@@ -42,8 +42,8 @@ public class OpenAction extends Action {
 	public OpenAction(JalgoWindow win) {
 
 		this.win = win;
-		setText(Messages.getString("OpenAction.Open_file..._1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("OpenAction.Open_a_file_2")); //$NON-NLS-1$
+		setText(Messages.getString("ui.Open_file")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("ui.Open_file")); //$NON-NLS-1$
 		setImageDescriptor(
 			ImageDescriptor.createFromFile(null, "pix/open.gif")); //$NON-NLS-1$
 	}
@@ -66,7 +66,7 @@ public class OpenAction extends Action {
 	public void run(boolean useCurrentModuleInstance) {
 		FileDialog fileChooser = new FileDialog(win.getShell(), SWT.OPEN);
 
-		fileChooser.setText(Messages.getString("OpenAction.Open_file_4")); //$NON-NLS-1$
+		fileChooser.setText(Messages.getString("ui.Open_file")); //$NON-NLS-1$
 		fileChooser.setFilterPath(currentDir);
 		fileChooser.setFilterExtensions(new String[] { "*.jalgo", "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$
 		fileChooser.setFilterNames(

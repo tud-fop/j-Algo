@@ -40,8 +40,8 @@ public class ZoomToFitAction extends Action {
 	 * @param panel The Panel which contents should be zoomed.
 	 */
 	public ZoomToFitAction(IFigure panel) {
-		setText(Messages.getString("ZoomToFitAction.Zoom_to_fit_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ZoomToFitAction.Zoom_to_fit_2")); //$NON-NLS-1$
+		setText(Messages.getString("ui.Zoom_fit")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("ui.Zoom_fit")); //$NON-NLS-1$
 		setImageDescriptor(
 			ImageDescriptor.createFromFile(null, "pix/zoom_to_fit.gif")); //$NON-NLS-1$
 	}

@@ -36,9 +36,9 @@ public class SaveAction extends Action {
 	public SaveAction(JalgoWindow win) {
 		//this.mc = mc;
 		this.win = win;
-		setText(Messages.getString("SaveAction.Save_1")); //$NON-NLS-1$
-		setId(Messages.getString("SaveAction.Save_2")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("SaveAction.Save_file._3")); //$NON-NLS-1$
+		setText(Messages.getString("ui.Save_file")); //$NON-NLS-1$
+		setId(Messages.getString("ui.Save_file")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("ui.Save")); //$NON-NLS-1$
 		setImageDescriptor(
 			ImageDescriptor.createFromFile(null, "pix/save.gif")); //$NON-NLS-1$
 	}

@@ -44,8 +44,8 @@ public class PrintViewAction extends Action {
 
 	public PrintViewAction(IFigure figure) {
 		this.figure = figure;
-		setText(Messages.getString("PrintViewAction.Print_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("PrintViewAction.Print_this_view_2")); //$NON-NLS-1$
+		setText(Messages.getString("ui.Print_view")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("ui.Print_view")); //$NON-NLS-1$
 		setImageDescriptor(
 			ImageDescriptor.createFromFile(null, "pix/print.gif")); //$NON-NLS-1$
 	}
@@ -55,7 +55,7 @@ public class PrintViewAction extends Action {
 
 		// New Print-Dialog
 		PrintDialog printDialog = new PrintDialog(shell);
-		printDialog.setText(Messages.getString("PrintViewAction.Choose_printer_4")); //$NON-NLS-1$
+		printDialog.setText(Messages.getString("ui.Select_printer")); //$NON-NLS-1$
 		PrinterData printerData = printDialog.open();
 		if(printerData==null) return;
 		

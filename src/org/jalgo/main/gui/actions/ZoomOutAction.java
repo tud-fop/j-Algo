@@ -43,8 +43,8 @@ public class ZoomOutAction extends Action {
 	 */
 	public ZoomOutAction(GraphViewForm form) {
 		this.form = form;
-		setText(Messages.getString("ZoomOutAction.Zoom_Out_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ZoomOutAction.Zoom_Out._2")); //$NON-NLS-1$
+		setText(Messages.getString("ui.Zoom_out")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("ui.Zoom_out")); //$NON-NLS-1$
 		setImageDescriptor(
 			ImageDescriptor.createFromFile(null, "pix/zoom-out.gif")); //$NON-NLS-1$
 	}

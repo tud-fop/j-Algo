@@ -33,6 +33,7 @@ import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabFolder2Adapter;
 import org.eclipse.swt.custom.CTabFolderAdapter;
 import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
@@ -107,19 +108,29 @@ public class JalgoWindow extends ApplicationWindow {
 				new Image(parent.getDisplay(), "pix/jalgo.png")); //$NON-NLS-1$
 
 		final JalgoMain jalgo = this.parent;
-
+		
 		ct = new CTabFolder(parent, SWT.FLAT);
 		ct.addCTabFolderListener(new CTabFolderAdapter() {
 			public void itemClosed(CTabFolderEvent event) {
 				jalgo.itemClosed((CTabItem) event.item);
 			}
 		});
+/*		Replacement for depriciated code above. Uncomment if using
+ * 		SWT-3.x of Eclipse 3.x
+ */
+//		ct = new CTabFolder(parent, SWT.FLAT);
+//		ct.addCTabFolder2Listener(new CTabFolder2Adapter() {
+//			public void itemClosed(CTabFolderEvent event) {
+//				jalgo.itemClosed((CTabItem) event.item);
+//			}
+//		});
+		
 		ct.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				jalgo.itemSelected((CTabItem) event.item);
 			}
 		});
-
+		ct.setSimple(false);
 		ct.setFocus();
 
 		return ct;
@@ -133,7 +144,7 @@ public class JalgoWindow extends ApplicationWindow {
 		// ** new_menu (is in file_menu)**
 
 		MenuManager new_menu = new MenuManager(Messages
-				.getString("JalgoWindow.&New")); //$NON-NLS-1$
+				.getString("ui.New")); //$NON-NLS-1$
 
 		for (int i = 0; i < newActions.size(); i++) {
 			new_menu.add((NewAction) newActions.get(i));
@@ -142,7 +153,7 @@ public class JalgoWindow extends ApplicationWindow {
 		// ** file_menu **
 
 		MenuManager file_menu = new MenuManager(Messages
-				.getString("JalgoWindow.&File")); //$NON-NLS-1$
+				.getString("ui.File")); //$NON-NLS-1$
 		file_menu.add(new_menu);
 		file_menu.add(new Separator());
 		file_menu.add(new OpenAction(this));
@@ -154,7 +165,7 @@ public class JalgoWindow extends ApplicationWindow {
 		// ** help_menu **
 
 		MenuManager help_menu = new MenuManager(Messages
-				.getString("JalgoWindow.&Help"), "help"); //$NON-NLS-1$
+				.getString("ui.Help"), "help"); //$NON-NLS-1$
 		help_menu.add(new AboutAction(this));
 		help_menu.add(new AboutModuleAction(this));
 

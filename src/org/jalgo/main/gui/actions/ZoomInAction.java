@@ -42,8 +42,8 @@ public class ZoomInAction extends Action {
 	 */
 	public ZoomInAction(GraphViewForm form) {
 		this.form = form;
-		setText(Messages.getString("ZoomInAction.Zoom_In_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ZoomInAction.Zoom_In._2")); //$NON-NLS-1$
+		setText(Messages.getString("ui.Zoom_in")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("ui.Zoom_in")); //$NON-NLS-1$
 		setImageDescriptor(
 			ImageDescriptor.createFromFile(null, "pix/zoom-in.gif")); //$NON-NLS-1$
 	}

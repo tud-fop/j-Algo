@@ -32,8 +32,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
 public class PrintAction extends Action {
 
 	public PrintAction() {
-		setText(Messages.getString("PrintAction.Print_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("PrintAction.Print_this_view_2")); //$NON-NLS-1$
+		setText(Messages.getString("ui.Print")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("ui.Print")); //$NON-NLS-1$
 		setImageDescriptor(
 			ImageDescriptor.createFromFile(null, "pix/print.gif")); //$NON-NLS-1$
 	}

@@ -55,10 +55,12 @@ public class AboutModuleAction extends Action {
 				+ "\n\n" //$NON-NLS-1$
 				+ win.getCurrentInstance().getModuleInfo().getDescription()
 				+ "\n\n" //$NON-NLS-1$
-				+ Messages.getString("AboutModuleAction.Author___n_8") //$NON-NLS-1$
+				+ Messages.getString("AboutModuleAction.Authors_8") //$NON-NLS-1$
+				+ ":\n" //$NON-NLS-1$
 				+ win.getCurrentInstance().getModuleInfo().getAuthor()
 				+ "\n\n" //$NON-NLS-1$
-				+ Messages.getString("AboutModuleAction.License___n_10") //$NON-NLS-1$
+				+ Messages.getString("AboutModuleAction.License_10") //$NON-NLS-1$
+				+ ":\n" //$NON-NLS-1$
 				+ win.getCurrentInstance().getModuleInfo().getLicense()
 			/*
 				+ "(c) Copyright jAlgo-Team 2004.  All rights reserved.\n"

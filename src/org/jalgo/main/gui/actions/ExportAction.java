@@ -46,8 +46,8 @@ public class ExportAction extends Action {
 	public ExportAction(IFigure figure) {
 		this.figure = figure;
 
-		setText(Messages.getString("ExportAction.Export_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ExportAction.Export_image_2")); //$NON-NLS-1$
+		setText(Messages.getString("ui.Export")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("ui.Export_image")); //$NON-NLS-1$
 		setImageDescriptor(
 			ImageDescriptor.createFromFile(null, "pix/export.gif")); //$NON-NLS-1$
 	}
@@ -76,7 +76,7 @@ public class ExportAction extends Action {
 
 		// Save to file
 		FileDialog filer = new FileDialog(new Shell(), SWT.SAVE);
-		filer.setText(Messages.getString("ExportAction.Export_file_4")); //$NON-NLS-1$
+		filer.setText(Messages.getString("ui.Export_file")); //$NON-NLS-1$
 		filer.setFilterExtensions(new String[] { "*.bmp" }); //$NON-NLS-1$
 		filer.setFilterNames(new String[] { Messages.getString("ExportAction.Bitmap_(*.bmp)_6") }); //$NON-NLS-1$
 		String filename = filer.open();

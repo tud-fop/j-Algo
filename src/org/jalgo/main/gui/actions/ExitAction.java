@@ -38,8 +38,8 @@ public class ExitAction extends Action {
 
 	public ExitAction(ApplicationWindow win) {
 		window = win;
-		setText(Messages.getString("ExitAction.E&xit@Ctrl+W_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ExitAction.Exit_Application._2")); //$NON-NLS-1$
+		setText(Messages.getString("ui.Exit")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("ui.Exit")); //$NON-NLS-1$
 		setImageDescriptor(
 			ImageDescriptor.createFromFile(null, "pix/close.gif")); //$NON-NLS-1$
 	}
