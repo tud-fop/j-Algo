@@ -70,23 +70,6 @@ public class JalgoMain {
 	}
 
 	/**
-	 * Fills <code>knownModules</code> and <code>knownModuleInfos</code> with content.
-	 * Module programmers have to alter this method and add their module here! 
-	 */
-	private void addKnownModules() {
-		try {
-			knownModules.add(ModuleConnector.class);
-			knownModules.add(org.jalgo.module.testModule.ModuleConnector.class);
-			//Add a new ModuleConnector here!!
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		knownModuleInfos.add(new ModuleInfo());
-		knownModuleInfos.add(new org.jalgo.module.testModule.ModuleInfo());
-		//Add a new ModuleInfo here!!
-	}
-
-	/**
 	 * Is called, when the specified tab item is closed.
 	 * @param cti The tab item, which is closed.
 	 */
@@ -259,5 +242,21 @@ public class JalgoMain {
 		}
 		return Storage.load(filename);
 	}
-
+	
+	/**
+	 * Fills <code>knownModules</code> and <code>knownModuleInfos</code> with content.
+	 * Module programmers have to alter this method and add their module here! 
+	 */
+	private void addKnownModules() {
+		try {
+			knownModules.add(ModuleConnector.class);
+			knownModules.add(org.jalgo.module.testModule.ModuleConnector.class);
+			//Add a new ModuleConnector here!!
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		knownModuleInfos.add(new ModuleInfo());
+		knownModuleInfos.add(new org.jalgo.module.testModule.ModuleInfo());
+		//Add a new ModuleInfo here!!
+	}
 }

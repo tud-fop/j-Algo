@@ -29,22 +29,22 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * @author Stephan Creutz
  */
 public interface IModuleInfo {
-	public abstract String getName();
-	public abstract String getVersion();
-	public abstract String getAuthor();
-	public abstract String getDescription();
-	public abstract ImageDescriptor getLogo();
-	public abstract String getLicense();
+	String getName();
+	String getVersion();
+	String getAuthor();
+	String getDescription();
+	ImageDescriptor getLogo();
+	String getLicense();
 	
 	/**
 	 * Get the filename of the currently opened file.
 	 * @return filename
 	 */
-	public abstract String getOpenFileName();
+	String getOpenFileName();
 	
 	/**
 	 * Set the filename of the currently opened file.
 	 * @param string filename
 	 */
-	public abstract void setOpenFileName(String string);
+	void setOpenFileName(String string);
 }
