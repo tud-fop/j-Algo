@@ -177,8 +177,10 @@ public class ModuleController {
 		// Create StatusLine
 		this.statusLineManager = statusLineManager;
 		createStatusLine();
+	}
 
-		// TODO: save in config-file, if user want's wizard
+	public void run() {
+		//TODO: save in config-file, if user want's wizard	
 		setMode(START_WITH_WIZARD);
 	}
 
@@ -622,11 +624,13 @@ public class ModuleController {
 
 	private void addPerformAllButton() {
 		toolBarManager.add(performAllAction);
+		performAllAction.setEnabled(true);
 		toolBarManager.update(false);
 	}
 
 	private void removePerformAllButton() {
 		toolBarManager.remove(performAllAction.getId());
+		performAllAction.setEnabled(false);
 		toolBarManager.update(false);
 	}
 
@@ -653,11 +657,13 @@ public class ModuleController {
 	private void addAbortAlgoButton() {
 		abortAlgoAction.setId("abortAlgo"); //$NON-NLS-1$
 		toolBarManager.add(abortAlgoAction);
+		abortAlgoAction.setEnabled(true);
 		toolBarManager.update(false);
 	}
 
 	private void removeAbortAlgoButton() {
 		toolBarManager.remove(abortAlgoAction.getId());
+		abortAlgoAction.setEnabled(false);
 		toolBarManager.update(false);
 	}
 

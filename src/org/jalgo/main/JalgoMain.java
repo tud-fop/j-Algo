@@ -187,7 +187,9 @@ public class JalgoMain {
 
 		// Add module to running instances
 		openInstances.put(cti, currentInstance);
-
+		
+		currentInstance.run();
+		
 		return currentInstance;
 	}
 
@@ -241,7 +243,6 @@ public class JalgoMain {
 	 * @param filename
 	 */
 	public boolean openFile(String filename, boolean useCurrentInstance) {
-
 		if (useCurrentInstance) {
 			return Storage.load(filename, currentInstance);
 		} else {

@@ -57,6 +57,13 @@ public class ModuleConnector implements IModuleConnector {
 	}
 
 	/**
+	 * @see IModuleConnector#run()
+	 */
+	public void run() {
+		controller.run();
+	}
+
+	/**
 	 * @see IModuleConnector#setDataFromFile(ByteArrayInputStream)
 	 */
 	public void setDataFromFile(ByteArrayInputStream data) {

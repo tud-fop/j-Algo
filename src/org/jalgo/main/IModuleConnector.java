@@ -38,6 +38,12 @@ import org.eclipse.jface.action.SubToolBarManager;
 public interface IModuleConnector {
 
 	/**
+	 * After the module has been initialized using the constructor (and maybe some methods), use this method to start it.
+	 * This method should return soon.
+	 */
+	public void run();
+
+	/**
 	 * use this function after the user loaded a saved file for the module.
 	 * @param 	data the loaded file consists of the module header, which was 
 	 * 					added by the main program before saving (e.g. including 
