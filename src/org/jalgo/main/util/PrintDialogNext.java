@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -32,81 +35,109 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-
 /**
  * Used after a usual PrintDialog to decide about the scaling.
  * 
  * @author Anne Kersten
  */
 public class PrintDialogNext extends Dialog {
-	
-	protected Combo select=new Combo(getParentShell(),SWT.DROP_DOWN|SWT.READ_ONLY);
-	int i;
+
+	private Combo select;
+
+	private int selectionIndex;
 
 	/**
 	 * Constructs a new PrintDialogNext.
-	 * @param parent the parent-shell
+	 * 
+	 * @param parent
+	 *                       the parent-shell
 	 */
 	public PrintDialogNext(Shell parent) {
 		super(parent);
 	}
-	
+
 	/**
 	 * Creates a Combo where you can chose the scaling.
-	 * @param parent the parent composite to contain the dialog area
+	 * 
+	 * @param parent
+	 *                       the parent composite to contain the dialog area
 	 * @return the parent composite holding a combo
 	 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
 	 */
-	protected Control createDialogArea(Composite parent)
-	{
-		Label title=new Label(parent,SWT.LEFT);
-		title.setText(Messages.getString("PrintDialogNext.Select_scaling_mode_1")); //$NON-NLS-1$
-		Combo sel=new Combo(parent,SWT.DROP_DOWN|SWT.READ_ONLY);
+	protected Control createDialogArea(Composite parent) {
+		Label title = new Label(parent, SWT.LEFT);
+		title
+				.setText(Messages
+						.getString("PrintDialogNext.Select_scaling_mode_1")); //$NON-NLS-1$
 		parent.setLayout(new GridLayout());
-		sel.add(Messages.getString("PrintDialogNext.Scale_to_fit_on_one_page_2")); //$NON-NLS-1$
-		sel.add(Messages.getString("PrintDialogNext.Scale_only_width_3")); //$NON-NLS-1$
-		sel.add(Messages.getString("PrintDialogNext.Scale_only_height_4")); //$NON-NLS-1$
-		sel.add(Messages.getString("PrintDialogNext.No_scaling_5")); //$NON-NLS-1$
-//		sel.add("Resize and use existing layout");
-		select=sel;
-		i=3;
-		sel.select(i);
-		select.addSelectionListener(new SelectionListener()
-		{
-
+		select
+				.add(Messages
+						.getString("PrintDialogNext.Scale_to_fit_on_one_page_2")); //$NON-NLS-1$
+		select
+				.add(Messages
+						.getString("PrintDialogNext.Scale_only_width_3")); //$NON-NLS-1$
+		select
+				.add(Messages
+						.getString("PrintDialogNext.Scale_only_height_4")); //$NON-NLS-1$
+		select.add(Messages.getString("PrintDialogNext.No_scaling_5")); //$NON-NLS-1$
+		selectionIndex = 3;
+		select.select(selectionIndex);
+		select.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				i=select.getSelectionIndex();	
+				selectionIndex = select.getSelectionIndex();
 			}
 
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
-			
-		});	
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
 		return parent;
 	}
-	
+
 	/**
 	 * Opens the PrintDialogNext
-	 * @return PrintScaledFigureOperation.FIT_PAGE for "Scale to fit on one page"<p>
-	 *		   PrintScaledFigureOperation.FIT_WIDTH for "Scale only width"<p>
-	 * 		   PrintScaledFigureOperation.FIT_HEIGHT for "Scale only height"<p>
-	 * 		   PrintScaledFigureOperation.TILE for "No scaling"<p>
-	 * 		   -1 for Window.CANCEL 
+	 * 
+	 * @return PrintScaledFigureOperation.FIT_PAGE for "Scale to fit on one
+	 *               page"
+	 *               <p>
+	 *               PrintScaledFigureOperation.FIT_WIDTH for "Scale only width"
+	 *               <p>
+	 *               PrintScaledFigureOperation.FIT_HEIGHT for "Scale only height"
+	 *               <p>
+	 *               PrintScaledFigureOperation.TILE for "No scaling"
+	 *               <p>
+	 *               -1 for Window.CANCEL
 	 */
-	public int open()
-	{
-		if(super.open()==Window.OK)
-		switch(i)
-		{
-			case 0: i= PrintScaledFigureOperation.FIT_PAGE; break;
-			case 1: i= PrintScaledFigureOperation.FIT_WIDTH; break;
-			case 2: i= PrintScaledFigureOperation.FIT_HEIGHT; break;
-			case 4: if(MessageDialog.openQuestion(getParentShell(),Messages.getString("PrintDialogNext.Warning__6"),Messages.getString("PrintDialogNext.Layout_warning_7")))i=PrintScaledFigureOperation.USE_LAYOUT;  //$NON-NLS-1$ //$NON-NLS-2$
-					else i=-1; break;
-			default: i= PrintScaledFigureOperation.TILE; break;
-		}
-		else i= -1;
-	
-		return i;
+	public int open() {
+		if (super.open() == Window.OK)
+			switch (selectionIndex) {
+			case 0:
+				selectionIndex = PrintScaledFigureOperation.FIT_PAGE;
+				break;
+			case 1:
+				selectionIndex = PrintScaledFigureOperation.FIT_WIDTH;
+				break;
+			case 2:
+				selectionIndex = PrintScaledFigureOperation.FIT_HEIGHT;
+				break;
+			case 4:
+				if (MessageDialog
+						.openQuestion(
+								getParentShell(),
+								Messages
+										.getString("PrintDialogNext.Warning__6"),
+								Messages
+										.getString("PrintDialogNext.Layout_warning_7")))
+					selectionIndex = PrintScaledFigureOperation.USE_LAYOUT; //$NON-NLS-1$ //$NON-NLS-2$
+				else
+					selectionIndex = -1;
+				break;
+			default:
+				selectionIndex = PrintScaledFigureOperation.TILE;
+			}
+		else
+			selectionIndex = -1;
+
+		return selectionIndex;
 	}
 
 }
