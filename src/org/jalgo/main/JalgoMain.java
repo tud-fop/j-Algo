@@ -73,7 +73,7 @@ public class JalgoMain {
 	 * Fills <code>knownModules</code> and <code>knownModuleInfos</code> with content.
 	 * Module programmers have to alter this method and add their module here! 
 	 */
-	public void addKnownModules() {
+	private void addKnownModules() {
 		try {
 			knownModules.add(ModuleConnector.class);
 			knownModules.add(org.jalgo.module.testModule.ModuleConnector.class);
