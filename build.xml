@@ -1,52 +1,54 @@
 <?xml version="1.0"?>
-<project name="j-Algo" default="core">
+<project name="j-Algo" default="default">
 
-  <target name="core-linux">
-    <echo message="Building of core for linux started ..."/>
+	<property name="default_message" value="Choose the right target by your operating system. You are now using ${os.name}" />
+	<property name="build_begin_message" value="Building of core for ${os.name} started ..." />
+	<property name="build_finished_message" value="... building of core for ${os.name} finished." />
 
-    <jar destfile="dist/linux/jalgo.jar"
-      basedir="src"
-      excludes="j-algo.*">
-      <manifest>
-        <attribute name="Built-By" value="${user.name}"/>
-        <attribute name="Main-Class" value="org.jalgo.main.Jalgo"/>
-        <attribute name="Class-Path" value="extlibs/jface.jar extlibs/draw2d.jar extlibs/boot.jar extlibs/runtime.jar extlibs/linux/swt.jar extlibs/linux/swt-pi.jar"/>
-      </manifest>
-    </jar>
+	<target name="default" description="${default_message}">
+		<echo message="${default_message}" />
+	</target>
 
-	<echo message="... building of core for linux finished."/>
-  </target>
+	<target name="Linux">
+		<echo message="${build_begin_message}" />
 
-  <target name="core-win">
-    <echo message="Building of core for win started ..."/>
+		<jar destfile="dist/linux/jalgo.jar" basedir="src" excludes="j-algo.*">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Main-Class" value="org.jalgo.main.Jalgo" />
+				<attribute name="Class-Path" value="extlibs/jface.jar extlibs/draw2d.jar extlibs/boot.jar extlibs/runtime.jar extlibs/linux/swt.jar extlibs/linux/swt-pi.jar" />
+			</manifest>
+		</jar>
 
-    <jar destfile="dist/win/jalgo.jar"
-      basedir="src"
-      excludes="j-algo.*">
-      <manifest>
-        <attribute name="Built-By" value="${user.name}"/>
-        <attribute name="Main-Class" value="org.jalgo.main.Jalgo"/>
-        <attribute name="Class-Path" value="extlibs/jface.jar extlibs/draw2d.jar extlibs/boot.jar extlibs/runtime.jar extlibs/win/swt.jar"/>
-      </manifest>
-    </jar>
+		<echo message="${build_finished_message}" />
+	</target>
 
-	<echo message="... building of core for win finished."/>
-  </target>
-  
-  <target name="core-solaris">
-    <echo message="Building of core for solaris started ..."/>
+	<target name="Windows X" description="for all Windows versions">
+		<echo message="${build_begin_message}" />
 
-    <jar destfile="dist/solaris/jalgo.jar"
-      basedir="src"
-      excludes="j-algo.*">
-      <manifest>
-        <attribute name="Built-By" value="${user.name}"/>
-        <attribute name="Main-Class" value="org.jalgo.main.Jalgo"/>
-        <attribute name="Class-Path" value="extlibs/jface.jar extlibs/draw2d.jar extlibs/boot.jar extlibs/runtime.jar extlibs/solaris/swt.jar"/>
-      </manifest>
-    </jar>
+		<jar destfile="dist/win/jalgo.jar" basedir="src" excludes="j-algo.*">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Main-Class" value="org.jalgo.main.Jalgo" />
+				<attribute name="Class-Path" value="extlibs/jface.jar extlibs/draw2d.jar extlibs/boot.jar extlibs/runtime.jar extlibs/win/swt.jar" />
+			</manifest>
+		</jar>
 
-    <echo message="... building of core for solaris finished."/>
-  </target>
+		<echo message="${build_finished_message}" />
+	</target>
+
+	<target name="Solaris" description="should be running on all Solaris versions">
+		<echo message="${build_begin_message}" />
+
+		<jar destfile="dist/solaris/jalgo.jar" basedir="src" excludes="j-algo.*">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Main-Class" value="org.jalgo.main.Jalgo" />
+				<attribute name="Class-Path" value="extlibs/jface.jar extlibs/draw2d.jar extlibs/boot.jar extlibs/runtime.jar extlibs/solaris/swt.jar" />
+			</manifest>
+		</jar>
+
+		<echo message="${build_finished_message}" />
+	</target>
 
 </project>
