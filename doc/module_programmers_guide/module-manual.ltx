@@ -1,0 +1,248 @@
+\documentclass[12pt]{scrartcl}
+\usepackage{a4wide, listings, url}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+
+\title{jAlgo\\Module Programmers Manual}
+\author{jAlgo - Team}
+\date{\today}
+
+% Schnittstelle zum Modul noch nicht sauber, JAlgoMain erzeugt direkt ein
+% konkretes Modul
+
+\newcommand{\code}[1]{\lstinline$#1$}
+
+% Synopsis
+% Description
+% Examples
+% Overview
+% Authors
+% Reporting Bugs
+% See Also
+% Copyright
+
+\begin{document}
+\maketitle
+\lstset{basicstyle=\small,language=Java,showstringspaces=false}
+\section{Introduction to jAlgo}
+JAlgo was developed to provide multiple module support. For this reason we created a simple interface. This interface is described in the sections below.\\
+The software is using the following toolkits: SWT, JFace and Draw2d (see section \ref{seealso}), thus you have to use it too. But it might be possible to write an adapter which makes it possible to use e.g. Swing or something else.
+
+\section{Implementing a module}
+
+\subsection{IModuleConnector}
+This interface establishes a connection to the main program.
+You have to implement the methods listed below:
+
+\begin{lstlisting}[frame=single,caption={IModuleConnector}]
+public interface IModuleConnector {
+
+	/**
+	 * use this function after the user loaded a saved file for
+	 * the module.
+	 * @param data the loaded file consists of the module header,
+	 * which was added by the main program before saving (e.g.
+	 * including with which module the file is associated) and the
+	 * data for the module; put the data in here
+	 */
+	public void setDataFromFile(ByteArrayInputStream data);
+
+	/**
+	 * use this function, when the user wants to save the state
+	 * of the module.
+	 * @return a stream with the data from the module, that has
+	 * to be stored in a file after the main program added the
+	 * module header (e.g. including with which module the file
+	 * is associated) to it
+	 */
+	public ByteArrayOutputStream getDataForFile();
+
+	/**
+	 * use this function, if the user clicked the print-button
+	 * (or chose to print in any other way)
+	 * the module will call a print dialog and manage the printing
+	 *
+	 * NOTE !!! this is currently unused
+	 */
+	public void print();
+
+	/**
+	 * Get the Menu from the module
+	 */
+	public SubMenuManager getMenuManager();
+
+	/**
+	 * Get the ToolBar from the module
+	 */
+	public SubToolBarManager getToolBarManager();
+
+	/**
+	 * Get the StatusLine from the module
+	 */
+	public SubStatusLineManager getStatusLineManager();
+	
+	/**
+	 * Get a class with all module information (name, description,
+	 * version, ...)
+	 */
+	public IModuleInfo getModuleInfo();
+
+}
+\end{lstlisting}
+
+\subsection{ModuleConnector Example}
+
+% 1. wie wird print() umgesetzt, momentan wird dies am interface vorbei gemacht
+% 2. wie soll das Image realisiert werden, dazu müßte man mindestens ein Device
+% Objekt kennen
+\begin{lstlisting}[frame=single,caption={IModuleInfo interface}]
+public class ModuleConnector implements IModuleConnector {
+
+	private IModuleInfo moduleInfo;
+	private ModuleController controller;
+
+	public ModuleConnector(
+		ApplicationWindow appWin,
+		Composite comp,
+		SubMenuManager menu,
+		SubToolBarManager tb,
+		SubStatusLineManager sl) {
+		moduleInfo = new ModuleInfo();
+		controller = new ModuleController(
+					appWin,
+					comp,
+					menu,
+					tb,
+					sl);
+	}
+
+	public void setDataFromFile(ByteArrayInputStream data) {
+		controller.setSerializedData(data);
+	}
+
+	public ByteArrayOutputStream getDataForFile() {
+		return controller.getSerializedData();
+	}
+
+	public void print() {
+	}
+
+	public ModuleController getController() {
+		return controller;
+	}
+
+	public SubMenuManager getMenuManager() {
+		return controller.getMenuManager();
+	}
+
+	public SubToolBarManager getToolBarManager() {
+		return controller.getToolBarManager();
+	}
+
+	public SubStatusLineManager getStatusLineManager() {
+		return controller.getStatusLineManager();
+	}
+
+	public IModuleInfo getModuleInfo() {
+		return moduleInfo; 
+	}
+
+}
+\end{lstlisting}
+
+\subsection{IModuleInfo}
+The class which implements this interface provides some basic information about the module. The class yields the name, version, author(s), license, description and a logo. Furthermore it holds the information about open files.
+
+\begin{lstlisting}[frame=single,caption={IModuleInfo interface}]
+import org.eclipse.swt.graphics.Image;
+
+public interface IModuleInfo {
+	public abstract String getName();
+	public abstract String getVersion();
+	public abstract String getAuthor();
+	public abstract String getDescription();
+	public abstract Image getLogo();
+	public abstract String getLicense();
+	
+	/**
+	 * Get the filename of the currently opened file.
+	 * @return filename
+	 */
+	public abstract String getOpenFileName();
+	/**
+	 * Set the filename of the currently opened file.
+	 * @param string filename
+	 */
+	public abstract void setOpenFileName(String string);
+}
+\end{lstlisting}
+
+\subsection{ModuleInfo Example}
+Here is a concrete example for a class implementing the \code{IModuleInfo} interface.
+
+\begin{lstlisting}[frame=single,caption={Sample ModuleInfo Code}]
+public class ModuleInfo implements IModuleInfo {
+
+	private String openFileName;
+
+	public String getName() {
+		return "Modul Name";
+	}
+
+	public String getVersion() {
+		return "0.1";
+	}
+
+	public String getAuthor() {
+		return "Autor(en) ...";
+	}
+
+	public String getDescription() {
+		return "Beschreibung";
+	}
+
+	public Image getLogo() {
+		return null; // this module provides no logo
+	}
+
+	public String getLicense() {
+		return "GNU General Public License";
+	}
+	
+	/**
+	 * Get the filename of the currently opened file.
+	 * @return filename
+	 */
+	public String getOpenFileName() {
+		return openFileName;
+	}
+
+	/**
+	 * Set the filename of the currently opened file.
+	 * @param string filename
+	 */
+	public void setOpenFileName(String string) {
+		openFileName = string;
+	}
+
+}
+\end{lstlisting}
+
+\section{Bind the module to the main program}
+If you finished creating your module, create a ``Jar'' file and put it to ``jalgo/modules''. The main program scans this directory for modules and binds them.
+
+\section{Errata}
+\begin{itemize}
+\item Because of a bug in the module scanner it is now impossible to load more than 1 module. This bug will be fixed in future versions.
+\item The method \code{public void print()} is now unused and senseless.
+\end{itemize}
+
+\section{Reporting Bugs}
+If you find a bug please be so kind to drop us an email (\url{sopra@binaervarianz.de}).
+
+\section{See Also}\label{seealso}
+To program a module you need information about SWT, JFace and Draw2d. This can be found at \url{http://www.eclipse.org}.\\
+More detailed information can be found in the source code.
+
+\end{document}
+
