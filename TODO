@@ -7,7 +7,8 @@ as fast as possible:
 * special characters don't work on all platforms (esp. not an solaris)
 * solaris: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)
 * bug in backtracking algorithms: work not for concatenations in lower part of repetition
-* remove try-catch blocks for e.g. Nullpointerexceptions to make debugging possible
+* [mostly DONE] remove try-catch blocks for e.g. Nullpointerexceptions to make debugging possible
+* there are empty catch blocks, handle these exceptions
 
 
 medium:
@@ -19,6 +20,7 @@ medium:
 * printing for linux/solaris (depends on gtk)
 * translation into English
 * trans()-algorithm "backwards"
+* remove duplicated code
 
 
 larger projects:
