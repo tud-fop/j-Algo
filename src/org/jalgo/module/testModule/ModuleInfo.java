@@ -43,7 +43,7 @@ public class ModuleInfo implements IModuleInfo {
      * @see org.jalgo.main.IModuleInfo#getLogo()
      */
     public ImageDescriptor getLogo() {
-        return ImageDescriptor.createFromFile(null, "pix/new.gif");
+        return ImageDescriptor.createFromFile(null, "pix/testModuleLogo.gif");
     }
 
     /* (non-Javadoc)

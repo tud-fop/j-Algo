@@ -19,20 +19,24 @@
 
 package org.jalgo.main.gui.actions;
 
-import java.util.Collection;
+//import java.util.Collection;
 
 import org.eclipse.jface.action.Action;
+/*
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 import org.jalgo.module.synDiaEBNF.startWizard.StartWizard;
 import org.jalgo.module.synDiaEBNF.startWizard.StartWizardDialog;
+*/
 
 /**
  * @author Christopher Friedrich
  */
+// TODO remove ths class because it is not needed anymore
 public class NewWizardAction extends Action {
 
+	/*
 	private JalgoWindow win;
 	private Collection knownModules;
 
@@ -45,9 +49,11 @@ public class NewWizardAction extends Action {
 		setImageDescriptor(ImageDescriptor.createFromFile(null, "pix/new.gif"));
 
 	}
-
+	*/
+	
 	public void run() {
 
+		/*
 		StartWizard wizard = new StartWizard((ModuleController)win.getCurrentInstance(), win);
 		StartWizardDialog wizardDialog =
 			new StartWizardDialog(win.getShell(), wizard);
@@ -55,6 +61,7 @@ public class NewWizardAction extends Action {
 		
 		// Start Module
 		win.getParent().newInstance(0);
+		*/
 	}
 
 }

@@ -75,7 +75,7 @@ public class ModuleInfo implements IModuleInfo {
 	 * @see IModuleInfo#getLogo()
 	 */
 	public ImageDescriptor getLogo() { // TODO: design logo and provide it here as an org.eclipse.swt.graphics.Image
-		return ImageDescriptor.createFromFile(null, "pix/new.gif");
+		return ImageDescriptor.createFromFile(null, "pix/ebnfSynLogo.gif");
 	}
 
 	/**
