@@ -514,17 +514,15 @@ public class EbnfInputGui extends Gui implements Serializable {
 			&& (variables.size() > 0)
 			&& (terms.size() > 0)) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	private boolean validateRule(String var, String term) {
 		if ((var != "") && (term != "")) { //$NON-NLS-1$ //$NON-NLS-2$
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 }

@@ -58,7 +58,7 @@ import org.jalgo.main.gui.widgets.GraphViewForm;
 import org.jalgo.main.gui.widgets.Splitter;
 import org.jalgo.main.gui.widgets.StackViewForm;
 import org.jalgo.main.gui.widgets.TextViewForm;
-;
+
 
 /**
  * This class provides the GUI for the EBNF-Module
