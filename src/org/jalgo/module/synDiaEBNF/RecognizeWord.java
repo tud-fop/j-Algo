@@ -56,7 +56,7 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariableBack;
  * a syntax diagram system. Within the possiblity to go step by step through the
  * system, even backwards. The algorithm can be aborted all the time.
  * 
- * @author Babett Schaliz
+ * @author Babett Schalitz
  * @author Benjamin Scholz
  * @author Marco Zimmmerling
  * @author Michael Pradel
@@ -67,43 +67,34 @@ public class RecognizeWord extends SynDiaBacktracking implements SynDiaColors,
 	private ModuleController moduleController;
 
 	private StackCanvas stackCanvas; // the Canvas of the
-
 	// graphical stack
 
-	private TextCanvas algoTxtCanvas; // this Canvas
-
-	// display the
+	private TextCanvas algoTxtCanvas; // this Canvas displays the
 	// algorithm
 
 	private TextCanvas outputCanvas; // this Canvas
-
-	// display the
-	// generated word
+	// display the generated word
 
 	private Figure synDiaCanvas;
 
 	private Stack stack; // the internal stack
 
 	private String generatedWord = ""; // the generated
-
 	// word
 	// //$NON-NLS-1$
 
 	private SynDiaSystem synDiaDef; // the SynDiaSystem to
-
 	// work with
 
 	private BackTrackHistory history; // save the steps
 
 	private SynDiaElement currentElement = null;
-
 	// current SynDiaElement to go through
-	private SynDiaInitial currentInitial;
 
+	private SynDiaInitial currentInitial;
 	// help diagram which worked at the moment
 
 	private String word = ""; //$NON-NLS-1$
-
 	// always points to the current character in the word (String)
 
 	/**
@@ -296,7 +287,7 @@ public class RecognizeWord extends SynDiaBacktracking implements SynDiaColors,
 
 		if (currentElement instanceof SynDiaTerminal) {
 			// mark the SynDiaTerminal
-			remark(currentElement, false);
+			unmark(currentElement, false);
 
 			// refresh the generatedWord
 			refreshGeneratedWord(generatedWord);
@@ -304,7 +295,7 @@ public class RecognizeWord extends SynDiaBacktracking implements SynDiaColors,
 			//SynDiaVariable Jump in in the next step
 
 			// mark the currentElem
-			remark(currentElement, false);
+			unmark(currentElement, false);
 
 			// remove correspondent backtracking label on StackCanvas
 			stackCanvas.pop();
@@ -329,13 +320,13 @@ public class RecognizeWord extends SynDiaBacktracking implements SynDiaColors,
 	}
 
 	/**
-	 * this method is called if the "do algorithm" button on the GUI is pushed
-	 * realize the backtracking algorithm has to find the next element in the
+	 * This method is called if the "do algorithm" button on the GUI is pushed.
+	 * It realizes the backtracking algorithm, has to find the next element in the
 	 * syntactical diagram and...
 	 */
 	public void performNextStep() {
 		if (hasPreviousHistStep()) {
-			remark(history.getStepElem(history.getPointer() - 1), true);
+			unmark(history.getStepElem(history.getPointer() - 1), true);
 		}
 
 		// check, if it is actually possible to perform a further step
@@ -351,18 +342,18 @@ public class RecognizeWord extends SynDiaBacktracking implements SynDiaColors,
 			if (currentElement instanceof SynDiaInitial) {
 				doNextInitial((SynDiaInitial) currentElement);
 			} else if (currentElement instanceof SynDiaEpsilon) {
-				//go on Stack, this is an Epsilon f.e. in a Alternative,
+				//go on Stack, this is an Epsilon for ex. in an alternative,
 				performNextStep();
-			} else if (currentElement instanceof SynDiaTerminal) { //terminal?
+			} else if (currentElement instanceof SynDiaTerminal) { //terminal
 				doNextTerm((SynDiaTerminal) currentElement);
-			} else if (currentElement instanceof SynDiaVariable) { //variable?
+			} else if (currentElement instanceof SynDiaVariable) { //variable
 				doNextVariable((SynDiaVariable) currentElement);
-			} else if (currentElement instanceof SynDiaVariableBack) { //variable?
+			} else if (currentElement instanceof SynDiaVariableBack) { //variable
 				doNextVariableBack((SynDiaVariableBack) currentElement);
-			} else { // Composite
+			} else { // composite
 				algoTxtCanvas.demarkAll();
-				algoTxtCanvas.mark(3); //Search the right Way
-				if (currentElement instanceof SynDiaRepetition) { //repetition?
+				algoTxtCanvas.mark(3); //search the right way
+				if (currentElement instanceof SynDiaRepetition) { //repetition
 					doNextRepetition((SynDiaRepetition) currentElement);
 				} else if (currentElement instanceof SynDiaAlternative) {
 					doNextAlternative((SynDiaAlternative) currentElement);
@@ -399,8 +390,21 @@ public class RecognizeWord extends SynDiaBacktracking implements SynDiaColors,
 		}
 	}
 
+	/**
+	 * Recursively goes through <code>help</code> and its inner elements and
+	 * (i) unmarks them, if they are marked,
+	 * (ii) adds his backtracking label to each <code>SynDiaVariable</code> and
+	 * makes a copy of it, which saves the information where to jump back to, after 
+	 * the diagram it is pointing to was executed.
+	 * <p>
+	 * This function is called at the beginning of the algorithm, in order to set
+	 * the backtracking labels. 
+	 * 
+	 * @param help
+	 * @param bool
+	 */
 	private void BacktrackingLabels(SynDiaElement help, boolean bool) {
-		remark(help, !bool);
+		unmark(help, !bool);
 		if (help instanceof SynDiaInitial) {
 
 			currentInitial = (SynDiaInitial) help;
@@ -446,14 +450,14 @@ public class RecognizeWord extends SynDiaBacktracking implements SynDiaColors,
 		current.setBackgroundColor(diagramHighlight);
 	}
 
-	private void remark(SynDiaElement markobj, boolean bool) {
+	private void unmark(SynDiaElement markobj, boolean bool) {
 		if (markobj instanceof SynDiaTerminal) {
-			((SynDiaTerminal) markobj).remarkObject(bool);
+			((SynDiaTerminal) markobj).unmarkObject(bool);
 		} else if (markobj instanceof SynDiaVariable) { //SynDiaVariable
-			((SynDiaVariable) markobj).remarkObject(bool);
+			((SynDiaVariable) markobj).unmarkObject(bool);
 		} else if (markobj instanceof SynDiaVariableBack) {
 			//SynDiaVariable
-			((SynDiaVariableBack) markobj).remarkObject(bool);
+			((SynDiaVariableBack) markobj).unmarkObject(bool);
 		}
 	}
 
@@ -498,10 +502,7 @@ public class RecognizeWord extends SynDiaBacktracking implements SynDiaColors,
 		currentElem.markObject();
 
 		// set internal Stack config
-		stack.push(currentElem.getHelpCopy()); // save
-		// to
-		// go
-		// back
+		stack.push(currentElem.getHelpCopy()); // save to go back
 		stack.push(currentElem.getStartElem());
 
 		// display correspondent backtracking label on StackCanvas
@@ -530,7 +531,7 @@ public class RecognizeWord extends SynDiaBacktracking implements SynDiaColors,
 	}
 
 	private void doNextRepetition(SynDiaRepetition currentElem) {
-		if (!(currentElem.isStraightAheadElemDone())) {
+		if (!(currentElem.isStraightAheadElemDone())) {// StraightAheadElement not done so far
 			// set new Stack Configuration
 			currentElem.setStraightAheadElemDone(true);
 			stack.push(currentElem);

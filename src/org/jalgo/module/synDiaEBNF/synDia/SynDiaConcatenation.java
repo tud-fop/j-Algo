@@ -35,8 +35,7 @@ import org.jalgo.module.synDiaEBNF.gfx.ConcatenationFigure;
  * @author Michael Pradel
  */
 public class SynDiaConcatenation extends SynDiaComposition
-		implements
-			Serializable {
+		implements Serializable {
 
 	private LinkedList elements;
 	private ConcatenationFigure gfx;

@@ -26,7 +26,7 @@ package org.jalgo.module.synDiaEBNF;
 import java.io.Serializable;
 
 /**
- * Basicclass to manage similar methods of the algorithmus to generate a Word or
+ * Basic class to manage similar methods of the algorithmus to generate a Word or
  * to recognize a word by a syntax diagram system
  * 
  * @author Michael Pradel

@@ -75,7 +75,7 @@ public class SynDiaTerminal extends SynDiaElement
 		ellipse.setBackgroundColor(currentFigure);
 	}
 
-	public void remarkObject(boolean bool) {
+	public void unmarkObject(boolean bool) {
 		ellipse.setBackgroundColor(null);
 		markObjekt(bool);
 	}

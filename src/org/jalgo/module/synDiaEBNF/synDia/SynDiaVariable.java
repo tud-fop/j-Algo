@@ -127,7 +127,7 @@ public class SynDiaVariable extends SynDiaElement
 		rectangle.setBackgroundColor(currentFigure);
 	}
 
-	public void remarkObject(boolean bool) {
+	public void unmarkObject(boolean bool) {
 		rectangle.setBackgroundColor(null);
 		markObjekt(bool);
 	}
@@ -156,6 +156,9 @@ public class SynDiaVariable extends SynDiaElement
 	}
 
 	/**
+	 * Sets the <code>SynDiaVariableBack</code>, which saves the information 
+	 * where to jump back to after the diagram it is pointing to was executed. 
+	 * 
 	 * @param back
 	 */
 	public void setHelpCopy(SynDiaVariableBack back) {

@@ -81,9 +81,9 @@ public class Stack implements Serializable {
 	}
 
 	/**
-	 * @return	current top element or null in case of an empty stack
+	 * @return Current top element or null in case of an empty stack.
 	 * 
-	 * it merely returns the current top element
+	 * It merely returns the current top element.
 	 */
 	public Object peak() {
 		if (content.size() > 0)

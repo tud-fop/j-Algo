@@ -230,7 +230,7 @@ public class GenerateWord
 
 		if (currentElement instanceof SynDiaTerminal) {
 			// mark the SynDiaTerminal
-			 ((SynDiaTerminal) currentElement).remarkObject(false);
+			 ((SynDiaTerminal) currentElement).unmarkObject(false);
 
 			// refresh the generatedWord
 			refreshGeneratedWord(generatedWord);
@@ -238,7 +238,7 @@ public class GenerateWord
 			//SynDiaVariable Jump in in the next step
 
 			// mark the currentElem
-			 ((SynDiaVariable) currentElement).remarkObject(false);
+			 ((SynDiaVariable) currentElement).unmarkObject(false);
 
 			// remove correspondent backtracking label on StackCanvas
 			stackCanvas.pop();
@@ -276,7 +276,7 @@ public class GenerateWord
 	public void performNextStep() {
 		// check, if it is actually possible to perform a further step
 		if (hasPreviousHistStep()) {
-			remark(history.getStepElem(history.getPointer() - 1), true);
+			unmark(history.getStepElem(history.getPointer() - 1), true);
 		}
 
 		if (stack.peak() != null) {
@@ -338,7 +338,7 @@ public class GenerateWord
 	}
 
 	private void BacktrackingLabels(SynDiaElement help, boolean bool) {
-		remark(help, !bool);
+		unmark(help, !bool);
 		if (help instanceof SynDiaInitial) {
 			currentInitial = (SynDiaInitial) help;
 			BacktrackingLabels(((SynDiaInitial) help).getInnerElem(), bool);
@@ -391,14 +391,14 @@ public class GenerateWord
 		current.setBackgroundColor(diagramHighlight);
 	}
 
-	private void remark(SynDiaElement markobj, boolean bool) {
+	private void unmark(SynDiaElement markobj, boolean bool) {
 		if (markobj instanceof SynDiaTerminal) {
-			((SynDiaTerminal) markobj).remarkObject(bool);
+			((SynDiaTerminal) markobj).unmarkObject(bool);
 		} else if (markobj instanceof SynDiaVariable) { //SynDiaVariable
-			 ((SynDiaVariable) markobj).remarkObject(bool);
+			 ((SynDiaVariable) markobj).unmarkObject(bool);
 		} else if (markobj instanceof SynDiaVariableBack) {
 			//SynDiaVariable
-			 ((SynDiaVariableBack) markobj).remarkObject(bool);
+			 ((SynDiaVariableBack) markobj).unmarkObject(bool);
 		}
 	}
 

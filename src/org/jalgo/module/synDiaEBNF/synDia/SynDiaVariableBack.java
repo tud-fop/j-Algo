@@ -31,7 +31,11 @@ import java.io.Serializable;
 import org.jalgo.module.synDiaEBNF.gfx.VariableFigure;
 
 /**
- * @author Babett Schaliz
+ * Saves information for the <code>SynDiaVariable original</code> 
+ * to jump back to <code>parentInitial</code> after the diagram it is
+ * pointing to was executed.  
+ * 
+ * @author Babett Schalitz
  */
 public class SynDiaVariableBack extends SynDiaElement implements Serializable {
 
@@ -56,8 +60,8 @@ public class SynDiaVariableBack extends SynDiaElement implements Serializable {
 		original.markObject();
 	}
 
-	public void remarkObject(boolean bool) {
-		original.remarkObject(bool);
+	public void unmarkObject(boolean bool) {
+		original.unmarkObject(bool);
 	}
 
 	public VariableFigure getGfx() {
