@@ -33,7 +33,6 @@ import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabFolder2Adapter;
 import org.eclipse.swt.custom.CTabFolderAdapter;
 import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
@@ -130,7 +129,7 @@ public class JalgoWindow extends ApplicationWindow {
 				jalgo.itemSelected((CTabItem) event.item);
 			}
 		});
-		ct.setSimple(false);
+//		ct.setSimple(false);
 		ct.setFocus();
 
 		return ct;
