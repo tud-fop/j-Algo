@@ -118,7 +118,7 @@ public class TextCanvas extends Composite {
 	}
 
 	/**
-	 * Marks the textsegment whith the given index.
+	 * Marks the textsegment with the given index.
 	 * 
 	 * @param mark
 	 */
@@ -165,10 +165,8 @@ public class TextCanvas extends Composite {
 						text += textSegments[i];
 				}
 				styledText.setText(text);
-
 				break;
 		}
-
 	}
 
 	/**

@@ -45,7 +45,7 @@ public class RightAction extends NavAction implements Serializable {
 	}
 
 	public void run() {
-		mc.performNextStep();
+		mc.nextHistStep();
 	}
 
 }

@@ -20,7 +20,7 @@
 /*
  * Created on 30.04.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF;
 
 import java.io.Serializable;
@@ -36,7 +36,6 @@ import org.jalgo.main.gfx.MarkStyle;
 import org.jalgo.main.gui.TextCanvas;
 import org.jalgo.main.gui.widgets.StackCanvas;
 import org.jalgo.main.util.GfxUtil;
-import org.jalgo.main.util.Stack;
 import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaColors;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure;
@@ -66,22 +65,7 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariableBack;
 public class GenerateWord
 	extends SynDiaBacktracking
 	implements SynDiaColors, Serializable {
-	private ModuleController moduleController;
-	private StackCanvas stackCanvas; // the Canvas of the graphical stack
-	private TextCanvas algoTxtCanvas; // this Canvas display the algorithm
-	private TextCanvas outputCanvas; // this Canvas display the generated word
-	private Figure synDiaCanvas;
 
-	private Stack stack; // the internal stack
-	private String generatedWord = ""; // the generated word //$NON-NLS-1$
-	private SynDiaSystem synDiaDef; // the SynDiaSystem to work with
-
-	private BackTrackHistory history; // save the steps
-
-	private SynDiaElement currentElement;
-	// current SynDiaElement to go through
-	private SynDiaInitial currentInitial;
-	// help diagram which worked at the moment
 
 	/**
 	* Constructor gets the Figure, Stack, the StackCanavas, the TextCanvases and
@@ -101,64 +85,38 @@ public class GenerateWord
 		TextCanvas generatedWordCanvas,
 		SynDiaSystem synDiaDef) {
 
-		this.moduleController = moduleController;
-		this.stackCanvas = stackCanvas;
-		this.algoTxtCanvas = algoTxtCanvas;
-		outputCanvas = generatedWordCanvas;
-		this.synDiaDef = synDiaDef;
-		synDiaCanvas = figure;
-		stack = new Stack();
-
-		//set correct reading order for all diagrams
-		checkReadingOrder(synDiaDef);
-		
-		//trick to set right backgrounds
-		SynDiaVariableBack help =
-			new SynDiaVariableBack(null, synDiaDef.getStartElem());
-		stack.push(help);
-
-		// go to first SynDiaElement to work with
-		// lay backtracking labels on stack 
-		stack.push(synDiaDef.getStartElem());
+		super(moduleController, figure, stackCanvas,
+		algoTxtCanvas, generatedWordCanvas, synDiaDef);
 
 		// algorithm written on page 22 in the script
-		algoTxtCanvas.setTextSegments(
-			new String[] {
-				Messages.getString("GenerateWord.Algo_title_2"), //$NON-NLS-1$
-				Messages.getString("GenerateWord.Algo_description_1_3") //$NON-NLS-1$
-					+ Messages.getString("GenerateWord.Algo_description_2_4"), //$NON-NLS-1$
-				Messages.getString("GenerateWord.Algo_description_3_5"), //$NON-NLS-1$
-				Messages.getString("GenerateWord.Algo_description_4_6") //$NON-NLS-1$
-					+ Messages.getString("GenerateWord.Algo_description_5_7") //$NON-NLS-1$
-					+ Messages.getString("GenerateWord.Algo_description_6_8"), //$NON-NLS-1$
-				Messages.getString("GenerateWord.Algo_description_7_9") //$NON-NLS-1$
-					+ Messages.getString("GenerateWord.Algo_description_8_10") //$NON-NLS-1$
-					+ Messages.getString("GenerateWord.Algo_description_9_11"), //$NON-NLS-1$
-				Messages.getString("GenerateWord.Algo_description_10_12") //$NON-NLS-1$
-					+ Messages.getString("GenerateWord.Algo_description_11_13") //$NON-NLS-1$
-					+ Messages.getString("GenerateWord.Algo_description_12_14") //$NON-NLS-1$
-					+ Messages.getString("GenerateWord.Algo_description_13_15") //$NON-NLS-1$
-					+ Messages.getString("GenerateWord.Algo_description_14_16"), //$NON-NLS-1$
-				Messages.getString("GenerateWord.Algo_description_15_17") //$NON-NLS-1$
-					+ Messages.getString("GenerateWord.Algo_description_16_18") //$NON-NLS-1$
-					+ Messages.getString("GenerateWord.Algo_description_17_19"), //$NON-NLS-1$
-				Messages.getString("GenerateWord.Algo_description_18_20") //$NON-NLS-1$
-					+ Messages.getString("GenerateWord.Algo_description_19_21"), //$NON-NLS-1$
-				Messages.getString("GenerateWord.Algo_description_20_22") }); //$NON-NLS-1$
+		algoTxtCanvas.setTextSegments(new String[] { Messages.getString("GenerateWord.Algo_title_2"), //$NON-NLS-1$
+			Messages.getString("GenerateWord.Algo_description_1_3") //$NON-NLS-1$
+			+Messages.getString("GenerateWord.Algo_description_2_4"), //$NON-NLS-1$
+			Messages.getString("GenerateWord.Algo_description_3_5"), //$NON-NLS-1$
+			Messages.getString("GenerateWord.Algo_description_4_6") //$NON-NLS-1$
+			+Messages.getString("GenerateWord.Algo_description_5_7") //$NON-NLS-1$
+			+Messages.getString("GenerateWord.Algo_description_6_8"), //$NON-NLS-1$
+			Messages.getString("GenerateWord.Algo_description_7_9") //$NON-NLS-1$
+			+Messages.getString("GenerateWord.Algo_description_8_10") //$NON-NLS-1$
+			+Messages.getString("GenerateWord.Algo_description_9_11"), //$NON-NLS-1$
+			Messages.getString("GenerateWord.Algo_description_10_12") //$NON-NLS-1$
+			+Messages.getString("GenerateWord.Algo_description_11_13") //$NON-NLS-1$
+			+Messages.getString("GenerateWord.Algo_description_12_14") //$NON-NLS-1$
+			+Messages.getString("GenerateWord.Algo_description_13_15") //$NON-NLS-1$
+			+Messages.getString("GenerateWord.Algo_description_14_16"), //$NON-NLS-1$
+			Messages.getString("GenerateWord.Algo_description_15_17") //$NON-NLS-1$
+			+Messages.getString("GenerateWord.Algo_description_16_18") //$NON-NLS-1$
+			+Messages.getString("GenerateWord.Algo_description_17_19"), //$NON-NLS-1$
+			Messages.getString("GenerateWord.Algo_description_18_20") //$NON-NLS-1$
+			+Messages.getString("GenerateWord.Algo_description_19_21"), //$NON-NLS-1$
+			Messages.getString("GenerateWord.Algo_description_20_22")}); //$NON-NLS-1$
 		algoTxtCanvas.markFirst();
 		algoTxtCanvas.setMarkStyle(new MarkStyle(normal, diagramNormal, 2));
 		algoTxtCanvas.demarkAll();
 		algoTxtCanvas.setMarkStyle(
 			new MarkStyle(textHighlight, diagramNormal, 3));
 
-		outputCanvas.setTextSegments(
-			new String[] { Messages.getString("GenerateWord.The_word_which_was_generated_is__n_23") }); //$NON-NLS-1$
-
-		//show backtracking labels
-		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
-			BacktrackingLabels(synDiaDef.getInitialDiagram(k), true);
-		}
-		history = new BackTrackHistory();
+		outputCanvas.setTextSegments(new String[] { Messages.getString("GenerateWord.The_word_which_was_generated_is__n_23")}); //$NON-NLS-1$
 	}
 
 	/**
@@ -176,16 +134,7 @@ public class GenerateWord
 	* 			false if not
 	*/
 	public boolean hasNextHistStep() {
-		return (history.getPointer() < history.getSize());
-	}
-
-	/**
-	* Test if there is a valid next step, to go there. Else the algorithm is ready.
-	* @return 	true if there is a next element, so you can go a NextStep();
-	* 			false if not, therefore the algorithm is ready
-	*/
-	public boolean hasNextStep() {
-		return !stack.isEmpty();
+		return (history.getPointer() < history.getSize() - 1);
 	}
 
 	/**
@@ -203,8 +152,7 @@ public class GenerateWord
 		//MAKE ready and controll if it works
 		if (currentElement instanceof SynDiaTerminal) {
 			redoNextTerm((SynDiaTerminal) currentElement);
-		} else if (
-			currentElement instanceof SynDiaVariable) { //SynDiaVariable
+		} else if (currentElement instanceof SynDiaVariable) { //SynDiaVariable
 			redoNextVariable((SynDiaVariable) currentElement);
 		} else if (currentElement instanceof SynDiaVariableBack) {
 			//SynDiaVariable
@@ -258,13 +206,12 @@ public class GenerateWord
 			//SynDiaVariableBackjump out!
 
 			// display correspondent backtracking label on StackCanvas
-			if (((SynDiaVariableBack) currentElement).getOriginal()
-				!= null) {
-				stackCanvas.push(
-					"" //$NON-NLS-1$
-						+ (((SynDiaVariableBack) currentElement)
-							.getOriginal()
-							.getBacktrackingLabel()));
+			if (((SynDiaVariableBack) currentElement).getOriginal() != null) {
+				stackCanvas.push("" //$NON-NLS-1$
+				+ (
+					((SynDiaVariableBack) currentElement)
+						.getOriginal()
+						.getBacktrackingLabel()));
 			}
 		} else {
 			//previousHistStep();
@@ -340,48 +287,6 @@ public class GenerateWord
 		}
 	}
 
-	private void BacktrackingLabels(SynDiaElement help, boolean bool) {
-		unmark(help, !bool);
-		if (help instanceof SynDiaInitial) {
-			currentInitial = (SynDiaInitial) help;
-			BacktrackingLabels(((SynDiaInitial) help).getInnerElem(), bool);
-		}
-		if (help instanceof SynDiaVariable) {
-			SynDiaVariableBack elem =
-				new SynDiaVariableBack((SynDiaVariable) help, currentInitial);
-			((SynDiaVariable) help).setHelpCopy(elem);
-			((SynDiaVariable) help).getGfx().setIndexText(
-				"" + ((SynDiaVariable) help).getBacktrackingLabel()); //$NON-NLS-1$
-			((SynDiaVariable) help).getGfx().setIndexVisible(bool);
-		}
-		if (help instanceof SynDiaRepetition) {
-			BacktrackingLabels(
-				((SynDiaRepetition) help).getStraightAheadElem(),
-				bool);
-			BacktrackingLabels(
-				((SynDiaRepetition) help).getRepeatedElem(),
-				bool);
-		}
-		if (help instanceof SynDiaAlternative) {
-			for (int i = 0;
-				i < (((SynDiaAlternative) help).getNumOfOptions());
-				i++) {
-				BacktrackingLabels(
-					((SynDiaAlternative) help).getOption(i),
-					bool);
-			}
-		}
-		if (help instanceof SynDiaConcatenation) {
-			for (int j = 0;
-				j < ((SynDiaConcatenation) help).getNumOfElements();
-				j++) {
-				BacktrackingLabels(
-					((SynDiaConcatenation) help).getContent(j),
-					bool);
-			}
-		}
-	}
-
 	private void colorTheDiagram(InitialFigure current) {
 		// reset all diagrams white
 		List list = this.synDiaDef.getGfx().getSynDias();
@@ -392,17 +297,6 @@ public class GenerateWord
 
 		//set the one
 		current.setBackgroundColor(diagramHighlight);
-	}
-
-	private void unmark(SynDiaElement markobj, boolean bool) {
-		if (markobj instanceof SynDiaTerminal) {
-			((SynDiaTerminal) markobj).unmarkObject(bool);
-		} else if (markobj instanceof SynDiaVariable) { //SynDiaVariable
-			 ((SynDiaVariable) markobj).unmarkObject(bool);
-		} else if (markobj instanceof SynDiaVariableBack) {
-			//SynDiaVariable
-			 ((SynDiaVariableBack) markobj).unmarkObject(bool);
-		}
 	}
 
 	//----------------------PerformNextStep()-----------------------------------
@@ -420,7 +314,7 @@ public class GenerateWord
 		algoTxtCanvas.mark(4); //SynDiaTerminal
 
 		// mark the SynDiaTerminal
-		 currentElem.markObject();
+		currentElem.markObject();
 
 		// refresh the generatedWord
 		generatedWord += currentElem.getLabel();
@@ -440,8 +334,7 @@ public class GenerateWord
 		stack.push(currentElem.getStartElem());
 
 		// display correspondent backtracking label on StackCanvas
-		stackCanvas.push(
-			"" + currentElem.getBacktrackingLabel()); //$NON-NLS-1$
+		stackCanvas.push("" + currentElem.getBacktrackingLabel()); //$NON-NLS-1$
 
 		// change diagram colors in Initial
 
@@ -482,9 +375,7 @@ public class GenerateWord
 	}
 
 	private void doNextAlternative(SynDiaAlternative currentElem) {
-		stack.push(
-			currentElem.getOption(
-				alternativeDialog(currentElem)));
+		stack.push(currentElem.getOption(alternativeDialog(currentElem)));
 		performNextStep();
 	}
 
@@ -496,7 +387,7 @@ public class GenerateWord
 		performNextStep();
 	}
 
-	//----------------------------redoNextTerm()--------------------------------
+	//----------------------------redoNext*XYZ()--------------------------------
 
 	private void redoNextTerm(SynDiaTerminal currentElem) {
 		// mark the right algorithmen Text-field
@@ -504,11 +395,10 @@ public class GenerateWord
 		algoTxtCanvas.mark(4); //SynDiaTerminal
 
 		// mark the SynDiaTerminal
-		 currentElem.markObject();
+		currentElem.markObject();
 
 		// refresh the generatedWord
-		generatedWord =
-			generatedWord + currentElem.getLabel();
+		generatedWord = generatedWord + currentElem.getLabel();
 		refreshGeneratedWord(generatedWord);
 	}
 
@@ -551,13 +441,9 @@ public class GenerateWord
 	}
 
 	private void readyDialog() {
-		boolean result =
-			MessageDialog.openQuestion(
-				stackCanvas.getShell(),
-				Messages.getString("GenerateWord.Algorithm_is_ready_30"), //$NON-NLS-1$
-				Messages.getString("GenerateWord.The_algorithm_has_finished_!_The_generated_Word_is__31") //$NON-NLS-1$
-					+ generatedWord
-					+ Messages.getString("GenerateWord.._Should_the_algorithm_be_closed__32")); //$NON-NLS-1$
+			boolean result = MessageDialog.openQuestion(stackCanvas.getShell(), Messages.getString("GenerateWord.Algorithm_is_ready_30"), //$NON-NLS-1$
+		Messages.getString("GenerateWord.The_algorithm_has_finished_!_The_generated_Word_is__31") //$NON-NLS-1$
+	+generatedWord + Messages.getString("GenerateWord.._Should_the_algorithm_be_closed__32")); //$NON-NLS-1$
 		if (result) {
 			finalTasks();
 			moduleController.algoFinished();
@@ -572,15 +458,11 @@ public class GenerateWord
 		int result = 0;
 
 		while (result == 0) {
-			InputDialog inDialog =
-				new InputDialog(
-					GfxUtil.getAppShell(),
-					Messages.getString("GenerateWord.Alternative_Dialog_33"), //$NON-NLS-1$
-					Messages.getString("GenerateWord.The_ways_are_numbered_form_top_to_bottom._There_are__34") //$NON-NLS-1$
-						+ way
-						+ Messages.getString("GenerateWord._ways_to_go_!_Which_one_do_you_want_to_go__35"), //$NON-NLS-1$
-					"", //$NON-NLS-1$
-					null);
+				InputDialog inDialog = new InputDialog(GfxUtil.getAppShell(), Messages.getString("GenerateWord.Alternative_Dialog_33"), //$NON-NLS-1$
+		Messages.getString("GenerateWord.The_ways_are_numbered_form_top_to_bottom._There_are__34") //$NON-NLS-1$
+		+way + Messages.getString("GenerateWord._ways_to_go_!_Which_one_do_you_want_to_go__35"), //$NON-NLS-1$
+		"", //$NON-NLS-1$
+	null);
 			if (inDialog.open() != Window.CANCEL) {
 				try {
 					result = (Integer.valueOf(inDialog.getValue())).intValue();
@@ -595,10 +477,8 @@ public class GenerateWord
 			if ((result > 0) && (result <= way)) {
 				return result - 1;
 			}
-			MessageDialog.openError(
-				null,
-				Messages.getString("GenerateWord.Warning_37"), //$NON-NLS-1$
-				Messages.getString("GenerateWord.Please_use_a_value_between_1_and__38") + way + "."); //$NON-NLS-1$ //$NON-NLS-2$
+			MessageDialog.openError(null, Messages.getString("GenerateWord.Warning_37"), //$NON-NLS-1$
+			Messages.getString("GenerateWord.Please_use_a_value_between_1_and__38") + way + "."); //$NON-NLS-1$ //$NON-NLS-2$
 			result = 0;
 		}
 		return 0;
@@ -607,10 +487,8 @@ public class GenerateWord
 	private boolean repetionDialog(SynDiaRepetition repetition) {
 		// ask the user, if the repetition should makes!
 		// return boolean if or not
-		return MessageDialog.openQuestion(
-			GfxUtil.getAppShell(),
-			Messages.getString("GenerateWord.Repetition_Dialog_40"), //$NON-NLS-1$
-			Messages.getString("GenerateWord.Do_you_want_to_go_through_the_repetition__41")); //$NON-NLS-1$
+		return MessageDialog.openQuestion(GfxUtil.getAppShell(), Messages.getString("GenerateWord.Repetition_Dialog_40"), //$NON-NLS-1$
+		Messages.getString("GenerateWord.Do_you_want_to_go_through_the_repetition__41")); //$NON-NLS-1$
 	}
 
 	private void restoreStep(BackTrackStep step) {
@@ -622,8 +500,9 @@ public class GenerateWord
 	public void finalTasks() {
 		hideBacktrackingLabels();
 		Iterator it = synDiaDef.getInitialDiagrams().iterator();
-		while (it.hasNext()) 
-			((SynDiaInitial)it.next()).getGfx().setBackgroundColor(diagramNormal);
+		while (it.hasNext())
+			((SynDiaInitial) it.next()).getGfx().setBackgroundColor(
+				diagramNormal);
 	}
 
 }

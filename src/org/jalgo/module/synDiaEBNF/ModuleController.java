@@ -79,7 +79,7 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaSystem;
  * @author Michael Pradel
  */
 
-public class ModuleController implements IModeConstants{
+public class ModuleController implements IModeConstants {
 
 	private ModuleInfo moduleInfo;
 	private ApplicationWindow appWin;
@@ -278,8 +278,7 @@ public class ModuleController implements IModeConstants{
 					new GenerateWord(
 						this,
 						((BackTrackingAlgoGui) gui).getFigure(),
-						((BackTrackingAlgoGui) gui)
-							.getStackCanvas(),
+						((BackTrackingAlgoGui) gui).getStackCanvas(),
 						((BackTrackingAlgoGui) gui).getAlgoText(),
 						((BackTrackingAlgoGui) gui).getWord(),
 						synDiaSystem);
@@ -338,6 +337,24 @@ public class ModuleController implements IModeConstants{
 	}
 
 	/**
+	 * If an algorithm is running currently, the next history step is reperformed.
+	 * @throws InternalErrorException Will be thrown if no algorithm is running.
+	 */
+	public void nextHistStep() throws InternalErrorException {
+		//		we are not performing any algorithm; should never be reached
+		if ((mode < TRANS_ALGO) || (mode > GENERATE_WORD_ALGO)) {
+			throw new InternalErrorException("trying to perfom next history step in ModuleController, when no algorithm is running; buttons should be disabled!"); //$NON-NLS-1$
+		}
+
+		try {
+			algo.nextHistStep();
+		} catch (IndexOutOfBoundsException e) {
+			java.lang.System.err.println(e);
+		}
+		testAndSetNavButtons();
+	}
+
+	/**
 	 * If trans-algorithm is running currently, all steps are performed.
 	 * @throws InternalErrorException Will be thrown if trans-algorithm is not running.
 	 */
@@ -373,7 +390,7 @@ public class ModuleController implements IModeConstants{
 	 */
 	public void goToFirstStep() throws InternalErrorException {
 		//		we are not performing any algorithm; should never be reached
-		if ((mode < TRANS_ALGO) || (mode  > GENERATE_WORD_ALGO)) {
+		if ((mode < TRANS_ALGO) || (mode > GENERATE_WORD_ALGO)) {
 			throw new InternalErrorException("trying to go to first history step in ModuleController, when no algorithm is running; buttons should be disabled!"); //$NON-NLS-1$
 		}
 
@@ -452,7 +469,8 @@ public class ModuleController implements IModeConstants{
 	 *
 	 */
 	public void algoFinished() {
-		if ((algo instanceof RecognizeWord) || (algo instanceof GenerateWord)) {
+		if ((algo instanceof RecognizeWord)
+			|| (algo instanceof GenerateWord)) {
 			setMode(NORMAL_VIEW_SYNDIA);
 		} else if (algo instanceof TransAlgorithm) {
 			synDiaSystem = ((TransAlgorithm) algo).getSynDiaSystem();
@@ -496,7 +514,7 @@ public class ModuleController implements IModeConstants{
 	//------- private methods --------------
 
 	private void leaveMode(int oldMode) {
-		switch (oldMode) {	
+		switch (oldMode) {
 			case NORMAL_VIEW_EMPTY :
 				removeCreationButtons();
 				break;
@@ -779,9 +797,9 @@ public class ModuleController implements IModeConstants{
 		}
 
 	}
-	
+
 	public ApplicationWindow getAppWin() {
-		return appWin;		
+		return appWin;
 	}
 
 }

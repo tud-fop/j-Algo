@@ -34,7 +34,7 @@ public interface IAlgorithm{
 
 	/** 
 	 * Returns information about whether there exists a further step or not. 
-	 * @return 	true in case of an existing further step, otherwise false
+	 * @return true in case of an existing further step, otherwise false
 	 */
 	public boolean hasNextStep();
 

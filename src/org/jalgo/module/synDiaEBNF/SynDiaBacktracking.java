@@ -26,12 +26,23 @@ package org.jalgo.module.synDiaEBNF;
 import java.io.Serializable;
 import java.util.LinkedList;
 
+import org.eclipse.draw2d.Figure;
+import org.jalgo.main.gui.TextCanvas;
+import org.jalgo.main.gui.widgets.StackCanvas;
+import org.jalgo.main.util.Stack;
+import org.jalgo.module.synDiaEBNF.synDia.SynDiaAlternative;
+import org.jalgo.module.synDiaEBNF.synDia.SynDiaConcatenation;
+import org.jalgo.module.synDiaEBNF.synDia.SynDiaElement;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaInitial;
+import org.jalgo.module.synDiaEBNF.synDia.SynDiaRepetition;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaSystem;
+import org.jalgo.module.synDiaEBNF.synDia.SynDiaTerminal;
+import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariable;
+import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariableBack;
 
 /**
- * Basic class to manage similar methods of the algorithmus to generate a Word
- * or to recognize a word by a syntax diagram system
+ * Basic class to manage similar methods of the algorithmus to generate a word
+ * or to recognize a word by a syntax diagram system.
  * 
  * @author Michael Pradel
  * @author Babett Schaliz
@@ -39,10 +50,60 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaSystem;
  */
 public abstract class SynDiaBacktracking implements IAlgorithm, Serializable {
 
+	protected ModuleController moduleController;
+	protected StackCanvas stackCanvas; // the Canvas of the graphical stack
+	protected TextCanvas algoTxtCanvas; // this Canvas display the algorithm
+	protected TextCanvas outputCanvas;
+	// this Canvas display the generated word
+	protected Figure synDiaCanvas;
+
+	protected String generatedWord = "";
+
+	protected SynDiaSystem synDiaDef; // the SynDiaSystem to work with
+	protected SynDiaElement currentElement = null;
+	// current SynDiaElement to go through
+	protected SynDiaInitial currentInitial;
+	// help diagram which worked at the moment
+
+	protected Stack stack; // the internal stack
+
+	protected BackTrackHistory history; // save the steps
+
 	/**
 	 * Constructor
 	 */
-	public SynDiaBacktracking() {
+	public SynDiaBacktracking(
+		ModuleController moduleController,
+		Figure figure,
+		StackCanvas stackCanvas,
+		TextCanvas algoTxtCanvas,
+		TextCanvas generatedWordCanvas,
+		SynDiaSystem synDiaDef) {
+		this.moduleController = moduleController;
+		this.stackCanvas = stackCanvas;
+		this.algoTxtCanvas = algoTxtCanvas;
+		outputCanvas = generatedWordCanvas;
+		this.synDiaDef = synDiaDef;
+		synDiaCanvas = figure;
+		stack = new Stack();
+
+		//set correct reading order for all diagrams
+		checkReadingOrder(synDiaDef);
+
+		//trick to set right backgrounds
+		SynDiaVariableBack help =
+			new SynDiaVariableBack(null, synDiaDef.getStartElem());
+		stack.push(help);
+		
+		// go to first SynDiaElement to work with
+		// lay backtracking labels on stack 
+		stack.push(synDiaDef.getStartElem());
+
+		//show backtracking labels
+		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
+			BacktrackingLabels(synDiaDef.getInitialDiagram(k), true);
+		}
+		history = new BackTrackHistory();
 	}
 
 	/**
@@ -62,11 +123,13 @@ public abstract class SynDiaBacktracking implements IAlgorithm, Serializable {
 	}
 
 	/**
+	 * Tests if there is a valid next step to go.
+	 *  
 	 * @return true, if you can perform the next step in the algorithm, so
 	 *               you can call performNextStep() false if not
 	 */
 	public boolean hasNextStep() {
-		return true;
+		return !stack.isEmpty();
 	}
 
 	/**
@@ -81,7 +144,7 @@ public abstract class SynDiaBacktracking implements IAlgorithm, Serializable {
 	}
 
 	/**
-	 * this method is called if the forwardButton on the GUI is pushed and
+	 * This method is called if the forwardButton on the GUI is pushed and
 	 * should restore the next saved step of the visualisation
 	 * 
 	 * @exception IndexOutOfBound
@@ -110,9 +173,77 @@ public abstract class SynDiaBacktracking implements IAlgorithm, Serializable {
 	protected void checkReadingOrder(SynDiaSystem synDiaDef) {
 		LinkedList synDiaInitials = synDiaDef.getInitialDiagrams();
 		for (int i = 0; i < synDiaInitials.size(); i++) {
-			((SynDiaInitial) synDiaInitials.get(i)).getInnerElem()
-					.checkReadingOrder(0);
+			((SynDiaInitial) synDiaInitials.get(i))
+				.getInnerElem()
+				.checkReadingOrder(
+				0);
 		}
 	}
+	
+	/**
+		 * Recursively goes through <code>help</code> and its inner elements and
+		 * (i) unmarks them, if they are marked,
+		 * (ii) adds his backtracking label to each <code>SynDiaVariable</code> and
+		 * makes a copy of it, which saves the information where to jump back to, after 
+		 * the diagram it is pointing to was executed.
+		 * <p>
+		 * This function is called at the beginning of the algorithm, in order to set
+		 * the backtracking labels. 
+		 * 
+		 * @param help
+		 * @param bool
+		 */
+	protected void BacktrackingLabels(SynDiaElement help, boolean bool) {
+		unmark(help, !bool);
+		if (help instanceof SynDiaInitial) {
+			currentInitial = (SynDiaInitial) help;
+			BacktrackingLabels(((SynDiaInitial) help).getInnerElem(), bool);
+		}
+		if (help instanceof SynDiaVariable) {
+			SynDiaVariableBack elem =
+				new SynDiaVariableBack((SynDiaVariable) help, currentInitial);
+			((SynDiaVariable) help).setHelpCopy(elem);
+			((SynDiaVariable) help).getGfx().setIndexText("" + ((SynDiaVariable) help).getBacktrackingLabel()); //$NON-NLS-1$
+			 ((SynDiaVariable) help).getGfx().setIndexVisible(bool);
+		}
+		if (help instanceof SynDiaRepetition) {
+			BacktrackingLabels(
+				((SynDiaRepetition) help).getStraightAheadElem(),
+				bool);
+			BacktrackingLabels(
+				((SynDiaRepetition) help).getRepeatedElem(),
+				bool);
+		}
+		if (help instanceof SynDiaAlternative) {
+			for (int i = 0;
+				i < (((SynDiaAlternative) help).getNumOfOptions());
+				i++) {
+				BacktrackingLabels(
+					((SynDiaAlternative) help).getOption(i),
+					bool);
+			}
+		}
+		if (help instanceof SynDiaConcatenation) {
+			for (int j = 0;
+				j < ((SynDiaConcatenation) help).getNumOfElements();
+				j++) {
+				BacktrackingLabels(
+					((SynDiaConcatenation) help).getContent(j),
+					bool);
+			}
+		}
+	}
+	
+	protected void unmark(SynDiaElement markobj, boolean bool) {
+		if (markobj instanceof SynDiaTerminal) {
+			((SynDiaTerminal) markobj).unmarkObject(bool);
+		} else if (markobj instanceof SynDiaVariable) { //SynDiaVariable
+			 ((SynDiaVariable) markobj).unmarkObject(bool);
+		} else if (markobj instanceof SynDiaVariableBack) {
+			//SynDiaVariable
+			 ((SynDiaVariableBack) markobj).unmarkObject(bool);
+		}
+	}
+
 
 }
