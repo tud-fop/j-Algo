@@ -57,7 +57,7 @@ public class NewWizardAction extends Action {
 		wizardDialog.open();
 		
 		// Start Module
-		win.getParent().newInstance("");
+		win.getParent().newInstance(0);
 	}
 
 }
