@@ -27,12 +27,12 @@ package org.jalgo.module.synDiaEBNF.ebnf;
  * @author Stephan Creutz
  */
 public class InputTokenizer extends Tokenizer {
-	private final String REGEX_COMMA = ","; //$NON-NLS-1$
-	private final String REGEX_WHITESPACE = "\\s+"; //$NON-NLS-1$
-	private final String REGEX_SYMBOL = "[^,\\s]+"; //$NON-NLS-1$
-	private String[] checkorder =
+	private final static String REGEX_COMMA = ","; //$NON-NLS-1$
+	private final static String REGEX_WHITESPACE = "\\s+"; //$NON-NLS-1$
+	private final static String REGEX_SYMBOL = "[^,\\s]+"; //$NON-NLS-1$
+	private static String[] checkorder =
 		{ REGEX_COMMA, REGEX_WHITESPACE, REGEX_SYMBOL };
-	private final Integer[] tokenNames = { new Integer(1), // COMMA
+	private final static Integer[] tokenNames = { new Integer(1), // COMMA
 		new Integer(2), // WHITESPACE
 		new Integer(3) // SYMBOL
 	};
