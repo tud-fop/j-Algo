@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -20,7 +23,7 @@
 /*
  * Created on 17.05.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.synDia;
 
 import java.io.Serializable;
@@ -31,7 +34,9 @@ import org.jalgo.module.synDiaEBNF.gfx.ConcatenationFigure;
 /**
  * @author Michael Pradel
  */
-public class SynDiaConcatenation extends SynDiaComposition implements Serializable {
+public class SynDiaConcatenation extends SynDiaComposition
+		implements
+			Serializable {
 
 	private LinkedList elements;
 	private ConcatenationFigure gfx;
@@ -41,8 +46,8 @@ public class SynDiaConcatenation extends SynDiaComposition implements Serializab
 	}
 
 	public SynDiaConcatenation(ConcatenationFigure gfx, LinkedList elements) {
-		this.gfx=gfx;
-		this.elements=elements;
+		this.gfx = gfx;
+		this.elements = elements;
 	}
 
 	public int getNumOfElements() {
@@ -63,7 +68,7 @@ public class SynDiaConcatenation extends SynDiaComposition implements Serializab
 	public void setContent(int num, SynDiaElement newElem) {
 		elements.set(num, newElem);
 	}
-	
+
 	public void setContent(LinkedList elements) {
 		this.elements = elements;
 	}

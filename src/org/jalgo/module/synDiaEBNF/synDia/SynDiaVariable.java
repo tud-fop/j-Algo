@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -20,7 +23,7 @@
 /*
  * Created on 29.04.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.synDia;
 
 import java.io.Serializable;
@@ -35,18 +38,20 @@ import org.jalgo.module.synDiaEBNF.gfx.VariableFigure;
  * @author Michael Pradel
  * @author Marco Zimmerling
  */
-public class SynDiaVariable
-	extends SynDiaElement
-	implements SynDiaColors, Serializable {
+public class SynDiaVariable extends SynDiaElement
+		implements
+			SynDiaColors,
+			Serializable {
 
 	//Rectangle in with the SynDiaVar is shown on the Screen
 	private VariableFigure rectangle;
 
 	private int backtrackingLabel;
 	private static int maxBacktrackingLabel = 1;
-	
-	private SynDiaInitial startElem=null;
-	private SynDiaVariableBack helpCopy=null; // for Backtracking is set there
+
+	private SynDiaInitial startElem = null;
+	/* for Backtracking is set there */
+	private SynDiaVariableBack helpCopy = null;
 
 	public SynDiaVariable() {
 		backtrackingLabel = maxBacktrackingLabel++;
@@ -60,21 +65,23 @@ public class SynDiaVariable
 	public SynDiaVariable(String label) {
 		this.rectangle = new VariableFigure(label);
 		backtrackingLabel = maxBacktrackingLabel++;
-		if (rectangle !=null) {rectangle.setIndexText(""+backtrackingLabel);} //$NON-NLS-1$
+		if (rectangle != null) {
+			rectangle.setIndexText("" + backtrackingLabel);} //$NON-NLS-1$
 	}
 
 	public SynDiaVariable(String label, SynDiaInitial startElem) {
 		this.rectangle = new VariableFigure(label);
 		this.startElem = startElem;
 		backtrackingLabel = maxBacktrackingLabel++;
-		if (rectangle !=null) {rectangle.setIndexText(""+backtrackingLabel);} 		 //$NON-NLS-1$
+		if (rectangle != null) {
+			rectangle.setIndexText("" + backtrackingLabel);} //$NON-NLS-1$
 	}
 
 	public SynDiaVariable(String label, SynDiaInitial startElem, Font font) {
 		this.rectangle = new VariableFigure(label, font);
 		this.startElem = startElem;
 		backtrackingLabel = maxBacktrackingLabel++;
-		if (rectangle !=null) {
+		if (rectangle != null) {
 			rectangle.setIndexVisible(false);
 		}
 	}
@@ -83,11 +90,11 @@ public class SynDiaVariable
 		this.rectangle = new VariableFigure(label, font);
 		this.startElem = null;
 		backtrackingLabel = maxBacktrackingLabel++;
-		if (rectangle !=null) {
-					rectangle.setIndexVisible(false);
+		if (rectangle != null) {
+			rectangle.setIndexVisible(false);
 		}
 	}
-		
+
 	public String getLabel() {
 		return rectangle.getLabel();
 	}
@@ -115,16 +122,16 @@ public class SynDiaVariable
 	public void markObjekt(boolean marked) {
 		rectangle.highlight(marked);
 	}
-	
+
 	public void markObject() {
 		rectangle.setBackgroundColor(currentFigure);
 	}
-	
-	public void remarkObject(boolean bool){
+
+	public void remarkObject(boolean bool) {
 		rectangle.setBackgroundColor(null);
 		markObjekt(bool);
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -137,7 +144,8 @@ public class SynDiaVariable
 	 */
 	public void setGfx(VariableFigure figure) {
 		rectangle = figure;
-		if (figure !=null) {rectangle.setIndexText(""+backtrackingLabel);}  //$NON-NLS-1$
+		if (figure != null) {
+			rectangle.setIndexText("" + backtrackingLabel);} //$NON-NLS-1$
 	}
 
 	/**

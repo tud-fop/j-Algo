@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -20,7 +23,7 @@
 /*
  * Created on 17.05.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.synDia;
 
 import java.io.Serializable;
@@ -36,49 +39,49 @@ public class SynDiaRepetition extends SynDiaComposition implements Serializable 
 	private SynDiaElement repeatedElem;
 	private RepetitionFigure gfx;
 
-	/**	
-	 * True  if the straightAheadElem is already done in the Back Tracking Algorithm
-	 * False else and by default 
+	/**
+	 * True if the straightAheadElem is already done in the Back Tracking
+	 * Algorithm False else and by default
 	 */
-	private boolean straightAheadElemDone = false;  
+	private boolean straightAheadElemDone = false;
 
 	public SynDiaRepetition() {
-		
+
 	}
 
-	public SynDiaRepetition(RepetitionFigure gfx, SynDiaElement straightAheadElem, SynDiaElement repeatedElem){
-		this.gfx=gfx;
+	public SynDiaRepetition(RepetitionFigure gfx,
+			SynDiaElement straightAheadElem, SynDiaElement repeatedElem) {
+		this.gfx = gfx;
 		this.straightAheadElem = straightAheadElem;
-		this.repeatedElem =repeatedElem;
+		this.repeatedElem = repeatedElem;
 	}
 
-
-	public SynDiaRepetition(SynDiaElement straightAheadElem, SynDiaElement repeatedElem){
+	public SynDiaRepetition(SynDiaElement straightAheadElem,
+			SynDiaElement repeatedElem) {
 		this.straightAheadElem = straightAheadElem;
-		this.repeatedElem =repeatedElem;
+		this.repeatedElem = repeatedElem;
 	}
 
 	public SynDiaElement getStraightAheadElem() {
 		return straightAheadElem;
 	}
-	
+
 	public SynDiaElement getRepeatedElem() {
 		return repeatedElem;
 	}
 
-
 	/**
-	 * @return True  if the straightAheadElem is already done in the Back Tracking Algorithm
-	 *         False else and by default
+	 * @return True if the straightAheadElem is already done in the Back
+	 *               Tracking Algorithm False else and by default
 	 */
 	public boolean isStraightAheadElemDone() {
 		return straightAheadElemDone;
 	}
 
 	/**
-	 * @param straightAheadElemDone True  if the straightAheadElem is already done 
-	 *                                    in the Back Tracking Algorithm
-	 *                              False else and by default
+	 * @param straightAheadElemDone
+	 *                   True if the straightAheadElem is already done in the Back
+	 *                   Tracking Algorithm False else and by default
 	 */
 	public void setStraightAheadElemDone(boolean straightAheadElemDone) {
 		this.straightAheadElemDone = straightAheadElemDone;

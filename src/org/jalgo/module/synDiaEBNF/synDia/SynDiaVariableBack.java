@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -20,7 +23,7 @@
 /*
  * Created on 29.04.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.synDia;
 
 import java.io.Serializable;
@@ -28,19 +31,17 @@ import java.io.Serializable;
 import org.jalgo.module.synDiaEBNF.gfx.VariableFigure;
 
 /**
- * @author Babett Schaliz 
+ * @author Babett Schaliz
  */
-public class SynDiaVariableBack
-	extends SynDiaElement
-	implements Serializable {
+public class SynDiaVariableBack extends SynDiaElement implements Serializable {
 
 	private SynDiaVariable original;
-	private SynDiaInitial parentInitial=null;
+	private SynDiaInitial parentInitial = null;
 
-
-	public SynDiaVariableBack(SynDiaVariable original, SynDiaInitial parentInitial) {
-			this.original=original;
-			this.parentInitial=parentInitial;
+	public SynDiaVariableBack(SynDiaVariable original,
+			SynDiaInitial parentInitial) {
+		this.original = original;
+		this.parentInitial = parentInitial;
 	}
 
 	public String getLabel() {
@@ -54,12 +55,11 @@ public class SynDiaVariableBack
 	public void markObjekt() {
 		original.markObject();
 	}
-	
-		public void remarkObject(boolean bool){
+
+	public void remarkObject(boolean bool) {
 		original.remarkObject(bool);
 	}
-	
-	
+
 	public VariableFigure getGfx() {
 		return original.getGfx();
 	}

@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -20,7 +23,7 @@
 /*
  * Created on 22.06.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.synDia;
 
 import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
@@ -32,14 +35,14 @@ public class SynDiaInitial extends SynDiaElement {
 
 	private SynDiaElement element;
 	private InitialFigure gfx;
-	
+
 	public SynDiaInitial() {
 		this(null, null);
 	}
-	
+
 	public SynDiaInitial(InitialFigure gfx, SynDiaElement element) {
-		this.gfx=gfx;
-		this.element=element;
+		this.gfx = gfx;
+		this.element = element;
 	}
 
 	public SynDiaElement getInnerElem() {
@@ -47,12 +50,12 @@ public class SynDiaInitial extends SynDiaElement {
 	}
 
 	public void setInnerElem(SynDiaElement newElem) {
-		element=newElem;
+		element = newElem;
 	}
-	
+
 	/**
-	* @return
-	*/
+	 * @return
+	 */
 	public InitialFigure getGfx() {
 		return gfx;
 	}
@@ -63,6 +66,5 @@ public class SynDiaInitial extends SynDiaElement {
 	public void setGfx(InitialFigure figure) {
 		gfx = figure;
 	}
-
 
 }

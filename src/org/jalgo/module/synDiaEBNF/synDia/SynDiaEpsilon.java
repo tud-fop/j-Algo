@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -20,7 +23,7 @@
 /*
  * Created on 17.06.2004
  */
-  
+
 package org.jalgo.module.synDiaEBNF.synDia;
 
 import java.io.Serializable;
@@ -34,19 +37,19 @@ public class SynDiaEpsilon extends SynDiaElement implements Serializable {
 
 	private EmptyFigure epsilon; // the graphical figure
 
-	public SynDiaEpsilon(){
+	public SynDiaEpsilon() {
 		epsilon = new EmptyFigure();
 	}
-	
-	public SynDiaEpsilon(EmptyFigure epsilon){
+
+	public SynDiaEpsilon(EmptyFigure epsilon) {
 		this.epsilon = epsilon;
 	}
-	
-	public EmptyFigure getFigure(){
+
+	public EmptyFigure getFigure() {
 		return epsilon;
-	} 
-	
-	public void setFigure(EmptyFigure epsilon){
-		this.epsilon=epsilon;
+	}
+
+	public void setFigure(EmptyFigure epsilon) {
+		this.epsilon = epsilon;
 	}
 }
