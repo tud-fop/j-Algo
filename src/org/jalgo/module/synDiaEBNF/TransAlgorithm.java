@@ -237,7 +237,7 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 		SynDiaVariable newSynDia = new SynDiaVariable(newEbnfSynDia.getLabel(), newInitial, gfxCanvas.getFont());		
 		
 		stillToTrans = new Stack();
-		stillToTrans.push(((SynDiaInitial)newSynDia.getStartElem()).getInnerElem());	// put the initial SynDiaToTrans element on the stack
+		stillToTrans.push(newSynDia.getStartElem().getInnerElem());	// put the initial SynDiaToTrans element on the stack
 		parentToTrans = new Stack();
 		parentToTrans.push(newSynDia.getStartElem());												// put the initial SynDiaInitial on the stack
 		
@@ -248,7 +248,7 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 						
 		currentSynDia = newSynDia;																	// set currentSynDia to the new one
 		
-		gfxCanvas.add(((SynDiaInitial)newSynDia.getStartElem()).getGfx());	// display it on the gfxCanvas
+		gfxCanvas.add(newSynDia.getStartElem().getGfx());	// display it on the gfxCanvas
 		
 		highlightTxtAndElem();																						// highlight corresponding part of the written algorithm
 				
@@ -432,14 +432,14 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 			// create new abstract syntactical variable (diagram)
 			SynDiaVariable newSynDia = new SynDiaVariable(newEbnfSynDia.getLabel(), newInitial, gfxCanvas.getFont());		
 			
-			stillToTrans.push(((SynDiaInitial)newSynDia.getStartElem()).getInnerElem());	// put the initial SynDiaToTrans element on the stack
+			stillToTrans.push(newSynDia.getStartElem().getInnerElem());	// put the initial SynDiaToTrans element on the stack
 			parentToTrans.push(newSynDia.getStartElem());												// put the initial SynDiaInitial on the stack
 			
 			alreadyCreatedDias.add(newSynDia);														// add it to the list
 						
 			currentSynDia = newSynDia;																	// set currentSynDia to the new one
 			
-			gfxCanvas.add(((SynDiaInitial)newSynDia.getStartElem()).getGfx());	// display it on the gfxCanvas
+			gfxCanvas.add(newSynDia.getStartElem().getGfx());	// display it on the gfxCanvas
 			toTransCanvas.pop();																				// also refresh display of variables to be transformed
 			highlightTxtAndElem();
 			

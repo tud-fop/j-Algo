@@ -40,10 +40,8 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.InternalErrorException;
 import org.jalgo.main.gui.JalgoWindow;
-import org.jalgo.main.gui.TextCanvas;
 import org.jalgo.main.gui.actions.SaveAction;
 import org.jalgo.main.gui.actions.SaveAsAction;
-import org.jalgo.main.gui.widgets.StackCanvas;
 import org.jalgo.module.synDiaEBNF.ebnf.EbnfDefinition;
 import org.jalgo.module.synDiaEBNF.gui.BackTrackingAlgoGui;
 import org.jalgo.module.synDiaEBNF.gui.CreateSynDiaClickGui;
@@ -285,11 +283,10 @@ public class ModuleController {
 				algo =
 					new RecognizeWord(
 						this,
-						(Figure) ((BackTrackingAlgoGui) gui).getFigure(),
-						(StackCanvas) ((BackTrackingAlgoGui) gui)
-							.getStackCanvas(),
-						(TextCanvas) ((BackTrackingAlgoGui) gui).getAlgoText(),
-						(TextCanvas) ((BackTrackingAlgoGui) gui).getWord(),
+						((BackTrackingAlgoGui) gui).getFigure(),
+						((BackTrackingAlgoGui) gui).getStackCanvas(),
+						((BackTrackingAlgoGui) gui).getAlgoText(),
+						((BackTrackingAlgoGui) gui).getWord(),
 						synDiaSystem);
 				enableNavButtons();
 				testAndSetNavButtons();
@@ -303,11 +300,11 @@ public class ModuleController {
 				algo =
 					new GenerateWord(
 						this,
-						(Figure) ((BackTrackingAlgoGui) gui).getFigure(),
-						(StackCanvas) ((BackTrackingAlgoGui) gui)
+						((BackTrackingAlgoGui) gui).getFigure(),
+						((BackTrackingAlgoGui) gui)
 							.getStackCanvas(),
-						(TextCanvas) ((BackTrackingAlgoGui) gui).getAlgoText(),
-						(TextCanvas) ((BackTrackingAlgoGui) gui).getWord(),
+						((BackTrackingAlgoGui) gui).getAlgoText(),
+						((BackTrackingAlgoGui) gui).getWord(),
 						synDiaSystem);
 				enableNavButtons();
 				testAndSetNavButtons();
@@ -462,7 +459,7 @@ public class ModuleController {
 	 */
 	public SubMenuManager getMenuManager() {
 		return menuManager;
-	};
+	}
 
 	/**
 	* Get the subtoolbar-manager of this module instance. It includes all module specific buttons.
@@ -470,7 +467,7 @@ public class ModuleController {
 	*/
 	public SubToolBarManager getToolBarManager() {
 		return toolBarManager;
-	};
+	}
 
 	/**
 	* Get the statusline-manager of this module instance. Right now, the statusbar is unused.
@@ -478,7 +475,7 @@ public class ModuleController {
 	*/
 	public SubStatusLineManager getStatusLineManager() {
 		return statusLineManager;
-	};
+	}
 
 	/**
 	 * A running algorithm can call this method, when it has finished and wishes to be disposed.
@@ -501,7 +498,7 @@ public class ModuleController {
 	 *
 	 */
 	public void createSynDiaFinished() {
-		synDias = (Figure) ((CreateSynDiaClickGui) gui).getSynDiaPanel();
+		synDias = ((CreateSynDiaClickGui) gui).getSynDiaPanel();
 		TransformSynDia tsd = new TransformSynDia(synDias);
 		synDiaSystem = tsd.getSynDiaSystem();
 		setMode(NORMAL_VIEW_SYNDIA);

@@ -81,7 +81,7 @@ public class BackTrackHistory {
 				}
 				history= newList;
 				history.add(help);
-			};
+			}
 		}
 		historyPointer++;
 	}
