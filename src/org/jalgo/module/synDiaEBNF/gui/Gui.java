@@ -47,7 +47,7 @@ public abstract class Gui implements Serializable {
 				children[i].dispose();
 			}
 		} catch (NullPointerException e) {
-			// TODO Handle Exception
+			e.printStackTrace();
 		}
 	}
 

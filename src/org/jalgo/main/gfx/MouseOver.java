@@ -44,7 +44,6 @@ public class MouseOver implements MouseListener {
 	 * @see org.eclipse.draw2d.MouseListener#mouseReleased(org.eclipse.draw2d.MouseEvent)
 	 */
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -52,7 +51,6 @@ public class MouseOver implements MouseListener {
 	 * @see org.eclipse.draw2d.MouseListener#mouseDoubleClicked(org.eclipse.draw2d.MouseEvent)
 	 */
 	public void mouseDoubleClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 	

@@ -47,7 +47,7 @@ public class AboutModuleAction extends Action {
 
 		try {
 			MessageBox dia = new MessageBox(win.getShell());
-
+			// TODO: find out why win.getCurrentInstance() == null
 			dia.setText(Messages.getString("AboutModuleAction.About_jAlgo-Module_4")); //$NON-NLS-1$
 			dia
 				.setMessage(
@@ -80,6 +80,7 @@ public class AboutModuleAction extends Action {
 			dia.open();
 		} catch (NullPointerException e) {
 			System.out.println(e);
+			e.printStackTrace();
 		}
 
 	}

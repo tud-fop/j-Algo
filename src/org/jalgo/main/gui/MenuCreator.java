@@ -39,7 +39,6 @@ public class MenuCreator implements IMenuCreator {
 	 * @see org.eclipse.jface.action.IMenuCreator#dispose()
 	 */
 	public void dispose() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -69,7 +68,6 @@ public class MenuCreator implements IMenuCreator {
 	 * @see org.eclipse.jface.action.IMenuCreator#getMenu(org.eclipse.swt.widgets.Menu)
 	 */
 	public Menu getMenu(Menu arg0) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
