@@ -3,7 +3,8 @@ as fast as possible:
 
 * [DONE] opening of file leads to two instances of the module sometimes
 * [DONE] code cleanup concerning module-scanning and module-initialization (for usage with any module, not only 'synDiaEBNF')
-* synDiaEBNF: wizard starts, when file is opened
+* [DONE] synDiaEBNF: wizard starts, when file is opened
+* buttons of module don't disappear when module is closed by the user
 * special characters don't work on all platforms (esp. not an solaris)
 * solaris: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)
 * bug in backtracking algorithms: work not for concatenations in lower part of repetition
