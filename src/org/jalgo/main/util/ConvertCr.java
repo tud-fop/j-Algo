@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -23,13 +26,18 @@
  
 package org.jalgo.main.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Benjamin Scholz
+ * @author Stephan Creutz
  */
 public class ConvertCr implements ITxtConvert {
 
 	public String convert(String text) {
-		return null;
+		Matcher matcher = Pattern.compile("(\r\n)|\n").matcher(text);
+		return matcher.replaceAll("\r");
 	}
 
 }
