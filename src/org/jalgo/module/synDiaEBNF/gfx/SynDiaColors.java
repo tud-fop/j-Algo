@@ -33,9 +33,9 @@ import org.eclipse.swt.graphics.Color;
 public interface SynDiaColors {
 	
 	static final Color normal = ColorConstants.black;							// ordinary color of components
-	static final Color hide = ColorConstants.gray;
-	static final Color currentFigure = ColorConstants.yellow;				// hide parts of a syntactical diagram
-	static final Color highlightEntireFigure = ColorConstants.red;			// cursor is over the figure's area
+	static final Color hide = ColorConstants.gray;								// hide parts of a syntactical diagram
+	static final Color currentFigure = ColorConstants.yellow;				// cursor is over the figure's area
+	static final Color highlightEntireFigure = ColorConstants.red;
 	static final Color figureAlongPath = ColorConstants.red;				// terminal/syntactical variable along the chosen path
 	static final Color connectionToChoice = ColorConstants.blue;		// user can choose the favored path
 	static final Color connectionAlongPath = ColorConstants.red; 		// connection along the chosen path

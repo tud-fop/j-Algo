@@ -24,7 +24,6 @@
 package org.jalgo.module.synDiaEBNF;
 
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -227,7 +226,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 
 		//mark the right algorithm Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(3); //legal way
+		algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
 
 		if (currentElement instanceof SynDiaTerminal) {
 			// mark the SynDiaTerminal
@@ -296,7 +295,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 				doNextVariableBack((SynDiaVariableBack) currentElement);
 			} else { // composite
 				algoTxtCanvas.demarkAll();
-				algoTxtCanvas.mark(3); //search the right way
+				algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
 				if (currentElement instanceof SynDiaRepetition) { //repetition
 					doNextRepetition((SynDiaRepetition) currentElement);
 				} else if (currentElement instanceof SynDiaAlternative) {
@@ -312,25 +311,9 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		if (!hasNextStep()) {
 			//mark the right algorithm text field
 			algoTxtCanvas.demarkAll();
-			algoTxtCanvas.mark(3);
+			algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
 			// dialog that the Algorithmen is Empty
 			readyDialog();
-		}
-	}
-
-	/**
-	 * this method is called if the algorithm is closed, aborted or finished and
-	 * should hide the no longer needful Backtrackinglabels
-	 */
-	public void hideBacktrackingLabels() {
-		//hide backtracking labels
-		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
-			BacktrackingLabels(synDiaDef.getInitialDiagram(k), false);
-		}
-		//	reset all diagrams white
-		List list = this.synDiaDef.getGfx().getSynDias();
-		for (int k = 0; k < list.size(); k++) {
-			((SynDiaFigure) list.get(k)).setBackgroundColor(diagramNormal);
 		}
 	}
 
@@ -358,7 +341,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	private void doNextTerm(SynDiaTerminal currentElem) {
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(4); //SynDiaTerminal
+		algoTxtCanvas.mark(ALGO_DEF_TERM);
 
 		// mark the SynDiaTerminal
 		currentElem.markObject();
@@ -381,7 +364,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		// in
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(5); //SynDiaVariable
+		algoTxtCanvas.mark(ALGO_DEF_VAR);
 
 		// mark the currentElem
 		currentElem.markObject();
@@ -401,7 +384,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		// out
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(6); //Backtracking
+		algoTxtCanvas.mark(ALGO_DEF_DIAGRAM_FINISHED);
 
 		// color last connection in the left diagram
 
@@ -450,7 +433,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	private void redoNextTerm(SynDiaTerminal currentElem) {
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(4); //SynDiaTerminal
+		algoTxtCanvas.mark(ALGO_DEF_TERM);
 
 		// mark the SynDiaTerminal
 		currentElem.markObject();
@@ -473,7 +456,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		//jump in
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(5); //SynDiaVariable
+		algoTxtCanvas.mark(ALGO_DEF_VAR);
 
 		// mark the currentElem
 		currentElem.markObject();
@@ -492,7 +475,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		//jump out
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(6); //backtracking
+		algoTxtCanvas.mark(ALGO_DEF_DIAGRAM_FINISHED);
 
 		// restore Backtracking diagram to set Background
 		colorTheDiagram(currentElem.getParentInitial().getGfx());
@@ -640,11 +623,4 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		currentElement = step.getElem();
 	}
 
-	public void finalTasks() {
-		hideBacktrackingLabels();
-		Iterator it = synDiaDef.getInitialDiagrams().iterator();
-		while (it.hasNext())
-			((SynDiaInitial) it.next()).getGfx().setBackgroundColor(
-					diagramNormal);
-	}
 }

@@ -42,7 +42,7 @@ public class SynDiaTerminal extends SynDiaElement
 			Serializable {
 
 	private TerminalFigure ellipse;
-	//Ellipse in with the SynDiaTerminal is shown on the Screen
+	//ellipse in which the SynDiaTerminal is shown on the screen
 
 	public SynDiaTerminal(String label, Font font) {
 		this.ellipse = new TerminalFigure(label, font);
@@ -71,6 +71,10 @@ public class SynDiaTerminal extends SynDiaElement
 		ellipse.highlight(marked);
 	}
 
+	/**
+	 * Changes the background color to mark this as the current element.
+	 *
+	 */
 	public void markObject() {
 		ellipse.setBackgroundColor(currentFigure);
 	}

@@ -195,10 +195,12 @@ public class TerminalFigure extends StandAloneSynDiaFigure {
 		interiorFigure.setIndexVisible(visible);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure#highlight(boolean)
+	 */
 	public void highlight(boolean highlight) {
 		if (highlight) {
-			interiorFigure.setForegroundColor(
-				SynDiaColors.highlightEntireFigure);
+			interiorFigure.setForegroundColor(SynDiaColors.highlightEntireFigure);
 			interiorFigure.getMainLabel().setForegroundColor(
 				SynDiaColors.normal);
 			interiorFigure.getIndexLabel().setForegroundColor(

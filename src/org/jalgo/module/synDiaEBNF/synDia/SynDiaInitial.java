@@ -53,18 +53,11 @@ public class SynDiaInitial extends SynDiaElement {
 		element = newElem;
 	}
 
-	/**
-	 * @return
-	 */
 	public InitialFigure getGfx() {
 		return gfx;
 	}
 
-	/**
-	 * @param figure
-	 */
 	public void setGfx(InitialFigure figure) {
 		gfx = figure;
 	}
-
 }

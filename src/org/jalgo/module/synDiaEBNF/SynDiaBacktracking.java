@@ -24,12 +24,14 @@
 package org.jalgo.module.synDiaEBNF;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.eclipse.draw2d.Figure;
 import org.jalgo.main.gui.TextCanvas;
 import org.jalgo.main.gui.widgets.StackCanvas;
 import org.jalgo.main.util.Stack;
+import org.jalgo.module.synDiaEBNF.gfx.SynDiaColors;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaAlternative;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaConcatenation;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaElement;
@@ -48,7 +50,8 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariableBack;
  * @author Babett Schaliz
  * @author Benjamin Scholz
  */
-public abstract class SynDiaBacktracking implements IAlgorithm, Serializable {
+public abstract class SynDiaBacktracking
+	implements IAlgorithm, Serializable, IAlgoDefConstants, SynDiaColors {
 
 	protected ModuleController moduleController;
 	protected StackCanvas stackCanvas; // the Canvas of the graphical stack
@@ -94,7 +97,7 @@ public abstract class SynDiaBacktracking implements IAlgorithm, Serializable {
 		SynDiaVariableBack help =
 			new SynDiaVariableBack(null, synDiaDef.getStartElem());
 		stack.push(help);
-		
+
 		// go to first SynDiaElement to work with
 		// lay backtracking labels on stack 
 		stack.push(synDiaDef.getStartElem());
@@ -179,7 +182,7 @@ public abstract class SynDiaBacktracking implements IAlgorithm, Serializable {
 				0);
 		}
 	}
-	
+
 	/**
 		 * Recursively goes through <code>help</code> and its inner elements and
 		 * (i) unmarks them, if they are marked,
@@ -233,7 +236,7 @@ public abstract class SynDiaBacktracking implements IAlgorithm, Serializable {
 			}
 		}
 	}
-	
+
 	protected void unmark(SynDiaElement markobj, boolean bool) {
 		if (markobj instanceof SynDiaTerminal) {
 			((SynDiaTerminal) markobj).unmarkObject(bool);
@@ -245,5 +248,37 @@ public abstract class SynDiaBacktracking implements IAlgorithm, Serializable {
 		}
 	}
 
+	/**
+	 * Should be called when the algorithm is finshed or aborted in order to
+	 * hide the backtracking labels and unmark highlighted elements.
+	 *
+	 */
+	public void finalTasks() {
+		hideBacktrackingLabels();
+
+		Iterator it = synDiaDef.getInitialDiagrams().iterator();
+		SynDiaInitial synDiaInitial;
+		// for each initialfigure ...
+		while (it.hasNext()) {
+			synDiaInitial = (SynDiaInitial) it.next();
+			// reset background color to normal color (should be white)
+			synDiaInitial.getGfx().setBackgroundColor(diagramNormal);
+
+			// search recursively through the diagram and unmark highlighted borders
+			// (all borders of elements which were on the path are highlighted)
+			// ... (to do) 
+		}
+	}
+
+	/**
+	* This method is called if the algorithm is closed, aborted or finished
+	* and should hide the no longer used backtrackinglabels.
+	*/
+	public void hideBacktrackingLabels() {
+		//hide backtracking labels
+		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
+			BacktrackingLabels(synDiaDef.getInitialDiagram(k), false);
+		}
+	}
 
 }

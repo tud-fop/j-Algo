@@ -24,7 +24,6 @@
 package org.jalgo.module.synDiaEBNF;
 
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -66,7 +65,6 @@ public class GenerateWord
 	extends SynDiaBacktracking
 	implements SynDiaColors, Serializable {
 
-
 	/**
 	* Constructor gets the Figure, Stack, the StackCanavas, the TextCanvases and
 	* also the syntaxtical diagram SynDiaSystem, to work with. It also fill the 
@@ -85,8 +83,13 @@ public class GenerateWord
 		TextCanvas generatedWordCanvas,
 		SynDiaSystem synDiaDef) {
 
-		super(moduleController, figure, stackCanvas,
-		algoTxtCanvas, generatedWordCanvas, synDiaDef);
+		super(
+			moduleController,
+			figure,
+			stackCanvas,
+			algoTxtCanvas,
+			generatedWordCanvas,
+			synDiaDef);
 
 		// algorithm written on page 22 in the script
 		algoTxtCanvas.setTextSegments(new String[] { Messages.getString("GenerateWord.Algo_title_2"), //$NON-NLS-1$
@@ -177,7 +180,7 @@ public class GenerateWord
 
 		//mark the right algorithm Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(3); //legal way
+		algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
 
 		if (currentElement instanceof SynDiaTerminal) {
 			// mark the SynDiaTerminal
@@ -254,7 +257,7 @@ public class GenerateWord
 				doNextVariableBack((SynDiaVariableBack) currentElement);
 			} else { // Composite
 				algoTxtCanvas.demarkAll();
-				algoTxtCanvas.mark(3); //Search the right Way
+				algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
 				if (currentElement instanceof SynDiaRepetition) { //repetition?
 					doNextRepetition((SynDiaRepetition) currentElement);
 				} else if (currentElement instanceof SynDiaAlternative) {
@@ -270,20 +273,9 @@ public class GenerateWord
 		if (!hasNextStep()) {
 			//mark the right algorithm text field
 			algoTxtCanvas.demarkAll();
-			algoTxtCanvas.mark(3);
+			algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
 			// dialog that the Algorithmen is Empty
 			readyDialog();
-		}
-	}
-
-	/**
-	* this method is called if the algorithm is closed, aborted or finished
-	* and should hide the no longer needful Backtrackinglabels
-	*/
-	public void hideBacktrackingLabels() {
-		//hide backtracking labels
-		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
-			BacktrackingLabels(synDiaDef.getInitialDiagram(k), false);
 		}
 	}
 
@@ -311,7 +303,7 @@ public class GenerateWord
 	private void doNextTerm(SynDiaTerminal currentElem) {
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(4); //SynDiaTerminal
+		algoTxtCanvas.mark(ALGO_DEF_TERM);
 
 		// mark the SynDiaTerminal
 		currentElem.markObject();
@@ -324,7 +316,7 @@ public class GenerateWord
 	private void doNextVariable(SynDiaVariable currentElem) { //jump in
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(5); //SynDiaVariable
+		algoTxtCanvas.mark(ALGO_DEF_VAR);
 
 		// mark the currentElem
 		currentElem.markObject();
@@ -343,7 +335,7 @@ public class GenerateWord
 	private void doNextVariableBack(SynDiaVariableBack currentElem) { //jump out
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(6); //Backtracking
+		algoTxtCanvas.mark(ALGO_DEF_DIAGRAM_FINISHED);
 
 		// color last connection in the left diagram
 
@@ -392,7 +384,7 @@ public class GenerateWord
 	private void redoNextTerm(SynDiaTerminal currentElem) {
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(4); //SynDiaTerminal
+		algoTxtCanvas.mark(ALGO_DEF_TERM);
 
 		// mark the SynDiaTerminal
 		currentElem.markObject();
@@ -406,7 +398,7 @@ public class GenerateWord
 		//jump in
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(5); //SynDiaVariable
+		algoTxtCanvas.mark(ALGO_DEF_VAR);
 
 		// mark the currentElem
 		currentElem.markObject();
@@ -425,7 +417,7 @@ public class GenerateWord
 		//jump out
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.mark(6); //backtracking
+		algoTxtCanvas.mark(ALGO_DEF_DIAGRAM_FINISHED);
 
 		// color last connection in the left diagramm
 
@@ -495,14 +487,6 @@ public class GenerateWord
 		generatedWord = step.getGeneratedWord();
 		stack = step.getStackConfig();
 		currentElement = step.getElem();
-	}
-
-	public void finalTasks() {
-		hideBacktrackingLabels();
-		Iterator it = synDiaDef.getInitialDiagrams().iterator();
-		while (it.hasNext())
-			((SynDiaInitial) it.next()).getGfx().setBackgroundColor(
-				diagramNormal);
 	}
 
 }
