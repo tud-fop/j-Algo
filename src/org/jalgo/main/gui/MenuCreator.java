@@ -54,11 +54,11 @@ public class MenuCreator implements IMenuCreator {
 		//item1.setImage(new Image(null, "pix/jalgo-file.png"));
 
 		MenuItem item2 = new MenuItem(menu, SWT.CASCADE);
-		item2.setText(Messages.getString("MenuCreator.EBNF-Diagramm_1")); //$NON-NLS-1$
+		item2.setText(Messages.getString("MenuCreator.EBNF-Diagramm")); //$NON-NLS-1$
 		item2.setImage(new Image(null, "pix/jalgo-file.png")); //$NON-NLS-1$
 		
 		MenuItem item3 = new MenuItem(menu, SWT.CASCADE);
-		item3.setText(Messages.getString("MenuCreator.EBNF-Term_3")); //$NON-NLS-1$
+		item3.setText(Messages.getString("MenuCreator.EBNF-Term")); //$NON-NLS-1$
 		item3.setImage(new Image(null, "pix/jalgo-file.png")); //$NON-NLS-1$
 
 		return menu;

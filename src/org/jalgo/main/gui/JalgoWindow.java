@@ -20,7 +20,7 @@
 /*
  * Created on Apr 17, 2004
  */
- 
+
 package org.jalgo.main.gui;
 
 import java.util.Collection;
@@ -58,7 +58,8 @@ import org.jalgo.main.util.Storage;
 import org.jalgo.module.synDiaEBNF.ModuleConnector;
 
 /**
- * This class provides a basic GUI Window with ToolBars, MenuBars and a StatusLine.
+ * This class provides a basic GUI Window with ToolBars, MenuBars and a
+ * StatusLine.
  * 
  * @author Christopher Friedrich
  * @author Cornelius Hald
@@ -66,32 +67,40 @@ import org.jalgo.module.synDiaEBNF.ModuleConnector;
 public class JalgoWindow extends ApplicationWindow {
 
 	private JalgoMain parent;
+
 	private Collection knownModules;
+
 	private IModuleConnector currentInstance;
 
-	private LinkedList newActions; // LinkedList of NewActions (one for each module)
+	private LinkedList newActions; // LinkedList of NewActions (one for each
+								   // module)
+
 	private SaveAction saveAction;
+
 	private SaveAsAction saveAsAction;
 
 	private CTabFolder ct;
+
 	private Collection tabWindow;
+
 	private Widget widget;
-	private AboutWindow aboutWindow;
+
 	private Storage storage;
+
 	private ModuleConnector moduleConnector;
+
 	private Storage storage1;
-	private AboutWindow aboutWindow1;
+
 	private CustomViewForm form1, form2, form3;
 
-	public JalgoWindow(
-		JalgoMain parent) {
+	public JalgoWindow(JalgoMain parent) {
 
 		super(null);
 
 		this.parent = parent;
 		this.knownModules = parent.getKnownModules();
 		this.currentInstance = parent.getCurrentInstance();
-		
+
 		newActions = new LinkedList();
 		createNewActions();
 
@@ -108,10 +117,14 @@ public class JalgoWindow extends ApplicationWindow {
 
 	protected Control createContents(Composite parent) {
 
-		parent.getShell().setText(Messages.getString("JalgoWindow.jAlgo_-_Version_X.XX_1")); //$NON-NLS-1$
+		parent
+				.getShell()
+				.setText(
+						Messages.getString("General.name") + " - " +
+						Messages.getString("General.version")); //$NON-NLS-1$
 		parent.getShell().setSize(800, 600);
 		parent.getShell().setImage(
-			new Image(parent.getDisplay(), "pix/jalgo.png")); //$NON-NLS-1$
+				new Image(parent.getDisplay(), "pix/jalgo.png")); //$NON-NLS-1$
 
 		final JalgoMain jalgo = this.parent;
 
@@ -131,6 +144,7 @@ public class JalgoWindow extends ApplicationWindow {
 
 		return ct;
 	}
+
 	/**
 	 * Creates standard MenuBar
 	 */
@@ -138,7 +152,8 @@ public class JalgoWindow extends ApplicationWindow {
 
 		// ** new_menu (is in file_menu)**
 
-		MenuManager new_menu = new MenuManager(Messages.getString("JalgoWindow.&New_3")); //$NON-NLS-1$
+		MenuManager new_menu = new MenuManager(Messages
+				.getString("JalgoWindow.&New")); //$NON-NLS-1$
 
 		for (int i = 0; i < newActions.size(); i++) {
 			new_menu.add((NewAction) newActions.get(i));
@@ -146,7 +161,8 @@ public class JalgoWindow extends ApplicationWindow {
 
 		// ** file_menu **
 
-		MenuManager file_menu = new MenuManager(Messages.getString("JalgoWindow.&File_4")); //$NON-NLS-1$
+		MenuManager file_menu = new MenuManager(Messages
+				.getString("JalgoWindow.&File")); //$NON-NLS-1$
 		file_menu.add(new_menu);
 		file_menu.add(new Separator());
 		file_menu.add(new OpenAction(this));
@@ -157,7 +173,8 @@ public class JalgoWindow extends ApplicationWindow {
 
 		// ** help_menu **
 
-		MenuManager help_menu = new MenuManager(Messages.getString("JalgoWindow.&Help_5"), "help"); //$NON-NLS-1$
+		MenuManager help_menu = new MenuManager(Messages
+				.getString("JalgoWindow.&Help"), "help"); //$NON-NLS-1$
 		help_menu.add(new AboutAction(this));
 		help_menu.add(new AboutModuleAction(this));
 
@@ -169,6 +186,7 @@ public class JalgoWindow extends ApplicationWindow {
 
 		return menubar;
 	}
+
 	/**
 	 * Create standard ToolBar
 	 */
@@ -201,9 +219,11 @@ public class JalgoWindow extends ApplicationWindow {
 	/**
 	 * Returns new CTabItem which should be used to put the module GUI into.
 	 * 
-	 * @param text	The Title for the CTabItem
-	 * @param img	The Image for the CTabItem
-	 * @return		The Composite which should be used to put the module GUI into
+	 * @param text
+	 *            The Title for the CTabItem
+	 * @param img
+	 *            The Image for the CTabItem
+	 * @return The Composite which should be used to put the module GUI into
 	 */
 	public CTabItem requestNewCTabItem(String text, Image img) {
 		CTabItem cti = new CTabItem(this.ct, SWT.FLAT);
