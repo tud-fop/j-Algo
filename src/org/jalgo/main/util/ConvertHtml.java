@@ -39,13 +39,13 @@ public class ConvertHtml implements ITxtConvert {
 		text = Pattern.compile("<").matcher(text).replaceAll("&lt;");
 		text = Pattern.compile(">").matcher(text).replaceAll("&gt;");
 		text = Pattern.compile("\"").matcher(text).replaceAll("&quot;");
-		text = Pattern.compile("ä").matcher(text).replaceAll("&auml;");
-		text = Pattern.compile("Ä").matcher(text).replaceAll("&Auml;");
-		text = Pattern.compile("ö").matcher(text).replaceAll("&ouml;");
-		text = Pattern.compile("Ö").matcher(text).replaceAll("&Ouml;");
-		text = Pattern.compile("ü").matcher(text).replaceAll("&uuml;");
-		text = Pattern.compile("Ü").matcher(text).replaceAll("&Uuml;");
-		text = Pattern.compile("ß").matcher(text).replaceAll("&szlig;");
+		text = Pattern.compile("Ã¤").matcher(text).replaceAll("&auml;");
+		text = Pattern.compile("Ã„").matcher(text).replaceAll("&Auml;");
+		text = Pattern.compile("Ã¶").matcher(text).replaceAll("&ouml;");
+		text = Pattern.compile("Ã–").matcher(text).replaceAll("&Ouml;");
+		text = Pattern.compile("Ã¼").matcher(text).replaceAll("&uuml;");
+		text = Pattern.compile("Ãœ").matcher(text).replaceAll("&Uuml;");
+		text = Pattern.compile("ÃŸ").matcher(text).replaceAll("&szlig;");
 		return "<html><head><title></title></head>\n<body>\n"
 			+ text
 			+ "\n</body></html>";
