@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -47,12 +50,12 @@ public class SynDiaDoneAction extends Action {
 
 	public SynDiaDoneAction(IFigure figure, ModuleController mc) {
 		this.figure = (Figure) figure;
-		this.mc=mc;
+		this.mc = mc;
 		//this.appWindow = appWindow;
 		setText(Messages.getString("SynDiaDoneAction.Diagram_done_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("SynDiaDoneAction.Done_2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/finish.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromFile(null,
+				"pix/finish.gif")); //$NON-NLS-1$
 	}
 
 	public void run() {
@@ -61,8 +64,11 @@ public class SynDiaDoneAction extends Action {
 		List variables = new ArrayList();
 		List initial = new ArrayList();
 		children.addAll(figure.getChildren());
-		if(children.isEmpty()){
-			MessageDialog.openError(new Shell(),Messages.getString("SynDiaDoneAction.Warning_4"), Messages.getString("SynDiaDoneAction.There_is_no_syntax_diagram._5")); //$NON-NLS-1$ //$NON-NLS-2$
+		if (children.isEmpty()) {
+			MessageDialog
+					.openError(
+							new Shell(),
+							Messages.getString("SynDiaDoneAction.Warning_4"), Messages.getString("SynDiaDoneAction.There_is_no_syntax_diagram._5")); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		}
 
@@ -73,9 +79,8 @@ public class SynDiaDoneAction extends Action {
 			if (!(o.equals(null))) {
 				children.addAll(((Figure) o).getChildren());
 				i++;
-			}
-			else children.remove(i);
-			
+			} else
+				children.remove(i);
 		}
 
 		Iterator it = children.iterator();
@@ -84,17 +89,16 @@ public class SynDiaDoneAction extends Action {
 			if (o instanceof CloudFigure) {
 				if (a == 0) {
 					if (MessageDialog
-						.openQuestion(
-							new Shell(),
-							Messages.getString("SynDiaDoneAction.Question_6"), //$NON-NLS-1$
-							Messages.getString("SynDiaDoneAction.There_are_still_clouds_left._Do_you_want_them_replaced_by_simple_lines__7"))) { //$NON-NLS-1$
+							.openQuestion(
+									new Shell(),
+									Messages
+											.getString("SynDiaDoneAction.Question_6"), //$NON-NLS-1$
+									Messages
+											.getString("SynDiaDoneAction.There_are_still_clouds_left._Do_you_want_them_replaced_by_simple_lines__7"))) { //$NON-NLS-1$
 						try {
-							(
-								(CompositeSynDiaFigure) ((CloudFigure) o)
-									.getParent())
-									.replace(
-								((CloudFigure) o),
-								new EmptyFigure());
+							((CompositeSynDiaFigure) ((CloudFigure) o)
+									.getParent()).replace(((CloudFigure) o),
+									new EmptyFigure());
 						} catch (SynDiaException e) {
 							// TODO Automatisch erstellter Catch-Block
 						}
@@ -103,33 +107,33 @@ public class SynDiaDoneAction extends Action {
 						return;
 				} else
 					try {
-						(
-							(CompositeSynDiaFigure) ((CloudFigure) o)
-								.getParent())
-								.replace(
-							((CloudFigure) o),
-							new EmptyFigure());
+						((CompositeSynDiaFigure) ((CloudFigure) o).getParent())
+								.replace(((CloudFigure) o), new EmptyFigure());
 					} catch (SynDiaException e) {
 						// TODO Automatisch erstellter Catch-Block
 					}
-			}
-			else
-			if(o instanceof VariableFigure)	variables.add(((VariableFigure)o).getText());
-			else if (o instanceof InitialFigure) initial.add(((InitialFigure)o).getLabel());
-			
+			} else if (o instanceof VariableFigure)
+				variables.add(((VariableFigure) o).getText());
+			else if (o instanceof InitialFigure)
+				initial.add(((InitialFigure) o).getLabel());
+
 		}
-		
-		for(i=0; i<variables.size();i++)
-		{
-			a=0;
-			for(j=0; j<initial.size();j++)
-				if (!initial.get(j).equals(variables.get(i)))  a++;
-			if(a==initial.size()){
-				MessageDialog.openError(new Shell(),Messages.getString("SynDiaDoneAction.Warning_8"),Messages.getString("SynDiaDoneAction.There_is_no_definition_for_9")+variables.get(i)); //$NON-NLS-1$ //$NON-NLS-2$
-				return; 
+
+		for (i = 0; i < variables.size(); i++) {
+			a = 0;
+			for (j = 0; j < initial.size(); j++)
+				if (!initial.get(j).equals(variables.get(i)))
+					a++;
+			if (a == initial.size()) {
+				MessageDialog
+						.openError(
+								new Shell(),
+								Messages
+										.getString("SynDiaDoneAction.Warning_8"), Messages.getString("SynDiaDoneAction.There_is_no_definition_for_9") + variables.get(i)); //$NON-NLS-1$ //$NON-NLS-2$
+				return;
 			}
 		}
-		
+
 		mc.createSynDiaFinished();
 	}
 }

@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -37,11 +40,8 @@ import org.jalgo.main.util.Stack;
 public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 
 	private Stack parseStack;
-
 	private EbnfDefinition definition;
-
 	private String variable;
-
 	private Set terminals, variables;
 
 	/*
@@ -49,13 +49,9 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 	 * defined in IEbnfTokenConstants
 	 */
 	private final Integer ALTERNATIVE = new Integer(102);
-
 	private final Integer OPTION = new Integer(103);
-
 	private final Integer PRECEDENCE = new Integer(104);
-
 	private final Integer REPETITION = new Integer(105);
-
 	private final Integer CONCATENATION = new Integer(106);
 
 	/**
@@ -409,11 +405,9 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 	}
 
 	private class StackElement {
-		Integer type;
-
-		String value;
-
-		int level;
+		private Integer type;
+		private String value;
+		private int level;
 
 		public StackElement(Integer type, String value, int level) {
 			this.type = type;

@@ -40,7 +40,7 @@ public class EbnfSynVariable extends EbnfElement implements Serializable {
 	private EbnfElement startElem;
 
 	public EbnfSynVariable() {
-		label = new String(""); //$NON-NLS-1$
+		label = ""; //$NON-NLS-1$
 	}
 
 	public EbnfSynVariable(String label) {

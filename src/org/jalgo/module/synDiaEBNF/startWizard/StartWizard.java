@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -20,23 +23,24 @@
 /*
  * Created on 12.05.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.startWizard;
 
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.jface.wizard.Wizard;
 import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.gui.actions.OpenAction;
+import org.jalgo.module.synDiaEBNF.IModeConstants;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
 /**
  * @author Michael Pradel
  */
-public class StartWizard extends Wizard {
+public class StartWizard extends Wizard implements IModeConstants {
 
 	private ApplicationWindow appWin;
 	private ModuleController mc;
-	
+
 	public FirstChoice firstChoice;
 
 	public StartWizard(ModuleController mc, ApplicationWindow appWin) {
@@ -55,24 +59,28 @@ public class StartWizard extends Wizard {
 		switch (firstChoice.getSelected()) {
 			case FirstChoice.LOADFILE :
 				OpenAction oa = new OpenAction((JalgoWindow) appWin);
-				oa.run(true);  // 'true' tells open action to use current instance of this module
+				/*
+				 * 'true' tells open action to use current instance of this
+				 * module
+				 */
+				oa.run(true);
 				return true;
-				
+
 			case FirstChoice.PUTINSYNDIA :
-				mc.setMode(3);
+				mc.setMode(CREATE_SYNDIA);
 				return true;
 
 			case FirstChoice.PUTINEBNF :
-				mc.setMode(4);
+				mc.setMode(EBNF_INPUT);
 				return true;
 
 			default :
 				return true;
 		}
 	}
-	
+
 	public boolean performCancel() {
-		mc.setMode(2);
+		mc.setMode(NORMAL_VIEW_EMPTY);
 		return true;
 	}
 }

@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -20,7 +23,7 @@
 /*
  * Created on 27.06.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF;
 
 import java.util.LinkedList;
@@ -38,14 +41,14 @@ public class BackTrackHistory {
 
 	public BackTrackHistory() {
 		history = new LinkedList();
-		historyPointer=0;
+		historyPointer = 0;
 	}
 
 	public int getSize() {
 		return history.size();
 	}
-	
-	public int getPointer(){
+
+	public int getPointer() {
 		return historyPointer;
 	}
 
@@ -58,28 +61,32 @@ public class BackTrackHistory {
 		historyPointer--;
 		return (BackTrackStep) history.get(historyPointer);
 	}
-	
-	public SynDiaElement getStepElem(int num){
-	return ((BackTrackStep) history.get(num)).getElem();
+
+	public SynDiaElement getStepElem(int num) {
+		return ((BackTrackStep) history.get(num)).getElem();
 	}
 
-	public void addNewPosStep(Stack currentStack, SynDiaElement currentElem, String generatedWord) {
-		BackTrackStep help = new BackTrackStep(currentStack, currentElem, generatedWord);
+	public void addNewPosStep(Stack currentStack, SynDiaElement currentElem,
+			String generatedWord) {
+		BackTrackStep help = new BackTrackStep(currentStack, currentElem,
+				generatedWord);
 		//new Step
 		if (historyPointer == history.size()) {
 			history.add(help);
-		} 
+		}
 		if (historyPointer < history.size()) {
-			//another forwardStep already exists, if they are not equal (new Way) remove the rest
-			if (help.getElem().hashCode() ==(((BackTrackStep) history.get(historyPointer)).getElem()).hashCode()) {
+			//another forwardStep already exists, if they are not equal (new
+			// Way) remove the rest
+			if (help.getElem().hashCode() == (((BackTrackStep) history
+					.get(historyPointer)).getElem()).hashCode()) {
 				// everything stay in history
-			}else{
+			} else {
 				// go back until currentElement is Rep or Alt
 				LinkedList newList = new LinkedList();
 				for (int i = 0; i < historyPointer; i++) {
 					newList.add(history.get(i));
 				}
-				history= newList;
+				history = newList;
 				history.add(help);
 			}
 		}

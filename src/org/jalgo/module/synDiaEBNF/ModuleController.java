@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -78,18 +81,7 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaSystem;
  * @author Michael Pradel
  */
 
-public class ModuleController {
-
-	final int NO_MODE_SET = 0;
-	final int START_WITH_WIZARD = 1;
-	final int NORMAL_VIEW_EMPTY = 2;
-	final int CREATE_SYNDIA = 3;
-	final int EBNF_INPUT = 4;
-	final int TRANS_ALGO = 5;
-	final int RECOGNIZE_WORD_ALGO = 6;
-	final int GENERATE_WORD_ALGO = 7;
-	final int NORMAL_VIEW_EBNF = 8;
-	final int NORMAL_VIEW_SYNDIA = 9;
+public class ModuleController implements IModeConstants{
 
 	private ModuleInfo moduleInfo;
 	private ApplicationWindow appWin;
@@ -132,7 +124,7 @@ public class ModuleController {
 	private IAlgorithm algo = null;
 	// currently performed algorithm, or null, if no algorithm is performed right now
 
-	private int mode = 0;
+	private int mode = NO_MODE_SET;
 	// indicated what the module is doing at this moment (see modes-table in setMode() comment)
 
 	// ------ public methods ----------------
@@ -270,7 +262,7 @@ public class ModuleController {
 				 *  where to go on indeterministic decissions; 
 				 * now: auto-mode is always on */
 
-				enableNavButtons();
+				enableNavButtons(true);
 				testAndSetNavButtons();
 				addPerformAllButton();
 				addAbortAlgoButton();
@@ -288,7 +280,7 @@ public class ModuleController {
 						((BackTrackingAlgoGui) gui).getAlgoText(),
 						((BackTrackingAlgoGui) gui).getWord(),
 						synDiaSystem);
-				enableNavButtons();
+				enableNavButtons(true);
 				testAndSetNavButtons();
 				addAbortAlgoButton();
 				break;
@@ -306,13 +298,14 @@ public class ModuleController {
 						((BackTrackingAlgoGui) gui).getAlgoText(),
 						((BackTrackingAlgoGui) gui).getWord(),
 						synDiaSystem);
-				enableNavButtons();
+				enableNavButtons(true);
 				testAndSetNavButtons();
 				addAbortAlgoButton();
 				break;
 
 			default :
-				}
+				System.err.println("Mode not implemented");
+		}
 		comp.layout();
 	}
 
@@ -347,14 +340,14 @@ public class ModuleController {
 	 */
 	public void performNextStep() throws InternalErrorException {
 		// we are not performing any algorithm; should never be reached
-		if (mode < 5 || mode > 7) {
+		if ((mode < TRANS_ALGO) || (mode > GENERATE_WORD_ALGO)) {
 			throw new InternalErrorException("trying to perfom next step in ModuleController, when no algorithm is running; buttons should be disabled!"); //$NON-NLS-1$
 		}
 
 		try {
 			algo.performNextStep();
-		} catch (IndexOutOfBoundsException ioobE) {
-			java.lang.System.err.println(ioobE);
+		} catch (IndexOutOfBoundsException e) {
+			java.lang.System.err.println(e);
 		}
 		testAndSetNavButtons();
 	}
@@ -377,7 +370,7 @@ public class ModuleController {
 	 */
 	public void previousHistStep() throws InternalErrorException {
 		// we are not performing any algorithm; should never be reached
-		if (mode < 5 || mode > 7) {
+		if ((mode < TRANS_ALGO) || (mode > GENERATE_WORD_ALGO)) {
 			throw new InternalErrorException("trying to go to previous hist step in ModuleController, when no algorithm is running; buttons should be disabled!"); //$NON-NLS-1$
 		}
 
@@ -395,11 +388,11 @@ public class ModuleController {
 	 */
 	public void goToFirstStep() throws InternalErrorException {
 		//		we are not performing any algorithm; should never be reached
-		if (mode < 5 || mode > 7) {
+		if ((mode < TRANS_ALGO) || (mode  > GENERATE_WORD_ALGO)) {
 			throw new InternalErrorException("trying to go to first history step in ModuleController, when no algorithm is running; buttons should be disabled!"); //$NON-NLS-1$
 		}
 
-		disableNavButtons();
+		enableNavButtons(false);
 		while (algo.hasPreviousHistStep()) {
 			algo.previousHistStep();
 		}
@@ -412,11 +405,11 @@ public class ModuleController {
 	 */
 	public void goToLastStep() throws InternalErrorException {
 		//		we are not performing any algorithm; should never be reached
-		if (mode < 5 || mode > 7) {
+		if ((mode < TRANS_ALGO) || (mode > GENERATE_WORD_ALGO)) {
 			throw new InternalErrorException("trying to go to last history step in ModuleController, when no algorithm is running; buttons should be disabled!"); //$NON-NLS-1$
 		}
 
-		disableNavButtons();
+		enableNavButtons(false);
 		while (algo.hasNextHistStep()) {
 			algo.nextHistStep();
 		}
@@ -429,7 +422,7 @@ public class ModuleController {
 	 */
 	public void setAuto(boolean auto) {
 		//		we are not performing any algorithm; should never be reached
-		if (mode != 5) {
+		if (mode != TRANS_ALGO) {
 			throw new InternalErrorException("trying to set automatically algorithm performance, when trans-algorithm isn't running; checkbox should be invisible!"); //$NON-NLS-1$
 		}
 
@@ -482,7 +475,7 @@ public class ModuleController {
 	 *
 	 */
 	public void algoFinished() {
-		if (algo instanceof RecognizeWord || algo instanceof GenerateWord) {
+		if ((algo instanceof RecognizeWord) || (algo instanceof GenerateWord)) {
 			setMode(NORMAL_VIEW_SYNDIA);
 		} else if (algo instanceof TransAlgorithm) {
 			synDiaSystem = ((TransAlgorithm) algo).getSynDiaSystem();
@@ -526,11 +519,11 @@ public class ModuleController {
 	//------- private methods --------------
 
 	private void leaveMode(int oldMode) {
-		switch (oldMode) {
+		switch (oldMode) {	
 			case NORMAL_VIEW_EMPTY :
 				removeCreationButtons();
 				break;
-			
+
 			case NORMAL_VIEW_EBNF :
 				removeTransButton();
 				disableSaveButtons();
@@ -541,24 +534,21 @@ public class ModuleController {
 				break;
 
 			case TRANS_ALGO :
-				disableNavButtons();
+				enableNavButtons(false);
 				removePerformAllButton();
 				removeAbortAlgoButton();
 				break;
 
 			case RECOGNIZE_WORD_ALGO :
-				disableNavButtons();
+				enableNavButtons(false);
 				removeAbortAlgoButton();
 				break;
 
 			case GENERATE_WORD_ALGO :
-				disableNavButtons();
+				enableNavButtons(false);
 				removeAbortAlgoButton();
 				break;
-
-			default :
-
-				}
+		}
 	}
 
 	private void createMenu() {
@@ -684,20 +674,12 @@ public class ModuleController {
 		saveAsAction.setEnabled(false);
 	}
 
-	private void disableNavButtons() {
-		firstAction.setEnabled(false);
-		leftAction.setEnabled(false);
-		rightAction.setEnabled(false);
-		lastAction.setEnabled(false);
-		performNextAction.setEnabled(false);
-	}
-
-	private void enableNavButtons() {
-		firstAction.setEnabled(true);
-		leftAction.setEnabled(true);
-		rightAction.setEnabled(true);
-		lastAction.setEnabled(true);
-		performNextAction.setEnabled(true);
+	private void enableNavButtons(boolean value) {
+		firstAction.setEnabled(value);
+		leftAction.setEnabled(value);
+		rightAction.setEnabled(value);
+		lastAction.setEnabled(value);
+		performNextAction.setEnabled(value);
 	}
 
 	/*

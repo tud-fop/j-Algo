@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -72,18 +75,18 @@ public class TransformSynDia {
 		
 		// die Startelemente eines jeden Objektes 
 		//noch rausfinden und in den SynVar setzen 
-		for (int j = 0; j < def.getInitialDiagrams().size(); j++) {
-			for (int k = 0; k < synVariables.size(); k++) {
-				if (def.getInitialDiagram(j).getGfx().getLabel().equals(((SynDiaVariable) synVariables.get(k)).getLabel())) {
-					((SynDiaVariable) synVariables.get(k)).setStartElem(def.getInitialDiagram(j));
+		for (int i = 0; i < def.getInitialDiagrams().size(); i++) {
+			for (int j = 0; j < synVariables.size(); j++) {
+				if (def.getInitialDiagram(i).getGfx().getLabel().equals(((SynDiaVariable) synVariables.get(j)).getLabel())) {
+					((SynDiaVariable) synVariables.get(j)).setStartElem(def.getInitialDiagram(i));
 				}
 			}
 		}
 		
 		//copy labels of the SynDiaVarialbes in the list into the HashSet
-		for (int l = 0; l < synVariables.size(); l++) {
+		for (int i = 0; i < synVariables.size(); i++) {
 			synVariablesSet.add(
-				((SynDiaVariable) synVariables.get(l)).getLabel());
+				((SynDiaVariable) synVariables.get(i)).getLabel());
 		}
 
 		// every partdiagram is performed
@@ -118,7 +121,9 @@ public class TransformSynDia {
 
 		SynDiaInitial elem = new SynDiaInitial(diagram, startElem);
 		// set StartElement in Definition
-		if (diagram.isStartFigure()) {this.def.setStartElem(elem);}
+		if (diagram.isStartFigure()) {
+			this.def.setStartElem(elem);
+		}
 		
 		// store the variables, ther could exsist Diagrams, which are as SynVar,
 		// possible especially for the startdiagram
@@ -132,8 +137,7 @@ public class TransformSynDia {
 		SynDiaElement straightAheadElem = searchTypAndTransform(figure.getTopFigure());
 		SynDiaElement repetedElem = searchTypAndTransform(figure.getBotFigure());
 
-		SynDiaRepetition elem = new SynDiaRepetition(figure, straightAheadElem, repetedElem);
-		return elem;
+		return new SynDiaRepetition(figure, straightAheadElem, repetedElem);
 	}
 
 	private SynDiaAlternative transformAlternativeFigure(AlternativeFigure figure) {
@@ -145,8 +149,7 @@ public class TransformSynDia {
 				searchTypAndTransform((Figure) inputList.get(i));
 			outputList.add(listElem);
 		}
-		SynDiaAlternative elem = new SynDiaAlternative(figure, outputList);
-		return elem;
+		return new SynDiaAlternative(figure, outputList);
 	}
 
 	private SynDiaConcatenation transformConcatenationFigure(ConcatenationFigure figure) {
@@ -157,31 +160,25 @@ public class TransformSynDia {
 				searchTypAndTransform((Figure) inputList.get(i));
 			outputList.add(listElem);
 		}
-		SynDiaConcatenation elem = new SynDiaConcatenation(figure, outputList);
-		return elem;
+		return new SynDiaConcatenation(figure, outputList);
 	}
 
 	private SynDiaEpsilon transformEmptyFigure(EmptyFigure figure) {
-		SynDiaEpsilon elem = new SynDiaEpsilon(figure);
-		return elem;
+		return new SynDiaEpsilon(figure);
 	}
 
 	private SynDiaTerminal transformTerminalFigure(TerminalFigure figure) {
-		// create new abstract Terminal
-		SynDiaTerminal elem = new SynDiaTerminal(figure);
-
 		//store Label in the list
 		terminalSymbols.add(figure.getLabel());
-		return elem;
+		// create new abstract Terminal
+		return new SynDiaTerminal(figure);
 	}
 
 	private SynDiaVariable transformSynDiaFigure(VariableFigure figure) {
 		// create new abstract Variable
 		SynDiaVariable elem = new SynDiaVariable(figure);
-
 		//store Variable in list
 		synVariables.add(elem);
-
 		return elem;
 	}
 }
