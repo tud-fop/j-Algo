@@ -41,7 +41,7 @@ public interface IModuleConnector {
 	 * After the module has been initialized using the constructor (and maybe some methods), use this method to start it.
 	 * This method should return soon.
 	 */
-	public void run();
+	void run();
 
 	/**
 	 * use this function after the user loaded a saved file for the module.
@@ -49,7 +49,7 @@ public interface IModuleConnector {
 	 * 					added by the main program before saving (e.g. including 
 	 * 					with which module the file is associated) and the data for the module; put the data in here
 	 */
-	public void setDataFromFile(ByteArrayInputStream data);
+	void setDataFromFile(ByteArrayInputStream data);
 
 	/**
 	 * use this function, when the user wants to save the state of the module.
@@ -57,32 +57,32 @@ public interface IModuleConnector {
 	 * 					be stored in a file after the main program added the module header (e.g. including 
 	 *						with which module the file is associated) to it
 	 */
-	public ByteArrayOutputStream getDataForFile();
+	ByteArrayOutputStream getDataForFile();
 
 	/**
 	 * use this function, if the user clicked the print-button (or chose to print in any other way)
 	 * the module will call a print dialog and manage the printing
 	 */
-	public void print();
+	void print();
 
 	/**
 	 * Get the Menu from the module
 	 */
-	public SubMenuManager getMenuManager();
+	SubMenuManager getMenuManager();
 
 	/**
 	 * Get the ToolBar from the module
 	 */
-	public SubToolBarManager getToolBarManager();
+	SubToolBarManager getToolBarManager();
 
 	/**
 	 * Get the StatusLine from the module
 	 */
-	public SubStatusLineManager getStatusLineManager();
+	SubStatusLineManager getStatusLineManager();
 	
 	/**
 	 * Get a class with all module information (name, description, version, ...)
 	 */
-	public IModuleInfo getModuleInfo();
+	IModuleInfo getModuleInfo();
 	
 }
