@@ -58,9 +58,8 @@ public class EmptyFigure extends SynDiaFigure {
 	public Dimension getPreferredSize(int arg0, int arg1) {
 		if ((startGap + endGap) < 2 ) {
 			return new Dimension(2, 36);
-		} else {
-			return new Dimension(startGap + endGap, 36);
 		}
+		return new Dimension(startGap + endGap, 36);
 	}
 
 	/**

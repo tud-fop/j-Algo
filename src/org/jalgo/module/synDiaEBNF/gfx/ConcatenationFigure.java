@@ -48,7 +48,6 @@ public class ConcatenationFigure extends CompositeSynDiaFigure {
 			if (numOfInteriorFigures < minNumOfInteriorFigures)
 				// groesser 2
 				//throw new SynDiaException("The number of interior figures to create has to at least 2.");
-				;
 
 			this.numOfInteriorFigures = numOfInteriorFigures;
 			startGap = endGap = 0;
