@@ -246,9 +246,8 @@ public class JalgoMain {
 	public boolean openFile(String filename, boolean useCurrentInstance) {
 		if (useCurrentInstance) {
 			return Storage.load(filename, currentInstance);
-		} else {
-			return Storage.load(filename);
 		}
+		return Storage.load(filename);
 	}
 
 }

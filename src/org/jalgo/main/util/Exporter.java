@@ -37,7 +37,7 @@ public class Exporter {
 
 	//private static String[] knownTxtConverters = { "txt_Lf", "txt_Cr", "txt_LfCr", "html" };
 	//private static String[] knownGfxConverters = { "png", "jpg" };
-	//private IConverter converter;
+	private IConverter converter;
 	
 	private Panel panel;
 
@@ -58,7 +58,8 @@ public class Exporter {
 		return null;
 	}
 
-	public void setConverter(IConverter converter){
+	public void setConverter(IConverter converter) {
+		this.converter = converter;
 	}
 
 	/**

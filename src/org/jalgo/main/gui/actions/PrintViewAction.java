@@ -86,7 +86,7 @@ public class PrintViewAction extends Action {
 				operation.setPrintMode(PrintScaledFigureOperation.USE_LAYOUT);
 				operation.run("JAlgo"); //$NON-NLS-1$
 				break;
-			default: ;
+			default:
 		}
 
 		printer.dispose();
