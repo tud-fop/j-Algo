@@ -31,7 +31,6 @@ public class Jalgo {
 	private static JalgoMain jalgo;
 
 	public static void main(String[] args) {
-
 		jalgo = new JalgoMain();
 		jalgo.createGUI();
 	}

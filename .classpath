@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
     <classpathentry kind="src" path="src"/>
-    <classpathentry kind="var" path="JRE_LIB" sourcepath="JSDK_SRC"/>
-    <classpathentry kind="lib" path="extlibs/jface.jar"/>
-    <classpathentry kind="lib" path="extlibs/boot.jar"/>
-    <classpathentry kind="lib" path="extlibs/runtime.jar"/>
-    <classpathentry kind="lib" path="extlibs/draw2d.jar"/>
-    <classpathentry kind="lib" path="extlibs/linux/swt.jar"/>
-    <classpathentry kind="lib" path="extlibs/linux/swt-pi.jar"/>
+    <classpathentry exported="true" kind="var" path="JRE_LIB" sourcepath="JSDK_SRC"/>
+    <classpathentry exported="true" kind="lib" path="extlibs/jface.jar"/>
+    <classpathentry exported="true" kind="lib" path="extlibs/boot.jar"/>
+    <classpathentry exported="true" kind="lib" path="extlibs/runtime.jar"/>
+    <classpathentry exported="true" kind="lib" path="extlibs/draw2d.jar"/>
+    <classpathentry exported="true" kind="lib" path="extlibs/linux/swt.jar"/>
+    <classpathentry exported="true" kind="lib" path="extlibs/linux/swt-pi.jar"/>
     <classpathentry kind="output" path="runtime"/>
 </classpath>
