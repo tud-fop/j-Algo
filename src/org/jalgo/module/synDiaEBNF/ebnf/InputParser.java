@@ -67,7 +67,7 @@ public class InputParser extends Parser {
 
 	private class BeginState extends InputState {
 		public void check() {
-			Token t = (Token) tokenizer.getNextToken();
+			Token t = tokenizer.getNextToken();
 			if (t.getTokenName().equals(SYMBOL)) {
 				set.add(t.getTokenValue());
 				state = concBeginState;
@@ -79,7 +79,7 @@ public class InputParser extends Parser {
 
 	private class ConcBeginState extends InputState {
 		public void check() {
-			Token t = (Token) tokenizer.getNextToken();
+			Token t = tokenizer.getNextToken();
 			if (t.getTokenName().equals(COMMA)) {
 				state = concState;
 			} else {
@@ -90,7 +90,7 @@ public class InputParser extends Parser {
 
 	private class ConcState extends InputState {
 		public void check() {
-			Token t = (Token) tokenizer.getNextToken();
+			Token t = tokenizer.getNextToken();
 			if (t.getTokenName().equals(COMMA)) {
 				state = concState;
 			} else if (t.getTokenName().equals(SYMBOL)) {

@@ -40,7 +40,7 @@ public class EbnfTerminal extends EbnfElement implements Serializable {
 	private String label;
 
 	public EbnfTerminal() {
-		label = new String(""); //$NON-NLS-1$
+		label = ""; //$NON-NLS-1$
 	}
 
 	public EbnfTerminal(String label) {
