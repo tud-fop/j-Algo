@@ -29,6 +29,7 @@ import org.jalgo.main.JalgoMain;
 
 /**
  * @author Michael Pradel
+ * 
  */
 public class NewAction extends Action {
 

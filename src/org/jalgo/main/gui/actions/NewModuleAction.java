@@ -3,11 +3,8 @@
  */
 package org.jalgo.main.gui.actions;
 
-import java.util.Iterator;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.JalgoMain;
 
 /**
@@ -26,10 +23,8 @@ public class NewModuleAction extends Action {
 	}
 	
 	public void run() {
-		System.out.println("knownModules:");
-		for (Iterator it = main.getKnownModuleInfos().iterator(); it.hasNext(); ) {
-			System.out.println("\t" + ((IModuleInfo)it.next()).getName());
-		}
+		// workaround as long as class isn't implented: open directly first module
+		main.newInstance(0);
 	}
 
 }
