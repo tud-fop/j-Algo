@@ -1,0 +1,68 @@
+/*
+ * Created on 28.06.2004
+ */
+package org.jalgo.main.gui.actions;
+
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.widgets.MessageBox;
+import org.jalgo.main.gui.JalgoWindow;
+
+/**
+ * @author Christopher Friedrich
+ */
+public class AboutModuleAction extends Action {
+
+	private JalgoWindow win;
+
+	public AboutModuleAction(JalgoWindow win) {
+		this.win = win;
+
+		setText(Messages.getString("AboutModuleAction.About_jAlgo-Module_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("AboutModuleAction.Get_infos_about_jAlgo-Module._2")); //$NON-NLS-1$
+		setImageDescriptor(
+			ImageDescriptor.createFromFile(null, "pix/about.gif")); //$NON-NLS-1$
+	}
+
+	public void run() {
+
+		try {
+			MessageBox dia = new MessageBox(win.getShell());
+
+			dia.setText(Messages.getString("AboutModuleAction.About_jAlgo-Module_4")); //$NON-NLS-1$
+			dia
+				.setMessage(
+					win.getCurrentInstance().getModuleInfo().getName()
+					+ Messages.getString("AboutModuleAction._-_Version__5") //$NON-NLS-1$
+					+ win.getCurrentInstance().getModuleInfo().getVersion()
+					+ "\n\n" //$NON-NLS-1$
+					+ win.getCurrentInstance().getModuleInfo().getDescription()
+					+ "\n\n" //$NON-NLS-1$
+					+ Messages.getString("AboutModuleAction.Author___n_8") //$NON-NLS-1$
+					+ win.getCurrentInstance().getModuleInfo().getAuthor()
+					+ "\n\n" //$NON-NLS-1$
+					+ Messages.getString("AboutModuleAction.License___n_10") //$NON-NLS-1$
+					+ win.getCurrentInstance().getModuleInfo().getLicense()
+			/*
+				+ "(c) Copyright jAlgo-Team 2004.  All rights reserved.\n"
+				+ "Visit http://www.inf.tu-dresden.de/~swt04-p1\n"
+				+ "\n"
+				+ "This program is free software; you can redistribute it and/or modify\n"
+				+ "it under the terms of the GNU General Public License as published by\n"
+				+ "the Free Software Foundation; either version 2 of the License, or\n"
+				+ "(at your option) any later version.\n"
+				+ "\n"
+				+ "This program is distributed in the hope that it will be useful,\n"
+				+ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+				+ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+				+ "GNU General Public License for more details."
+				*/
+			);
+			dia.open();
+		} catch (NullPointerException e) {
+			System.out.println(e);
+		}
+
+	}
+
+}

@@ -1,0 +1,82 @@
+/*
+ * Created on 19.06.2004
+ */
+ 
+package org.jalgo.module.synDiaEBNF.gui.actions;
+
+import java.util.ArrayList;
+
+import org.eclipse.draw2d.Figure;
+import org.eclipse.draw2d.IFigure;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.window.Window;
+import org.jalgo.main.gfx.IClickAction;
+import org.jalgo.main.util.ClickCollector;
+import org.jalgo.main.util.GfxUtil;
+import org.jalgo.module.synDiaEBNF.gfx.CloudFigure;
+import org.jalgo.module.synDiaEBNF.gfx.CompositeSynDiaFigure;
+import org.jalgo.module.synDiaEBNF.gfx.SynDiaException;
+import org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure;
+import org.jalgo.module.synDiaEBNF.gfx.TerminalFigure;
+
+/**
+ * @author Hauke Menges
+ */
+public class AddTerminalAction extends Action implements IClickAction {
+	IFigure figure;
+
+	public AddTerminalAction(IFigure figure) {
+		this.figure = figure;
+		setText(Messages.getString("AddTerminalAction.Terminal_symbol_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("AddTerminalAction.Add_terminal_symbol._2")); //$NON-NLS-1$
+		setImageDescriptor(
+			ImageDescriptor.createFromFile(null, "pix/terminalsymbol.gif")); //$NON-NLS-1$
+	}
+
+	public void run() {
+		ClickCollector.init(1, this);
+
+	}
+
+	public void performAction(ArrayList items) {
+		try {
+			IFigure help = ((Figure) items.get(0)).getParent();
+
+			if (help instanceof CloudFigure) {
+				InputDialog inDialog =
+					new InputDialog(
+						GfxUtil.getAppShell(),
+						Messages.getString("AddTerminalAction.Terminal_symbol_4"), //$NON-NLS-1$
+						Messages.getString("AddTerminalAction.Terminal_symbol__5"), //$NON-NLS-1$
+						"", //$NON-NLS-1$
+						null);
+				String result = ""; //$NON-NLS-1$
+				if (inDialog.open() != Window.CANCEL) {
+					result = inDialog.getValue();
+
+					if (result != "") //$NON-NLS-1$
+						((CompositeSynDiaFigure) help.getParent()).replace(
+							(SynDiaFigure) help,
+							new TerminalFigure(result, help.getFont()));
+					else
+						MessageDialog.openError(
+							null,
+							Messages.getString("AddTerminalAction.Warning_9"), //$NON-NLS-1$
+							Messages.getString("AddTerminalAction.You_must_enter_a_proper_string_for_a_terminal_symbol._10")); //$NON-NLS-1$
+				}
+			} else
+				MessageDialog.openError(
+					null,
+					Messages.getString("AddTerminalAction.Warning_11"), //$NON-NLS-1$
+					Messages.getString("AddTerminalAction.Click_on_a_cloud_to_add_a_new_element._12")); //$NON-NLS-1$
+
+		} catch (SynDiaException e) {
+			//TODO: handle e
+		}
+
+	}
+
+}

@@ -1,0 +1,72 @@
+/*
+ * Created on May 22, 2004
+ */
+
+package org.jalgo.main.gui.actions;
+
+import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.SWTGraphics;
+import org.eclipse.draw2d.ScaledGraphics;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.ImageLoader;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
+
+/**
+ * @author Cornelius Hald
+ */
+public class ExportAction extends Action {
+
+	private IFigure figure;
+	private Control parent;
+
+	public ExportAction(IFigure figure) {
+		this.figure = figure;
+
+		setText(Messages.getString("ExportAction.Export_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("ExportAction.Export_image_2")); //$NON-NLS-1$
+		setImageDescriptor(
+			ImageDescriptor.createFromFile(null, "pix/export.gif")); //$NON-NLS-1$
+	}
+
+	public void run() {
+		
+		// Create Image with double size to enhance quality
+		Image img =
+			new Image(
+				null,
+				figure.getPreferredSize().width,
+				figure.getPreferredSize().height);
+		GC gc = new GC(img);
+		SWTGraphics swtg = new SWTGraphics(gc);
+		ScaledGraphics scaled = new ScaledGraphics(swtg);
+
+		// Enter the scale factor
+		scaled.scale(1);
+
+		// Paint the figure on the scaledGraphics
+		figure.paint(scaled);
+
+		// Sets ImageData
+		ImageLoader loader = new ImageLoader();
+		loader.data = new ImageData[] { img.getImageData()};
+
+		// Save to file
+		FileDialog filer = new FileDialog(new Shell(), SWT.SAVE);
+		filer.setText(Messages.getString("ExportAction.Export_file_4")); //$NON-NLS-1$
+		filer.setFilterExtensions(new String[] { "*.bmp" }); //$NON-NLS-1$
+		filer.setFilterNames(new String[] { Messages.getString("ExportAction.Bitmap_(*.bmp)_6") }); //$NON-NLS-1$
+		String filename = filer.open();
+
+		if (filename != null) {
+			loader.save(filename, SWT.IMAGE_BMP);
+		}
+	}
+
+}
