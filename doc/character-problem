@@ -1,0 +1,9 @@
+Stand der Dinge beim Problem der Sonderzeichen auf Solaris
+----------------------------------------------------------
+
+(falls sich mal jemand damit beschaeftigen will, und fuer mich zum erinnern)
+
+* (nochmal) kleine Test-Programme geschrieben: org.jalgo.tests.CharTest1.java (SWT) und CharTest2.java (Konsole)
+* http://developers.sun.com/dev/gadc/unicode/solaris/ ueberflogen, Auswaehlen von en_US.UTF8  als locale beim Login hilft nicht
+* die hier: http://www.bolthole.com/java/unicode/solaris.html beschriebene Methode, die Datei fnt.properties in der Java-Lib zu ersetzen geht scheinbar auch nicht (waere aber eh ein doofer Weg, weil man im Java-VM-Pfad rumfuschen muss)
+
