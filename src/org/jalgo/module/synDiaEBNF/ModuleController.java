@@ -51,7 +51,7 @@ import org.jalgo.module.synDiaEBNF.gui.CreateSynDiaClickGui;
 import org.jalgo.module.synDiaEBNF.gui.EbnfInputGui;
 import org.jalgo.module.synDiaEBNF.gui.Gui;
 import org.jalgo.module.synDiaEBNF.gui.NormalViewEbnfGui;
-import org.jalgo.module.synDiaEBNF.gui.NormalViewGui;
+import org.jalgo.module.synDiaEBNF.gui.NormalViewEmptyGui;
 import org.jalgo.module.synDiaEBNF.gui.NormalViewSynDiaGui;
 import org.jalgo.module.synDiaEBNF.gui.TransAlgorithmGui;
 import org.jalgo.module.synDiaEBNF.gui.actions.AbortAlgoAction;
@@ -168,8 +168,7 @@ public class ModuleController implements IModeConstants{
 	}
 
 	public void run() {
-		//TODO: save in config-file, if user want's wizard	
-		setMode(START_WITH_WIZARD);
+		setMode(NORMAL_VIEW_EMPTY);
 	}
 
 	/**
@@ -212,7 +211,7 @@ public class ModuleController implements IModeConstants{
 			case NORMAL_VIEW_EMPTY :
 				mode = NORMAL_VIEW_EMPTY;
 				addCreationButtons();
-				gui = new NormalViewGui(comp);
+				gui = new NormalViewEmptyGui(comp, this);
 				break;
 
 			case NORMAL_VIEW_EBNF :
@@ -428,14 +427,6 @@ public class ModuleController implements IModeConstants{
 
 		TransAlgorithm transAlgo = (TransAlgorithm) algo;
 		transAlgo.setAuto(auto);
-	}
-
-	/**
-	 * Starts the wizard.
-	 *
-	 */
-	public void startWizard() {
-		setMode(START_WITH_WIZARD);
 	}
 
 	/**
@@ -801,6 +792,10 @@ public class ModuleController implements IModeConstants{
 			throw new InternalErrorException(cnfExc.getMessage());
 		}
 
+	}
+	
+	public ApplicationWindow getAppWin() {
+		return appWin;		
 	}
 
 }

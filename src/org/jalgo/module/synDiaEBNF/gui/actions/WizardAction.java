@@ -29,6 +29,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Composite;
+import org.jalgo.module.synDiaEBNF.IModeConstants;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
 /**
@@ -54,7 +55,7 @@ public class WizardAction extends Action implements Serializable {
 				parent.getShell(),
 				Messages.getString("WizardAction.Really_start_wizard__4"), //$NON-NLS-1$
 				Messages.getString("WizardAction.Starting_the_wizard_will_destroy_all_you_have_done_with_this_module_up_to_now_!_5"))) { //$NON-NLS-1$
-			mc.startWizard();
+			mc.setMode(IModeConstants.NORMAL_VIEW_EMPTY);
 		} else {
 			return;
 		}
