@@ -61,13 +61,13 @@ public abstract class SynDiaElement
 				//set all inner elements of concatenation to value of this element
 				for (int i = 0;
 					i < (((SynDiaConcatenation) this).getContent()).size();i++) {
-					((SynDiaElement)((SynDiaConcatenation) this).getContent(i)).checkReadingOrder(r);
+					((SynDiaConcatenation) this).getContent(i).checkReadingOrder(r);
 				}
 			} else if (this instanceof SynDiaAlternative) {
 				//set all inner elements of alternative to value of this element
 				for (int i = 0;
 					i < (((SynDiaAlternative) this).getOptions()).size();i++) {
-					((SynDiaElement) ((SynDiaAlternative) this).getOption(i)).checkReadingOrder(r);
+					((SynDiaAlternative) this).getOption(i).checkReadingOrder(r);
 				}
 			} else if (this instanceof SynDiaRepetition) {
 				//set straightAheadElement to value of this element and repeatedElement to inverse
@@ -76,8 +76,8 @@ public abstract class SynDiaElement
 					rInverse = RIGHT_TO_LEFT;
 				else
 					rInverse = LEFT_TO_RIGHT;
-				((SynDiaElement)((SynDiaRepetition) this).getStraightAheadElem()).checkReadingOrder(r);
-				((SynDiaElement)((SynDiaRepetition) this).getRepeatedElem()).checkReadingOrder(rInverse);
+				((SynDiaRepetition) this).getStraightAheadElem().checkReadingOrder(r);
+				((SynDiaRepetition) this).getRepeatedElem().checkReadingOrder(rInverse);
 			}
 		}
 	}

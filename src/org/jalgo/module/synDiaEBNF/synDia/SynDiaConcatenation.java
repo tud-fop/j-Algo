@@ -59,8 +59,7 @@ public class SynDiaConcatenation
 		//read from left-to-right? --> inverse list!
 		if (this.getReadingOrder() == RIGHT_TO_LEFT)
 			return inverse(elements);
-		else
-			return elements;
+		return elements;
 	}
 
 	public SynDiaElement getContent(int num) {
