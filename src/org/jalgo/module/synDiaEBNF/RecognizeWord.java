@@ -83,10 +83,9 @@ public class RecognizeWord extends SynDiaBacktracking implements SynDiaColors,
 	// word
 	// //$NON-NLS-1$
 
-	private SynDiaSystem synDiaDef; // the SynDiaSystem to
-	// work with
-
 	private BackTrackHistory history; // save the steps
+
+	private SynDiaSystem synDiaDef; // the SynDiaSystem to work with
 
 	private SynDiaElement currentElement = null;
 	// current SynDiaElement to go through
@@ -127,6 +126,9 @@ public class RecognizeWord extends SynDiaBacktracking implements SynDiaColors,
 		this.synDiaDef = synDiaDef;
 
 		stack = new Stack();
+		
+		//set correct reading order for all diagrams
+		checkReadingOrder(synDiaDef);
 
 		//trick to set right backgrounds
 		SynDiaVariableBack help = new SynDiaVariableBack(null, synDiaDef

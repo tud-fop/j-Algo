@@ -109,6 +109,9 @@ public class GenerateWord
 		synDiaCanvas = figure;
 		stack = new Stack();
 
+		//set correct reading order for all diagrams
+		checkReadingOrder(synDiaDef);
+		
 		//trick to set right backgrounds
 		SynDiaVariableBack help =
 			new SynDiaVariableBack(null, synDiaDef.getStartElem());

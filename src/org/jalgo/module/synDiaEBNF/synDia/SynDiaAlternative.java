@@ -23,7 +23,7 @@
 /*
  * Created on 17.05.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.synDia;
 
 import java.io.Serializable;
@@ -44,10 +44,10 @@ public class SynDiaAlternative
 	public SynDiaAlternative() {
 		options = new LinkedList();
 	}
-	
+
 	public SynDiaAlternative(AlternativeFigure gfx, LinkedList options) {
-		this.options=options;
-		this.gfx=gfx;
+		this.options = options;
+		this.gfx = gfx;
 	}
 
 	public int getNumOfOptions() {
@@ -79,7 +79,7 @@ public class SynDiaAlternative
 
 	public boolean removeOption(SynDiaElement optionToRemove) {
 		return options.remove(optionToRemove);
-		
+
 	}
 	/**
 	 * @return

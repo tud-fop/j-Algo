@@ -7,12 +7,13 @@ as fast as possible:
 * [DONE] buttons of module don't disappear when module is closed by the user
 * special characters don't work on all platforms (esp. not an solaris) --> view /doc/character-problem
 * solaris: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)
-* bug in backtracking algorithms: work not for concatenations in lower part of repetition
+* [DONE] bug in backtracking algorithms: work not for concatenations in lower part of repetition
 * [mostly DONE] remove try-catch blocks for e.g. Nullpointerexceptions to make debugging possible
 * there are empty catch blocks, handle these exceptions
 * mac os x: gui works only after resizing the main window at least one time
 * mac os x: "Fertigstellen"-button after creation of an ebnf-definition does nothing
 * mac os x: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)  - same bug with solaris
+* bug in trans-algorithm: nullpointer exception when trying to transform something like S={{{abc}}}
 
 
 medium:

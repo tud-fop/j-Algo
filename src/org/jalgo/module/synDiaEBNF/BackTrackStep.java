@@ -29,7 +29,7 @@ import org.jalgo.main.util.Stack;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaElement;
 
 /**
- * This class is a Data Structure which represents a step in the Backtracking Algorithm.
+ * This class is a data structure which represents a step in the backtracking algorithm.
  *
  * @author Babett Schalitz
  */

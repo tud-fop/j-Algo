@@ -27,6 +27,7 @@
 package org.jalgo.module.synDiaEBNF.synDia;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.jalgo.module.synDiaEBNF.gfx.ConcatenationFigure;
@@ -34,8 +35,9 @@ import org.jalgo.module.synDiaEBNF.gfx.ConcatenationFigure;
 /**
  * @author Michael Pradel
  */
-public class SynDiaConcatenation extends SynDiaComposition
-		implements Serializable {
+public class SynDiaConcatenation
+	extends SynDiaComposition
+	implements Serializable {
 
 	private LinkedList elements;
 	private ConcatenationFigure gfx;
@@ -54,12 +56,24 @@ public class SynDiaConcatenation extends SynDiaComposition
 	}
 
 	public LinkedList getContent() {
-		return elements;
+		//read from left-to-right? --> inverse list!
+		if (this.getReadingOrder() == RIGHT_TO_LEFT)
+			return inverse(elements);
+		else
+			return elements;
 	}
 
 	public SynDiaElement getContent(int num) {
-		if (elements.get(num) instanceof SynDiaElement) {
-			return (SynDiaElement) elements.get(num);
+		//read from left-to-right? --> inverse list!
+		if (this.getReadingOrder() == RIGHT_TO_LEFT) {
+			LinkedList elementsInverted = inverse(elements);
+			if (elementsInverted.get(num) instanceof SynDiaElement) {
+				return (SynDiaElement) elementsInverted.get(num);
+			}
+		} else {
+			if (elements.get(num) instanceof SynDiaElement) {
+				return (SynDiaElement) elements.get(num);
+			}
 		}
 		return null;
 	}
@@ -92,6 +106,20 @@ public class SynDiaConcatenation extends SynDiaComposition
 	 */
 	public void setGfx(ConcatenationFigure figure) {
 		gfx = figure;
+	}
+
+	/**
+	 * Inverses a <code>LinkedList</code>.
+	 * @param l The list to invert.
+	 * @return The inverted list.
+	 */
+	private LinkedList inverse(LinkedList l) {
+		LinkedList li = new LinkedList();
+		Iterator i = l.iterator();
+		while (i.hasNext()) {
+			li.addFirst(i.next());
+		}
+		return li;
 	}
 
 }

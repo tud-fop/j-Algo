@@ -20,10 +20,15 @@
 /*
  * Created on 30.04.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+
+import org.jalgo.module.synDiaEBNF.synDia.SynDiaElement;
+import org.jalgo.module.synDiaEBNF.synDia.SynDiaInitial;
+import org.jalgo.module.synDiaEBNF.synDia.SynDiaSystem;
 
 /**
  * Basic class to manage similar methods of the algorithmus to generate a Word or
@@ -41,14 +46,13 @@ public abstract class SynDiaBacktracking implements IAlgorithm, Serializable {
 	public SynDiaBacktracking() {
 	}
 
-
-   /**
-   * @return 	true, if there is a previous element, so you can go a step back in history; 
-   * 			false if not
-   */
-   public boolean hasPreviousHistStep() {
-	   return true;
-   }
+	/**
+	* @return 	true, if there is a previous element, so you can go a step back in history; 
+	* 			false if not
+	*/
+	public boolean hasPreviousHistStep() {
+		return true;
+	}
 
 	/**
 	* @return 	true, if there is a next element, so you can go a step forward in history; 
@@ -93,5 +97,20 @@ public abstract class SynDiaBacktracking implements IAlgorithm, Serializable {
 	*/
 	public void previousHistStep() throws IndexOutOfBoundsException {
 	}
-	
+
+	/**
+	 * Checks and corrects the reading order of all diagrams of the system <code>synDiaDef</code>.
+	 * @param synDiaDef The <code>SynDiaSystem</code> to check.
+	 */
+	protected void checkReadingOrder(SynDiaSystem synDiaDef) {
+		LinkedList synDiaInitials = synDiaDef.getInitialDiagrams();
+		for (int i = 0; i < synDiaInitials.size(); i++) {
+			(
+				(SynDiaElement) ((SynDiaInitial) synDiaInitials.get(i))
+					.getInnerElem())
+					.checkReadingOrder(
+				0);
+		}
+	}
+
 }
