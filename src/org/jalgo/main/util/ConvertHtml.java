@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -20,16 +23,32 @@
 /*
  * Created on 23.04.2004
  */
- 
+
 package org.jalgo.main.util;
+
+import java.util.regex.Pattern;
 
 /**
  * @author Benjamin Scholz
+ * @author Stephan Creutz
  */
 public class ConvertHtml implements ITxtConvert {
-
+	
 	public String convert(String text) {
-		return null;
+		text = Pattern.compile("&").matcher(text).replaceAll("&amp;");
+		text = Pattern.compile("<").matcher(text).replaceAll("&lt;");
+		text = Pattern.compile(">").matcher(text).replaceAll("&gt;");
+		text = Pattern.compile("\"").matcher(text).replaceAll("&quot;");
+		text = Pattern.compile("ä").matcher(text).replaceAll("&auml;");
+		text = Pattern.compile("Ä").matcher(text).replaceAll("&Auml;");
+		text = Pattern.compile("ö").matcher(text).replaceAll("&ouml;");
+		text = Pattern.compile("Ö").matcher(text).replaceAll("&Ouml;");
+		text = Pattern.compile("ü").matcher(text).replaceAll("&uuml;");
+		text = Pattern.compile("Ü").matcher(text).replaceAll("&Uuml;");
+		text = Pattern.compile("ß").matcher(text).replaceAll("&szlig;");
+		return "<html><head><title></title></head>\n<body>\n"
+			+ text
+			+ "\n</body></html>";
 	}
 
 }
