@@ -91,6 +91,14 @@ public class JalgoMain {
 	 * @param cti The tab item, which is closed.
 	 */
 	public void itemClosed(CTabItem cti) {
+		/* Delete menu and toolbar of CTab */
+		if (currentInstance.getMenuManager() != null)
+			currentInstance.getMenuManager().setVisible(false);
+		if (currentInstance.getToolBarManager() != null)
+			currentInstance.getToolBarManager().setVisible(false);
+		appWin.getMenuBarManager().update(true);
+		appWin.getToolBarManager().update(true);
+		/* Remove CTab */
 		openInstances.remove(cti);
 		cti.dispose();
 		if (openInstances.isEmpty()) {
@@ -107,9 +115,9 @@ public class JalgoMain {
 	 */
 	public void itemSelected(CTabItem cti) {
 		//happends only, when program is launched
-		if (openInstances.isEmpty()) 
+		if (openInstances.isEmpty())
 			return;
-		
+
 		//makes current Module-Tool/MenuBar invisible
 		if (currentInstance != null) {
 			if (currentInstance.getMenuManager() != null)
@@ -148,7 +156,8 @@ public class JalgoMain {
 		}
 
 		// Requests a fresh CTabItem from the appWin
-		String ctiText = ((IModuleInfo) knownModuleInfos.get(modNumber)).getName();
+		String ctiText =
+			((IModuleInfo) knownModuleInfos.get(modNumber)).getName();
 		CTabItem cti = appWin.requestNewCTabItem(ctiText, new Image(appWin.getShell().getDisplay(), "pix/jalgo-file.png")); //$NON-NLS-1$
 
 		// Create a new instance of a module.
@@ -176,7 +185,8 @@ public class JalgoMain {
 		}
 
 		// Set CTabItem selected
-		appWin.getCTabFolder().setSelection(appWin.getCTabFolder().getItemCount() - 1);
+		appWin.getCTabFolder().setSelection(
+			appWin.getCTabFolder().getItemCount() - 1);
 
 		// Activate the modules Menu
 		currentInstance.getMenuManager().setVisible(true);
@@ -188,9 +198,9 @@ public class JalgoMain {
 
 		// Add module to running instances
 		openInstances.put(cti, currentInstance);
-		
+
 		currentInstance.run();
-		
+
 		return currentInstance;
 	}
 

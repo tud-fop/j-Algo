@@ -4,12 +4,15 @@ as fast as possible:
 * [DONE] opening of file leads to two instances of the module sometimes
 * [DONE] code cleanup concerning module-scanning and module-initialization (for usage with any module, not only 'synDiaEBNF')
 * [DONE] synDiaEBNF: wizard starts, when file is opened
-* buttons of module don't disappear when module is closed by the user
+* [DONE] buttons of module don't disappear when module is closed by the user
 * special characters don't work on all platforms (esp. not an solaris)
 * solaris: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)
 * bug in backtracking algorithms: work not for concatenations in lower part of repetition
 * [mostly DONE] remove try-catch blocks for e.g. Nullpointerexceptions to make debugging possible
 * there are empty catch blocks, handle these exceptions
+* mac os x: gui works only after resizing the main window at least one time
+* mac os x: "Fertigstellen"-button after creation of an ebnf-definition does nothing
+* mac os x: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)  - same bug with solaris
 
 
 medium:
@@ -26,6 +29,7 @@ medium:
 * split translated Strings in 2 portions. Mainprog. and Module
 * remove magic numbers, replace them with describing constant names
 * port to SWT 3
+* implement NewModuleAction.java
 
 
 larger projects:

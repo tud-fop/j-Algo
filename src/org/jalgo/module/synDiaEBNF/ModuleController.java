@@ -67,8 +67,6 @@ import org.jalgo.module.synDiaEBNF.gui.actions.RecognizeWordAction;
 import org.jalgo.module.synDiaEBNF.gui.actions.RightAction;
 import org.jalgo.module.synDiaEBNF.gui.actions.TransAction;
 import org.jalgo.module.synDiaEBNF.gui.actions.WizardAction;
-import org.jalgo.module.synDiaEBNF.startWizard.StartWizard;
-import org.jalgo.module.synDiaEBNF.startWizard.StartWizardDialog;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaSystem;
 
 /**
@@ -91,9 +89,6 @@ public class ModuleController implements IModeConstants{
 	private Composite comp;
 	private Gui gui;
 	private Figure synDias;
-
-	private StartWizard startWizard;
-	private StartWizardDialog startWizardDialog;
 
 	// buttons created in main program
 	private SaveAction saveAction;
@@ -175,7 +170,6 @@ public class ModuleController implements IModeConstants{
 	 * Set what the module should do, so the GUI is updated completely and algorithms are initiated if necessary.
 	 * @param mode 
 	 *   NO_MODE_SET - no mode set 
-	 *   START_WITH_WIZARD - start with wizard
 	 *   NORMAL_VIEW_EMPTY - normal view (nothing is displayed, user can choose what to do next)
 	 *   NORMAL_VIEW_EBNF - normal view (ebnf is displayed, user can start trans() )
 	 *   NORMAL_VIEW_SYNDIA - normal view (syndia is displayed, user can start generateWord() or recognizeWord() )
@@ -198,14 +192,6 @@ public class ModuleController implements IModeConstants{
 		switch (newMode) {
 			case NO_MODE_SET :
 				mode = NO_MODE_SET;
-				break;
-
-			case START_WITH_WIZARD :
-				mode = START_WITH_WIZARD;
-				startWizard = new StartWizard(this, appWin);
-				startWizardDialog =
-					new StartWizardDialog(comp.getShell(), startWizard);
-				startWizardDialog.open();
 				break;
 
 			case NORMAL_VIEW_EMPTY :
