@@ -14,7 +14,9 @@ as fast as possible:
 * mac os x: "Fertigstellen"-button after creation of an ebnf-definition does nothing
 * mac os x: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)  - same bug with solaris
 * [DONE] bug in trans-algorithm: nullpointer exception when trying to transform something like S={{{abc}}}
-
+* bug in Backtrack-Algo: if breaked and started new, it remembers the old state! (ben)
+* Wizard: at "Neue EBNF" -> "neue EBNF-Definition der Form...." afterwards the Text is missing (ben)
+* bug in Backtrack-Algo: when I go a little bit forward and backward in 2 SynDias I get a wrong Label in the stack and have and endless loop (ben)
 
 medium:
 #############################
@@ -31,7 +33,16 @@ medium:
 * [DONE] remove magic numbers, replace them with describing constant names
 * port to SWT 3
 * implement NewModuleAction.java
-
+* Info Field: Ordering the authors after who is most active (ben)
+* Info Field: Link to TU-Dresden + TU-Logo (ben)
+* BacktrackAlgo: show the current position when at Alternative (ben)
+* there are 4 Algorithm Buttons for 2 Algorithms (ben)
+* lock the History Buttons in the Overview, after using the Algo (ben)
+* the Warning Window has to be a Dialog Window (as the Questions) (ben)
+* save Syntax Diagramm (ben)
+* flip the Stack (so that it goes from bottom to top) (ben)
+* add the Name of the Author in the TODOs and FIXMEs so that anyone can ask what went wrong (ben)
+* don't waste the std-Output or don't create the error.log. Only one from both (ben)
 
 larger projects:
 #############################
