@@ -59,6 +59,7 @@ public class CreateSynDiaClickGui extends Gui implements Serializable {
 
 	private GraphViewForm form2;
 	private ModuleController mc;
+	private ClickListener form2ClickListener;
 
 	public CreateSynDiaClickGui(Composite parent, ModuleController mc)
 	{
@@ -70,7 +71,8 @@ public class CreateSynDiaClickGui extends Gui implements Serializable {
 
 		form2 = new GraphViewForm(parent, SWT.BORDER);
 		
-/*
+		// TODO is this dead code needed anymore? 
+		/*
 		BorderFlowLayout flowlayout = new BorderFlowLayout(false);
 		flowlayout.setMajorAlignment(BorderFlowLayout.ALIGN_LEFTTOP);
 		flowlayout.setMajorSpacing(0); // Y-Spacing
@@ -78,7 +80,8 @@ public class CreateSynDiaClickGui extends Gui implements Serializable {
 		flowlayout.setStretchMinorAxis(false);
 
 		form2.getPanel().setLayoutManager(flowlayout);
-*/
+		*/
+		
 		ToolbarLayout layout = new ToolbarLayout();
 		layout.setSpacing(50);
 		form2.getPanel().setLayoutManager(layout);
@@ -121,9 +124,13 @@ public class CreateSynDiaClickGui extends Gui implements Serializable {
 		form2.setTopCenter(toolbar2);
 		form2.setText(Messages.getString("CreateSynDiaClickGui.Use_the_buttons_below_to_get_a_new_syntax_diagram._1")); //$NON-NLS-1$
 		form2.setImage(new Image(parent.getDisplay(), "./pix/new.gif")); //$NON-NLS-1$
-
-		new ClickListener(form2.getPanel());
-
+		
+		/* - the original code was "new ClickListener(form2.getPanel());" without an assignment
+		 * - didn't understand this because in my way of thinking this would be thrownaway by the
+		 * garbage collector. please enlight me!!!
+		 * Stephan
+		 */
+		form2ClickListener = new ClickListener(form2.getPanel());
 	}
 	
 	public Figure getSynDiaPanel() {
