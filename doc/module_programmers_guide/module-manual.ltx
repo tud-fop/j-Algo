@@ -1,14 +1,10 @@
-\documentclass[12pt]{scrartcl}
+\documentclass[12pt]{article}
 \usepackage{a4wide, listings, url}
-\usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
-
-\title{jAlgo\\Module Programmers Manual}
-\author{jAlgo - Team}
+ 
+\title{J-Algo\\Module Programmers Manual}
+\author{Stephan Creutz, Michael Pradel}
 \date{\today}
-
-% Schnittstelle zum Modul noch nicht sauber, JAlgoMain erzeugt direkt ein
-% konkretes Modul
 
 \newcommand{\code}[1]{\lstinline$#1$}
 
@@ -25,10 +21,13 @@
 \maketitle
 \lstset{basicstyle=\small,language=Java,showstringspaces=false}
 \section{Introduction to jAlgo}
-JAlgo was developed to provide multiple module support. For this reason we created a simple interface. This interface is described in the sections below.\\
+J-Algo was developed to provide multiple module support. Each module should cover one topic (e.g. tree algorithms or EBNF). For this reason we created a simple interface. This interface is described in the sections below.\\
 The software is using the following toolkits: SWT, JFace and Draw2d (see section \ref{seealso}), thus you have to use it too. But it might be possible to write an adapter which makes it possible to use e.g. Swing or something else.
 
 \section{Implementing a module}
+
+To implement a new J-Algo module, create a directory with your modules name in /source/org/jalgo/module. This directory has to contain at least two classes: ModuleConnector.java implementing the interface IModuleConnector and ModuleInfo.java implementing the interface IModuleInfo.\\
+In order to help you to write a new module, there is an minimalistic module called testModule. It is a correctly implemented J-Algo module, but does nothing. You can use it as a skeleton for any new module.
 
 \subsection{IModuleConnector}
 This interface establishes a connection to the main program.
@@ -90,63 +89,67 @@ public interface IModuleConnector {
 }
 \end{lstlisting}
 
-\subsection{ModuleConnector Example}
+\subsection{ModuleConnector from testModule}
 
-% 1. wie wird print() umgesetzt, momentan wird dies am interface vorbei gemacht
-% 2. wie soll das Image realisiert werden, dazu müßte man mindestens ein Device
-% Objekt kennen
+% TODO: wie wird print() umgesetzt, momentan wird dies am interface vorbei gemacht
 \begin{lstlisting}[frame=single,caption={IModuleInfo interface}]
 public class ModuleConnector implements IModuleConnector {
 
-	private IModuleInfo moduleInfo;
-	private ModuleController controller;
+    private ModuleInfo moduleInfo;
 
-	public ModuleConnector(
-		ApplicationWindow appWin,
-		Composite comp,
-		SubMenuManager menu,
-		SubToolBarManager tb,
-		SubStatusLineManager sl) {
-		moduleInfo = new ModuleInfo();
-		controller = new ModuleController(
-					appWin,
-					comp,
-					menu,
-					tb,
-					sl);
-	}
+    private ApplicationWindow appWin;
+    private Composite comp;
+    private SubMenuManager menuManager;
+    private SubToolBarManager toolBarManager;
+    private SubStatusLineManager statusLineManager;
+    
+    public ModuleConnector(
+	ApplicationWindow appWin,
+	Composite comp,
+	SubMenuManager menu,
+	SubToolBarManager tb,
+	SubStatusLineManager sl) {
+	    
+	moduleInfo = new ModuleInfo();
+	    
+	this.appWin = appWin;
+	this.comp = comp;
+	this.menuManager = menu;
+	this.toolBarManager = tb;
+	this.statusLineManager = sl;
+    }
+    
+    public void run() {
+        System.err.println("testModule is running");
+    }
 
-	public void setDataFromFile(ByteArrayInputStream data) {
-		controller.setSerializedData(data);
-	}
+    public void setDataFromFile(ByteArrayInputStream data) {
+        
+    }
 
-	public ByteArrayOutputStream getDataForFile() {
-		return controller.getSerializedData();
-	}
+    public ByteArrayOutputStream getDataForFile() {
+        return null;
+    }
 
-	public void print() {
-	}
+    public void print() {
 
-	public ModuleController getController() {
-		return controller;
-	}
+    }
 
-	public SubMenuManager getMenuManager() {
-		return controller.getMenuManager();
-	}
+    public SubMenuManager getMenuManager() {
+        return menuManager;
+    }
 
-	public SubToolBarManager getToolBarManager() {
-		return controller.getToolBarManager();
-	}
+    public SubToolBarManager getToolBarManager() {
+        return toolBarManager;
+    }
 
-	public SubStatusLineManager getStatusLineManager() {
-		return controller.getStatusLineManager();
-	}
+    public SubStatusLineManager getStatusLineManager() {
+        return statusLineManager;
+    }
 
-	public IModuleInfo getModuleInfo() {
-		return moduleInfo; 
-	}
-
+    public IModuleInfo getModuleInfo() {
+        return moduleInfo;
+    }
 }
 \end{lstlisting}
 
@@ -177,70 +180,76 @@ public interface IModuleInfo {
 }
 \end{lstlisting}
 
-\subsection{ModuleInfo Example}
+\subsection{ModuleInfo from testModule}
 Here is a concrete example for a class implementing the \code{IModuleInfo} interface.
 
 \begin{lstlisting}[frame=single,caption={Sample ModuleInfo Code}]
 public class ModuleInfo implements IModuleInfo {
 
-	private String openFileName;
+    public String getName() {
+        return "testModule";
+    }
 
-	public String getName() {
-		return "Modul Name";
-	}
+    public String getVersion() {
+        return "0.1";
+    }
 
-	public String getVersion() {
-		return "0.1";
-	}
+    public String getAuthor() {
+        return "Your Name";
+    }
 
-	public String getAuthor() {
-		return "Autor(en) ...";
-	}
+    public String getDescription() {
+        return "a module for testing purposes";
+    }
 
-	public String getDescription() {
-		return "Beschreibung";
-	}
+    public ImageDescriptor getLogo() {
+        return ImageDescriptor.createFromFile(null, "pix/new.gif");
+    }
 
-	public Image getLogo() {
-		return null; // this module provides no logo
-	}
+    public String getLicense() {
+        return "GPL";
+    }
 
-	public String getLicense() {
-		return "GNU General Public License";
-	}
-	
-	/**
-	 * Get the filename of the currently opened file.
-	 * @return filename
-	 */
-	public String getOpenFileName() {
-		return openFileName;
-	}
+    public String getOpenFileName() {
+        return null;
+    }
 
-	/**
-	 * Set the filename of the currently opened file.
-	 * @param string filename
-	 */
-	public void setOpenFileName(String string) {
-		openFileName = string;
-	}
+    public void setOpenFileName(String string) {
 
+    }
 }
 \end{lstlisting}
 
-\section{Bind the module to the main program}
-If you finished creating your module, create a ``Jar'' file and put it to ``jalgo/modules''. The main program scans this directory for modules and binds them.
+If this is too easy for you, just have a look at the module called synDiaEBNF ;-) 
 
-\section{Errata}
+\section{Bind the module to the main program}
+Binding a new module to the main program is really easy: You only have to add two lines into the class /src/org/jalgo/main/JalgoMain.java. You should find the method addKnownModules:
+\begin{lstlisting}[frame=single,caption={JalgoMain.addKnownModules()}]
+public void addKnownModules() {
+	try {
+		knownModules.add(ModuleConnector.class);
+		knownModules.add(org.jalgo.module.testModule.ModuleConnector.class);
+		//Add a new ModuleConnector here!!
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	knownModuleInfos.add(new ModuleInfo());
+	knownModuleInfos.add(new org.jalgo.module.testModule.ModuleInfo());
+	//Add a new ModuleInfo here!!
+}
+\end{lstlisting}
+
+Please use the complete path to your classes!\\
+
+\section{Known bugs}
 \begin{itemize}
-\item Because of a bug in the module scanner it is now impossible to load more than 1 module. This bug will be fixed in future versions.
-\item The method \code{public void print()} is now unused and senseless.
+\item The method \code{public void print()} is unused and senseless in the moment.
 \end{itemize}
 
-\section{Reporting Bugs}
-If you find a bug please be so kind to drop us an email (\url{sopra@binaervarianz.de}).
+\section{Reporting bugs}
+If you find a bug please be so kind to drop us an email (\url{j-algo-development@lists.sourceforge.net}).
 
-\section{See Also}\label{seealso}
+\section{See also}\label{seealso}
 To program a module you need information about SWT, JFace and Draw2d. This can be found at \url{http://www.eclipse.org}.\\
 More detailed information can be found in the source code.
 

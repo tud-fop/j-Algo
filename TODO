@@ -13,8 +13,8 @@ as fast as possible:
 medium:
 #############################
 
+* improve usability
 * file name of opened file is not displayed
-* update 'Module programmers guide'
 * swt-actions, images, etc. for modules are in org.jalgo.main.*  (should be in org.jalgo.module... )
 * printing for linux/solaris (depends on gtk)
 * translation into English

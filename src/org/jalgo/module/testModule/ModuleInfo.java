@@ -29,7 +29,7 @@ public class ModuleInfo implements IModuleInfo {
      * @see org.jalgo.main.IModuleInfo#getAuthor()
      */
     public String getAuthor() {
-        return "Michael Pradel";
+        return "Your Name";
     }
 
     /* (non-Javadoc)
