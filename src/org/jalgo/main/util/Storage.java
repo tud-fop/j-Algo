@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -54,7 +57,6 @@ public class Storage {
 		FileInputStream in = null;
 		try {
 			in = new FileInputStream(filename);
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -108,6 +110,7 @@ public class Storage {
 
 			// give outStream to Module
 			ByteArrayInputStream outStream = new ByteArrayInputStream(buf);
+			if (currentInstance == null) throw new NullPointerException("currentInstance is null");
 			currentInstance.setDataFromFile(outStream);
 
 		} catch (IOException e1) {
