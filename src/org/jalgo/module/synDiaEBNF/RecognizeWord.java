@@ -84,7 +84,6 @@ public class RecognizeWord
 	// help diagram which worked at the moment
 
 	private String word = ""; //$NON-NLS-1$
-	private int wordPointer;
 	// always points to the current character in the word (String)
 
 	/**

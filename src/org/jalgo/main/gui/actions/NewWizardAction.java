@@ -27,7 +27,6 @@ import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 import org.jalgo.module.synDiaEBNF.startWizard.StartWizard;
 import org.jalgo.module.synDiaEBNF.startWizard.StartWizardDialog;
-import org.jalgo.module.testModule.ModuleConnector;
 
 /**
  * @author Christopher Friedrich
@@ -36,8 +35,6 @@ public class NewWizardAction extends Action {
 
 	private JalgoWindow win;
 	private Collection knownModules;
-
-	private ModuleConnector modConn;
 
 	public NewWizardAction(JalgoWindow win, Collection knownModules) {
 		this.win = win;

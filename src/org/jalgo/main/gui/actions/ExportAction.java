@@ -33,7 +33,6 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
@@ -43,7 +42,6 @@ import org.eclipse.swt.widgets.Shell;
 public class ExportAction extends Action {
 
 	private IFigure figure;
-	private Control parent;
 
 	public ExportAction(IFigure figure) {
 		this.figure = figure;

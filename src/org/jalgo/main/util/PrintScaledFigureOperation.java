@@ -44,7 +44,6 @@ public static final int USE_LAYOUT = 5;
 
 private int printMode = TILE;
 private Color oldBGColor;
-private IFigure printSource;
 private Rectangle oldBounds;
 
 

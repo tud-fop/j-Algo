@@ -32,8 +32,6 @@ import org.eclipse.draw2d.IFigure;
  * @author Hauke Menges
  */
 public class Animator {
-	private long maxTime;
-
 	
 	/**
 	 * Calculates and displays all animations that are stored in hashMap.

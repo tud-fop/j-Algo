@@ -92,8 +92,7 @@ public class Exporter {
 	 * @return Returns converted DataStream. This Stream may be written to harddisk.
 	 */
 	private DataOutputStream convert() {
-		IConverter converter; // either txt or gfxConverter will be created
-
+		//IConverter converter;  either txt or gfxConverter will be created
 		return null;
 	}
 	

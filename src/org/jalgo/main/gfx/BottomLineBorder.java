@@ -48,7 +48,6 @@ public class BottomLineBorder extends AbstractBorder {
 	public void paint(IFigure figure, Graphics graphics, Insets insets) {
 
 		graphics.setLineWidth(1);
-		Insets inset = new Insets(0);
 		Point startPoint =
 			new Point(
 				getPaintRectangle(figure, insets).getBottomLeft().x,

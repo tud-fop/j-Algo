@@ -104,7 +104,7 @@ public class InputParser extends Parser {
 
 	private class ErrorState extends InputState {
 		public void check(){
-			Token t = (Token) tokenizer.getNextToken();
+			tokenizer.getNextToken();
 			state = errorState;
 		}
 	}

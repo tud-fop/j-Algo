@@ -24,12 +24,10 @@
 package org.jalgo.main.gui.widgets;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jalgo.main.util.Stack;
 
@@ -38,11 +36,7 @@ import org.jalgo.main.util.Stack;
  * @author Christopher Friedrich
  */
 public class StackCanvas extends Composite {
-
-	private Label label;
-
 	private Stack stack;
-
 	private Text textField;
 
 	private void redrawStack() {
@@ -50,7 +44,6 @@ public class StackCanvas extends Composite {
 		textField.setText(""); //$NON-NLS-1$
 		String str = new String();
 		
-		LinkedList l = stack.getContent();
 		Iterator si = stack.getContent().iterator();
 		while (si.hasNext()) {
 			str = (String) si.next() + "\n" + str; //$NON-NLS-1$

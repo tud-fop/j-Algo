@@ -29,7 +29,7 @@ package org.jalgo.main.util;
  * @author Hauke Menges
  */
 public class Timer {
-	private long msStart, msEnd;
+	//private long msStart, msEnd;
 
 	/**
 	 * Initializes the timer.

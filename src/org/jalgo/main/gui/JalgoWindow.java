@@ -42,7 +42,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Widget;
 import org.jalgo.main.IModuleConnector;
 import org.jalgo.main.JalgoMain;
 import org.jalgo.main.gui.actions.AboutAction;
@@ -53,8 +52,6 @@ import org.jalgo.main.gui.actions.NewModuleAction;
 import org.jalgo.main.gui.actions.OpenAction;
 import org.jalgo.main.gui.actions.SaveAction;
 import org.jalgo.main.gui.actions.SaveAsAction;
-import org.jalgo.main.gui.widgets.CustomViewForm;
-import org.jalgo.main.util.Storage;
 import org.jalgo.module.synDiaEBNF.ModuleConnector;
 
 /**
@@ -67,31 +64,14 @@ import org.jalgo.module.synDiaEBNF.ModuleConnector;
 public class JalgoWindow extends ApplicationWindow {
 
 	private JalgoMain parent;
-
 	private Collection knownModules;
-
 	private IModuleConnector currentInstance;
-
 	private LinkedList newActions; // LinkedList of NewActions (one for each
 								   // module)
-
 	private SaveAction saveAction;
-
 	private SaveAsAction saveAsAction;
-
 	private CTabFolder ct;
-
-	private Collection tabWindow;
-
-	private Widget widget;
-
-	private Storage storage;
-
 	private ModuleConnector moduleConnector;
-
-	private Storage storage1;
-
-	private CustomViewForm form1, form2, form3;
 
 	public JalgoWindow(JalgoMain parent) {
 

@@ -34,8 +34,6 @@ import org.jalgo.main.InternalErrorException;
  */
 public class SynDiaException extends InternalErrorException {
 	
-	private String errorMsg;
-	
 	/**
 	 * Constructor that creates a SynDiaException with a short error description.
 	 * 

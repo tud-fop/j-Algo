@@ -33,8 +33,6 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class NormalViewGui extends Gui implements Serializable {
 
-	private Composite mainComp;
-
 	public NormalViewGui(Composite parent) {
 		// TODO: show current SynDia or Ebnf (if not null)
 		super(parent);

@@ -54,7 +54,6 @@ public class TransformSynDia {
 	private LinkedList synVariables= new LinkedList(); // List of SynDiaInitial
 	private HashSet synVariablesSet= new HashSet(); // Set of Labels
 	private HashSet terminalSymbols= new HashSet(); // Strings
-	private SynDiaVariable startElem= null; // decorated StartElem
 	private Figure panel;
 	private SynDiaSystem def;
 

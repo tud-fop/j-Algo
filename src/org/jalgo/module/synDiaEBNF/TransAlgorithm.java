@@ -857,7 +857,6 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 	 */
 	private synchronized void readObject(ObjectInputStream s)
 		throws IOException, ClassNotFoundException {
-		Object o = s.readObject();
 		try {
 			gfxCanvas = (Figure) s.readObject();
 			synDiaSystem = (SynDiaSystem) s.readObject();

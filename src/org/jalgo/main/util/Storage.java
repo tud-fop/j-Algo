@@ -83,7 +83,6 @@ public class Storage {
 			String name = new String(buf);
 			buf = new byte[versionLength];
 			in.read(buf, 0, versionLength);
-			String version = new String(buf);
 			buf = null;
 
 			//get modNumber of module corresponding to this file

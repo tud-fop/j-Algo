@@ -39,7 +39,6 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
@@ -76,10 +75,6 @@ public class ExampleGui extends Gui  implements Serializable{
 	public ExampleGui(Composite parent) {
 
 		super(parent);
-
-		//	Init some colors
-		Color white = new Color(parent.getDisplay(), 255, 255, 255);
-		Color black = new Color(parent.getDisplay(), 0, 0, 0);
 
 		// Generate 3 ViewForms separated by Sashs. The numbering is clockwise.
 		// The Sash are now replaced with Splitters. Splitters are better so juste

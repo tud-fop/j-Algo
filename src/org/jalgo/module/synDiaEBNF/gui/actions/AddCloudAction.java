@@ -34,7 +34,6 @@ import org.jalgo.main.util.ClickCollector;
 import org.jalgo.module.synDiaEBNF.gfx.AlternativeFigure;
 import org.jalgo.module.synDiaEBNF.gfx.CloudFigure;
 import org.jalgo.module.synDiaEBNF.gfx.CompositeSynDiaFigure;
-import org.jalgo.module.synDiaEBNF.gfx.ConcatenationFigure;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaException;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure;
 
@@ -59,9 +58,7 @@ public class AddCloudAction extends Action implements IClickAction {
 	}
 
 	public void performAction(ArrayList items) {
-		ConcatenationFigure cloud;
 		try {
-			cloud = new ConcatenationFigure(3);
 			IFigure help = ((Figure) items.get(0)).getParent();
 			
 			if (help instanceof CloudFigure)

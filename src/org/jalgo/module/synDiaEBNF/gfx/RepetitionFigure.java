@@ -35,7 +35,6 @@ public class RepetitionFigure extends CompositeSynDiaFigure {
 
 	private final int hSpacing = 30;
 	private final int vSpacing = 15;
-	private final int minNumOfInteriorFigures = 2;
 	private SynDiaFigure topFigure, botFigure;
 	private PolylineConnection toTop, fromTop, topToBot, botToTop;
 

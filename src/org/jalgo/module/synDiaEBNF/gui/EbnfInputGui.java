@@ -57,8 +57,6 @@ import org.jalgo.module.synDiaEBNF.ebnf.EbnfParser;
 public class EbnfInputGui extends Gui implements Serializable {
 
 	private Composite mainComp;
-	private Composite rulesOuterContainer;
-	private Composite rulesInnerContainer;
 
 	private Text variablesSet;
 	private Text terminalSymbolsSet;
@@ -66,8 +64,6 @@ public class EbnfInputGui extends Gui implements Serializable {
 	private ArrayList variables;
 	// list of text (String) with variables in rule-lines
 	private ArrayList terms;
-	// list of text (String) with terms in rule-lines
-	private int termsIter = 0;
 
 	public EbnfInputGui(Composite parent, ModuleController mc) {
 
@@ -152,7 +148,7 @@ public class EbnfInputGui extends Gui implements Serializable {
 
 		// Row 4_2
 
-		GridData data4_2 = new GridData(GridData.FILL_HORIZONTAL);
+		//GridData data4_2 = new GridData(GridData.FILL_HORIZONTAL);
 		Composite data4_2_container = new Composite(mainComp, SWT.NULL);
 		GridLayout data4_2_layout = new GridLayout(7, false);
 		data4_2_layout.marginHeight = 0;
@@ -224,7 +220,7 @@ public class EbnfInputGui extends Gui implements Serializable {
 
 		// Row 5_2
 
-		GridData data5_2 = new GridData(GridData.FILL_HORIZONTAL);
+		//GridData data5_2 = new GridData(GridData.FILL_HORIZONTAL);
 		Composite data5_2_container = new Composite(mainComp, SWT.NULL);
 		GridLayout data5_2_layout = new GridLayout(3, false);
 		data5_2_layout.marginHeight = 0;
@@ -242,7 +238,7 @@ public class EbnfInputGui extends Gui implements Serializable {
 
 		// Row 5_2_2
 
-		GridData data5_2_2 = new GridData();
+		//GridData data5_2_2 = new GridData();
 		Label label5_2 = new Label(data5_2_container, SWT.NULL);
 		label5_2.setText(" ::= "); //$NON-NLS-1$
 

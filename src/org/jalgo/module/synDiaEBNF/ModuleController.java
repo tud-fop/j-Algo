@@ -134,8 +134,6 @@ public class ModuleController {
 	private IAlgorithm algo = null;
 	// currently performed algorithm, or null, if no algorithm is performed right now
 
-	private boolean auto = false; // should the algorithm run automatically?
-
 	private int mode = 0;
 	// indicated what the module is doing at this moment (see modes-table in setMode() comment)
 

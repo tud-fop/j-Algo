@@ -40,8 +40,6 @@ public class ConcatenationFigure extends CompositeSynDiaFigure {
 	private final int minNumOfInteriorFigures = 0;
 	private final int hSpacing = 15;
 
-	private int maxHeight = 0;
-
 	private LinkedList innerConn;
 
 	public ConcatenationFigure(int numOfInteriorFigures) {
