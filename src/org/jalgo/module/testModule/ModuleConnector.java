@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -20,7 +23,7 @@
 /*
  * Created on 25.06.2004
  */
- 
+
 package org.jalgo.module.testModule;
 
 import java.io.ByteArrayInputStream;
@@ -41,7 +44,7 @@ import org.jalgo.main.IModuleInfo;
 public class ModuleConnector implements IModuleConnector {
 
 	public ModuleConnector() {
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -80,7 +83,7 @@ public class ModuleConnector implements IModuleConnector {
 	}
 
 	public void print() {
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -88,6 +91,9 @@ public class ModuleConnector implements IModuleConnector {
 	 */
 	public void setDataFromFile(ByteArrayInputStream data) {
 
+	}
+
+	public void run() {
 	}
 
 }

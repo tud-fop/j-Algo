@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -22,7 +25,7 @@
  */
 package org.jalgo.module.testModule;
 
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.main.IModuleInfo;
 
 /**
@@ -30,12 +33,13 @@ import org.jalgo.main.IModuleInfo;
  * 24.06.2004 20:20:00
  */
 public class ModuleInfo implements IModuleInfo {
-	private Image image;
+	private ImageDescriptor image;
 	private String openfile;
-	
+
 	public ModuleInfo() {
-		image = new Image(null, "logo.png");
+		image = ImageDescriptor.createFromFile(null, "logo.png");
 	}
+
 	public String getName() {
 		return "Sample Module Name";
 	}
@@ -52,7 +56,7 @@ public class ModuleInfo implements IModuleInfo {
 		return "This is a sample module which demonstrates how program a module";
 	}
 
-	public Image getLogo() {
+	public ImageDescriptor getLogo() {
 		// supported fileformats are GIF, BMP, JPEG, PNG and TIFF
 		return image;
 	}
