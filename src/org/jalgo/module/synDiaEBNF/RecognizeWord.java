@@ -192,7 +192,7 @@ public class RecognizeWord
 	* 			false if not, therefore the algorithm is ready
 	*/
 	public boolean hasNextStep() {
-		return !(stack.isEmpty());
+		return !stack.isEmpty();
 	}
 
 	/**
@@ -202,7 +202,6 @@ public class RecognizeWord
 	* @exception IndexOutOfBounds   if there is no further step to go
 	*/
 	public void nextHistStep() throws IndexOutOfBoundsException {
-		//throw exception
 		if (!hasNextHistStep()) {
 			throw new IndexOutOfBoundsException("there is no further history step to go"); //$NON-NLS-1$
 		} else {
@@ -232,7 +231,6 @@ public class RecognizeWord
 	* @exception IndexOutOfBounds   if there is no previous step to go
 	*/
 	public void previousHistStep() throws IndexOutOfBoundsException {
-		//throw exeption
 		if (!hasPreviousHistStep()) {
 			throw new IndexOutOfBoundsException("there is no further history step to go back"); //$NON-NLS-1$
 		} else {
@@ -359,9 +357,7 @@ public class RecognizeWord
 	}
 
 	private void BacktrackingLabels(SynDiaElement help, boolean bool) {
-		if (!bool) {
-			remark(help, false);
-		}
+		remark(help, !bool);
 		if (help instanceof SynDiaInitial) {
 
 			currentInitial = (SynDiaInitial) help;
@@ -540,7 +536,7 @@ public class RecognizeWord
 		// refresh the generatedWord
 		generatedWord =
 			generatedWord + (((SynDiaTerminal) currentElem).getLabel());
-		if (!(word.startsWith(generatedWord))) {
+		if (!word.startsWith(generatedWord)) {
 			if (missMatchDialog()) {
 				previousHistStep();
 			} else {
@@ -604,10 +600,8 @@ public class RecognizeWord
 				Messages.getString("RecognizeWord.Word_to_recognize__36"), //$NON-NLS-1$
 				"", //$NON-NLS-1$
 				null);
-		String result = ""; //$NON-NLS-1$
 		if (inDialog.open() != Window.CANCEL) {
-			result = inDialog.getValue();
-			word = result;
+			word = inDialog.getValue();
 		} else {
 			MessageDialog.openError(
 				null,
@@ -655,10 +649,8 @@ public class RecognizeWord
 	}
 
 	private int alternativeDialog(SynDiaAlternative alternative) {
-		LinkedList list;
-		int way;
-		list = alternative.getOptions();
-		way = list.size(); // int of posibile ways
+		LinkedList list = alternative.getOptions();
+		int way = list.size(); // int of posibile ways
 		// ask the user, which way to go on
 		//return the list index of the choosen way
 		int result = 0;

@@ -436,13 +436,8 @@ public class ModuleController {
 			throw new InternalErrorException("trying to set automatically algorithm performance, when trans-algorithm isn't running; checkbox should be invisible!"); //$NON-NLS-1$
 		}
 
-		if (auto) {
-			TransAlgorithm transAlgo = (TransAlgorithm) algo;
-			transAlgo.setAuto(true);
-		} else {
-			TransAlgorithm transAlgo = (TransAlgorithm) algo;
-			transAlgo.setAuto(false);
-		}
+		TransAlgorithm transAlgo = (TransAlgorithm) algo;
+		transAlgo.setAuto(auto);
 	}
 
 	/**
@@ -713,11 +708,7 @@ public class ModuleController {
 	 * tests for each navigation button using has***() and enables or disables it 
 	 */
 	private void testAndSetNavButtons() {
-		if (algo.hasNextStep()) {
-			performNextAction.setEnabled(true);
-		} else {
-			performNextAction.setEnabled(false);
-		}
+		performNextAction.setEnabled(algo.hasNextStep());
 
 		//		history not implemented for Trans-Algo so far ...  START
 		if (algo instanceof TransAlgorithm) {
@@ -727,20 +718,11 @@ public class ModuleController {
 		}
 		//		history not implemented for Trans-Algo so far ...  END
 
-		if (algo.hasNextHistStep()) {
-			rightAction.setEnabled(true);
-			lastAction.setEnabled(true);
-		} else {
-			rightAction.setEnabled(false);
-			lastAction.setEnabled(false);
-		}
-		if (algo.hasPreviousHistStep()) {
-			leftAction.setEnabled(true);
-			firstAction.setEnabled(true);
-		} else {
-			leftAction.setEnabled(false);
-			firstAction.setEnabled(false);
-		}
+		rightAction.setEnabled(algo.hasNextHistStep());
+		lastAction.setEnabled(algo.hasNextHistStep());
+
+		leftAction.setEnabled(algo.hasPreviousHistStep());
+		firstAction.setEnabled(algo.hasPreviousHistStep());
 	}
 
 	private void createStatusLine() {

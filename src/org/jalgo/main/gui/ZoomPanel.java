@@ -29,9 +29,6 @@ import org.eclipse.draw2d.geometry.Translatable;
 
 public class ZoomPanel extends Figure {
 
-	{
-	}
-
 	private float zoom;
 
 	public float getZoom() {

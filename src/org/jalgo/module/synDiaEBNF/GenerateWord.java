@@ -182,7 +182,7 @@ public class GenerateWord
 	* 			false if not, therefore the algorithm is ready
 	*/
 	public boolean hasNextStep() {
-		return !(stack.isEmpty());
+		return !stack.isEmpty();
 	}
 
 	/**
@@ -192,7 +192,6 @@ public class GenerateWord
 	* @exception IndexOutOfBounds   if there is no further step to go
 	*/
 	public void nextHistStep() throws IndexOutOfBoundsException {
-		//throw exception
 		if (!hasNextHistStep()) {
 			throw new IndexOutOfBoundsException("there is no further history step to go"); //$NON-NLS-1$
 		} else {
@@ -220,7 +219,6 @@ public class GenerateWord
 	* @exception IndexOutOfBounds   if there is no previous step to go
 	*/
 	public void previousHistStep() throws IndexOutOfBoundsException {
-		//throw exeption
 		if (!hasPreviousHistStep()) {
 			throw new IndexOutOfBoundsException("there is no further history step to go back"); //$NON-NLS-1$
 		} else {
@@ -285,7 +283,7 @@ public class GenerateWord
 			remark(history.getStepElem(history.getPointer() - 1), true);
 		}
 
-		if ((stack.peak() != null)) {
+		if (stack.peak() != null) {
 
 			//fetch the new SynDiaElement to work with
 			currentElement = (SynDiaElement) stack.pop();
@@ -344,9 +342,7 @@ public class GenerateWord
 	}
 
 	private void BacktrackingLabels(SynDiaElement help, boolean bool) {
-		if (!bool) {
-			remark(help, false);
-		}
+		remark(help, !bool);
 		if (help instanceof SynDiaInitial) {
 			currentInitial = (SynDiaInitial) help;
 			BacktrackingLabels(((SynDiaInitial) help).getInnerElem(), bool);
@@ -428,7 +424,7 @@ public class GenerateWord
 		 ((SynDiaTerminal) currentElem).markObject();
 
 		// refresh the generatedWord
-		generatedWord += (((SynDiaTerminal) currentElem).getLabel());
+		generatedWord += ((SynDiaTerminal) currentElem).getLabel();
 		refreshGeneratedWord(generatedWord);
 	}
 
@@ -470,7 +466,7 @@ public class GenerateWord
 	}
 
 	private void doNextRepetition(SynDiaRepetition currentElem) {
-		if (!(currentElem.isStraightAheadElemDone())) {
+		if (!currentElem.isStraightAheadElemDone()) {
 			// set new Stack Configuration
 			currentElem.setStraightAheadElemDone(true);
 			stack.push(currentElem);
@@ -570,10 +566,8 @@ public class GenerateWord
 	}
 
 	private int alternativeDialog(SynDiaAlternative alternative) {
-		LinkedList list;
-		int way;
-		list = alternative.getOptions();
-		way = list.size(); // int of possible ways
+		LinkedList list = alternative.getOptions();
+		int way = list.size(); // int of possible ways
 		// ask the user, which way to go on
 		//return the list index of the choosen way
 		int result = 0;

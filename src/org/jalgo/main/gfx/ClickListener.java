@@ -77,14 +77,10 @@ public class ClickListener
 	public void mouseEntered(MouseEvent e) {
 		oldColor = this.myFigure.getBackgroundColor();
 		if (ClickCollector.isCollecting()) {
-			try {
-				GfxUtil.getAppShell().setCursor(
-					new Cursor(
-						GfxUtil.getAppShell().getDisplay(),
-						SWT.CURSOR_UPARROW));
-			} catch (NullPointerException exception) {
-				// TODO: Catch Exception
-			}
+			GfxUtil.getAppShell().setCursor(
+				new Cursor(
+					GfxUtil.getAppShell().getDisplay(),
+					SWT.CURSOR_UPARROW));
 			
 			// maybe change this back later on...
 			//this.myFigure.setBackgroundColor(ColorConstants.lightBlue);
@@ -93,15 +89,10 @@ public class ClickListener
 
 	public void mouseExited(MouseEvent e) {
 
-		try {
-			GfxUtil.getAppShell().setCursor(
-				new Cursor(
-					GfxUtil.getAppShell().getDisplay(),
-					SWT.CURSOR_ARROW));
-		} catch (NullPointerException exception) {
-			// TODO Catch Exception
-		}
-
+		GfxUtil.getAppShell().setCursor(
+			new Cursor(
+				GfxUtil.getAppShell().getDisplay(),
+				SWT.CURSOR_ARROW));
 		this.myFigure.setBackgroundColor(oldColor);
 	}
 

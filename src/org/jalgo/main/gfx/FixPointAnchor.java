@@ -53,8 +53,7 @@ public class FixPointAnchor extends AbstractConnectionAnchor {
 	public Point getLocation(Point reference) {
 		Rectangle r = getOwner().getBounds().getCopy();
 		getOwner().translateToAbsolute(r);
-		int off = style;
-		switch (off)
+		switch (style)
 		{
 			case(SWT.TOP):return r.getTop();
 			case(SWT.RIGHT):return r.getRight();

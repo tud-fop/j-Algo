@@ -148,9 +148,7 @@ public class JalgoMain {
 		}
 
 		// Requests a fresh CTabItem from the appWin
-		String ctiText =
-			new String(
-				((IModuleInfo) knownModuleInfos.get(modNumber)).getName());
+		String ctiText = ((IModuleInfo) knownModuleInfos.get(modNumber)).getName();
 		CTabItem cti = appWin.requestNewCTabItem(ctiText, new Image(appWin.getShell().getDisplay(), "pix/jalgo-file.png")); //$NON-NLS-1$
 
 		// Create a new instance of a module.
@@ -178,8 +176,7 @@ public class JalgoMain {
 		}
 
 		// Set CTabItem selected
-		appWin.getCTabFolder().setSelection(
-			appWin.getCTabFolder().getItemCount() - 1);
+		appWin.getCTabFolder().setSelection(appWin.getCTabFolder().getItemCount() - 1);
 
 		// Activate the modules Menu
 		currentInstance.getMenuManager().setVisible(true);

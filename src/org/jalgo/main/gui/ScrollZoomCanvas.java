@@ -119,12 +119,10 @@ public class ScrollZoomCanvas extends FigureCanvas {
 	}
 
 	public IFigure findFigureAt(int x, int y, TreeSearch search) {
-		//
 		return this.zoomPane.findFigureAt(x, y, search);
 	}
 
 	public IFigure findFigureAtExcluding(int x, int y, Collection collection) {
-		//
 		return this.zoomPane.findFigureAtExcluding(x, y, collection);
 	}
 
@@ -133,7 +131,6 @@ public class ScrollZoomCanvas extends FigureCanvas {
 	}
 
 	public Color getZBackgroundColor() {
-		//
 		return this.zoomPane.getBackgroundColor();
 	}
 
@@ -150,27 +147,22 @@ public class ScrollZoomCanvas extends FigureCanvas {
 	}
 
 	public Color getZForegroundColor() {
-		//
 		return this.zoomPane.getForegroundColor();
 	}
 
 	public Insets getZInsets() {
-		//
 		return this.zoomPane.getInsets();
 	}
 
 	public LayoutManager getLayoutManager() {
-		//
 		return this.zoomPane.getLayoutManager();
 	}
 
 	public Color getZLocalBackgroundColor() {
-		//
 		return this.zoomPane.getLocalBackgroundColor();
 	}
 
 	public Color getZLocalForegroundColor() {
-		//
 		return this.zoomPane.getLocalForegroundColor();
 	}
 
@@ -279,12 +271,10 @@ public class ScrollZoomCanvas extends FigureCanvas {
 	}
 
 	public void paint(Graphics graphics) {
-		//
 		this.zoomPane.paint(graphics);
 	}
 
 	public void remove(IFigure figure) {
-		//
 		this.zoomPane.remove(figure);
 	}
 
@@ -359,22 +349,18 @@ public class ScrollZoomCanvas extends FigureCanvas {
 	}
 
 	public void setFont(Font f) {
-		//
 		this.zoomPane.setFont(f);
 	}
 
 	public void setForegroundColor(Color c) {
-		//
 		this.zoomPane.setForegroundColor(c);
 	}
 
 	public void setLayoutManager(LayoutManager lm) {
-		//
 		zoomPane.setLayoutManager(lm);
 	}
 
 	public void setLocation(Point p) {
-		//
 		this.zoomPane.setLocation(p);
 	}
 

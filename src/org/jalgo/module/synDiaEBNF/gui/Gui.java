@@ -40,14 +40,10 @@ public abstract class Gui implements Serializable {
 	}
 	
 	public void dispose() {
-		try {
-			Control[] children = parent.getChildren();
+		Control[] children = parent.getChildren();
 		
-			for (int i=0; i<children.length; i++) {
-				children[i].dispose();
-			}
-		} catch (NullPointerException e) {
-			e.printStackTrace();
+		for (int i=0; i<children.length; i++) {
+			children[i].dispose();
 		}
 	}
 

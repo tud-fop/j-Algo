@@ -44,24 +44,22 @@ public class AboutModuleAction extends Action {
 	}
 
 	public void run() {
-
-		try {
-			MessageBox dia = new MessageBox(win.getShell());
-			// TODO: find out why win.getCurrentInstance() == null
-			dia.setText(Messages.getString("AboutModuleAction.About_jAlgo-Module_4")); //$NON-NLS-1$
-			dia
-				.setMessage(
-					win.getCurrentInstance().getModuleInfo().getName()
-					+ Messages.getString("AboutModuleAction._-_Version__5") //$NON-NLS-1$
-					+ win.getCurrentInstance().getModuleInfo().getVersion()
-					+ "\n\n" //$NON-NLS-1$
-					+ win.getCurrentInstance().getModuleInfo().getDescription()
-					+ "\n\n" //$NON-NLS-1$
-					+ Messages.getString("AboutModuleAction.Author___n_8") //$NON-NLS-1$
-					+ win.getCurrentInstance().getModuleInfo().getAuthor()
-					+ "\n\n" //$NON-NLS-1$
-					+ Messages.getString("AboutModuleAction.License___n_10") //$NON-NLS-1$
-					+ win.getCurrentInstance().getModuleInfo().getLicense()
+		MessageBox dia = new MessageBox(win.getShell());
+		// TODO: find out why win.getCurrentInstance() == null
+		dia.setText(Messages.getString("AboutModuleAction.About_jAlgo-Module_4")); //$NON-NLS-1$
+		dia
+			.setMessage(
+				win.getCurrentInstance().getModuleInfo().getName()
+				+ Messages.getString("AboutModuleAction._-_Version__5") //$NON-NLS-1$
+				+ win.getCurrentInstance().getModuleInfo().getVersion()
+				+ "\n\n" //$NON-NLS-1$
+				+ win.getCurrentInstance().getModuleInfo().getDescription()
+				+ "\n\n" //$NON-NLS-1$
+				+ Messages.getString("AboutModuleAction.Author___n_8") //$NON-NLS-1$
+				+ win.getCurrentInstance().getModuleInfo().getAuthor()
+				+ "\n\n" //$NON-NLS-1$
+				+ Messages.getString("AboutModuleAction.License___n_10") //$NON-NLS-1$
+				+ win.getCurrentInstance().getModuleInfo().getLicense()
 			/*
 				+ "(c) Copyright jAlgo-Team 2004.  All rights reserved.\n"
 				+ "Visit http://www.inf.tu-dresden.de/~swt04-p1\n"
@@ -76,13 +74,8 @@ public class AboutModuleAction extends Action {
 				+ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
 				+ "GNU General Public License for more details."
 				*/
-			);
-			dia.open();
-		} catch (NullPointerException e) {
-			System.out.println(e);
-			e.printStackTrace();
-		}
-
+		);
+		dia.open();
 	}
 
 }
