@@ -2,7 +2,6 @@ as fast as possible:
 #############################
 
 * special characters don't work on all platforms (esp. not an solaris)
-* buttons in toolbar of module ebnf-syndias appear twice sometimes
 * opening of file leads to two instances of the module sometimes
 * file name of opened file is not displayed
 * solaris: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)

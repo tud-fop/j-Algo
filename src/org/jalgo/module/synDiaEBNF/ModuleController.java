@@ -20,7 +20,7 @@
 /*
  * Created on 20.04.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF;
 
 import java.io.ByteArrayInputStream;
@@ -173,9 +173,7 @@ public class ModuleController {
 		createActions();
 		createMenu();
 		addWizardButton();
-		createToolBar();
-		disableSaveButtons();
-		disableNavButtons();
+		addNavButtons();
 
 		// Create StatusLine
 		this.statusLineManager = statusLineManager;
@@ -298,8 +296,8 @@ public class ModuleController {
 						(TextCanvas) ((BackTrackingAlgoGui) gui).getWord(),
 						synDiaSystem);
 				enableNavButtons();
-				addAbortAlgoButton();
 				testAndSetNavButtons();
+				addAbortAlgoButton();
 				break;
 
 			case GENERATE_WORD_ALGO :
@@ -316,8 +314,8 @@ public class ModuleController {
 						(TextCanvas) ((BackTrackingAlgoGui) gui).getWord(),
 						synDiaSystem);
 				enableNavButtons();
-				addAbortAlgoButton();
 				testAndSetNavButtons();
+				addAbortAlgoButton();
 				break;
 
 			default :
@@ -376,7 +374,7 @@ public class ModuleController {
 		if (mode != TRANS_ALGO)
 			throw new InternalErrorException("EBNF_SynDia; ModuleController: performAll() was called, when trans-algorithm was not running"); //$NON-NLS-1$
 
-		((TransAlgorithm) algo).autoTransAll();
+		 ((TransAlgorithm) algo).autoTransAll();
 		testAndSetNavButtons();
 	}
 
@@ -529,7 +527,7 @@ public class ModuleController {
 		} else if (algo instanceof RecognizeWord) {
 			((RecognizeWord) algo).finalTasks();
 			setMode(NORMAL_VIEW_SYNDIA);
-		} else if (algo instanceof GenerateWord){
+		} else if (algo instanceof GenerateWord) {
 			((GenerateWord) algo).finalTasks();
 			setMode(NORMAL_VIEW_SYNDIA);
 		} else {
@@ -541,6 +539,10 @@ public class ModuleController {
 
 	private void leaveMode(int oldMode) {
 		switch (oldMode) {
+			case NORMAL_VIEW_EMPTY :
+				removeCreationButtons();
+				break;
+			
 			case NORMAL_VIEW_EBNF :
 				removeTransButton();
 				disableSaveButtons();
@@ -548,7 +550,6 @@ public class ModuleController {
 
 			case NORMAL_VIEW_SYNDIA :
 				removeBacktrackingButtons();
-				disableSaveButtons();
 				break;
 
 			case TRANS_ALGO :
@@ -585,23 +586,8 @@ public class ModuleController {
 		menu.add(transAction);
 		menu.add(generateWordAction);
 		menu.add(recognizeWordAction);
-		
-		menuManager.insertBefore("help", menu); //$NON-NLS-1$
-	}
 
-	private void createToolBar() {
-		firstAction = new FirstAction(this);
-		toolBarManager.add(firstAction);
-		leftAction = new LeftAction(this);
-		toolBarManager.add(leftAction);
-		rightAction = new RightAction(this);
-		toolBarManager.add(rightAction);
-		lastAction = new LastAction(this);
-		toolBarManager.add(lastAction);
-		toolBarManager.add(new Separator());
-		performNextAction = new PerformNextAction(this);
-		toolBarManager.add(performNextAction);
-		toolBarManager.add(new Separator());
+		menuManager.insertBefore("help", menu); //$NON-NLS-1$
 	}
 
 	private void addCreationButtons() {
@@ -685,6 +671,16 @@ public class ModuleController {
 		menuManager.update(false);
 	}
 
+	private void addNavButtons() {
+		toolBarManager.add(firstAction);
+		toolBarManager.add(leftAction);
+		toolBarManager.add(rightAction);
+		toolBarManager.add(lastAction);
+		toolBarManager.add(new Separator());
+		toolBarManager.add(performNextAction);
+		toolBarManager.add(new Separator());
+	}
+
 	private void enableSaveButtons() {
 		saveAction.setEnabled(true);
 		saveAsAction.setEnabled(true);
@@ -723,8 +719,6 @@ public class ModuleController {
 			performNextAction.setEnabled(false);
 		}
 
-		
-
 		//		history not implemented for Trans-Algo so far ...  START
 		if (algo instanceof TransAlgorithm) {
 			rightAction.setEnabled(false);
@@ -754,23 +748,34 @@ public class ModuleController {
 
 	private void createActions() {
 		abortAlgoAction = new AbortAlgoAction(this);
+		abortAlgoAction.setEnabled(false);
 		createEbnfAction = new CreateEbnfAction(this, comp);
 		createEbnfAction.setEnabled(false);
 		createSynDiaAction = new CreateSynDiaAction(this, comp);
 		createSynDiaAction.setEnabled(false);
 		firstAction = new FirstAction(this);
+		firstAction.setEnabled(false);
 		generateWordAction = new GenerateWordAction(this);
 		generateWordAction.setEnabled(false);
 		lastAction = new LastAction(this);
+		lastAction.setEnabled(false);
 		leftAction = new LeftAction(this);
+		leftAction.setEnabled(false);
 		performAllAction = new PerformAllAction(this);
+		performAllAction.setEnabled(false);
 		performNextAction = new PerformNextAction(this);
+		performNextAction.setEnabled(false);
 		recognizeWordAction = new RecognizeWordAction(this);
 		recognizeWordAction.setEnabled(false);
 		rightAction = new RightAction(this);
+		rightAction.setEnabled(false);
 		transAction = new TransAction(this);
 		transAction.setEnabled(false);
 		wizardAction = new WizardAction(this, comp);
+		wizardAction.setEnabled(true);
+
+		saveAction.setEnabled(false);
+		saveAsAction.setEnabled(false);
 	}
 
 	private ByteArrayOutputStream serialize() {
@@ -831,8 +836,7 @@ public class ModuleController {
 			throw new InternalErrorException(IOExc.getMessage());
 
 		} catch (ClassNotFoundException cnfExc) {
-			java.lang.System.err.println(
-				"Error while loading, please see error.log for more details."); //$NON-NLS-1$
+			java.lang.System.err.println("Error while loading, please see error.log for more details."); //$NON-NLS-1$
 			throw new InternalErrorException(cnfExc.getMessage());
 		}
 
