@@ -3,19 +3,10 @@
 \usepackage[latin1]{inputenc}
  
 \title{J-Algo\\Module Programmers Manual}
-\author{Stephan Creutz, Michael Pradel}
+\author{Stephan Creutz \and Michael Pradel}
 \date{\today}
 
 \newcommand{\code}[1]{\lstinline$#1$}
-
-% Synopsis
-% Description
-% Examples
-% Overview
-% Authors
-% Reporting Bugs
-% See Also
-% Copyright
 
 \begin{document}
 \maketitle
@@ -160,23 +151,23 @@ The class which implements this interface provides some basic information about 
 import org.eclipse.swt.graphics.Image;
 
 public interface IModuleInfo {
-	public abstract String getName();
-	public abstract String getVersion();
-	public abstract String getAuthor();
-	public abstract String getDescription();
-	public abstract ImageDescriptor getLogo();
-	public abstract String getLicense();
+	public String getName();
+	public String getVersion();
+	public String getAuthor();
+	public String getDescription();
+	public ImageDescriptor getLogo();
+	public String getLicense();
 	
 	/**
 	 * Get the filename of the currently opened file.
 	 * @return filename
 	 */
-	public abstract String getOpenFileName();
+	public String getOpenFileName();
 	/**
 	 * Set the filename of the currently opened file.
 	 * @param string filename
 	 */
-	public abstract void setOpenFileName(String string);
+	public void setOpenFileName(String string);
 }
 \end{lstlisting}
 
@@ -215,7 +206,6 @@ public class ModuleInfo implements IModuleInfo {
     }
 
     public void setOpenFileName(String string) {
-
     }
 }
 \end{lstlisting}
@@ -228,13 +218,15 @@ Binding a new module to the main program is really easy: You only have to add tw
 public void addKnownModules() {
 	try {
 		knownModules.add(ModuleConnector.class);
-		knownModules.add(org.jalgo.module.testModule.ModuleConnector.class);
+		knownModules.add(
+			org.jalgo.module.testModule.ModuleConnector.class);
 		//Add a new ModuleConnector here!!
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
 	knownModuleInfos.add(new ModuleInfo());
-	knownModuleInfos.add(new org.jalgo.module.testModule.ModuleInfo());
+	knownModuleInfos.add(
+		new org.jalgo.module.testModule.ModuleInfo());
 	//Add a new ModuleInfo here!!
 }
 \end{lstlisting}
@@ -254,4 +246,3 @@ To program a module you need information about SWT, JFace and Draw2d. This can b
 More detailed information can be found in the source code.
 
 \end{document}
-
