@@ -194,21 +194,18 @@ public class GenerateWord
 	public void nextHistStep() throws IndexOutOfBoundsException {
 		if (!hasNextHistStep()) {
 			throw new IndexOutOfBoundsException("there is no further history step to go"); //$NON-NLS-1$
-		} else {
-
-			restoreStep(history.getNextHistoryStep());
-			refreshGeneratedWord(generatedWord);
-
-			//MAKE ready and controll if it works
-			if (currentElement instanceof SynDiaTerminal) {
-				redoNextTerm((SynDiaTerminal) currentElement);
-			} else if (
-				currentElement instanceof SynDiaVariable) { //SynDiaVariable
-				redoNextVariable((SynDiaVariable) currentElement);
-			} else if (currentElement instanceof SynDiaVariableBack) {
-				//SynDiaVariable
-				redoNextVariableBack((SynDiaVariableBack) currentElement);
-			}
+		}
+		restoreStep(history.getNextHistoryStep());
+		refreshGeneratedWord(generatedWord);
+		//MAKE ready and controll if it works
+		if (currentElement instanceof SynDiaTerminal) {
+			redoNextTerm((SynDiaTerminal) currentElement);
+		} else if (
+			currentElement instanceof SynDiaVariable) { //SynDiaVariable
+			redoNextVariable((SynDiaVariable) currentElement);
+		} else if (currentElement instanceof SynDiaVariableBack) {
+			//SynDiaVariable
+			redoNextVariableBack((SynDiaVariableBack) currentElement);
 		}
 	}
 
@@ -221,54 +218,53 @@ public class GenerateWord
 	public void previousHistStep() throws IndexOutOfBoundsException {
 		if (!hasPreviousHistStep()) {
 			throw new IndexOutOfBoundsException("there is no further history step to go back"); //$NON-NLS-1$
-		} else {
-			restoreStep(history.getLastHistoryStep());
+		}
+		restoreStep(history.getLastHistoryStep());
+		refreshGeneratedWord(generatedWord);
+
+		stack.push(currentElement);
+
+		//mark the right algorithm Text-field
+		algoTxtCanvas.demarkAll();
+		algoTxtCanvas.mark(3); //legal way
+
+		if (currentElement instanceof SynDiaTerminal) {
+			// mark the SynDiaTerminal
+			 ((SynDiaTerminal) currentElement).remarkObject(false);
+
+			// refresh the generatedWord
 			refreshGeneratedWord(generatedWord);
+		} else if (currentElement instanceof SynDiaVariable) {
+			//SynDiaVariable Jump in in the next step
 
-			stack.push(currentElement);
+			// mark the currentElem
+			 ((SynDiaVariable) currentElement).remarkObject(false);
 
-			//mark the right algorithm Text-field
-			algoTxtCanvas.demarkAll();
-			algoTxtCanvas.mark(3); //legal way
+			// remove correspondent backtracking label on StackCanvas
+			stackCanvas.pop();
 
-			if (currentElement instanceof SynDiaTerminal) {
-				// mark the SynDiaTerminal
-				 ((SynDiaTerminal) currentElement).remarkObject(false);
+			// restore Backtracking diagram to set Background
+			colorTheDiagram(
+				((SynDiaVariable) currentElement)
+					.getHelpCopy()
+					.getParentInitial()
+					.getGfx());
 
-				// refresh the generatedWord
-				refreshGeneratedWord(generatedWord);
-			} else if (currentElement instanceof SynDiaVariable) {
-				//SynDiaVariable Jump in in the next step
+			// MAKE first Connection??? 
+		} else if (currentElement instanceof SynDiaVariableBack) {
+			//SynDiaVariableBackjump out!
 
-				// mark the currentElem
-				 ((SynDiaVariable) currentElement).remarkObject(false);
-
-				// remove correspondent backtracking label on StackCanvas
-				stackCanvas.pop();
-
-				// restore Backtracking diagram to set Background
-				colorTheDiagram(
-					((SynDiaVariable) currentElement)
-						.getHelpCopy()
-						.getParentInitial()
-						.getGfx());
-
-				// MAKE first Connection??? 
-			} else if (currentElement instanceof SynDiaVariableBack) {
-				//SynDiaVariableBackjump out!
-
-				// display correspondent backtracking label on StackCanvas
-				if (((SynDiaVariableBack) currentElement).getOriginal()
-					!= null) {
-					stackCanvas.push(
-						"" //$NON-NLS-1$
-							+ (((SynDiaVariableBack) currentElement)
-								.getOriginal()
-								.getBacktrackingLabel()));
-				}
-			} else {
-				//previousHistStep();
+			// display correspondent backtracking label on StackCanvas
+			if (((SynDiaVariableBack) currentElement).getOriginal()
+				!= null) {
+				stackCanvas.push(
+					"" //$NON-NLS-1$
+						+ (((SynDiaVariableBack) currentElement)
+							.getOriginal()
+							.getBacktrackingLabel()));
 			}
+		} else {
+			//previousHistStep();
 		}
 	}
 
@@ -421,10 +417,10 @@ public class GenerateWord
 		algoTxtCanvas.mark(4); //SynDiaTerminal
 
 		// mark the SynDiaTerminal
-		 ((SynDiaTerminal) currentElem).markObject();
+		 currentElem.markObject();
 
 		// refresh the generatedWord
-		generatedWord += ((SynDiaTerminal) currentElem).getLabel();
+		generatedWord += currentElem.getLabel();
 		refreshGeneratedWord(generatedWord);
 	}
 
@@ -438,11 +434,11 @@ public class GenerateWord
 
 		// set internal Stack config 
 		stack.push(currentElem.getHelpCopy()); // save to go back
-		stack.push(((SynDiaVariable) currentElem).getStartElem());
+		stack.push(currentElem.getStartElem());
 
 		// display correspondent backtracking label on StackCanvas
 		stackCanvas.push(
-			"" + ((SynDiaVariable) currentElem).getBacktrackingLabel()); //$NON-NLS-1$
+			"" + currentElem.getBacktrackingLabel()); //$NON-NLS-1$
 
 		// change diagram colors in Initial
 
@@ -473,7 +469,7 @@ public class GenerateWord
 			stack.push(currentElem.getStraightAheadElem());
 		} else { //StraightAheadElem already done
 			currentElem.setStraightAheadElemDone(false);
-			if (repetionDialog((SynDiaRepetition) currentElem)) {
+			if (repetionDialog(currentElem)) {
 				// go into the Repetition 
 				stack.push(currentElem);
 				stack.push(currentElem.getRepeatedElem());
@@ -485,7 +481,7 @@ public class GenerateWord
 	private void doNextAlternative(SynDiaAlternative currentElem) {
 		stack.push(
 			currentElem.getOption(
-				alternativeDialog((SynDiaAlternative) currentElem)));
+				alternativeDialog(currentElem)));
 		performNextStep();
 	}
 
@@ -505,11 +501,11 @@ public class GenerateWord
 		algoTxtCanvas.mark(4); //SynDiaTerminal
 
 		// mark the SynDiaTerminal
-		 ((SynDiaTerminal) currentElem).markObject();
+		 currentElem.markObject();
 
 		// refresh the generatedWord
 		generatedWord =
-			generatedWord + (((SynDiaTerminal) currentElem).getLabel());
+			generatedWord + currentElem.getLabel();
 		refreshGeneratedWord(generatedWord);
 	}
 
@@ -524,10 +520,10 @@ public class GenerateWord
 
 		// set internal Stack config 
 		stack.push(currentElem); // save to go back
-		stack.push(((SynDiaVariable) currentElem).getStartElem());
+		stack.push(currentElem.getStartElem());
 
 		// display correspondent backtracking label on StackCanvas
-		stackCanvas.push(((SynDiaVariable) currentElem).getLabel());
+		stackCanvas.push(currentElem.getLabel());
 
 		// change diagram colors in Initial
 	}
@@ -595,13 +591,12 @@ public class GenerateWord
 			}
 			if ((result > 0) && (result <= way)) {
 				return result - 1;
-			} else {
-				MessageDialog.openError(
-					null,
-					Messages.getString("GenerateWord.Warning_37"), //$NON-NLS-1$
-					Messages.getString("GenerateWord.Please_use_a_value_between_1_and__38") + way + "."); //$NON-NLS-1$ //$NON-NLS-2$
-				result = 0;
 			}
+			MessageDialog.openError(
+				null,
+				Messages.getString("GenerateWord.Warning_37"), //$NON-NLS-1$
+				Messages.getString("GenerateWord.Please_use_a_value_between_1_and__38") + way + "."); //$NON-NLS-1$ //$NON-NLS-2$
+			result = 0;
 		}
 		return 0;
 	}
