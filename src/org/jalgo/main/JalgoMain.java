@@ -76,10 +76,12 @@ public class JalgoMain {
 	public void addKnownModules() {
 		try {
 			knownModules.add(ModuleConnector.class);
+			knownModules.add(org.jalgo.module.testModule.ModuleConnector.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		knownModuleInfos.add(new ModuleInfo());
+		knownModuleInfos.add(new org.jalgo.module.testModule.ModuleInfo());
 	}
 
 	/**
