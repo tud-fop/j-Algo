@@ -108,21 +108,21 @@ public class JalgoWindow extends ApplicationWindow {
 
 		final JalgoMain jalgo = this.parent;
 		
+		// code used in swt 2.1 and deprecated when using swt 3.0
 		ct = new CTabFolder(parent, SWT.FLAT);
 		ct.addCTabFolderListener(new CTabFolderAdapter() {
 			public void itemClosed(CTabFolderEvent event) {
 				jalgo.itemClosed((CTabItem) event.item);
 			}
 		});
-/*		Replacement for depriciated code above. Uncomment if using
- * 		SWT-3.x of Eclipse 3.x
- */
-//		ct = new CTabFolder(parent, SWT.FLAT);
-//		ct.addCTabFolder2Listener(new CTabFolder2Adapter() {
-//			public void itemClosed(CTabFolderEvent event) {
-//				jalgo.itemClosed((CTabItem) event.item);
-//			}
-//		});
+
+		// replacement for deprecated code above (to use with swt 3.0)
+		/*ct = new CTabFolder(parent, SWT.FLAT);
+		ct.addCTabFolder2Listener(new CTabFolder2Adapter() {
+			public void itemClosed(CTabFolderEvent event) {
+				jalgo.itemClosed((CTabItem) event.item);
+			}
+		});*/
 		
 		ct.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
