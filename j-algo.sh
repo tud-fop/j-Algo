@@ -1,12 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # this is UN*X startscript for JAlgo
-# Stephan
+# Stephan Creutz
 
 CLASSPATH="runtime:extlibs/jface.jar:extlibs/boot.jar:extlibs/runtime.jar:\
 extlibs/draw2d.jar"
 MAINCLASS="org.jalgo.main.Jalgo"
 
-UNAME=$(uname -s)
+UNAME=`uname -s`
 
 if [ "$UNAME" = "Linux" ]; then
 	CLASSPATH="$CLASSPATH:extlibs/linux/swt.jar:extlibs/linux/swt-pi.jar"
@@ -16,9 +16,8 @@ elif [ "$UNAME" = "SunOS" ] ; then
 	SYSTEM_PROPERTIES="java.library.path=extlibs/solaris"
 fi
 	
-JAVAVERSION=$(java -version 2>&1 | head -n 1 | cut -d' ' -f3 | \
-	sed -e 's/^\"\([0-9]\+\)\.\([0-9]\+\)\.\([0-9]\+\)_.*\"$/\1\2\3/')
-# this regex is ugly but it is the only portable solution
+JAVAVERSION=`java -version 2>&1 | head -n 1 | cut -d' ' -f3 | cut -d\" -f2 | \
+	sed -e 's/\.//g' | cut -d_ -f1`
 
 if [ "$JAVAVERSION" -lt "140" ] ; then
 	echo "You need Java 1.4.0 or higher" > /dev/stderr
@@ -26,4 +25,3 @@ if [ "$JAVAVERSION" -lt "140" ] ; then
 fi
 
 exec java -D$SYSTEM_PROPERTIES -classpath "$CLASSPATH" $MAINCLASS "$@"
-
