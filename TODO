@@ -24,6 +24,8 @@ medium:
 * improve i18n identical strings should be writen once not 3 or 4 times....
 * remove duplicated code
 * split translated Strings in 2 portions. Mainprog. and Module
+* remove magic numbers, replace them with describing constant names
+* port to SWT 3
 
 
 larger projects:
