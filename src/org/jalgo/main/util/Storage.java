@@ -63,9 +63,8 @@ public class Storage {
 
 		try {
 			// is it a valid jalgo-file?
-			buf = new byte[new String("jalgo").getBytes().length]; //$NON-NLS-1$
-			in.read(buf, 0, new String("jalgo").getBytes().length); //$NON-NLS-1$
-
+			buf = new byte["jalgo".getBytes().length]; //$NON-NLS-1$
+			in.read(buf, 0, "jalgo".getBytes().length); //$NON-NLS-1$
 			if (!(new String(buf).equals("jalgo"))) { //$NON-NLS-1$
 				Shell shell = new Shell();
 				MessageDialog.openError(shell, Messages.getString("Storage.Could_not_open_file_4"), //$NON-NLS-1$
@@ -112,9 +111,14 @@ public class Storage {
 			ByteArrayInputStream outStream = new ByteArrayInputStream(buf);
 			if (currentInstance == null) throw new NullPointerException("currentInstance is null");
 			currentInstance.setDataFromFile(outStream);
-
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return true;
@@ -153,7 +157,7 @@ public class Storage {
 
 		try {
 			// Write Header
-			out.write((new String("jalgo")).getBytes()); //$NON-NLS-1$
+			out.write("jalgo".getBytes()); //$NON-NLS-1$
 			out.write(nameLength);
 			out.write(versionLength);
 			out.write(
@@ -168,8 +172,14 @@ public class Storage {
 			// Write module data
 			out.write(Jalgo.getCurrentModule().getDataForFile().toByteArray());
 
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return true;

@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -35,10 +38,8 @@ import org.jalgo.main.gui.widgets.StyledTextViewForm;
  * @author Michael Pradel
  */
 public class NormalViewSynDiaGui extends Gui {
-
-	Composite parent;
-	StyledTextViewForm tupleForm;
-	GraphViewForm synDiaForm;
+	private StyledTextViewForm tupleForm;
+	private GraphViewForm synDiaForm;
 
 	public NormalViewSynDiaGui(Composite parent) {
 		super(parent);

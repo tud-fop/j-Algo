@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -151,12 +154,11 @@ public class Stack implements Serializable {
 	 */
 	public String toString() {
 		if (content.size() == 0)
-			return new String();
-			 
-		String str = new String();
-		ListIterator it = content.listIterator();
+			return "";
 		
-		str += it.toString();
+		ListIterator it = content.listIterator();
+		String str = it.toString();
+		
 		while (it.hasNext())
 			str += it.next().toString();
 		

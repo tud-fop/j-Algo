@@ -83,7 +83,7 @@ public class SynDiaDoneAction extends Action {
 
 		while (i < children.size()) {
 			o = children.get(i);
-			if (!o.equals(null)) {
+			if (o != null) {
 				children.addAll(((Figure) o).getChildren());
 				i++;
 			} else

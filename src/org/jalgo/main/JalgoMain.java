@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -24,6 +27,7 @@
 package org.jalgo.main;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -49,9 +53,16 @@ public class JalgoMain {
 	private JalgoWindow appWin;
 
 	private LinkedList knownModules;
+
 	// LinkedList of Class object with IModuleConnectors
-	private LinkedList knownModuleInfos; // LinkedList of IModulesInfos
-	private HashMap openInstances; // key = CTabItem, value = IModuleConnector
+	private LinkedList knownModuleInfos; // LinkedList
+								   // of
+								   // IModulesInfos
+
+	private HashMap openInstances; // key = CTabItem,
+							     // value =
+							     // IModuleConnector
+
 	private IModuleConnector currentInstance;
 
 	public JalgoMain() {
@@ -71,7 +82,9 @@ public class JalgoMain {
 
 	/**
 	 * Is called, when the specified tab item is closed.
-	 * @param cti The tab item, which is closed.
+	 * 
+	 * @param cti
+	 *                       The tab item, which is closed.
 	 */
 	public void itemClosed(CTabItem cti) {
 		/* Delete menu and toolbar of CTab */
@@ -94,7 +107,8 @@ public class JalgoMain {
 
 	/**
 	 * Set currentInstance to corresponding CTabItem
-	 * @param cti 
+	 * 
+	 * @param cti
 	 */
 	public void itemSelected(CTabItem cti) {
 		//happends only, when program is launched
@@ -104,16 +118,19 @@ public class JalgoMain {
 		//makes current Module-Tool/MenuBar invisible
 		if (currentInstance != null) {
 			if (currentInstance.getMenuManager() != null)
-				currentInstance.getMenuManager().setVisible(false);
+				currentInstance.getMenuManager().setVisible(
+						false);
 			if (currentInstance.getToolBarManager() != null)
-				currentInstance.getToolBarManager().setVisible(false);
+				currentInstance.getToolBarManager().setVisible(
+						false);
 		}
 
 		currentInstance = (IModuleConnector) openInstances.get(cti);
 
 		//makes Module-Tool/MenuBar from new tab's module visible
 		if (currentInstance == null) {
-			throw new InternalErrorException("itemSelected() called, but new tab item's module is null");
+			throw new InternalErrorException(
+					"itemSelected() called, but new tab item's module is null");
 		}
 		if (currentInstance.getMenuManager() != null)
 			currentInstance.getMenuManager().setVisible(true);
@@ -126,50 +143,62 @@ public class JalgoMain {
 
 	/**
 	 * Creates a new instance of the specified module.
-	 * @param modNumber Number of new module in <code>knownModules</code> starting with 0.
+	 * 
+	 * @param modNumber
+	 *                       Number of new module in <code>knownModules</code>
+	 *                       starting with 0.
 	 * @return
 	 */
 	public IModuleConnector newInstance(int modNumber) {
 		// Makes current Module-Tool/MenuBar invisible
 		if (currentInstance != null) {
 			if (currentInstance.getMenuManager() != null)
-				currentInstance.getMenuManager().setVisible(false);
+				currentInstance.getMenuManager().setVisible(
+						false);
 			if (currentInstance.getToolBarManager() != null)
-				currentInstance.getToolBarManager().setVisible(false);
+				currentInstance.getToolBarManager().setVisible(
+						false);
 		}
 
 		// Requests a fresh CTabItem from the appWin
-		String ctiText =
-			((IModuleInfo) knownModuleInfos.get(modNumber)).getName();
-		CTabItem cti = appWin.requestNewCTabItem(ctiText, new Image(appWin.getShell().getDisplay(), "pix/jalgo-file.png")); //$NON-NLS-1$
+		String ctiText = ((IModuleInfo) knownModuleInfos.get(modNumber))
+				.getName();
+		CTabItem cti = appWin.requestNewCTabItem(ctiText, new Image(
+				appWin.getShell().getDisplay(),
+				"pix/jalgo-file.png")); //$NON-NLS-1$
 
 		// Create a new instance of a module.
-		Class constrArgs[] =
-			new Class[] {
-				ApplicationWindow.class,
-				Composite.class,
-				SubMenuManager.class,
+		Class constrArgs[] = new Class[] { ApplicationWindow.class,
+				Composite.class, SubMenuManager.class,
 				SubToolBarManager.class,
 				SubStatusLineManager.class };
-		Object[] args =
-			new Object[] {
+		Object[] args = new Object[] {
 				appWin,
 				(Composite) cti.getControl(),
 				new SubMenuManager(appWin.getMenuBarManager()),
-				new SubToolBarManager(appWin.getToolBarManager()),
-				new SubStatusLineManager(appWin.getTheStatusLineManager())};
+				new SubToolBarManager(appWin
+						.getToolBarManager()),
+				new SubStatusLineManager(appWin
+						.getTheStatusLineManager()) };
 		try {
-			Constructor constr =
-				((Class) knownModules.get(modNumber)).getConstructor(
-					constrArgs);
-			currentInstance = (IModuleConnector) constr.newInstance(args);
-		} catch (Exception e) {
+			Constructor constr = ((Class) knownModules
+					.get(modNumber))
+					.getConstructor(constrArgs);
+			currentInstance = (IModuleConnector) constr
+					.newInstance(args);
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
 
 		// Set CTabItem selected
 		appWin.getCTabFolder().setSelection(
-			appWin.getCTabFolder().getItemCount() - 1);
+				appWin.getCTabFolder().getItemCount() - 1);
 
 		// Activate the modules Menu
 		currentInstance.getMenuManager().setVisible(true);
@@ -201,7 +230,7 @@ public class JalgoMain {
 
 	/**
 	 * Takes content from module and stores it in currently used file
-	 * 
+	 *  
 	 */
 	public boolean saveFile() {
 		if (currentInstance.getModuleInfo().getOpenFileName() == null) {
@@ -209,7 +238,8 @@ public class JalgoMain {
 			a.run();
 			return true;
 		}
-		return saveFileAs(currentInstance.getModuleInfo().getOpenFileName());
+		return saveFileAs(currentInstance.getModuleInfo()
+				.getOpenFileName());
 	}
 
 	/**
@@ -222,12 +252,11 @@ public class JalgoMain {
 	}
 
 	/**
-	 * Opens file 
+	 * Opens file
 	 * 
 	 * @param filename
 	 */
 	public boolean openFile(String filename) {
-
 		return Storage.load(filename);
 	}
 
@@ -242,21 +271,21 @@ public class JalgoMain {
 		}
 		return Storage.load(filename);
 	}
-	
+
 	/**
-	 * Fills <code>knownModules</code> and <code>knownModuleInfos</code> with content.
-	 * Module programmers have to alter this method and add their module here! 
+	 * Fills <code>knownModules</code> and <code>knownModuleInfos</code>
+	 * with content. Module programmers have to alter this method and add
+	 * their module here!
 	 */
 	private void addKnownModules() {
-		try {
-			knownModules.add(ModuleConnector.class);
-			knownModules.add(org.jalgo.module.testModule.ModuleConnector.class);
-			//Add a new ModuleConnector here!!
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		knownModules.add(ModuleConnector.class);
+		knownModules
+				.add(org.jalgo.module.testModule.ModuleConnector.class);
+		//Add a new ModuleConnector here!!
+
 		knownModuleInfos.add(new ModuleInfo());
-		knownModuleInfos.add(new org.jalgo.module.testModule.ModuleInfo());
+		knownModuleInfos
+				.add(new org.jalgo.module.testModule.ModuleInfo());
 		//Add a new ModuleInfo here!!
 	}
 }

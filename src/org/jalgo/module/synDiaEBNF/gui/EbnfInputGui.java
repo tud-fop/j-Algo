@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -499,8 +502,8 @@ public class EbnfInputGui extends Gui implements Serializable {
 		Iterator varIter = variables.iterator();
 		Iterator termsIter = terms.iterator();
 		while (varIter.hasNext() && termsIter.hasNext()) {
-			String var = new String();
-			String term = new String();
+			String var = "";
+			String term = "";
 			var = ((String) varIter.next());
 			term = ((String) termsIter.next());
 			rules.put(var, term);

@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -24,6 +27,7 @@
 package org.jalgo.main;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -34,17 +38,20 @@ import java.util.GregorianCalendar;
 public class InternalErrorException extends IllegalArgumentException {  
 
 	public InternalErrorException(String s) {
-
-		//super(s);
+		FileWriter errorFile = null;
+		
 		try {
-			FileWriter errorFile = new FileWriter("error.log", true);  // append to file //$NON-NLS-1$
+			errorFile = new FileWriter("error.log", true);  // append to file //$NON-NLS-1$
 			Calendar calendar = new GregorianCalendar();
 			errorFile.write(calendar.getTime() +  ": " + s + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
-			errorFile.close();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.err.println(e);
+		} finally {
+			try {
+				if (errorFile != null) errorFile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-
 	}
-
 }

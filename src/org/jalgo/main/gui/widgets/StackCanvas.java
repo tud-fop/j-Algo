@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -42,7 +45,7 @@ public class StackCanvas extends Composite {
 	private void redrawStack() {
 		
 		textField.setText(""); //$NON-NLS-1$
-		String str = new String();
+		String str = "";
 		
 		Iterator si = stack.getContent().iterator();
 		while (si.hasNext()) {
