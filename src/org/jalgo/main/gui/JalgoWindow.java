@@ -24,7 +24,7 @@
 package org.jalgo.main.gui;
 
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.LinkedList;
 
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -49,6 +49,7 @@ import org.jalgo.main.gui.actions.AboutAction;
 import org.jalgo.main.gui.actions.AboutModuleAction;
 import org.jalgo.main.gui.actions.ExitAction;
 import org.jalgo.main.gui.actions.NewAction;
+import org.jalgo.main.gui.actions.NewModuleAction;
 import org.jalgo.main.gui.actions.OpenAction;
 import org.jalgo.main.gui.actions.SaveAction;
 import org.jalgo.main.gui.actions.SaveAsAction;
@@ -68,19 +69,31 @@ public class JalgoWindow extends ApplicationWindow {
 	private Collection knownModules;
 	private IModuleConnector currentInstance;
 
+	private LinkedList newActions; // LinkedList of NewActions (one for each module)
 	private SaveAction saveAction;
 	private SaveAsAction saveAsAction;
 
+	private CTabFolder ct;
+	private Collection tabWindow;
+	private Widget widget;
+	private AboutWindow aboutWindow;
+	private Storage storage;
+	private ModuleConnector moduleConnector;
+	private Storage storage1;
+	private AboutWindow aboutWindow1;
+	private CustomViewForm form1, form2, form3;
+
 	public JalgoWindow(
-		JalgoMain parent,
-		Collection knownModules,
-		IModuleConnector currentInstance) {
+		JalgoMain parent) {
 
 		super(null);
 
 		this.parent = parent;
-		this.knownModules = knownModules;
-		this.currentInstance = currentInstance;
+		this.knownModules = parent.getKnownModules();
+		this.currentInstance = parent.getCurrentInstance();
+		
+		newActions = new LinkedList();
+		createNewActions();
 
 		saveAction = new SaveAction(this);
 		saveAction.setEnabled(false);
@@ -92,24 +105,6 @@ public class JalgoWindow extends ApplicationWindow {
 		addToolBar(SWT.WRAP | SWT.FLAT);
 		addStatusLine();
 	}
-
-	private CTabFolder ct;
-
-	private Collection tabWindow;
-
-	private Widget widget;
-
-	private AboutWindow aboutWindow;
-
-	private Storage storage;
-
-	private ModuleConnector moduleConnector;
-
-	private Storage storage1;
-
-	private AboutWindow aboutWindow1;
-
-	private CustomViewForm form1, form2, form3;
 
 	protected Control createContents(Composite parent) {
 
@@ -141,19 +136,12 @@ public class JalgoWindow extends ApplicationWindow {
 	 */
 	protected MenuManager createMenuManager() {
 
-		// ** new_menu **
-
-		NewAction na;
+		// ** new_menu (is in file_menu)**
 
 		MenuManager new_menu = new MenuManager(Messages.getString("JalgoWindow.&New_3")); //$NON-NLS-1$
-		new_menu.add(new NewAction(this));
-		new_menu.add(new Separator());
 
-		Iterator it = knownModules.iterator();
-		while (it.hasNext()) {
-			na = new NewAction(this);
-			na.setText((String) it.next());
-			new_menu.add(na);
+		for (int i = 0; i < newActions.size(); i++) {
+			new_menu.add((NewAction) newActions.get(i));
 		}
 
 		// ** file_menu **
@@ -188,10 +176,7 @@ public class JalgoWindow extends ApplicationWindow {
 
 		ToolBarManager toolbar = new ToolBarManager(style);
 
-		NewAction newact = new NewAction(this);
-		//newact.xxx();
-		//newact.setMenuCreator(new MenuCreator());
-		toolbar.add(newact);
+		toolbar.add(new NewModuleAction(parent));
 		toolbar.add(new OpenAction(this));
 		toolbar.add(new Separator());
 		toolbar.add(saveAction);
@@ -249,8 +234,6 @@ public class JalgoWindow extends ApplicationWindow {
 		return parent.openFile(filename);
 	}
 
-	/* **  ** */
-
 	public boolean openFile(String filename, boolean useCurrentInstance) {
 		return parent.openFile(filename, useCurrentInstance);
 	}
@@ -277,6 +260,12 @@ public class JalgoWindow extends ApplicationWindow {
 
 	public IModuleConnector getCurrentInstance() {
 		return currentInstance;
+	}
+
+	private void createNewActions() {
+		for (int i = 0; i < parent.getKnownModuleInfos().size(); i++) {
+			newActions.add(new NewAction(parent, i));
+		}
 	}
 
 }

@@ -47,14 +47,13 @@ public class ModuleConnector implements IModuleConnector {
 	 * @see IModuleConnector
 	 */
 	public ModuleConnector(
-		boolean startWizard,
 		ApplicationWindow appWin,
 		Composite comp,
 		SubMenuManager menu,
 		SubToolBarManager tb,
 		SubStatusLineManager sl) {
 		moduleInfo = new ModuleInfo();
-		controller = new ModuleController(startWizard, (ModuleInfo)moduleInfo, appWin, comp, menu, tb, sl);
+		controller = new ModuleController((ModuleInfo)moduleInfo, appWin, comp, menu, tb, sl);
 	}
 
 	/**

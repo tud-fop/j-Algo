@@ -24,31 +24,28 @@
 package org.jalgo.main.gui.actions;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.jalgo.main.gui.JalgoWindow;
-import org.jalgo.module.testModule.ModuleConnector;
+import org.jalgo.main.IModuleInfo;
+import org.jalgo.main.JalgoMain;
 
 /**
- * @author Cornelius Hald
  * @author Michael Pradel
  */
 public class NewAction extends Action {
 
-	private JalgoWindow win;
+	private JalgoMain main;
+	private int modNumber;
 
-	private ModuleConnector modConn;
+	public NewAction(JalgoMain main, int modNumber) {
+		this.main = main;
+		this.modNumber = modNumber;
 
-	public NewAction(JalgoWindow win) {
-		this.win = win;
-
-		setText(Messages.getString("NewAction.EBNF_and_syntactical_diagrams_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("NewAction.Load_new_instance_2")); //$NON-NLS-1$
-		setImageDescriptor(ImageDescriptor.createFromFile(null, "pix/new.gif")); //$NON-NLS-1$
+		setText( ( (IModuleInfo) (main.getKnownModuleInfos().get(modNumber)) ).getName() ); 
+		setToolTipText(( (IModuleInfo) (main.getKnownModuleInfos().get(modNumber)) ).getDescription()); 
+		setImageDescriptor(( (IModuleInfo) (main.getKnownModuleInfos().get(modNumber)) ).getLogo());
 	}
 
 	public void run() {
-		// Start Module
-		win.getParent().newInstance("synDiaEBNF"); //$NON-NLS-1$
+		main.newInstance(modNumber);
 	}
 
 }

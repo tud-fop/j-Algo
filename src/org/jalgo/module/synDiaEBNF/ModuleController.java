@@ -149,7 +149,6 @@ public class ModuleController {
 	 * @param statusLineManager the modules <code>StatusLineManager</code>
 	 */
 	public ModuleController(
-		boolean startWizard,
 		ModuleInfo moduleInfo,
 		ApplicationWindow appWin,
 		Composite comp,
@@ -179,11 +178,8 @@ public class ModuleController {
 		this.statusLineManager = statusLineManager;
 		createStatusLine();
 
-		if (startWizard) {
-			setMode(START_WITH_WIZARD);
-		} else {
-			setMode(NORMAL_VIEW_EMPTY);
-		}
+		// TODO: save in config-file, if user want's wizard
+		setMode(START_WITH_WIZARD);
 	}
 
 	/**

@@ -20,7 +20,7 @@
 /*
  * Created on 19.04.2004
  */
- 
+
 package org.jalgo.main.util;
 
 import java.io.ByteArrayInputStream;
@@ -28,14 +28,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.jalgo.main.IModuleConnector;
+import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.Jalgo;
 
 /**
- * @author Hauke Menges
+ * @author Hauke Menges, Michael Pradel
  */
 public class Storage {
 
@@ -64,10 +66,8 @@ public class Storage {
 
 			if (!(new String(buf).equals("jalgo"))) { //$NON-NLS-1$
 				Shell shell = new Shell();
-				MessageDialog.openError(
-					shell,
-					Messages.getString("Storage.Could_not_open_file_4"), //$NON-NLS-1$
-					Messages.getString("Storage.File_not_valid_5")); //$NON-NLS-1$
+				MessageDialog.openError(shell, Messages.getString("Storage.Could_not_open_file_4"), //$NON-NLS-1$
+				Messages.getString("Storage.File_not_valid_5")); //$NON-NLS-1$
 				shell.dispose();
 				return false;
 			}
@@ -86,9 +86,22 @@ public class Storage {
 			String version = new String(buf);
 			buf = null;
 
+			//get modNumber of module corresponding to this file
+			int modNumber = -1;
+			LinkedList moduleInfos = Jalgo.getJalgoMain().getKnownModuleInfos();
+			for (int i = 0; i < moduleInfos.size(); i++) {
+				if (((IModuleInfo) moduleInfos.get(i)).getName().equals(name))
+					modNumber = i;
+			}
+			if (modNumber < 0) {
+				Shell shell = new Shell();
+				MessageDialog.openError(shell, "Cannot open file", "Could not find a J-Algo module for this file.");
+				shell.dispose();
+				return false;
+			}
+
 			if (currentInstance == null)
-				currentInstance =
-					Jalgo.getJalgoMain().newInstance(name + " " + version, false); //$NON-NLS-1$
+				currentInstance = Jalgo.getJalgoMain().newInstance(modNumber); //$NON-NLS-1$
 
 			// Read module data
 			buf = new byte[in.available()];
@@ -106,7 +119,6 @@ public class Storage {
 	}
 
 	public static boolean save(String filename) {
-
 		// Generate Headers
 		int nameLength =
 			Jalgo
@@ -130,10 +142,9 @@ public class Storage {
 
 		} catch (FileNotFoundException e) {
 			Shell shell = new Shell();
-			MessageDialog.openError(
-				shell,
-				Messages.getString("Storage.Could_not_write_file_7"), //$NON-NLS-1$
-				Messages.getString("Storage.Could_not_write_the_file._n_8") + //$NON-NLS-1$				Messages.getString("Storage.Maybe_out_of_diskspace_9")); //$NON-NLS-1$
+			MessageDialog.openError(shell, Messages.getString("Storage.Could_not_write_file_7"), //$NON-NLS-1$
+			Messages.getString("Storage.Could_not_write_the_file._n_8") + //$NON-NLS-1$
+			Messages.getString("Storage.Maybe_out_of_diskspace_9")); //$NON-NLS-1$
 
 			e.printStackTrace();
 		}

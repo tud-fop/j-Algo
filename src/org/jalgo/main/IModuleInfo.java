@@ -23,7 +23,7 @@
  
 package org.jalgo.main;
 
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
  * @author Stephan Creutz
@@ -33,7 +33,7 @@ public interface IModuleInfo {
 	public abstract String getVersion();
 	public abstract String getAuthor();
 	public abstract String getDescription();
-	public abstract Image getLogo();
+	public abstract ImageDescriptor getLogo();
 	public abstract String getLicense();
 	
 	/**

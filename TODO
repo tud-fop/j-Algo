@@ -1,9 +1,9 @@
 as fast as possible:
 #############################
 
+* [DONE] opening of file leads to two instances of the module sometimes
+* [DONE] code cleanup concerning module-scanning and module-initialization (for usage with any module, not only 'synDiaEBNF')
 * special characters don't work on all platforms (esp. not an solaris)
-* opening of file leads to two instances of the module sometimes
-* file name of opened file is not displayed
 * solaris: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)
 * bug in backtracking algorithms: work not for concatenations in lower part of repetition
 
@@ -11,6 +11,7 @@ as fast as possible:
 medium:
 #############################
 
+* file name of opened file is not displayed
 * printing for linux/solaris (depends on gtk)
 * translation into English
 * trans()-algorithm "backwards"

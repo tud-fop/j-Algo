@@ -22,7 +22,7 @@
 */
 package org.jalgo.module.synDiaEBNF;
 
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.main.IModuleInfo;
 
 /**
@@ -40,7 +40,7 @@ public class ModuleInfo implements IModuleInfo {
 
 	/**
 	 * @see IModuleInfo#getName()
-	 */
+	 */ 
 	public String getName() {
 		return Messages.getString("ModuleInfo.EBNF_und_Syntaxdiagramme_1"); //$NON-NLS-1$
 	}
@@ -74,8 +74,8 @@ public class ModuleInfo implements IModuleInfo {
 	/**
 	 * @see IModuleInfo#getLogo()
 	 */
-	public Image getLogo() { // TODO: design logo and provide it here as an org.eclipse.swt.graphics.Image
-		return null;
+	public ImageDescriptor getLogo() { // TODO: design logo and provide it here as an org.eclipse.swt.graphics.Image
+		return ImageDescriptor.createFromFile(null, "pix/new.gif");
 	}
 
 	/**
