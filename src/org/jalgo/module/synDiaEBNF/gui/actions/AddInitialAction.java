@@ -87,7 +87,7 @@ public class AddInitialAction extends Action implements IClickAction {
 				Iterator it = labelList.iterator();
 
 				while (it.hasNext()) {
-					if (result.equals((String) it.next()))
+					if (result.equals(it.next()))
 						errorInList = true;
 				}
 

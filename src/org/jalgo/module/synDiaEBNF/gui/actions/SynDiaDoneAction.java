@@ -123,8 +123,7 @@ public class SynDiaDoneAction extends Action {
 		{
 			a=0;
 			for(j=0; j<initial.size();j++)
-				if (initial.get(j).equals(variables.get(i))) ;
-				else a++;
+				if (!initial.get(j).equals(variables.get(i)))  a++;
 			if(a==initial.size()){
 				MessageDialog.openError(new Shell(),Messages.getString("SynDiaDoneAction.Warning_8"),Messages.getString("SynDiaDoneAction.There_is_no_definition_for_9")+variables.get(i)); //$NON-NLS-1$ //$NON-NLS-2$
 				return; 
