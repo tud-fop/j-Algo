@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -14,7 +17,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /*
@@ -37,32 +39,35 @@ import java.util.regex.Pattern;
  */
 public class EbnfTokenizer extends Tokenizer implements IEbnfTokenConstants {
 	private final String REGEX_WHITESPACE = "\\s+"; //$NON-NLS-1$
+
 	private final String REGEX_LEFT_CURLY_BRACKET = "\\\\\\^\\{", //$NON-NLS-1$
-		REGEX_RIGHT_CURLY_BRACKET = "\\\\\\^\\}"; //$NON-NLS-1$
+			REGEX_RIGHT_CURLY_BRACKET = "\\\\\\^\\}"; //$NON-NLS-1$
+
 	private final String REGEX_LEFT_SQUARED_BRACKET = "\\\\\\^\\[", //$NON-NLS-1$
-		REGEX_RIGHT_SQUARED_BRACKET = "\\\\\\^\\]"; //$NON-NLS-1$
+			REGEX_RIGHT_SQUARED_BRACKET = "\\\\\\^\\]"; //$NON-NLS-1$
+
 	private final String REGEX_LEFT_BRACKET = "\\\\\\^\\(", //$NON-NLS-1$
-		REGEX_RIGHT_BRACKET = "\\\\\\^\\)"; //$NON-NLS-1$
+			REGEX_RIGHT_BRACKET = "\\\\\\^\\)"; //$NON-NLS-1$
+
 	private final String REGEX_PIPE = "\\\\\\^\\|"; //$NON-NLS-1$
+
 	private final String REGEX_DOT = "\\."; //$NON-NLS-1$
+
 	private final String REGEX_REST = "."; //$NON-NLS-1$
+
 	private List checkorder;
-	private Integer[] tokenNames =
-		{
-			WHITESPACE,
-			PIPE,
-			LEFT_CURLY_BRACKET,
-			RIGHT_CURLY_BRACKET,
-			LEFT_SQUARED_BRACKET,
-			RIGHT_SQUARED_BRACKET,
-			LEFT_BRACKET,
-			RIGHT_BRACKET,
-			DOT };
+
+	private Integer[] tokenNames = { WHITESPACE, PIPE, LEFT_CURLY_BRACKET,
+			RIGHT_CURLY_BRACKET, LEFT_SQUARED_BRACKET,
+			RIGHT_SQUARED_BRACKET, LEFT_BRACKET, RIGHT_BRACKET, DOT };
 
 	/**
 	 * Constructor for the EBNF tokenizer
-	 * @param term an EBNF term to tokenize
-	 * @param symbols the defined symbols (V union Sigma)
+	 * 
+	 * @param term
+	 *                       an EBNF term to tokenize
+	 * @param symbols
+	 *                       the defined symbols (V union Sigma)
 	 */
 	public EbnfTokenizer(String term, Set symbols) {
 		super(term);
@@ -77,12 +82,14 @@ public class EbnfTokenizer extends Tokenizer implements IEbnfTokenConstants {
 		checkorder.add(REGEX_RIGHT_BRACKET);
 		checkorder.add(REGEX_DOT);
 		skip = REGEX_WHITESPACE;
-		LinkedList list = new LinkedList(symbols);
-		Collections.sort(list, new StringLengthComparator());
-		for (Iterator it = list.iterator(); it.hasNext();) {
-			quoteRegex((String) it.next());
+		LinkedList unquotedSymbolList = new LinkedList(symbols);
+		Collections.sort(unquotedSymbolList,
+				new StringLengthComparator());
+		LinkedList quotedSymbolList = new LinkedList();
+		for (Iterator it = unquotedSymbolList.iterator(); it.hasNext();) {
+			quotedSymbolList.add(quoteRegex((String) it.next()));
 		}
-		checkorder.addAll(list);
+		checkorder.addAll(quotedSymbolList);
 		checkorder.add(REGEX_REST);
 		tokenize();
 	}
@@ -101,7 +108,8 @@ public class EbnfTokenizer extends Tokenizer implements IEbnfTokenConstants {
 					} else {
 						tokenName = SYMBOL;
 					}
-					if (match((String) checkorder.get(index), tokenName))
+					if (match((String) checkorder
+							.get(index), tokenName))
 						break;
 				}
 			}
@@ -110,20 +118,24 @@ public class EbnfTokenizer extends Tokenizer implements IEbnfTokenConstants {
 
 	/**
 	 * special characters must be quoted for use in regular expressions
-	 * @param unquotedStr the unquoted <code>String</code>
+	 * 
+	 * @param unquotedStr
+	 *                       the unquoted <code>String</code>
 	 * @return a quoted <code>String</code>
 	 */
 	private String quoteRegex(String unquotedStr) {
 		int position = 0;
-		String regexMetaSymbol =
-			"\\^|\\(|\\)|\\[|\\]|\\{|\\}|\\||\\\\|\\$|\\&|\\?|\\*|\\+"; //$NON-NLS-1$
+		String regexMetaSymbol = "\\^|\\(|\\)|\\[|\\]|\\{|\\}|\\||\\\\|\\$|\\&|\\?|\\*|\\+"; //$NON-NLS-1$
 		StringBuffer quotedStr = new StringBuffer(""); //$NON-NLS-1$
-		Matcher matcher = Pattern.compile(regexMetaSymbol).matcher(unquotedStr);
+		Matcher matcher = Pattern.compile(regexMetaSymbol).matcher(
+				unquotedStr);
 		while (matcher.find()) {
-			quotedStr.append(unquotedStr.substring(position, matcher.start()));
+			quotedStr.append(unquotedStr.substring(position,
+					matcher.start()));
 			quotedStr.append("\\" + matcher.group()); //$NON-NLS-1$
 			position = matcher.end();
 		}
+		quotedStr.append(unquotedStr.substring(position));
 		return quotedStr.toString();
 	}
 

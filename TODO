@@ -13,7 +13,7 @@ as fast as possible:
 * mac os x: gui works only after resizing the main window at least one time
 * mac os x: "Fertigstellen"-button after creation of an ebnf-definition does nothing
 * mac os x: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)  - same bug with solaris
-* bug in trans-algorithm: nullpointer exception when trying to transform something like S={{{abc}}}
+* [DONE] bug in trans-algorithm: nullpointer exception when trying to transform something like S={{{abc}}}
 
 
 medium:
