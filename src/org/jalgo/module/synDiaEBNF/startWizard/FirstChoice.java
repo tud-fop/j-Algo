@@ -143,8 +143,10 @@ public class FirstChoice extends WizardPage {
 
 	}
 
+	/*
 	private void updateStatus(String message) {
 		setErrorMessage(message);
 		setPageComplete(message == null);
 	}
+	*/
 }

@@ -23,7 +23,7 @@
  
 package org.jalgo.main.util;
 
-import java.io.DataOutputStream;
+//import java.io.DataOutputStream;
 import java.util.Collection;
 
 import org.eclipse.draw2d.Panel;
@@ -35,9 +35,9 @@ import org.eclipse.draw2d.Panel;
  */
 public class Exporter {
 
-	private static String[] knownTxtConverters = { "txt_Lf", "txt_Cr", "txt_LfCr", "html" };
-	private static String[] knownGfxConverters = { "png", "jpg" };
-	private IConverter converter;
+	//private static String[] knownTxtConverters = { "txt_Lf", "txt_Cr", "txt_LfCr", "html" };
+	//private static String[] knownGfxConverters = { "png", "jpg" };
+	//private IConverter converter;
 	
 	private Panel panel;
 
@@ -85,12 +85,15 @@ public class Exporter {
 			this.panel = panel;
 	}
 
+	/*
 	private void getData() {
 	}
+	*/
 
 	/**
 	 * @return Returns converted DataStream. This Stream may be written to harddisk.
 	 */
+	/*
 	private DataOutputStream convert() {
 		//IConverter converter;  either txt or gfxConverter will be created
 		return null;
@@ -100,6 +103,6 @@ public class Exporter {
 		// opens the Filechooser Dialog
 		return null;
 	}
-
+	*/
 
 }
