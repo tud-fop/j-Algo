@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -75,12 +78,13 @@ public class NormalViewEmptyGui extends Gui {
 		 */
 		group1.setText("EBNF laden");
 		Label openFileImage = new Label(group1, SWT.CENTER);
-		ImageDescriptor img1 =
-			ImageDescriptor.createFromFile(null, "pix/open.gif");
+		ImageDescriptor img1 = ImageDescriptor.createFromFile(null,
+				"pix/open.gif");
 		openFileImage.setImage(img1.createImage());
 
 		Label openFileText = new Label(group1, SWT.WRAP);
-		openFileText.setText(Messages.getString("FirstChoice.Load_sample_EBNF_4")); //$NON-NLS-1$
+		openFileText.setText(Messages
+				.getString("FirstChoice.Load_sample_EBNF_4")); //$NON-NLS-1$
 		openFileText.setLayoutData(gridData);
 
 		Button openFileButton = new Button(group1, SWT.CENTER);
@@ -91,11 +95,12 @@ public class NormalViewEmptyGui extends Gui {
 			}
 
 			public void widgetSelected(SelectionEvent event) {
-				OpenAction oa =
-					new OpenAction((JalgoWindow) mc_final.getAppWin());
+				OpenAction oa = new OpenAction(
+						(JalgoWindow) mc_final
+								.getAppWin());
 				/*
-				 * 'true' tells open action to use current instance of this
-				 * module
+				 * 'true' tells open action to use current
+				 * instance of this module
 				 */
 				oa.run(true);
 			}
@@ -106,12 +111,14 @@ public class NormalViewEmptyGui extends Gui {
 		 */
 		group2.setText("Neue EBNF");
 		Label createEbnfImage = new Label(group2, SWT.CENTER);
-		ImageDescriptor img2 =
-			ImageDescriptor.createFromFile(null, "pix/createEbnf.gif");
+		ImageDescriptor img2 = ImageDescriptor.createFromFile(null,
+				"pix/createEbnf.gif");
 		createEbnfImage.setImage(img2.createImage());
 
 		Label createEbnfText = new Label(group2, SWT.WRAP);
-		createEbnfText.setText(Messages.getString("FirstChoice.Enter_new_EBNF_definition._6")); //$NON-NLS-1$
+		createEbnfText
+				.setText(Messages
+						.getString("FirstChoice.Enter_new_EBNF_definition._6") + "      "); //$NON-NLS-1$
 		createEbnfText.setLayoutData(gridData);
 
 		Button createEbnfButton = new Button(group2, SWT.CENTER);
@@ -131,28 +138,32 @@ public class NormalViewEmptyGui extends Gui {
 		 */
 		group3.setText("Syntax-Diagramm-System erstellen");
 		Label createSynDiaImage = new Label(group3, SWT.CENTER);
-		ImageDescriptor img3 =
-			ImageDescriptor.createFromFile(null, "pix/createSynDia.gif");
+		ImageDescriptor img3 = ImageDescriptor.createFromFile(null,
+				"pix/createSynDia.gif");
 		createSynDiaImage.setImage(img3.createImage());
 
 		Label createSynDiaText = new Label(group3, SWT.WRAP);
-		createSynDiaText.setText(Messages.getString("FirstChoice.Create_SynDia_using_mouse_8")); //$NON-NLS-1$
+		createSynDiaText
+				.setText(Messages
+						.getString("FirstChoice.Create_SynDia_using_mouse_8")); //$NON-NLS-1$
 		createSynDiaText.setLayoutData(gridData);
 
 		Button createSynDiaButton = new Button(group3, SWT.CENTER);
 		createSynDiaButton.setText("Auswählen");
-		createSynDiaButton.addSelectionListener(new SelectionListener() {
+		createSynDiaButton
+				.addSelectionListener(new SelectionListener() {
 
-			public void widgetDefaultSelected(SelectionEvent event) {
-			}
+					public void widgetDefaultSelected(
+							SelectionEvent event) {
+					}
 
-			public void widgetSelected(SelectionEvent event) {
-				mc_final.setMode(IModeConstants.CREATE_SYNDIA);
-			}
-		});
-		
+					public void widgetSelected(
+							SelectionEvent event) {
+						mc_final
+								.setMode(IModeConstants.CREATE_SYNDIA);
+					}
+				});
+
 		parent.redraw();
-
 	}
-
 }

@@ -1,22 +1,22 @@
 as fast as possible:
 #############################
 
-* [DONE] opening of file leads to two instances of the module sometimes
-* [DONE] code cleanup concerning module-scanning and module-initialization (for usage with any module, not only 'synDiaEBNF')
-* [DONE] synDiaEBNF: wizard starts, when file is opened
-* [DONE] buttons of module don't disappear when module is closed by the user
 * special characters don't work on all platforms (esp. not an solaris) --> view /doc/character-problem
 * solaris: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)
 * [DONE] bug in backtracking algorithms: work not for concatenations in lower part of repetition
 * [mostly DONE] remove try-catch blocks for e.g. Nullpointerexceptions to make debugging possible
 * there are empty catch blocks, handle these exceptions
 * mac os x: gui works only after resizing the main window at least one time
+	- this seems to be a general problem with SWT 3 (stephan)
 * mac os x: "Fertigstellen"-button after creation of an ebnf-definition does nothing
 * mac os x: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)  - same bug with solaris
 * [DONE] bug in trans-algorithm: nullpointer exception when trying to transform something like S={{{abc}}}
 * bug in Backtrack-Algo: if breaked and started new, it remembers the old state! (ben)
-* Wizard: at "Neue EBNF" -> "neue EBNF-Definition der Form...." afterwards the Text is missing (ben)
+* [DONE] Wizard: at "Neue EBNF" -> "neue EBNF-Definition der Form...." afterwards the Text is missing (ben)
+	- seems to be a bug in swt, added spaces as a workaround (stephan)
 * bug in Backtrack-Algo: when I go a little bit forward and backward in 2 SynDias I get a wrong Label in the stack and have and endless loop (ben)
+* add a delete button for editing syntactical diagrams (stephan)
+* port to SWT 3 (stephan)
 
 medium:
 #############################
@@ -31,7 +31,6 @@ medium:
 * remove duplicated code
 * split translated Strings in 2 portions. Mainprog. and Module
 * [DONE] remove magic numbers, replace them with describing constant names
-* port to SWT 3
 * implement NewModuleAction.java
 * Info Field: Ordering the authors after who is most active (ben)
 * Info Field: Link to TU-Dresden + TU-Logo (ben)

@@ -53,13 +53,11 @@ public class BackTrackHistory {
 	}
 
 	public BackTrackStep getNextHistoryStep() {
-		historyPointer++;
-		return (BackTrackStep) history.get(historyPointer);
+		return (BackTrackStep) history.get(++historyPointer);
 	}
 
 	public BackTrackStep getLastHistoryStep() {
-		historyPointer--;
-		return (BackTrackStep) history.get(historyPointer);
+		return (BackTrackStep) history.get(--historyPointer);
 	}
 
 	public SynDiaElement getStepElem(int num) {

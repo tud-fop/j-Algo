@@ -17,8 +17,8 @@ The software is using the following toolkits: SWT, JFace and Draw2d (see section
 
 \section{Implementing a module}
 
-To implement a new J-Algo module, create a directory with your modules name in /source/org/jalgo/module. This directory has to contain at least two classes: ModuleConnector.java implementing the interface IModuleConnector and ModuleInfo.java implementing the interface IModuleInfo.\\
-In order to help you to write a new module, there is an minimalistic module called testModule. It is a correctly implemented J-Algo module, but does nothing. You can use it as a skeleton for any new module.
+To implement a new J-Algo module, create a directory with your module name in /source/org/jalgo/module. This directory has to contain at least two classes: ModuleConnector.java implementing the interface IModuleConnector and ModuleInfo.java implementing the interface IModuleInfo.\\
+In order to help you to write a new module, there is an minimalistic module called testModule. It is a correctly implemented J-Algo module, but does almost nothing. You can use it as a skeleton for any new module.
 
 \subsection{IModuleConnector}
 This interface establishes a connection to the main program.
@@ -235,7 +235,7 @@ Please use the complete path to your classes!\\
 
 \section{Known bugs}
 \begin{itemize}
-\item The method \code{public void print()} is unused and senseless in the moment.
+\item The method \code{public void print()} is unused and senseless at the moment.
 \end{itemize}
 
 \section{Reporting bugs}

@@ -488,5 +488,4 @@ public class GenerateWord
 		stack = step.getStackConfig();
 		currentElement = step.getElem();
 	}
-
 }

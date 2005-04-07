@@ -157,11 +157,11 @@ public class Stack implements Serializable {
 			return "";
 		
 		ListIterator it = content.listIterator();
-		String str = it.toString();
+		StringBuffer strBuffer = new StringBuffer(it.toString());
 		
 		while (it.hasNext())
-			str += it.next().toString();
+			strBuffer.append(it.next().toString());
 		
-		return str;		
+		return strBuffer.toString();
 	}
 }

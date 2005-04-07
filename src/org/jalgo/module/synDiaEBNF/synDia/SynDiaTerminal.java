@@ -67,7 +67,7 @@ public class SynDiaTerminal extends SynDiaElement
 		ellipse.highlightExitingConnection(marked);
 	}
 
-	public void markObjekt(boolean marked) {
+	public void highlightObject(boolean marked) {
 		ellipse.highlight(marked);
 	}
 
@@ -81,7 +81,7 @@ public class SynDiaTerminal extends SynDiaElement
 
 	public void unmarkObject(boolean bool) {
 		ellipse.setBackgroundColor(null);
-		markObjekt(bool);
+		highlightObject(bool);
 	}
 
 	/**

@@ -56,7 +56,7 @@ public class SynDiaVariableBack extends SynDiaElement implements Serializable {
 		return original.getStartElem();
 	}
 
-	public void markObjekt() {
+	public void markObject() {
 		original.markObject();
 	}
 

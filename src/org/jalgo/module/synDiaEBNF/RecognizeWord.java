@@ -152,7 +152,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 
 		//show backtracking labels
 		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
-			BacktrackingLabels(synDiaDef.getInitialDiagram(k), true);
+			backtrackingLabels(synDiaDef.getInitialDiagram(k), true);
 		}
 		history = new BackTrackHistory();
 		wordInputDialog();

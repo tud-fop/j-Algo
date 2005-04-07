@@ -107,6 +107,7 @@ public class JalgoWindow extends ApplicationWindow {
 				new Image(parent.getDisplay(), "pix/jalgo.png")); //$NON-NLS-1$
 
 		final JalgoMain jalgo = this.parent;
+		System.out.println(SWT.getVersion());
 		
 		// code used in swt 2.1 and deprecated when using swt 3.0
 		ct = new CTabFolder(parent, SWT.FLAT);

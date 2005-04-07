@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -20,7 +23,7 @@
 /*
  * Created on 29.04.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.ebnf;
 
 import java.io.Serializable;
@@ -31,16 +34,14 @@ import java.util.List;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * symbolize EBNF-terms of the form x=listelem1 listelem2 .... where listelemX 
- * are new terms 
+ * symbolize EBNF-terms of the form x=listelem1 listelem2 .... where listelemX
+ * are new terms
  * 
  * @author Babett Schaliz
  * @author Michael Pradel
  * @author Stephan Creutz
  */
-public class EbnfConcatenation
-	extends EbnfComposition
-	implements Serializable {
+public class EbnfConcatenation extends EbnfComposition implements Serializable {
 
 	private LinkedList elements;
 
@@ -89,16 +90,17 @@ public class EbnfConcatenation
 
 	public int render(Shell shell, List styleList, int pos) {
 		for (Iterator it = elements.iterator(); it.hasNext();) {
-			pos = ((EbnfElement) it.next()).render(shell, styleList, pos);
+			pos = ((EbnfElement) it.next()).render(shell,
+					styleList, pos);
 		}
 		return pos;
 	}
 
 	public String toString() {
-		String str = ""; //$NON-NLS-1$
+		StringBuffer strBuffer = new StringBuffer();
 		for (Iterator it = elements.iterator(); it.hasNext();) {
-			str += ((EbnfElement) it.next()).toString();
+			strBuffer.append(((EbnfElement) it.next()).toString());
 		}
-		return str;
+		return strBuffer.toString();
 	}
 }

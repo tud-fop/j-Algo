@@ -43,20 +43,18 @@ public class StackCanvas extends Composite {
 	private Text textField;
 
 	private void redrawStack() {
-		
 		textField.setText(""); //$NON-NLS-1$
-		String str = "";
+		StringBuffer strBuffer = new StringBuffer();
 		
 		Iterator si = stack.getContent().iterator();
 		while (si.hasNext()) {
-			str = (String) si.next() + "\n" + str; //$NON-NLS-1$
+			strBuffer.insert(0, (String) si.next() + "\n"); //$NON-NLS-1$
 		}
 		
-		textField.setText(str);
+		textField.setText(strBuffer.toString());
 	}
 
-	public StackCanvas(Composite parent, int style) {
-		
+	public StackCanvas(Composite parent, int style) {		
 		super(parent, style);
 		
 		setLayout(new FillLayout());
@@ -79,11 +77,9 @@ public class StackCanvas extends Composite {
 		stack.clear();
 	}
 
-
 	public Stack getStack() {
 		return stack;
 	}
-
 
 	public void setStack(Stack stack) {
 		this.stack = stack;

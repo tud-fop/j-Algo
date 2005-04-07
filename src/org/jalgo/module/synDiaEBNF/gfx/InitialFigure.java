@@ -20,7 +20,7 @@
 /*
  * Created on 16.06.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.gfx;
 
 import java.util.LinkedList;
@@ -30,7 +30,8 @@ import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 
 /**
- * Represents an abstact syntactical diagram, including its name and the diagram.
+ * Represents an abstact syntactical diagram, including its name and the
+ * diagram.
  * 
  * @author Marco Zimmerling
  * @author Michael Pradel
@@ -40,8 +41,9 @@ public class InitialFigure extends CompositeSynDiaFigure {
 
 	private ConcatenationFigure concat;
 	private Label label;
-	
-	private boolean startFigure; // auszeichnung, das dieses Startdiagramm
+
+	private boolean startFigure; // auszeichnung, das dieses
+												// Startdiagramm
 
 	public InitialFigure(String label) {
 		ToolbarLayout tbl = new ToolbarLayout(true);
@@ -51,7 +53,7 @@ public class InitialFigure extends CompositeSynDiaFigure {
 		this.label = new Label(label);
 		add(this.label);
 		add(concat);
-	
+
 		startFigure = false;
 	}
 
@@ -81,7 +83,7 @@ public class InitialFigure extends CompositeSynDiaFigure {
 
 	public void replace(SynDiaFigure oldFigure, SynDiaFigure newFigure) {
 		concat.replace(oldFigure, newFigure);
-		}
+	}
 
 	public void reposition() {
 		// do nothing, because InitialFigure has no parent
@@ -103,35 +105,31 @@ public class InitialFigure extends CompositeSynDiaFigure {
 		return concat.getInteriorFigures();
 	}
 
-	public void highlightConnectionTo(
-		SynDiaFigure targetFigure,
-		boolean selection)
-		throws SynDiaException {
+	public void highlightConnectionTo(SynDiaFigure targetFigure,
+			boolean selection) throws SynDiaException {
 
 	}
 
 	public void highlightConnectionTo(int index, boolean selection)
-		throws SynDiaException {
+			throws SynDiaException {
 
 	}
 
-	public void highlightConnectionFrom(
-		SynDiaFigure sourceFigure,
-		boolean selection)
-		throws SynDiaException {
+	public void highlightConnectionFrom(SynDiaFigure sourceFigure,
+			boolean selection) throws SynDiaException {
 
 	}
 
 	public void highlightConnectionFrom(int index, boolean selection)
-		throws SynDiaException {
+			throws SynDiaException {
 
 	}
-	
+
 	public void remove(int index) throws SynDiaException {
-		
+
 	}
-	
+
 	public void highlight(boolean highlight) {
-		
+
 	}
 }

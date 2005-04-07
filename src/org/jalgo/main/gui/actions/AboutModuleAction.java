@@ -45,7 +45,9 @@ public class AboutModuleAction extends Action {
 
 	public void run() {
 		MessageBox dia = new MessageBox(win.getShell());
-		// TODO: find out why win.getCurrentInstance() == null
+		// TODO: check whether the following line is semantically right
+		// is a module loaded?
+		if (win.getCurrentInstance() == null) return;
 		dia.setText(Messages.getString("AboutModuleAction.About_jAlgo-Module_4")); //$NON-NLS-1$
 		dia
 			.setMessage(

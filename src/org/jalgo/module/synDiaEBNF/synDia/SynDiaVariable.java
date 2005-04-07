@@ -38,18 +38,18 @@ import org.jalgo.module.synDiaEBNF.gfx.VariableFigure;
  * @author Michael Pradel
  * @author Marco Zimmerling
  */
-public class SynDiaVariable extends SynDiaElement
-		implements
-			SynDiaColors,
-			Serializable {
+public class SynDiaVariable extends SynDiaElement implements SynDiaColors,
+		Serializable {
 
 	//Rectangle in with the SynDiaVar is shown on the Screen
 	private VariableFigure rectangle;
 
 	private int backtrackingLabel;
+
 	private static int maxBacktrackingLabel = 1;
 
 	private SynDiaInitial startElem = null;
+
 	/* for Backtracking is set there */
 	private SynDiaVariableBack helpCopy = null;
 
@@ -63,10 +63,11 @@ public class SynDiaVariable extends SynDiaElement
 	}
 
 	public SynDiaVariable(String label) {
-		this.rectangle = new VariableFigure(label);
-		backtrackingLabel = maxBacktrackingLabel++;
-		if (rectangle != null) {
-			rectangle.setIndexText("" + backtrackingLabel);} //$NON-NLS-1$
+		/*
+		 * the cast is necessary, thus the compiler is able to choose
+		 * the right constructor
+		 */
+		this(label, (SynDiaInitial) null);
 	}
 
 	public SynDiaVariable(String label, SynDiaInitial startElem) {
@@ -87,12 +88,7 @@ public class SynDiaVariable extends SynDiaElement
 	}
 
 	public SynDiaVariable(String label, Font font) {
-		this.rectangle = new VariableFigure(label, font);
-		this.startElem = null;
-		backtrackingLabel = maxBacktrackingLabel++;
-		if (rectangle != null) {
-			rectangle.setIndexVisible(false);
-		}
+		this(label, null, font);
 	}
 
 	public String getLabel() {
@@ -119,7 +115,7 @@ public class SynDiaVariable extends SynDiaElement
 		rectangle.highlightExitingConnection(marked);
 	}
 
-	public void markObjekt(boolean marked) {
+	public void highlightObject(boolean marked) {
 		rectangle.highlight(marked);
 	}
 
@@ -129,7 +125,7 @@ public class SynDiaVariable extends SynDiaElement
 
 	public void unmarkObject(boolean bool) {
 		rectangle.setBackgroundColor(null);
-		markObjekt(bool);
+		highlightObject(bool);
 	}
 
 	/**
@@ -145,7 +141,8 @@ public class SynDiaVariable extends SynDiaElement
 	public void setGfx(VariableFigure figure) {
 		rectangle = figure;
 		if (figure != null) {
-			rectangle.setIndexText("" + backtrackingLabel);} //$NON-NLS-1$
+			rectangle.setIndexText("" + backtrackingLabel); //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -156,8 +153,9 @@ public class SynDiaVariable extends SynDiaElement
 	}
 
 	/**
-	 * Sets the <code>SynDiaVariableBack</code>, which saves the information 
-	 * where to jump back to after the diagram it is pointing to was executed. 
+	 * Sets the <code>SynDiaVariableBack</code>, which saves the
+	 * information where to jump back to after the diagram it is pointing to
+	 * was executed.
 	 * 
 	 * @param back
 	 */

@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.MenuItem;
 /**
  * @author Cornelius Hald
  */
+// TODO is this dead code?
 public class MenuCreator implements IMenuCreator {
 
 	/* (non-Javadoc)
@@ -49,19 +50,20 @@ public class MenuCreator implements IMenuCreator {
 
 		Menu menu = new Menu(arg0);
 
-		//MenuItem item1 = new MenuItem(menu, SWT.CASCADE);
-		//item1.setText("EBNF Wizzard");
-		//item1.setImage(new Image(null, "pix/jalgo-file.png"));
+		MenuItem item1 = new MenuItem(menu, SWT.CASCADE);
+		item1.setText("New");
+		item1.setImage(new Image(null, "pix/new.gif"));
 
-		MenuItem item2 = new MenuItem(menu, SWT.CASCADE);
+		/*MenuItem item2 = new MenuItem(menu, SWT.CASCADE);
 		item2.setText(Messages.getString("MenuCreator.EBNF-Diagramm")); //$NON-NLS-1$
-		item2.setImage(new Image(null, "pix/jalgo-file.png")); //$NON-NLS-1$
+		item2.setImage(new Image(null, "pix/jalgo-file.png")); //$NON-NLS-1$ */
 		
-		MenuItem item3 = new MenuItem(menu, SWT.CASCADE);
+		/*MenuItem item3 = new MenuItem(menu, SWT.CASCADE);
 		item3.setText(Messages.getString("MenuCreator.EBNF-Term")); //$NON-NLS-1$
-		item3.setImage(new Image(null, "pix/jalgo-file.png")); //$NON-NLS-1$
+		item3.setImage(new Image(null, "pix/jalgo-file.png")); //$NON-NLS-1$*/
 
-		return menu;
+		//return menu;
+		return null;
 	}
 
 	/* (non-Javadoc)

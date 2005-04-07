@@ -49,7 +49,7 @@ import org.jalgo.module.synDiaEBNF.gfx.SynDiaSystemFigure;
  */
 public class SynDiaSystem implements Serializable {
 
-	private String label; // Name of the SDS, mostly SynDia
+	private String label = "SynDia"; //$NON-NLS-1$; // Name of the SDS, mostly SynDia
 	private Set synVariables; // Strings
 	private Set terminalSymbols; // Strings
 	/* the figure including the hole Diagramsystem! */
@@ -62,7 +62,6 @@ public class SynDiaSystem implements Serializable {
 	 * constructor
 	 */
 	public SynDiaSystem() {
-		label = "SynDia"; //$NON-NLS-1$
 		startElem = null;
 		synVariables = new HashSet();
 		terminalSymbols = new HashSet();
@@ -73,7 +72,6 @@ public class SynDiaSystem implements Serializable {
 	 */
 	public SynDiaSystem(SynDiaSystemFigure panel) {
 		this.gfx = panel;
-		label = "SynDia"; //$NON-NLS-1$
 		startElem = null;
 		synVariables = new HashSet();
 		terminalSymbols = new HashSet();
@@ -86,7 +84,6 @@ public class SynDiaSystem implements Serializable {
 	 *                   pointer of the start element
 	 */
 	public SynDiaSystem(SynDiaInitial startElem) {
-		label = "SynDia"; //$NON-NLS-1$
 		this.startElem = startElem;
 	}
 

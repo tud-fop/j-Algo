@@ -104,7 +104,7 @@ public abstract class SynDiaBacktracking
 
 		//show backtracking labels
 		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
-			BacktrackingLabels(synDiaDef.getInitialDiagram(k), true);
+			backtrackingLabels(synDiaDef.getInitialDiagram(k), true);
 		}
 		history = new BackTrackHistory();
 	}
@@ -196,11 +196,11 @@ public abstract class SynDiaBacktracking
 		 * @param help
 		 * @param bool
 		 */
-	protected void BacktrackingLabels(SynDiaElement help, boolean bool) {
+	protected void backtrackingLabels(SynDiaElement help, boolean bool) {
 		unmark(help, !bool);
 		if (help instanceof SynDiaInitial) {
 			currentInitial = (SynDiaInitial) help;
-			BacktrackingLabels(((SynDiaInitial) help).getInnerElem(), bool);
+			backtrackingLabels(((SynDiaInitial) help).getInnerElem(), bool);
 		}
 		if (help instanceof SynDiaVariable) {
 			SynDiaVariableBack elem =
@@ -210,10 +210,10 @@ public abstract class SynDiaBacktracking
 			 ((SynDiaVariable) help).getGfx().setIndexVisible(bool);
 		}
 		if (help instanceof SynDiaRepetition) {
-			BacktrackingLabels(
+			backtrackingLabels(
 				((SynDiaRepetition) help).getStraightAheadElem(),
 				bool);
-			BacktrackingLabels(
+			backtrackingLabels(
 				((SynDiaRepetition) help).getRepeatedElem(),
 				bool);
 		}
@@ -221,7 +221,7 @@ public abstract class SynDiaBacktracking
 			for (int i = 0;
 				i < (((SynDiaAlternative) help).getNumOfOptions());
 				i++) {
-				BacktrackingLabels(
+				backtrackingLabels(
 					((SynDiaAlternative) help).getOption(i),
 					bool);
 			}
@@ -230,7 +230,7 @@ public abstract class SynDiaBacktracking
 			for (int j = 0;
 				j < ((SynDiaConcatenation) help).getNumOfElements();
 				j++) {
-				BacktrackingLabels(
+				backtrackingLabels(
 					((SynDiaConcatenation) help).getContent(j),
 					bool);
 			}
@@ -277,7 +277,7 @@ public abstract class SynDiaBacktracking
 	public void hideBacktrackingLabels() {
 		//hide backtracking labels
 		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
-			BacktrackingLabels(synDiaDef.getInitialDiagram(k), false);
+			backtrackingLabels(synDiaDef.getInitialDiagram(k), false);
 		}
 	}
 
