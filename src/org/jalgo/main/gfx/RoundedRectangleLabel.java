@@ -102,6 +102,7 @@ public class RoundedRectangleLabel extends RoundedRectangle {
 	 * @param bool Enable or disable a line under the mainLabel
 	 */
 	public void setTextUnderline(boolean bool) {
+		/* this block is intended to be empty */
 	}
 	
 	public void setFont(Font font) {

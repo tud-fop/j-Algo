@@ -88,6 +88,7 @@ public class PrintDialogNext extends Dialog {
 			}
 
 			public void widgetDefaultSelected(SelectionEvent arg0) {
+				/* this block is intended to be empty */
 			}
 		});
 		return parent;

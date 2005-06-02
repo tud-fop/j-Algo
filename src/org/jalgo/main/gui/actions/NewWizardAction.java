@@ -33,7 +33,7 @@ import org.jalgo.module.synDiaEBNF.startWizard.StartWizardDialog;
 /**
  * @author Christopher Friedrich
  */
-// TODO remove ths class because it is not needed anymore
+// TODO remove ths class because it is not needed anymore (Stephan)
 public class NewWizardAction extends Action {
 
 	/*

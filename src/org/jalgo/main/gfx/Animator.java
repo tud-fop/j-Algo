@@ -39,7 +39,8 @@ public class Animator {
 	 * @param panel		The parent figure
 	 * @param hashMap	A HashMap of the form (Figure, AnimationDate)
 	 */		
-	public static void run(IFigure panel, HashMap hashMap){
+	public static void run(IFigure panel, HashMap hashMap) {
+		/* this block is intended to be empty */
 	}
 
 }

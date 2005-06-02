@@ -44,11 +44,11 @@ public class Dragger extends MouseMotionListener.Stub implements MouseListener {
 	private Figure dragFigure;
 	
 	public void mouseClicked(MouseEvent e) {
-	
+		/* this block is intended to be empty */
 	}
 	
 	public void mouseDoubleClicked(MouseEvent e) {
-	
+		/* this block is intended to be empty */
 	}
 	
 	public void mousePressed(MouseEvent e) {

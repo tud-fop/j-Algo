@@ -163,7 +163,7 @@ public class NormalViewEmptyGui extends Gui {
 								.setMode(IModeConstants.CREATE_SYNDIA);
 					}
 				});
-
+		
 		parent.redraw();
 	}
 }
