@@ -12,18 +12,27 @@ package org.jalgo.main.trees;
 
 public class Edge extends TreeComponent {
 
-	private TreeComponent source, target;
 	private String text;
 	private org.eclipse.draw2d.graph.Edge edge;
 	private EdgeFigure figure;
 
-	public Edge(TreeComponent source, TreeComponent target) {
-		if ((source instanceof Edge) || (target instanceof Edge)) {
-			throw new RuntimeException("An edge cannot connect other edges.");
+	public Edge(TreeComponent parent, TreeComponent child) {
+		addOutgoing(child);
+		setParent(parent);
+	}
+	
+	public void addOutgoing(TreeComponent newOut) {
+		if (newOut instanceof Edge) {
+			throw new RuntimeException("Trying to add an edge to an edge.");
 		}
-		
-		this.source = source;
-		this.target = target;
+		super.addOutgoing(newOut);
+	}
+	
+	public void setParent(TreeComponent newParent) {
+		if (!(newParent instanceof Node)) {
+			throw new RuntimeException("Only nodes can be parent of an edge.");
+		}
+		super.setParent(newParent);
 	}
 	
 	public void setText(String text) {

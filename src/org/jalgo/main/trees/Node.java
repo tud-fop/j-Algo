@@ -21,6 +21,20 @@ public class Node extends TreeComponent {
 		node = new org.eclipse.draw2d.graph.Node();
 	}
 	
+	public void addOutgoing(TreeComponent newOut) {
+		if (!(newOut instanceof Edge)) {
+			throw new RuntimeException("Trying to add a component that is not an edge to a node.");
+		}
+		super.addOutgoing(newOut);
+	}
+	
+	public void setParent(TreeComponent newParent) {
+		if (!(newParent instanceof Edge)) {
+			throw new RuntimeException("Trying to set a component as parent of a node that is not an edge.");
+		}
+		super.setParent(newParent);
+	}
+	
 	public void setText(String text) {
 		this.text = text;
 	}
@@ -43,5 +57,13 @@ public class Node extends TreeComponent {
 	
 	public org.eclipse.draw2d.graph.Node getNode() {
 		return node;
+	}
+	
+	/**
+	 * Layoutn the tree or subtree starting from this node.
+	 *
+	 */
+	public void treeLayout() {
+		
 	}
 }

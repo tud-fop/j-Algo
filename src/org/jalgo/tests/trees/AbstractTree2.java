@@ -1,5 +1,5 @@
 /*
- * Created on 30.05.2005
+ * Created on 02.06.2005
  *
  */
 package org.jalgo.tests.trees;
@@ -9,9 +9,9 @@ import org.jalgo.main.trees.Node;
 
 /**
  * @author Michael Pradel
- *  
+ *
  */
-public class AbstractTree1 {
+public class AbstractTree2 {
 
 	public static void main(String[] args) {
 		Node n1 = new Node();
@@ -33,10 +33,12 @@ public class AbstractTree1 {
 		Edge e11_14 = new Edge(n11,n14);
 		Edge e14_15 = new Edge(n14,n15);
 
-		System.out.println("Parent von 7 ist " + n7.getParent());
-		System.out.println("Parent von 2 ist " + n2.getParent());
-
-		// provoke exception
-		n1.addOutgoing(n2);
+		/* RIGHT ROTATION */
+		
+		// step a) to b)
+		n7.deleteOutgoing(e7_2);
+		n7.deleteOutgoing(e7_8);
+		n11.deleteOutgoing(n7);
+		// HIER WEITER !!
 	}
 }

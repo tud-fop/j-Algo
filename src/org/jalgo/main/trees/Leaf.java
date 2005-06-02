@@ -20,6 +20,17 @@ public class Leaf extends TreeComponent {
 		super();
 		node = new org.eclipse.draw2d.graph.Node();
 	}
+
+	public void addOutgoing(TreeComponent newOut) {
+		throw new RuntimeException("Trying to add a component to a leaf.");
+	}
+	
+	public void setParent(TreeComponent newParent) {
+		if (!(newParent instanceof Edge)) {
+			throw new RuntimeException("Only egdes can be parent of leaves.");
+		}
+		super.setParent(newParent);
+	}
 	
 	public void setText(String text) {
 		this.text = text;
