@@ -6,8 +6,11 @@ package org.jalgo.main.trees;
 
 import java.util.LinkedList;
 
+import org.eclipse.draw2d.graph.Edge;
+import org.eclipse.draw2d.graph.Node;
+
 /**
- * Abstract class to represent a component of a tree independant of its specific
+ * Abstract class to represent a component of a tree, independant of its specific
  * properties (following the "Composite" design pattern).
  * 
  * @author Michael Pradel
@@ -46,7 +49,11 @@ public abstract class TreeComponent {
 		}
 
 		outgoing.add(newOut);
-		newOut.setParent(this);
+
+		// verify that the new outgoing element has this element as parent
+		if ((newOut.getParent() == null) || !(newOut.getParent().equals(this))) {
+			newOut.setParent(this);
+		}
 	}
 
 	public void deleteOutgoing(TreeComponent oldOut) {
@@ -94,7 +101,14 @@ public abstract class TreeComponent {
 			throw new RuntimeException(
 					"A leaf cannot be the parent of a tree component.");
 		}
+
 		parent = newParent;
+		
+		// verify that parent has connection to this element
+		if (newParent == null) return;
+		if (!(newParent.getOutgoing().contains(this))) {
+			newParent.addOutgoing(this);
+		}
 	}
 
 	public boolean getVisibility() {
@@ -103,5 +117,13 @@ public abstract class TreeComponent {
 
 	public void setVisibility(boolean visible) {
 		this.visible = visible;
+	}
+	
+	public Node getNode() {
+		return null;
+	}
+	
+	public Edge getEdge() {
+		return null;
 	}
 }

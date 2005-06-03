@@ -29,7 +29,7 @@ public class Node extends TreeComponent {
 	}
 	
 	public void setParent(TreeComponent newParent) {
-		if (!(newParent instanceof Edge)) {
+		if ((newParent instanceof Node) || (newParent instanceof Leaf)) {
 			throw new RuntimeException("Trying to set a component as parent of a node that is not an edge.");
 		}
 		super.setParent(newParent);

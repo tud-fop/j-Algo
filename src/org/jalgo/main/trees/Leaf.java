@@ -26,7 +26,7 @@ public class Leaf extends TreeComponent {
 	}
 	
 	public void setParent(TreeComponent newParent) {
-		if (!(newParent instanceof Edge)) {
+		if ((newParent instanceof Leaf) || (newParent instanceof Node)) {
 			throw new RuntimeException("Only egdes can be parent of leaves.");
 		}
 		super.setParent(newParent);
