@@ -6,8 +6,9 @@ package org.jalgo.main.trees;
 
 
 /**
- * This class seems to be senseless :-)
- * Don't use it.
+ * A tree can be a single node or a node with children. This class represents
+ * the composite of the composite design pattern.
+ * 
  * @author Michael Pradel
  *
  */
@@ -16,14 +17,16 @@ public class Tree extends TreeComponent {
 	public void layout() {
 	}
 	
-	public void addOutgoing(TreeComponent newOut) {
-		throw new RuntimeException("Cannot add outgoing elements to a tree.");
+	public boolean isTree() {
+		return true;
 	}
 	
-	public void setParent(TreeComponent newParent) {
-		if (!(newParent instanceof Edge)) {
-			throw new RuntimeException("Parent of a tree has to be an edge.");
-		}
-		super.setParent(newParent);
+	public void addChild(TreeComponent c) {
+		children.add(c);
 	}
+
+	public boolean removeChild(TreeComponent c) {
+		return children.remove(c);
+	}
+	
 }

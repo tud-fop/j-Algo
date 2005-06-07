@@ -11,33 +11,13 @@ package org.jalgo.main.trees;
  *  
  */
 
-public class Edge extends TreeComponent {
+public class Edge {
 
 	private String text;
 
 	private org.eclipse.draw2d.graph.Edge edge;
 
 	private EdgeFigure figure;
-
-	public Edge(TreeComponent parent, TreeComponent child) {
-		edge = new org.eclipse.draw2d.graph.Edge(parent.getNode(), child.getNode());
-		addOutgoing(child);
-		setParent(parent);
-	}
-
-	public void addOutgoing(TreeComponent newOut) {
-		if (newOut instanceof Edge) {
-			throw new RuntimeException("Trying to add an edge to an edge.");
-		}
-		super.addOutgoing(newOut);
-	}
-
-	public void setParent(TreeComponent newParent) {
-		if ((newParent instanceof Edge) || (newParent instanceof Leaf)) {
-			throw new RuntimeException("Leaves and egdes can't be parent of an edge.");
-		}
-		super.setParent(newParent);
-	}
 
 	public void setText(String text) {
 		this.text = text;
