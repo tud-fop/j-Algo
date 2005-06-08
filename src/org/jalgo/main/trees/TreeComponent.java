@@ -4,7 +4,7 @@
  */
 package org.jalgo.main.trees;
 
-import java.util.LinkedList;
+import org.eclipse.draw2d.graph.Node;
 
 /**
  * Abstract class to represent a component of a tree, independant of its
@@ -15,20 +15,44 @@ import java.util.LinkedList;
  */
 public abstract class TreeComponent {
 
+	protected String text;
+
+	protected String outerText;
+
 	protected int weight = 0;
 
 	protected boolean visible = true;
-	
+
 	protected TreeComponent parent;
-	
-	protected Edge edgeToParent; 
-	
-	protected LinkedList children; // LinkedList of TreeComponents 
+
+	protected Edge edgeToParent;
+
+	private org.eclipse.draw2d.graph.Node node;
 
 	public TreeComponent() {
-		children = new LinkedList();
+		node = new Node(this);
 	}
-	
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setOuterText(String text) {
+		this.outerText = text;
+	}
+
+	public String getOuterText() {
+		return outerText;
+	}
+
+	public org.eclipse.draw2d.graph.Node getNode() {
+		return node;
+	}
+
 	/**
 	 * Get the weight of this component. A node, leaf or subtree with a higher
 	 * weight will appear on the right of one with a lower weigth.
@@ -58,21 +82,24 @@ public abstract class TreeComponent {
 	public void setVisibility(boolean visible) {
 		this.visible = visible;
 	}
-	
+
 	public boolean isTree() {
 		return false;
 	}
-	
+
 	public TreeComponent getParent() {
 		return parent;
+	}
+
+	protected void setParent(TreeComponent p) {
+		parent = p;
 	}
 	
 	public Edge getEdgeToParent() {
 		return edgeToParent;
 	}
-	
+
 	protected void setEdgeToParent(Edge e) {
 		edgeToParent = e;
 	}
-
 }

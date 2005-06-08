@@ -5,10 +5,11 @@
 package org.jalgo.main.trees;
 
 import org.eclipse.draw2d.Figure;
+import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.RoundedRectangle;
-import org.eclipse.draw2d.XYLayout;
-import org.eclipse.swt.graphics.Color;
+import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Rectangle;
 
 /**
  * A {@link Figure}that shows a leaf of a tree.
@@ -16,47 +17,56 @@ import org.eclipse.swt.graphics.Color;
  * @author Michael Pradel
  *  
  */
-public class LeafFigure extends RoundedRectangle {
+public class LeafFigure extends Figure {
 
-	private Color backgroundColor;
+	private final int spacing = 10;
+
+	private textFigure rect;
 
 	private Label label;
 
-	private XYLayout layout;
+	private Label outerLabel;
 
+	private class textFigure extends RoundedRectangle {
+		public Label label;
+		
+		public textFigure(String t) {
+			label = new Label(t);
+			FlowLayout textLayout = new FlowLayout();
+			textLayout.setMajorAlignment(FlowLayout.ALIGN_CENTER);
+			setLayoutManager(textLayout);
+			add(label, new Rectangle(-1,-1,-1,-1));
+		}
+
+		public Dimension getPreferredSize(int wHint, int hHint) {
+			Dimension pref = super.getPreferredSize(wHint, hHint);
+			pref.width += spacing;
+			return pref;
+		}
+	}
+	
 	public LeafFigure() {
 		this("NIL");
 	}
 
 	public LeafFigure(String text) {
 		super();
-		label = new Label(text);
-		this.add(label);
-		layout = new XYLayout();
-		setLayoutManager(layout);
-		setOpaque(true);
-		System.out.println("Label width in constructor: "
-				+ label.getPreferredSize().width);
+		outerLabel = new Label();
+
+		rect = new textFigure(text);
 		
-		// HIER GEHTS WEITER!! (Größe von Figure automatisch an Label-Breite anpassen)
+		// TODO: remove after testing
+		outerLabel.setText("xyz");
+
+		FlowLayout layout = new FlowLayout();
+		setLayoutManager(layout);
+
+		add(outerLabel, new Rectangle(0, 0, -1, -1));
+		add(rect, new Rectangle(0, 0, -1, -1));
+
 	}
 
-	/*
-	 * public Dimension getPreferredSize(int wHint, int hHint) {
-	 * System.out.println("Call of getPreferredSize()"); Dimension pref =
-	 * super.getPreferredSize(wHint, hHint); System.out.println("Rectangle's
-	 * preferred width: " + pref.width); int childrenWidth = getInsets().left +
-	 * getInsets().right; System.out.println("children's width without label: " +
-	 * childrenWidth); childrenWidth += label.getPreferredSize().width;
-	 * System.out.println("children's width with label: " + childrenWidth); if
-	 * (pref.width < childrenWidth) pref.width = childrenWidth; return pref; }
-	 */
-
-	public Color getBackgroundColor() {
-		return backgroundColor;
-	}
-
-	public void setBackgroundColor(Color backgroundColor) {
-		this.backgroundColor = backgroundColor;
+	public void setText(String text) {
+		rect.label.setText(text);
 	}
 }

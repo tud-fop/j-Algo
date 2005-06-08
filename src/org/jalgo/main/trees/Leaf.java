@@ -11,32 +11,9 @@ package org.jalgo.main.trees;
  */
 public class Leaf extends TreeComponent {
 
-	private org.eclipse.draw2d.graph.Node node;
-	private String text;
-	private String outerText;
 	private LeafFigure figure;
 	
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public String getText() {
-		return text;
-	}
-
 	public LeafFigure getFigure() {
 		return figure;
-	}
-
-	public void setOuterText(String text) {
-		this.outerText = text;
-	}
-
-	public String getOuterText() {
-		return outerText;
-	}
-	
-	public org.eclipse.draw2d.graph.Node getNode() {
-		return node;
 	}
 }

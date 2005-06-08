@@ -4,8 +4,7 @@
  */
 package org.jalgo.tests.trees;
 
-import org.jalgo.main.trees.Edge;
-import org.jalgo.main.trees.Node;
+import org.jalgo.main.trees.Tree;
 
 /**
  * @author Michael Pradel
@@ -14,29 +13,33 @@ import org.jalgo.main.trees.Node;
 public class AbstractTree1 {
 
 	public static void main(String[] args) {
-		Node n1 = new Node();
-		Node n2 = new Node();
-		Node n4 = new Node();
-		Node n5 = new Node();
-		Node n7 = new Node();
-		Node n8 = new Node();
-		Node n11 = new Node();
-		Node n14 = new Node();
-		Node n15 = new Node();
-
-		Edge e11_7 = new Edge(n11, n7);
-		Edge e2_1 = new Edge(n2, n1);
-		Edge e2_5 = new Edge(n2, n5);
-		Edge e5_4 = new Edge(n5, n4);
-		Edge e7_2 = new Edge(n7, n2);
-		Edge e7_8 = new Edge(n7, n8);
-		Edge e11_14 = new Edge(n11,n14);
-		Edge e14_15 = new Edge(n14,n15);
-
-		System.out.println("Parent von 7 ist " + n7.getParent());
-		System.out.println("Parent von 2 ist " + n2.getParent());
-
-		// provoke exception
-		n1.addOutgoing(n2);
+		Tree t11 = new Tree("11");
+		Tree t7 = new Tree("7");
+		Tree t2 = new Tree("2");
+		Tree t8 = new Tree("8");
+		Tree t1 = new Tree("1");
+		Tree t5 = new Tree("5");
+		Tree t4 = new Tree("4");
+		Tree t14 = new Tree("14");
+		Tree t15 = new Tree("15");
+		
+		t11.addChild(t7);
+		t11.addChild(t14);
+		t7.addChild(t2);
+		t7.addChild(t8);
+		t2.addChild(t1);
+		t2.addChild(t5);
+		t5.addChild(t4);
+		t14.addChild(t15);
+		
+		System.out.println("Children of 11: " + t11.getChildren());	
+		System.out.println("Parent of 4: " + t4.getParent());
+		System.out.println("Parent of 2: " + t2.getParent());
+		
+		System.out.println("Node from t4: " + t4.getNode());
+		
+		System.out.println("Edge from 11 to 7: " + t11.getEdgeTo(t7));
+		System.out.println("Edge from 15 to its parent: " + t15.getEdgeToParent());
+		System.out.println("Edge from 14 to 15 (should be equal): " + t14.getEdgeTo(t15));
 	}
 }

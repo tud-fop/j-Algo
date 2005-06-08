@@ -5,7 +5,12 @@
 package org.jalgo.main.trees;
 
 import org.eclipse.draw2d.Ellipse;
+import org.eclipse.draw2d.Figure;
+import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.StackLayout;
+import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 
 /**
@@ -14,27 +19,57 @@ import org.eclipse.swt.graphics.Color;
  *  
  */
 
-public class NodeFigure extends Ellipse {
+public class NodeFigure extends Figure {
 
-	private Color textColor;
+	private final int spacing = 5;
 
-	private Color backgroundColor;
+	private Label outerLabel;
+	
+	private textFigure circle;
+	
+	private class textFigure extends Ellipse {
+		public Label label;
+		
+		public textFigure(String t) {
+			label = new Label(t);
+			setLayoutManager(new StackLayout());
+			add(label, new Rectangle(-1,-1,-1,-1));
+		}
 
-	private Label label;
+		public Dimension getPreferredSize(int wHint, int hHint) {
+			Dimension pref = super.getPreferredSize(wHint, hHint);
+			pref.width += spacing;
+			pref.height = pref.width;
+			return pref;
+		}
+	}
+	
+	public NodeFigure() {
+		this("");
+	}
+	
+	public NodeFigure(String text) {
+		super();
+		outerLabel = new Label();
+		circle = new textFigure(text);
+		
+		// TODO: remove after testing
+		outerLabel.setText("abc");
+		
+		FlowLayout layout = new FlowLayout();
+		setLayoutManager(layout);
+
+		add(outerLabel, new Rectangle(0, 0, -1, -1));
+		add(circle, new Rectangle(0, 0, -1, -1));
+		
+	}
 
 	public void setTextColor(Color color) {
-		this.textColor = color;
+		circle.label.setForegroundColor(color);
 	}
 
 	public Color getTextColor() {
-		return textColor;
+		return circle.label.getForegroundColor();
 	}
-
-	public Color getBackgroundColor() {
-		return backgroundColor;
-	}
-
-	public void setBackgroundColor(Color color) {
-		this.backgroundColor = color;
-	}
+	
 }

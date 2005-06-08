@@ -19,6 +19,18 @@ public class Edge {
 
 	private EdgeFigure figure;
 
+	private TreeComponent parent;
+
+	private TreeComponent child;
+	
+	private boolean visible =true;
+
+	public Edge(TreeComponent p, TreeComponent c) {
+		parent = p;
+		child = c;
+		edge = new org.eclipse.draw2d.graph.Edge(p.getNode(), c.getNode());
+	}
+	
 	public void setText(String text) {
 		this.text = text;
 	}
@@ -30,9 +42,17 @@ public class Edge {
 	public EdgeFigure getFigure() {
 		return figure;
 	}
-	
+
 	public org.eclipse.draw2d.graph.Edge getEdge() {
 		return edge;
+	}
+
+	public boolean getVisibility() {
+		return visible;
+	}
+	
+	public void setVisibility(boolean v) {
+		visible = v;
 	}
 	
 }
