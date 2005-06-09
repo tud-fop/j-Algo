@@ -13,7 +13,33 @@ public class Leaf extends TreeComponent {
 
 	private LeafFigure figure;
 	
+	public Leaf() {
+		this("NIL");
+	}
+	
+	public Leaf(String text) {
+		super();
+		figure = new LeafFigure(text);
+	}
+
+	public void setText(String text) {
+		figure.setText(text);
+	}
+
+	public String getText() {
+		return figure.getText();
+	}
+
+	public void setOuterText(String text) {
+		figure.setOuterText(text);
+	}
+
+	public String getOuterText() {
+		return figure.getOuterText();
+	}
+	
 	public LeafFigure getFigure() {
 		return figure;
 	}
+	
 }

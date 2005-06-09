@@ -48,7 +48,7 @@ public class LeafFigure extends Figure {
 	public LeafFigure() {
 		this("NIL");
 	}
-
+	
 	public LeafFigure(String text) {
 		super();
 		outerLabel = new Label();
@@ -68,5 +68,17 @@ public class LeafFigure extends Figure {
 
 	public void setText(String text) {
 		rect.label.setText(text);
+	}
+	
+	public String getText() {
+		return rect.label.getText();
+	}
+	
+	public void setOuterText(String text) {
+		outerLabel.setText(text);
+	}
+	
+	public String getOuterText() {
+		return outerLabel.getText();
 	}
 }

@@ -16,6 +16,8 @@ import java.util.LinkedList;
  */
 public class Tree extends TreeComponent {
 
+	private NodeFigure nodeFigure;
+	
 	private LinkedList children; // LinkedList of TreeComponent
 
 	private LinkedList edges; // LinkedList of Edge
@@ -28,9 +30,9 @@ public class Tree extends TreeComponent {
 	
 	public Tree(String text) {
 		super();
+		nodeFigure = new NodeFigure(text);
 		children = new LinkedList();
 		edges = new LinkedList();
-		this.text = text;
 	}
 
 	public void layout() {
@@ -68,7 +70,7 @@ public class Tree extends TreeComponent {
 		return (Edge) edges.get(i);
 	}
 
-	public void setVisibility(boolean visible) {
+	public void setAllVisibility(boolean visible) {
 		// change visibility of children
 		Iterator i = children.iterator();
 		while(i.hasNext()) {
@@ -81,8 +83,28 @@ public class Tree extends TreeComponent {
 		}
 	}
 	
-	public void setFirstVisibility(boolean visible) {
+	public void setVisibility(boolean visible) {
 		firstVisibility = visible;
+	}
+
+	public void setText(String text) {
+		nodeFigure.setText(text);
+	}
+
+	public String getText() {
+		return nodeFigure.getText();
+	}
+
+	public void setOuterText(String text) {
+		nodeFigure.setOuterText(text);
+	}
+
+	public String getOuterText() {
+		return nodeFigure.getOuterText();
+	}
+	
+	public NodeFigure getNodeFigure() {
+		return nodeFigure;
 	}
 	
 }

@@ -7,7 +7,9 @@ package org.jalgo.tests.trees;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.FlowLayout;
+import org.eclipse.draw2d.ImageFigure;
 import org.eclipse.draw2d.LightweightSystem;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jalgo.main.trees.LeafFigure;
@@ -46,6 +48,13 @@ public class GraphicalTree1 {
 		contents.add(n3);
 		NodeFigure n4 = new NodeFigure("a");
 		contents.add(n4);
+		
+		//Arrows a = new Arrows();
+		//contents.add(a);
+		
+		ImageFigure imf = new ImageFigure();
+		imf.setImage(new Image(null, "pix/trees/arrows.png"));
+		contents.add(imf);
 		
 		lws.setContents(contents);
 		shell.open();

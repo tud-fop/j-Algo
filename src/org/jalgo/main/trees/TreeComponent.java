@@ -15,10 +15,6 @@ import org.eclipse.draw2d.graph.Node;
  */
 public abstract class TreeComponent {
 
-	protected String text;
-
-	protected String outerText;
-
 	protected int weight = 0;
 
 	protected boolean visible = true;
@@ -28,25 +24,9 @@ public abstract class TreeComponent {
 	protected Edge edgeToParent;
 
 	private org.eclipse.draw2d.graph.Node node;
-
+	
 	public TreeComponent() {
 		node = new Node(this);
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setOuterText(String text) {
-		this.outerText = text;
-	}
-
-	public String getOuterText() {
-		return outerText;
 	}
 
 	public org.eclipse.draw2d.graph.Node getNode() {
@@ -91,15 +71,16 @@ public abstract class TreeComponent {
 		return parent;
 	}
 
-	protected void setParent(TreeComponent p) {
-		parent = p;
-	}
-	
 	public Edge getEdgeToParent() {
 		return edgeToParent;
+	}
+
+	protected void setParent(TreeComponent p) {
+		parent = p;
 	}
 
 	protected void setEdgeToParent(Edge e) {
 		edgeToParent = e;
 	}
+
 }

@@ -4,22 +4,18 @@
  */
 package org.jalgo.main.trees;
 
-import org.eclipse.draw2d.ImageFigure;
+import org.eclipse.draw2d.Figure;
 
 /**
  * A {@link Figure} that shows two arrows. 
  * @author Michael Pradel
  *  
  */
-public class Arrows extends ImageFigure {
-
-	public int direction;
-
-	/**
-	 * Set the direction of the arrows.
-	 * @param dir left or right rotation, see also {@link ITreeConstants}
-	 */
-	public void setDirection(int dir) {
-		direction = dir;
-	}
+public final class Arrows {
+	
+	
+	
+	
+	
+	
 }
