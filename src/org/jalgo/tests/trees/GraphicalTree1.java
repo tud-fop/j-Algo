@@ -9,9 +9,9 @@ import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.ImageFigure;
 import org.eclipse.draw2d.LightweightSystem;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.jalgo.main.trees.Arrows;
 import org.jalgo.main.trees.LeafFigure;
 import org.jalgo.main.trees.NodeFigure;
 
@@ -49,12 +49,16 @@ public class GraphicalTree1 {
 		NodeFigure n4 = new NodeFigure("a");
 		contents.add(n4);
 		
-		//Arrows a = new Arrows();
-		//contents.add(a);
-		
-		ImageFigure imf = new ImageFigure();
-		imf.setImage(new Image(null, "pix/trees/arrows.png"));
+		ImageFigure imf = Arrows.getRightArrows();
 		contents.add(imf);
+		
+		ImageFigure imf2 = Arrows.getRightArrows();
+		contents.add(imf2);
+		
+		ImageFigure imf3 = Arrows.getLeftArrows();
+		contents.add(imf3);
+		
+		
 		
 		lws.setContents(contents);
 		shell.open();
