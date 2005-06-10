@@ -22,20 +22,15 @@ public final class Arrows {
 	private Arrows() {
 	}
 
-	public static ImageFigure getRightArrows() {
+	public static ImageFigure getArrows(int direction) {
 		if (instance == null)
 			instance = new Arrows();
-		ImageFigure ra = new ImageFigure();
-		ra.setImage(new Image(null, "pix/trees/right_arrows.png"));
-		return ra;
+		ImageFigure a = new ImageFigure();
+		if (direction == ITreeConstants.LEFT_ROT)
+			a.setImage(new Image(null, "pix/trees/left_arrows.png"));
+		else if (direction == ITreeConstants.RIGHT_ROT)
+			a.setImage(new Image(null, "pix/trees/right_arrows.png"));
+		return a;
 	}
 	
-	public static ImageFigure getLeftArrows() {
-		if (instance == null)
-			instance = new Arrows();
-		ImageFigure la = new ImageFigure();
-		la.setImage(new Image(null, "pix/trees/left_arrows.png"));
-		return la;
-	}
-
 }

@@ -13,46 +13,43 @@ package org.jalgo.main.trees;
 
 public class Edge {
 
-	private String text;
-
 	private org.eclipse.draw2d.graph.Edge edge;
-
+	
 	private EdgeFigure figure;
 
 	private TreeComponent parent;
 
 	private TreeComponent child;
 	
-	private boolean visible =true;
-
 	public Edge(TreeComponent p, TreeComponent c) {
 		parent = p;
 		child = c;
+		figure = new EdgeFigure();
 		edge = new org.eclipse.draw2d.graph.Edge(p.getNode(), c.getNode());
 	}
 	
 	public void setText(String text) {
-		this.text = text;
+		figure.setText(text);
 	}
 
 	public String getText() {
-		return text;
+		return figure.getText();
 	}
 
 	public EdgeFigure getFigure() {
 		return figure;
 	}
 
-	public org.eclipse.draw2d.graph.Edge getEdge() {
-		return edge;
-	}
-
 	public boolean getVisibility() {
-		return visible;
+		return figure.isVisible();
 	}
 	
 	public void setVisibility(boolean v) {
-		visible = v;
+		figure.setVisible(v);
+	}
+	
+	public org.eclipse.draw2d.graph.Edge getEdge() {
+		return edge;
 	}
 	
 }

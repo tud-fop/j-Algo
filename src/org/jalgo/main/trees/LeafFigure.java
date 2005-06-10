@@ -81,4 +81,8 @@ public class LeafFigure extends Figure {
 	public String getOuterText() {
 		return outerLabel.getText();
 	}
+	
+	public Figure getInnerFigure() {
+		return rect;
+	}
 }

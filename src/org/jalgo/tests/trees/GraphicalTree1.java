@@ -12,6 +12,7 @@ import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jalgo.main.trees.Arrows;
+import org.jalgo.main.trees.ITreeConstants;
 import org.jalgo.main.trees.LeafFigure;
 import org.jalgo.main.trees.NodeFigure;
 
@@ -49,13 +50,13 @@ public class GraphicalTree1 {
 		NodeFigure n4 = new NodeFigure("a");
 		contents.add(n4);
 		
-		ImageFigure imf = Arrows.getRightArrows();
+		ImageFigure imf = Arrows.getArrows(ITreeConstants.RIGHT_ROT);
 		contents.add(imf);
 		
-		ImageFigure imf2 = Arrows.getRightArrows();
+		ImageFigure imf2 = Arrows.getArrows(ITreeConstants.RIGHT_ROT);
 		contents.add(imf2);
 		
-		ImageFigure imf3 = Arrows.getLeftArrows();
+		ImageFigure imf3 = Arrows.getArrows(ITreeConstants.LEFT_ROT);
 		contents.add(imf3);
 		
 		

@@ -4,6 +4,8 @@
  */
 package org.jalgo.main.trees;
 
+import org.eclipse.draw2d.Figure;
+
 /**
  * A leaf component of a tree. Leaves cannot have any children.
  * @author Michael Pradel
@@ -40,6 +42,18 @@ public class Leaf extends TreeComponent {
 	
 	public LeafFigure getFigure() {
 		return figure;
+	}
+	
+	public void setVisibility(boolean v) {
+		figure.setVisible(v);
+	}
+	
+	public boolean getVisibility() {
+		return figure.isVisible();
+	}
+
+	public Figure getInnerFigure() {
+		return figure.getInnerFigure();
 	}
 	
 }

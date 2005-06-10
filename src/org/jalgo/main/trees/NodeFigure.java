@@ -89,4 +89,8 @@ public class NodeFigure extends Figure {
 		return outerLabel.getText();
 	}
 
+	public Figure getInnerFigure() {
+		return circle;
+	}
+	
 }

@@ -7,6 +7,8 @@ package org.jalgo.main.trees;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.eclipse.draw2d.Figure;
+
 /**
  * A tree can be a single node or a node with children. This class represents
  * the composite of the composite design pattern.
@@ -21,8 +23,6 @@ public class Tree extends TreeComponent {
 	private LinkedList children; // LinkedList of TreeComponent
 
 	private LinkedList edges; // LinkedList of Edge
-
-	private boolean firstVisibility;
 	
 	public Tree() {
 		this("");
@@ -84,7 +84,11 @@ public class Tree extends TreeComponent {
 	}
 	
 	public void setVisibility(boolean visible) {
-		firstVisibility = visible;
+		nodeFigure.setVisible(visible);
+	}
+	
+	public boolean getVisibility() {
+		return nodeFigure.isVisible();
 	}
 
 	public void setText(String text) {
@@ -105,6 +109,10 @@ public class Tree extends TreeComponent {
 	
 	public NodeFigure getNodeFigure() {
 		return nodeFigure;
+	}
+	
+	public Figure getInnerFigure() {
+		return nodeFigure.getInnerFigure();
 	}
 	
 }

@@ -4,6 +4,7 @@
  */
 package org.jalgo.main.trees;
 
+import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.graph.Node;
 
 /**
@@ -16,8 +17,6 @@ import org.eclipse.draw2d.graph.Node;
 public abstract class TreeComponent {
 
 	protected int weight = 0;
-
-	protected boolean visible = true;
 
 	protected TreeComponent parent;
 
@@ -55,13 +54,9 @@ public abstract class TreeComponent {
 		this.weight = weight;
 	}
 
-	public boolean getVisibility() {
-		return visible;
-	}
+	public abstract boolean getVisibility();
 
-	public void setVisibility(boolean visible) {
-		this.visible = visible;
-	}
+	public abstract void setVisibility(boolean visible);
 
 	public boolean isTree() {
 		return false;
@@ -75,6 +70,8 @@ public abstract class TreeComponent {
 		return edgeToParent;
 	}
 
+	public abstract Figure getInnerFigure();
+	
 	protected void setParent(TreeComponent p) {
 		parent = p;
 	}
