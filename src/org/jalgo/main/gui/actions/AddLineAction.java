@@ -39,7 +39,6 @@ public class AddLineAction extends Action {
 	}
 
 	public void run() {
-		/* this block is intended to be empty */
 	}
 
 }

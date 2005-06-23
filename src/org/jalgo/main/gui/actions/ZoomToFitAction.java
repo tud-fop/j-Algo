@@ -47,7 +47,6 @@ public class ZoomToFitAction extends Action {
 	}
 
 	public void run() {
-		/* this block is intended to be empty */
 	}
 
 }

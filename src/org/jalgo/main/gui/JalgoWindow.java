@@ -23,7 +23,6 @@
 
 package org.jalgo.main.gui;
 
-import java.util.Collection;
 import java.util.LinkedList;
 
 import org.eclipse.jface.action.MenuManager;
@@ -33,6 +32,7 @@ import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabFolder2Adapter;
 import org.eclipse.swt.custom.CTabFolderAdapter;
 import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
@@ -42,7 +42,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.jalgo.main.IModuleConnector;
 import org.jalgo.main.JalgoMain;
 import org.jalgo.main.gui.actions.AboutAction;
 import org.jalgo.main.gui.actions.AboutModuleAction;
@@ -52,7 +51,6 @@ import org.jalgo.main.gui.actions.NewModuleAction;
 import org.jalgo.main.gui.actions.OpenAction;
 import org.jalgo.main.gui.actions.SaveAction;
 import org.jalgo.main.gui.actions.SaveAsAction;
-import org.jalgo.module.synDiaEBNF.ModuleConnector;
 
 /**
  * This class provides a basic GUI Window with ToolBars, MenuBars and a
@@ -60,26 +58,22 @@ import org.jalgo.module.synDiaEBNF.ModuleConnector;
  * 
  * @author Christopher Friedrich
  * @author Cornelius Hald
+ * @author Alexander Claus
  */
 public class JalgoWindow extends ApplicationWindow {
 
 	private JalgoMain parent;
-	private Collection knownModules;
-	private IModuleConnector currentInstance;
 	private LinkedList newActions; // LinkedList of NewActions (one for each
 								   // module)
 	private SaveAction saveAction;
 	private SaveAsAction saveAsAction;
 	private CTabFolder ct;
-	private ModuleConnector moduleConnector;
 
 	public JalgoWindow(JalgoMain parent) {
 
 		super(null);
 
 		this.parent = parent;
-		this.knownModules = parent.getKnownModules();
-		this.currentInstance = parent.getCurrentInstance();
 
 		newActions = new LinkedList();
 		createNewActions();
@@ -93,8 +87,22 @@ public class JalgoWindow extends ApplicationWindow {
 		addMenuBar();
 		addToolBar(SWT.WRAP | SWT.FLAT);
 		addStatusLine();
+	
 	}
 
+	/**
+	 * Iterates over all open modules, calls <code>close()</code> on them.
+	 * Closes the application only if all modules are ready to close, what means,
+	 * that each call to <code>close()</code> has to return <code>true</code>.
+	 */
+	protected void handleShellCloseEvent() {
+		while (getParent().getCurrentInstance() != null) {
+			if (!getParent().getCurrentInstance().close()) return;
+			getParent().itemClosed(ct.getItem(ct.getSelectionIndex()));
+		}
+		super.handleShellCloseEvent();
+	}
+	
 	protected Control createContents(Composite parent) {
 
 		parent
@@ -107,13 +115,14 @@ public class JalgoWindow extends ApplicationWindow {
 				new Image(parent.getDisplay(), "pix/jalgo.png")); //$NON-NLS-1$
 
 		final JalgoMain jalgo = this.parent;
-		System.out.println(SWT.getVersion());
 		
 		// code used in swt 2.1 and deprecated when using swt 3.0
 		ct = new CTabFolder(parent, SWT.FLAT);
 		ct.addCTabFolderListener(new CTabFolderAdapter() {
 			public void itemClosed(CTabFolderEvent event) {
-				jalgo.itemClosed((CTabItem) event.item);
+				// Ask user for savinge
+				if (!getParent().getCurrentInstance().close()) event.doit = false;
+				else jalgo.itemClosed((CTabItem) event.item);
 			}
 		});
 
@@ -121,7 +130,9 @@ public class JalgoWindow extends ApplicationWindow {
 		/*ct = new CTabFolder(parent, SWT.FLAT);
 		ct.addCTabFolder2Listener(new CTabFolder2Adapter() {
 			public void itemClosed(CTabFolderEvent event) {
-				jalgo.itemClosed((CTabItem) event.item);
+				// Ask user for saving
+				if (!getParent().getCurrentInstance().close()) event.doit = false;
+				else jalgo.itemClosed((CTabItem) event.item);
 			}
 		});*/
 		
@@ -132,7 +143,10 @@ public class JalgoWindow extends ApplicationWindow {
 		});
 //		ct.setSimple(false);
 		ct.setFocus();
-
+		jalgo.newInstance(0);
+		parent.pack();
+		parent.getShell().setSize(800, 600);
+		
 		return ct;
 	}
 
@@ -217,7 +231,7 @@ public class JalgoWindow extends ApplicationWindow {
 	 * @return The Composite which should be used to put the module GUI into
 	 */
 	public CTabItem requestNewCTabItem(String text, Image img) {
-		CTabItem cti = new CTabItem(this.ct, SWT.FLAT);
+		CTabItem cti = new CTabItem(this.ct, SWT.FLAT|SWT.CLOSE);
 		cti.setText(text);
 		cti.setImage(img);
 
@@ -249,28 +263,12 @@ public class JalgoWindow extends ApplicationWindow {
 		return parent.openFile(filename, useCurrentInstance);
 	}
 
-	public ModuleConnector getModuleConnector() {
-		return moduleConnector;
-	}
-
-	public void setModuleConnector(ModuleConnector moduleConnector) {
-		this.moduleConnector = moduleConnector;
-	}
-
 	public SaveAction getSaveAction() {
 		return saveAction;
 	}
 
 	public SaveAsAction getSaveAsAction() {
 		return saveAsAction;
-	}
-
-	public void setCurrentInstance(IModuleConnector ci) {
-		this.currentInstance = ci;
-	}
-
-	public IModuleConnector getCurrentInstance() {
-		return currentInstance;
 	}
 
 	private void createNewActions() {

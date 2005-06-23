@@ -48,8 +48,9 @@ public class SaveAsAction extends Action {
 	public void run() {
 		FileDialog fileChooser = new FileDialog(win.getShell(), SWT.SAVE);
 		fileChooser.setText(Messages.getString("ui.Save_as")); //$NON-NLS-1$
-
-		fileChooser.setFilterExtensions(new String[] {Messages.getString("SaveAsAction.*.jalgo_6")}); //$NON-NLS-1$
+		fileChooser.setFilterPath(System.getProperty("user.dir"));
+		fileChooser.setFilterExtensions(new String[] {
+			Messages.getString("SaveAsAction.*.jalgo_6")}); //$NON-NLS-1$
 		String filename = fileChooser.open();
 		if (filename != null) {
 			win.saveFileAs(filename);

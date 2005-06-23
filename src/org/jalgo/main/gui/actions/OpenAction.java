@@ -37,7 +37,6 @@ import org.jalgo.main.gui.JalgoWindow;
 public class OpenAction extends Action {
 
 	private JalgoWindow win;
-	private String currentDir;
 
 	public OpenAction(JalgoWindow win) {
 
@@ -67,7 +66,7 @@ public class OpenAction extends Action {
 		FileDialog fileChooser = new FileDialog(win.getShell(), SWT.OPEN);
 
 		fileChooser.setText(Messages.getString("ui.Open_file")); //$NON-NLS-1$
-		fileChooser.setFilterPath(currentDir);
+		fileChooser.setFilterPath(System.getProperty("user.dir"));
 		fileChooser.setFilterExtensions(new String[] { "*.jalgo", "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$
 		fileChooser.setFilterNames(
 			new String[] { Messages.getString("OpenAction.jAlgo_files_(*.jalgo)_7"), Messages.getString("OpenAction.All_files_8") }); //$NON-NLS-1$ //$NON-NLS-2$

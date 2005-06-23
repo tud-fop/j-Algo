@@ -45,23 +45,22 @@ public class AboutModuleAction extends Action {
 
 	public void run() {
 		MessageBox dia = new MessageBox(win.getShell());
-		assert win.getCurrentInstance() != null;
 		dia.setText(Messages.getString("AboutModuleAction.About_jAlgo-Module_4")); //$NON-NLS-1$
 		dia
 			.setMessage(
-				win.getCurrentInstance().getModuleInfo().getName()
+				win.getParent().getCurrentInstance().getModuleInfo().getName()
 				+ Messages.getString("AboutModuleAction._-_Version__5") //$NON-NLS-1$
-				+ win.getCurrentInstance().getModuleInfo().getVersion()
+				+ win.getParent().getCurrentInstance().getModuleInfo().getVersion()
 				+ "\n\n" //$NON-NLS-1$
-				+ win.getCurrentInstance().getModuleInfo().getDescription()
+				+ win.getParent().getCurrentInstance().getModuleInfo().getDescription()
 				+ "\n\n" //$NON-NLS-1$
 				+ Messages.getString("AboutModuleAction.Authors_8") //$NON-NLS-1$
 				+ ":\n" //$NON-NLS-1$
-				+ win.getCurrentInstance().getModuleInfo().getAuthor()
+				+ win.getParent().getCurrentInstance().getModuleInfo().getAuthor()
 				+ "\n\n" //$NON-NLS-1$
 				+ Messages.getString("AboutModuleAction.License_10") //$NON-NLS-1$
 				+ ":\n" //$NON-NLS-1$
-				+ win.getCurrentInstance().getModuleInfo().getLicense()
+				+ win.getParent().getCurrentInstance().getModuleInfo().getLicense()
 			/*
 				+ "(c) Copyright jAlgo-Team 2004.  All rights reserved.\n"
 				+ "Visit http://www.inf.tu-dresden.de/~swt04-p1\n"

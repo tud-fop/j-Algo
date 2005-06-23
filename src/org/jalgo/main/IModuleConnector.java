@@ -34,6 +34,7 @@ import org.eclipse.jface.action.SubToolBarManager;
  * @author Michael Pradel
  * @author Christopher Friedrich
  * @author Stephan Creutz
+ * @author Alexander Claus
  */
 public interface IModuleConnector {
 
@@ -84,5 +85,15 @@ public interface IModuleConnector {
 	 * Get a class with all module information (name, description, version, ...)
 	 */
 	IModuleInfo getModuleInfo();
-	
+
+	/**
+	 * This method is invoked, when module or program are intended to be closed.
+	 * Here the user can be asked for saving his work.
+	 * If this method returns <code>false</code>, the closing of module / program
+	 * is ignored.
+	 * 
+	 * @return <code>true</code>, if module is ready to be closed,
+	 * 			<code>false</code> otherwise
+	 */
+	boolean close();
 }

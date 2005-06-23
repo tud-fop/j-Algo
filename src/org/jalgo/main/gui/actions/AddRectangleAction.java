@@ -56,7 +56,6 @@ public class AddRectangleAction extends Action {
 		RectangleFigure fig = new RectangleFigure();
 		figure.addMouseListener(new MouseListener.Stub() {
 			public void mousePressed(MouseEvent arg0) {
-				/* this block is intended to be empty */
 			}
 		});
 		figure.add(fig);

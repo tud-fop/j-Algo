@@ -34,6 +34,7 @@ import java.util.LinkedList;
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubStatusLineManager;
 import org.eclipse.jface.action.SubToolBarManager;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Image;
@@ -42,8 +43,6 @@ import org.eclipse.swt.widgets.Display;
 import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.gui.actions.SaveAsAction;
 import org.jalgo.main.util.Storage;
-import org.jalgo.module.synDiaEBNF.ModuleConnector;
-import org.jalgo.module.synDiaEBNF.ModuleInfo;
 
 /**
  * @author Christopher Friedrich, Michael Pradel
@@ -63,6 +62,7 @@ public class JalgoMain {
 							     // value =
 							     // IModuleConnector
 
+	
 	private IModuleConnector currentInstance;
 
 	public JalgoMain() {
@@ -76,8 +76,10 @@ public class JalgoMain {
 		appWin = new JalgoWindow(this);
 		appWin.setBlockOnOpen(true);
 		appWin.open();
+		
 
 		Display.getCurrent().dispose();
+		
 	}
 
 	/**
@@ -94,6 +96,8 @@ public class JalgoMain {
 			currentInstance.getToolBarManager().setVisible(false);
 		appWin.getMenuBarManager().update(true);
 		appWin.getToolBarManager().update(true);
+		appWin.getSaveAction().setEnabled(false);
+		appWin.getSaveAsAction().setEnabled(false);
 		/* Remove CTab */
 		openInstances.remove(cti);
 		cti.dispose();
@@ -142,6 +146,26 @@ public class JalgoMain {
 	}
 
 	/**
+	 * Creates a new instance of the module with the given name.
+	 * Returns <code>null</code>, if the given name does not match to any known
+	 * module name.
+	 * 
+	 * @param moduleName the name of the module to be created
+	 * 
+	 * @return the <code>IModuleConnector</code> instance of the module, if it is
+	 * 			created, <code>null</code> otherwise
+	 */
+	public IModuleConnector newInstanceByName(String moduleName) {
+		for (int i=0; i<knownModuleInfos.size(); i++) {
+			if (((IModuleInfo)knownModuleInfos.get(i)).getName().
+					equals(moduleName)) {
+				return newInstance(i);
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Creates a new instance of the specified module.
 	 * 
 	 * @param modNumber
@@ -159,14 +183,21 @@ public class JalgoMain {
 				currentInstance.getToolBarManager().setVisible(
 						false);
 		}
-
+		
 		// Requests a fresh CTabItem from the appWin
-		String ctiText = ((IModuleInfo) knownModuleInfos.get(modNumber))
-				.getName();
-		CTabItem cti = appWin.requestNewCTabItem(ctiText, new Image(
-				appWin.getShell().getDisplay(),
-				"pix/jalgo-file.png")); //$NON-NLS-1$
-
+		IModuleInfo module = (IModuleInfo) knownModuleInfos.get(modNumber);
+		String ctiText = module.getName();
+		ImageDescriptor imageDescriptor = module.getLogo();
+		Image image;
+		if (imageDescriptor == null) {
+			// Default "jAlgo File" icon.
+			image = new Image(appWin.getShell().getDisplay(), "pix/jalgo-file.png");
+		} else {
+			// Custom icon as defined in the module info.
+			image = imageDescriptor.createImage(appWin.getShell().getDisplay());
+		}
+		CTabItem cti = appWin.requestNewCTabItem(ctiText, image);
+		
 		// Create a new instance of a module.
 		Class constrArgs[] = new Class[] { ApplicationWindow.class,
 				Composite.class, SubMenuManager.class,
@@ -233,9 +264,14 @@ public class JalgoMain {
 	 *  
 	 */
 	public boolean saveFile() {
+	    //FSt
+	    if(this.currentInstance == null)
+	        return false;
+	    //~FSt
 		if (currentInstance.getModuleInfo().getOpenFileName() == null) {
 			SaveAsAction a = new SaveAsAction(appWin);
 			a.run();
+			
 			return true;
 		}
 		return saveFileAs(currentInstance.getModuleInfo()
@@ -248,6 +284,7 @@ public class JalgoMain {
 	 * @param filename
 	 */
 	public boolean saveFileAs(String filename) {
+		currentInstance.getModuleInfo().setOpenFileName(filename);
 		return Storage.save(filename);
 	}
 
@@ -257,7 +294,12 @@ public class JalgoMain {
 	 * @param filename
 	 */
 	public boolean openFile(String filename) {
-		return Storage.load(filename);
+		if( Storage.load(filename) == true)
+		{
+		    this.currentInstance.getModuleInfo().setOpenFileName(filename);
+		    return true;
+		}
+		return false;
 	}
 
 	/**
@@ -267,9 +309,15 @@ public class JalgoMain {
 	 */
 	public boolean openFile(String filename, boolean useCurrentInstance) {
 		if (useCurrentInstance) {
-			return Storage.load(filename, currentInstance);
+		   
+			if( Storage.load(filename, currentInstance) == true)
+			{
+			    currentInstance.getModuleInfo().setOpenFileName(filename);
+			    return true;
+			}
+			return false;
 		}
-		return Storage.load(filename);
+		return openFile( filename);
 	}
 
 	/**
@@ -278,14 +326,40 @@ public class JalgoMain {
 	 * their module here!
 	 */
 	private void addKnownModules() {
-		knownModules.add(ModuleConnector.class);
-		knownModules
-				.add(org.jalgo.module.testModule.ModuleConnector.class);
+/*		String jarFileName, moduleName;
+		for (File file : new File(System.getProperty("user.dir")+
+				System.getProperty("file.separator")+"/modules").listFiles()) {
+			jarFileName = file.getName();
+			if (file.isFile() &&
+				jarFileName.endsWith(".jar") &&
+				!jarFileName.equals("jalgo.jar")) {
+				moduleName = jarFileName.substring(0, jarFileName.length()-4); 
+				try {
+					knownModules.add(Class.forName("org.jalgo.module."+
+						moduleName+".ModuleConnector"));
+					knownModuleInfos.add(Class.forName("org.jalgo.module."+
+						moduleName+".ModuleInfo").newInstance());
+				}
+				catch (ClassNotFoundException e) {e.printStackTrace();}
+				catch (InstantiationException e) {e.printStackTrace();}
+				catch (IllegalAccessException e) {e.printStackTrace();}
+			}
+		}*/
+		
+		knownModules.add(org.jalgo.module.startup.ModuleConnector.class);
+		knownModules.add(org.jalgo.module.avl.ModuleConnector.class);
+		knownModules.add(org.jalgo.module.dijkstraModule.ModuleConnector.class);
+		knownModules.add(org.jalgo.module.synDiaEBNF.ModuleConnector.class);
+//		knownModules.add(org.jalgo.module.testModule.ModuleConnector.class);
 		//Add a new ModuleConnector here!!
 
-		knownModuleInfos.add(new ModuleInfo());
-		knownModuleInfos
-				.add(new org.jalgo.module.testModule.ModuleInfo());
-		//Add a new ModuleInfo here!!
+		knownModuleInfos.add(new org.jalgo.module.startup.ModuleInfo());
+		knownModuleInfos.add(new org.jalgo.module.avl.ModuleInfo());
+		knownModuleInfos.add(new org.jalgo.module.dijkstraModule.ModuleInfo());
+		knownModuleInfos.add(new org.jalgo.module.synDiaEBNF.ModuleInfo());
+		
+		
+//		knownModuleInfos.add(new org.jalgo.module.testModule.ModuleInfo());
+		//Add a new ModuleInfo here!! 
 	}
 }
