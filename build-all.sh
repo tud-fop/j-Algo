@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: build-all.sh,v 1.1 2005/06/23 09:19:09 jalgosequoia Exp $
+# $Id: build-all.sh,v 1.1 2005/06/23 09:22:58 jalgosequoia Exp $
 
 for SYSTEM in freebsd linux windows macosx; do
     echo "Building for $SYSTEM..."
