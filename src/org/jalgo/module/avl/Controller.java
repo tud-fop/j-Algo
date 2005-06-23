@@ -1,0 +1,376 @@
+/*
+ * Created on 26.04.2005
+ * 
+ */
+package org.jalgo.module.avl;
+import java.util.LinkedList;
+import java.util.Queue;
+
+import org.jalgo.module.avl.algorithm.AVLTest;
+import org.jalgo.module.avl.algorithm.CommandFactory;
+import org.jalgo.module.avl.algorithm.CreateRandomTree;
+import org.jalgo.module.avl.algorithm.Insert;
+import org.jalgo.module.avl.algorithm.InsertAVL;
+import org.jalgo.module.avl.algorithm.MacroCommand;
+import org.jalgo.module.avl.algorithm.Remove;
+import org.jalgo.module.avl.algorithm.RemoveAVL;
+import org.jalgo.module.avl.datastructure.Node;
+import org.jalgo.module.avl.datastructure.SearchTree;
+import org.jalgo.module.avl.datastructure.Visualizable;
+import org.jalgo.module.avl.datastructure.WorkNode;
+
+
+/**
+ * @author Matthias Schmidt
+ *
+ *	The class <code>Controller</code> is an important connection between the GUI an the
+ *	working algorithms. <br>
+ *	It provides several functions like: to start a new algorithm, 
+ *  to check if the working algorithm is ready and to get the results of the active
+ *  algorithm.
+ */
+public class Controller implements Constants {
+
+	private SearchTree tree;	
+	private boolean avlMode = false;	
+	private MacroCommand currentCommand = null;
+	private WorkNode workingNode = null;
+	private Queue<String> logDescriptions;
+
+/**
+ * Constructs the <code>Controller</code> instance for the current AVL module
+ * instance.<br>
+ * Initializes the <code>WorkingNode</code> for the algorithms. <br>
+ * Initializes the list of logdescriptions shown in the logbook at the GUI.
+ * 
+ * @param st the datastructure for the algorithm
+ */	
+	public Controller(SearchTree st) {
+		tree = st;
+		workingNode = new WorkNode(0, null);
+		workingNode.setVisualizationStatus(Visualizable.INVISIBLE);
+
+		logDescriptions = new LinkedList<String>(); 
+	}
+		
+/**
+ * Sets the AVL mode
+ * @param avl - <code>true</code> to enable the AVL mode, false to disable it. 
+ */
+	public void setAVLMode(boolean avl){
+		avlMode = avl;
+	}	
+
+/**
+ * Retrieves the status of the AVL mode
+ * @return <code>true</code> if the AVL mode is enabled
+ */
+	public boolean isAVLMode(){
+		return avlMode;
+	}
+	
+/**
+ * @return The section of the current command. <br>
+ * If there is no current command "noCommand" is returned.
+ */	
+	public String getSection(){
+		if (currentCommand == null ||
+			!currentCommand.hasNext()) return null;
+		return (String) currentCommand.getResults().get(1);
+	}
+	
+/**
+ * Retrieves the Node with which the algorithms work.
+ * @return The WorkNode of the active algorithm.
+ */
+	public WorkNode getWorkNode(){
+		return workingNode;
+	}
+
+/**
+ * Starts a new Search algorithm. 
+ * @param key - the key of the <code>Node</code> that is searched in the tree
+ */
+	public void startSearch(int key) {
+		workingNode = new WorkNode(key,tree.getRoot());
+		currentCommand = CommandFactory.createSearch(workingNode);
+		putLogDescription((String)currentCommand.getResult(0));
+	}
+
+/**
+ * Starts a new Insert algorithm. <br>
+ * If the AVL mode is enabled the insertation keeps the avl character. 
+ * @param key - the key of the <code>Node</code> that shall be inserted.
+ */
+	public void startInsert(int key) {
+		workingNode = new WorkNode(key,tree.getRoot());
+		if (avlMode) currentCommand = CommandFactory.createInsertAVL(workingNode,tree);
+		else currentCommand = CommandFactory.createInsert(workingNode,tree);
+		putLogDescription((String)currentCommand.getResult(0));
+	}
+	
+/**
+ * Starts a new Remove algorithm.
+ * If the AVL mode is enabled the removal keeps the avl character.
+ * @param key - the key of the <code>Node</code> the shall be removed.
+ */
+	public void startRemove(int key) {
+		workingNode = new WorkNode(key, tree.getRoot());
+		if (avlMode) 
+			currentCommand = CommandFactory.createRemoveAvl(workingNode, tree);
+		else
+			currentCommand = CommandFactory.createRemove(workingNode, tree);
+		putLogDescription((String)currentCommand.getResult(0));
+	}
+	
+/**
+ * Starts an algorithm that creates a random tree. <br>
+ * If the AVL mode is enabled the new tree has the avl character.
+ * @param nodeNumber - number of <code>Node</code>s for the random tree
+ */
+	public void createRandomTree(int nodeNumber) {
+		workingNode = new WorkNode(0,tree.getRoot());
+		workingNode.setVisualizationStatus(Visualizable.INVISIBLE);
+//		if (avlMode)
+//			currentCommand = CommandFactory.createCreateRandomAVLTree(nodeNumber,tree,workingNode);
+//		else 
+		currentCommand = CommandFactory.createCreateRandomTree(nodeNumber,tree,workingNode, avlMode);
+		putLogDescription((String)currentCommand.getResult(0));
+	}
+
+/**
+ * Starts an AVLTest algorithm and performs it once. 
+ * 
+ */
+	public void startAVLTest(){
+		currentCommand = CommandFactory.createAVLTest(tree);
+		currentCommand.perform();
+		putLogDescription((String)currentCommand.getResult(0));
+	}
+	
+/**
+ * Checks the status of the current command.
+ * @return false if the current command has no next step 
+ * or if there is no current command.   
+ */
+	public boolean algorithmHasNextStep() {
+		boolean next = false;
+		if(currentCommand!=null)
+			next = currentCommand.hasNext();
+		return next;
+	}
+	
+/**
+ * Checks the status of the current command.
+ * @return false if the current command has no previous step 
+ * or if there is no current command.
+ */
+	public boolean algorithmHasPreviousStep(){
+		boolean previous = false;
+		if (currentCommand!=null)
+			previous = currentCommand.hasPrevious();
+		return previous;
+	}
+	
+/**
+ * Trys to perform one step forward in the active algorithm.
+ * @throws NoCommandException if there is no active algorithm
+ * @throws NoPerformException if it's impossible to calculate a new step in the active algorithm
+ */
+	public void perform() throws NoActionException {	
+		try {
+			currentCommand.perform();
+//			section = (String) currentCommand.getResults().get(0);
+			putLogDescription((String)currentCommand.getResult(0));
+		}
+		catch(NullPointerException e) {
+			throw new NoCommandException();
+		}
+		catch(IndexOutOfBoundsException e){
+			throw new NoPerformException();
+		}
+	}
+
+/**
+ * Trys to perform one undo-Step in the active algorithm.
+ * @throws NoCommandException if there is no active algorithm
+ * @throws NoUndoException if it's impossible to calculate a previous step in the active algorithm
+ */
+	public void undo() throws NoActionException{			
+		try {
+			currentCommand.hasNext();
+		}
+		catch(NullPointerException e){
+			throw new NoCommandException();
+		}		
+		try {
+			currentCommand.undo();
+//			section = (String) currentCommand.getResults().get(0);
+			putLogDescription((String)currentCommand.getResult(0));
+		}
+		catch(NullPointerException e) {
+			throw new NoUndoException();
+		}
+				
+	}
+
+/**
+ * Trys to perform one BIG step in the active algorithm.
+ * @throws NoCommandException if there is no active algorithm
+ * @throws NoPerformException if it's impossible to calculate a new step in the active algorithm
+ */
+	public void performBlockStep()  throws NoActionException{
+		try {
+			currentCommand.performBlockStep();
+//			section = (String) currentCommand.getResults().get(0);
+			putLogDescription((String)currentCommand.getResult(0));
+		}
+		catch(NullPointerException e) {
+			throw new NoCommandException();
+		}
+		catch(IndexOutOfBoundsException e){
+			throw new NoPerformException();
+		}
+	}
+
+/**
+ * Trys to perform one BIG step backwards in the active algorithm. 
+ * @throws NoCommandException if there is no active algorithm
+ * @throws NoPerformException if it's impossible to calculate a previous step in the active algorithm
+ */
+	public void undoBlockStep() throws NoActionException{
+		try {
+			currentCommand.hasNext();
+		}
+		catch(NullPointerException e){
+			throw new NoActionException("Kein laufender Algo., undo() nicht ausgeführt.");
+		}		
+		try {
+			currentCommand.undoBlockStep();
+//			section = (String) currentCommand.getResults().get(0);
+			putLogDescription((String)currentCommand.getResult(0));
+		}
+		catch(NullPointerException e) {
+			throw new NoActionException("Rückgängig im Algorithmus nicht möglich, undo() nicht ausgeführt.");
+		}
+	}
+
+/**
+ * Terminates the active algorithm with the last stable status.
+ * @throws NoActionException if something goes wrong with the Termination.
+ */
+	public void abort() throws NoActionException{
+		try {
+			if (currentCommand.hasNext())
+				putLogDescription(getAlgoName()+" abgebrochen");
+			currentCommand.abort();
+		}
+		catch(Exception e) {throw new NoActionException(e.getMessage());}
+
+		if (tree.getRoot()!=null)
+			tree.getRoot().setVisualizationStatus(Visualizable.NORMAL);
+		workingNode.setVisualizationStatus(Visualizable.INVISIBLE);
+		Node next;
+		if ((next=workingNode.getNextToMe())!=null)
+			next.setVisualizationStatus(Visualizable.NORMAL);
+		currentCommand = null;
+	}
+	
+/**
+ * Terminates the active algorithm by getting it to the end.
+ * @throws NoActionException if something goes wrong with the Termination.
+ */
+	public void finish() throws NoActionException {
+		try{
+			currentCommand.finish();
+		}
+		catch(Exception e) {throw new NoActionException(e.getMessage());}
+		
+		putLogDescription(getAlgoName()+" beendet");
+	}
+
+/**
+ * Returns the Result of the <code>AVL-Test</code>
+ * @return <code>false</code> as <code>Boolean</code> if the tree has no avl character. <br>
+ * <code>null</code> is returned if the active algorithm is no <code>AVLTest</code>.    
+ */
+	public Boolean getAVLTestResult() {
+		if (currentCommand instanceof AVLTest)
+			return (Boolean)currentCommand.getResult(2);
+		return null;
+	}
+
+	/**
+	 * Inserts the given <code>String</code> in the queue of log descriptions.
+	 * These descriptions can be results of algorithms or events caused by the GUI.
+	 * 
+	 * @param logDesc a log description of the last action
+	 */
+	public void putLogDescription(String logDesc) {
+		logDescriptions.offer(logDesc);
+	}
+
+	/**
+	 * Retrieves the log description of the last action as <code>String</code>.
+	 * If this method is called, the string is removed from the description queue.
+	 * This guarantees that no action is mentioned more than once in log. 
+	 * 
+	 * @return the log description of the last action
+	 */
+	public String getLogDescription() {
+		return logDescriptions.poll();
+	}
+
+	/**
+	 * Retrieves all accumulated log descriptions in entrance order.
+	 * 
+	 * @return a <code>Queue</code> of log descriptions.
+	 */
+	public Queue<String> getLogDescriptions() {
+		Queue<String> retVal = new LinkedList<String>(logDescriptions);
+		logDescriptions.clear();
+		return retVal;
+	}
+
+/**
+ * Returns a <code>Sting</code> which is shown in a short Message at the end of an algorithm.
+ * @return the result of the active algorithm. <br> 
+ * 0 is returned if there is no working algorithm or an <code>AVLTest</code> is working.
+ */	
+	public String getResult(){
+		if (currentCommand != null && !(currentCommand instanceof AVLTest)){
+			int result = (Integer) currentCommand.getResult(2);
+			switch (result){
+			case FOUND:	
+				if (currentCommand instanceof Insert ||
+					currentCommand instanceof InsertAVL)
+					return "Schlüssel existiert bereits!";
+				return "Schlüssel gefunden";
+			case DONE:
+				if (currentCommand instanceof Insert ||
+					currentCommand instanceof InsertAVL)
+					return "Knoten eingefügt";
+				if (currentCommand instanceof CreateRandomTree)
+					return getAlgoName()+" erfolgreich";
+				if (currentCommand instanceof Remove ||
+					currentCommand instanceof RemoveAVL)
+					return "Knoten gelöscht";
+			case NOTFOUND:
+				return "Schlüssel nicht im Baum enthalten";
+		    default:
+				return "Algorithmusende noch nicht betrachtet";
+			}
+		}			
+		return "No Command Working"; 
+	}
+	
+/**
+ * Returns a <code>String</code> better known as the algorithm name.
+ * @return the name of the current active <code>MacroCommand</code> 
+ */
+	public String getAlgoName(){
+		if (currentCommand!=null)
+			return currentCommand.getName();
+		return "nocommand";
+	}
+}

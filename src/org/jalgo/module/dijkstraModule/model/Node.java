@@ -1,0 +1,185 @@
+/*
+ * Created on 07.05.2005
+ *
+ */
+package org.jalgo.module.dijkstraModule.model;
+
+import java.io.Serializable;
+import java.lang.Comparable;
+
+/**
+ * @author Hannes Strass, Martin Winter
+ * 
+ * Represents a Node which is characterized by its index -- an integer between 1 and 9.
+ *
+ */
+public class Node 
+extends GraphElement 
+implements Serializable, Comparable
+{
+	private int index;
+	private Position position;
+	private Node predecessor;
+	private int distance;
+	
+	/** Returns the distance from the start node. This is used by {@link DijkstraAlgorithm}.
+	 * 
+	 * @return Returns the distance from the start node to this one.
+	 */
+	public int getDistance() {
+		return distance;
+	}
+	/** Sets the distance from the start node. This is used by {@link DijkstraAlgorithm}.
+	 * 
+	 * @param distance The distance to set.
+	 */
+	public void setDistance(int distance) {
+		this.distance = distance;
+	}
+	/**
+	 * Creates a Node with Position(0.0, 0.0) and given index, sets changed-flag true
+	 * @param index the index
+	 */
+	public Node(int index)
+	{
+		this.index = index;
+		this.position = new Position(0.0, 0.0);
+		
+		this.setChanged(true); // new Nodes are always changed
+	}
+	
+	/**
+	 * creates a node with given Position and given index, sets changed-flag true
+	 * @param index the index
+	 * @param position the Position
+	 */
+	public Node(int index, Position position)
+	{
+		this.index = index;
+		this.position = position;
+		
+		this.setChanged(true); // new Nodes are always changed
+	}
+	/**
+	 * @param anotherNode
+	 * @return true, if indexes of this and anotherNode are equal
+	 */
+	public boolean equals(Node anotherNode)
+	{
+		return (this.index) == anotherNode.getIndex();
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString()
+	{
+		return "(Node " + index + ", " + position + ");"+super.toString();
+	}
+	
+	/**
+	 * @return the index as String
+	 */
+	public String getLabel()
+	{
+		return (String.valueOf(index));
+	}
+	
+	/**
+	 * @return the index
+	 */
+	public int getIndex()
+	{
+		return index;
+	}
+	
+	/**
+	 * @param newIndex the index to set
+	 * @return true, if index is in range (from 1 to 9). index will not be set otherwise
+	 */
+	public boolean setIndex(int newIndex)
+	{
+		if ((0 < newIndex) && (newIndex < 10)) {
+			this.index = newIndex;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * @return The Position of the Node in the virtual "world coordinate system"
+	 */
+	public Position getPosition()
+	{
+		return this.position;
+	}
+	
+	/**
+	 * @return the predecessor of the node concerning shortest paths
+	 */
+	public Node getPredecessor()
+	{
+		return this.predecessor;
+	}
+	
+	/**
+	 * @return the shortest path as string
+	 */
+	public String getShortestPath()
+	{
+	    if(getPredecessor() != null)
+	    {
+	        String strPath = getPredecessor().getShortestPath();
+	        if(strPath.length() == 0)
+	            return getPredecessor().getLabel();
+	        else
+	            return strPath+","+getPredecessor().getLabel();
+	    }
+	    else
+	        return "";
+	}
+	
+	/**
+	 *  compares Nodes
+	 *  @param anotherNode Node to compare with
+	 *  @return -1 for less, 0 for equal and 1 for greater (this than anotherNode)
+	 */
+	public int compareTo(Object anotherNode)
+	{
+		try
+		{
+			Node node = (Node) anotherNode;
+			
+			if (node.getIndex() < this.index) {
+				return (int) 1;
+			} else {
+				if (node.getIndex() == this.index) {
+					return (int) 0;
+				} else { // (node.getIndex() > this.index)
+					return -1;
+				}
+			}
+		}
+		catch (ClassCastException e)
+		{
+			return -1;
+		}
+	}
+	
+	/** Sets the position of this node on the screen.
+	 * @param newPosition the new position
+	 */
+	public void setPosition(Position newPosition)
+	{
+		this.position = newPosition;
+	}
+	
+	/** Sets the predecessor of a node. This forms the spanning graph where we extract the shortest paths.
+	 * @param newPredecessor the predecessor to set
+	 */
+	public void setPredecessor(Node newPredecessor)
+	{
+		this.predecessor = newPredecessor;
+	}
+}
