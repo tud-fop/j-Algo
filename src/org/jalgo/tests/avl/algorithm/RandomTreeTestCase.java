@@ -1,9 +1,11 @@
-package org.jalgo.module.avl.algorithm;
-
-import org.jalgo.module.avl.datastructure.SearchTree;
-import org.jalgo.module.avl.datastructure.WorkNode;
+package org.jalgo.tests.avl.algorithm;
 
 import junit.framework.TestCase;
+
+import org.jalgo.module.avl.algorithm.CommandFactory;
+import org.jalgo.module.avl.algorithm.CreateRandomTree;
+import org.jalgo.module.avl.datastructure.SearchTree;
+import org.jalgo.module.avl.datastructure.WorkNode;
 
 public class RandomTreeTestCase extends TestCase {
 

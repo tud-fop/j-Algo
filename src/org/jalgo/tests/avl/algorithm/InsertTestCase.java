@@ -1,4 +1,4 @@
-package org.jalgo.module.avl.algorithm;
+package org.jalgo.tests.avl.algorithm;
 
 import java.util.Arrays;
 

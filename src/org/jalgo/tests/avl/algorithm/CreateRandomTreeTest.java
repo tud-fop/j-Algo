@@ -2,7 +2,7 @@
  * Created on 14.05.2005
  *
  */
-package org.jalgo.module.avl.algorithm;
+package org.jalgo.tests.avl.algorithm;
 
 import org.jalgo.module.avl.datastructure.*;
 import org.jalgo.module.avl.*;

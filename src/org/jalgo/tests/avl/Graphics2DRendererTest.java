@@ -1,4 +1,4 @@
-package org.jalgo.module.avl;
+package org.jalgo.tests.avl;
 
 import java.awt.*;
 

@@ -1,10 +1,12 @@
-package org.jalgo.module.avl.algorithm;
+package org.jalgo.tests.avl.algorithm;
 
+import junit.framework.TestCase;
+
+import org.jalgo.module.avl.algorithm.CommandFactory;
+import org.jalgo.module.avl.algorithm.MacroCommand;
 import org.jalgo.module.avl.datastructure.AVLNode;
 import org.jalgo.module.avl.datastructure.SearchTree;
 import org.jalgo.module.avl.datastructure.WorkNode;
-
-import junit.framework.TestCase;
 
 public class InsertAVLTestCase extends TestCase {
 

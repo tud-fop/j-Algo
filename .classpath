@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-    <classpathentry kind="src" path="src"/>
-    <classpathentry exported="true" kind="var" path="JRE_LIB" sourcepath="JSDK_SRC"/>
-    <classpathentry exported="true" kind="lib" path="extlibs/jface.jar"/>
-    <classpathentry exported="true" kind="lib" path="extlibs/boot.jar"/>
-    <classpathentry exported="true" kind="lib" path="extlibs/runtime.jar"/>
-    <classpathentry exported="true" kind="lib" path="extlibs/draw2d.jar"/>
-    <classpathentry exported="true" kind="lib" path="extlibs/linux/swt.jar"/>
-    <classpathentry exported="true" kind="lib" path="extlibs/linux/swt-pi.jar"/>
-    <classpathentry kind="output" path="runtime"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry sourcepath="ECLIPSE_HOME/plugins/org.eclipse.jdt.source_3.0.0/src/org.junit_3.8.1/junitsrc.zip" kind="var" path="JUNIT_HOME/junit.jar"/>
+	<classpathentry kind="lib" path="extlibs/draw2d.jar"/>
+	<classpathentry kind="lib" path="extlibs/jface.jar"/>
+	<classpathentry kind="lib" path="extlibs/osgi.jar"/>
+	<classpathentry kind="lib" path="extlibs/runtime.jar"/>
+	<classpathentry kind="lib" path="extlibs/linux/swt.jar"/>
+	<classpathentry kind="lib" path="extlibs/linux/swt-mozilla.jar"/>
+	<classpathentry kind="lib" path="extlibs/linux/swt-pi.jar"/>
+	<classpathentry kind="output" path="runtime"/>
 </classpath>

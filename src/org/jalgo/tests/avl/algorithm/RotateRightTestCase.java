@@ -1,4 +1,4 @@
-package org.jalgo.module.avl.algorithm;
+package org.jalgo.tests.avl.algorithm;
 
 import org.jalgo.module.avl.algorithm.Command;
 import org.jalgo.module.avl.algorithm.CommandFactory;

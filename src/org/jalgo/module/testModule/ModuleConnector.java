@@ -103,4 +103,9 @@ public class ModuleConnector implements IModuleConnector {
         return moduleInfo;
     }
 
+	public boolean close() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }
