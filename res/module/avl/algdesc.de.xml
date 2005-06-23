@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE AlgorithmDescription SYSTEM "structure.dtd" >
+<AlgorithmDescription>
+
+<!-- search algorithm !-->
+<Schritt>
+         <Key>search1</Key>
+         <Text>
+         <Line> Schlüsselsuche im Suchbaum: </Line>
+         <Line endswith="nl" startswith="nlsp3">
+               a) Falls der Baum leer ist, dann "Schlüssel nicht im Baum vorhanden"</Line>
+		     <Line endswith="nl" startswith="sp3">
+               b) Falls der Suchschlüssel gleich dem aktuellen Schlüssel ist, dann "Schlüssel gefunden"</Line>
+		     <Line endswith="nl" startswith="sp3">
+               c) Falls der Suchschlüssel kleiner ist, als der aktuelle Schlüssel,</Line>
+         <Line endswith="nl" startswith="sp9">
+               wiederhole diesen Schritt im linken Teilbaum</Line>
+		     <Line endswith="nl" startswith="sp3">
+               d) Falls der Suchschlüssel größer ist, als der aktuelle Schlüssel,</Line>
+		     <Line startswith="sp9">
+               wiederhole diesen Schritt im rechten Teilbaum</Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>search1newline</Key>
+		<Line endswith="nl"/>
+</Schritt>
+
+<!-- insert algorithm !-->
+<Schritt>
+         <Key>insert1</Key>
+         <Text>
+         <Line endswith="nl"> 1. Suche Stelle zum Einfügen eines Schlüssels s: </Line>
+         <Line endswith="nl" startswith="sp3">
+               a) Falls der Baum leer ist, dann Einfügestelle gefunden, gehe zu Schritt 2</Line>
+		     <Line endswith="nl" startswith="sp3">
+               b) Falls der neue Schlüssel gleich dem aktuellen Schlüssel ist,</Line>
+         <Line endswith="nl" startswith="sp9">
+               dann Schlüssel schon vorhanden, Einfügen abbrechen</Line>
+		     <Line endswith="nl" startswith="sp3">
+               c) Falls der neue Schlüssel kleiner ist als der aktuelle Schlüssel,</Line>
+         <Line endswith="nl" startswith="sp9">
+               wiederhole diesen Schritt im linken Teilbaum</Line>
+		     <Line endswith="nl" startswith="sp3">
+               d) Falls der neue Schlüssel größer ist als der aktuelle Schlüssel,</Line>
+		     <Line startswith="sp9">
+               wiederhole diesen Schritt im rechten Teilbaum</Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>insert1newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>insert2</Key>
+         <Text>
+         </Text>
+         <Line>2. Knoten mit neuem Schlüssel an gefundene Stelle einfügen</Line>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>insert2newline</Key>
+		<Line endswith="nl"/>
+</Schritt>
+
+<!-- avl insert !-->
+<Schritt>
+         <Key>avlinsert1</Key>
+         <Text>
+         <Line> 1. Suche Stelle zum Einfügen: </Line>
+         <Line endswith="nl" startswith="nlsp3">
+               a) Falls der Baum leer ist, dann Einfügestelle gefunden, gehe zu Schritt 2</Line>
+		     <Line endswith="nl" startswith="sp3">
+               b) Falls der neue Schlüssel gleich dem aktuellen Schlüssel ist,</Line>
+         <Line endswith="nl" startswith="sp9">
+               dann Schlüssel schon vorhanden, Einfügen abbrechen</Line>
+		     <Line endswith="nl" startswith="sp3">
+               c) Falls der neue Schlüssel kleiner ist als der aktuelle Schlüssel,</Line>
+         <Line endswith="nl" startswith="sp9">
+               wiederhole diesen Schritt im linken Teilbaum</Line>
+		     <Line endswith="nl" startswith="sp3">
+               d) Falls der neue Schlüssel größer ist als der aktuelle Schlüssel,</Line>
+		     <Line startswith="sp9">
+               wiederhole diesen Schritt im rechten Teilbaum</Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>avlinsert1newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>avlinsert2</Key>
+         <Text>
+         <Line endswith="nl">
+               2. neuen Knoten n an gefundene Stelle einfügen</Line>
+         <Line endswith="nl" startswith="sp3">
+               Balance von n aktualisieren (auf 0 setzen).</Line>
+         <Line endswith="nl" startswith="sp3">
+               n auf den Vorgängerknoten von n setzen, falls dieser existiert</Line>
+         <Line startswith="sp3">
+               Sonst "fertig". </Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>avlinsert2newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>avlinsert3a</Key>
+         <Text>
+         <Line endswith="nl">
+               3. Balancen aktualisieren am aktuellen Knoten n</Line>
+         <Line endswith="nl" startswith="sp3">
+               a) Falls neuer Schlüssel im linken Unterbaum von n eingefügt wurde: </Line>
+         <Line endswith="nl" startswith="sp6">
+               i) wenn n-&gt;balance==1, dann n-&gt;balance=0, Algorithmus beendet</Line>
+         <Line endswith="nl" startswith="sp6">
+               ii) wenn n-&gt;balance==0, dann n-&gt;balance=-1, wiederhole diesen Schritt</Line>
+         <Line endswith="nl" startswith="sp9">
+               mit dem Vorgängerknoten von n. Falls dieser nicht existiert, Algorithmus beendet</Line>
+         <Line endswith="nl" startswith="sp6">
+               iii) wenn n-&gt;balance==-1 und n-&gt;left-&gt;balance==-1, </Line>
+         <Line endswith="nl" startswith="sp9">
+               dann führe eine Rechtsrotation um n durch. </Line>
+         <Line endswith="nl" startswith="sp6">
+               iv) wenn n-&gt;balance==-1 und n-&gt;left-&gt;balance==1, </Line>
+         <Line startswith="sp9">
+               dann führe Linksrotation um n-&gt;left und Rechtsrotation um n durch </Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>avlinsert3anewline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>avlinsert3b</Key>
+         <Text>
+         <Line endswith="nl" startswith="sp3">
+               b) Falls neuer Schlüssel im rechten Unterbaum von n eingefügt wurde: </Line>
+         <Line endswith="nl" startswith="sp6">
+               i) wenn n-&gt;balance==-1, dann n-&gt;balance=0, Algorithmus beendet</Line>
+         <Line endswith="nl" startswith="sp6">
+               ii) wenn n-&gt;balance==0, dann n-&gt;balance=1, wiederhole diesen Schritt</Line>
+         <Line endswith="nl" startswith="sp9">
+               mit dem Vorgängerknoten von n. Falls dieser nicht existiert, gehe zu Algorithmus beendet</Line>
+         <Line endswith="nl" startswith="sp6">
+               iii) wenn n-&gt;balance==1 und n-&gt;left-&gt;balance==1, </Line>
+         <Line endswith="nl" startswith="sp9">
+               dann führe eine Linksrotation um n durch. </Line>
+         <Line endswith="nl" startswith="sp6">
+               iv) wenn n-&gt;balance==-1 und n-&gt;left-&gt;balance==1, </Line>
+         <Line startswith="sp9">
+               dann führe Rechtsrotation um n-&gt;right und Linksrotation um n durch </Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>avlinsert3bnewline</Key>
+		<Line endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>remove1</Key>
+         <Text>
+         <Line endswith="nl"> 1. Schlüsselsuche: </Line>
+         <Line endswith="nl" startswith="sp3">
+               a) Falls der Baum leer ist, dann Löschen beendet (Schlüssel nicht vorhanden)</Line>
+		     <Line endswith="nl" startswith="sp3">
+               b) Falls der neue Schlüssel gleich dem aktuellen Schlüssel ist,</Line>
+         <Line endswith="nl" startswith="sp9">
+               dann Schlüssel gefunden, gehe zu Schritt 2</Line>
+		     <Line endswith="nl" startswith="sp3">
+               c) Falls der neue Schlüssel kleiner ist als der aktuelle Schlüssel,</Line>
+         <Line endswith="nl" startswith="sp9">
+               wiederhole diesen Schritt im linken Teilbaum</Line>
+		     <Line endswith="nl" startswith="sp3">
+               d) Falls der neue Schlüssel größer ist als der aktuelle Schlüssel,</Line>
+		     <Line startswith="sp9">
+               wiederhole diesen Schritt im rechten Teilbaum</Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>remove1newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>remove2</Key>
+         <Text>
+         <Line endswith="nl"> 2. Fallunterscheidung </Line>
+         <Line endswith="nl" startswith="sp3">
+               a) Falls zu löschender Knoten Blatt --&gt; fertig </Line>
+         <Line endswith="nl" startswith="sp3">
+               b) Falls zu löschender Knoten keinen rechten Nachfolger hat, </Line>
+         <Line endswith="nl" startswith="sp6">
+               dann Knoten durch linken Teilbaum ersetzen</Line>
+         <Line startswith="sp3">
+               c) sonst nächstgrößeren Schlüssel suchen (gehe zu Schritt 3)</Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>remove2newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>remove3</Key>
+         <Text>
+         <Line endswith="nl"> 3. Nächstgrößeren Schlüssel suchen </Line>
+         <Line endswith="nl" startswith="sp3">
+               Einmal nach rechts gehen und dann solange nach links, </Line>
+         <Line startswith="sp3">
+               bis kein linker Nachfolger mehr da ist. </Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>remove3newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>remove4</Key>
+         <Text>
+         <Line endswith="nl"> 4. Schlüsselersetzen </Line>
+         <Line endswith="nl" startswith="sp3">
+               Ersetze zu löschenden Schlüssel durch nächstgrößeren Schlüssel. </Line>
+         <Line endswith="nl" startswith="sp3">
+               Dessen rechter Teilbaum wird dabei umgehangen. </Line>
+         <Line startswith="sp3">
+               Algorithmus beendet</Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>remove4newline</Key>
+		<Line endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>avlremove1</Key>
+         <Text>
+         <Line endswith="nl"> 1. Schlüsselsuche: </Line>
+         <Line endswith="nl" startswith="sp3">
+               a) Falls der Baum leer ist, dann Löschen beendet (Schlüssel nicht vorhanden)</Line>
+		     <Line endswith="nl" startswith="sp3">
+               b) Falls der neue Schlüssel gleich dem aktuellen Schlüssel ist,</Line>
+         <Line endswith="nl" startswith="sp9">
+               dann Schlüssel gefunden, gehe zu Schritt 2</Line>
+		     <Line endswith="nl" startswith="sp3">
+               c) Falls der neue Schlüssel kleiner ist als der aktuelle Schlüssel,</Line>
+         <Line endswith="nl" startswith="sp9">
+               wiederhole diesen Schritt im linken Teilbaum</Line>
+		     <Line endswith="nl" startswith="sp3">
+               d) Falls der neue Schlüssel größer ist als der aktuelle Schlüssel,</Line>
+		     <Line startswith="sp9">
+               wiederhole diesen Schritt im rechten Teilbaum</Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>avlremove1newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>avlremove2</Key>
+         <Text>
+         <Line endswith="nl"> 2. Fallunterscheidung </Line>
+         <Line endswith="nl" startswith="sp3">
+               a) Falls zu löschender Knoten Blatt, gehe zu Schritt 5 mit Vaterknoten des zu löschenden. </Line>
+         <Line endswith="nl" startswith="sp3">
+               b) Falls zu löschender Knoten keinen rechten Nachfolger hat, </Line>
+         <Line endswith="nl" startswith="sp6">
+               dann Knoten durch linken Teilbaum ersetzen, gehe zu Schritt 5</Line>
+         <Line startswith="sp3">
+               c) sonst nächstgrößeren Schlüssel suchen (gehe zu Schritt 3)</Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>avlremove2newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>avlremove3</Key>
+         <Text>
+         <Line endswith="nl"> 3. Nächstgrößeren Schlüssel suchen </Line>
+         <Line endswith="nl" startswith="sp3">
+               Einmal nach rechts gehen und dann solange nach links, </Line>
+         <Line startswith="sp3">
+               bis kein linker Nachfolger mehr da ist. </Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>avlremove3newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>avlremove4</Key>
+         <Text>
+         <Line endswith="nl"> 4. Schlüsselersetzen </Line>
+         <Line endswith="nl" startswith="sp3">
+               Ersetze zu löschenden Schlüssel durch nächstgrößeren Schlüssel. </Line>
+         <Line endswith="nl" startswith="sp3">
+               Dessen rechter Teilbaum wird dabei umgehangen, falls er existiert. </Line>
+         <Line startswith="sp3">
+               Gehe zu Schritt 5 mit dem Vaterknoten des nächstgrößeren Schlüssels </Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>avlremove4newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Schritt>
+
+<Schritt>
+         <Key>avlremove5</Key>
+         <Text>
+         <Line endswith="nl"> 5. Balancieren </Line>
+         <Line endswith="nl" startswith="sp3">
+               Berechne die Balance des aktuellen Knotens. Falls, </Line>
+         <Line endswith="nl" startswith="sp3">
+               a) Balance 2 und rechte Balance -1, dann Rechts-Links-Rotation </Line>
+         <Line endswith="nl" startswith="sp3">
+               b) Balance 2 und rechte Balance nicht -1, dann Links-Rotation </Line>
+         <Line endswith="nl" startswith="sp3">
+               c) Balance -2 und linke Balance 1, dann Links-Rechts-Rotation </Line>
+         <Line endswith="nl" startswith="sp3">
+               d) Balance -2 und linke Balance nicht 1, dann Rechts-Rotation </Line>
+         <Line endswith="nl" startswith="sp3">
+               e) sonst keine Rotation. </Line>
+         <Line startswith="sp3">
+               Gehe zum Vaterknoten des aktuellen, falls er existiert, sonst Algorithmus beendet </Line>
+         </Text>
+</Schritt>
+
+<!-- only for layout !-->
+<Schritt>
+		<Key>avlremove5newline</Key>
+		<Line endswith="nl"/>
+</Schritt>
+
+</AlgorithmDescription>

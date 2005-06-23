@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT AlgorithmDescription (Schritt)*>
+<!ELEMENT Schritt (Key,Text)>
+<!ELEMENT Key (#PCDATA)*>
+<!ELEMENT Text (Line)*>
+<!ELEMENT Line (#PCDATA)*>
