@@ -3,7 +3,7 @@
 \usepackage[latin1]{inputenc}
  
 \title{J-Algo\\Module Programmers Manual}
-\author{Stephan Creutz \and Michael Pradel}
+\author{Stephan Creutz \and Michael Pradel \and Alexander Claus}
 \date{\today}
 
 \newcommand{\code}[1]{\lstinline$#1$}
@@ -17,42 +17,49 @@ The software is using the following toolkits: SWT, JFace and Draw2d (see section
 
 \section{Implementing a module}
 
-To implement a new J-Algo module, create a directory with your module name in /source/org/jalgo/module. This directory has to contain at least two classes: ModuleConnector.java implementing the interface IModuleConnector and ModuleInfo.java implementing the interface IModuleInfo.\\
-In order to help you to write a new module, there is an minimalistic module called testModule. It is a correctly implemented J-Algo module, but does almost nothing. You can use it as a skeleton for any new module.
+To implement a new J-Algo module, create a directory with your modules name in\\ /source/org/jalgo/module. This directory has to contain at least two classes:\\ ModuleConnector.java implementing the interface IModuleConnector and ModuleInfo.java implementing the interface IModuleInfo.\\
+In order to help you to write a new module, there is an minimalistic module called\\
+testModule. It is a correctly implemented J-Algo module, but does nothing. You can use it as a skeleton for any new module.
 
 \subsection{IModuleConnector}
 This interface establishes a connection to the main program.
 You have to implement the methods listed below:
+\newpage
 
 \begin{lstlisting}[frame=single,caption={IModuleConnector}]
 public interface IModuleConnector {
 
 	/**
-	 * use this function after the user loaded a saved file for
-	 * the module.
-	 * @param data the loaded file consists of the module header,
-	 * which was added by the main program before saving (e.g.
-	 * including with which module the file is associated) and the
-	 * data for the module; put the data in here
+	 * This method is invoked, after the user loaded a saved file
+	 * for the module.
+	 *
+	 * @param data the loaded file consisting of the module
+	 *             header, which was added by the main program
+	 *             before saving (e.g. including with which
+	 *             module the file is associated) and the data
+	 *             for the module; put the data in here
 	 */
 	public void setDataFromFile(ByteArrayInputStream data);
 
 	/**
-	 * use this function, when the user wants to save the state
-	 * of the module.
+	 * This method is invoked, when the user wants to save the
+	 * state of the module.
+	 *
 	 * @return a stream with the data from the module, that has
-	 * to be stored in a file after the main program added the
-	 * module header (e.g. including with which module the file
-	 * is associated) to it
+	 *         to be stored in a file after the main program
+	 *         added the module header (e.g. including with
+	 *         which module the file is associated) to it
 	 */
 	public ByteArrayOutputStream getDataForFile();
 
 	/**
-	 * use this function, if the user clicked the print-button
-	 * (or chose to print in any other way)
-	 * the module will call a print dialog and manage the printing
+	 * This method will be invoked, if the user clicked the
+	 * print-button (or chose to print in any other way)
+	 * The module will call a print dialog and manage the
+	 * printing.
 	 *
-	 * NOTE !!! this is currently unused
+	 * NOTE! Printing is currently not supported by the J-Algo
+	 * main program.
 	 */
 	public void print();
 
@@ -60,6 +67,9 @@ public interface IModuleConnector {
 	 * Get the Menu from the module
 	 */
 	public SubMenuManager getMenuManager();
+
+
+
 
 	/**
 	 * Get the ToolBar from the module
@@ -72,15 +82,27 @@ public interface IModuleConnector {
 	public SubStatusLineManager getStatusLineManager();
 	
 	/**
-	 * Get a class with all module information (name, description,
-	 * version, ...)
+	 * Get a class with all module information (name,
+	 * description, version, ...)
 	 */
 	public IModuleInfo getModuleInfo();
 
+	/**
+	 * This method is invoked, when module or program are
+	 * intended to be closed.
+	 * Here the user can be asked for saving his work.
+	 * If this method returns false, the closing of module/
+	 * program is ignored.
+	 * 
+	 * @return true, if module is ready to be closed,
+	 *         false otherwise
+	 */
+	public boolean close();
 }
 \end{lstlisting}
 
 \subsection{ModuleConnector from testModule}
+Here is a concrete example for a class implementing the \code{IModuleConnector} interface.
 
 % TODO: wie wird print() umgesetzt, momentan wird dies am interface vorbei gemacht
 \begin{lstlisting}[frame=single,caption={IModuleInfo interface}]
@@ -94,37 +116,34 @@ public class ModuleConnector implements IModuleConnector {
     private SubToolBarManager toolBarManager;
     private SubStatusLineManager statusLineManager;
     
+ 
     public ModuleConnector(
-	ApplicationWindow appWin,
-	Composite comp,
-	SubMenuManager menu,
-	SubToolBarManager tb,
-	SubStatusLineManager sl) {
+		ApplicationWindow appWin,
+		Composite comp,
+		SubMenuManager menu,
+		SubToolBarManager tb,
+		SubStatusLineManager sl) {
 	    
-	moduleInfo = new ModuleInfo();
+		moduleInfo = new ModuleInfo();
 	    
-	this.appWin = appWin;
-	this.comp = comp;
-	this.menuManager = menu;
-	this.toolBarManager = tb;
-	this.statusLineManager = sl;
+		this.appWin = appWin;
+		this.comp = comp;
+		this.menuManager = menu;
+		this.toolBarManager = tb;
+		this.statusLineManager = sl;
     }
     
     public void run() {
         System.err.println("testModule is running");
     }
 
-    public void setDataFromFile(ByteArrayInputStream data) {
-        
-    }
+    public void setDataFromFile(ByteArrayInputStream data) {}
 
     public ByteArrayOutputStream getDataForFile() {
         return null;
     }
 
-    public void print() {
-
-    }
+    public void print() {}
 
     public SubMenuManager getMenuManager() {
         return menuManager;
@@ -148,7 +167,7 @@ public class ModuleConnector implements IModuleConnector {
 The class which implements this interface provides some basic information about the module. The class yields the name, version, author(s), license, description and a logo. Furthermore it holds the information about open files.
 
 \begin{lstlisting}[frame=single,caption={IModuleInfo interface}]
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.jface.resource.ImageDescriptor
 
 public interface IModuleInfo {
 	public String getName();
@@ -185,6 +204,7 @@ public class ModuleInfo implements IModuleInfo {
         return "0.1";
     }
 
+
     public String getAuthor() {
         return "Your Name";
     }
@@ -210,32 +230,34 @@ public class ModuleInfo implements IModuleInfo {
 }
 \end{lstlisting}
 
-If this is too easy for you, just have a look at the module called synDiaEBNF ;-) 
+If this is too easy for you, just have a look at the existing modules, namely "AVL-trees", "Dijkstra-algorithm", "Syntax diagrams and EBNF".
+\newpage
 
 \section{Bind the module to the main program}
-Binding a new module to the main program is really easy: You only have to add two lines into the class /src/org/jalgo/main/JalgoMain.java. You should find the method addKnownModules:
+Binding a new module to the main program is really easy: You only have to add two lines into the class /src/org/jalgo/main/JalgoMain.java.\\
+You should find the method addKnownModules:
 \begin{lstlisting}[frame=single,caption={JalgoMain.addKnownModules()}]
 public void addKnownModules() {
-	try {
-		knownModules.add(ModuleConnector.class);
-		knownModules.add(
-			org.jalgo.module.testModule.ModuleConnector.class);
-		//Add a new ModuleConnector here!!
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-	knownModuleInfos.add(new ModuleInfo());
-	knownModuleInfos.add(
-		new org.jalgo.module.testModule.ModuleInfo());
-	//Add a new ModuleInfo here!!
+    try {
+    	knownModules.add(ModuleConnector.class);
+    	knownModules.add(
+        	org.jalgo.module.testModule.ModuleConnector.class);
+    	//Add a new ModuleConnector here!!
+    } catch (Exception e) {
+    	e.printStackTrace();
+    }
+    knownModuleInfos.add(new ModuleInfo());
+    knownModuleInfos.add(
+    	new org.jalgo.module.testModule.ModuleInfo());
+    //Add a new ModuleInfo here!!
 }
 \end{lstlisting}
 
-Please use the complete path to your classes!\\
+Please use the complete path to your classes!
 
 \section{Known bugs}
 \begin{itemize}
-\item The method \code{public void print()} is unused and senseless at the moment.
+\item The method \code{public void print()} is unused and senseless in the moment.
 \end{itemize}
 
 \section{Reporting bugs}

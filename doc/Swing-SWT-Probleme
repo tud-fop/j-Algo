@@ -1,0 +1,29 @@
+Probleme bei der Integration von Swing-Komponenten in SWT-Umgebung:
+
+reine SWT-Probleme:
+ -	bei SWT v3.106 wird neu hinzugekommener Fensterinhalt erst nach Grössenänderung
+	des Fensters sichtbar
+ ->	Abhilfe: SWT v3.064 verwenden, da funktionierte noch alles
+ -	Implementation verschiedener Teile des Frameworks (z.B. die SWT-AWT-Bridge) gehen
+	auf vielen Plattformen nur schleppend voran
+ ->	Abhilfe: keine, arbeite selbst an SWT mit...
+
+SWT-Swing-Probleme:
+ -	Zugriff aus Swing-Event-Thread auf bestimmte Routinen von SWT endet in einer
+	Invalid Thread Access Exception, so z.B.:
+	Setzen des Textes der Statuszeile,
+	Auslesen von Komponentenkoordinaten,
+	Öffnen eines FileDialoges
+ ->	Abhilfe: an Instanz des ApplicationWindow wenden, über das Shell-Objekt und
+	darüber über das Display-Objekt kann man mittels syncExec(Runnable) oder
+	asyncExec(Runnable) einen separaten, jedoch von SWT kontrollierten Thread starten,
+	der dieses Problem umgeht,
+	Beispielaufruf: appWin.getShell().getDisplay().syncExec(new Runnable() {...});
+
+ -	Mauszeigergestalt verändert sich nicht direkt über den entsprechenden Komponenten,
+	Verschiebung um Hauptfensterposition
+ ->	Abhilfe: beim ApplicationWindow über das Shell-Objekt einen ControlListener
+	registrieren, bei controlMoved() und controlResized() jeweils die Koordinaten des
+	SWT-AWT-Bridge-Frames anpassen durch Auslesen der Fensterkoordinaten + Offset
+ ->	bessere Abhilfe: statt eine Lightweight-Komponente wie JPanel auf die Bridge zu
+	setzen, eine Heavyweight-Komponente nehmen, z.B. java.awt.Panel

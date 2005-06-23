@@ -1,0 +1,66 @@
+
+\section{Algorithmussteuerung}
+
+Aufgabe des Moduls \AVL \ ist es, Baumalgorithmen, wie das Einf"ugen und L"oschen von Knoten, zu visualisieren.
+Jeder Algorithmus ist in verschiedene Teilschritte unterteilt, die nacheinander angezeigt werden. Das Visualisieren
+erfolgt dabei durch das Zeichnen des Baumes, durch die Erkl"arung der Schritte im Dokumentationsbereich und im Logbuch und durch die 
+Neuberechnung der baumspezifischen Daten, die im Infobereich pr"asentiert werden.
+\\
+Nachdem Sie einen Algorithmus gestartet haben, verweilt er in einem Initialzustand und wartet auf Ihre Eingabe. 
+Nun haben Sie die M"oglichkeit, den Algorithmus in kleinen oder gro"sen Schritten zu durchlaufen; Sie k"onnen ihn sofort
+beenden oder direkt abbrechen. Daf"ur bietet die Algorithmussteuerung die entsprechenden Werkzeuge. \\
+
+
+\subsection{Schritt-Pfeile}
+
+Mittels der Schritt-Pfeile steuern Sie die Abfolge der Einzelschritte und bekommen so eine detailierte Sicht
+auf die Arbeitsweise des Algorithmus. Das Programm bietet Ihnen die M"oglichkeit, einen Teilschritt r"uckg"angig 
+zu machen und damit gewisse Abl"aufe zu wiederholen. Die Schritt-Pfeile, welche die R"uckg"angigfunktion anbieten, weisen
+in ihrer Richtung nach links und sind dadurch gut von den Vorw"arts-Pfeilen zu unterscheiden. \\
+Zus"atzlich gibt es f"ur jede Richtung einen gro"sen und einen kleinen Schritt, der per Knopfdruck ausgef"uhrt wird. \\
+
+Kleine Schritte beim Einf"ugen eines Knotens stellen Schl"usselvergleiche, Balancenberechnungen und
+Rotationen dar. Gro"se Schritte hingegen sind zum Beispiel das Suchen der Einf"ugestelle, das Einf"ugen an dieser und 
+die gesamte Balancenaktualisierung. \\
+
+\medskip
+\raisebox{-1.3ex}{\includegraphics[scale=6.2]{\pfad icon-steps}} {\bf Einzel-Schritt-Pfeile} \\ 
+
+Ein Klick auf diese Buttons realisiert einen kleinen Algorithmusschritt zur"uck bzw. nach vorn. \\
+
+
+\medskip
+\raisebox{-1.3ex}{\includegraphics[scale=6.2]{\pfad icon-stepsblock}} {\bf Block-Schritt-Pfeile} \\
+
+Ein Klick auf diese Buttons realisiert einen gro"sen Schritt zur"uck bzw. nach vorn. Sollte der Algorithmusablauf an eine
+Stelle geraten, an der es nur noch einen kleinen Schritt nach vorn bzw. zur"uck gibt, so hat der Block-Schritt die selbe
+Funktionalit"at wie ein Einzel-Schritt. \\
+
+
+\subsection[Abbruch und Beenden-Buttons]{}
+\vspace{-4.3ex} {\bf {\large  \qquad \qquad \quad  Abbruch und Beenden-Buttons}} 
+
+\icon{icon-abort&finish}{-3}{5}{6.2}
+
+
+Klicken Sie auf den Beenden-Button \raisebox{-1ex}{\includegraphics[scale=0.8]{\pfad icon-finish}} um den laufenden 
+Algorithmus bis zum Ende auszuf"uhren. \\
+Klicken Sie auf den Abbruch-Button \raisebox{-1ex}{\includegraphics[scale=0.8]{\pfad icon-abort}} um den laufenden 
+Algorithmus abzubrechen. Der Baum hat danach den gleichen Status wie vor Begin des Algorithmus. \\
+Ist ein Algorithmus beendet, so steht Ihnen diese Option nicht mehr zur Verf"ugung, weil nur der
+{\it laufende} Algorithmus abgebrochen werden kann. \\
+
+
+\subsection{Animationsgeschwindigkeit}
+
+Beim Generieren eines Zufallsbaumes haben Sie die Option, den Ablauf der Baumerzeugung als Animation ablaufen zu lassen.
+Starten Sie in diesem Modus, so beginnt die Animation sofort und kann mit dem Geschwindigkeitsregler schneller oder langsamer abgespielt
+werden. Zu Beginn steht dieser auf der Mittelposition. Verschieben Sie den Regler nach links, um die Animation zu verlangsamen
+bzw. nach rechts, um sie zu beschleunigen. \\
+Eine Animation der anderen Algorithmenabl"aufe ist in dieser Version von \AVL \ nicht integriert.
+
+\bigskip
+\centerpic{animregler}{0.9}{Der Regler f"ur die Animationsgeschwindigkeit}
+
+\bigskip
+\bigskip
