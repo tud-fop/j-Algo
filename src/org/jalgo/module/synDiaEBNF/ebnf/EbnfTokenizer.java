@@ -3,7 +3,7 @@
  * platform independant. j-Algo is developed with the help of Dresden
  * University of Technology.
  *
- * Copyright (C) 2004 j-Algo-Team, j-algo-development@lists.sourceforge.net
+ * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
