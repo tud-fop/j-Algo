@@ -143,7 +143,9 @@ public class JalgoWindow extends ApplicationWindow {
 		});
 //		ct.setSimple(false);
 		ct.setFocus();
-		jalgo.newInstance(0);
+
+		//enable the following for release version -alexander
+//		jalgo.newInstance(0);
 		//no more need for the following lines when using the swt v 3.138 -alexander
 //		parent.pack();
 //		parent.getShell().setSize(800, 600);
