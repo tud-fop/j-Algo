@@ -116,7 +116,7 @@ public class ModuleConnector implements IModuleConnector {
     private SubToolBarManager toolBarManager;
     private SubStatusLineManager statusLineManager;
     
- 
+
     public ModuleConnector(
 		ApplicationWindow appWin,
 		Composite comp,
@@ -137,7 +137,8 @@ public class ModuleConnector implements IModuleConnector {
         System.err.println("testModule is running");
     }
 
-    public void setDataFromFile(ByteArrayInputStream data) {}
+    public void setDataFromFile(ByteArrayInputStream data) {
+    }
 
     public ByteArrayOutputStream getDataForFile() {
         return null;
@@ -159,6 +160,10 @@ public class ModuleConnector implements IModuleConnector {
 
     public IModuleInfo getModuleInfo() {
         return moduleInfo;
+    }
+
+    public boolean close() {
+        return true;
     }
 }
 \end{lstlisting}
@@ -203,7 +208,6 @@ public class ModuleInfo implements IModuleInfo {
     public String getVersion() {
         return "0.1";
     }
-
 
     public String getAuthor() {
         return "Your Name";
