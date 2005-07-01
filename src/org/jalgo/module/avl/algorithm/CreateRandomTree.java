@@ -1,22 +1,3 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
- * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-
 /*
  * Created on 22.04.2005
  */
@@ -63,8 +44,7 @@ public class CreateRandomTree extends MacroCommand implements Constants{
 			finalNodeNumber = nodes;
 			keyList = new ArrayList<Integer>();
 
-			int firstKey = rand.nextInt(MAX_KEY)+MIN_KEY;
-			
+			int firstKey = rand.nextInt(MAX_KEY)+MIN_KEY;		
 			changeWorkNode(firstKey);
 			if (avl)	commands.add(0,CommandFactory.createInsertAVL(wn,tree));
 			else		commands.add(0,CommandFactory.createInsert(wn,tree));
@@ -82,65 +62,23 @@ public class CreateRandomTree extends MacroCommand implements Constants{
 			
 		}
 	}
-//	 Changes the work node.	
+	
+//	Changes the work node.	
 	private void changeWorkNode(int key){
 		wn.setKey(key);
 		wn.setNextToMe(tree.getRoot());
 		wn.setVisualizationStatus(Visualizable.NORMAL);
 	}
 	
-//	 Stores the log description and the section from a command.	
+//	Stores the log description and the section from a command.	
 	private void storeLogAndSectionFrom(Command c){
 		results.clear();
 		results.add(c.getResult(0));
 		results.add(c.getResult(1));
 		results.add(c.getResult(2));
 	}
+
 	
-//	 Offer the necessary commands for the next insertation.	
-	private void calculateNextInsertation(){
-		currentPosition++;
-		results.clear();	
-			// test: Are there some commands in the commandlist which has not been performed?
-			if (currentPosition>=commands.size()){
-
-				// test: Is it necessary to add one more node?
-				// each node needs one Insert and one NoOperation object
-				if (currentPosition/2<finalNodeNumber){			
-						int newkey=0;
-						while(keyList.contains(newkey = rand.nextInt(MAX_KEY)+MIN_KEY)) {}
-					
-						changeWorkNode(newkey);
-						if (avl) 	commands.add(CommandFactory.createInsertAVL(wn,tree));
-						else 		commands.add(CommandFactory.createInsert(wn,tree));
-						commands.add(CommandFactory.createNoOperation());
-						keyList.add(newkey);
-					
-						storeLogAndSectionFrom(commands.get(currentPosition));
-						//results.set(0,"NoOp");
-					
-						return;
-				}
-				results.add(0,"zufälliger Suchbaum ist fertig");
-				results.add(1," ");
-				results.add(2,DONE);
-				
-				wn.setNextToMe(tree.getRoot());
-			}
-			else {	
-				
-				results.add(0,"");
-				results.add(1,"1");
-				results.add(2,WORKING);
-				
-				wn.setNextToMe(tree.getRoot());
-				wn.setKey(keyList.get(currentPosition/2));
-				wn.setVisualizationStatus(Visualizable.NORMAL);
-				tree.getRoot().setVisualizationStatus(Visualizable.FOCUSED);
-			}
-
-	}
-
 /**
 * Calculates one step. <br> 	
 * The result list gets WORKING at the index 2 if the final number of <code>Node</code>s is not reached, 
@@ -148,40 +86,17 @@ public class CreateRandomTree extends MacroCommand implements Constants{
 */
 	public void perform() {
 		
-/*		Command com = commands.get(currentPosition);
-
-		if (!(com instanceof NoOperation)) {			
-			if (avl) {
-				InsertAVL ins = (InsertAVL) com;
-				if (ins.hasNext()) {
-					ins.perform();
-					storeLogAndSectionFrom(com);
-					if (!ins.hasNext())
-						currentPosition++;
-					return;
-				}
-				currentPosition++;
-			}
-			else {
-				Insert ins = (Insert) com;
-				if (ins.hasNext()) {
-					ins.perform();
-					storeLogAndSectionFrom(com);
-					if (!ins.hasNext())
-						currentPosition++;
-					return;
-				}
-				currentPosition++;
-			}		
-		}
-		
-		Command noOp = commands.get(currentPosition);
-		noOp.perform();	
-		calculateNextInsertation();
-		*/
 		Command c = commands.get(currentPosition);
 		if (c instanceof NoOperation) {
-			if (keyList.size()>=finalNodeNumber) {currentPosition++; return; }
+			// Test: Ready?
+			if (keyList.size()>=finalNodeNumber) {
+				if (avl)
+					results.set(0,"AVL-Baum ist fertig");
+				else 
+					results.set(0,"Suchbaum ist fertig");
+				currentPosition++;
+				return; 
+			}
 			int newkey=0;
 			while(keyList.contains(newkey = rand.nextInt(MAX_KEY)+MIN_KEY)) {}
 			keyList.add(newkey);
@@ -191,6 +106,7 @@ public class CreateRandomTree extends MacroCommand implements Constants{
 			else
 				commands.set(0, CommandFactory.createInsert(wn, tree));
 			currentPosition = 0;
+			storeLogAndSectionFrom(c);
 		}
 		else {
 			MacroCommand m = (MacroCommand)c;
@@ -203,6 +119,7 @@ public class CreateRandomTree extends MacroCommand implements Constants{
 		}
 }
 
+	
 /**
 * Calculates one block step. <br>
 * The result list gets WORKING at the index 2 if the final number of <code>Node</code>s is not reached, 
@@ -211,7 +128,14 @@ public class CreateRandomTree extends MacroCommand implements Constants{
 	public void performBlockStep() {
 		Command c = commands.get(currentPosition);
 		if (c instanceof NoOperation) {
-			if (keyList.size()>=finalNodeNumber) {currentPosition++; return; }
+			if (keyList.size()>=finalNodeNumber) {
+				if (avl) 
+					results.set(0,"AVL-Baum fertig");
+				else results.set(0,"Suchbaum fertig");
+				
+				currentPosition++; 
+				return; 
+			}
 			int newkey=0;
 			while(keyList.contains(newkey = rand.nextInt(MAX_KEY)+MIN_KEY)) {}
 			keyList.add(newkey);
@@ -232,32 +156,6 @@ public class CreateRandomTree extends MacroCommand implements Constants{
 			}
 			if (keyList.size() >= finalNodeNumber) {currentPosition = 2; return; }
 		}
-		
-		
-		
-/*		Command com = commands.get(currentPosition);
-		if (!(com instanceof NoOperation)) {
-			if (avl) {
-				InsertAVL ins = (InsertAVL) com;
-				while(ins.hasNext())
-					ins.perform();
-				storeLogAndSectionFrom(ins);
-				results.set(0,keyList.get(currentPosition/2)+ " Einfügen beendet");		
-				currentPosition++;
-				return;
-			}
-			else{
-				Insert ins = (Insert)com;
-				while(ins.hasNext())
-					ins.perform();
-				storeLogAndSectionFrom(ins);
-				results.set(0,keyList.get(currentPosition/2)+ " Einfügen beendet");		
-				currentPosition++;
-				return;
-			}
-		}
-		else
-			currentPosition++; */
 	}
 
 /**
@@ -271,52 +169,8 @@ public class CreateRandomTree extends MacroCommand implements Constants{
 		
 		MacroCommand mc = (MacroCommand) commands.get(0);
 		mc.undo();
+		storeLogAndSectionFrom(mc);
 		currentPosition=0;
-		
-/*		if (this.hasPrevious()){
-			//test: first time, that undo() is running?
-			if (currentPosition>=commands.size())
-				currentPosition--;
-			Command com = (Command) commands.get(currentPosition);
-			
-			if (!(com instanceof NoOperation)){
-				if (avl){
-					InsertAVL ins = (InsertAVL)com;
-					if (ins.hasPrevious()){
-						ins.undo();
-						storeLogAndSectionFrom(ins);
-						return;
-					}
-					tree.getRoot().setVisualizationStatus(Visualizable.NORMAL);
-					currentPosition--;	
-				}
-				else {
-					Insert ins = (Insert)com;
-					if (ins.hasPrevious()){
-						ins.undo();
-						storeLogAndSectionFrom(ins);
-						return;
-					}
-					tree.getRoot().setVisualizationStatus(Visualizable.NORMAL);
-					currentPosition--;
-				}
-			}		
-			com.undo();
-			//wn.getNextToMe().setVisualizationStatus(Visualizable.FOCUSED);
-			results.clear();
-			results.add("");
-			results.add("2");
-			results.add(WORKING);
-			
-//			commands.remove(currentPosition);
-//			commands.remove(currentPosition+1);
-			
-			currentPosition--;
-			int preKey = keyList.get(finalNodeNumber);
-			wn.setNextToMe(tree.getNodeFor(preKey));
-			wn.setKey(preKey);
-			wn.setVisualizationStatus(Visualizable.INVISIBLE);		
-		} */
 	}
 
 /**
@@ -332,59 +186,7 @@ public class CreateRandomTree extends MacroCommand implements Constants{
 		MacroCommand mc = (MacroCommand) commands.get(0);
 		while (mc.hasPrevious())
 			mc.undo();
-		
-/*		if (this.hasPrevious()){
-			//test: first time, that undo() is running?
-			if (currentPosition>=commands.size())
-				currentPosition--;			
-			Command com = commands.get(currentPosition);
-			
-			
-			if (!(com instanceof NoOperation)){
-				if(avl){
-					InsertAVL ins = (InsertAVL)com;
-					if (ins.hasPrevious()){
-						while (ins.hasPrevious())
-							ins.undo();
-						storeLogAndSectionFrom(ins);
-						if (hasPrevious())
-							currentPosition--;
-						return;
-					}
-					tree.getRoot().setVisualizationStatus(Visualizable.NORMAL);
-					currentPosition--;	
-				}		
-				else {
-					Insert ins = (Insert)com;
-					if (ins.hasPrevious()){
-						while(ins.hasPrevious())
-							ins.undo();
-						storeLogAndSectionFrom(ins);
-						if (this.hasPrevious())
-							currentPosition--;
-				    return;
-					}
-					tree.getRoot().setVisualizationStatus(Visualizable.NORMAL);
-					currentPosition--;
-				}
-			}
-			
-			com.undo();
-			results.clear();
-			results.add("");
-			results.add("2");
-			results.add(WORKING);
-			
-//			commands.remove(currentPosition);
-//			commands.remove(currentPosition+1);
-						
-			currentPosition--;
-			int preKey = keyList.get(finalNodeNumber);
-			wn.setNextToMe(tree.getNodeFor(preKey));
-			wn.setKey(preKey);
-			wn.setVisualizationStatus(Visualizable.INVISIBLE);
-			tree.getRoot().setVisualizationStatus(Visualizable.NORMAL);
-		} */
+		storeLogAndSectionFrom(mc);
 	}
 	
 /**
