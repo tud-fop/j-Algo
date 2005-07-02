@@ -1,0 +1,91 @@
+Properties:
+
+java.runtime.name=Java(TM) 2 Runtime Environment, Standard Edition
+sun.boot.library.path=C:\Programme\Java\jre1.5.0_04\bin
+java.vm.version=1.5.0_04-b05
+java.vm.vendor=Sun Microsystems Inc.
+java.vendor.url=http://java.sun.com/
+path.separator=;
+java.vm.name=Java HotSpot(TM) Client VM
+file.encoding.pkg=sun.io
+user.country=DE
+sun.os.patch.level=Service Pack 2
+java.vm.specification.name=Java Virtual Machine Specification
+user.dir=D:\programmieren\java\j-algo
+java.runtime.version=1.5.0_04-b05
+java.awt.graphicsenv=sun.awt.Win32GraphicsEnvironment
+java.endorsed.dirs=C:\Programme\Java\jre1.5.0_04\lib\endorsed
+os.arch=x86
+java.io.tmpdir=C:\DOKUME~1\ALEXAN~1\LOKALE~1\Temp\
+line.separator=
+
+java.vm.specification.vendor=Sun Microsystems Inc.
+user.variant=
+os.name=Windows XP
+sun.jnu.encoding=Cp1252
+java.library.path=extlibs/win
+java.specification.name=Java Platform API Specification
+java.class.version=49.0
+sun.management.compiler=HotSpot Client Compiler
+os.version=5.1
+user.home=C:\Dokumente und Einstellungen\Alexander
+user.timezone=
+java.awt.printerjob=sun.awt.windows.WPrinterJob
+file.encoding=Cp1252
+java.specification.version=1.5
+java.class.path=D:\programmieren\java\j-algo\runtime;C:\programmieren\eclipse\plugins\org.junit_3.8.1\junit.jar;D:\programmieren\java\j-algo\extlibs\draw2d.jar;D:\programmieren\java\j-algo\extlibs\jface.jar;D:\programmieren\java\j-algo\extlibs\osgi.jar;D:\programmieren\java\j-algo\extlibs\runtime.jar;D:\programmieren\java\j-algo\extlibs\win\swt.jar
+user.name=Alexander
+java.vm.specification.version=1.0
+java.home=C:\Programme\Java\jre1.5.0_04
+sun.arch.data.model=32
+user.language=de
+java.specification.vendor=Sun Microsystems Inc.
+awt.toolkit=sun.awt.windows.WToolkit
+java.vm.info=mixed mode, sharing
+java.version=1.5.0_04
+java.ext.dirs=C:\Programme\Java\jre1.5.0_04\lib\ext
+sun.boot.class.path=C:\Programme\Java\jre1.5.0_04\lib\rt.jar;C:\Programme\Java\jre1.5.0_04\lib\i18n.jar;C:\Programme\Java\jre1.5.0_04\lib\sunrsasign.jar;C:\Programme\Java\jre1.5.0_04\lib\jsse.jar;C:\Programme\Java\jre1.5.0_04\lib\jce.jar;C:\Programme\Java\jre1.5.0_04\lib\charsets.jar;C:\Programme\Java\jre1.5.0_04\classes
+java.vendor=Sun Microsystems Inc.
+file.separator=\
+java.vendor.url.bug=http://java.sun.com/cgi-bin/bugreport.cgi
+sun.io.unicode.encoding=UnicodeLittle
+sun.cpu.endian=little
+sun.desktop=windows
+sun.cpu.isalist=pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86
+
+Error Log
+
+java.lang.ClassCastException: org.eclipse.swt.layout.GridData
+	at org.eclipse.swt.layout.FillLayout.computeChildSize(FillLayout.java:141)
+	at org.eclipse.swt.layout.FillLayout.computeSize(FillLayout.java:119)
+	at org.eclipse.swt.widgets.Composite.computeSize(Composite.java:213)
+	at org.eclipse.swt.widgets.Group.computeSize(Group.java:150)
+	at org.eclipse.swt.layout.GridData.computeSize(GridData.java:478)
+	at org.eclipse.swt.layout.GridLayout.layout(GridLayout.java:207)
+	at org.eclipse.swt.layout.GridLayout.computeSize(GridLayout.java:155)
+	at org.eclipse.swt.widgets.Composite.computeSize(Composite.java:213)
+	at org.eclipse.swt.layout.FillData.computeSize(FillData.java:26)
+	at org.eclipse.swt.layout.FillLayout.computeChildSize(FillLayout.java:148)
+	at org.eclipse.swt.layout.FillLayout.computeSize(FillLayout.java:119)
+	at org.eclipse.swt.widgets.Composite.computeSize(Composite.java:213)
+	at org.jalgo.module.dijkstraModule.gui.PageLayout.computeSize(PageLayout.java:48)
+	at org.eclipse.swt.widgets.Composite.computeSize(Composite.java:213)
+	at org.eclipse.swt.widgets.Control.pack(Control.java:1484)
+	at org.eclipse.swt.widgets.Control.pack(Control.java:1458)
+	at org.jalgo.module.dijkstraModule.gui.Controller.createGUI(Controller.java:628)
+	at org.jalgo.module.dijkstraModule.gui.Controller.<init>(Controller.java:233)
+	at org.jalgo.module.dijkstraModule.ModuleConnector.run(ModuleConnector.java:82)
+	at org.jalgo.main.JalgoMain.newInstance(JalgoMain.java:245)
+	at org.jalgo.main.gui.actions.NewAction.run(NewAction.java:49)
+	at org.eclipse.jface.action.Action.runWithEvent(Action.java:881)
+	at org.eclipse.jface.action.ActionContributionItem.handleWidgetSelection(ActionContributionItem.java:915)
+	at org.eclipse.jface.action.ActionContributionItem.access$2(ActionContributionItem.java:866)
+	at org.eclipse.jface.action.ActionContributionItem$7.handleEvent(ActionContributionItem.java:785)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:66)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:843)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:3080)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:2713)
+	at org.eclipse.jface.window.Window.runEventLoop(Window.java:668)
+	at org.eclipse.jface.window.Window.open(Window.java:648)
+	at org.jalgo.main.JalgoMain.createGUI(JalgoMain.java:78)
+	at org.jalgo.main.Jalgo.main(Jalgo.java:35)
