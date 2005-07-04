@@ -32,7 +32,6 @@ import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabFolder2Adapter;
 import org.eclipse.swt.custom.CTabFolderAdapter;
 import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
@@ -40,6 +39,8 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.jalgo.main.JalgoMain;
@@ -63,10 +64,14 @@ import org.jalgo.main.gui.actions.SaveAsAction;
 public class JalgoWindow extends ApplicationWindow {
 
 	private JalgoMain parent;
+
 	private LinkedList newActions; // LinkedList of NewActions (one for each
-								   // module)
+
+	// module)
 	private SaveAction saveAction;
+
 	private SaveAsAction saveAsAction;
+
 	private CTabFolder ct;
 
 	public JalgoWindow(JalgoMain parent) {
@@ -87,69 +92,76 @@ public class JalgoWindow extends ApplicationWindow {
 		addMenuBar();
 		addToolBar(SWT.WRAP | SWT.FLAT);
 		addStatusLine();
-	
+
 	}
 
 	/**
 	 * Iterates over all open modules, calls <code>close()</code> on them.
-	 * Closes the application only if all modules are ready to close, what means,
-	 * that each call to <code>close()</code> has to return <code>true</code>.
+	 * Closes the application only if all modules are ready to close, what
+	 * means, that each call to <code>close()</code> has to return
+	 * <code>true</code>.
 	 */
 	protected void handleShellCloseEvent() {
 		while (getParent().getCurrentInstance() != null) {
-			if (!getParent().getCurrentInstance().close()) return;
+			if (!getParent().getCurrentInstance().close())
+				return;
 			getParent().itemClosed(ct.getItem(ct.getSelectionIndex()));
 		}
 		super.handleShellCloseEvent();
 	}
-	
+
 	protected Control createContents(Composite parent) {
 
-		parent
-				.getShell()
-				.setText(
-						Messages.getString("General.name") + " - " +
-						Messages.getString("General.version")); //$NON-NLS-1$
+		parent.getShell().setText(
+				Messages.getString("General.name") + " - "
+						+ Messages.getString("General.version")); //$NON-NLS-1$
 		parent.getShell().setSize(800, 600);
 		parent.getShell().setImage(
 				new Image(parent.getDisplay(), "pix/jalgo.png")); //$NON-NLS-1$
 
 		final JalgoMain jalgo = this.parent;
-		
+
 		// code used in swt 2.1 and deprecated when using swt 3.0
 		ct = new CTabFolder(parent, SWT.FLAT);
 		ct.addCTabFolderListener(new CTabFolderAdapter() {
 			public void itemClosed(CTabFolderEvent event) {
 				// Ask user for savinge
-				if (!getParent().getCurrentInstance().close()) event.doit = false;
-				else jalgo.itemClosed((CTabItem) event.item);
+				if (!getParent().getCurrentInstance().close())
+					event.doit = false;
+				else
+					jalgo.itemClosed((CTabItem) event.item);
 			}
 		});
 
 		// replacement for deprecated code above (to use with swt 3.0)
-		/*ct = new CTabFolder(parent, SWT.FLAT);
-		ct.addCTabFolder2Listener(new CTabFolder2Adapter() {
-			public void itemClosed(CTabFolderEvent event) {
-				// Ask user for saving
-				if (!getParent().getCurrentInstance().close()) event.doit = false;
-				else jalgo.itemClosed((CTabItem) event.item);
-			}
-		});*/
-		
+		/*
+		 * ct = new CTabFolder(parent, SWT.FLAT); ct.addCTabFolder2Listener(new
+		 * CTabFolder2Adapter() { public void itemClosed(CTabFolderEvent event) { //
+		 * Ask user for saving if (!getParent().getCurrentInstance().close())
+		 * event.doit = false; else jalgo.itemClosed((CTabItem) event.item); }
+		 * });
+		 */
+
 		ct.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				jalgo.itemSelected((CTabItem) event.item);
 			}
 		});
-//		ct.setSimple(false);
+		//ct.setSimple(false);
 		ct.setFocus();
 
-		//enable the following for release version -alexander
-//		jalgo.newInstance(0);
-		//no more need for the following lines when using the swt v 3.138 -alexander
-//		parent.pack();
-//		parent.getShell().setSize(800, 600);
+		// enable the following for release version -alexander
+		// jalgo.newInstance(0);
+		// no more need for the following lines when using the swt v 3.138
+		// -alexander
+		// parent.pack();
+		// parent.getShell().setSize(800, 600);
+
+		// start gui to choose module (by michi)
+		CTabItem cti = requestNewCTabItem("Willkommen", new Image(null, "pix/jalgo-file.png"));
+		ModuleChooser moduleChooser = new ModuleChooser(jalgo, cti, (Composite) cti.getControl(), SWT.NONE);
 		
+
 		return ct;
 	}
 
@@ -160,8 +172,7 @@ public class JalgoWindow extends ApplicationWindow {
 
 		// ** new_menu (is in file_menu)**
 
-		MenuManager new_menu = new MenuManager(Messages
-				.getString("ui.New")); //$NON-NLS-1$
+		MenuManager new_menu = new MenuManager(Messages.getString("ui.New")); //$NON-NLS-1$
 
 		for (int i = 0; i < newActions.size(); i++) {
 			new_menu.add((NewAction) newActions.get(i));
@@ -169,8 +180,7 @@ public class JalgoWindow extends ApplicationWindow {
 
 		// ** file_menu **
 
-		MenuManager file_menu = new MenuManager(Messages
-				.getString("ui.File")); //$NON-NLS-1$
+		MenuManager file_menu = new MenuManager(Messages.getString("ui.File")); //$NON-NLS-1$
 		file_menu.add(new_menu);
 		file_menu.add(new Separator());
 		file_menu.add(new OpenAction(this));
@@ -181,8 +191,8 @@ public class JalgoWindow extends ApplicationWindow {
 
 		// ** help_menu **
 
-		MenuManager help_menu = new MenuManager(Messages
-				.getString("ui.Help"), "help"); //$NON-NLS-1$
+		MenuManager help_menu = new MenuManager(
+				Messages.getString("ui.Help"), "help"); //$NON-NLS-1$
 		help_menu.add(new AboutAction(this));
 		help_menu.add(new AboutModuleAction(this));
 
@@ -234,7 +244,7 @@ public class JalgoWindow extends ApplicationWindow {
 	 * @return The Composite which should be used to put the module GUI into
 	 */
 	public CTabItem requestNewCTabItem(String text, Image img) {
-		CTabItem cti = new CTabItem(this.ct, SWT.FLAT|SWT.CLOSE);
+		CTabItem cti = new CTabItem(this.ct, SWT.FLAT | SWT.CLOSE);
 		cti.setText(text);
 		cti.setImage(img);
 

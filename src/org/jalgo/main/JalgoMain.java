@@ -346,14 +346,12 @@ public class JalgoMain {
 			}
 		}*/
 		
-		knownModules.add(org.jalgo.module.startup.ModuleConnector.class);
 		knownModules.add(org.jalgo.module.avl.ModuleConnector.class);
 		knownModules.add(org.jalgo.module.dijkstraModule.ModuleConnector.class);
 		knownModules.add(org.jalgo.module.synDiaEBNF.ModuleConnector.class);
 //		knownModules.add(org.jalgo.module.testModule.ModuleConnector.class);
 		//Add a new ModuleConnector here!!
 
-		knownModuleInfos.add(new org.jalgo.module.startup.ModuleInfo());
 		knownModuleInfos.add(new org.jalgo.module.avl.ModuleInfo());
 		knownModuleInfos.add(new org.jalgo.module.dijkstraModule.ModuleInfo());
 		knownModuleInfos.add(new org.jalgo.module.synDiaEBNF.ModuleInfo());
