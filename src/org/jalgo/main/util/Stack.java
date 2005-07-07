@@ -30,7 +30,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.List;
 
 /**
  * @author Marco Zimmerling
@@ -38,15 +38,17 @@ import java.util.ListIterator;
  * 
  * This class implements a stack with a wide range of functionalities in order to handle its elements.
  */
-public class Stack implements Serializable {
+public class Stack<T> implements Serializable {
 
-	private LinkedList content;
+	private static final long serialVersionUID = 2366915019102580664L;
+	
+	private LinkedList<T> content;
 
 	/**
 	* default constructor, creates an empty stack 
 	*/
 	public Stack() {
-		content = new LinkedList();
+		content = new LinkedList<T>();
 	}
 
 	/**
@@ -55,8 +57,8 @@ public class Stack implements Serializable {
 	* 
 	* creates a stack which initially holds the elements passed by c  
 	*/
-	public Stack(Collection c, boolean firstOnTop) {
-		content = new LinkedList(c);
+	public Stack(Collection<T> c, boolean firstOnTop) {
+		content = new LinkedList<T>(c);
 		
 		if (!firstOnTop)
 			Collections.reverse(content);
@@ -67,7 +69,7 @@ public class Stack implements Serializable {
 	 * 
 	 * puts item on the stack, thus it'll be the new top element
 	 */
-	public void push(Object item) {
+	public void push(T item) {
 		content.addFirst(item);				//content[0] is top element
 	}
 
@@ -76,7 +78,7 @@ public class Stack implements Serializable {
 	 * 
 	 * removes and returns the current top element
 	 */
-	public Object pop() {
+	public T pop() {
 		if (content.size() > 0)
 			return content.removeFirst();
 		
@@ -88,7 +90,7 @@ public class Stack implements Serializable {
 	 * 
 	 * It merely returns the current top element.
 	 */
-	public Object peak() {
+	public T peak() {
 		if (content.size() > 0)
 			return content.getFirst();
 		
@@ -100,17 +102,17 @@ public class Stack implements Serializable {
 	* 
 	* Replaces the current elements with those of c.  
 	*/
-	public void setContent(Collection c) {
+	public void setContent(Collection<T> c) {
 		content.clear();
 		content.addAll(c);	
 	}
 		
 	/**
-	 * @return	a LinkedList containing the stack's elements    
+	 * @return	a List containing the stack's elements    
 	 * 
-	 * Returns a LinkedList of the present stack's elements where the first element is the top element.           
+	 * Returns a List of the present stack's elements where the first element is the top element.           
 	 */
-	public LinkedList getContent() {
+	public List<T> getContent() {
 		return content;
 	}
 
@@ -142,7 +144,7 @@ public class Stack implements Serializable {
 	 * Tries to search out the first occurrence of item. In case of a successful execution its position from the 
 	 * top is returned. A return value of 0 indicates the top element. If item is not detectable, -1 will be returned.  
 	 */
-	public int search(Object item) {
+	public int search(T item) {
 		return content.indexOf(item);
 	}
 
@@ -156,11 +158,11 @@ public class Stack implements Serializable {
 		if (content.size() == 0)
 			return "";
 		
-		ListIterator it = content.listIterator();
-		StringBuffer strBuffer = new StringBuffer(it.toString());
+		StringBuffer strBuffer = new StringBuffer();
 		
-		while (it.hasNext())
-			strBuffer.append(it.next().toString());
+		for (T item : content) {
+			strBuffer.append(item.toString());
+		}
 		
 		return strBuffer.toString();
 	}

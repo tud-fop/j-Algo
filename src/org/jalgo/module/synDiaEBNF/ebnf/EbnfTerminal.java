@@ -20,7 +20,7 @@
 /*
  * Created on 29.04.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.ebnf;
 
 import java.io.Serializable;
@@ -36,6 +36,8 @@ import org.eclipse.swt.widgets.Shell;
  * symbolize terminalsymbols in the internal Layer
  */
 public class EbnfTerminal extends EbnfElement implements Serializable {
+
+	private static final long serialVersionUID = 6418064913941647564L;
 
 	private String label;
 
@@ -62,7 +64,7 @@ public class EbnfTerminal extends EbnfElement implements Serializable {
 		return label.equals(o);
 	}
 
-	public int render(Shell shell, List styleList, int pos) {
+	public int render(Shell shell, List<StyleRange> styleList, int pos) {
 		styleList.add(new StyleRange(pos, label.length(), null, null));
 		return pos + label.length();
 	}

@@ -25,6 +25,7 @@ package org.jalgo.main.util;
 
 import java.util.ArrayList;
 
+import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.geometry.Point;
 import org.jalgo.main.gfx.ClickListener;
 import org.jalgo.main.gfx.IClickAction;
@@ -43,7 +44,7 @@ public class ClickCollector {
 	private static boolean isCollecting;
 	private static int numberOfClicks;
 	private static IClickAction actionObject;
-	private static ArrayList items;
+	private static ArrayList<Figure> items;
 	
 	private static Point lastPoint;
 	
@@ -52,7 +53,7 @@ public class ClickCollector {
 		isCollecting = true;
 		numberOfClicks = numberOfClicks_;
 		actionObject = actionObject_;
-		items = new ArrayList();
+		items = new ArrayList<Figure>();
 	}
 	
 	public static boolean addItem(ClickListener clickListener){

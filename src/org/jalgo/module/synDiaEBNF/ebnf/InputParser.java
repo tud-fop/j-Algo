@@ -37,13 +37,13 @@ public class InputParser extends Parser {
 	private final ConcState concState = new ConcState();
 	private final ErrorState errorState = new ErrorState();
 	private InputState state = beginState;
-	private Set set = new HashSet();
+	private Set<String> set = new HashSet<String>();
 
 	public InputParser(String str) {
 		tokenizer = new InputTokenizer(str);
 	}
 
-	public Set analyse() throws EbnfParseException {
+	public Set<String> analyse() throws EbnfParseException {
 		if (!tokenizer.hasNextToken()) {
 			throw new EbnfParseException(Messages.getString("InputParser.Input_empty_1")); //$NON-NLS-1$
 		}

@@ -20,7 +20,7 @@
 /*
  * Created on 29.04.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.ebnf;
 
 import java.io.Serializable;
@@ -36,7 +36,11 @@ import org.eclipse.swt.widgets.Shell;
  * symbolize syntax variable in an EBNF-term 
  */
 public class EbnfSynVariable extends EbnfElement implements Serializable {
+
+	private static final long serialVersionUID = 4891992319506550348L;
+
 	private String label;
+
 	private EbnfElement startElem;
 
 	public EbnfSynVariable() {
@@ -69,12 +73,12 @@ public class EbnfSynVariable extends EbnfElement implements Serializable {
 		}
 		return super.equals(o);
 	}
-	
-	public int render(Shell shell, List styleList, int pos) {
+
+	public int render(Shell shell, List<StyleRange> styleList, int pos) {
 		styleList.add(new StyleRange(pos, label.length(), null, null));
 		return pos + label.length();
 	}
-	
+
 	public String toString() {
 		return label;
 	}

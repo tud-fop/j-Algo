@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 public abstract class Tokenizer {
 	private String str;
 	protected String substr;
-	protected List tokens;
+	protected List<Token> tokens;
 	protected String skip;
 	protected int position = 0;
 	private int index = 0;
@@ -53,7 +53,7 @@ public abstract class Tokenizer {
 	 * @return token object
 	 */
 	public Token getNextToken() {
-		return (Token) tokens.get(index++);
+		return tokens.get(index++);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public abstract class Tokenizer {
 	 */
 	public Token lookahead(int k) {
 		if ((k >= 0) && hasLookahead(k)) {
-			return (Token) tokens.get(index + k);
+			return tokens.get(index + k);
 		}
 		return null;
 	}
@@ -131,7 +131,7 @@ public abstract class Tokenizer {
 	Tokenizer(String str) {
 		this.str = str;
 		this.substr = str;
-		this.tokens = new LinkedList();
+		this.tokens = new LinkedList<Token>();
 	}
 
 }

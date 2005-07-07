@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -43,13 +44,15 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class EbnfConcatenation extends EbnfComposition implements Serializable {
 
-	private LinkedList elements;
+	private static final long serialVersionUID = 3723908500641089028L;
+
+	private LinkedList<EbnfElement> elements;
 
 	public EbnfConcatenation() {
-		elements = new LinkedList();
+		elements = new LinkedList<EbnfElement>();
 	}
 
-	public EbnfConcatenation(LinkedList elements) {
+	public EbnfConcatenation(LinkedList<EbnfElement> elements) {
 		this.elements = elements;
 	}
 
@@ -62,17 +65,14 @@ public class EbnfConcatenation extends EbnfComposition implements Serializable {
 	}
 
 	public EbnfElement getContent(int num) {
-		if (elements.get(num) instanceof EbnfElement) {
-			return (EbnfElement) elements.get(num);
-		}
-		return null;
+		return elements.get(num);
 	}
 
 	public void setContent(int num, EbnfElement newElem) {
 		elements.set(num, newElem);
 	}
 
-	public void setContent(LinkedList elements) {
+	public void setContent(LinkedList<EbnfElement> elements) {
 		this.elements = elements;
 	}
 
@@ -88,10 +88,9 @@ public class EbnfConcatenation extends EbnfComposition implements Serializable {
 		return elements.remove(elem);
 	}
 
-	public int render(Shell shell, List styleList, int pos) {
+	public int render(Shell shell, List<StyleRange> styleList, int pos) {
 		for (Iterator it = elements.iterator(); it.hasNext();) {
-			pos = ((EbnfElement) it.next()).render(shell,
-					styleList, pos);
+			pos = ((EbnfElement) it.next()).render(shell, styleList, pos);
 		}
 		return pos;
 	}

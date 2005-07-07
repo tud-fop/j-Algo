@@ -20,7 +20,7 @@
 /*
  * Created on 01.05.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.ebnf;
 
 import java.io.Serializable;
@@ -47,11 +47,16 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class EbnfDefinition implements Serializable {
 
+	private static final long serialVersionUID = -7553138235836084038L;
+
 	private String label;
+
 	// Name of the EbnfDefinition, mostly the greek "epsilon"
-	private Set variables;
+	private Set<EbnfSynVariable> variables;
+
 	// Set of "EbnfSynVariable"s (the syntactical variables)
-	private Set alphabet;
+	private Set<EbnfTerminal> alphabet;
+
 	// Set of "EbnfTerminal"s (the terminal symbols)
 	private EbnfSynVariable startVariable;
 
@@ -78,15 +83,15 @@ public class EbnfDefinition implements Serializable {
 	public EbnfDefinition(String label, EbnfSynVariable startVariable) {
 		this.label = label;
 		this.startVariable = startVariable;
-		this.variables = new HashSet();
-		this.alphabet = new HashSet();
+		this.variables = new HashSet<EbnfSynVariable>();
+		this.alphabet = new HashSet<EbnfTerminal>();
 	}
 
 	/**
 	 * Give you the final set of the Terminalsymbols
 	 * @return   a Set of <code>EbnfTerminal</code>s (the terminal symbols)
 	 */
-	public Set getAlphabet() {
+	public Set<EbnfTerminal> getAlphabet() {
 		return alphabet;
 	}
 
@@ -110,7 +115,7 @@ public class EbnfDefinition implements Serializable {
 	 * Give a final set of the SyntaxVariables.
 	 * @return   a Set of <code>EbnfSynVariable</code>s (the syntactical variables)
 	 */
-	public Set getVariables() {
+	public Set<EbnfSynVariable> getVariables() {
 		return variables;
 	}
 
@@ -155,7 +160,9 @@ public class EbnfDefinition implements Serializable {
 	 */
 	public StyledText styledText(Composite parent) {
 		StyledText widget = new StyledText(parent, SWT.BORDER);
-		widget.append(label + " = (V, \u03A3, " + startVariable.getLabel() + Messages.getString("EbnfDefinition.,_R)_mit_n_2")); //$NON-NLS-1$ //$NON-NLS-2$
+		widget
+				.append(label
+						+ " = (V, \u03A3, " + startVariable.getLabel() + Messages.getString("EbnfDefinition.,_R)_mit_n_2")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		/* variables */
 		widget.append("  V = {"); //$NON-NLS-1$
@@ -178,12 +185,9 @@ public class EbnfDefinition implements Serializable {
 		for (Iterator it = variables.iterator(); it.hasNext();) {
 			EbnfSynVariable var = (EbnfSynVariable) it.next();
 			EbnfElement elem = var.getStartElem();
-			ArrayList styleList = new ArrayList();
+			ArrayList<StyleRange> styleList = new ArrayList<StyleRange>();
 			widget.append("    " + var.getLabel() + " ::= "); //$NON-NLS-1$ //$NON-NLS-2$
-			elem.render(
-				parent.getShell(),
-				styleList,
-				widget.getText().length());
+			elem.render(parent.getShell(), styleList, widget.getText().length());
 			widget.append(elem.toString());
 			for (Iterator it2 = styleList.iterator(); it2.hasNext();) {
 				widget.setStyleRange((StyleRange) it2.next());
@@ -191,7 +195,7 @@ public class EbnfDefinition implements Serializable {
 			if (it.hasNext())
 				widget.append("\n"); //$NON-NLS-1$
 		}
-		
+
 		return widget;
 	}
 }

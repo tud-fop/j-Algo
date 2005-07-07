@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -24,7 +27,6 @@
 package org.jalgo.main.util;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -37,19 +39,17 @@ public class Sets {
 	 * @param set2
 	 * @return true if the two sets are disjoint
 	 */
-	public static boolean disjoint(Set set1, Set set2) {
-		Iterator it = set2.iterator();
-		while (it.hasNext()) {
-			if (set1.contains(it.next())) {
+	public static <T> boolean disjoint(Set<T> set1, Set<T> set2) {
+		for (T set2Object : set2) {
+			if (set1.contains(set2Object)) {
 				return false;
 			}
 		}
 		return true;
 	}
 
-	public static Object search(Set set, Object o) {
-		for (Iterator it = set.iterator(); it.hasNext();) {
-			Object setObject = it.next();
+	public static <T> T search(Set<T> set, T o) {
+		for (T setObject : set) {
 			if (o.equals(setObject)) {
 				return setObject;
 			}
@@ -57,8 +57,8 @@ public class Sets {
 		return null;
 	}
 	
-	public static Set union(Set set1, Set set2) {
-		Set set = new HashSet();
+	public static <T> Set<T> union(Set<T> set1, Set<T> set2) {
+		Set<T> set = new HashSet<T>();
 		set.addAll(set1);
 		set.addAll(set2);
 		return set;

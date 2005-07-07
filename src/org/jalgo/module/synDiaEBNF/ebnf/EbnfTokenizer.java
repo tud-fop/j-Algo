@@ -27,7 +27,6 @@ package org.jalgo.module.synDiaEBNF.ebnf;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -55,10 +54,9 @@ public class EbnfTokenizer extends Tokenizer implements IEbnfTokenConstants {
 
 	private final String REGEX_REST = "."; //$NON-NLS-1$
 
-	private List checkorder;
+	private List<String> checkorder;
 
-	private Integer[] tokenNames = { WHITESPACE, PIPE, LEFT_CURLY_BRACKET,
-			RIGHT_CURLY_BRACKET, LEFT_SQUARED_BRACKET,
+	private Integer[] tokenNames = { WHITESPACE, PIPE, LEFT_CURLY_BRACKET, RIGHT_CURLY_BRACKET, LEFT_SQUARED_BRACKET,
 			RIGHT_SQUARED_BRACKET, LEFT_BRACKET, RIGHT_BRACKET, DOT };
 
 	/**
@@ -69,9 +67,9 @@ public class EbnfTokenizer extends Tokenizer implements IEbnfTokenConstants {
 	 * @param symbols
 	 *                       the defined symbols (V union Sigma)
 	 */
-	public EbnfTokenizer(String term, Set symbols) {
+	public EbnfTokenizer(String term, Set<String> symbols) {
 		super(term);
-		checkorder = new LinkedList();
+		checkorder = new LinkedList<String>();
 		checkorder.add(REGEX_WHITESPACE);
 		checkorder.add(REGEX_PIPE);
 		checkorder.add(REGEX_LEFT_CURLY_BRACKET);
@@ -82,12 +80,11 @@ public class EbnfTokenizer extends Tokenizer implements IEbnfTokenConstants {
 		checkorder.add(REGEX_RIGHT_BRACKET);
 		checkorder.add(REGEX_DOT);
 		skip = REGEX_WHITESPACE;
-		LinkedList unquotedSymbolList = new LinkedList(symbols);
-		Collections.sort(unquotedSymbolList,
-				new StringLengthComparator());
-		LinkedList quotedSymbolList = new LinkedList();
-		for (Iterator it = unquotedSymbolList.iterator(); it.hasNext();) {
-			quotedSymbolList.add(quoteRegex((String) it.next()));
+		LinkedList<String> unquotedSymbolList = new LinkedList<String>(symbols);
+		Collections.sort(unquotedSymbolList, new StringLengthComparator());
+		LinkedList<String> quotedSymbolList = new LinkedList<String>();
+		for (String unquotedSymbol : unquotedSymbolList) {
+			quotedSymbolList.add(quoteRegex(unquotedSymbol));
 		}
 		checkorder.addAll(quotedSymbolList);
 		checkorder.add(REGEX_REST);
@@ -108,8 +105,7 @@ public class EbnfTokenizer extends Tokenizer implements IEbnfTokenConstants {
 					} else {
 						tokenName = SYMBOL;
 					}
-					if (match((String) checkorder
-							.get(index), tokenName))
+					if (match(checkorder.get(index), tokenName))
 						break;
 				}
 			}
@@ -127,11 +123,9 @@ public class EbnfTokenizer extends Tokenizer implements IEbnfTokenConstants {
 		int position = 0;
 		String regexMetaSymbol = "\\^|\\(|\\)|\\[|\\]|\\{|\\}|\\||\\\\|\\$|\\&|\\?|\\*|\\+"; //$NON-NLS-1$
 		StringBuffer quotedStr = new StringBuffer(""); //$NON-NLS-1$
-		Matcher matcher = Pattern.compile(regexMetaSymbol).matcher(
-				unquotedStr);
+		Matcher matcher = Pattern.compile(regexMetaSymbol).matcher(unquotedStr);
 		while (matcher.find()) {
-			quotedStr.append(unquotedStr.substring(position,
-					matcher.start()));
+			quotedStr.append(unquotedStr.substring(position, matcher.start()));
 			quotedStr.append("\\" + matcher.group()); //$NON-NLS-1$
 			position = matcher.end();
 		}
@@ -139,20 +133,17 @@ public class EbnfTokenizer extends Tokenizer implements IEbnfTokenConstants {
 		return quotedStr.toString();
 	}
 
-	private class StringLengthComparator implements Comparator {
-		public int compare(Object o1, Object o2) {
-			if (o1 instanceof String && o2 instanceof String) {
-				int o1Length = ((String) o1).length();
-				int o2Length = ((String) o2).length();
-				if (o1Length < o2Length) {
-					return 1;
-				} else if (o1Length > o2Length) {
-					return -1;
-				} else {
-					return 0;
-				}
+	private class StringLengthComparator implements Comparator<String> {
+		public int compare(String str1, String str2) {
+			int str1Length = str1.length();
+			int str2Length = str2.length();
+			if (str1Length < str2Length) {
+				return 1;
+			} else if (str1Length > str2Length) {
+				return -1;
+			} else {
+				return 0;
 			}
-			return 0;
 		}
 	}
 }

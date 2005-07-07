@@ -20,7 +20,7 @@
 /*
  * Created on 29.04.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.ebnf;
 
 import java.io.Serializable;
@@ -39,6 +39,8 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class EbnfPrecedence extends EbnfComposition implements Serializable {
 
+	private static final long serialVersionUID = 8287444742704734873L;
+
 	private EbnfElement content;
 
 	public EbnfPrecedence() {
@@ -56,7 +58,7 @@ public class EbnfPrecedence extends EbnfComposition implements Serializable {
 		this.content = content;
 	}
 
-	public int render(Shell shell, List styleList, int pos) {
+	public int render(Shell shell, List<StyleRange> styleList, int pos) {
 		Color color = shell.getDisplay().getSystemColor(PRECEDENCE_COLOR);
 		styleList.add(new StyleRange(pos, 1, color, null));
 		pos = content.render(shell, styleList, pos + 1);

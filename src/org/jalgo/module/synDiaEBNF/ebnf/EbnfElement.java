@@ -27,6 +27,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -43,5 +44,5 @@ public abstract class EbnfElement implements Serializable {
 	protected final int PRECEDENCE_COLOR = SWT.COLOR_BLUE;
 	protected final int REPETITION_COLOR = SWT.COLOR_BLUE;
 
-	public abstract int render(Shell shell, List styleList, int pos);
+	public abstract int render(Shell shell, List<StyleRange> styleList, int pos);
 }

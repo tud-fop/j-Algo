@@ -39,9 +39,12 @@ import org.jalgo.main.util.Stack;
  */
 public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 
-	private Stack parseStack;
+	private Stack<StackElement> parseStack;
+
 	private EbnfDefinition definition;
+
 	private String variable;
+
 	private Set terminals, variables;
 
 	/*
@@ -49,9 +52,13 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 	 * defined in IEbnfTokenConstants
 	 */
 	private final Integer ALTERNATIVE = new Integer(102);
+
 	private final Integer OPTION = new Integer(103);
+
 	private final Integer PRECEDENCE = new Integer(104);
+
 	private final Integer REPETITION = new Integer(105);
+
 	private final Integer CONCATENATION = new Integer(106);
 
 	/**
@@ -69,10 +76,10 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 	 * @param terminals
 	 *                   Set of String representing the EBNF Terminals
 	 */
-	public EbnfTermParser(String term, EbnfDefinition definition,
-			String variable, Set variables, Set terminals) {
+	public EbnfTermParser(String term, EbnfDefinition definition, String variable, Set<String> variables,
+			Set<String> terminals) {
 		tokenizer = new EbnfTokenizer(term, Sets.union(variables, terminals));
-		parseStack = new Stack();
+		parseStack = new Stack<StackElement>();
 		this.definition = definition;
 		this.variable = variable;
 		this.terminals = terminals;
@@ -87,20 +94,17 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 	public EbnfElement analyse() throws EbnfParseException {
 		tokenizer.reset();
 		if (!tokenizer.hasNextToken()) {
-			throw new EbnfParseException(errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_1_1"))); //$NON-NLS-1$
+			throw new EbnfParseException(errorMsg(Messages.getString("EbnfTermParser.EbnfParseException_1_1"))); //$NON-NLS-1$
 		}
 		begin(0);
 		tokenizer.hasNextToken();
 		if (tokenizer.hasNextToken()) {
-			throw new EbnfParseException(errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_2_2") //$NON-NLS-1$
+			throw new EbnfParseException(errorMsg(Messages.getString("EbnfTermParser.EbnfParseException_2_2") //$NON-NLS-1$
 					+ tokenizer.getNextToken().getTokenValue()));
 		}
 		EbnfElement result = buildEbnfTree(0);
 		if (result == null) {
-			throw new EbnfParseException(errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_3_3"))); //$NON-NLS-1$
+			throw new EbnfParseException(errorMsg(Messages.getString("EbnfTermParser.EbnfParseException_3_3"))); //$NON-NLS-1$
 		}
 		return result;
 	}
@@ -117,8 +121,7 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 			tName = token.getTokenName();
 			if (tName.equals(SYMBOL)) {
 				tokenizer.consume();
-				parseStack.push(new StackElement(SYMBOL, token.getTokenValue(),
-						level));
+				parseStack.push(new StackElement(SYMBOL, token.getTokenValue(), level));
 				concatenation(level);
 				return;
 			} else if (tName.equals(LEFT_CURLY_BRACKET)) {
@@ -126,16 +129,14 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 				begin(level + 1);
 				concatenation(level + 1);
 				if (!tokenizer.hasNextToken()) {
-					throw new EbnfParseException(
-							errorMsg(Messages
-									.getString("EbnfTermParser.EbnfParseException_5_5"))); //$NON-NLS-1$
+					throw new EbnfParseException(errorMsg(Messages
+							.getString("EbnfTermParser.EbnfParseException_5_5"))); //$NON-NLS-1$
 				}
 				token = tokenizer.lookahead(0);
 				tName = token.getTokenName();
 				if (tName.equals(RIGHT_CURLY_BRACKET)) {
 					tokenizer.consume();
-					parseStack.push(new StackElement(REPETITION, token
-							.getTokenValue(), level));
+					parseStack.push(new StackElement(REPETITION, token.getTokenValue(), level));
 					concatenation(level);
 					return;
 				}
@@ -147,78 +148,65 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 				begin(level + 1);
 				concatenation(level + 1);
 				if (!tokenizer.hasNextToken()) {
-					throw new EbnfParseException(
-							errorMsg(Messages
-									.getString("EbnfTermParser.EbnfParseException_7_7"))); //$NON-NLS-1$
+					throw new EbnfParseException(errorMsg(Messages
+							.getString("EbnfTermParser.EbnfParseException_7_7"))); //$NON-NLS-1$
 				}
 				token = tokenizer.lookahead(0);
 				tName = token.getTokenName();
 				if (tName.equals(RIGHT_SQUARED_BRACKET)) {
 					tokenizer.consume();
-					parseStack.push(new StackElement(OPTION, token
-							.getTokenValue(), level));
+					parseStack.push(new StackElement(OPTION, token.getTokenValue(), level));
 					concatenation(level);
 					return;
 				}
-				throw new EbnfParseException(
-						errorMsg(Messages
-								.getString("EbnfTermParser.EbnfParseException_8_8") + token.getTokenValue()), //$NON-NLS-1$
+				throw new EbnfParseException(errorMsg(Messages
+						.getString("EbnfTermParser.EbnfParseException_8_8") + token.getTokenValue()), //$NON-NLS-1$
 						token.getPosition());
 			} else if (tName.equals(LEFT_BRACKET)) {
 				tokenizer.consume();
 				begin(level + 1);
 				concatenation(level + 1);
 				if (!tokenizer.hasNextToken()) {
-					throw new EbnfParseException(
-							errorMsg(Messages
-									.getString("EbnfTermParser.EbnfParseException_9_9"))); //$NON-NLS-1$
+					throw new EbnfParseException(errorMsg(Messages
+							.getString("EbnfTermParser.EbnfParseException_9_9"))); //$NON-NLS-1$
 				}
 				token = tokenizer.lookahead(0);
 				tName = token.getTokenName();
 				if (tName.equals(PIPE)) {
 					tokenizer.consume();
-					parseStack.push(new StackElement(PIPE, token
-							.getTokenValue(), level));
+					parseStack.push(new StackElement(PIPE, token.getTokenValue(), level));
 					begin(level + 1);
 					concatenation(level + 1);
 					if (!tokenizer.hasNextToken()) {
-						throw new EbnfParseException(
-								errorMsg(Messages
-										.getString("EbnfTermParser.EbnfParseException_10_10"))); //$NON-NLS-1$
+						throw new EbnfParseException(errorMsg(Messages
+								.getString("EbnfTermParser.EbnfParseException_10_10"))); //$NON-NLS-1$
 					}
 					token = tokenizer.lookahead(0);
 					tName = token.getTokenName();
 					if (tName.equals(RIGHT_BRACKET)) {
 						tokenizer.consume();
-						parseStack.push(new StackElement(ALTERNATIVE, token
-								.getTokenValue(), level));
+						parseStack.push(new StackElement(ALTERNATIVE, token.getTokenValue(), level));
 						concatenation(level);
 						return;
 					}
-					throw new EbnfParseException(
-							errorMsg(Messages
-									.getString("EbnfTermParser.EbnfParseException_11_11") //$NON-NLS-1$
-									+ token.getTokenValue()), token
-									.getPosition());
+					throw new EbnfParseException(errorMsg(Messages
+							.getString("EbnfTermParser.EbnfParseException_11_11") //$NON-NLS-1$
+							+ token.getTokenValue()), token.getPosition());
 				} else if (tName.equals(RIGHT_BRACKET)) {
 					tokenizer.consume();
-					parseStack.push(new StackElement(PRECEDENCE, token
-							.getTokenValue(), level));
+					parseStack.push(new StackElement(PRECEDENCE, token.getTokenValue(), level));
 					concatenation(level);
 					return;
 				} else {
-					throw new EbnfParseException(
-							errorMsg(Messages
-									.getString("EbnfTermParser.EbnfParseException_12_12") //$NON-NLS-1$
-									+ token.getTokenValue()), token
-									.getPosition());
+					throw new EbnfParseException(errorMsg(Messages
+							.getString("EbnfTermParser.EbnfParseException_12_12") //$NON-NLS-1$
+							+ token.getTokenValue()), token.getPosition());
 				}
 			} else if (tName.equals(DOT) && !tokenizer.hasLookahead(1)) {
 				tokenizer.consume();
 			} else {
-				throw new EbnfParseException(
-						errorMsg(Messages
-								.getString("EbnfTermParser.EbnfParseException_13_13") + token.getTokenValue())); //$NON-NLS-1$
+				throw new EbnfParseException(errorMsg(Messages
+						.getString("EbnfTermParser.EbnfParseException_13_13") + token.getTokenValue())); //$NON-NLS-1$
 			}
 		}
 	}
@@ -231,8 +219,7 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 			tName = token.getTokenName();
 			if (tName.equals(SYMBOL)) {
 				tokenizer.consume();
-				parseStack.push(new StackElement(SYMBOL, token.getTokenValue(),
-						level));
+				parseStack.push(new StackElement(SYMBOL, token.getTokenValue(), level));
 				parseStack.push(new StackElement(CONCATENATION, null, level));
 				concatenation(level);
 				return;
@@ -241,18 +228,15 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 				begin(level + 1);
 				concatenation(level);
 				if (!tokenizer.hasNextToken()) {
-					throw new EbnfParseException(
-							errorMsg(Messages
-									.getString("EbnfTermParser.EbnfParseException_14_14"))); //$NON-NLS-1$
+					throw new EbnfParseException(errorMsg(Messages
+							.getString("EbnfTermParser.EbnfParseException_14_14"))); //$NON-NLS-1$
 				}
 				token = tokenizer.lookahead(0);
 				tName = token.getTokenName();
 				if (tName.equals(RIGHT_CURLY_BRACKET)) {
 					tokenizer.consume();
-					parseStack.push(new StackElement(REPETITION, token
-							.getTokenValue(), level));
-					parseStack
-							.push(new StackElement(CONCATENATION, null, level));
+					parseStack.push(new StackElement(REPETITION, token.getTokenValue(), level));
+					parseStack.push(new StackElement(CONCATENATION, null, level));
 					concatenation(level);
 					return;
 				}
@@ -264,80 +248,64 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 				begin(level + 1);
 				concatenation(level);
 				if (!tokenizer.hasNextToken()) {
-					throw new EbnfParseException(
-							errorMsg(Messages
-									.getString("EbnfTermParser.EbnfParseException_16_16"))); //$NON-NLS-1$
+					throw new EbnfParseException(errorMsg(Messages
+							.getString("EbnfTermParser.EbnfParseException_16_16"))); //$NON-NLS-1$
 				}
 				token = tokenizer.lookahead(0);
 				tName = token.getTokenName();
 				if (tName.equals(RIGHT_SQUARED_BRACKET)) {
 					tokenizer.consume();
-					parseStack.push(new StackElement(OPTION, token
-							.getTokenValue(), level));
-					parseStack
-							.push(new StackElement(CONCATENATION, null, level));
+					parseStack.push(new StackElement(OPTION, token.getTokenValue(), level));
+					parseStack.push(new StackElement(CONCATENATION, null, level));
 					concatenation(level);
 					return;
 				}
-				throw new EbnfParseException(
-						errorMsg(Messages
-								.getString("EbnfTermParser.EbnfParseException_17_17") + token.getTokenValue()), //$NON-NLS-1$
+				throw new EbnfParseException(errorMsg(Messages
+						.getString("EbnfTermParser.EbnfParseException_17_17") + token.getTokenValue()), //$NON-NLS-1$
 						token.getPosition());
 			} else if (tName.equals(LEFT_BRACKET)) {
 				tokenizer.consume();
 				begin(level + 1);
 				concatenation(level);
 				if (!tokenizer.hasNextToken()) {
-					throw new EbnfParseException(
-							errorMsg(Messages
-									.getString("EbnfTermParser.EbnfParseException_18_18"))); //$NON-NLS-1$
+					throw new EbnfParseException(errorMsg(Messages
+							.getString("EbnfTermParser.EbnfParseException_18_18"))); //$NON-NLS-1$
 				}
 				token = tokenizer.lookahead(0);
 				tName = token.getTokenName();
 				if (tName.equals(PIPE)) {
 					tokenizer.consume();
-					parseStack.push(new StackElement(PIPE, token
-							.getTokenValue(), level));
+					parseStack.push(new StackElement(PIPE, token.getTokenValue(), level));
 					begin(level + 1);
 					concatenation(level);
 					if (!tokenizer.hasNextToken()) {
-						throw new EbnfParseException(
-								errorMsg(Messages
-										.getString("EbnfTermParser.EbnfParseException_19_19"))); //$NON-NLS-1$
+						throw new EbnfParseException(errorMsg(Messages
+								.getString("EbnfTermParser.EbnfParseException_19_19"))); //$NON-NLS-1$
 					}
 					token = tokenizer.lookahead(0);
 					tName = token.getTokenName();
 					if (tName.equals(RIGHT_BRACKET)) {
 						tokenizer.consume();
-						parseStack.push(new StackElement(ALTERNATIVE, token
-								.getTokenValue(), level));
-						parseStack.push(new StackElement(CONCATENATION, null,
-								level));
+						parseStack.push(new StackElement(ALTERNATIVE, token.getTokenValue(), level));
+						parseStack.push(new StackElement(CONCATENATION, null, level));
 						concatenation(level);
 						return;
 					}
-					throw new EbnfParseException(
-							errorMsg(Messages
-									.getString("EbnfTermParser.EbnfParseException_20_20") //$NON-NLS-1$
-									+ token.getTokenValue()), token
-									.getPosition());
+					throw new EbnfParseException(errorMsg(Messages
+							.getString("EbnfTermParser.EbnfParseException_20_20") //$NON-NLS-1$
+							+ token.getTokenValue()), token.getPosition());
 				} else if (tName.equals(RIGHT_BRACKET)) {
 					tokenizer.consume();
-					parseStack.push(new StackElement(PRECEDENCE, token
-							.getTokenValue(), level));
-					parseStack
-							.push(new StackElement(CONCATENATION, null, level));
+					parseStack.push(new StackElement(PRECEDENCE, token.getTokenValue(), level));
+					parseStack.push(new StackElement(CONCATENATION, null, level));
 					concatenation(level);
 					return;
 				} else {
-					throw new EbnfParseException(
-							errorMsg(Messages
-									.getString("EbnfTermParser.EbnfParseException_21_21") //$NON-NLS-1$
-									+ token.getTokenValue()), token
-									.getPosition());
+					throw new EbnfParseException(errorMsg(Messages
+							.getString("EbnfTermParser.EbnfParseException_21_21") //$NON-NLS-1$
+							+ token.getTokenValue()), token.getPosition());
 				}
-			} else if (tName.equals(RIGHT_CURLY_BRACKET)
-					|| tName.equals(RIGHT_SQUARED_BRACKET)
+			} else if (tName.equals(RIGHT_CURLY_BRACKET) || tName.equals(RIGHT_SQUARED_BRACKET)
 					|| tName.equals(RIGHT_BRACKET) || tName.equals(PIPE)) {
 				return;
 			}
@@ -346,56 +314,44 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 
 	private EbnfElement buildEbnfTree(int level) throws EbnfParseException {
 		while (!parseStack.isEmpty()) {
-			StackElement elem = (StackElement) parseStack.peak();
-			if (elem.getType().equals(CONCATENATION)
-					&& elem.getLevel() == level) {
+			StackElement elem = parseStack.peak();
+			if (elem.getType().equals(CONCATENATION) && elem.getLevel() == level) {
 				parseStack.pop();
 				EbnfConcatenation c = new EbnfConcatenation();
-				while (!parseStack.isEmpty()
-						&& ((StackElement) parseStack.peak()).getLevel() == level) {
-					if (((StackElement) parseStack.peak()).getType().equals(
-							CONCATENATION)) {
+				while (!parseStack.isEmpty() && parseStack.peak().getLevel() == level) {
+					if (parseStack.peak().getType().equals(CONCATENATION)) {
 						parseStack.pop();
 						continue;
 					}
 					c.addElem(0, buildEbnfTree(level));
 				}
 				return c;
-			} else if (elem.getType().equals(ALTERNATIVE)
-					&& elem.getLevel() == level) {
+			} else if (elem.getType().equals(ALTERNATIVE) && elem.getLevel() == level) {
 				parseStack.pop();
 				EbnfAlternative e = new EbnfAlternative();
 				e.setRight(buildEbnfTree(level + 1));
 				parseStack.pop(); // pop PIPE parsesymbol
 				e.setLeft(buildEbnfTree(level + 1));
 				return e;
-			} else if (elem.getType().equals(OPTION)
-					&& elem.getLevel() == level) {
+			} else if (elem.getType().equals(OPTION) && elem.getLevel() == level) {
 				parseStack.pop();
 				return new EbnfOption(buildEbnfTree(level + 1));
-			} else if (elem.getType().equals(PRECEDENCE)
-					&& elem.getLevel() == level) {
+			} else if (elem.getType().equals(PRECEDENCE) && elem.getLevel() == level) {
 				parseStack.pop();
 				return new EbnfPrecedence(buildEbnfTree(level + 1));
-			} else if (elem.getType().equals(REPETITION)
-					&& elem.getLevel() == level) {
+			} else if (elem.getType().equals(REPETITION) && elem.getLevel() == level) {
 				parseStack.pop();
 				return new EbnfRepetition(buildEbnfTree(level + 1));
-			} else if (elem.getType().equals(SYMBOL)
-					&& elem.getLevel() == level) {
+			} else if (elem.getType().equals(SYMBOL) && elem.getLevel() == level) {
 				parseStack.pop();
 				if (terminals.contains(elem.getValue())) {
-					return (EbnfTerminal) Sets.search(definition.getAlphabet(),
-							new EbnfTerminal(elem.getValue()));
+					return Sets.search(definition.getAlphabet(), new EbnfTerminal(elem.getValue()));
 				} else if (variables.contains(elem.getValue())) {
-					return (EbnfSynVariable) Sets.search(definition
-							.getVariables(), new EbnfSynVariable(elem
-							.getValue()));
+					return Sets.search(definition.getVariables(), new EbnfSynVariable(elem.getValue()));
 				} else {
-					throw new EbnfParseException(
-							Messages
-									.getString("EbnfTermParser.EbnfParseException_22_22") //$NON-NLS-1$
-									+ elem.getValue() + "\")"); //$NON-NLS-1$
+					throw new EbnfParseException(Messages
+							.getString("EbnfTermParser.EbnfParseException_22_22") //$NON-NLS-1$
+							+ elem.getValue() + "\")"); //$NON-NLS-1$
 				}
 			} else {
 				return null;
@@ -406,7 +362,9 @@ public class EbnfTermParser extends Parser implements IEbnfTokenConstants {
 
 	private class StackElement {
 		private Integer type;
+
 		private String value;
+
 		private int level;
 
 		public StackElement(Integer type, String value, int level) {

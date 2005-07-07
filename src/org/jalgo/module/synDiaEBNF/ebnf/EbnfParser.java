@@ -37,7 +37,7 @@ public class EbnfParser extends Parser {
 	private String ebnfName, variables, alphabet, startVariable;
 	private HashMap rules;
 	private EbnfDefinition definition;
-	private Set metaSymbols;
+	private Set<String> metaSymbols;
 
 	/**
 	 * Contructor for the EBNF-Parser object and takes the following
@@ -62,7 +62,7 @@ public class EbnfParser extends Parser {
 		this.rules = rules;
 		this.definition = new EbnfDefinition(ebnfName);
 
-		metaSymbols = new HashSet();
+		metaSymbols = new HashSet<String>();
 		metaSymbols.add("\\^("); //$NON-NLS-1$
 		metaSymbols.add("\\^)"); //$NON-NLS-1$
 		metaSymbols.add("\\^["); //$NON-NLS-1$
@@ -82,14 +82,10 @@ public class EbnfParser extends Parser {
 	public EbnfDefinition analyse() throws EbnfParseException {
 		InputParser variableSetParser = new InputParser(variables);
 		InputParser terminalSetParser = new InputParser(alphabet);
-		Set variableSet = null;
-		Set terminalSet = null;
+		Set<String> variableSet = null;
+		Set<String> terminalSet = null;
 		variableSet = variableSetParser.analyse();
-		try {
-			terminalSet = terminalSetParser.analyse();
-		} catch (Exception e) {
-			throw new EbnfParseException(e.toString());
-		}
+		terminalSet = terminalSetParser.analyse();
 		if (!Sets.disjoint(variableSet, terminalSet)) {
 			throw new EbnfParseException(Messages.getString("EbnfParser.EbnfParseException_1_9")); //$NON-NLS-1$
 		}

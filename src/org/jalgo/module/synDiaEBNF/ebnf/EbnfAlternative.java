@@ -38,7 +38,10 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class EbnfAlternative extends EbnfComposition implements Serializable {
 
+	private static final long serialVersionUID = -1903903632334122157L;
+
 	private EbnfElement left;
+
 	private EbnfElement right;
 
 	public EbnfAlternative() {
@@ -65,7 +68,7 @@ public class EbnfAlternative extends EbnfComposition implements Serializable {
 		return right;
 	}
 
-	public int render(Shell shell, List styleList, int pos) {
+	public int render(Shell shell, List<StyleRange> styleList, int pos) {
 		Color color = shell.getDisplay().getSystemColor(ALTERNATIVE_COLOR);
 		styleList.add(new StyleRange(pos, 1, color, null));
 		pos = left.render(shell, styleList, pos + 1);

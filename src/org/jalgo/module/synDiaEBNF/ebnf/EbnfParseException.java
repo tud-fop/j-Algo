@@ -29,6 +29,8 @@ package org.jalgo.module.synDiaEBNF.ebnf;
  */
 public class EbnfParseException extends Exception {
 
+	private static final long serialVersionUID = -7652140753340833433L;
+
 	public EbnfParseException(String message) {
 		super(message);
 	}
