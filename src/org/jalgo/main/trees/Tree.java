@@ -57,6 +57,9 @@ public class Tree extends TreeComponent {
 		
 		treeF.add(nodeFigure);
 		treeF.add(childrenF);
+		
+		// TODO: remove when finished
+		return null;
 	}
 
 	public boolean isTree() {
