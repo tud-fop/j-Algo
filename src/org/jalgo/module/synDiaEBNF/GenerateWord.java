@@ -65,6 +65,8 @@ public class GenerateWord
 	extends SynDiaBacktracking
 	implements SynDiaColors, Serializable {
 
+	private static final long serialVersionUID = -4764721879157297522L;
+
 	/**
 	* Constructor gets the Figure, Stack, the StackCanavas, the TextCanvases and
 	* also the syntaxtical diagram SynDiaSystem, to work with. It also fill the 
@@ -235,7 +237,7 @@ public class GenerateWord
 		if (stack.peak() != null) {
 
 			//fetch the new SynDiaElement to work with
-			currentElement = (SynDiaElement) stack.pop();
+			currentElement = stack.pop();
 
 			//detect type of currentElem and go on accordingly
 			if (currentElement instanceof SynDiaInitial) {
@@ -372,7 +374,7 @@ public class GenerateWord
 	}
 
 	private void doNextConcatenation(SynDiaConcatenation currentElem) {
-		LinkedList list = currentElem.getContent();
+		LinkedList<SynDiaElement> list = currentElem.getContent();
 		for (int i = list.size() - 1; i >= 0; i--) {
 			stack.push(list.get(i));
 		}

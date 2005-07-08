@@ -59,9 +59,9 @@ public class SynDiaDoneAction extends Action {
 
 	public void run() {
 		int a = 0, i = 0, j;
-		List children = new ArrayList();
-		List variables = new ArrayList();
-		List initial = new ArrayList();
+		List<Figure> children = new ArrayList<Figure>();
+		List<String> variables = new ArrayList<String>();
+		List<String> initial = new ArrayList<String>();
 		children.addAll(figure.getChildren());
 		if (children.isEmpty()) {
 			MessageDialog
@@ -72,7 +72,7 @@ public class SynDiaDoneAction extends Action {
 									.getString("SynDiaDoneAction.There_is_no_syntax_diagram._5")); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		} else if ((children.size() == 1)
-				&& ((Figure) children.get(0) instanceof CloudFigure)) {
+				&& (children.get(0) instanceof CloudFigure)) {
 			MessageDialog.openError(new Shell(), Messages
 					.getString("SynDiaDoneAction.Warning_4"), Messages
 					.getString("SynDiaDoneAction.0"));

@@ -37,6 +37,8 @@ import java.util.GregorianCalendar;
  */
 public class InternalErrorException extends IllegalArgumentException {  
 
+	private static final long serialVersionUID = 4550324443173141861L;
+
 	public InternalErrorException(String s) {
 		FileWriter errorFile = null;
 		

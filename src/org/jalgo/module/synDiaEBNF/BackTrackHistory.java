@@ -36,11 +36,12 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaElement;
  */
 public class BackTrackHistory {
 
-	private LinkedList history;
+	private LinkedList<BackTrackStep> history;
+
 	private int historyPointer;
 
 	public BackTrackHistory() {
-		history = new LinkedList();
+		history = new LinkedList<BackTrackStep>();
 		historyPointer = 0;
 	}
 
@@ -53,21 +54,19 @@ public class BackTrackHistory {
 	}
 
 	public BackTrackStep getNextHistoryStep() {
-		return (BackTrackStep) history.get(++historyPointer);
+		return history.get(++historyPointer);
 	}
 
 	public BackTrackStep getLastHistoryStep() {
-		return (BackTrackStep) history.get(--historyPointer);
+		return history.get(--historyPointer);
 	}
 
 	public SynDiaElement getStepElem(int num) {
-		return ((BackTrackStep) history.get(num)).getElem();
+		return history.get(num).getElem();
 	}
 
-	public void addNewPosStep(Stack currentStack, SynDiaElement currentElem,
-			String generatedWord) {
-		BackTrackStep help = new BackTrackStep(currentStack, currentElem,
-				generatedWord);
+	public void addNewPosStep(Stack currentStack, SynDiaElement currentElem, String generatedWord) {
+		BackTrackStep help = new BackTrackStep(currentStack, currentElem, generatedWord);
 		//new Step
 		if (historyPointer == history.size()) {
 			history.add(help);
@@ -75,12 +74,11 @@ public class BackTrackHistory {
 		if (historyPointer < history.size()) {
 			//another forwardStep already exists, if they are not equal (new
 			// Way) remove the rest
-			if (help.getElem().hashCode() == (((BackTrackStep) history
-					.get(historyPointer)).getElem()).hashCode()) {
+			if (help.getElem().hashCode() == (history.get(historyPointer).getElem()).hashCode()) {
 				// everything stay in history
 			} else {
 				// go back until currentElement is Rep or Alt
-				LinkedList newList = new LinkedList();
+				LinkedList<BackTrackStep> newList = new LinkedList<BackTrackStep>();
 				for (int i = 0; i < historyPointer; i++) {
 					newList.add(history.get(i));
 				}

@@ -41,6 +41,7 @@ public class SynDiaTerminal extends SynDiaElement
 			SynDiaColors,
 			Serializable {
 
+	private static final long serialVersionUID = -6897310429617753293L;
 	private TerminalFigure ellipse;
 	//ellipse in which the SynDiaTerminal is shown on the screen
 

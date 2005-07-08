@@ -37,6 +37,7 @@ import org.jalgo.module.synDiaEBNF.ModuleController;
  */
 public class WizardAction extends Action implements Serializable {
 
+	private static final long serialVersionUID = -2670334124635815595L;
 	private ModuleController mc;
 	private Composite parent;
 

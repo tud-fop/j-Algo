@@ -68,6 +68,7 @@ import org.jalgo.main.gui.widgets.TextViewForm;
  */
 public class ExampleGui extends Gui  implements Serializable{
 
+	private static final long serialVersionUID = -253027503594404507L;
 	TextViewForm form1;
 	GraphViewForm form2;
 	StackViewForm form3;

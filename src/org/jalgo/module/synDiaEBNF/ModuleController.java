@@ -802,4 +802,8 @@ public class ModuleController implements IModeConstants {
 		return appWin;
 	}
 
+	public ModuleInfo getModuleInfo() {
+		return moduleInfo;
+	}
+
 }

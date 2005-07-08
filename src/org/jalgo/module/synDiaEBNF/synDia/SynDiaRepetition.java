@@ -35,6 +35,7 @@ import org.jalgo.module.synDiaEBNF.gfx.RepetitionFigure;
  */
 public class SynDiaRepetition extends SynDiaComposition implements Serializable {
 
+	private static final long serialVersionUID = -3788743706927508747L;
 	private SynDiaElement straightAheadElem;
 	private SynDiaElement repeatedElem;
 	private RepetitionFigure gfx;

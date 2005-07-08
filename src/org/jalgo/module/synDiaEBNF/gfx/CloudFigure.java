@@ -39,6 +39,7 @@ import org.jalgo.main.gfx.FixPointAnchor;
  */
 public class CloudFigure extends SynDiaFigure {
 
+	private static final long serialVersionUID = -6337364300875007954L;
 	private Ellipse interiorFigure;
 
 	public CloudFigure() {

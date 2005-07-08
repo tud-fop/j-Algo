@@ -43,6 +43,7 @@ public class CreateEbnfAction extends Action
 			IModeConstants,
 			Serializable {
 
+	private static final long serialVersionUID = 6893127259423133755L;
 	private Composite parent;
 	private ModuleController mc;
 

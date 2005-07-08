@@ -62,6 +62,7 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariableBack;
  */
 public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, SynDiaColors,
 		Serializable {
+	private static final long serialVersionUID = 4542393009123159241L;
 	
 	private String word = ""; //$NON-NLS-1$
 	// always points to the current character in the word (String)
@@ -276,7 +277,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		if ((stack.peak() != null)) {
 
 			//fetch the new SynDiaElement to work with
-			currentElement = (SynDiaElement) stack.pop();
+			currentElement = stack.pop();
 
 			//initialize BackTrackStep to save and restore later!
 			history.addNewPosStep(stack, currentElement, generatedWord);
@@ -421,7 +422,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	}
 
 	private void doNextConcatenation(SynDiaConcatenation currentElem) {
-		LinkedList list = currentElem.getContent();
+		LinkedList<SynDiaElement> list = currentElem.getContent();
 		for (int i = list.size() - 1; i >= 0; i--) {
 			stack.push(list.get(i));
 		}

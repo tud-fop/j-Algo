@@ -41,6 +41,8 @@ import org.jalgo.module.synDiaEBNF.gfx.VariableFigure;
 public class SynDiaVariable extends SynDiaElement implements SynDiaColors,
 		Serializable {
 
+	private static final long serialVersionUID = -5791017043768225083L;
+
 	//Rectangle in with the SynDiaVar is shown on the Screen
 	private VariableFigure rectangle;
 

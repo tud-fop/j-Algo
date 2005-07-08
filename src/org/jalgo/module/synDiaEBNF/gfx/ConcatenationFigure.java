@@ -20,7 +20,7 @@
 /*
  * Created on 15.06.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.gfx;
 
 import java.util.Iterator;
@@ -37,19 +37,22 @@ import org.eclipse.draw2d.geometry.Rectangle;
  */
 public class ConcatenationFigure extends CompositeSynDiaFigure {
 
+	private static final long serialVersionUID = -3624766979324957655L;
+
 	private final int minNumOfInteriorFigures = 0;
+
 	private final int hSpacing = 15;
 
-	private LinkedList innerConn;
+	private LinkedList<PolylineConnection> innerConn;
 
 	public ConcatenationFigure(int numOfInteriorFigures) {
 
-		/*throws SynDiaException*/ {
+		/*throws SynDiaException*/{
 			if (numOfInteriorFigures < minNumOfInteriorFigures)
 				// groesser 2
 				//throw new SynDiaException("The number of interior figures to create has to at least 2.");
 
-			this.numOfInteriorFigures = numOfInteriorFigures;
+				this.numOfInteriorFigures = numOfInteriorFigures;
 			startGap = endGap = 0;
 
 			initializeLayout();
@@ -73,7 +76,7 @@ public class ConcatenationFigure extends CompositeSynDiaFigure {
 		add(endFigure);
 
 		// create connections
-		innerConn = new LinkedList();
+		innerConn = new LinkedList<PolylineConnection>();
 
 		// create first connection
 		PolylineConnection conIn = new PolylineConnection();
@@ -105,12 +108,11 @@ public class ConcatenationFigure extends CompositeSynDiaFigure {
 		//TODO: implement, but not soooo important
 	}
 
-	public void replace(SynDiaFigure newFigure, int index)
-		throws SynDiaException {
-		
+	public void replace(SynDiaFigure newFigure, int index) throws SynDiaException {
+
 		// Adjust index. The startFigure should not count
 		index++;
-		
+
 		// test if possible
 		if (index < 0 || index > interiorFigures.size() - 2)
 			throw new InvalidIndexException(index);
@@ -123,12 +125,11 @@ public class ConcatenationFigure extends CompositeSynDiaFigure {
 		reposition();
 	}
 
-	public void replace(SynDiaFigure oldFigure, SynDiaFigure newFigure)
-		throws SynDiaException {
-		
+	public void replace(SynDiaFigure oldFigure, SynDiaFigure newFigure) throws SynDiaException {
+
 		for (int i = 0; i < interiorFigures.size(); i++) {
 			if (interiorFigures.get(i).equals(oldFigure)) {
-				replace(newFigure, i-1);
+				replace(newFigure, i - 1);
 			}
 		}
 	}
@@ -149,21 +150,20 @@ public class ConcatenationFigure extends CompositeSynDiaFigure {
 		while (it.hasNext()) {
 			Figure f = (Figure) it.next();
 			// Case it's the endFigure
-			if (f.equals(endFigure)) x += endGap;
+			if (f.equals(endFigure))
+				x += endGap;
 			layout.setConstraint(f, new Rectangle(x, 0, -1, -1));
 			// Case it's the endFigure
-			if (f.equals(startFigure)) x += startGap;
+			if (f.equals(startFigure))
+				x += startGap;
 			x += hSpacing + f.getPreferredSize().width;
 		}
 
 		// update connections
 		for (int i = 0; i + 1 < interiorFigures.size(); i++) {
-
-			PolylineConnection con = (PolylineConnection) innerConn.get(i);
-			con.setSourceAnchor(
-				((SynDiaFigure) interiorFigures.get(i)).getRightAnchor());
-			con.setTargetAnchor(
-				((SynDiaFigure) interiorFigures.get(i + 1)).getLeftAnchor());
+			PolylineConnection con = innerConn.get(i);
+			con.setSourceAnchor(interiorFigures.get(i).getRightAnchor());
+			con.setTargetAnchor(interiorFigures.get(i + 1).getLeftAnchor());
 		}
 	}
 
@@ -209,7 +209,7 @@ public class ConcatenationFigure extends CompositeSynDiaFigure {
 
 	public LinkedList getInteriorFigures() {
 		LinkedList innerFigures = (LinkedList) interiorFigures.clone();
-		
+
 		// Cut away startFigure and endFigure
 		innerFigures.removeFirst();
 		innerFigures.removeLast();

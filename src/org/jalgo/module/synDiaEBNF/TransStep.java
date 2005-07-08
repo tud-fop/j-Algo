@@ -35,7 +35,8 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaToTrans;
  * @author Benjamin Scholz
  */
 public class TransStep implements Serializable{
-
+	private static final long serialVersionUID = -5680214355111699453L;
+	
 	private String textMarker;
 	// the position of the Text which is marked in this Step
 	private Object transformed;

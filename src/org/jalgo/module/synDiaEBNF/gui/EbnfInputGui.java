@@ -59,14 +59,16 @@ import org.jalgo.module.synDiaEBNF.ebnf.EbnfParser;
  */
 public class EbnfInputGui extends Gui implements Serializable {
 
+	private static final long serialVersionUID = -215486669613014254L;
+
 	private Composite mainComp;
 
 	private Text variablesSet;
 	private Text terminalSymbolsSet;
 	private Text startVar;
-	private ArrayList variables;
+	private ArrayList<String> variables;
 	// list of text (String) with variables in rule-lines
-	private ArrayList terms;
+	private ArrayList<String> terms;
 
 	public EbnfInputGui(Composite parent, ModuleController mc) {
 
@@ -86,8 +88,8 @@ public class EbnfInputGui extends Gui implements Serializable {
 		GridLayout gridLayout = new GridLayout(3, false);
 		mainComp.setLayout(gridLayout);
 
-		variables = new ArrayList();
-		terms = new ArrayList();
+		variables = new ArrayList<String>();
+		terms = new ArrayList<String>();
 
 		// Row 1
 
@@ -498,7 +500,7 @@ public class EbnfInputGui extends Gui implements Serializable {
 	}
 
 	private HashMap getRules() {
-		HashMap rules = new HashMap();
+		HashMap<String, String> rules = new HashMap<String, String>();
 		Iterator varIter = variables.iterator();
 		Iterator termsIter = terms.iterator();
 		while (varIter.hasNext() && termsIter.hasNext()) {

@@ -33,6 +33,7 @@ import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
  */
 public class SynDiaInitial extends SynDiaElement {
 
+	private static final long serialVersionUID = 6374802925464570595L;
 	private SynDiaElement element;
 	private InitialFigure gfx;
 

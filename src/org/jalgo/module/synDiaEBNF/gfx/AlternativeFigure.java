@@ -20,7 +20,7 @@
 /*
  * Created on Jun 22, 2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.gfx;
 
 import java.util.Iterator;
@@ -37,12 +37,16 @@ import org.jalgo.main.gfx.RoundedManhattanConnectionRouter;
  */
 public class AlternativeFigure extends CompositeSynDiaFigure {
 
+	private static final long serialVersionUID = 1038968063975627939L;
+
 	private final int vSpacing = 15, hSpacing = 20;
+
 	private final int minNumOfInteriorFigures = 2;
+
 	private int maxWidth;
 
 	public AlternativeFigure(int numOfInteriorFigures) throws SynDiaException {
-		
+
 		if (numOfInteriorFigures < minNumOfInteriorFigures)
 			// valid passed number of interior figures to create?
 			throw new SynDiaException("The number of interior figures to create has to at least 2."); //$NON-NLS-1$
@@ -75,16 +79,14 @@ public class AlternativeFigure extends CompositeSynDiaFigure {
 			tPC = new PolylineConnection();
 			tPC.setConnectionRouter(new RoundedManhattanConnectionRouter());
 			tPC.setSourceAnchor(startFigure.getRightAnchor());
-			tPC.setTargetAnchor(
-				((SynDiaFigure) interiorFigures.get(i)).getLeftAnchor());
+			tPC.setTargetAnchor(interiorFigures.get(i).getLeftAnchor());
 			add(tPC);
 			connectionsToInteriorFigures.add(tPC);
 
 			// connection from interiorFigures[i] to endFigure
 			tPC = new PolylineConnection();
 			tPC.setConnectionRouter(new RoundedManhattanConnectionRouter());
-			tPC.setSourceAnchor(
-				((SynDiaFigure) interiorFigures.get(i)).getRightAnchor());
+			tPC.setSourceAnchor(interiorFigures.get(i).getRightAnchor());
 
 			tPC.setTargetAnchor(endFigure.getLeftAnchor());
 			add(tPC);
@@ -152,8 +154,7 @@ public class AlternativeFigure extends CompositeSynDiaFigure {
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.synDiaEBNF.gfx.CompositeSynDiaFigure#replace(org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure, org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure)
 	 */
-	public void replace(SynDiaFigure oldFigure, SynDiaFigure newFigure)
-		throws SynDiaException {
+	public void replace(SynDiaFigure oldFigure, SynDiaFigure newFigure) throws SynDiaException {
 
 		for (int i = 0; i < interiorFigures.size(); i++) {
 			if (interiorFigures.get(i).equals(oldFigure)) {
@@ -165,24 +166,17 @@ public class AlternativeFigure extends CompositeSynDiaFigure {
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.synDiaEBNF.gfx.CompositeSynDiaFigure#replace(org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure, int)
 	 */
-	public void replace(SynDiaFigure newFigure, int index)
-		throws SynDiaException {
+	public void replace(SynDiaFigure newFigure, int index) throws SynDiaException {
 
 		// Update Figures
-		Figure oldFigure = (Figure) interiorFigures.get(index);
+		Figure oldFigure = interiorFigures.get(index);
 		interiorFigures.set(index, newFigure);
 		remove(oldFigure);
 		add(newFigure);
 
 		// Update connections
-		(
-			(PolylineConnection) connectionsToInteriorFigures.get(
-				index)).setTargetAnchor(
-			((SynDiaFigure) interiorFigures.get(index)).getLeftAnchor());
-		(
-			(PolylineConnection) connectionsFromInteriorFigures.get(
-				index)).setSourceAnchor(
-			((SynDiaFigure) interiorFigures.get(index)).getRightAnchor());
+		(connectionsToInteriorFigures.get(index)).setTargetAnchor(interiorFigures.get(index).getLeftAnchor());
+		(connectionsFromInteriorFigures.get(index)).setSourceAnchor(interiorFigures.get(index).getRightAnchor());
 
 		reposition();
 	}
@@ -194,13 +188,8 @@ public class AlternativeFigure extends CompositeSynDiaFigure {
 		int width = 0;
 		int heigth = 0;
 
-		width =
-			maxWidth
-				+ startGap
-				+ 2 * hSpacing
-				+ startFigure.getPreferredSize().width
-				+ endFigure.getPreferredSize().width
-				+ endGap;
+		width = maxWidth + startGap + 2 * hSpacing + startFigure.getPreferredSize().width
+				+ endFigure.getPreferredSize().width + endGap;
 
 		// Get total heigth
 		Iterator it = interiorFigures.iterator();

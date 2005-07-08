@@ -23,7 +23,7 @@
 /*
  * Created on 20.06.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF;
 
 import java.util.HashSet;
@@ -54,10 +54,14 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariable;
  */
 public class TransformSynDia {
 
-	private LinkedList synVariables= new LinkedList(); // List of SynDiaInitial
-	private HashSet synVariablesSet= new HashSet(); // Set of Labels
-	private HashSet terminalSymbols= new HashSet(); // Strings
+	private LinkedList<SynDiaVariable> synVariables = new LinkedList<SynDiaVariable>(); // List of SynDiaInitial
+
+	private HashSet<String> synVariablesSet = new HashSet<String>(); // Set of Labels
+
+	private HashSet<String> terminalSymbols = new HashSet<String>(); // Strings
+
 	private Figure panel;
+
 	private SynDiaSystem def;
 
 	//	ruft Rekursion auf + textcanvas und Definition erstellen
@@ -69,24 +73,23 @@ public class TransformSynDia {
 		def = new SynDiaSystem(new SynDiaSystemFigure(list));
 		for (int i = 0; i < list.size(); i++) {
 			// transform the parts of the diagram
-			SynDiaInitial InitialElem =	transformSynDia((InitialFigure) list.get(i));
+			SynDiaInitial InitialElem = transformSynDia((InitialFigure) list.get(i));
 			def.addInitialDiagram(InitialElem);
 		}
-		
+
 		// die Startelemente eines jeden Objektes 
 		//noch rausfinden und in den SynVar setzen 
 		for (int i = 0; i < def.getInitialDiagrams().size(); i++) {
 			for (int j = 0; j < synVariables.size(); j++) {
-				if (def.getInitialDiagram(i).getGfx().getLabel().equals(((SynDiaVariable) synVariables.get(j)).getLabel())) {
-					((SynDiaVariable) synVariables.get(j)).setStartElem(def.getInitialDiagram(i));
+				if (def.getInitialDiagram(i).getGfx().getLabel().equals(synVariables.get(j).getLabel())) {
+					synVariables.get(j).setStartElem(def.getInitialDiagram(i));
 				}
 			}
 		}
-		
+
 		//copy labels of the SynDiaVarialbes in the list into the HashSet
 		for (int i = 0; i < synVariables.size(); i++) {
-			synVariablesSet.add(
-				((SynDiaVariable) synVariables.get(i)).getLabel());
+			synVariablesSet.add(synVariables.get(i).getLabel());
 		}
 
 		// every partdiagram is performed
@@ -113,7 +116,8 @@ public class TransformSynDia {
 			return transformAlternativeFigure((AlternativeFigure) currentFigure);
 		} else if (currentFigure instanceof ConcatenationFigure) {
 			return transformConcatenationFigure((ConcatenationFigure) currentFigure);
-		} return null;
+		}
+		return null;
 	}
 
 	private SynDiaInitial transformSynDia(InitialFigure diagram) {
@@ -124,7 +128,7 @@ public class TransformSynDia {
 		if (diagram.isStartFigure()) {
 			this.def.setStartElem(elem);
 		}
-		
+
 		// store the variables, ther could exsist Diagrams, which are as SynVar,
 		// possible especially for the startdiagram
 		synVariablesSet.add(elem.getGfx().getLabel());
@@ -133,7 +137,7 @@ public class TransformSynDia {
 
 	private SynDiaRepetition transformRepetitionFigure(RepetitionFigure figure) {
 		//TODO in geraden Tiefen eigentlich die Concatenationen umdrehen!
-		
+
 		SynDiaElement straightAheadElem = searchTypAndTransform(figure.getTopFigure());
 		SynDiaElement repetedElem = searchTypAndTransform(figure.getBotFigure());
 
@@ -142,11 +146,10 @@ public class TransformSynDia {
 
 	private SynDiaAlternative transformAlternativeFigure(AlternativeFigure figure) {
 		LinkedList inputList = figure.getInteriorFigures();
-		LinkedList outputList = new LinkedList();
+		LinkedList<SynDiaElement> outputList = new LinkedList<SynDiaElement>();
 
 		for (int i = 0; i < inputList.size(); i++) {
-			SynDiaElement listElem =
-				searchTypAndTransform((Figure) inputList.get(i));
+			SynDiaElement listElem = searchTypAndTransform((Figure) inputList.get(i));
 			outputList.add(listElem);
 		}
 		return new SynDiaAlternative(figure, outputList);
@@ -154,10 +157,9 @@ public class TransformSynDia {
 
 	private SynDiaConcatenation transformConcatenationFigure(ConcatenationFigure figure) {
 		LinkedList inputList = figure.getInteriorFigures();
-		LinkedList outputList = new LinkedList();
+		LinkedList<SynDiaElement> outputList = new LinkedList<SynDiaElement>();
 		for (int i = 0; i < inputList.size(); i++) {
-			SynDiaElement listElem =
-				searchTypAndTransform((Figure) inputList.get(i));
+			SynDiaElement listElem = searchTypAndTransform((Figure) inputList.get(i));
 			outputList.add(listElem);
 		}
 		return new SynDiaConcatenation(figure, outputList);

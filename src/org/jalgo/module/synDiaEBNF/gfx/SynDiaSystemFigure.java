@@ -35,9 +35,10 @@ import org.eclipse.draw2d.Figure;
  */
 public class SynDiaSystemFigure extends Figure implements Serializable {
 	
-	private List synDias; // list of InitialFigure's 
+	private static final long serialVersionUID = -6655439601666628571L;
+	private List<InitialFigure> synDias; // list of InitialFigure's 
 	
-	public SynDiaSystemFigure(List synDias){
+	public SynDiaSystemFigure(List<InitialFigure> synDias){
 		this.synDias=synDias;
 	}
 
@@ -52,7 +53,7 @@ public class SynDiaSystemFigure extends Figure implements Serializable {
 		return synDias;
 	}
 	
-	public void setSynDias(List synDias){
+	public void setSynDias(List<InitialFigure> synDias){
 		this.synDias=synDias;
 	}
 

@@ -60,6 +60,7 @@ import org.jalgo.module.synDiaEBNF.gfx.ToTransFigure;
 import org.jalgo.module.synDiaEBNF.gfx.VariableFigure;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaAlternative;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaConcatenation;
+import org.jalgo.module.synDiaEBNF.synDia.SynDiaElement;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaEpsilon;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaInitial;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaRepetition;
@@ -78,6 +79,7 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariable;
  */
 public class TransAlgorithm implements IAlgorithm, Serializable {
 
+	private static final long serialVersionUID = -279980842844233688L;
 	private final int ALGO_POS_VARIABLE = 1;					// position in txtCanvas for EbnfSynVariable
 	private final int ALGO_POS_TERMINAL= 2;					// position in txtCanvas for EbnfTerminal
 	private final int ALGO_POS_ONE_ALPHA = 3;			// position in txtCanvas for the case of one alpha
@@ -97,12 +99,12 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 																								// all grafical figures
 	private SynDiaVariable currentSynDia;							// currently created SynDiaVariable
 	
-	private Stack stillToTrans;												// holds EbnfElements which still have to be transformed
-	private Stack parentToTrans; 
-	private Stack toTransVariables;										// holds all EbnfSynVariables which still have to be transfromed
-	private LinkedList alreadyCreatedVariables;					// holds all SynDiaVariables (key->this, value->label) which are already
+	private Stack<SynDiaElement> stillToTrans;												// holds EbnfElements which still have to be transformed
+	private Stack<SynDiaElement> parentToTrans; 
+	private Stack<EbnfSynVariable> toTransVariables;										// holds all EbnfSynVariables which still have to be transfromed
+	private LinkedList<SynDiaVariable> alreadyCreatedVariables;					// holds all SynDiaVariables (key->this, value->label) which are already
 																								// created but have no appropriate reference to its startElem
-	private LinkedList alreadyCreatedDias;							// holds all SynDiaVariables which represent a complete syntactical diagram,
+	private LinkedList<SynDiaVariable> alreadyCreatedDias;							// holds all SynDiaVariables which represent a complete syntactical diagram,
 																								// befor finishing the elements of alreadyCreatedVariables have to be finalized
 																								// where its startElem has to reference the startElem of the appropriate element
 																								// in alreadyCreatedDias
@@ -199,11 +201,11 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 		gfxCanvas.setLayoutManager(layout);
 
 		// write all variables from the EbnfDef onto the stack (toTransVariables), S will be on top of the stack afterwards
-		LinkedList tVarList = new LinkedList(ebnfDef.getVariables());		// get them from the ebnfDef
+		LinkedList<EbnfSynVariable> tVarList = new LinkedList<EbnfSynVariable>(ebnfDef.getVariables()); // get them from the ebnfDef
 		if (tVarList.getFirst() == ebnfDef.getStartVariable())						// S already on top?
-			toTransVariables = new Stack(tVarList, true);
+			toTransVariables = new Stack<EbnfSynVariable>(tVarList, true);
 		else if (tVarList.getLast() == ebnfDef.getStartVariable())				// S already at bottom?
-			toTransVariables = new Stack(tVarList, false);
+			toTransVariables = new Stack<EbnfSynVariable>(tVarList, false);
 		else {																								// S anywhere else
 			boolean finished = false;
 			int i = 1;
@@ -215,15 +217,15 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 				}
 				++i;
 			} while (!finished);
-			toTransVariables = new Stack(tVarList, true);	
+			toTransVariables = new Stack<EbnfSynVariable>(tVarList, true);	
 		}
 		
 		// also put the variables onto the toTransCanvas apart from S
 		for (int i = toTransVariables.size() - 1; i >= 1; i--)
-			toTransCanvas.push(((EbnfSynVariable)toTransVariables.getContent().get(i)).getLabel());
+			toTransCanvas.push(toTransVariables.getContent().get(i).getLabel());
 		
 		// get next varibale from stack
-		EbnfSynVariable newEbnfSynDia = (EbnfSynVariable)toTransVariables.pop();
+		EbnfSynVariable newEbnfSynDia = toTransVariables.pop();
 		// create new SynDiaToTrans by passing the startElement and its grafical object
 		SynDiaToTrans newTrans = new SynDiaToTrans(newEbnfSynDia.getStartElem());
 		ToTransFigure newTransFigure = new ToTransFigure(newEbnfSynDia.getStartElem().toString(), gfxCanvas.getFont());
@@ -236,14 +238,14 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 		// create new abstract syntactical variable (diagram)
 		SynDiaVariable newSynDia = new SynDiaVariable(newEbnfSynDia.getLabel(), newInitial, gfxCanvas.getFont());		
 		
-		stillToTrans = new Stack();
+		stillToTrans = new Stack<SynDiaElement>();
 		stillToTrans.push(newSynDia.getStartElem().getInnerElem());	// put the initial SynDiaToTrans element on the stack
-		parentToTrans = new Stack();
+		parentToTrans = new Stack<SynDiaElement>();
 		parentToTrans.push(newSynDia.getStartElem());												// put the initial SynDiaInitial on the stack
 		
-		alreadyCreatedVariables = new LinkedList();
+		alreadyCreatedVariables = new LinkedList<SynDiaVariable>();
 		
-		alreadyCreatedDias = new LinkedList();
+		alreadyCreatedDias = new LinkedList<SynDiaVariable>();
 		alreadyCreatedDias.add(newSynDia);														// add it to the list
 						
 		currentSynDia = newSynDia;																	// set currentSynDia to the new one
@@ -254,12 +256,12 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 				
 		// initialize the SynDiaSystem which has to be created by this algorithm, the terminals and variables are already set here
 		synDiaSystem = new SynDiaSystem();
-		HashSet variables = new HashSet();
+		HashSet<String> variables = new HashSet<String>();
 		Iterator it1 = ebnfDef.getVariables().iterator();
 		while (it1.hasNext())
 			variables.add(((EbnfSynVariable)it1.next()).getLabel());
 		synDiaSystem.setSynVariables(variables);
-		HashSet alphabet = new HashSet();
+		HashSet<String> alphabet = new HashSet<String>();
 		Iterator it2 = ebnfDef.getAlphabet().iterator();
 		while (it2.hasNext())
 			alphabet.add(((EbnfTerminal)it2.next()).getLabel());
@@ -419,7 +421,7 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 	public void performNextStep() throws IndexOutOfBoundsException, SynDiaException {
 		if (stillToTrans.isEmpty()) {						// syntactical variable finished?
 			// get next varibale from stack
-			EbnfSynVariable newEbnfSynDia = (EbnfSynVariable)toTransVariables.pop();
+			EbnfSynVariable newEbnfSynDia = toTransVariables.pop();
 			// create new SynDiaToTrans by passing the startElement and its grafical object
 			SynDiaToTrans newTrans = new SynDiaToTrans(newEbnfSynDia.getStartElem());
 			ToTransFigure newTransFigure = new ToTransFigure(newEbnfSynDia.getStartElem().toString(), gfxCanvas.getFont()) ;
@@ -590,7 +592,7 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 			newAlternativeFigure.replace(newTransFigure, 0);
 			newAlternativeFigure.replace(new EmptyFigure(), 1);
 			// create a new abstract repetition by passing its grafical representation and its abstract elements
-			LinkedList elements = new LinkedList();
+			LinkedList<SynDiaElement> elements = new LinkedList<SynDiaElement>();
 			elements.add(newTrans);
 			elements.add(new SynDiaEpsilon());
 			SynDiaAlternative newAlternative = new SynDiaAlternative(newAlternativeFigure, elements);
@@ -673,7 +675,7 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 		}
 		// *** EBNFConcatenation *** 
 		else if (trans.getEbnf() instanceof EbnfConcatenation) {
-			LinkedList elements = new LinkedList();							// list of new SynDiaToTrans-elements
+			LinkedList<SynDiaElement> elements = new LinkedList<SynDiaElement>();							// list of new SynDiaToTrans-elements
 			ConcatenationFigure newConcatenationFigure = 
 				new ConcatenationFigure(((EbnfConcatenation)trans.getEbnf()).getNumOfElements());		// corresponding figure
 			// create a new SynDiaToTrans for each element in the EbnfConcatenation (trans.getEbnf())
@@ -805,25 +807,25 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 			int j = 0;
 			for (int i = 0; i < alreadyCreatedVariables.size(); i++) {
 				j = 0;
-				while (((SynDiaVariable)alreadyCreatedVariables.get(i)).getStartElem() == null) {
+				while (alreadyCreatedVariables.get(i).getStartElem() == null) {
 					if (j >= alreadyCreatedDias.size())
 						throw new InternalErrorException("no path in the Algorithm matches"); //$NON-NLS-1$
-					if (((SynDiaVariable)alreadyCreatedVariables.get(i)).getLabel() == ((SynDiaVariable)alreadyCreatedDias.get(j)).getLabel())
-						((SynDiaVariable)alreadyCreatedVariables.get(i)).setStartElem(((SynDiaVariable)alreadyCreatedDias.get(j)).getStartElem());
+					if (alreadyCreatedVariables.get(i).getLabel() == alreadyCreatedDias.get(j).getLabel())
+						alreadyCreatedVariables.get(i).setStartElem(alreadyCreatedDias.get(j).getStartElem());
 					
 					++j;						
 				}
 			}
 			// set entiere start element
-			synDiaSystem.setStartElem(((SynDiaVariable)alreadyCreatedDias.getFirst()).getStartElem());
+			synDiaSystem.setStartElem(alreadyCreatedDias.getFirst().getStartElem());
 			// set the SynDiaInitial's
-			LinkedList initialDias = new LinkedList();
+			LinkedList<SynDiaInitial> initialDias = new LinkedList<SynDiaInitial>();
 			for (int i = 0; i < alreadyCreatedDias.size(); i++)
-				initialDias.add(((SynDiaVariable)alreadyCreatedDias.get(i)).getStartElem());
+				initialDias.add(alreadyCreatedDias.get(i).getStartElem());
 			synDiaSystem.setInitialDiagrams(initialDias);
-			LinkedList initialFigures = new LinkedList();
+			LinkedList<InitialFigure> initialFigures = new LinkedList<InitialFigure>();
 			for (int i = 0; i < initialDias.size(); i++)
-				initialFigures.add(((SynDiaInitial)initialDias.get(i)).getGfx());
+				initialFigures.add(initialDias.get(i).getGfx());
 			synDiaSystem.setGfx(new SynDiaSystemFigure(initialFigures));
 			
 			showDialogFinished();
@@ -864,7 +866,8 @@ public class TransAlgorithm implements IAlgorithm, Serializable {
 			stillToTrans = (Stack) s.readObject();
 			toTransVariables = (Stack) s.readObject();
 			unpackTxtCanvas((Object[]) s.readObject());
-			toTransCanvas.setStack((Stack) s.readObject());
+			// FIXME find the right solution (Stephan)
+			toTransCanvas.setStack((Stack<String>) s.readObject());
 			// moduleController will be set from moduleController when deserializing
 		} catch (ClassCastException cce) {
 			throw new ClassNotFoundException();

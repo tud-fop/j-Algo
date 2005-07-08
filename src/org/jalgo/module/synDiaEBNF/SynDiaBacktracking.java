@@ -68,7 +68,7 @@ public abstract class SynDiaBacktracking
 	protected SynDiaInitial currentInitial;
 	// help diagram which worked at the moment
 
-	protected Stack stack; // the internal stack
+	protected Stack<SynDiaElement> stack; // the internal stack
 
 	protected BackTrackHistory history; // save the steps
 
@@ -88,7 +88,7 @@ public abstract class SynDiaBacktracking
 		outputCanvas = generatedWordCanvas;
 		this.synDiaDef = synDiaDef;
 		synDiaCanvas = figure;
-		stack = new Stack();
+		stack = new Stack<SynDiaElement>();
 
 		//set correct reading order for all diagrams
 		checkReadingOrder(synDiaDef);

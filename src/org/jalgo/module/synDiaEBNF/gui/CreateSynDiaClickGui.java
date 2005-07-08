@@ -57,6 +57,7 @@ import org.jalgo.module.synDiaEBNF.gui.actions.SynDiaDoneAction;
  */
 public class CreateSynDiaClickGui extends Gui implements Serializable {
 
+	private static final long serialVersionUID = -557820845220356421L;
 	private GraphViewForm form2;
 	private ModuleController mc;
 	private ClickListener form2ClickListener;

@@ -34,6 +34,7 @@ import org.jalgo.main.gui.widgets.StyledTextViewForm;
  */
 public class NormalViewEbnfGui extends Gui {
 
+	private static final long serialVersionUID = -6615462858896372221L;
 	private StyledTextViewForm viewForm; 
 	private StyledText ebnfText;
 	

@@ -45,12 +45,12 @@ public class AddInitialAction extends Action implements IClickAction {
 
 	private IFigure figure;
 	private boolean firstSet;
-	private ArrayList labelList;
+	private ArrayList<String> labelList;
 
 	public AddInitialAction(IFigure figure) {
 		this.figure = figure;
 		this.firstSet = false;
-		this.labelList = new ArrayList();
+		this.labelList = new ArrayList<String>();
 		setText(Messages.getString("AddInitialAction.New_Diagram_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("AddInitialAction.Add_initial_diagram._2")); //$NON-NLS-1$
 		setImageDescriptor(

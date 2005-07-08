@@ -31,6 +31,8 @@ package org.jalgo.module.synDiaEBNF.gfx;
  */
 public class InvalidIndexException extends SynDiaException {
 	
+	private static final long serialVersionUID = 9109383877591963636L;
+
 	/**
 	 * Creates an InvalidIndexException with the invalid index. An error message is automatically created.
 	 * 

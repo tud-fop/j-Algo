@@ -20,10 +20,12 @@
 /*
  * Created on 15.06.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF.gfx;
 
 import java.util.LinkedList;
+
+import org.eclipse.draw2d.PolylineConnection;
 
 /**
  * This class extends SynDiaFigure by adding some methods to work with composites. 
@@ -32,13 +34,16 @@ import java.util.LinkedList;
  */
 public abstract class CompositeSynDiaFigure extends SynDiaFigure {
 
-	protected int numOfInteriorFigures;																	// number of interior figures
-	protected LinkedList interiorFigures = new LinkedList();									// figures inside 
-	protected LinkedList connectionsToInteriorFigures = new LinkedList();		// connections from startFigure to interior ones
-	protected LinkedList connectionsFromInteriorFigures = new LinkedList();	// connections from interior figures to endFigure
-	
+	protected int numOfInteriorFigures; // number of interior figures
+	// figures inside
+	protected LinkedList<SynDiaFigure> interiorFigures = new LinkedList<SynDiaFigure>(); 
+	// connections from startFigure to interior ones
+	protected LinkedList<PolylineConnection> connectionsToInteriorFigures = new LinkedList<PolylineConnection>();
+	// connections from interior figures to endFigure
+	protected LinkedList<PolylineConnection> connectionsFromInteriorFigures = new LinkedList<PolylineConnection>();
+
 	// *** abstract methods ***
-	
+
 	/**
 	 * Replaces oldFigure by newFigure if oldFigure is one of the interior figures. 
 	 * 
@@ -47,7 +52,7 @@ public abstract class CompositeSynDiaFigure extends SynDiaFigure {
 	 * @throws SynDiaException		oldFigure is not one of the interior figures
 	 */
 	public abstract void replace(SynDiaFigure oldFigure, SynDiaFigure newFigure) throws SynDiaException;
-	
+
 	/**
 	 * Replaces the figure at the passed index (interiorFigures[index]) by newFigure in case of a valid index. 
 	 * 
@@ -64,31 +69,31 @@ public abstract class CompositeSynDiaFigure extends SynDiaFigure {
 	 * @throws SynDiaException		invalid index
 	 */
 	public abstract void remove(int index) throws SynDiaException;
-	
+
 	// *** implemented methods ***
-	
+
 	public void highlightConnectionTo(SynDiaFigure targetFigure, boolean selection) throws SynDiaException {
-		
+
 	}
-	
+
 	public void highlightConnectionTo(int index, boolean selection) throws SynDiaException {
-		
+
 	}
-	
+
 	public void highlightConnectionFrom(SynDiaFigure sourceFigure, boolean selection) throws SynDiaException {
-		
+
 	}
-	
+
 	public void highlightConnectionFrom(int index, boolean selection) throws SynDiaException {
-		
+
 	}
-	
+
 	/**
 	 * This method is for laying out the children.
 	 */
 	public abstract void reposition();
-	
+
 	/*public void remove() throws SynDiaException {
-		((CompositeSynDiaFigure)getParent()).remove(this);
-	}*/
+	 ((CompositeSynDiaFigure)getParent()).remove(this);
+	 }*/
 }

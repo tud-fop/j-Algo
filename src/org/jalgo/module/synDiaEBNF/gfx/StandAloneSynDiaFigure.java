@@ -35,6 +35,7 @@ import org.eclipse.draw2d.PolylineConnection;
  */
 public class StandAloneSynDiaFigure extends SynDiaFigure {
 
+	private static final long serialVersionUID = 1932335076118213879L;
 	private String label;
 	private boolean isTerminal;
 	private PolylineConnection incomingConnection;

@@ -26,8 +26,6 @@
  
 package org.jalgo.main.gui.widgets;
 
-import java.util.Iterator;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -38,17 +36,19 @@ import org.jalgo.main.util.Stack;
  * @author Cornelius Hald
  * @author Christopher Friedrich
  */
+/*
+ * This is an adapter because Java don't support multiple inheritance
+ */
 public class StackCanvas extends Composite {
-	private Stack stack;
+	private Stack<String> stack;
 	private Text textField;
 
 	private void redrawStack() {
 		textField.setText(""); //$NON-NLS-1$
 		StringBuffer strBuffer = new StringBuffer();
 		
-		Iterator si = stack.getContent().iterator();
-		while (si.hasNext()) {
-			strBuffer.insert(0, (String) si.next() + "\n"); //$NON-NLS-1$
+		for (String item : stack) {
+			strBuffer.insert(0, item + "\n"); //$NON-NLS-1$
 		}
 		
 		textField.setText(strBuffer.toString());
@@ -59,7 +59,7 @@ public class StackCanvas extends Composite {
 		
 		setLayout(new FillLayout());
 		textField = new Text(this, SWT.MULTI);
-		stack = new Stack();
+		stack = new Stack<String>();
 	}
 
 	public void push(String element) {
@@ -68,7 +68,7 @@ public class StackCanvas extends Composite {
 	}
 
 	public String pop() {
-		String obj = (String) stack.pop();
+		String obj = stack.pop();
 		redrawStack();
 		return obj;
 	}
@@ -81,7 +81,7 @@ public class StackCanvas extends Composite {
 		return stack;
 	}
 
-	public void setStack(Stack stack) {
+	public void setStack(Stack<String> stack) {
 		this.stack = stack;
 	}
 

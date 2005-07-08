@@ -38,14 +38,15 @@ public class SynDiaAlternative
 	extends SynDiaComposition
 	implements Serializable {
 
-	private LinkedList options;
+	private static final long serialVersionUID = 9111449357455734662L;
+	private LinkedList<SynDiaElement> options;
 	private AlternativeFigure gfx;
 
 	public SynDiaAlternative() {
-		options = new LinkedList();
+		options = new LinkedList<SynDiaElement>();
 	}
 
-	public SynDiaAlternative(AlternativeFigure gfx, LinkedList options) {
+	public SynDiaAlternative(AlternativeFigure gfx, LinkedList<SynDiaElement> options) {
 		this.options = options;
 		this.gfx = gfx;
 	}
@@ -59,17 +60,14 @@ public class SynDiaAlternative
 	}
 
 	public SynDiaElement getOption(int num) {
-		if (options.get(num) instanceof SynDiaElement) {
-			return (SynDiaElement) options.get(num);
-		}
-		return null;
+		return options.get(num);
 	}
 
 	public void setOption(int num, SynDiaElement newOption) {
 		options.set(num, newOption);
 	}
 
-	public void setOptions(LinkedList options) {
+	public void setOptions(LinkedList<SynDiaElement> options) {
 		this.options = options;
 	}
 

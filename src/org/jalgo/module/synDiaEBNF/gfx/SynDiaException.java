@@ -34,6 +34,8 @@ import org.jalgo.main.InternalErrorException;
  */
 public class SynDiaException extends InternalErrorException {
 	
+	private static final long serialVersionUID = -7211856640573485339L;
+
 	/**
 	 * Constructor that creates a SynDiaException with a short error description.
 	 * 

@@ -41,6 +41,7 @@ import org.jalgo.main.gui.widgets.TextViewForm;
  */
 public class BackTrackingAlgoGui extends Gui implements Serializable {
 
+	private static final long serialVersionUID = -2967448408740673948L;
 	private Figure figure;
 	private GraphViewForm synDiaViewForm;
 	private TextCanvas algoText; // verbal text of the algorithm form script

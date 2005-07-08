@@ -38,6 +38,8 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaElement;
  * @author Babett Schalitz
  */
 public class BackTrackStep implements Serializable {
+	private static final long serialVersionUID = -315723239856067064L;
+
 	//	 the Stack configuration of this step
 	private Stack currentStack;
 

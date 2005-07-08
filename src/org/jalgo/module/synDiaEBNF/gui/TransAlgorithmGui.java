@@ -43,6 +43,7 @@ import org.jalgo.main.gui.widgets.TextViewForm;
  */
 public class TransAlgorithmGui extends Gui  implements Serializable{
 	
+	private static final long serialVersionUID = -1806790598523703737L;
 	private IFigure figure;  // mixture of ebnf-terms and syndia
 	private TextCanvas textCanvas;  // verbal algorithm form script
 	private StackCanvas stackCanvas;

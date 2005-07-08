@@ -41,6 +41,7 @@ import org.jalgo.main.gfx.FixPointAnchor;
  */
 public class TerminalFigure extends StandAloneSynDiaFigure {
 
+	private static final long serialVersionUID = -8179486416071931698L;
 	private EllipseLabel interiorFigure;
 	private EmptyFigure startFigure, endFigure;
 

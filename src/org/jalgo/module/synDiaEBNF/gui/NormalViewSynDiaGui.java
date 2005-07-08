@@ -38,6 +38,7 @@ import org.jalgo.main.gui.widgets.StyledTextViewForm;
  * @author Michael Pradel
  */
 public class NormalViewSynDiaGui extends Gui {
+	private static final long serialVersionUID = -552910493042667551L;
 	private StyledTextViewForm tupleForm;
 	private GraphViewForm synDiaForm;
 

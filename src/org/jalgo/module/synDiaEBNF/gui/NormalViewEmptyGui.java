@@ -47,6 +47,8 @@ import org.jalgo.module.synDiaEBNF.ModuleController;
  */
 public class NormalViewEmptyGui extends Gui {
 
+	private static final long serialVersionUID = 1481705887589094185L;
+
 	public NormalViewEmptyGui(Composite parent, ModuleController mc) {
 		super(parent);
 

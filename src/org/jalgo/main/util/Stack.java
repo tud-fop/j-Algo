@@ -29,6 +29,7 @@ package org.jalgo.main.util;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ import java.util.List;
  * 
  * This class implements a stack with a wide range of functionalities in order to handle its elements.
  */
-public class Stack<T> implements Serializable {
+public class Stack<T> implements Iterable<T>, Serializable {
 
 	private static final long serialVersionUID = 2366915019102580664L;
 	
@@ -146,6 +147,10 @@ public class Stack<T> implements Serializable {
 	 */
 	public int search(T item) {
 		return content.indexOf(item);
+	}
+	
+	public Iterator<T> iterator() {
+		return content.iterator();
 	}
 
 	/**

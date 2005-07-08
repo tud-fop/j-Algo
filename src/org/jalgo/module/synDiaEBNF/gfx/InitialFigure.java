@@ -39,6 +39,7 @@ import org.eclipse.draw2d.geometry.Dimension;
  */
 public class InitialFigure extends CompositeSynDiaFigure {
 
+	private static final long serialVersionUID = 7398349169950981383L;
 	private ConcatenationFigure concat;
 	private Label label;
 

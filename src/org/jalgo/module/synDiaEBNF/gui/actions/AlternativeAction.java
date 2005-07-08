@@ -32,6 +32,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
  */
 public class AlternativeAction extends Action implements Serializable {
 
+	private static final long serialVersionUID = -5283380213652902893L;
+
 	public AlternativeAction() {
 		setText(Messages.getString("AlternativeAction.Alternative_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("AlternativeAction.Create_Alternative_2")); //$NON-NLS-1$

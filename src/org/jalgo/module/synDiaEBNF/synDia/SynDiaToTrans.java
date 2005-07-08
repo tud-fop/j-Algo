@@ -39,6 +39,7 @@ import org.jalgo.module.synDiaEBNF.gfx.ToTransFigure;
  */
 public class SynDiaToTrans extends SynDiaElement implements Serializable {
 
+	private static final long serialVersionUID = 7300401585234751899L;
 	private EbnfElement stillToTrans;
 	private ToTransFigure gfx;
 

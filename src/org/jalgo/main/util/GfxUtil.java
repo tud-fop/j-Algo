@@ -48,7 +48,7 @@ public class GfxUtil {
 	 */
 	public static Collection getSourceConnections(Figure panel, Figure node) {
 		List list = panel.getChildren();
-		List returnList = new ArrayList();
+		List<PolylineConnection> returnList = new ArrayList<PolylineConnection>();
 
 		Iterator it = list.iterator();
 
@@ -56,7 +56,7 @@ public class GfxUtil {
 			Object obj = it.next();
 			if (obj instanceof PolylineConnection) {
 				if (node.equals(((PolylineConnection) obj).getTargetAnchor().getOwner())) {
-					returnList.add(obj);
+					returnList.add((PolylineConnection)obj);
 				}
 			}
 		}
@@ -72,7 +72,7 @@ public class GfxUtil {
 	 */
 	public static Collection getTargetConnections(Figure panel, Figure node) {
 		List list = panel.getChildren();
-		List returnList = new ArrayList();
+		List<PolylineConnection> returnList = new ArrayList<PolylineConnection>();
 
 		Iterator it = list.iterator();
 
@@ -80,7 +80,7 @@ public class GfxUtil {
 			Object obj = it.next();
 			if (obj instanceof PolylineConnection) {
 				if (node.equals(((PolylineConnection) obj).getSourceAnchor().getOwner())) {
-					returnList.add(obj);
+					returnList.add((PolylineConnection)obj);
 				}
 			}
 		}

@@ -43,6 +43,7 @@ import org.jalgo.main.gfx.FixPointAnchor;
  */
 public class ToTransFigure extends StandAloneSynDiaFigure {
 
+	private static final long serialVersionUID = -6709738449786825351L;
 	private XYLayout layout;
 	private RoundedRectangle inner;
 	private Label label1, label2;

@@ -35,6 +35,8 @@ import org.jalgo.module.synDiaEBNF.gfx.EmptyFigure;
  */
 public class SynDiaEpsilon extends SynDiaElement implements Serializable {
 
+	private static final long serialVersionUID = -3280271912124458544L;
+	
 	private EmptyFigure epsilon; // the graphical figure
 
 	public SynDiaEpsilon() {

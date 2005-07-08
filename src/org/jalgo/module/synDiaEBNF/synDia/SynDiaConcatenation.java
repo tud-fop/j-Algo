@@ -27,7 +27,6 @@
 package org.jalgo.module.synDiaEBNF.synDia;
 
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.jalgo.module.synDiaEBNF.gfx.ConcatenationFigure;
@@ -35,18 +34,19 @@ import org.jalgo.module.synDiaEBNF.gfx.ConcatenationFigure;
 /**
  * @author Michael Pradel
  */
-public class SynDiaConcatenation
-	extends SynDiaComposition
-	implements Serializable {
+public class SynDiaConcatenation extends SynDiaComposition implements Serializable {
 
-	private LinkedList elements;
+	private static final long serialVersionUID = 5490760021030232097L;
+
+	private LinkedList<SynDiaElement> elements;
+
 	private ConcatenationFigure gfx;
 
 	public SynDiaConcatenation() {
-		elements = new LinkedList();
+		elements = new LinkedList<SynDiaElement>();
 	}
 
-	public SynDiaConcatenation(ConcatenationFigure gfx, LinkedList elements) {
+	public SynDiaConcatenation(ConcatenationFigure gfx, LinkedList<SynDiaElement> elements) {
 		this.gfx = gfx;
 		this.elements = elements;
 	}
@@ -55,7 +55,7 @@ public class SynDiaConcatenation
 		return elements.size();
 	}
 
-	public LinkedList getContent() {
+	public LinkedList<SynDiaElement> getContent() {
 		//read from left-to-right? --> inverse list!
 		if (this.getReadingOrder() == RIGHT_TO_LEFT)
 			return inverse(elements);
@@ -70,9 +70,7 @@ public class SynDiaConcatenation
 				return (SynDiaElement) elementsInverted.get(num);
 			}
 		} else {
-			if (elements.get(num) instanceof SynDiaElement) {
-				return (SynDiaElement) elements.get(num);
-			}
+			return elements.get(num);
 		}
 		return null;
 	}
@@ -81,7 +79,7 @@ public class SynDiaConcatenation
 		elements.set(num, newElem);
 	}
 
-	public void setContent(LinkedList elements) {
+	public void setContent(LinkedList<SynDiaElement> elements) {
 		this.elements = elements;
 	}
 
@@ -112,11 +110,10 @@ public class SynDiaConcatenation
 	 * @param l The list to invert.
 	 * @return The inverted list.
 	 */
-	private LinkedList inverse(LinkedList l) {
-		LinkedList li = new LinkedList();
-		Iterator i = l.iterator();
-		while (i.hasNext()) {
-			li.addFirst(i.next());
+	private <T> LinkedList<T> inverse(LinkedList<T> l) {
+		LinkedList<T> li = new LinkedList<T>();
+		for (T item : l) {
+			li.add(item);
 		}
 		return li;
 	}

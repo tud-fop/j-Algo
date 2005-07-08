@@ -43,6 +43,7 @@ public class CreateSynDiaAction extends Action
 			IModeConstants,
 			Serializable {
 
+	private static final long serialVersionUID = 1888795917445235903L;
 	private Composite parent;
 	private ModuleController mc;
 

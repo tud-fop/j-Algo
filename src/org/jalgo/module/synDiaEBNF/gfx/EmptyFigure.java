@@ -35,6 +35,8 @@ import org.jalgo.main.gfx.FixPointAnchor;
  */
 public class EmptyFigure extends SynDiaFigure {
 
+	private static final long serialVersionUID = 1933204442022083350L;
+
 	public EmptyFigure() {
 		
 		// Add a inner connection cause width is >= 2

@@ -39,6 +39,7 @@ import org.jalgo.module.synDiaEBNF.gfx.VariableFigure;
  */
 public class SynDiaVariableBack extends SynDiaElement implements Serializable {
 
+	private static final long serialVersionUID = -1540787416253245620L;
 	private SynDiaVariable original;
 	private SynDiaInitial parentInitial = null;
 

@@ -49,12 +49,18 @@ import org.jalgo.module.synDiaEBNF.gfx.SynDiaSystemFigure;
  */
 public class SynDiaSystem implements Serializable {
 
+	private static final long serialVersionUID = 5571505642975927051L;
+
 	private String label = "SynDia"; //$NON-NLS-1$; // Name of the SDS, mostly SynDia
-	private Set synVariables; // Strings
-	private Set terminalSymbols; // Strings
+
+	private Set<String> synVariables;
+
+	private Set<String> terminalSymbols;
+
 	/* the figure including the hole Diagramsystem! */
-	private SynDiaSystemFigure gfx; 
-	private LinkedList initialDia = new LinkedList(); //diagramms
+	private SynDiaSystemFigure gfx;
+
+	private LinkedList<SynDiaInitial> initialDia = new LinkedList<SynDiaInitial>(); //diagramms
 
 	private SynDiaInitial startElem; // decorated StartElem
 
@@ -63,8 +69,8 @@ public class SynDiaSystem implements Serializable {
 	 */
 	public SynDiaSystem() {
 		startElem = null;
-		synVariables = new HashSet();
-		terminalSymbols = new HashSet();
+		synVariables = new HashSet<String>();
+		terminalSymbols = new HashSet<String>();
 	}
 
 	/**
@@ -73,8 +79,8 @@ public class SynDiaSystem implements Serializable {
 	public SynDiaSystem(SynDiaSystemFigure panel) {
 		this.gfx = panel;
 		startElem = null;
-		synVariables = new HashSet();
-		terminalSymbols = new HashSet();
+		synVariables = new HashSet<String>();
+		terminalSymbols = new HashSet<String>();
 	}
 
 	/**
@@ -105,11 +111,11 @@ public class SynDiaSystem implements Serializable {
 		return synVariables;
 	}
 
-	public void setSynVariables(Set synVariables) {
+	public void setSynVariables(Set<String> synVariables) {
 		this.synVariables = synVariables;
 	}
 
-	public void addSynVariable(SynDiaVariable name) {
+	public void addSynVariable(String name) {
 		synVariables.add(name);
 	}
 
@@ -120,7 +126,7 @@ public class SynDiaSystem implements Serializable {
 		return terminalSymbols;
 	}
 
-	public void setTerminalSymbols(Set terminalSymbols) {
+	public void setTerminalSymbols(Set<String> terminalSymbols) {
 		this.terminalSymbols = terminalSymbols;
 	}
 
@@ -134,10 +140,7 @@ public class SynDiaSystem implements Serializable {
 
 	public StyledText getTuple(Composite parent) {
 		StyledText widget = new StyledText(parent, SWT.BORDER);
-		widget
-				.append(label
-						+ Messages
-								.getString("SynDiaSystem.(_u03A3,_V)_mit_n___u03A3___{_4")); //$NON-NLS-1$
+		widget.append(label + Messages.getString("SynDiaSystem.(_u03A3,_V)_mit_n___u03A3___{_4")); //$NON-NLS-1$
 		for (Iterator it = terminalSymbols.iterator(); it.hasNext();) {
 			widget.append((String) it.next());
 			if (it.hasNext())
@@ -169,10 +172,10 @@ public class SynDiaSystem implements Serializable {
 	}
 
 	public SynDiaInitial getInitialDiagram(int i) {
-		return (SynDiaInitial) initialDia.get(i);
+		return initialDia.get(i);
 	}
 
-	public void setInitialDiagrams(LinkedList list) {
+	public void setInitialDiagrams(LinkedList<SynDiaInitial> list) {
 		initialDia = list;
 	}
 

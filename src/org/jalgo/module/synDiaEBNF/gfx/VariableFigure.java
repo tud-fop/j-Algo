@@ -41,6 +41,7 @@ import org.jalgo.main.gfx.RectangleLabel;
  */
 public class VariableFigure extends StandAloneSynDiaFigure {
 
+	private static final long serialVersionUID = 4793107589797254242L;
 	private RectangleLabel interiorFigure;
 	private EmptyFigure startFigure, endFigure;
 

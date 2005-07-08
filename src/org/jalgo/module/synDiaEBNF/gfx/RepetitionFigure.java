@@ -33,6 +33,7 @@ import org.jalgo.main.gfx.RoundedManhattanConnectionRouter;
  */
 public class RepetitionFigure extends CompositeSynDiaFigure {
 
+	private static final long serialVersionUID = -4766480112413889918L;
 	private final int hSpacing = 30;
 	private final int vSpacing = 15;
 	private SynDiaFigure topFigure, botFigure;

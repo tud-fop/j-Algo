@@ -34,6 +34,7 @@ import org.jalgo.module.synDiaEBNF.ModuleController;
  */
 public class FirstAction extends NavAction implements Serializable {
 
+	private static final long serialVersionUID = -2417377997305014319L;
 	private ModuleController mc;
 
 	public FirstAction(ModuleController mc) {
