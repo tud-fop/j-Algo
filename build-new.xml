@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="binary-all" name="J-Algo">
 
-	<property name="version"				value="0.49-RC1"/>
+	<property name="version"				value="0.49-RC2"/>
 	<property name="title"       			value="J-Algo"/>
 	<property name="packages"    			value="org.jalgo."/>
 	<property name="tmpdist"                value="dist/tmp"/>
@@ -113,7 +113,7 @@
 			<param name="classpath.platform" value="${classpath} extlibs/swt.jar extlibs/swt-pi.jar extlibs/libswt-carbon-3064.jnilib extlibs/libswt-pi-carbon-3064.jnilib extlibs/libswt-webkit-carbon-3064.jnilib" />
 			<param name="start.platform" value="start.sh"/>		
 		</antcall>
-		<antcall target="binary-tar.gz">
+		<antcall target="binary-zip">
 			<param name="platform" value="macosx"/>
 		</antcall>
 		
