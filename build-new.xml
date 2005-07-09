@@ -113,7 +113,7 @@
 			<param name="classpath.platform" value="${classpath} extlibs/swt.jar extlibs/swt-pi.jar extlibs/libswt-carbon-3064.jnilib extlibs/libswt-pi-carbon-3064.jnilib extlibs/libswt-webkit-carbon-3064.jnilib" />
 			<param name="start.platform" value="start.sh"/>		
 		</antcall>
-		<antcall target="binary-zip">
+		<antcall target="binary-tar.gz">
 			<param name="platform" value="macosx"/>
 		</antcall>
 		
