@@ -20,6 +20,7 @@
 /* Created on 19.05.2005 */
 package org.jalgo.module.avl.gui.components;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.util.Hashtable;
 
@@ -88,32 +89,29 @@ implements GUIConstants {
 		JPanel messagePane = new JPanel();
 		messagePane.setLayout(new BoxLayout(messagePane, BoxLayout.LINE_AXIS));
 		messageLabel = new JLabel();
-		errorIcon = new ImageIcon("pix/avl/msg_error.gif");
-		infoIcon = new ImageIcon("pix/avl/msg_info.gif");
-//TODO: enable this, when switching to plugin structure
-//		errorIcon = new ImageIcon(getClass().getResource("/pix/avl/msg_error.gif"));
-//		infoIcon = new ImageIcon(getClass().getResource("/pix/avl/msg_info.gif"));
+		errorIcon = new ImageIcon(getClass().getResource("/avl_pix/msg_error.gif"));
+		infoIcon = new ImageIcon(getClass().getResource("/avl_pix/msg_info.gif"));
 		messagePane.add(Box.createRigidArea(new Dimension(
 			5, errorIcon.getIconHeight()+4)));
 		messagePane.add(messageLabel);
 		setMessage(null, NO_MESSAGE);
-		messagePane.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+		messagePane.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(messagePane);
 		
 		JPanel keyPane = new JPanel();
 		keyPane.setLayout(new BoxLayout(keyPane, BoxLayout.LINE_AXIS));
-		JLabel keyLabel = new JLabel("Schlüssel:");
-		keyLabel.setAlignmentY(JLabel.CENTER_ALIGNMENT);
+		JLabel keyLabel = new JLabel("SchlÃ¼ssel:");
+		keyLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
 		keyPane.add(keyLabel);
 		keyTextField = new JTextField(2);
-		keyTextField.setAlignmentY(JTextField.CENTER_ALIGNMENT);
+		keyTextField.setAlignmentY(Component.CENTER_ALIGNMENT);
 		keyTextField.setMaximumSize(new Dimension(
 			keyTextField.getMaximumSize().width,
 			keyTextField.getMinimumSize().height));
 		// watch key input, show error messages if necessary (key must be
 		// integer between 0 and MAX_KEY)
 		keyTextField.getDocument().addDocumentListener(action);
-		keyTextField.setToolTipText("Geben Sie hier den Schlüssel ein");
+		keyTextField.setToolTipText("Geben Sie hier den SchlÃ¼ssel ein");
 		keyTextField.addMouseListener(action);
 		keyTextField.addFocusListener(action);
 		keyPane.add(keyTextField);
@@ -124,15 +122,15 @@ implements GUIConstants {
 		randomKeyButton.addActionListener(action);
 		randomKeyButton.addMouseListener(action);
 		randomKeyButton.setMnemonic('r');
-		randomKeyButton.setAlignmentY(JButton.CENTER_ALIGNMENT);
+		randomKeyButton.setAlignmentY(Component.CENTER_ALIGNMENT);
 		keyPane.add(randomKeyButton);
-		keyPane.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+		keyPane.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(keyPane);
 
 		add(Box.createVerticalStrut(8));
 
 		JLabel algSelectLabel = new JLabel("Auswahl eines Algorithmus:");
-		algSelectLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+		algSelectLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(algSelectLabel);
 
 		add(Box.createVerticalStrut(4));
@@ -144,25 +142,25 @@ implements GUIConstants {
 		startSearchButton = new JButton("Suchen");
 		startSearchButton.setActionCommand("search");
 		startSearchButton.setToolTipText(
-			"Startet den Suchen-Algorithmus mit dem gegebenen Schlüssel");
+			"Startet den Suchen-Algorithmus mit dem gegebenen SchlÃ¼ssel");
 		startSearchButton.addActionListener(action);
 		startSearchButton.addMouseListener(action);
 		startSearchButton.setMnemonic('s');
 		buttonPane1.add(startSearchButton);
 
-		startInsertButton = new JButton("Einfügen");
+		startInsertButton = new JButton("EinfÃ¼gen");
 		startInsertButton.setActionCommand("insert");
 		startInsertButton.setToolTipText(
-			"Startet den Einfüge-Algorithmus mit dem gegebenen Schlüssel");
+			"Startet den EinfÃ¼ge-Algorithmus mit dem gegebenen SchlÃ¼ssel");
 		startInsertButton.addActionListener(action);
 		startInsertButton.addMouseListener(action);
 		startInsertButton.setMnemonic('i');
 		buttonPane1.add(startInsertButton);
 
-		startDeleteButton = new JButton("Löschen");
+		startDeleteButton = new JButton("LÃ¶schen");
 		startDeleteButton.setActionCommand("delete");
 		startDeleteButton.setToolTipText(
-			"Startet den Löschen-Algorithmus mit dem gegebenen Schlüssel");
+			"Startet den LÃ¶schen-Algorithmus mit dem gegebenen SchlÃ¼ssel");
 		startDeleteButton.addActionListener(action);
 		startDeleteButton.addMouseListener(action);
 		
@@ -171,7 +169,7 @@ implements GUIConstants {
 		startDeleteButton.setEnabled(false);
 		buttonPane1.add(startDeleteButton);
 
-		buttonPane1.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+		buttonPane1.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(buttonPane1);
 
 		add(Box.createVerticalStrut(4));
@@ -195,7 +193,7 @@ implements GUIConstants {
 		startAVLTestButton.setMnemonic('t');
 		buttonPane2.add(startAVLTestButton);
 
-		buttonPane2.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+		buttonPane2.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(buttonPane2);
 
 		setAlgorithmButtonsEnabled(false);
@@ -203,14 +201,14 @@ implements GUIConstants {
 		add(Box.createVerticalStrut(8));
 
 		JLabel flowControlLabel = new JLabel("Algorithmussteuerung:");
-		flowControlLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+		flowControlLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(flowControlLabel);
 		add(Box.createVerticalStrut(4));
 
 		JToolBar flowControl = new JToolBar();
 		flowControl.setFloatable(false);
 		flowControl.setRollover(true);
-		flowControl.setAlignmentX(JToolBar.CENTER_ALIGNMENT);
+		flowControl.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		JButton[] flowControlButtons  = gui.getFlowControlButtons();
 		for (JButton button : flowControlButtons) {
@@ -221,7 +219,7 @@ implements GUIConstants {
 		JPanel flowControlPane = new JPanel();
 		flowControlPane.setLayout(
 			new BoxLayout(flowControlPane, BoxLayout.PAGE_AXIS));
-		flowControlPane.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+		flowControlPane.setAlignmentX(Component.LEFT_ALIGNMENT);
 		flowControlPane.add(Box.createHorizontalGlue());
 		flowControlPane.add(flowControl);
 		flowControlPane.add(Box.createHorizontalGlue());
@@ -230,22 +228,22 @@ implements GUIConstants {
 		add(Box.createVerticalStrut(8));
 
 		JLabel animSpeedLabel = new JLabel("Animationsgeschwindigkeit:");
-		animSpeedLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+		animSpeedLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		add(animSpeedLabel);
 
-		animSpeed = new JSlider(200, 1400, 800);
+		animSpeed = new JSlider(200, 2000, 1100);
 		animSpeed.setInverted(true);
 		animSpeed.setMinorTickSpacing(100);
 		animSpeed.setPaintTicks(true);
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
 		labelTable.put(200, new JLabel("schnell"));
-		labelTable.put(1400, new JLabel("langsam"));
+		labelTable.put(2000, new JLabel("langsam"));
 		animSpeed.setLabelTable(labelTable);
 		animSpeed.setPaintLabels(true);
 		animSpeed.addChangeListener(action);
 		animSpeed.setToolTipText("Stellt die Geschwindigkeit der Animation ein");
 		animSpeed.addMouseListener(action);
-		animSpeed.setAlignmentX(JSlider.LEFT_ALIGNMENT);
+		animSpeed.setAlignmentX(Component.LEFT_ALIGNMENT);
 		animSpeed.setEnabled(false);
 		add(animSpeed);
 	}
@@ -291,11 +289,11 @@ implements GUIConstants {
 			setAlgorithmButtonsEnabled(true);
 			break;
 		case NO_INTEGER:
-			setMessage("Nur ganze Zahlen als Schlüssel gültig!", ERROR_MESSAGE);
+			setMessage("Nur ganze Zahlen als SchlÃ¼ssel gÃ¼ltig!", ERROR_MESSAGE);
 			setAlgorithmButtonsEnabled(false);
 			break;
 		case NOT_IN_RANGE:
-			setMessage("Nur Schlüssel von "+MIN_KEY+" bis "+MAX_KEY+" gültig!",
+			setMessage("Nur SchlÃ¼ssel von "+MIN_KEY+" bis "+MAX_KEY+" gÃ¼ltig!",
 				ERROR_MESSAGE);
 			setAlgorithmButtonsEnabled(false);
 			break;
