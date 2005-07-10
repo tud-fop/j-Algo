@@ -74,7 +74,7 @@ extends JPanel {
 		GUIController.setGBC(weight, gbl, 1, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.NONE);
 		add(weight);
 		
-		JLabel heightLabel = new JLabel("Baumhöhe: ");
+		JLabel heightLabel = new JLabel("BaumhÃ¶he: ");
 		GUIController.setGBC(heightLabel, gbl, 0, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.NONE);
 		add(heightLabel);
 		height = new JLabel();
@@ -94,7 +94,7 @@ extends JPanel {
 				gui.setStatusMessage(null);
 			}
 			public void mouseEntered(MouseEvent e) {
-				gui.setStatusMessage("Zeigt Informationen über den Baum an");
+				gui.setStatusMessage("Zeigt Informationen Ã¼ber den Baum an");
 			}
 		});
 
