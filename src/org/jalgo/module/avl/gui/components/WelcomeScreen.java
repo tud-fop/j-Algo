@@ -66,46 +66,30 @@ implements GUIConstants {
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         loadButton = new WelcomeButton(
-        	new ImageIcon("pix/avl/welcome_load.gif"),
-        	new ImageIcon("pix/avl/welcome_load_rollover.gif"),
-        	new ImageIcon("pix/avl/welcome_load_desc.gif"),
-			"load", action);
-		manualButton = new WelcomeButton(
-            new ImageIcon("pix/avl/welcome_manual.gif"),
-        	new ImageIcon("pix/avl/welcome_manual_rollover.gif"),
-        	new ImageIcon("pix/avl/welcome_manual_desc.gif"),
-			"createManually", action);
-		randomButton = new WelcomeButton(
-           	new ImageIcon("pix/avl/welcome_random.gif"),
-        	new ImageIcon("pix/avl/welcome_random_rollover.gif"),
-        	new ImageIcon("pix/avl/welcome_random_desc.gif"),
-			"createRandomly", action);
-//		TODO: enable this, when switching to plugin structure
-/*        loadButton = new WelcomeButton(
 	        	new ImageIcon(
-					getClass().getResource("/pix/avl/welcome_load.gif")),
+					getClass().getResource("/avl_pix/welcome_load.gif")),
 	        	new ImageIcon(
-					getClass().getResource("/pix/avl/welcome_load_rollover.gif")),
+					getClass().getResource("/avl_pix/welcome_load_rollover.gif")),
 	        	new ImageIcon(
-					getClass().getResource("/pix/avl/welcome_load_desc.gif")),
+					getClass().getResource("/avl_pix/welcome_load_desc.gif")),
 				"load", action);
 			manualButton = new WelcomeButton(
 	            new ImageIcon(
-					getClass().getResource("/pix/avl/welcome_manual.gif")),
+					getClass().getResource("/avl_pix/welcome_manual.gif")),
 	        	new ImageIcon(
-					getClass().getResource("/pix/avl/welcome_manual_rollover.gif")),
+					getClass().getResource("/avl_pix/welcome_manual_rollover.gif")),
 	        	new ImageIcon(
-					getClass().getResource("/pix/avl/welcome_manual_desc.gif")),
+					getClass().getResource("/avl_pix/welcome_manual_desc.gif")),
 				"createManually", action);
 			randomButton = new WelcomeButton(
 	           	new ImageIcon(
-					getClass().getResource("/pix/avl/welcome_random.gif")),
+					getClass().getResource("/avl_pix/welcome_random.gif")),
 	        	new ImageIcon(
-					getClass().getResource("/pix/avl/welcome_random_rollover.gif")),
+					getClass().getResource("/avl_pix/welcome_random_rollover.gif")),
 	        	new ImageIcon(
-					getClass().getResource("/pix/avl/welcome_random_desc.gif")),
+					getClass().getResource("/avl_pix/welcome_random_desc.gif")),
 				"createRandomly", action);
-*/
+
 		descriptionLabel = new JLabel();
 		descriptionLabel.setMaximumSize(new Dimension(800, 30));
 		descriptionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

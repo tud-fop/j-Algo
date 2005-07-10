@@ -48,7 +48,7 @@ extends SwingSWTAction {
 		this.controller = controller;
 		setText("Algorithmus abbrechen");
 		setToolTipText("Bricht den laufenden Algorithmus ab");
-		setIconImage("pix/avl/abort.gif");
+		setIconImage("avl_pix/abort.gif");
 	}
 
 	/**
