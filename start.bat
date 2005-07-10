@@ -1,1 +1,3 @@
-javaw -Djava.library.path=extlibs -jar jalgo.jar
+@echo off
+javaw -Djava.library.path=extlibs/win -Djava.ext.dirs=runtime/modules -jar runtime/jalgo.jar
+@echo on
