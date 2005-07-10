@@ -60,12 +60,9 @@ extends Action {
 		this.gui = gui;
 		this.tree = tree;
 		setText("Willkommensbildschirm anzeigen");
-		setToolTipText("Öffnet den Willkommensbildschirm");
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/avl/logo.gif"));
-//		TODO: enable this, when switching to plugin structure
-//		setImageDescriptor(ImageDescriptor.createFromURL(
-//			getClass().getResource("/pix/avl/logo.gif")));
+		setToolTipText("Ã–ffnet den Willkommensbildschirm");
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/avl_pix/logo.gif")));
 	}
 
 	/**
@@ -73,7 +70,7 @@ extends Action {
 	 */
 	public void run() {
 		switch (new MessageDialog(parent.getShell(), "Achtung", null,
-				"Möchten Sie Ihre Änderungen verwerfen?", MessageDialog.QUESTION,
+				"MÃ¶chten Sie Ihre Ã„nderungen verwerfen?", MessageDialog.QUESTION,
 				new String[]{"Ja", "Nein", "Abbrechen"}, 1).open()) {
 			case 0:
 				tree.clear();
@@ -86,16 +83,5 @@ extends Action {
 			case 2:
 				return;
 		}
-
-//		if (MessageDialog.openConfirm(parent.getShell(),
-//			"Achtung",
-//			"Bei Öffnen des Willkommensbildschirms werden aktuelle Änderungen "+
-//			"verworfen. Bestätigen sie dies mit \"Yes\" oder kehren Sie mit "+
-//			"\"No\" zurück.")) {
-//			tree.clear();
-//			gui.installWelcomeScreen();
-//		}
-		//TODO: make possible to open a new module by selecting 'no'
-		// -> ModuleConnector needs reference to JalgoMain or JalgoMain as Singleton
 	}
 }
