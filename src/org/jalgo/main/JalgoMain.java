@@ -246,11 +246,11 @@ public class JalgoMain {
 		return currentInstance;
 	}
 
-	public LinkedList getKnownModules() {
+	public LinkedList<Class<IModuleConnector>> getKnownModules() {
 		return knownModules;
 	}
 
-	public LinkedList getKnownModuleInfos() {
+	public LinkedList<IModuleInfo> getKnownModuleInfos() {
 		return knownModuleInfos;
 	}
 
