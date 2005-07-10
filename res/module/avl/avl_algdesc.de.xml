@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE AlgorithmDescription SYSTEM "structure.dtd" >
+<!DOCTYPE AlgorithmDescription [ <!-- SYSTEM "structure.dtd" > !-->
+	<!ELEMENT AlgorithmDescription (Schritt)*>
+	<!ELEMENT Schritt (Key,Text)>
+	<!ELEMENT Key (#PCDATA)*>
+	<!ELEMENT Text (Line)*>
+	<!ELEMENT Line (#PCDATA)*>
+]>
 <AlgorithmDescription>
 
 <!-- search algorithm !-->
