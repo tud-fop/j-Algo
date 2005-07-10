@@ -36,6 +36,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 
 import org.eclipse.jface.action.MenuManager;
@@ -214,7 +215,7 @@ implements GUIConstants {
 		infoPane = new InfoPane(this, tree);
 		graphicPane = new JScrollPane(paintArea);
 		graphicPane.setCorner(
-			JScrollPane.LOWER_RIGHT_CORNER, new Navigator(this, paintArea));
+			ScrollPaneConstants.LOWER_RIGHT_CORNER, new Navigator(this, paintArea));
 
 		//store current insets for later layout validations (efficiency)
 		graphicPaneInsetsX = graphicPane.getInsets().left+
@@ -423,7 +424,7 @@ implements GUIConstants {
 	public boolean showSaveDialog() {
 		//ensure that this method is called only from an swt thread!!
 		switch (new MessageDialog(appWin.getShell(), "Beenden", null,
-			"Möchten Sie Ihre Arbeit speichern?", MessageDialog.QUESTION,
+			"MÃ¶chten Sie Ihre Arbeit speichern?", MessageDialog.QUESTION,
 			new String[]{"Ja", "Nein", "Abbrechen"}, 0).open()) {
 		case 0:
 			appWin.getShell().getDisplay().syncExec(new Runnable() {
@@ -495,7 +496,7 @@ implements GUIConstants {
 		if (controller.getAVLTestResult()){
 			if (JOptionPane.showConfirmDialog(controlPane,
 				"Der aktuelle Baum hat die AVL - Eigenschaft!\r\n"+
-				"Möchten Sie jetzt in den AVL - Modus wechseln?",
+				"MÃ¶chten Sie jetzt in den AVL - Modus wechseln?",
 				"Modus wechseln?", JOptionPane.YES_NO_OPTION) ==
 					JOptionPane.YES_OPTION) {
 				controller.putLogDescription("AVL-Modus angeschalten");
