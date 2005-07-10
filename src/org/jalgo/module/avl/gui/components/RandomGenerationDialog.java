@@ -91,10 +91,8 @@ implements GUIConstants {
 
 		// messagePane contains the error message
 		JPanel messagePane = new JPanel(new BorderLayout(4, 4));
-		errorIcon = new JLabel(new ImageIcon("pix/avl/msg_error.gif"));
-//		TODO: enable this, when switching to plugin structure
-//		errorIcon = new JLabel(new ImageIcon(
-//			getClass().getResource("/pix/avl/msg_error.gif")));
+		errorIcon = new JLabel(new ImageIcon(
+			getClass().getResource("/avl_pix/msg_error.gif")));
 		errorMessage = new JLabel();
 		messagePane.add(errorIcon, BorderLayout.WEST);
 		messagePane.add(errorMessage, BorderLayout.CENTER);
