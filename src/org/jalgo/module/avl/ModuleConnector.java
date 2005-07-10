@@ -61,9 +61,6 @@ implements IModuleConnector {
 	private Controller controller;
 	private GUIController gui;
 
-	//saves exceptions to file
-	private ErrorLog errorLog;
-
     /**
 	 * Constructs a <code>ModuleConnector</code> object for the AVL module.
 	 * Instances of the module specific <code>SearchTree</code>,
@@ -83,9 +80,6 @@ implements IModuleConnector {
 		this.statusLineManager = sl;
 
 		moduleInfo = new ModuleInfo();
-
-		//TODO: enable this, when release the product, don't forget close() !
-		errorLog = new ErrorLog();
 
 		tree = new SearchTree();
 		controller = new Controller(tree);
@@ -122,8 +116,6 @@ implements IModuleConnector {
 		catch (NoActionException ex) {}
 
 		if (gui.areChangesToSave() && !gui.showSaveDialog()) return false;
-		//TODO: enable this, when release the product
-		errorLog.close();
 		return true;
 	}
 
@@ -139,11 +131,11 @@ implements IModuleConnector {
 			gui.installStandardLayout();
     	}
 		catch (IOException ex) {
-			gui.showErrorMessage("Keine gültige AVL-Datei.");
+			gui.showErrorMessage("Keine gÃ¼ltige AVL-Datei.");
 		}
 		catch (ClassNotFoundException ex) {
 			gui.showErrorMessage("Fehler beim Laden der Datei.\r\n"+
-				"Die Datei ist möglicherweise beschädigt.");
+				"Die Datei ist mÃ¶glicherweise beschÃ¤digt.");
 		}
     }
 
