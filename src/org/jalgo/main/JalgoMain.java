@@ -26,6 +26,7 @@
 
 package org.jalgo.main;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -51,14 +52,14 @@ public class JalgoMain {
 
 	private JalgoWindow appWin;
 
-	private LinkedList knownModules;
+	private LinkedList<Class<IModuleConnector>> knownModules;
 
 	// LinkedList of Class object with IModuleConnectors
-	private LinkedList knownModuleInfos; // LinkedList
+	private LinkedList<IModuleInfo> knownModuleInfos; // LinkedList
 								   // of
 								   // IModulesInfos
 
-	private HashMap openInstances; // key = CTabItem,
+	private HashMap<CTabItem, IModuleConnector> openInstances; // key = CTabItem,
 							     // value =
 							     // IModuleConnector
 
@@ -66,20 +67,18 @@ public class JalgoMain {
 	private IModuleConnector currentInstance;
 
 	public JalgoMain() {
-		knownModules = new LinkedList();
-		knownModuleInfos = new LinkedList();
+		knownModules = new LinkedList<Class<IModuleConnector>>();
+		knownModuleInfos = new LinkedList<IModuleInfo>();
 		addKnownModules();
-		openInstances = new HashMap();
+		openInstances = new HashMap<CTabItem, IModuleConnector>();
 	}
 
 	public void createGUI() {
 		appWin = new JalgoWindow(this);
 		appWin.setBlockOnOpen(true);
 		appWin.open();
-		
 
-		Display.getCurrent().dispose();
-		
+		Display.getCurrent().dispose();	
 	}
 
 	/**
@@ -129,7 +128,7 @@ public class JalgoMain {
 						false);
 		}
 
-		currentInstance = (IModuleConnector) openInstances.get(cti);
+		currentInstance = openInstances.get(cti);
 
 		//makes Module-Tool/MenuBar from new tab's module visible
 		if (currentInstance == null) {
@@ -157,8 +156,7 @@ public class JalgoMain {
 	 */
 	public IModuleConnector newInstanceByName(String moduleName) {
 		for (int i=0; i<knownModuleInfos.size(); i++) {
-			if (((IModuleInfo)knownModuleInfos.get(i)).getName().
-					equals(moduleName)) {
+			if ((knownModuleInfos.get(i)).getName().equals(moduleName)) {
 				return newInstance(i);
 			}
 		}
@@ -185,13 +183,14 @@ public class JalgoMain {
 		}
 		
 		// Requests a fresh CTabItem from the appWin
-		IModuleInfo module = (IModuleInfo) knownModuleInfos.get(modNumber);
+		IModuleInfo module = knownModuleInfos.get(modNumber);
 		String ctiText = module.getName();
 		ImageDescriptor imageDescriptor = module.getLogo();
 		Image image;
 		if (imageDescriptor == null) {
 			// Default "jAlgo File" icon.
-			image = new Image(appWin.getShell().getDisplay(), "pix/jalgo-file.png");
+			image = ImageDescriptor.createFromURL(
+				getClass().getResource("/main_pix/jalgo-file.png")).createImage();
 		} else {
 			// Custom icon as defined in the module info.
 			image = imageDescriptor.createImage(appWin.getShell().getDisplay());
@@ -326,37 +325,36 @@ public class JalgoMain {
 	 * their module here!
 	 */
 	private void addKnownModules() {
-/*		String jarFileName, moduleName;
-		for (File file : new File(System.getProperty("user.dir")+
-				System.getProperty("file.separator")+"/modules").listFiles()) {
+		String jarFileName, moduleName;
+		String fileSep = System.getProperty("file.separator");
+		for (File file : new File(System.getProperty("user.dir") + fileSep +
+				"runtime" + fileSep + "modules").listFiles()) {
 			jarFileName = file.getName();
 			if (file.isFile() &&
 				jarFileName.endsWith(".jar") &&
 				!jarFileName.equals("jalgo.jar")) {
-				moduleName = jarFileName.substring(0, jarFileName.length()-4); 
+				moduleName = jarFileName.substring(0, jarFileName.length()-4);
 				try {
-					knownModules.add(Class.forName("org.jalgo.module."+
+					knownModules.add((Class<IModuleConnector>)Class.forName("org.jalgo.module."+
 						moduleName+".ModuleConnector"));
-					knownModuleInfos.add(Class.forName("org.jalgo.module."+
+					knownModuleInfos.add((IModuleInfo)Class.forName("org.jalgo.module."+
 						moduleName+".ModuleInfo").newInstance());
 				}
 				catch (ClassNotFoundException e) {e.printStackTrace();}
 				catch (InstantiationException e) {e.printStackTrace();}
 				catch (IllegalAccessException e) {e.printStackTrace();}
 			}
-		}*/
-		
-		knownModules.add(org.jalgo.module.avl.ModuleConnector.class);
-		knownModules.add(org.jalgo.module.dijkstraModule.ModuleConnector.class);
-		knownModules.add(org.jalgo.module.synDiaEBNF.ModuleConnector.class);
+		}
+
+//		knownModules.add(org.jalgo.module.avl.ModuleConnector.class);
+//		knownModules.add(org.jalgo.module.dijkstraModule.ModuleConnector.class);
+//		knownModules.add(org.jalgo.module.synDiaEBNF.ModuleConnector.class);
 //		knownModules.add(org.jalgo.module.testModule.ModuleConnector.class);
 		//Add a new ModuleConnector here!!
 
-		knownModuleInfos.add(new org.jalgo.module.avl.ModuleInfo());
-		knownModuleInfos.add(new org.jalgo.module.dijkstraModule.ModuleInfo());
-		knownModuleInfos.add(new org.jalgo.module.synDiaEBNF.ModuleInfo());
-		
-		
+//		knownModuleInfos.add(new org.jalgo.module.avl.ModuleInfo());
+//		knownModuleInfos.add(new org.jalgo.module.dijkstraModule.ModuleInfo());
+//		knownModuleInfos.add(new org.jalgo.module.synDiaEBNF.ModuleInfo());
 //		knownModuleInfos.add(new org.jalgo.module.testModule.ModuleInfo());
 		//Add a new ModuleInfo here!! 
 	}

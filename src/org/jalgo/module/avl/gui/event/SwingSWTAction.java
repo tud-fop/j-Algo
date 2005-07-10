@@ -85,12 +85,9 @@ implements javax.swing.Action {
 	 * @param fileName the fileName of the icon image
 	 */
 	public void setIconImage(String fileName) {
-		setImageDescriptor(ImageDescriptor.createFromFile(null, fileName));
-		putValue(SMALL_ICON, new ImageIcon(fileName));
-//TODO: enable this, when switching to plugin structure
-//		setImageDescriptor(ImageDescriptor.createFromURL(
-//			getClass().getResource("/"+fileName)));
-//		putValue(SMALL_ICON, new ImageIcon(getClass().getResource("/"+fileName)));
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/"+fileName)));
+		putValue(SMALL_ICON, new ImageIcon(getClass().getResource("/"+fileName)));
 	}
 
 	/* (non-Javadoc)
