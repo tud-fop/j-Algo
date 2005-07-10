@@ -33,6 +33,7 @@ import java.awt.SystemColor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
 import javax.swing.Popup;
@@ -113,7 +114,7 @@ implements MouseListener, MouseMotionListener {
 		//robot is responsible for automatically mouse moving
 		try {robot = new Robot();}
 		catch (AWTException ex) {
-			gui.showErrorMessage("Keine Maussprünge möglich.\r\n");
+			gui.showErrorMessage("Keine MaussprÃ¼nge mÃ¶glich.\r\n");
 			ex.printStackTrace();
 			robot = null;
 		}
@@ -216,7 +217,7 @@ implements MouseListener, MouseMotionListener {
 	public void paint(Graphics g) {
 		g.setColor(SystemColor.control);
 		g.fill3DRect(0, 0, getWidth(), getHeight(), !mouseOver);
-		g.setColor(SystemColor.WHITE);
+		g.setColor(Color.WHITE);
 		g.fill3DRect(4, 4, getWidth()-8, getWidth()-8, mouseOver);
 		g.fillRect(5, 5, getWidth()-10, getWidth()-10);
 	}

@@ -29,6 +29,7 @@ import java.util.Map;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 
@@ -65,7 +66,7 @@ implements DisplayModeChangeable, GUIConstants {
 	 * @param gui the <code>GUIController</code> instance of the AVL module
 	 * @param controller the <code>Controller</code> instance of the AVL module
 	 */
-	public DocuPane(GUIController gui, Controller controller) {
+	public DocuPane(final GUIController gui, Controller controller) {
 		this.gui = gui;
 		manager = new DocuManager(controller);
 
@@ -78,17 +79,17 @@ implements DisplayModeChangeable, GUIConstants {
 		setLayout(new BorderLayout());
 		JScrollPane scrollPane = new JScrollPane(
 			textPane,
-			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-			JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+			ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		add(scrollPane, BorderLayout.CENTER);
 
 		//the status line updater
 		textPane.addMouseListener(new MouseAdapter() {
 			public void mouseExited(MouseEvent e) {
-				DocuPane.this.gui.setStatusMessage(null);
+				gui.setStatusMessage(null);
 			}
 			public void mouseEntered(MouseEvent e) {
-				DocuPane.this.gui.setStatusMessage("Zeigt den Algorithmustext an");
+				gui.setStatusMessage("Zeigt den Algorithmustext an");
 			}
 		});
 	}
@@ -119,9 +120,9 @@ implements DisplayModeChangeable, GUIConstants {
 		if (gui.isPerformStep()) textPane.setCaretPosition(Math.max(0,
 				lastHighlightedParagraphOffset+lastHighlightedParagraphLength));
 		else textPane.setCaretPosition(Math.max(0, lastHighlightedParagraphOffset));
-		//FIXME: der folgende ansatz führt zu darstellungsfehlern,
+		//FIXME: der folgende ansatz fï¿½hrt zu darstellungsfehlern,
 		//es wird zwar richtig positioniert, allerdings wird der text gelegentlich
-		//überlagert, bzw. sogar in der paintarea dargestellt,
+		//ï¿½berlagert, bzw. sogar in der paintarea dargestellt,
 		//vermutung: scrollRectToVisible() ist schuld...
 		//daher hier getrickst
 //		Rectangle visibleRect = textPane.getVisibleRect();
