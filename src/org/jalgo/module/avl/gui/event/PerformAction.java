@@ -47,9 +47,9 @@ extends SwingSWTAction {
 		super();
 		this.gui = gui;
 		this.controller = controller;
-		setText("Nächster Schritt");
-		setToolTipText("Führt den nächsten Schritt im aktuellen Algorithmus aus");
-		setIconImage("pix/avl/perform.gif");
+		setText("NÃ¤chster Schritt");
+		setToolTipText("FÃ¼hrt den nÃ¤chsten Schritt im aktuellen Algorithmus aus");
+		setIconImage("avl_pix/perform.gif");
 	}
 
 	/**

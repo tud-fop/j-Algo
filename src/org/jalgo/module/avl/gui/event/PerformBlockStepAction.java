@@ -47,10 +47,10 @@ extends SwingSWTAction {
 	public PerformBlockStepAction(GUIController gui, Controller controller) {
 		this.gui = gui;
 		this.controller = controller;
-		setText("Nächster Blockschritt");
+		setText("NÃ¤chster Blockschritt");
 		setToolTipText(
-			"Führt den nächsten grösseren Schritt im aktuellen Algorithmus aus");
-		setIconImage("pix/avl/performBlockStep.gif");
+			"FÃ¼hrt den nÃ¤chsten grÃ¶sseren Schritt im aktuellen Algorithmus aus");
+		setIconImage("avl_pix/performBlockStep.gif");
 	}
 
 	/**

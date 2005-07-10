@@ -25,8 +25,6 @@ import java.io.IOException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.program.Program;
 import org.jalgo.main.util.BrowserLauncher;
 import org.jalgo.module.avl.gui.GUIConstants;
 import org.jalgo.module.avl.gui.GUIController;
@@ -58,11 +56,9 @@ implements GUIConstants {
 		this.gui = gui;
 
 		setText("Hilfe zum AVL-Modul");
-		setToolTipText("Öffnet die Hilfe zum AVL-Modul");
-		setImageDescriptor(ImageDescriptor.createFromFile(null, "pix/help.gif"));
-//TODO: enable this, when switching to plugin structure
-//		setImageDescriptor(ImageDescriptor.createFromURL(
-//			getClass().getResource("/pix/help.gif")));
+		setToolTipText("Ã–ffnet die Hilfe zum AVL-Modul");
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/help.gif")));
 		setAccelerator(SWT.F1);
 		helpPath = System.getProperty("user.dir")+fileSep+HELP_FILE_NAME.
 			replace(":",fileSep);
@@ -74,16 +70,8 @@ implements GUIConstants {
 	public void run() {
 		try {BrowserLauncher.openURL(helpPath);}
 		catch (IOException ex) {
-			gui.showErrorMessage("Konnte Hilfedatei nicht öffnen!"+lineSep+
-				"Bitte öffnen Sie die Hilfe manuell mit Ihrem Browser");			
+			gui.showErrorMessage("Konnte Hilfedatei nicht Ã¶ffnen!"+lineSep+
+				"Bitte Ã¶ffnen Sie die Hilfe manuell mit Ihrem Browser");			
 		}
-//		if (System.getProperty("os.name").toLowerCase().startsWith("windows")) try {
-//			Runtime.getRuntime().exec(
-//				"C:\\Programme\\Internet Explorer\\iexplore.exe "+helpPath);
-//		}
-//		catch (IOException ex) {
-//			gui.showErrorMessage("Konnte Hilfedatei nicht öffnen!"+lineSep+
-//				"Bitte öffnen Sie die Hilfe manuell mit Ihrem Browser");
-//		}
 	}
 }

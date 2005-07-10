@@ -52,13 +52,10 @@ extends Action {
 		this.gui = gui;
 		this.parent = parent;
 		this.tree = tree;
-		setText("Baum löschen");
-		setToolTipText("Löscht den gesamten Baum");
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/avl/clear.gif"));
-//TODO: enable this, when switching to plugin structure
-//		setImageDescriptor(ImageDescriptor.createFromURL(
-//			getClass().getResource("/pix/avl/clear.gif")));
+		setText("Baum lÃ¶schen");
+		setToolTipText("LÃ¶scht den gesamten Baum");
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/avl_pix/clear.gif")));
 	}
 
 	/**
@@ -66,7 +63,7 @@ extends Action {
 	 */
 	public void run() {
 		switch (new MessageDialog(parent.getShell(), "Achtung", null,
-			"Der gesamte Baum wird gelöscht.", MessageDialog.QUESTION,
+			"Der gesamte Baum wird gelÃ¶scht.", MessageDialog.QUESTION,
 			new String[] {"OK", "Abbrechen"}, 0).open()) {
 		case 0:
 			tree.clear();

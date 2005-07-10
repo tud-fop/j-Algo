@@ -47,8 +47,8 @@ extends SwingSWTAction {
 		this.gui = gui;
 		this.controller = controller;
 		setText("Algorithmus beenden");
-		setToolTipText("Durchl‰uft den Algorithmus bis zum Ende");
-		setIconImage("pix/avl/finish.gif");
+		setToolTipText("Durchl√§uft den Algorithmus bis zum Ende");
+		setIconImage("avl_pix/finish.gif");
 	}
 
 	/**
