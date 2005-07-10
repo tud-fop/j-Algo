@@ -38,7 +38,7 @@ implements IModuleInfo {
      * @see org.jalgo.main.IModuleInfo#getName()
      */
     public String getName() {
-        return "AVL - Bäume";
+        return "AVL - BÃ¤ume";
     }
 
     /* (non-Javadoc)
@@ -59,20 +59,18 @@ implements IModuleInfo {
      * @see org.jalgo.main.IModuleInfo#getDescription()
      */
 	public String getDescription() {
-		return "Dieses Modul behandelt binäre Suchbäume mit und ohne die "+
+		return "Dieses Modul behandelt binÃ¤re SuchbÃ¤ume mit und ohne die "+
 			"AVL-Eigenschaft. "+lineSep+
-			"Es werden die Algorithmen Suchen, Einfügen und Löschen visualisiert. "+
-			"Dabei können die Algorithmen interaktiv gesteuert werden";
+			"Es werden die Algorithmen Suchen, EinfÃ¼gen und LÃ¶schen visualisiert. "+
+			"Dabei kÃ¶nnen die Algorithmen interaktiv gesteuert werden";
     }
 
     /* (non-Javadoc)
      * @see org.jalgo.main.IModuleInfo#getLogo()
      */
     public ImageDescriptor getLogo() {
-		return ImageDescriptor.createFromFile(null, "pix/avl/logo.gif");
-//TODO: enable this, when switching to plugin structure
-//		return ImageDescriptor.createFromURL(
-//			getClass().getResource("/pix/avl/logo.gif"));
+		return ImageDescriptor.createFromURL(
+			getClass().getResource("/avl_pix/logo.gif"));
     }
 
     /* (non-Javadoc)

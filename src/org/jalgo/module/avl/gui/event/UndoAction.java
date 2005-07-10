@@ -46,9 +46,9 @@ extends SwingSWTAction {
 	public UndoAction(GUIController gui, Controller controller) {
 		this.gui = gui;
 		this.controller = controller;
-		setText("Schritt zurück");
-		setToolTipText("Macht den letzten Schritt im aktuellen Algorithmus rückgängig");
-		setIconImage("pix/avl/undo.gif");
+		setText("Schritt zurÃ¼ck");
+		setToolTipText("Macht den letzten Schritt im aktuellen Algorithmus rÃ¼ckgÃ¤ngig");
+		setIconImage("avl_pix/undo.gif");
 	}
 
 	/**

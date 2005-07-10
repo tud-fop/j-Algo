@@ -47,9 +47,9 @@ extends SwingSWTAction {
 	public UndoBlockStepAction(GUIController gui, Controller controller) {
 		this.gui = gui;
 		this.controller = controller;
-		setText("Blockschritt zurück");
-		setToolTipText("Macht den letzen grösseren Schritt im aktuellen Algorithmus rückgängig");
-		setIconImage("pix/avl/undoBlockStep.gif");
+		setText("Blockschritt zurÃ¼ck");
+		setToolTipText("Macht den letzen grÃ¶sseren Schritt im aktuellen Algorithmus rÃ¼ckgÃ¤ngig");
+		setIconImage("avl_pix/undoBlockStep.gif");
 	}
 
 	/**
