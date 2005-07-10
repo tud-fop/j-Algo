@@ -23,7 +23,6 @@
  */
 package org.jalgo.module.avl.gui;
 
-import java.io.File;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -183,13 +182,8 @@ implements GUIConstants {
 			SAXParserFactory factory = SAXParserFactory.newInstance();	
 			SAXParser saxParser = factory.newSAXParser();
 			XmlHandler xmlhandler = new XmlHandler();
-			String path = "res:module:avl:";
-			String fileseparator = System.getProperty("file.separator");
-			path = path.replace(":", fileseparator);				
-			saxParser.parse(new File(path+ALGORITHM_TEXT_BASE), xmlhandler);
-//TODO: enable this, when switching to plugin structure
-//			saxParser.parse(getClass().getResourceAsStream(
-//				"/res/module/avl/"+ALGORITHM_TEXT_BASE), xmlhandler);
+			saxParser.parse(getClass().getResourceAsStream("/"+ALGORITHM_TEXT_BASE),
+				xmlhandler);
 			Map<String,String> mapOfElements = xmlhandler.getMapOfElements();
 
 			mapOfAlgorithms = new TreeMap<String, Map<String, String>>();
@@ -281,13 +275,13 @@ implements GUIConstants {
 	private String getKey(String name) {
 		if (name.equals("Suchen"))
 			return "search";
-		if (name.equals("Einfügen") || name.equals("Suchbaum Erstellen"))
+		if (name.equals("Einfï¿½gen") || name.equals("Suchbaum Erstellen"))
 			return "insert";
-		if (name.equals("AVL-Einfügen") || name.equals("AVL-Baum Erstellen"))
+		if (name.equals("AVL-Einfï¿½gen") || name.equals("AVL-Baum Erstellen"))
 			return "avlinsert";
-		if (name.equals("Löschen"))
+		if (name.equals("Lï¿½schen"))
 			return "remove";
-		if (name.equals("AVL-Löschen"))
+		if (name.equals("AVL-Lï¿½schen"))
 			return "avlremove";
 		if (name.equals("AVL-Test"))
 			return "avltest";
