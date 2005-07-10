@@ -24,8 +24,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.module.avl.gui.DisplayModeChangeable;
+import org.jalgo.module.avl.gui.GUIConstants;
 import org.jalgo.module.avl.gui.Settings;
 
 /**
@@ -51,13 +53,10 @@ extends Action {
 	 * Constructs the singleton instance of <code>ToggleDisplayModeAction</code>.
 	 */
 	private ToggleDisplayModeAction() {
-		super("Beamermodus", Action.AS_CHECK_BOX);
-		setImageDescriptor(
-				ImageDescriptor.createFromFile(null, "pix/avl/beamer.gif"));
-//		TODO: enable this, when switching to plugin structure
-//		setImageDescriptor(ImageDescriptor.createFromURL(
-//			getClass().getResource("/pix/avl/beamer.gif")));
-		setChecked(Settings.getDisplayMode() == Settings.BEAMER_MODE);
+		super("Beamermodus", IAction.AS_CHECK_BOX);
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/avl_pix/beamer.gif")));
+		setChecked(Settings.getDisplayMode() == GUIConstants.BEAMER_MODE);
 		observers = new LinkedList<DisplayModeChangeable>();
 	}
 
@@ -87,7 +86,8 @@ extends Action {
 	 * notified.
 	 */
 	public void run() {
-		Settings.setDisplayMode(isChecked()?Settings.BEAMER_MODE:Settings.PC_MODE);
+		Settings.setDisplayMode(
+			isChecked() ? GUIConstants.BEAMER_MODE : GUIConstants.PC_MODE);
 		for (DisplayModeChangeable observer : observers) {
 			observer.displayModeChanged();
 		}
