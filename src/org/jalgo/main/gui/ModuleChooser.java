@@ -6,6 +6,7 @@ package org.jalgo.main.gui;
 
 import java.util.Iterator;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabItem;
@@ -71,13 +72,14 @@ public class ModuleChooser extends Composite implements SelectionListener {
 		
 		// logo
 		logoL = new Label(top, SWT.CENTER);
-		logoL.setImage(new Image(null, "pix/jalgo.png"));
+		logoL.setImage(ImageDescriptor.createFromURL(getClass().getResource(
+			"/main_pix/jalgo.png")).createImage());
 		logoL.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.FILL_HORIZONTAL));
 		
 		// start button
 		button = new Button(top, SWT.PUSH);
 		button.setText("Starten");
-		button.setToolTipText("Das ausgewählte Modul starten.");
+		button.setToolTipText("Das ausgewï¿½hlte Modul starten.");
 		button.setEnabled(false);
 		button.addSelectionListener(this);
 		
