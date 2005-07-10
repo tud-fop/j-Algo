@@ -23,6 +23,8 @@
  
 package org.jalgo.main;
 
+import org.jalgo.main.util.ErrorLog;
+
 /**
  * @author Christopher Friedrich
  */
@@ -30,9 +32,24 @@ public class Jalgo {
 
 	private static JalgoMain jalgo;
 
+	/**
+	 * When releasing the product, start the program with the flag "errorLogOn".
+	 * So an error log file could be created for easy debugging.
+	 * 
+	 * @param args the program arguments
+	 * 
+	 * @see ErrorLog
+	 */
 	public static void main(String[] args) {
+		//saves exceptions to file
+		ErrorLog errorLog = null;
+		if (args.length > 0 && args[0].equalsIgnoreCase("errorlogon"))
+			errorLog = new ErrorLog();
+
 		jalgo = new JalgoMain();
 		jalgo.createGUI();
+		
+		if (errorLog != null) errorLog.close();
 	}
 
 	public static IModuleConnector getCurrentModule() {
