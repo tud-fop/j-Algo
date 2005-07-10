@@ -34,8 +34,8 @@ public class PrintAction extends Action {
 	public PrintAction() {
 		setText(Messages.getString("ui.Print")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("ui.Print")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/print.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/print.gif")));
 	}
 
 	public void run() {

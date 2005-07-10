@@ -45,7 +45,7 @@ public class UndoToolBarAction extends Action implements Serializable
 		setText("Rückgängig");
 		setToolTipText("Macht die letzte Änderung rückgängig.");
 		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/undo.gif"));
+			ImageDescriptor.createFromURL(getClass().getResource("/dijkstra_pix/undo.gif")));
 	}
 
 	public void run()

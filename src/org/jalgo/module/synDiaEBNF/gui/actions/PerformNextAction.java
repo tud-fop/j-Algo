@@ -43,8 +43,8 @@ public class PerformNextAction extends Action implements Serializable {
 		setText(Messages.getString("PerformNextAction.Next_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("PerformNextAction.Perform_next_step._2")); //$NON-NLS-1$
 		// TODO: find or design nice buttons
-		setImageDescriptor(
-					ImageDescriptor.createFromFile(null, "pix/performNext.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/performNext.gif")));
 		setId(Messages.getString("PerformNextAction.performNext_4")); //$NON-NLS-1$
 	}
 

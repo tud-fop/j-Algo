@@ -40,8 +40,8 @@ public class ExitAction extends Action {
 		window = win;
 		setText(Messages.getString("ui.Exit")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("ui.Exit")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/close.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/close.gif")));
 	}
 
 	public void run() {

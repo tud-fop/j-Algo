@@ -45,8 +45,8 @@ public class ZoomOutAction extends Action {
 		this.form = form;
 		setText(Messages.getString("ui.Zoom_out")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("ui.Zoom_out")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/zoom-out.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/zoom-out.gif")));
 	}
 
 	public void run() {

@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -79,7 +80,8 @@ public class EbnfInputGui extends Gui implements Serializable {
 		Splitter sash = new Splitter(parent, SWT.HORIZONTAL);
 		CustomViewForm form = new CustomViewForm(sash, SWT.BORDER);
 		form.setText(Messages.getString("EbnfInputGui.Ebnf_Input_1")); //$NON-NLS-1$
-		form.setImage(new Image(parent.getDisplay(), "./pix/new.gif")); //$NON-NLS-1$
+		form.setImage(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/new.gif")).createImage());
 
 		mainComp = new Composite(form, SWT.FLAT);
 

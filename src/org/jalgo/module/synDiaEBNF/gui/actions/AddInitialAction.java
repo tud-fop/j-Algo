@@ -53,8 +53,8 @@ public class AddInitialAction extends Action implements IClickAction {
 		this.labelList = new ArrayList<String>();
 		setText(Messages.getString("AddInitialAction.New_Diagram_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("AddInitialAction.Add_initial_diagram._2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/newsyndia.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/newsyndia.gif")));
 	}
 
 	public void run() {

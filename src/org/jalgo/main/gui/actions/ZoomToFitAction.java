@@ -42,8 +42,8 @@ public class ZoomToFitAction extends Action {
 	public ZoomToFitAction(IFigure panel) {
 		setText(Messages.getString("ui.Zoom_fit")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("ui.Zoom_fit")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/zoom_to_fit.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/zoom_to_fit.gif")));
 	}
 
 	public void run() {

@@ -37,8 +37,8 @@ public class CloseAction extends Action {
 	public CloseAction(Widget w) {
 		setText(Messages.getString("ui.Close")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("ui.Close")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/close.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/close.gif")));
 		this.widget = w;
 	}
 

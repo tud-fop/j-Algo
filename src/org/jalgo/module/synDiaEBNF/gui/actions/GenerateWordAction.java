@@ -43,8 +43,8 @@ public class GenerateWordAction extends Action implements IModeConstants {
 				.getString("GenerateWordAction.generate_word_algorithm_1")); //$NON-NLS-1$
 		setToolTipText(Messages
 				.getString("GenerateWordAction.Start_generate_word_algorithm._2")); //$NON-NLS-1$
-		setImageDescriptor(ImageDescriptor.createFromFile(null,
-				"pix/generateWord.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/generateWord.gif")));
 	}
 
 	public void run() {

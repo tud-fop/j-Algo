@@ -42,8 +42,8 @@ public class AddRoundedRectangleAction extends Action {
 		this.figure = figure;
 		setText("Rounded rectangle");
 		setToolTipText("Add rounded rectangle.");
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/rounded_rectangle.gif"));
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/rounded_rectangle.gif")));
 	}
 
 	public void run() {

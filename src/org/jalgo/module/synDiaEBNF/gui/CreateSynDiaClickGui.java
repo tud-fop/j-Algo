@@ -29,8 +29,8 @@ import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.jalgo.main.gfx.ClickListener;
@@ -124,7 +124,8 @@ public class CreateSynDiaClickGui extends Gui implements Serializable {
 		//		Attach all to ViewForm
 		form2.setTopCenter(toolbar2);
 		form2.setText(Messages.getString("CreateSynDiaClickGui.Use_the_buttons_below_to_get_a_new_syntax_diagram._1")); //$NON-NLS-1$
-		form2.setImage(new Image(parent.getDisplay(), "./pix/new.gif")); //$NON-NLS-1$
+		form2.setImage(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/new.gif")).createImage());
 		
 		/* - the original code was "new ClickListener(form2.getPanel());" without an assignment
 		 * - didn't understand this because in my way of thinking this would be thrownaway by the

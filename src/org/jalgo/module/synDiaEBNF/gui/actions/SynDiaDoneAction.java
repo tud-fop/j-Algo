@@ -53,8 +53,8 @@ public class SynDiaDoneAction extends Action {
 		this.mc = mc;
 		setText(Messages.getString("SynDiaDoneAction.Diagram_done_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("SynDiaDoneAction.Done_2")); //$NON-NLS-1$
-		setImageDescriptor(ImageDescriptor.createFromFile(null,
-				"pix/finish.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/finish.gif")));
 	}
 
 	public void run() {

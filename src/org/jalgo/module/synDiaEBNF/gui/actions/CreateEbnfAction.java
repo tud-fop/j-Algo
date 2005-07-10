@@ -54,8 +54,8 @@ public class CreateEbnfAction extends Action
 		setToolTipText(Messages
 				.getString("CreateEbnfAction.Eingabe_von_EBNF_Termen._2")); //$NON-NLS-1$
 		//		TODO: find or design nice buttons
-		setImageDescriptor(ImageDescriptor.createFromFile(null,
-				"pix/createEbnf.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/createEbnf.gif")));
 	}
 
 	public void run() {

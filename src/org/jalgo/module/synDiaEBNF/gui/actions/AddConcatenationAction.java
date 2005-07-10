@@ -53,8 +53,8 @@ public class AddConcatenationAction extends Action implements IClickAction {
 		//this.appWindow = appWindow;
 		setText(Messages.getString("AddConcatenationAction.Concatenation_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("AddConcatenationAction.Add_concatenation._2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/concatenation.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/concatenation.gif")));
 	}
 
 	public void run() {

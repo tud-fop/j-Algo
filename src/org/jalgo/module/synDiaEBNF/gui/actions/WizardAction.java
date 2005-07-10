@@ -46,8 +46,8 @@ public class WizardAction extends Action implements Serializable {
 		this.parent = parent;
 		setText(Messages.getString("WizardAction.Wizard_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("WizardAction.Starten_des_Wizards_2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/wizard.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/wizard.gif")));
 	}
 
 	public void run() {

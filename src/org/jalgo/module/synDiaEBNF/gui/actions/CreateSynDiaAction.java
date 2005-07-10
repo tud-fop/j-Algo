@@ -55,8 +55,8 @@ public class CreateSynDiaAction extends Action
 		setToolTipText(Messages
 				.getString("CreateSynDiaAction.Erstellen_eines_Syntaxdiagramm-Systems_mit_Hilfe_der_Maus._2")); //$NON-NLS-1$
 		//		TODO: find or design nice buttons
-		setImageDescriptor(ImageDescriptor.createFromFile(null,
-				"pix/createSynDia.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/createSynDia.gif")));
 	}
 
 	public void run() {

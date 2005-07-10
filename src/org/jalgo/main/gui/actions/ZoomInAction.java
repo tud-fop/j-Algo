@@ -44,8 +44,8 @@ public class ZoomInAction extends Action {
 		this.form = form;
 		setText(Messages.getString("ui.Zoom_in")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("ui.Zoom_in")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/zoom-in.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/zoom-in.gif")));
 	}
 
 	public void run() {

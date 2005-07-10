@@ -34,8 +34,8 @@ public class AddCurvedLineAction extends Action {
 	public AddCurvedLineAction() {
 		setText("Curved Line");
 		setToolTipText("Add curved line.");
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/curved_connector.gif"));
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/curved_connector.gif")));
 	}
 
 	public void run() {

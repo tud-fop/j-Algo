@@ -19,7 +19,7 @@
 
 /*
  * Created on Aug 15, 2004
- * $Id: ModuleInfo.java,v 1.2 2005/06/27 21:03:08 mischi Exp $
+ * $Id: ModuleInfo.java,v 1.3 2005/07/10 13:00:06 styjdt Exp $
  */
 package org.jalgo.module.dijkstraModule;
 
@@ -68,7 +68,8 @@ public class ModuleInfo implements IModuleInfo {
      * @see org.jalgo.main.IModuleInfo#getLogo()
      */
     public ImageDescriptor getLogo() {
-        return ImageDescriptor.createFromFile(null, "pix/dijkstra_icon.gif");
+    	return ImageDescriptor.createFromURL(
+    		getClass().getResource("/dijkstra_pix/logo.gif"));
     }
 
     /* (non-Javadoc)

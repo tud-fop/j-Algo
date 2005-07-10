@@ -43,8 +43,8 @@ public class TransAction extends Action implements IModeConstants {
 		setToolTipText(Messages
 				.getString("TransAction.Start_trans_algorithm._2")); //$NON-NLS-1$
 		//  TODO: add button-image
-		setImageDescriptor(ImageDescriptor.createFromFile(null,
-				"pix/transalgo.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/transalgo.gif")));
 	}
 
 	public void run() {

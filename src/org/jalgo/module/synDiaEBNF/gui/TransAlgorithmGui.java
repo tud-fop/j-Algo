@@ -26,8 +26,8 @@ package org.jalgo.module.synDiaEBNF.gui;
 import java.io.Serializable;
 
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.gui.TextCanvas;
 import org.jalgo.main.gui.widgets.GraphViewForm;
@@ -57,7 +57,8 @@ public class TransAlgorithmGui extends Gui  implements Serializable{
 
 		GraphViewForm form1 = new GraphViewForm(sash1, SWT.BORDER);
 		form1.setText(Messages.getString("TransAlgorithmGui.translation_1")); //$NON-NLS-1$
-		form1.setImage(new Image(parent.getDisplay(), "./pix/new.gif")); //$NON-NLS-1$
+		form1.setImage(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/new.gif")).createImage());
 		figure = form1.getPanel();
 		
 		StackViewForm form2 = new StackViewForm(sash1, SWT.BORDER);
@@ -66,7 +67,8 @@ public class TransAlgorithmGui extends Gui  implements Serializable{
 		
 		TextViewForm form3 = new TextViewForm(sash, SWT.BORDER);
 		form3.setText(Messages.getString("TransAlgorithmGui.Algo_definition_4")); //$NON-NLS-1$
-		form3.setImage(new Image(parent.getDisplay(), "./pix/new.gif")); //$NON-NLS-1$
+		form3.setImage(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/new.gif")).createImage());
 		textCanvas = form3.getTextCanvas();
 
 		sash.setWeights(new int[] { 60, 40 });

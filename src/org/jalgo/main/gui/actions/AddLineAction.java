@@ -34,8 +34,8 @@ public class AddLineAction extends Action {
 	public AddLineAction() {
 		setText("Line");
 		setToolTipText("Add straight line.");
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/line.gif"));
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/line.gif")));
 	}
 
 	public void run() {

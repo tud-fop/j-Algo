@@ -45,8 +45,8 @@ public class AddRoundedRectangleLabelAction extends Action {
 		this.figure = figure;
 		setText("Circle");
 		setToolTipText("Add circle.");
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/circle.gif"));
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/circle.gif")));
 	}
 
 	public void run() {

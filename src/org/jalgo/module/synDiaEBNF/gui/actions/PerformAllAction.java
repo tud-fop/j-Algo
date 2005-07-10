@@ -37,8 +37,8 @@ public class PerformAllAction extends Action {
 		this.mc = mc;
 		setText(Messages.getString("PerformAllAction.Perform_All_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("PerformAllAction.Perform_trans-algorithm_automatically_to_the_end._2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/transalgoend.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/transalgoend.gif")));
 		setId(Messages.getString("PerformAllAction.performAll_4")); //$NON-NLS-1$
 	}
 

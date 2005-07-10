@@ -41,8 +41,8 @@ public class AboutAction extends Action {
 		setText(Messages.getString("AboutAction.About_jAlgo_1")); //$NON-NLS-1$
 		setToolTipText(Messages
 				.getString("AboutAction.Get_infos_about_jAlgo._2")); //$NON-NLS-1$
-		setImageDescriptor(ImageDescriptor
-				.createFromFile(null, "pix/about.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/about.gif")));
 	}
 
 	public void run() {

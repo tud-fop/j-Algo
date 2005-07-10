@@ -47,8 +47,8 @@ public class AddEpsilonAction extends Action implements IClickAction {
 		//this.appWindow = appWindow;
 		setText(Messages.getString("AddEpsilonAction.Empty_Figure_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("AddEpsilonAction.Add_Epsilon._2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/epsilon.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/epsilon.gif")));
 	}
 
 	public void run() {

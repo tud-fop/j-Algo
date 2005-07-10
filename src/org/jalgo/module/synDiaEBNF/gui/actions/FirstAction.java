@@ -41,8 +41,8 @@ public class FirstAction extends NavAction implements Serializable {
 		this.mc = mc;
 		setText(Messages.getString("FirstAction.First_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("FirstAction.Jump_to_first._2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/first.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/first.gif")));
 	}
 
 	public void run() {

@@ -51,8 +51,8 @@ public class AddTerminalAction extends Action implements IClickAction {
 		this.figure = figure;
 		setText(Messages.getString("AddTerminalAction.Terminal_symbol_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("AddTerminalAction.Add_terminal_symbol._2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/terminalsymbol.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/terminalsymbol.gif")));
 	}
 
 	public void run() {

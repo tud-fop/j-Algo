@@ -44,7 +44,8 @@ public class MaximizeAction extends Action {
 
 		setText("Maximize");
 		setToolTipText("Maximize.");
-		setImageDescriptor(ImageDescriptor.createFromFile(null, "pix/zoom-in.gif"));
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/zoom-in.gif")));
 	}
 
 	public void run() {

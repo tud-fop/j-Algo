@@ -48,8 +48,8 @@ public class AddRectangleAction extends Action {
 		this.figure = figure;
 		setText("Rectangle");
 		setToolTipText("Add rectangle.");
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/rectangle.gif"));
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/rectangle.gif")));
 	}
 
 	public void run() {

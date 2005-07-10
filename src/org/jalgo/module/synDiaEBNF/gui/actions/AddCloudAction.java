@@ -48,8 +48,8 @@ public class AddCloudAction extends Action implements IClickAction {
 		this.figure = figure;
 		setText(Messages.getString("AddCloudAction.Cloud_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("AddCloudAction.Add_cloud._2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/rectangle.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/rectangle.gif")));
 	}
 
 	public void run() {

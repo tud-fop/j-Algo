@@ -41,8 +41,8 @@ public class LeftAction extends NavAction implements Serializable {
 		this.mc = mc;
 		setText(Messages.getString("LeftAction.Previous_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("LeftAction.Previous_step._2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/left.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/left.gif")));
 	}
 
 	public void run() {

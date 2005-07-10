@@ -45,7 +45,7 @@ public class RedoToolBarAction extends Action implements Serializable
 		setText("Wiederherstellen");
 		setToolTipText("Wiederherstellen");
 		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/redo.gif"));
+			ImageDescriptor.createFromURL(getClass().getResource("/dijkstra_pix/redo.gif")));
 	}
 
 	public void run()

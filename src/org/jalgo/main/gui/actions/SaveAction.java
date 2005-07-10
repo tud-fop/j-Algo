@@ -39,8 +39,8 @@ public class SaveAction extends Action {
 		setText(Messages.getString("ui.Save_file")); //$NON-NLS-1$
 		setId(Messages.getString("ui.Save_file")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("ui.Save_file")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/save.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/save.gif")));
 	}
 
 	public void run() {

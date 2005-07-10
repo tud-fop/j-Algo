@@ -38,6 +38,7 @@ import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -95,7 +96,8 @@ public class ExampleGui extends Gui  implements Serializable{
 		// Create GUI
 
 		form1.setText("Some TextCanvas");
-		form1.setImage(new Image(parent.getDisplay(), "./pix/new.gif"));
+		form1.setImage(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/new.gif")).createImage());
 		form1.getTextCanvas().setTextSegments(
 			new String[] {
 				"Das ist der erste Block",
@@ -250,12 +252,14 @@ public class ExampleGui extends Gui  implements Serializable{
 		// Attach all to ViewForm
 		form2.setTopCenter(toolbar2);
 		form2.setText("Graphenmodellierung");
-		form2.setImage(new Image(parent.getDisplay(), "./pix/new.gif"));
+		form2.setImage(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/new.gif")).createImage());
 
 		// ** Form 3 **
 		// Create GUI
 		form3.setText("Stack");
-		form3.setImage(new Image(parent.getDisplay(), "./pix/new.gif"));
+		form3.setImage(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/new.gif")).createImage());
 		form3.getStackCanvas().push("Element 1");
 		form3.getStackCanvas().push("Element 2");
 		form3.getStackCanvas().push("Element 3");

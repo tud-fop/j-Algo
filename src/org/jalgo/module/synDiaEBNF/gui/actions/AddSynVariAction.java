@@ -51,8 +51,8 @@ public class AddSynVariAction extends Action implements IClickAction {
 		this.figure = figure;
 		setText(Messages.getString("AddSynVariAction.Syntax_variable_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("AddSynVariAction.Add_syntax_variable._2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/synvar.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/synvar.gif")));
 	}
 
 	public void run() {

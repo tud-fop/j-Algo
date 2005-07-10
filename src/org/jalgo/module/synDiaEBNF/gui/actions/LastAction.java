@@ -41,8 +41,8 @@ public class LastAction extends NavAction implements Serializable {
 		this.mc = mc;
 		setText(Messages.getString("LastAction.Last_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("LastAction.Jump_to_last._2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/last.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/last.gif")));
 	}
 
 	public void run() {

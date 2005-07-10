@@ -38,7 +38,8 @@ public class NewModuleAction extends Action {
 	public NewModuleAction(JalgoMain main) {
 		this.main = main;
 		setToolTipText(Messages.getString("ui.New"));
-		setImageDescriptor(ImageDescriptor.createFromFile(null, "pix/new.gif"));
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/new.gif")));
 	}
 	
 	public void run() {

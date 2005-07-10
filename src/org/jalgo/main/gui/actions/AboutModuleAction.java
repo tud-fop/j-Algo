@@ -39,8 +39,8 @@ public class AboutModuleAction extends Action {
 
 		setText(Messages.getString("AboutModuleAction.About_jAlgo-Module_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("AboutModuleAction.Get_infos_about_jAlgo-Module._2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/about.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/about.gif")));
 	}
 
 	public void run() {

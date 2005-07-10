@@ -48,8 +48,8 @@ public class ExportAction extends Action {
 
 		setText(Messages.getString("ui.Export")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("ui.Export_image")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/export.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/export.gif")));
 	}
 
 	public void run() {

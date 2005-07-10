@@ -52,8 +52,8 @@ public class AddRepetitionAction extends Action implements IClickAction {
 		//this.appWindow = appWindow;
 		setText(Messages.getString("AddRepetitionAction.Repetition_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("AddRepetitionAction.Add_repetition_2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/repetition.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/repetition.gif")));
 	}
 	
 	public void run() {

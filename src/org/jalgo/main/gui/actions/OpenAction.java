@@ -43,8 +43,8 @@ public class OpenAction extends Action {
 		this.win = win;
 		setText(Messages.getString("ui.Open_file")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("ui.Open_file")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/open.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/open.gif")));
 	}
 
 	/**

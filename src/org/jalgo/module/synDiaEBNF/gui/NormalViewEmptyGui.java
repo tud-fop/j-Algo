@@ -80,8 +80,8 @@ public class NormalViewEmptyGui extends Gui {
 		 */
 		group1.setText("EBNF laden");
 		Label openFileImage = new Label(group1, SWT.CENTER);
-		ImageDescriptor img1 = ImageDescriptor.createFromFile(null,
-				"pix/open.gif");
+		ImageDescriptor img1 = ImageDescriptor.createFromURL(
+			getClass().getResource("/main_pix/open.gif"));
 		openFileImage.setImage(img1.createImage());
 
 		Label openFileText = new Label(group1, SWT.WRAP);
@@ -113,8 +113,8 @@ public class NormalViewEmptyGui extends Gui {
 		 */
 		group2.setText("Neue EBNF");
 		Label createEbnfImage = new Label(group2, SWT.CENTER);
-		ImageDescriptor img2 = ImageDescriptor.createFromFile(null,
-				"pix/createEbnf.gif");
+		ImageDescriptor img2 = ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/createEbnf.gif"));
 		createEbnfImage.setImage(img2.createImage());
 
 		Label createEbnfText = new Label(group2, SWT.WRAP);
@@ -140,8 +140,8 @@ public class NormalViewEmptyGui extends Gui {
 		 */
 		group3.setText("Syntax-Diagramm-System erstellen");
 		Label createSynDiaImage = new Label(group3, SWT.CENTER);
-		ImageDescriptor img3 = ImageDescriptor.createFromFile(null,
-				"pix/createSynDia.gif");
+		ImageDescriptor img3 = ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/createSynDia.gif"));
 		createSynDiaImage.setImage(img3.createImage());
 
 		Label createSynDiaText = new Label(group3, SWT.WRAP);

@@ -37,8 +37,8 @@ public class AbortAlgoAction extends Action {
 		this.mc = mc;
 		setText(Messages.getString("AbortAlgoAction.Abort_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("AbortAlgoAction.Abort_the_algorithm._2")); //$NON-NLS-1$
-		setImageDescriptor(
-			ImageDescriptor.createFromFile(null, "pix/stop.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/stop.gif")));
 	}
 
 	public void run() {

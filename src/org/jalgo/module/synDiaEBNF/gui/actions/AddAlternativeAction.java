@@ -52,7 +52,8 @@ public class AddAlternativeAction extends Action implements IClickAction {
 		
 		setText(Messages.getString("AddAlternativeAction.Alternative_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("AddAlternativeAction.Add_alternative._2")); //$NON-NLS-1$
-		setImageDescriptor(ImageDescriptor.createFromFile(null, "pix/alternative.gif")); //$NON-NLS-1$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			getClass().getResource("/ebnf_pix/alternative.gif")));
 	}
 
 	public void run() {
