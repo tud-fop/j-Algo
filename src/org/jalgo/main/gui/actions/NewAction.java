@@ -40,9 +40,9 @@ public class NewAction extends Action {
 		this.main = main;
 		this.modNumber = modNumber;
 
-		setText( ( (IModuleInfo) (main.getKnownModuleInfos().get(modNumber)) ).getName() ); 
-		setToolTipText(( (IModuleInfo) (main.getKnownModuleInfos().get(modNumber)) ).getDescription()); 
-		setImageDescriptor(( (IModuleInfo) (main.getKnownModuleInfos().get(modNumber)) ).getLogo());
+		setText( (main.getKnownModuleInfos().get(modNumber)).getName() ); 
+		setToolTipText((main.getKnownModuleInfos().get(modNumber)).getDescription()); 
+		setImageDescriptor((main.getKnownModuleInfos().get(modNumber)).getLogo());
 	}
 
 	public void run() {
