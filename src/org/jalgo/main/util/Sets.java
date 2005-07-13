@@ -26,28 +26,14 @@
  
 package org.jalgo.main.util;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Stephan Creutz
  */
 public class Sets {
-	/**
-	 * proves whether two sets are disjoint
-	 * @param set1
-	 * @param set2
-	 * @return true if the two sets are disjoint
-	 */
-	public static <T> boolean disjoint(Set<T> set1, Set<T> set2) {
-		for (T set2Object : set2) {
-			if (set1.contains(set2Object)) {
-				return false;
-			}
-		}
-		return true;
-	}
 
+	//TODO: lookup, if this method is really necessary, otherwise delete class Sets
 	public static <T> T search(Set<T> set, T o) {
 		for (T setObject : set) {
 			if (o.equals(setObject)) {
@@ -55,12 +41,5 @@ public class Sets {
 			}
 		}
 		return null;
-	}
-	
-	public static <T> Set<T> union(Set<T> set1, Set<T> set2) {
-		Set<T> set = new HashSet<T>();
-		set.addAll(set1);
-		set.addAll(set2);
-		return set;
 	}
 }
