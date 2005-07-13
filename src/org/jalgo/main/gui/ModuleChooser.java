@@ -12,7 +12,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -107,13 +106,13 @@ public class ModuleChooser extends Composite implements SelectionListener {
 			button.setEnabled(true);
 			int modNum = moduleList.getSelectionIndex();
 			// set description text of module
-			descrL.setText(((IModuleInfo) main.getKnownModuleInfos().get(modNum)).getName() + 
-					"\n\n" + ((IModuleInfo) main.getKnownModuleInfos().get(modNum)).getDescription() +
-					"\n\nVersion: " + ((IModuleInfo) main.getKnownModuleInfos().get(modNum)).getVersion() + 
-					"\n\nAutoren: " + ((IModuleInfo) main.getKnownModuleInfos().get(modNum)).getAuthor() +
-					"\n\nLizenz: " + ((IModuleInfo) main.getKnownModuleInfos().get(modNum)).getLicense());
+			descrL.setText(main.getKnownModuleInfos().get(modNum).getName() + 
+					"\n\n" + main.getKnownModuleInfos().get(modNum).getDescription() +
+					"\n\nVersion: " + main.getKnownModuleInfos().get(modNum).getVersion() + 
+					"\n\nAutoren: " + main.getKnownModuleInfos().get(modNum).getAuthor() +
+					"\n\nLizenz: " + main.getKnownModuleInfos().get(modNum).getLicense());
 			// show module's logo
-			logoL.setImage(((IModuleInfo) main.getKnownModuleInfos().get(modNum)).getLogo().createImage());
+			logoL.setImage(main.getKnownModuleInfos().get(modNum).getLogo().createImage());
 		}
  	}
 	
