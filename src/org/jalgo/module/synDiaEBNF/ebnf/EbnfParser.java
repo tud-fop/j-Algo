@@ -23,12 +23,11 @@
  
 package org.jalgo.module.synDiaEBNF.ebnf;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
-import org.jalgo.main.util.Sets;
 
 /**
  * @author Stephan Creutz
@@ -77,7 +76,7 @@ public class EbnfParser extends Parser {
 	 * analyse an EBNF rule system
 	 * 
 	 * @return a EbnfDefinition object
-	 * @throws Exception if something goes wrong
+	 * @throws EbnfParseException if something goes wrong
 	 */
 	public EbnfDefinition analyse() throws EbnfParseException {
 		InputParser variableSetParser = new InputParser(variables);
@@ -86,13 +85,13 @@ public class EbnfParser extends Parser {
 		Set<String> terminalSet = null;
 		variableSet = variableSetParser.analyse();
 		terminalSet = terminalSetParser.analyse();
-		if (!Sets.disjoint(variableSet, terminalSet)) {
+		if (!Collections.disjoint(variableSet, terminalSet)) {
 			throw new EbnfParseException(Messages.getString("EbnfParser.EbnfParseException_1_9")); //$NON-NLS-1$
 		}
-		if (!Sets.disjoint(variableSet, metaSymbols)) {
+		if (!Collections.disjoint(variableSet, metaSymbols)) {
 			throw new EbnfParseException(Messages.getString("EbnfParser.EbnfParseException_2_10")); //$NON-NLS-1$
 		}
-		if (!Sets.disjoint(terminalSet, metaSymbols)) {
+		if (!Collections.disjoint(terminalSet, metaSymbols)) {
 			throw new EbnfParseException(Messages.getString("EbnfParser.EbnfParseException_3_11")); //$NON-NLS-1$
 		}
 		if (startVariable.equals("")) { //$NON-NLS-1$
@@ -137,44 +136,27 @@ public class EbnfParser extends Parser {
 		}
 		return definition;
 	}
-	/**
-	 * @return
-	 */
+
 	public String getAlphabet() {
 		return alphabet;
 	}
 
-	/**
-	 * @return
-	 */
 	public EbnfDefinition getDefinition() {
 		return definition;
 	}
 
-	/**
-	 * @return
-	 */
 	public String getEbnfName() {
 		return ebnfName;
 	}
 
-	/**
-	 * @return
-	 */
 	public HashMap getRules() {
 		return rules;
 	}
 
-	/**
-	 * @return
-	 */
 	public String getStartVariable() {
 		return startVariable;
 	}
 
-	/**
-	 * @return
-	 */
 	public String getVariables() {
 		return variables;
 	}
