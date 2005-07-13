@@ -234,7 +234,7 @@ public class GenerateWord
 			unmark(history.getStepElem(history.getPointer() - 1), true);
 		}
 
-		if (stack.peak() != null) {
+		if (stack.peek() != null) {
 
 			//fetch the new SynDiaElement to work with
 			currentElement = stack.pop();
