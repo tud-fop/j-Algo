@@ -1,20 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /*
@@ -60,13 +64,13 @@ import org.jalgo.main.gui.actions.SaveAsAction;
  * @author Cornelius Hald
  * @author Alexander Claus
  */
-public class JalgoWindow extends ApplicationWindow {
+public class JalgoWindow
+extends ApplicationWindow {
 
 	private JalgoMain parent;
 
-	private LinkedList<NewAction> newActions; // LinkedList of NewActions (one for each
+	private LinkedList<NewAction> newActions;
 
-								   // module)
 	private SaveAction saveAction;
 	private SaveAsAction saveAsAction;
 	private CTabFolder ct;
@@ -89,7 +93,7 @@ public class JalgoWindow extends ApplicationWindow {
 		addMenuBar();
 		addToolBar(SWT.WRAP | SWT.FLAT);
 		addStatusLine();
-	
+
 	}
 
 	/**
@@ -105,60 +109,45 @@ public class JalgoWindow extends ApplicationWindow {
 		}
 		super.handleShellCloseEvent();
 	}
-	
-	protected Control createContents(Composite parent) {
 
-		parent.getShell().setText(Messages.getString("General.name") + " - " +
-			Messages.getString("General.version")); //$NON-NLS-1$
+	protected Control createContents(Composite parent) {
+		parent.getShell().setText(Messages.getString("General.name") + " - "
+			+ Messages.getString("General.version")); //$NON-NLS-1$
 		parent.getShell().setSize(800, 600);
 		parent.getShell().setImage(ImageDescriptor.createFromURL(
 			getClass().getResource("/main_pix/jalgo.png")).createImage());
 
 		final JalgoMain jalgo = this.parent;
-		
-		// code used in swt 2.1 and deprecated when using swt 3.0
-		//ct = new CTabFolder(parent, SWT.FLAT);
-		//ct.addCTabFolderListener(new CTabFolderAdapter() {
-		//	public void itemClosed(CTabFolderEvent event) {
-		//		// Ask user for savinge
-		//		if (!getParent().getCurrentInstance().close())
-		//			event.doit = false;
-		//		else
-		//			jalgo.itemClosed((CTabItem) event.item);
-		//	}
-		//});
 
-		// replacement for deprecated code above (to use with swt 3.0)
-
-		//FIXME: find out the subtile changes, because the closing mechanism isn't working correctly - alexander
 		ct = new CTabFolder(parent, SWT.FLAT);
 		ct.addCTabFolder2Listener(new CTabFolder2Adapter() {
-			public void itemClosed(CTabFolderEvent event) {
-				//Ask user for saving
-				if (!getParent().getCurrentInstance().close()) event.doit = false;
-				else jalgo.itemClosed((CTabItem) event.item);
+			public void close(CTabFolderEvent event) {
+				// Ask user for saving
+				if (!jalgo.getModuleInstanceByTab((CTabItem)event.item).close())
+					event.doit = false;
+				else jalgo.itemClosed((CTabItem)event.item);
 			}
 		});
 
 		ct.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
-				jalgo.itemSelected((CTabItem) event.item);
+				jalgo.itemSelected((CTabItem)event.item);
 			}
 		});
-		
+
 		ct.setSimple(false);
 		ct.setFocus();
 
 		// no more need for the following lines when using the swt v 3.138
 		// -alexander
-//		parent.pack();
-//		parent.getShell().setSize(800, 600);
-		
+		// parent.pack();
+		// parent.getShell().setSize(800, 600);
+
 		// start gui to choose module (by michi)
 		CTabItem cti = requestNewCTabItem("Willkommen",
-			ImageDescriptor.createFromURL(getClass().getResource(
-				"/main_pix/jalgo-file.png")).createImage());
-		new ModuleChooser(jalgo, cti, (Composite) cti.getControl(), SWT.NONE);
+			ImageDescriptor.createFromURL(
+				getClass().getResource("/main_pix/jalgo-file.png")).createImage());
+		new ModuleChooser(jalgo, cti, (Composite)cti.getControl(), SWT.NONE);
 
 		return ct;
 	}
@@ -221,7 +210,7 @@ public class JalgoWindow extends ApplicationWindow {
 	}
 
 	public CTabFolder getCTabFolder() {
-		return this.ct;
+		return ct;
 	}
 
 	public StatusLineManager getTheStatusLineManager() {
@@ -235,14 +224,12 @@ public class JalgoWindow extends ApplicationWindow {
 	/**
 	 * Returns new CTabItem which should be used to put the module GUI into.
 	 * 
-	 * @param text
-	 *            The Title for the CTabItem
-	 * @param img
-	 *            The Image for the CTabItem
+	 * @param text The Title for the CTabItem
+	 * @param img The Image for the CTabItem
 	 * @return The Composite which should be used to put the module GUI into
 	 */
 	public CTabItem requestNewCTabItem(String text, Image img) {
-		CTabItem cti = new CTabItem(this.ct, SWT.FLAT|SWT.CLOSE);
+		CTabItem cti = new CTabItem(this.ct, SWT.FLAT | SWT.CLOSE);
 		cti.setText(text);
 		cti.setImage(img);
 
@@ -287,5 +274,4 @@ public class JalgoWindow extends ApplicationWindow {
 			newActions.add(new NewAction(parent, i));
 		}
 	}
-
 }
