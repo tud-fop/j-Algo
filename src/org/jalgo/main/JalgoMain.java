@@ -53,16 +53,8 @@ public class JalgoMain {
 	private JalgoWindow appWin;
 
 	private LinkedList<Class<IModuleConnector>> knownModules;
-
-	// LinkedList of Class object with IModuleConnectors
-	private LinkedList<IModuleInfo> knownModuleInfos; // LinkedList
-								   // of
-								   // IModulesInfos
-
-	private HashMap<CTabItem, IModuleConnector> openInstances; // key = CTabItem,
-							     // value =
-							     // IModuleConnector
-
+	private LinkedList<IModuleInfo> knownModuleInfos;
+	private HashMap<CTabItem, IModuleConnector> openInstances;
 	
 	private IModuleConnector currentInstance;
 
@@ -84,8 +76,7 @@ public class JalgoMain {
 	/**
 	 * Is called, when the specified tab item is closed.
 	 * 
-	 * @param cti
-	 *                       The tab item, which is closed.
+	 * @param cti The tab item, which is closed.
 	 */
 	public void itemClosed(CTabItem cti) {
 		/* Delete menu and toolbar of CTab */
@@ -100,12 +91,9 @@ public class JalgoMain {
 		/* Remove CTab */
 		openInstances.remove(cti);
 		cti.dispose();
-		if (openInstances.isEmpty()) {
-			//closed tab was the last one
-			currentInstance = null;
-		} else {
-			itemSelected(appWin.getCTabFolder().getSelection());
-		}
+		//closed tab was the last one
+		if (openInstances.isEmpty()) currentInstance = null;
+		else itemSelected(appWin.getCTabFolder().getSelection());
 	}
 
 	/**
@@ -115,8 +103,7 @@ public class JalgoMain {
 	 */
 	public void itemSelected(CTabItem cti) {
 		//happends only, when program is launched
-		if (openInstances.isEmpty())
-			return;
+		if (openInstances.isEmpty()) return;
 
 		//makes current Module-Tool/MenuBar invisible
 		if (currentInstance != null) {
@@ -156,9 +143,8 @@ public class JalgoMain {
 	 */
 	public IModuleConnector newInstanceByName(String moduleName) {
 		for (int i=0; i<knownModuleInfos.size(); i++) {
-			if ((knownModuleInfos.get(i)).getName().equals(moduleName)) {
+			if ((knownModuleInfos.get(i)).getName().equals(moduleName))
 				return newInstance(i);
-			}
 		}
 		return null;
 	}
@@ -357,5 +343,16 @@ public class JalgoMain {
 //		knownModuleInfos.add(new org.jalgo.module.synDiaEBNF.ModuleInfo());
 //		knownModuleInfos.add(new org.jalgo.module.testModule.ModuleInfo());
 		//Add a new ModuleInfo here!! 
+	}
+
+	/**
+	 * Retrieves the module instance belonging to the given tab item.
+	 * 
+	 * @param item the interesting tab item
+	 * 
+	 * @return the module instance belonging to the given tab item
+	 */
+	public IModuleConnector getModuleInstanceByTab(CTabItem item) {
+		return openInstances.get(item);
 	}
 }
