@@ -26,11 +26,12 @@
  
 package org.jalgo.main.gui.widgets;
 
+import java.util.Stack;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
-import org.jalgo.main.util.Stack;
 
 /**
  * @author Cornelius Hald
@@ -84,5 +85,4 @@ public class StackCanvas extends Composite {
 	public void setStack(Stack<String> stack) {
 		this.stack = stack;
 	}
-
 }
