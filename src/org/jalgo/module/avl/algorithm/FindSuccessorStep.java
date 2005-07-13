@@ -1,20 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /**
@@ -30,18 +34,15 @@ import org.jalgo.module.avl.datastructure.WorkNode;
 /**
  * @author Jean Christoph Jung
  * 
- * <code> FindNextInSizeStep </code> is one step in the search for the key
- * that is next in size to the key that will be removed.
- * 
- * 
- * 
+ * <code> FindNextInSizeStep </code> is one step in the search for the key that
+ * is next in size to the key that will be removed.
  */
 public class FindSuccessorStep extends Command implements Constants {
 
 	private WorkNode wn;
-	
+
 	/**
-	 * @param wn: the worknode indicates the position in the tree 
+	 * @param wn the worknode indicates the position in the tree
 	 */
 	public FindSuccessorStep(WorkNode wn) {
 		this.wn = wn;
@@ -50,38 +51,37 @@ public class FindSuccessorStep extends Command implements Constants {
 		results.add(2, WORKING);
 	}
 
-	/** 
-	 * <code> perform </code> moves the worknode to the left child (if exists) of the current node next
-	 * to the worknode, and changes the visualisations of both the old and new node next to
-	 * the worknode
+	/**
+	 * <code> perform </code> moves the worknode to the left child (if exists)
+	 * of the current node next to the worknode, and changes the visualisations
+	 * of both the old and new node next to the worknode
 	 */
 	@Override
 	public void perform() {
 		Node n = wn.getNextToMe();
 		n.setVisualizationStatus(Visualizable.NORMAL);
 		n = n.getLeftChild();
-		n.setVisualizationStatus(Visualizable.FOCUSED | Visualizable.LINE_NORMAL);
+		n.setVisualizationStatus(Visualizable.FOCUSED
+			| Visualizable.LINE_NORMAL);
 		wn.setNextToMe(n);
-		if (n.getLeftChild()!=null)
-			results.set(2, WORKING);
-		else 
-			results.set(2, FOUND);
+		if (n.getLeftChild() != null) results.set(2, WORKING);
+		else results.set(2, FOUND);
 		results.set(0, "links gegangen");
 	}
 
 	/**
-	 * <code> undo </code> moves the worknode to the parent of the current node next
-	 * to the worknode, and changes the visualisations of both the old and new node next to
-	 * the worknode
+	 * <code> undo </code> moves the worknode to the parent of the current node
+	 * next to the worknode, and changes the visualisations of both the old and
+	 * new node next to the worknode
 	 */
 	@Override
 	public void undo() {
 		Node n = wn.getNextToMe();
 		n.setVisualizationStatus(Visualizable.NORMAL);
 		n = n.getParent();
-		n.setVisualizationStatus(Visualizable.FOCUSED | Visualizable.LINE_NORMAL);
+		n.setVisualizationStatus(Visualizable.FOCUSED
+			| Visualizable.LINE_NORMAL);
 		wn.setNextToMe(n);
-		results.set(2, WORKING);	
+		results.set(2, WORKING);
 	}
-
 }
