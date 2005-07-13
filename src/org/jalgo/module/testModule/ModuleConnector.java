@@ -123,7 +123,6 @@ public class ModuleConnector implements IModuleConnector {
     }
 
 	public boolean close() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

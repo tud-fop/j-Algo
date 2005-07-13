@@ -19,7 +19,7 @@
 
 /*
  * Created on Aug 15, 2004
- * $Id: ModuleConnector.java,v 1.2 2005/06/27 21:03:28 mischi Exp $
+ * $Id: ModuleConnector.java,v 1.3 2005/07/13 23:00:34 styjdt Exp $
  */
 package org.jalgo.module.startup;
 
@@ -151,7 +151,6 @@ public class ModuleConnector implements IModuleConnector {
 	}
 
 	public boolean close() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

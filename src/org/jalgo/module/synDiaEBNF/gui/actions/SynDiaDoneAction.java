@@ -107,7 +107,7 @@ public class SynDiaDoneAction extends Action {
 									.getParent()).replace(((CloudFigure) o),
 									new EmptyFigure());
 						} catch (SynDiaException e) {
-							// TODO Automatisch erstellter Catch-Block
+							// TODO handle e
 						}
 						a = 1;
 					} else
@@ -117,7 +117,7 @@ public class SynDiaDoneAction extends Action {
 						((CompositeSynDiaFigure) ((CloudFigure) o).getParent())
 								.replace(((CloudFigure) o), new EmptyFigure());
 					} catch (SynDiaException e) {
-						// TODO Automatisch erstellter Catch-Block
+						// TODO handle e
 					}
 			} else if (o instanceof VariableFigure)
 				variables.add(((VariableFigure) o).getText());
