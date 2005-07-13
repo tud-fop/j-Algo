@@ -88,9 +88,8 @@ public class Remove extends MacroCommand implements Constants {
 					nodeToDelete = wn.getNextToMe();
 					nodeToDelete.setVisualizationStatus(Visualizable.FOCUSED
 						| Visualizable.LINE_NORMAL);
-					if (nodeToDelete.getRightChild() == null) commands
-						.add(CommandFactory.createRemoveNode(wn, tree,
-							nodeToDelete));
+					if (nodeToDelete.getRightChild() == null) commands.add(
+						CommandFactory.createRemoveNode(wn, tree, nodeToDelete));
 					else commands.add(CommandFactory.createFindSuccessor(wn));
 					break;
 				case WORKING:
@@ -99,8 +98,7 @@ public class Remove extends MacroCommand implements Constants {
 					results.add(2, WORKING);
 					break;
 				case NOTFOUND:
-					results
-						.set(0, resultlist.get(0) + " \nLöschen abgebrochen");
+					results.set(0, resultlist.get(0) + " \nLöschen abgebrochen");
 					results.set(1, "remove1");
 					results.set(2, NOTFOUND);
 					currentPosition++;
@@ -135,9 +133,6 @@ public class Remove extends MacroCommand implements Constants {
 			results = c.getResults();
 			results.set(1, "remove4");
 			results.set(2, DONE);
-			// ich hab folgende zeile hier eingef�gt, weil ich sonst exceptions
-			// bekam, hab aber keine ahnung, ob das hier richtig ist - alexander
-			// results.add(3, wn.getNextToMe());
 			currentPosition++;
 		}
 	}
@@ -158,9 +153,7 @@ public class Remove extends MacroCommand implements Constants {
 				c = commands.get(currentPosition);
 			}
 		}
-		if ((c instanceof SearchAlg) && !((SearchAlg)c).hasPrevious()) {
-			return;
-		}
+		if ((c instanceof SearchAlg) && !((SearchAlg)c).hasPrevious()) return;
 		else if ((c instanceof FindSuccessor)
 			&& !((FindSuccessor)c).hasPrevious()) {
 			currentPosition--;
@@ -169,15 +162,9 @@ public class Remove extends MacroCommand implements Constants {
 
 		c.undo();
 
-		if (c instanceof FindSuccessor) {
-			results.set(1, "remove3");
-		}
-		else if (c instanceof RemoveNode) {
-			results.set(1, "remove4");
-		}
-		else if (c instanceof SearchAlg) {
-			results.set(1, "remove1");
-		}
+		if (c instanceof FindSuccessor) results.set(1, "remove3");
+		else if (c instanceof RemoveNode) results.set(1, "remove4");
+		else if (c instanceof SearchAlg) results.set(1, "remove1");
 
 		// delete old objects, perform creates new ones
 		if ((c instanceof SearchAlg) || (c instanceof FindSuccessor)) {
@@ -211,7 +198,6 @@ public class Remove extends MacroCommand implements Constants {
 			perform();
 			results = c.getResults();
 		}
-
 	}
 
 	/**
@@ -230,26 +216,24 @@ public class Remove extends MacroCommand implements Constants {
 				c = commands.get(currentPosition);
 			}
 		}
-		if ((c instanceof SearchAlg) && !((SearchAlg)c).hasPrevious()) {
-			return;
-		}
-		else if ((c instanceof FindSuccessor)
-			&& !((FindSuccessor)c).hasPrevious()) {
+
+		if ((c instanceof SearchAlg) && !((SearchAlg)c).hasPrevious()) return;
+		else if ((c instanceof FindSuccessor) &&
+				!((FindSuccessor)c).hasPrevious()) {
 			currentPosition--;
 			c = commands.get(currentPosition);
 		}
 
-		if (c instanceof SearchAlg) while (((SearchAlg)c).hasPrevious())
-			undo();
-		else if (c instanceof FindSuccessor) while (((FindSuccessor)c)
-			.hasPrevious())
-			undo();
+		if (c instanceof SearchAlg)
+			while (((SearchAlg)c).hasPrevious()) undo();
+		else if (c instanceof FindSuccessor)
+			while (((FindSuccessor)c).hasPrevious()) undo();
 		else c.undo();
 
 		// delete old objects, perform creates new ones
 		if ((c instanceof SearchAlg) || (c instanceof FindSuccessor)) {
-			if (commands.size() > currentPosition + 1) commands
-				.remove(currentPosition + 1);
+			if (commands.size() > currentPosition + 1)
+				commands.remove(currentPosition + 1);
 		}
 	}
 }
