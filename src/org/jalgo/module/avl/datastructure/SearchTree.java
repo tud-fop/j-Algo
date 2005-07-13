@@ -306,7 +306,7 @@ public class SearchTree {
 		calcHeight.perform();
 		// update balances
 		calculateBalances((AVLNode)root);
-		// TODO: nur �bergangsl�sung, auskommentiertes soll hier rein
+		// TODO: nur Übergangslösung, auskommentiertes soll hier rein
 		// Command calcAllBalances = CommandFactory.createCalcAllBalances(root);
 		// calcAllBalances.perform();
 	}

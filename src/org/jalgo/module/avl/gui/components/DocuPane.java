@@ -121,7 +121,7 @@ implements DisplayModeChangeable, GUIConstants {
 		if (gui.isPerformStep()) textPane.setCaretPosition(Math.max(0,
 				lastHighlightedParagraphOffset+lastHighlightedParagraphLength));
 		else textPane.setCaretPosition(Math.max(0, lastHighlightedParagraphOffset));
-		//FIXME: der folgende ansatz f�hrt zu darstellungsfehlern,
+		//FIXME: der folgende ansatz führt zu darstellungsfehlern,
 		//es wird zwar richtig positioniert, allerdings wird der text gelegentlich
 		//�berlagert, bzw. sogar in der paintarea dargestellt,
 		//vermutung: scrollRectToVisible() ist schuld...
