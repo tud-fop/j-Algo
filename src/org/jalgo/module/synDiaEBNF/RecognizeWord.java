@@ -1,20 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /*
@@ -60,11 +64,14 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariableBack;
  * @author Michael Pradel
  * @version %I%, %G%
  */
-public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, SynDiaColors,
-		Serializable {
+public class RecognizeWord
+extends SynDiaBacktracking
+implements IAlgorithm, SynDiaColors, Serializable {
+
 	private static final long serialVersionUID = 4542393009123159241L;
-	
+
 	private String word = ""; //$NON-NLS-1$
+
 	// always points to the current character in the word (String)
 
 	/**
@@ -74,84 +81,57 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	 * the inputCanvas opens a dialog to get word-to-recognize from user using
 	 * wordInputDialog()
 	 * 
-	 * @param figure
-	 *                   The <code> Figure </code> include the diagram system
-	 * @param stackCanvas
-	 *                   The <code> StackCanvas </code> of the graphical stack
-	 * @param algoTxtCanvas
-	 *                   The <code> TextCanvas </code> where the algorithm is displayed
-	 * @param generatedWordCanvas
-	 *                   The <code> TextCanvas </code> to display the generated word
-	 * @param synDiaDef
-	 *                   The <code> SynDiaSystem </code> to work with
+	 * @param figure The <code> Figure </code> include the diagram system
+	 * @param stackCanvas The <code> StackCanvas </code> of the graphical stack
+	 * @param algoTxtCanvas The <code> TextCanvas </code> where the algorithm is
+	 *            displayed
+	 * @param generatedWordCanvas The <code> TextCanvas </code> to display the
+	 *            generated word
+	 * @param synDiaDef The <code> SynDiaSystem </code> to work with
 	 */
 	public RecognizeWord(ModuleController moduleController, Figure figure,
-			StackCanvas stackCanvas, TextCanvas algoTxtCanvas,
-			TextCanvas generatedWordCanvas, SynDiaSystem synDiaDef) {
+		StackCanvas stackCanvas, TextCanvas algoTxtCanvas,
+		TextCanvas generatedWordCanvas, SynDiaSystem synDiaDef) {
 
 		super(moduleController, figure, stackCanvas, algoTxtCanvas,
-		generatedWordCanvas, synDiaDef);
+			generatedWordCanvas, synDiaDef);
 
 		// algorithm written on page 22 in the script
-		algoTxtCanvas
-				.setTextSegments(new String[] {
-						Messages.getString("RecognizeWord.Algo_title_3"), //$NON-NLS-1$
-						Messages
-								.getString("RecognizeWord.Algo_Description_1_4") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_2_5"), //$NON-NLS-1$
-						Messages
-								.getString("RecognizeWord.Algo_Description_3_6"), //$NON-NLS-1$
-						Messages
-								.getString("RecognizeWord.Algo_Description_4_7") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_5_8") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_6_9"), //$NON-NLS-1$
-						Messages
-								.getString("RecognizeWord.Algo_Description_7_10") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_8_11") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_9_12") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_10_13") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_11_14") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_12_15"), //$NON-NLS-1$
-						Messages
-								.getString("RecognizeWord.Algo_Description_13_16") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_14_17") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_15_18") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_16_19") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_17_20"), //$NON-NLS-1$
-						Messages
-								.getString("RecognizeWord.Algo_Description_18_21") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_19_22") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_20_23"), //$NON-NLS-1$
-						Messages
-								.getString("RecognizeWord.Algo_Description_21_24") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.Algo_Description_22_25"), //$NON-NLS-1$
-						Messages
-								.getString("RecognizeWord.Algo_Description_23_26") }); //$NON-NLS-1$
+		algoTxtCanvas.setTextSegments(new String[] {
+			Messages.getString("RecognizeWord.Algo_title_3"), //$NON-NLS-1$
+			Messages.getString("RecognizeWord.Algo_Description_1_4") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_2_5"), //$NON-NLS-1$
+			Messages.getString("RecognizeWord.Algo_Description_3_6"), //$NON-NLS-1$
+			Messages.getString("RecognizeWord.Algo_Description_4_7") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_5_8") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_6_9"), //$NON-NLS-1$
+			Messages.getString("RecognizeWord.Algo_Description_7_10") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_8_11") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_9_12") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_10_13") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_11_14") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_12_15"), //$NON-NLS-1$
+			Messages.getString("RecognizeWord.Algo_Description_13_16") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_14_17") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_15_18") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_16_19") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_17_20"), //$NON-NLS-1$
+			Messages.getString("RecognizeWord.Algo_Description_18_21") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_19_22") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_20_23"), //$NON-NLS-1$
+			Messages.getString("RecognizeWord.Algo_Description_21_24") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.Algo_Description_22_25"), //$NON-NLS-1$
+			Messages.getString("RecognizeWord.Algo_Description_23_26")}); //$NON-NLS-1$
 		algoTxtCanvas.markFirst();
 		algoTxtCanvas.setMarkStyle(new MarkStyle(normal, diagramNormal, 2));
 		algoTxtCanvas.demarkAll();
 		algoTxtCanvas.setMarkStyle(new MarkStyle(textHighlight, diagramNormal,
-				3));
+			3));
 
-		outputCanvas.setTextSegments(new String[] { Messages
-				.getString("RecognizeWord.Algo_Description_24_27") }); //$NON-NLS-1$
+		outputCanvas.setTextSegments(new String[] {Messages
+		.getString("RecognizeWord.Algo_Description_24_27")}); //$NON-NLS-1$
 
-		//show backtracking labels
+		// show backtracking labels
 		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
 			backtrackingLabels(synDiaDef.getInitialDiagram(k), true);
 		}
@@ -163,7 +143,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	 * Test if there is a valid previous element in the history, to go there.
 	 * 
 	 * @return true, if there is a previous element in the history, so you can
-	 *               go a step back; false if not
+	 *         go a step back; false if not
 	 */
 	public boolean hasPreviousHistStep() {
 		return (history.getPointer() > 0);
@@ -173,7 +153,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	 * Test if there is a valid next element in the history, to go there
 	 * 
 	 * @return true, if there is a next element, so you can go a step forward in
-	 *               history; false if not
+	 *         history; false if not
 	 */
 	public boolean hasNextHistStep() {
 		return (history.getPointer() < history.getSize());
@@ -183,27 +163,29 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	 * This method is called if the forwardInHistoryButton on the GUI is pushed,
 	 * it restore the next step with the history.
 	 * 
-	 * @exception IndexOutOfBounds
-	 *                        if there is no further step to go
+	 * @exception IndexOutOfBoundsException if there is no further step to go
 	 */
-	public void nextHistStep() throws IndexOutOfBoundsException {
-		if (!hasNextHistStep()) {
-			throw new IndexOutOfBoundsException(
-					"there is no further history step to go"); //$NON-NLS-1$
+	public void nextHistStep()
+	throws IndexOutOfBoundsException {
+		if (!hasNextHistStep()) { throw new IndexOutOfBoundsException(
+			"there is no further history step to go"); //$NON-NLS-1$
 		}
 
 		restoreStep(history.getNextHistoryStep());
 		refreshGeneratedWord(generatedWord);
 
-		//MAKE ready and controll if it works
+		// MAKE ready and controll if it works
 		if (currentElement instanceof SynDiaTerminal) {
-			redoNextTerm((SynDiaTerminal) currentElement);
-		} else if (currentElement instanceof SynDiaVariable) { //SynDiaVariable
-			redoNextVariable((SynDiaVariable) currentElement);
-		} else if (currentElement instanceof SynDiaVariableBack) {
-			//SynDiaVariable
-			redoNextVariableBack((SynDiaVariableBack) currentElement);
-		} else {
+			redoNextTerm((SynDiaTerminal)currentElement);
+		}
+		else if (currentElement instanceof SynDiaVariable) { // SynDiaVariable
+			redoNextVariable((SynDiaVariable)currentElement);
+		}
+		else if (currentElement instanceof SynDiaVariableBack) {
+			// SynDiaVariable
+			redoNextVariableBack((SynDiaVariableBack)currentElement);
+		}
+		else {
 			nextHistStep();
 		}
 	}
@@ -212,20 +194,19 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	 * this method is called if the backwardButton on the GUI is pushed and
 	 * should restore the last saved step of the visualisation
 	 * 
-	 * @exception IndexOutOfBounds
-	 *                        if there is no previous step to go
+	 * @exception IndexOutOfBoundsException if there is no previous step to go
 	 */
-	public void previousHistStep() throws IndexOutOfBoundsException {
-		if (!hasPreviousHistStep()) {
-			throw new IndexOutOfBoundsException(
-					"there is no further history step to go back"); //$NON-NLS-1$
+	public void previousHistStep()
+	throws IndexOutOfBoundsException {
+		if (!hasPreviousHistStep()) { throw new IndexOutOfBoundsException(
+			"there is no further history step to go back"); //$NON-NLS-1$
 		}
 		restoreStep(history.getLastHistoryStep());
 		refreshGeneratedWord(generatedWord);
 
 		stack.push(currentElement);
 
-		//mark the right algorithm Text-field
+		// mark the right algorithm Text-field
 		algoTxtCanvas.demarkAll();
 		algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
 
@@ -235,8 +216,9 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 
 			// refresh the generatedWord
 			refreshGeneratedWord(generatedWord);
-		} else if (currentElement instanceof SynDiaVariable) {
-			//SynDiaVariable Jump in in the next step
+		}
+		else if (currentElement instanceof SynDiaVariable) {
+			// SynDiaVariable Jump in in the next step
 
 			// mark the currentElem
 			unmark(currentElement, false);
@@ -245,28 +227,30 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 			stackCanvas.pop();
 
 			// restore Backtracking diagram to set Background
-			colorTheDiagram(((SynDiaVariable) currentElement).getHelpCopy()
-					.getParentInitial().getGfx());
+			colorTheDiagram(((SynDiaVariable)currentElement).getHelpCopy()
+			.getParentInitial().getGfx());
 
 			// MAKE first Connection???
-		} else if (currentElement instanceof SynDiaVariableBack) {
-			//SynDiaVariableBackjump out!
+		}
+		else if (currentElement instanceof SynDiaVariableBack) {
+			// SynDiaVariableBackjump out!
 
 			// display correspondent backtracking label on StackCanvas
-			if (((SynDiaVariableBack) currentElement).getOriginal() != null) {
+			if (((SynDiaVariableBack)currentElement).getOriginal() != null) {
 				stackCanvas.push("" //$NON-NLS-1$
-						+ (((SynDiaVariableBack) currentElement).getOriginal()
-								.getBacktrackingLabel()));
+					+ (((SynDiaVariableBack)currentElement).getOriginal()
+					.getBacktrackingLabel()));
 			}
-		} else {
+		}
+		else {
 			previousHistStep();
 		}
 	}
 
 	/**
 	 * This method is called if the "do algorithm" button on the GUI is pushed.
-	 * It realizes the backtracking algorithm, has to find the next element in the
-	 * syntactical diagram and...
+	 * It realizes the backtracking algorithm, has to find the next element in
+	 * the syntactical diagram and...
 	 */
 	public void performNextStep() {
 		if (hasPreviousHistStep()) {
@@ -274,43 +258,51 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		}
 
 		// check, if it is actually possible to perform a further step
-		if ((stack.peak() != null)) {
+		if ((stack.peek() != null)) {
 
-			//fetch the new SynDiaElement to work with
+			// fetch the new SynDiaElement to work with
 			currentElement = stack.pop();
 
-			//initialize BackTrackStep to save and restore later!
+			// initialize BackTrackStep to save and restore later!
 			history.addNewPosStep(stack, currentElement, generatedWord);
 
-			//detect type of currentElem and go on accordingly
+			// detect type of currentElem and go on accordingly
 			if (currentElement instanceof SynDiaInitial) {
-				doNextInitial((SynDiaInitial) currentElement);
-			} else if (currentElement instanceof SynDiaEpsilon) {
-				//go on Stack, this is an Epsilon for ex. in an alternative,
+				doNextInitial((SynDiaInitial)currentElement);
+			}
+			else if (currentElement instanceof SynDiaEpsilon) {
+				// go on Stack, this is an Epsilon for ex. in an alternative,
 				performNextStep();
-			} else if (currentElement instanceof SynDiaTerminal) { //terminal
-				doNextTerm((SynDiaTerminal) currentElement);
-			} else if (currentElement instanceof SynDiaVariable) { //variable
-				doNextVariable((SynDiaVariable) currentElement);
-			} else if (currentElement instanceof SynDiaVariableBack) { //variable
-				doNextVariableBack((SynDiaVariableBack) currentElement);
-			} else { // composite
+			}
+			else if (currentElement instanceof SynDiaTerminal) { // terminal
+				doNextTerm((SynDiaTerminal)currentElement);
+			}
+			else if (currentElement instanceof SynDiaVariable) { // variable
+				doNextVariable((SynDiaVariable)currentElement);
+			}
+			else if (currentElement instanceof SynDiaVariableBack) { // variable
+				doNextVariableBack((SynDiaVariableBack)currentElement);
+			}
+			else { // composite
 				algoTxtCanvas.demarkAll();
 				algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
-				if (currentElement instanceof SynDiaRepetition) { //repetition
-					doNextRepetition((SynDiaRepetition) currentElement);
-				} else if (currentElement instanceof SynDiaAlternative) {
-					doNextAlternative((SynDiaAlternative) currentElement);
-				} else if (currentElement instanceof SynDiaConcatenation) {
-					doNextConcatenation((SynDiaConcatenation) currentElement);
+				if (currentElement instanceof SynDiaRepetition) { // repetition
+					doNextRepetition((SynDiaRepetition)currentElement);
+				}
+				else if (currentElement instanceof SynDiaAlternative) {
+					doNextAlternative((SynDiaAlternative)currentElement);
+				}
+				else if (currentElement instanceof SynDiaConcatenation) {
+					doNextConcatenation((SynDiaConcatenation)currentElement);
 				}
 			}
-		} else { // if null on stack
+		}
+		else { // if null on stack
 			stack.pop();
 			performNextStep();
 		}
 		if (!hasNextStep()) {
-			//mark the right algorithm text field
+			// mark the right algorithm text field
 			algoTxtCanvas.demarkAll();
 			algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
 			// dialog that the Algorithmen is Empty
@@ -323,19 +315,19 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		List list = this.synDiaDef.getGfx().getSynDias();
 
 		for (int k = 0; k < list.size(); k++) {
-			((SynDiaFigure) list.get(k)).setBackgroundColor(diagramNormal);
+			((SynDiaFigure)list.get(k)).setBackgroundColor(diagramNormal);
 		}
 
-		//set the one
+		// set the one
 		current.setBackgroundColor(diagramHighlight);
 	}
 
-	//----------------------PerformNextStep()-----------------------------------
+	// ----------------------PerformNextStep()-----------------------------------
 
 	private void doNextInitial(SynDiaInitial currentElem) {
 		colorTheDiagram(currentElem.getGfx());
 
-		//actualize StackConfiguration
+		// actualize StackConfiguration
 		stack.push(currentElem.getInnerElem());
 	}
 
@@ -352,16 +344,18 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		if (!(word.startsWith(generatedWord))) {
 			if (missMatchDialog()) {
 				previousHistStep();
-			} else {
+			}
+			else {
 				finalTasks();
 				moduleController.algoFinished();
 			}
-		} else {
+		}
+		else {
 			refreshGeneratedWord(generatedWord);
 		}
 	}
 
-	private void doNextVariable(SynDiaVariable currentElem) { //jump
+	private void doNextVariable(SynDiaVariable currentElem) { // jump
 		// in
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
@@ -381,7 +375,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 
 	}
 
-	private void doNextVariableBack(SynDiaVariableBack currentElem) { //jump
+	private void doNextVariableBack(SynDiaVariableBack currentElem) { // jump
 		// out
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
@@ -400,12 +394,14 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	}
 
 	private void doNextRepetition(SynDiaRepetition currentElem) {
-		if (!(currentElem.isStraightAheadElemDone())) {// StraightAheadElement not done so far
+		if (!(currentElem.isStraightAheadElemDone())) {// StraightAheadElement
+			// not done so far
 			// set new Stack Configuration
 			currentElem.setStraightAheadElemDone(true);
 			stack.push(currentElem);
 			stack.push(currentElem.getStraightAheadElem());
-		} else { //StraightAheadElem already done
+		}
+		else { // StraightAheadElem already done
 			currentElem.setStraightAheadElemDone(false);
 			if (repetionDialog(currentElem)) {
 				// go into the Repetition
@@ -429,7 +425,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		performNextStep();
 	}
 
-	//----------------------------redoNextTerm()--------------------------------
+	// ----------------------------redoNextTerm()--------------------------------
 
 	private void redoNextTerm(SynDiaTerminal currentElem) {
 		// mark the right algorithmen Text-field
@@ -444,17 +440,19 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		if (!word.startsWith(generatedWord)) {
 			if (missMatchDialog()) {
 				previousHistStep();
-			} else {
+			}
+			else {
 				finalTasks();
 				moduleController.algoFinished();
 			}
-		} else {
+		}
+		else {
 			refreshGeneratedWord(generatedWord);
 		}
 	}
 
 	private void redoNextVariable(SynDiaVariable currentElem) {
-		//jump in
+		// jump in
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
 		algoTxtCanvas.mark(ALGO_DEF_VAR);
@@ -473,7 +471,7 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	}
 
 	private void redoNextVariableBack(SynDiaVariableBack currentElem) {
-		//jump out
+		// jump out
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
 		algoTxtCanvas.mark(ALGO_DEF_DIAGRAM_FINISHED);
@@ -487,12 +485,12 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 
 	private void refreshGeneratedWord(String output) {
 		outputCanvas
-				.addSegment(Messages
-						.getString("RecognizeWord.the_word_to_recognize_is___n_33") //$NON-NLS-1$
-						+ word
-						+ Messages
-								.getString("RecognizeWord._nthe_word_generated_until_here_is___n_34") //$NON-NLS-1$
-						+ output);
+		.addSegment(Messages
+		.getString("RecognizeWord.the_word_to_recognize_is___n_33") //$NON-NLS-1$
+			+ word
+			+ Messages
+			.getString("RecognizeWord._nthe_word_generated_until_here_is___n_34") //$NON-NLS-1$
+			+ output);
 
 	}
 
@@ -502,21 +500,22 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	 */
 	private void wordInputDialog() {
 		InputDialog inDialog = new InputDialog(GfxUtil.getAppShell(), Messages
-				.getString("RecognizeWord.WordInput_35"), //$NON-NLS-1$
-				Messages.getString("RecognizeWord.Word_to_recognize__36"), //$NON-NLS-1$
-				"", //$NON-NLS-1$
-				null);
+		.getString("RecognizeWord.WordInput_35"), //$NON-NLS-1$
+			Messages.getString("RecognizeWord.Word_to_recognize__36"), //$NON-NLS-1$
+			"", //$NON-NLS-1$
+			null);
 		if (inDialog.open() != Window.CANCEL) {
 			word = inDialog.getValue();
-		} else {
+		}
+		else {
 			MessageDialog
-					.openError(
-							null,
-							Messages.getString("RecognizeWord.Warning_39"), //$NON-NLS-1$
-							Messages
-									.getString("RecognizeWord.You_must_enter_a_proper_string_40") //$NON-NLS-1$
-									+ Messages
-											.getString("RecognizeWord.Now_the_Algo_will_be_finished_!_41")); //$NON-NLS-1$
+			.openError(
+				null,
+				Messages.getString("RecognizeWord.Warning_39"), //$NON-NLS-1$
+				Messages
+				.getString("RecognizeWord.You_must_enter_a_proper_string_40") //$NON-NLS-1$
+					+ Messages
+					.getString("RecognizeWord.Now_the_Algo_will_be_finished_!_41")); //$NON-NLS-1$
 			finalTasks();
 			moduleController.algoFinished();
 		}
@@ -528,18 +527,12 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	 * @return boolean false if the want abort
 	 */
 	private boolean missMatchDialog() {
-		return MessageDialog
-				.openQuestion(
-						stackCanvas.getShell(),
-						Messages
-								.getString("RecognizeWord.recognize_missmatch_1_42"), //$NON-NLS-1$
-						Messages
-								.getString("RecognizeWord.recognize_missmatch_2_43") //$NON-NLS-1$
-								+ word
-								+ Messages
-										.getString("RecognizeWord.recognize_missmatch_3_44") //$NON-NLS-1$
-								+ Messages
-										.getString("RecognizeWord.recognize_missmatch_4_45")); //$NON-NLS-1$
+		return MessageDialog.openQuestion(stackCanvas.getShell(), Messages
+		.getString("RecognizeWord.recognize_missmatch_1_42"), //$NON-NLS-1$
+			Messages.getString("RecognizeWord.recognize_missmatch_2_43") //$NON-NLS-1$
+				+ word
+				+ Messages.getString("RecognizeWord.recognize_missmatch_3_44") //$NON-NLS-1$
+				+ Messages.getString("RecognizeWord.recognize_missmatch_4_45")); //$NON-NLS-1$
 	}
 
 	/**
@@ -548,20 +541,21 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 	private void readyDialog() {
 		if (generatedWord.equals(word)) {
 			boolean result = MessageDialog
-					.openQuestion(
-							stackCanvas.getShell(),
-							Messages
-									.getString("RecognizeWord.Algo_finished_unsuccessfull_1_46"), //$NON-NLS-1$
-							Messages
-									.getString("RecognizeWord.Algo_finished_unsuccessfull_2_47") //$NON-NLS-1$
-									+ generatedWord
-									+ Messages
-											.getString("RecognizeWord.Algo_finished_unsuccessfull_3_48")); //$NON-NLS-1$
+			.openQuestion(
+				stackCanvas.getShell(),
+				Messages
+				.getString("RecognizeWord.Algo_finished_unsuccessfull_1_46"), //$NON-NLS-1$
+				Messages
+				.getString("RecognizeWord.Algo_finished_unsuccessfull_2_47") //$NON-NLS-1$
+					+ generatedWord
+					+ Messages
+					.getString("RecognizeWord.Algo_finished_unsuccessfull_3_48")); //$NON-NLS-1$
 			if (result) {
 				finalTasks();
 				moduleController.algoFinished();
 			}
-		} else {
+		}
+		else {
 			missMatchDialog();
 		}
 	}
@@ -570,40 +564,38 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		LinkedList list = alternative.getOptions();
 		int way = list.size(); // int of posibile ways
 		// ask the user, which way to go on
-		//return the list index of the choosen way
+		// return the list index of the choosen way
 		int result = 0;
 
 		while (result == 0) {
-			InputDialog inDialog = new InputDialog(
-					GfxUtil.getAppShell(),
-					Messages.getString("RecognizeWord.Alternative_Dialog_1_49"), //$NON-NLS-1$
-					Messages.getString("RecognizeWord.Alternative_Dialog_2_50") //$NON-NLS-1$
-							+ way
-							+ Messages
-									.getString("RecognizeWord.Alternative_Dialog_3_51"), //$NON-NLS-1$
-					"", //$NON-NLS-1$
-					null);
+			InputDialog inDialog = new InputDialog(GfxUtil.getAppShell(),
+				Messages.getString("RecognizeWord.Alternative_Dialog_1_49"), //$NON-NLS-1$
+				Messages.getString("RecognizeWord.Alternative_Dialog_2_50") //$NON-NLS-1$
+					+ way
+					+ Messages
+					.getString("RecognizeWord.Alternative_Dialog_3_51"), //$NON-NLS-1$
+				"", //$NON-NLS-1$
+				null);
 			if (inDialog.open() != Window.CANCEL) {
 				try {
 					result = (Integer.valueOf(inDialog.getValue())).intValue();
-				} catch (NumberFormatException e) {
-					//				MessageDialog.openError(
-					//					null,
-					//					"Warning",
-					//					"Please use a integer value. Using default value now:
+				}
+				catch (NumberFormatException e) {
+					// MessageDialog.openError(
+					// null,
+					// "Warning",
+					// "Please use a integer value. Using default value now:
 					// 1.");
 					result = 0;
 				}
 			}
-			if ((result > 0) && (result <= way)) {
-				return result - 1;
-			}
+			if ((result > 0) && (result <= way)) { return result - 1; }
 			MessageDialog
-					.openError(
-							null,
-							Messages.getString("RecognizeWord.Warning_53"), //$NON-NLS-1$
-							Messages
-									.getString("RecognizeWord.Please_use_a_value_between_1_and__54") + way + "."); //$NON-NLS-1$ //$NON-NLS-2$
+			.openError(
+				null,
+				Messages.getString("RecognizeWord.Warning_53"), //$NON-NLS-1$
+				Messages
+				.getString("RecognizeWord.Please_use_a_value_between_1_and__54") + way + "."); //$NON-NLS-1$ //$NON-NLS-2$
 			result = 0;
 		}
 
@@ -614,8 +606,8 @@ public class RecognizeWord extends SynDiaBacktracking implements IAlgorithm, Syn
 		// ask the user, if the repetition should makes!
 		// return boolean if or not
 		return MessageDialog.openQuestion(GfxUtil.getAppShell(), Messages
-				.getString("RecognizeWord.Repetition_Dialog__1_56"), //$NON-NLS-1$
-				Messages.getString("RecognizeWord.Repetition_Dialog__2_57")); //$NON-NLS-1$
+		.getString("RecognizeWord.Repetition_Dialog__1_56"), //$NON-NLS-1$
+			Messages.getString("RecognizeWord.Repetition_Dialog__2_57")); //$NON-NLS-1$
 	}
 
 	private void restoreStep(BackTrackStep step) {
