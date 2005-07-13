@@ -29,23 +29,23 @@ package org.jalgo.module.dijkstraModule.util;
  * @author Hannes Stra"s
  *
  */
-public class ParsingException extends Exception
-{
+public class ParsingException extends Exception {
+
+	private static final long serialVersionUID = 807340482223438215L;
+
 	private String message;
-	
+
 	/** Creates a ParsingException containing the given message.
 	 * @param message error message
 	 */
-	public ParsingException(String message)
-	{
+	public ParsingException(String message) {
 		this.message = message;
 	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Throwable#getMessage()
 	 */
-	public String getMessage()
-	{
+	public String getMessage() {
 		return message;
 	}
 }

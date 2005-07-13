@@ -66,7 +66,7 @@ public class NodeListComposite extends ControllerComposite {
 		        this.m_textNodeList.setText(strText);
 		    }
 		}
-	};
+	}
 	protected class NodeListObserver implements Observer
 	{
 		private Text m_textNodeList;
@@ -90,7 +90,7 @@ public class NodeListComposite extends ControllerComposite {
 			Graph gr = ctrl.getGraph();
 			m_textNodeList.setText(gr.getNodeListText());			
 		}
-	};
+	}
 	
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.dijkstraModule.gui.ControllerComposite

@@ -39,7 +39,7 @@ public class StatusbarTextMouseTrackAdapter extends MouseTrackAdapter {
     {
         m_ctrl = ctrl;
         m_strText = strText;
-    };
+    }
     
     /* (non-Javadoc)
      * @see org.eclipse.swt.events.MouseTrackListener#mouseEnter(org.eclipse.swt.events.MouseEvent)

@@ -71,7 +71,7 @@ import org.jalgo.module.dijkstraModule.util.StatusbarText;
  */
 
 public class Controller extends Observable {
-    
+
 	private class _Observable extends Observable {
 
 		/**
@@ -101,75 +101,67 @@ public class Controller extends Observable {
 
 			super.setChanged();
 		}
-	};
-   protected class _DisposeListener implements DisposeListener
-    {
-        Controller m_ctrl;
-        public _DisposeListener(Controller ctrl)
-        {
-            m_ctrl = ctrl;
-        }
-	    public void widgetDisposed(DisposeEvent e)
-	    {
-	        m_ctrl.stopAnimation();
-	        
-	        if(m_ctrl.isSaved() == false)
-	        {
-	            MessageBox msg =new MessageBox(Display.getCurrent().getActiveShell(),SWT.ICON_QUESTION|SWT.YES | SWT.NO);
-	            msg.setMessage("M\u00F6chten Sie Ihre \u00C4nderungen im Modul \"Dijkstra\" speichern?");
-	            if( msg.open() == SWT.YES)
-	            {
-	    	        JalgoMain main = Jalgo.getJalgoMain();
-			        main.saveFile();
-	            }	
-	        }
-	    }
 	}
-	private class _AlgoAnimator implements Runnable
-	{
-	    private Controller m_ctrl;
-	    public _AlgoAnimator(Controller ctrl)
-	    {
-	        m_ctrl = ctrl;
-	        
-	    }
-	     /* (non-Javadoc)
-         * @see java.lang.Runnable#run()
-         */
-        public void run()
-        {
-            try
-            {
-                if(m_ctrl.m_iAniMillis > 0)
-                {
-     			   int nStep = m_ctrl.getCurrentStep();
-     			   if(m_ctrl.hasNextStep(nStep) == true)
-     			   {
-    				   nStep = m_ctrl.getNextStepIndex();		
-    				   State state = m_ctrl.getState(nStep);
-    				   if(state != null)
-    				   {
-    				       m_ctrl.setStatusbarText(state.getDescriptionEx());
-    				       m_ctrl.setModifiedFlag();
-    				   }
-    			   }
-     			   else
-     			   {
-     			     m_ctrl.stopAnimation();
-     			     m_ctrl.setModifiedFlag();
-     			     return;
-     			   }
-                }                
-                m_ctrl.m_algorithmPage.getDisplay().timerExec(m_ctrl.m_iAniMillis,this);
-            }
-            catch(SWTException e)
-            {
-                
-            }
-        }
+
+	protected class _DisposeListener implements DisposeListener {
+		Controller m_ctrl;
+
+		public _DisposeListener(Controller ctrl) {
+			m_ctrl = ctrl;
+		}
+
+		public void widgetDisposed(DisposeEvent e) {
+			m_ctrl.stopAnimation();
+
+			if (m_ctrl.isSaved() == false) {
+				MessageBox msg = new MessageBox(Display.getCurrent().getActiveShell(), SWT.ICON_QUESTION
+						| SWT.YES | SWT.NO);
+				msg.setMessage("M\u00F6chten Sie Ihre \u00C4nderungen im Modul \"Dijkstra\" speichern?");
+				if (msg.open() == SWT.YES) {
+					JalgoMain main = Jalgo.getJalgoMain();
+					main.saveFile();
+				}
+			}
+		}
 	}
+
+	private class _AlgoAnimator implements Runnable {
+		private Controller m_ctrl;
+
+		public _AlgoAnimator(Controller ctrl) {
+			m_ctrl = ctrl;
+
+		}
+
+		/* (non-Javadoc)
+		 * @see java.lang.Runnable#run()
+		 */
+		public void run() {
+			try {
+				if (m_ctrl.m_iAniMillis > 0) {
+					int nStep = m_ctrl.getCurrentStep();
+					if (m_ctrl.hasNextStep(nStep) == true) {
+						nStep = m_ctrl.getNextStepIndex();
+						State state = m_ctrl.getState(nStep);
+						if (state != null) {
+							m_ctrl.setStatusbarText(state.getDescriptionEx());
+							m_ctrl.setModifiedFlag();
+						}
+					} else {
+						m_ctrl.stopAnimation();
+						m_ctrl.setModifiedFlag();
+						return;
+					}
+				}
+				m_ctrl.m_algorithmPage.getDisplay().timerExec(m_ctrl.m_iAniMillis, this);
+			} catch (SWTException e) {
+
+			}
+		}
+	}
+
 	protected int m_iAniMillis = -1;
-	
+
 	protected ActionStack m_actions;
 
 	protected Graph m_curGraph;
@@ -181,12 +173,11 @@ public class Controller extends Observable {
 	protected Page m_editingPage;
 
 	protected Page m_algorithmPage;
-	
-	
 
 	public static final int MODE_NO_TOOL_ACTIVE = 0; // When in editing mode but
-													 // with no visual tool
-													 // selected.
+
+	// with no visual tool
+	// selected.
 
 	public static final int MODE_ADD_MOVE_NODE = 1;
 
@@ -205,19 +196,29 @@ public class Controller extends Observable {
 	protected int m_iEditingMode = MODE_NO_TOOL_ACTIVE;
 
 	protected _Observable m_StatusbarObservable;
+
 	protected StatusbarText m_strStatusbarText;
+
 	protected HashMap m_mapNodes2AlgoStatesArrayLists = new HashMap();
 
 	protected int m_nCurStep = 0;
-	
+
 	private ApplicationWindow m_appWindow;
+
 	private SubToolBarManager m_toolBarManager;
+
 	private UndoToolBarAction m_undoToolBarAction;
+
 	private RedoToolBarAction m_redoToolBarAction;
+
 	private SaveAction m_saveToolBarAction;
+
 	private SaveAsAction m_saveAsToolBarAction;
+
 	private _AlgoAnimator m_animator;
+
 	private boolean m_bSaved = true;
+
 	public Controller(Composite parent, SubToolBarManager toolBarManager, ApplicationWindow appWindow) {
 		super();
 		m_actions = new ActionStack(0);
@@ -228,12 +229,12 @@ public class Controller extends Observable {
 
 		this.m_toolBarManager = toolBarManager;
 		this.m_appWindow = appWindow;
-		
+
 		// Create stuff here...
 		createGUI();
 		m_animator = new _AlgoAnimator(this);
 	}
-	
+
 	/**
 	 * @author Steven Voigt
 	 * deserialize the data, given by the 
@@ -246,27 +247,27 @@ public class Controller extends Observable {
 			int newMode = serializedObjects.readInt();
 			setGraph((Graph) serializedObjects.readObject());
 			switch (newMode) {
-			case MODE_ADD_MOVE_NODE:				
+			case MODE_ADD_MOVE_NODE:
 				setEditingMode(MODE_ADD_MOVE_NODE);
 				break;
 
-			case MODE_ADD_WEIGH_EDGE:				
+			case MODE_ADD_WEIGH_EDGE:
 				setEditingMode(MODE_ADD_WEIGH_EDGE);
 				break;
 
-			case MODE_DELETE_NODE:				
+			case MODE_DELETE_NODE:
 				setEditingMode(MODE_DELETE_NODE);
 				break;
 
-			case MODE_ALGORITHM:				
+			case MODE_ALGORITHM:
 				setEditingMode(MODE_ALGORITHM);
 				break;
 
-			case MODE_NO_TOOL_ACTIVE:				
+			case MODE_NO_TOOL_ACTIVE:
 				setEditingMode(MODE_NO_TOOL_ACTIVE);
 				break;
 
-			default:				
+			default:
 				setEditingMode(MODE_NO_TOOL_ACTIVE);
 			}
 
@@ -278,43 +279,35 @@ public class Controller extends Observable {
 			java.lang.System.err.println("Error while loading.");
 			throw new InternalErrorException(cnfExc.getMessage());
 		}
-		try
-		{
-			if(this.getEditingMode() == MODE_ALGORITHM)
-			{
-			    new ShowAlgorithmPageAction(this);
+		try {
+			if (this.getEditingMode() == MODE_ALGORITHM) {
+				new ShowAlgorithmPageAction(this);
 
+			} else {
+				new ShowEditPageAction(this);
 			}
-			else
-			{
-			    new ShowEditPageAction(this);
-			}
-			
+
 			this.setModifiedFlag();
+		} catch (Exception e) {
+
 		}
-		catch(Exception e)
-		{
-		    
-		}
-	
+
 	}
-	
+
 	/**
 	 * @author Steven Voigt
 	 * Get the graph to cast it in a ByteArrayOutputStream 
 	 * @return the graph as an ByteArrayOutputStream with int for the actual mode
 	 * 
 	 */
-	
+
 	private ByteArrayOutputStream serialize() {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		try {
-			ObjectOutputStream serializedObjects = new ObjectOutputStream(
-					outputStream);
+			ObjectOutputStream serializedObjects = new ObjectOutputStream(outputStream);
 
 			serializedObjects.writeInt(getEditingMode());
 			serializedObjects.writeObject(getGraph());
-			
 
 		} catch (IOException IOExc) {
 			java.lang.System.err.println(IOExc);
@@ -324,7 +317,6 @@ public class Controller extends Observable {
 		return outputStream;
 	}
 
-	
 	/**
 	 * @author Steven Voigt
 	 * Get the serialized data to store it in a file.
@@ -342,10 +334,7 @@ public class Controller extends Observable {
 	public void setSerializedData(ByteArrayInputStream data) {
 		deserialize(data);
 	}
-	
-	
-	
-	
+
 	/**
 	 * (MW) Call setModifiedFlag() after calling this method, except when
 	 * calling from an action. When setModifiedFlag() was called from within
@@ -356,19 +345,19 @@ public class Controller extends Observable {
 	 */
 	public void setEditingMode(int mode) {
 
-		m_iEditingMode = (((mode > _MAX_MODE) || (mode < _MIN_MODE)) ? MODE_NO_TOOL_ACTIVE
-				: mode);
+		m_iEditingMode = (((mode > _MAX_MODE) || (mode < _MIN_MODE)) ? MODE_NO_TOOL_ACTIVE : mode);
 		if (mode == MODE_ALGORITHM) {
 			computeAlgoStates();
 		}
 	}
-	
+
 	/**
 	 * @return Returns the m_iEditingMode field
 	 */
 	public int getEditingMode() {
 		return m_iEditingMode;
 	}
+
 	/**
 	 * @author Frank Staudinger
 	 * 
@@ -378,9 +367,8 @@ public class Controller extends Observable {
 		try {
 			m_nCurStep = 0;
 			m_mapNodes2AlgoStatesArrayLists.clear();
-			DijkstraAlgorithm DijkstraAlgorithm = 
-			    new DijkstraAlgorithm(new ColorFactory(m_composite.getDisplay()),
-			            			  getGraph());
+			DijkstraAlgorithm DijkstraAlgorithm = new DijkstraAlgorithm(new ColorFactory(m_composite.getDisplay()),
+					getGraph());
 			Graph gr = getGraph();
 			Iterator iterNodes = gr.getNodeList().iterator();
 			Node prevStartNode = gr.getStartNode();
@@ -397,8 +385,7 @@ public class Controller extends Observable {
 					arList.add(DijkstraAlgorithm.getCurrentState());
 				}
 				node.setStart(bStart);
-				m_mapNodes2AlgoStatesArrayLists.put(
-						new Integer(node.getIndex()), arList);
+				m_mapNodes2AlgoStatesArrayLists.put(new Integer(node.getIndex()), arList);
 			}
 
 			if (prevStartNode != null) {
@@ -417,13 +404,12 @@ public class Controller extends Observable {
 		Node node = getGraph().getStartNode();
 		if (node == null)
 			return null;
-		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists
-				.get(new Integer(node.getIndex()));
-		if(nStep >= arList.size())
-		    nStep = arList.size()-1;
-		else if(nStep < 0)
+		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists.get(new Integer(node.getIndex()));
+		if (nStep >= arList.size())
+			nStep = arList.size() - 1;
+		else if (nStep < 0)
 			nStep = 0;
-			
+
 		State state = (State) arList.get(nStep);
 		m_nCurStep = nStep;
 		return state;
@@ -443,18 +429,17 @@ public class Controller extends Observable {
 	public int getCurrentStep() {
 		return m_nCurStep;
 	}
-	
+
 	/**
 	 * 
 	 * @return Returns the # of steps for the current start node
 	 */
-	public int getStepCount(){
+	public int getStepCount() {
 		Node node = getGraph().getStartNode();
 		if (node == null)
 			return 0;
-		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists
-				.get(new Integer(node.getIndex()));
-		return ((arList != null) ? (arList.size()) : 0 );		
+		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists.get(new Integer(node.getIndex()));
+		return ((arList != null) ? (arList.size()) : 0);
 	}
 
 	/**
@@ -466,8 +451,7 @@ public class Controller extends Observable {
 		Node node = getGraph().getStartNode();
 		if (node == null)
 			return false;
-		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists
-				.get(new Integer(node.getIndex()));
+		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists.get(new Integer(node.getIndex()));
 		return ((arList != null) ? (nStep + 1) < arList.size() : false);
 	}
 
@@ -480,8 +464,7 @@ public class Controller extends Observable {
 		Node node = getGraph().getStartNode();
 		if (node == null)
 			return false;
-		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists
-				.get(new Integer(node.getIndex()));
+		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists.get(new Integer(node.getIndex()));
 		return ((arList != null) ? (nStep > 0) : false);
 	}
 
@@ -496,8 +479,7 @@ public class Controller extends Observable {
 		Node node = getGraph().getStartNode();
 		if (node == null)
 			return false;
-		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists
-				.get(new Integer(node.getIndex()));
+		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists.get(new Integer(node.getIndex()));
 		Iterator iter = arList.iterator();
 		for (int i = 0; iter.hasNext(); i++) {
 			State state = (State) iter.next();
@@ -518,8 +500,7 @@ public class Controller extends Observable {
 		Node node = getGraph().getStartNode();
 		if (node == null)
 			return false;
-		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists
-				.get(new Integer(node.getIndex()));
+		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists.get(new Integer(node.getIndex()));
 		Iterator iter = arList.iterator();
 		for (int i = 0; iter.hasNext(); i++) {
 			State state = (State) iter.next();
@@ -550,8 +531,7 @@ public class Controller extends Observable {
 		Node node = getGraph().getStartNode();
 		if (node == null)
 			return 0;
-		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists
-				.get(new Integer(node.getIndex()));
+		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists.get(new Integer(node.getIndex()));
 
 		for (int i = getCurrentStep() - 1; i >= 0; i--) {
 			State state = (State) arList.get(i);
@@ -570,9 +550,8 @@ public class Controller extends Observable {
 		Node node = getGraph().getStartNode();
 		if (node == null)
 			return 0;
-		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists
-				.get(new Integer(node.getIndex()));
-		Iterator iter = arList.iterator();
+		ArrayList arList = (ArrayList) m_mapNodes2AlgoStatesArrayLists.get(new Integer(node.getIndex()));
+
 		for (int i = getCurrentStep() + 1; i < arList.size(); i++) {
 			State state = (State) arList.get(i);
 			if (state == null)
@@ -600,17 +579,16 @@ public class Controller extends Observable {
 	public void showAlgorithmPage() {
 		m_folder.showPage(m_algorithmPage);
 		this.setEditingMode(MODE_ALGORITHM);
-		
+
 	}
 
 	/**
 	 * Creates the page folder and all the items on the pages.
 	 */
-	private void createGUI()
-	{
-		
+	private void createGUI() {
+
 		m_folder = new PageFolder(m_composite);
-		
+
 		m_editingPage = new Page(m_folder);
 		m_algorithmPage = new Page(m_folder);
 
@@ -627,12 +605,14 @@ public class Controller extends Observable {
 		// the right size from the start.
 		m_folder.pack();
 		m_folder.setSize(m_composite.getSize());
-		
+
 		//HS -- create toolbar
 		m_saveToolBarAction = ((JalgoWindow) m_appWindow).getSaveAction();
-		if (m_saveToolBarAction != null) m_saveToolBarAction.setEnabled(true);
+		if (m_saveToolBarAction != null)
+			m_saveToolBarAction.setEnabled(true);
 		m_saveAsToolBarAction = ((JalgoWindow) m_appWindow).getSaveAsAction();
-		if (m_saveAsToolBarAction != null) m_saveAsToolBarAction.setEnabled(true);
+		if (m_saveAsToolBarAction != null)
+			m_saveAsToolBarAction.setEnabled(true);
 		m_undoToolBarAction = new UndoToolBarAction(this);
 		m_undoToolBarAction.setEnabled(false);
 		m_toolBarManager.add(m_undoToolBarAction);
@@ -664,8 +644,8 @@ public class Controller extends Observable {
 		this.m_curGraph = graph;
 		if (this.m_iEditingMode == Controller.MODE_ALGORITHM)
 			computeAlgoStates();
-		if(oldGraph.equals(graph)==false)
-		    m_bSaved = false;
+		if (oldGraph.equals(graph) == false)
+			m_bSaved = false;
 		return oldGraph;
 	}
 
@@ -680,9 +660,7 @@ public class Controller extends Observable {
 	 * @return Returns the result of act.doAction()
 	 * @throws Exception
 	 */
-	public boolean registerAndDoAction(Action act, boolean bRegister)
-			throws Exception {
-		
+	public boolean registerAndDoAction(Action act, boolean bRegister) throws Exception {
 
 		if (bRegister == true)
 			m_actions.add(act);
@@ -691,13 +669,10 @@ public class Controller extends Observable {
 			setModifiedFlag();
 			return true;
 		}
-		else
-		{
-		    if(bRegister == true)
-		        m_actions.movePrevious();
-		}
+		if (bRegister == true)
+			m_actions.movePrevious();
 		return false;
-	};
+	}
 
 	/**
 	 * Undoes the last Action
@@ -707,32 +682,31 @@ public class Controller extends Observable {
 	public boolean undoAction() throws Exception {
 		Action pAction = m_actions.movePrevious();
 		return ((pAction == null) ? false : pAction.undoAction());
-	};
+	}
 
 	/**
 	 * @return Returns true if the action stack is not empty
 	 */
 	public boolean hasUndoAction() {
 		return m_actions.canMovePrevious();
-	};
-	
+	}
+
 	/**
 	 * Redoes the last Action
 	 * @return Returns the last actions doAction() function result
 	 * @throws Exception
-	 */	
+	 */
 	public boolean redoAction() throws Exception {
 		Action pAction = m_actions.moveNext();
 		return ((pAction == null) ? false : pAction.doAction());
-	};
+	}
+
 	/**
 	 * @return Returns true if there is an action to redo
 	 */
 	public boolean hasRedoAction() {
 		return m_actions.canMoveNext();
-	};
-
-
+	}
 
 	/**
 	 * Call this function to inform the Controller's observers about changes
@@ -750,7 +724,6 @@ public class Controller extends Observable {
 		this.m_StatusbarObservable.addObserver(observer);
 	}
 
-
 	public StatusbarText getStatusbarText() {
 		return m_strStatusbarText;
 	}
@@ -761,49 +734,45 @@ public class Controller extends Observable {
 		this.m_StatusbarObservable.notifyObservers(this);
 		this.m_StatusbarObservable.clearChanged();
 	}
-	
-	private void updateToolBar()
-	{
-		if (m_undoToolBarAction != null) m_undoToolBarAction.setEnabled(hasUndoAction());
-		if (m_redoToolBarAction != null) m_redoToolBarAction.setEnabled(hasRedoAction());
+
+	private void updateToolBar() {
+		if (m_undoToolBarAction != null)
+			m_undoToolBarAction.setEnabled(hasUndoAction());
+		if (m_redoToolBarAction != null)
+			m_redoToolBarAction.setEnabled(hasRedoAction());
 	}
 
-	public void startAnimation(int iMilliseconds)
-	{
-	    this.m_iAniMillis = iMilliseconds;
-	    m_animator.run();
+	public void startAnimation(int iMilliseconds) {
+		this.m_iAniMillis = iMilliseconds;
+		m_animator.run();
 	}
-	
-	public void stopAnimation()
-	{
-	    if(getAnimationMillis() > 0)
-	    {
-	        try
-	        {
-		        this.m_iAniMillis = -1;
-		        m_algorithmPage.getDisplay().timerExec(this.m_iAniMillis,m_animator);
-		    }
-	        catch(SWTException e)
-	        {
-	            
-	        }
-	    }
+
+	public void stopAnimation() {
+		if (getAnimationMillis() > 0) {
+			try {
+				this.m_iAniMillis = -1;
+				m_algorithmPage.getDisplay().timerExec(this.m_iAniMillis, m_animator);
+			} catch (SWTException e) {
+
+			}
+		}
 	}
-    /**
-     * @return Returns the m_iAniMillis.
-     */
-    public int getAnimationMillis() {
-        return m_iAniMillis;
-    }
-    /**
-     * @return Returns the m_bSaved.
-     */
-    public boolean isSaved() {
-        return m_bSaved;
-    }
-    
-    public void registerDisposeListener(org.eclipse.swt.widgets.Widget widget)
-    {
-        widget.addDisposeListener(new _DisposeListener(this));
-    }
+
+	/**
+	 * @return Returns the m_iAniMillis.
+	 */
+	public int getAnimationMillis() {
+		return m_iAniMillis;
+	}
+
+	/**
+	 * @return Returns the m_bSaved.
+	 */
+	public boolean isSaved() {
+		return m_bSaved;
+	}
+
+	public void registerDisposeListener(org.eclipse.swt.widgets.Widget widget) {
+		widget.addDisposeListener(new _DisposeListener(this));
+	}
 }

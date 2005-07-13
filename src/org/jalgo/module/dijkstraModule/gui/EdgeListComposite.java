@@ -70,7 +70,7 @@ public class EdgeListComposite extends ControllerComposite {
 		        this.m_textEdgeList.setText(strText);
 		    }
 		}
-	};
+	}
 	protected class EdgeListObserver implements Observer
 	{
 		private Text m_textEdgeList;
@@ -94,7 +94,7 @@ public class EdgeListComposite extends ControllerComposite {
 			Graph gr = ctrl.getGraph();
 			m_textEdgeList.setText(gr.getEdgeListText());			
 		}
-	};
+	}
 
 	private Text m_t;
 

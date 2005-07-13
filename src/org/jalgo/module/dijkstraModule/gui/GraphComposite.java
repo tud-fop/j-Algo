@@ -71,7 +71,7 @@ public class GraphComposite extends ControllerComposite {
 			m_graphParent.setGraph(gr);			
 			m_graphParent.update();			
 		}
-	};
+	}
 	protected class RescaleGraphButtonAdapter extends SelectionAdapter
 	{
 		private Controller m_Controller;
@@ -88,12 +88,12 @@ public class GraphComposite extends ControllerComposite {
 			{
 				new RescaleGraphAction(this.m_Controller);
 			}
-			catch (Exception ex)
+			catch (Exception ex) // FIXME warum wird eine Exception gecatched (Stephan)
 			{
 				
 			}
 		}
-	};
+	}
 	
 	protected GraphParent m_graphParent;
 	

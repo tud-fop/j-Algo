@@ -20,7 +20,7 @@
 /*
  * Created on Jun 8, 2005
  */
- 
+
 package org.jalgo.module.dijkstraModule.gui;
 
 import java.io.Serializable;
@@ -34,28 +34,23 @@ import org.jalgo.module.dijkstraModule.actions.RedoAction;
 /**
  * @author Hannes Stra"s
  */
-public class RedoToolBarAction extends Action implements Serializable
-{
+public class RedoToolBarAction extends Action implements Serializable {
+
+	private static final long serialVersionUID = 7953171985089838235L;
 
 	private Controller controller;
 
-	public RedoToolBarAction(Controller c)
-	{
+	public RedoToolBarAction(Controller c) {
 		this.controller = c;
 		setText("Wiederherstellen");
 		setToolTipText("Wiederherstellen");
-		setImageDescriptor(
-			ImageDescriptor.createFromURL(getClass().getResource("/dijkstra_pix/redo.gif")));
+		setImageDescriptor(ImageDescriptor.createFromURL(getClass().getResource("/dijkstra_pix/redo.gif")));
 	}
 
-	public void run()
-	{
-		try
-		{
+	public void run() {
+		try {
 			new RedoAction(controller);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			new DefaultExceptionHandler(e);
 		}
 	}

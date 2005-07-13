@@ -56,6 +56,7 @@ public class RandomGenerationDialog
 extends JDialog
 implements GUIConstants {
 
+	private static final long serialVersionUID = 4752493355110066765L;
 	private Frame parent;
 	private RandomGenerationDialogActionHandler action;
 	

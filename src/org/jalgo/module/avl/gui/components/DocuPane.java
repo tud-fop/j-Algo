@@ -51,6 +51,7 @@ public class DocuPane
 extends JPanel
 implements DisplayModeChangeable, GUIConstants {
 
+	private static final long serialVersionUID = -8080746921156718079L;
 	private GUIController gui;
 	private DocuManager manager;
 	private JTextPane textPane;

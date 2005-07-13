@@ -90,7 +90,7 @@ public class EditModeToolsComposite extends ControllerComposite {
 				return;
 			m_UndoButton.setEnabled(ctrl.hasRedoAction());
 		}		
-	};
+	}
 	protected class ButtonObserver implements Observer
 	{
 		protected Button m_btnTarget;
@@ -129,7 +129,7 @@ public class EditModeToolsComposite extends ControllerComposite {
 				new DefaultExceptionHandler(exc);
 			}		        
 		}
-	};		
+	}	
 	protected class SaveButtonSelectionAdapter extends SelectionAdapter
 	{
 		protected boolean m_bSave;
@@ -176,7 +176,7 @@ public class EditModeToolsComposite extends ControllerComposite {
 				
 			}		        
 		}
-	};		
+	}
 	protected class ButtonSelectionAdapter extends SelectionAdapter
 	{
 		Controller m_Ctrl;

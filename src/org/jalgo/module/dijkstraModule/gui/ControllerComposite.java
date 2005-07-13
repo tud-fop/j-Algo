@@ -51,5 +51,5 @@ public class ControllerComposite extends Composite {
 	{
 		super(cmpParent,nStyle);
 		this.m_Controller = ctrl;
-	};
+	}
 }

@@ -210,7 +210,7 @@ public class MatrixComposite extends ControllerComposite {
 						// keys (tab, arrows, delete ...).
 						// Do not accept entry of digits if text field already
 						// has two characters.
-						int ascii = (int) e.character;
+						int ascii = e.character;
 						boolean isDigit = (ascii >= 48) && (ascii <= 57);
 						boolean textFieldFull = false;//m_arTextfields[r][s].getText().length()
 						// >= 2;

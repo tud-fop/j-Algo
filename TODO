@@ -1,22 +1,22 @@
+release critical:
+#############################
+
+* avoid catching "Exception" oder "NullPointerException" they possibly cover errors and making
+  debugging possible (Stephan)
+* there are empty catch blocks, handle these exceptions (Stephan)
+
 as fast as possible:
 #############################
 
 * special characters don't work on all platforms (esp. not an solaris) --> view /doc/character-problem
-* solaris: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)
-* [DONE] bug in backtracking algorithms: work not for concatenations in lower part of repetition
-* [mostly DONE] remove try-catch blocks for e.g. Nullpointerexceptions to make debugging possible
-* there are empty catch blocks, handle these exceptions
 * mac os x: gui works only after resizing the main window at least one time
-	- this seems to be a general problem with SWT 3 (stephan)
+	- this seems to be a general problem with SWT 3 (Stephan)
 * mac os x: "Fertigstellen"-button after creation of an ebnf-definition does nothing
-* mac os x: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)  - same bug with solaris
-* [DONE] bug in trans-algorithm: nullpointer exception when trying to transform something like S={{{abc}}}
+* mac os x, solaris: while creating syntactical diagram with the mouse, it is not displayed (only if you press zoom in/out)
 * bug in Backtrack-Algo: if breaked and started new, it remembers the old state! (ben)
-* [DONE] Wizard: at "Neue EBNF" -> "neue EBNF-Definition der Form...." afterwards the Text is missing (ben)
-	- seems to be a bug in swt, added spaces as a workaround (stephan)
 * bug in Backtrack-Algo: when I go a little bit forward and backward in 2 SynDias I get a wrong Label in the stack and have and endless loop (ben)
-* add a delete button for editing syntactical diagrams (stephan)
-* port to SWT 3 (stephan)
+* add a delete button for editing syntactical diagrams (Stephan)
+* port to SWT 3 (Stephan)
 
 medium:
 #############################
@@ -30,7 +30,6 @@ medium:
 * improve i18n identical strings should be writen once not 3 or 4 times....
 * remove duplicated code
 * split translated Strings in 2 portions. Mainprog. and Module
-* [DONE] remove magic numbers, replace them with describing constant names
 * implement NewModuleAction.java
 * Info Field: Ordering the authors after who is most active (ben)
 * Info Field: Link to TU-Dresden + TU-Logo (ben)
@@ -39,9 +38,10 @@ medium:
 * lock the History Buttons in the Overview, after using the Algo (ben)
 * the Warning Window has to be a Dialog Window (as the Questions) (ben)
 * save Syntax Diagramm (ben)
-* flip the Stack (so that it goes from bottom to top) (ben)
+* flip the Stack (so that it goes from bottom to top) (ben) (for which purpose? (Stephan))
 * add the Name of the Author in the TODOs and FIXMEs so that anyone can ask what went wrong (ben)
 * don't waste the std-Output or don't create the error.log. Only one from both (ben)
+* port the whole code to Java 5.0 (Stephan)
 
 larger projects:
 #############################

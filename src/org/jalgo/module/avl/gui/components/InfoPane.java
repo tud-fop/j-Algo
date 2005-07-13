@@ -47,6 +47,8 @@ import org.jalgo.module.avl.gui.GUIController;
 public class InfoPane
 extends JPanel {
 
+	private static final long serialVersionUID = -3131790632990225572L;
+
 	private SearchTree tree;
 	
 	private JLabel weight;

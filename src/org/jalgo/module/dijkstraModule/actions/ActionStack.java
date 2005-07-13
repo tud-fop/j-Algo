@@ -30,6 +30,7 @@ package org.jalgo.module.dijkstraModule.actions;
  * You can limit the stack size by providing an int in the constructor.
  * A value of zero means unlimited size.
  */
+// FIXME wieso kein Adapter zu org.jalgo.main.util.Stack (Stephan)
 public class ActionStack 
 {
 	final protected class Node
@@ -43,44 +44,44 @@ public class ActionStack
 			m_PrevNode = PrevNode;
 			m_NextNode = null;
 			m_Action = action;
-		};
+		}
 		
 		public boolean HasNextNode()
 		{
 			return (m_NextNode != null);
-		};
+		}
 	
 		public boolean HasPrevNode()
 		{
 			return (m_PrevNode != null);
-		};
+		}
 		
 		public Action GetAction()
 		{
 			return m_Action;
-		};
+		}
 		
 		public Node GetPrevNode()
 		{
 			return m_PrevNode;
-		};
+		}
 
 		public void SetPrevNode(Node pNode)
 		{
 			m_PrevNode = pNode;
-		};
+		}
 
 		public Node GetNextNode()
 		{
 			return m_NextNode;
-		};
+		}
 
 		public void SetNextNode(Node pNode)
 		{
 			m_NextNode = pNode;
-		};		
-		
-	};
+		}
+	
+	}
 	
 	protected int		m_nMaxCount ;
 	protected int		m_nCurrentCount;
@@ -130,7 +131,7 @@ public class ActionStack
 			return add(pAction);
 		}
 		return bCanInsert;		
-	};
+	}
 
 	/**
 	 * @return Returns true if the stack pointer doesn't point to the top element.
@@ -142,7 +143,7 @@ public class ActionStack
 			return (m_pHead != null);
 		}
 		return m_pTail.HasNextNode();
-	};
+	}
 
 	/**
 	 * @return Returns the next action in the stack or null.
@@ -159,12 +160,12 @@ public class ActionStack
 			m_pTail = m_pHead;
 			return m_pHead.GetAction();
 			
-		};
+		}
 		
 		m_pTail = m_pTail.GetNextNode();
 		m_nCurrentCount++;
 		return m_pTail.GetAction();		
-	};
+	}
 
 	/**
 	 * @return Returns true if the stack pointer doesn't point to the bottom element.
@@ -172,7 +173,7 @@ public class ActionStack
 	public boolean canMovePrevious()
 	{
 		return (m_nCurrentCount != 0);
-	};
+	}
 
 	/**
 	 * @return Returns the previous action in the stack or null.
@@ -183,11 +184,10 @@ public class ActionStack
 			return null;
 
 		Action pAction = m_pTail.GetAction();
-		Node pNode = m_pTail;
 		m_pTail = m_pTail.GetPrevNode();
 		m_nCurrentCount--;
 		return pAction;
-	};
+	}
 	
 	/**
 	 * @return Returns the m_nCurrentCount field.
@@ -195,6 +195,6 @@ public class ActionStack
 	public int getCount()
 	{
 		return m_nCurrentCount;
-	};
+	}
 	
 }

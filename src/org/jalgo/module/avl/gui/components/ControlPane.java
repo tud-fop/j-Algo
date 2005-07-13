@@ -55,6 +55,7 @@ public class ControlPane
 extends JPanel
 implements GUIConstants {
 	
+	private static final long serialVersionUID = 5167913386704980330L;
 	//layout and control components
 	private JLabel messageLabel;
 	private JTextField keyTextField;

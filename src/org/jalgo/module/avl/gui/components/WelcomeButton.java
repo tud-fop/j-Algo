@@ -37,6 +37,7 @@ import org.jalgo.module.avl.gui.event.WelcomeScreenActionHandler;
 public class WelcomeButton
 extends JToggleButton {
 
+	private static final long serialVersionUID = -1924541401853204950L;
 	private final ImageIcon desc;
 	
 	/**

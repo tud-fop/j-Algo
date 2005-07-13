@@ -46,6 +46,8 @@ public class WelcomeScreen
 extends JPanel
 implements GUIConstants {
 
+	private static final long serialVersionUID = -2019743374918523370L;
+
 	private WelcomeScreenActionHandler action;
 
 	//components

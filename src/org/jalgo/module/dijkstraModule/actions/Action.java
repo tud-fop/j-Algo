@@ -49,7 +49,7 @@ public abstract class Action  extends Object
 	public Action(Controller ctrl)
 	{
 		m_Controller = ctrl;
-	};
+	}
 	
 	/**
 	 * @return Return m_Controller field

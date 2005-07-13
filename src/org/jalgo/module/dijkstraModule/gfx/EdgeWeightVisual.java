@@ -150,7 +150,6 @@ implements MouseListener, MouseMotionListener {
 	 * Call this method after modifying any flags.
 	 */
 	public void update() {
-		int flags = getFlags();
 		if (isInEditingMode()) {
 			// Flag with highest priority comes first.
 			if (isActive()) {

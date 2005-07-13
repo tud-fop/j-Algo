@@ -20,7 +20,7 @@
 /*
  * Created on Jun 8, 2005
  */
- 
+
 package org.jalgo.module.dijkstraModule.gui;
 
 import java.io.Serializable;
@@ -34,28 +34,23 @@ import org.jalgo.module.dijkstraModule.actions.UndoAction;
 /**
  * @author Hannes Straß
  */
-public class UndoToolBarAction extends Action implements Serializable
-{
+public class UndoToolBarAction extends Action implements Serializable {
+
+	private static final long serialVersionUID = 1920536031544200329L;
 
 	private Controller controller;
 
-	public UndoToolBarAction(Controller c)
-	{
+	public UndoToolBarAction(Controller c) {
 		this.controller = c;
 		setText("Rückgängig");
 		setToolTipText("Macht die letzte Änderung rückgängig.");
-		setImageDescriptor(
-			ImageDescriptor.createFromURL(getClass().getResource("/dijkstra_pix/undo.gif")));
+		setImageDescriptor(ImageDescriptor.createFromURL(getClass().getResource("/dijkstra_pix/undo.gif")));
 	}
 
-	public void run()
-	{
-		try
-		{
+	public void run() {
+		try {
 			new UndoAction(controller);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			new DefaultExceptionHandler(e);
 		}
 	}

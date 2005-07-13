@@ -59,7 +59,6 @@ public class NodeListParser
 	 */
 	public Graph getParsedNodeList(String nodeListToParse, Graph graphToFill) throws ParsingException
 	{
-		String currentNode;
 		
 		retGraph = graphToFill;
 		setNodeList(nodeListToParse);

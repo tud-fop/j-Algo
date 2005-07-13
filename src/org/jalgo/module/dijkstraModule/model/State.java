@@ -19,7 +19,7 @@
 
 /*
  * Created on 21.05.2005
- * $Id: State.java,v 1.2 2005/06/27 20:59:53 mischi Exp $
+ * $Id: State.java,v 1.3 2005/07/13 20:41:09 stephancr Exp $
  */
 package org.jalgo.module.dijkstraModule.model;
 
@@ -52,7 +52,7 @@ public class State {
     * @return The list of nodes in the right order. (Start node is the first)
     */
    public ArrayList getPath(Node node) {
-       ArrayList nodes = new ArrayList();
+       ArrayList<Node> nodes = new ArrayList<Node>();
        
        for(Node n = node; n != null; n = node.getPredecessor()) {
            // Wow, this is wasteful. :)
@@ -70,7 +70,7 @@ public class State {
         return description;
     }
     
-    private ArrayList styleRanges;
+    private ArrayList<StyleRange> styleRanges;
     
     /** Appends descr to the end of the current description and set appropriate styles.
      * 
@@ -97,7 +97,7 @@ public class State {
     	StyleRange[] styles = new StyleRange[styleRanges.size()];
     	
     	for (int i = 0; i<styles.length; i++)
-    	    styles[i] = (StyleRange)styleRanges.get(i);
+    	    styles[i] = styleRanges.get(i);
     	
         return new StatusbarText(description,styles);
     }
@@ -113,7 +113,7 @@ public class State {
         this.description = descr;
         this.isMacro = macro;
         this.borderStates = borderStates;
-        styleRanges = new ArrayList();
+        styleRanges = new ArrayList<StyleRange>();
     }
     
     /** Creates a new state object without discription. 

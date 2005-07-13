@@ -39,7 +39,7 @@ public class StatusbarText
 	{
 		m_styles = styles;
 		m_strText = strText;
-	};
+	}
 	
 	public void setText(StyledText text)
 	{
@@ -48,4 +48,4 @@ public class StatusbarText
 			text.setStyleRanges(m_styles);
 	}
 
-};
+}

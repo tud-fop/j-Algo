@@ -53,27 +53,35 @@ import org.jalgo.module.avl.gui.graphics.PaintArea;
  * 
  * @author Alexander Claus
  */
-public class Navigator
-extends JComponent
-implements MouseListener, MouseMotionListener {
+public class Navigator extends JComponent implements MouseListener, MouseMotionListener {
+
+	private static final long serialVersionUID = 2584571837248927562L;
 
 	//general references
 	private PaintArea paintArea;
 
 	//popup components
 	private Popup popup;
+
 	private JInternalFrame navigator;
+
 	private JComponent map;
+
 	private Point lowerRightCornerPoint;
 
 	//variables for displaying
 	private static final int DIAGONAL = 200;
+
 	private double scale;
+
 	private Rectangle visibleRect;
+
 	private Image scaledImage;
+
 	private Point vrCorner;
+
 	private boolean mouseOver;
-	
+
 	//the "mouse mover"
 	private Robot robot;
 
@@ -91,6 +99,8 @@ implements MouseListener, MouseMotionListener {
 		navigator = new JInternalFrame("Navigator");
 		//the map is responsible for displaying the preview
 		map = new JComponent() {
+			private static final long serialVersionUID = 4023482342502748131L;
+
 			public void paint(Graphics g) {
 				//fill background
 				g.setColor(Color.WHITE);
@@ -101,9 +111,7 @@ implements MouseListener, MouseMotionListener {
 				//draw visible rect, offset like preview
 				updateVisibleRect();
 				g.setColor(Color.RED);
-				g.drawRect(
-					visibleRect.x+3, visibleRect.y+3,
-					visibleRect.width, visibleRect.height);
+				g.drawRect(visibleRect.x + 3, visibleRect.y + 3, visibleRect.width, visibleRect.height);
 				//paint border
 				super.paintBorder(g);
 			}
@@ -112,8 +120,9 @@ implements MouseListener, MouseMotionListener {
 		navigator.add(map);
 		navigator.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		//robot is responsible for automatically mouse moving
-		try {robot = new Robot();}
-		catch (AWTException ex) {
+		try {
+			robot = new Robot();
+		} catch (AWTException ex) {
 			gui.showErrorMessage("Keine Maussprünge möglich.\r\n");
 			ex.printStackTrace();
 			robot = null;
@@ -126,9 +135,8 @@ implements MouseListener, MouseMotionListener {
 	 */
 	private void updateVisibleRect() {
 		visibleRect = paintArea.getVisibleRect();
-		visibleRect.setRect(
-			visibleRect.x*scale, visibleRect.y*scale,
-			visibleRect.width*scale, visibleRect.height*scale);
+		visibleRect.setRect(visibleRect.x * scale, visibleRect.y * scale, visibleRect.width * scale, visibleRect.height
+				* scale);
 	}
 
 	/**
@@ -137,20 +145,20 @@ implements MouseListener, MouseMotionListener {
 	 */
 	public void mousePressed(MouseEvent e) {
 		//ensure that only the left mouse button is pressed once
-		if (e.getButton() != MouseEvent.BUTTON1 ||
-			e.getClickCount() > 1) return;
+		if (e.getButton() != MouseEvent.BUTTON1 || e.getClickCount() > 1)
+			return;
 		//force popup relicts to disappear
-		if (popup != null) popup.hide();
+		if (popup != null)
+			popup.hide();
 
 		//calculate size of navigator frame
-		scale = DIAGONAL/Math.sqrt(
-			paintArea.getWidth()*paintArea.getWidth()+
-			paintArea.getHeight()*paintArea.getHeight());
+		scale = DIAGONAL
+				/ Math.sqrt(paintArea.getWidth() * paintArea.getWidth() + paintArea.getHeight()
+						* paintArea.getHeight());
 		//border of 9px because of compensation of localisation conflicts
 		//caused by the SWT <-> Swing "cooperation"
-		map.setPreferredSize(new Dimension(
-			(int)(paintArea.getWidth()*scale)+9,
-			(int)(paintArea.getHeight()*scale)+9));
+		map.setPreferredSize(new Dimension((int) (paintArea.getWidth() * scale) + 9,
+				(int) (paintArea.getHeight() * scale) + 9));
 		//create scaled image of paint area
 		scaledImage = paintArea.getScaledImage(scale);
 		navigator.pack();
@@ -160,22 +168,19 @@ implements MouseListener, MouseMotionListener {
 		//lower right corner of the scrollpane
 		lowerRightCornerPoint = getLocationOnScreen();
 		lowerRightCornerPoint.translate(getWidth(), getHeight());
-		popup = PopupFactory.getSharedInstance().getPopup(
-			this, navigator,
-			lowerRightCornerPoint.x-navigator.getWidth(),
-			lowerRightCornerPoint.y-navigator.getHeight());
+		popup = PopupFactory.getSharedInstance()
+				.getPopup(this, navigator, lowerRightCornerPoint.x - navigator.getWidth(),
+						lowerRightCornerPoint.y - navigator.getHeight());
 		popup.show();
 		//TODO: request focus on navigator does not work...
 		//move cursor to center of the visible rect
 		updateVisibleRect();
-		vrCorner = navigator.getAccessibleContext().
-			getAccessibleChild(0).getAccessibleContext().
-			getAccessibleComponent().getBounds().getLocation();
-		if (robot != null) robot.mouseMove(
-			lowerRightCornerPoint.x-navigator.getWidth()+
-				vrCorner.x+(int)visibleRect.getCenterX(),
-			lowerRightCornerPoint.y-navigator.getHeight()+
-				vrCorner.y+(int)visibleRect.getCenterY());
+		vrCorner = navigator.getAccessibleContext().getAccessibleChild(0).getAccessibleContext()
+				.getAccessibleComponent().getBounds().getLocation();
+		if (robot != null)
+			robot.mouseMove(lowerRightCornerPoint.x - navigator.getWidth() + vrCorner.x
+					+ (int) visibleRect.getCenterX(), lowerRightCornerPoint.y - navigator.getHeight()
+					+ vrCorner.y + (int) visibleRect.getCenterY());
 		addMouseMotionListener(this);
 	}
 
@@ -184,15 +189,14 @@ implements MouseListener, MouseMotionListener {
 	 * mouse cursor back to center of the corner component.
 	 */
 	public void mouseReleased(MouseEvent e) {
-		if (e.getButton() != MouseEvent.BUTTON1 ||
-			e.getClickCount() > 1) return;
+		if (e.getButton() != MouseEvent.BUTTON1 || e.getClickCount() > 1)
+			return;
 		popup.hide();
 		//remove the listener to avoid drag events during initialization
 		//and hiding the popup
 		removeMouseMotionListener(this);
-		if (robot != null) robot.mouseMove(
-			lowerRightCornerPoint.x-getWidth()/2,
-			lowerRightCornerPoint.y-getHeight()/2);
+		if (robot != null)
+			robot.mouseMove(lowerRightCornerPoint.x - getWidth() / 2, lowerRightCornerPoint.y - getHeight() / 2);
 	}
 
 	/**
@@ -218,8 +222,8 @@ implements MouseListener, MouseMotionListener {
 		g.setColor(SystemColor.control);
 		g.fill3DRect(0, 0, getWidth(), getHeight(), !mouseOver);
 		g.setColor(Color.WHITE);
-		g.fill3DRect(4, 4, getWidth()-8, getWidth()-8, mouseOver);
-		g.fillRect(5, 5, getWidth()-10, getWidth()-10);
+		g.fill3DRect(4, 4, getWidth() - 8, getWidth() - 8, mouseOver);
+		g.fillRect(5, 5, getWidth() - 10, getWidth() - 10);
 	}
 
 	/**
@@ -229,25 +233,22 @@ implements MouseListener, MouseMotionListener {
 	public void mouseDragged(MouseEvent e) {
 		//calculate the upper left corner of the new visible rect
 		Point p = e.getPoint();
-		p.translate(
-			navigator.getWidth()-getWidth()-vrCorner.x,
-			navigator.getHeight()-getHeight()-vrCorner.y);
-		visibleRect.setLocation(
-			p.x-visibleRect.width/2,
-			p.y-visibleRect.height/2);
-		paintArea.scrollRectToVisible(new Rectangle(
-			(int)(visibleRect.x/scale), (int)(visibleRect.y/scale),
-			paintArea.getVisibleRect().width, paintArea.getVisibleRect().height));
+		p.translate(navigator.getWidth() - getWidth() - vrCorner.x, navigator.getHeight() - getHeight() - vrCorner.y);
+		visibleRect.setLocation(p.x - visibleRect.width / 2, p.y - visibleRect.height / 2);
+		paintArea.scrollRectToVisible(new Rectangle((int) (visibleRect.x / scale), (int) (visibleRect.y / scale),
+				paintArea.getVisibleRect().width, paintArea.getVisibleRect().height));
 		map.repaint();
 	}
 
 	/**
 	 * No action is performed here.
 	 */
-	public void mouseMoved(MouseEvent e) {}
+	public void mouseMoved(MouseEvent e) {
+	}
 
 	/**
 	 * No action is performed here.
 	 */
-	public void mouseClicked(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {
+	}
 }

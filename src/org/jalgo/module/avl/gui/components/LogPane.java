@@ -51,6 +51,7 @@ public class LogPane
 extends JComponent
 implements DisplayModeChangeable, GUIConstants {
 
+	private static final long serialVersionUID = 8981036220693388871L;
 	private Controller controller;
 	private JTextPane textPane;
 	private DefaultStyledDocument doc;
