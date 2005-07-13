@@ -143,8 +143,6 @@ implements DisplayModeChangeable, GUIConstants {
 			for (String key : steps.keySet()) {
 				doc.insertString(doc.getLength(), steps.get(key),
 					Settings.NORMAL_STYLE[PC_MODE]);
-//				doc.insertString(doc.getLength(), lineSep+lineSep,
-//					Settings.NORMAL_STYLE[PC_MODE]);
 			}
 		}
 		catch (BadLocationException ex) {
