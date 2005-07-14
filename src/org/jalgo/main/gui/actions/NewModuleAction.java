@@ -24,27 +24,26 @@ package org.jalgo.main.gui.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.jalgo.main.JalgoMain;
+import org.jalgo.main.gui.JalgoWindow;
+import org.jalgo.main.gui.ModuleChooseDialog;
 
 /**
- * @author michi
+ * @author Michael Pradel
  */
 public class NewModuleAction extends Action {
+
+	JalgoWindow win;
 	
-	// TODO: implement this class: user can choose from the list of known modules which one to open; 
-	// information about the modules (description, logo, license, ...) should be available for the user 
-	private JalgoMain main;
-	
-	public NewModuleAction(JalgoMain main) {
-		this.main = main;
+	public NewModuleAction(JalgoWindow win) {
+		this.win = win;
 		setToolTipText(Messages.getString("ui.New"));
-		setImageDescriptor(ImageDescriptor.createFromURL(
-			getClass().getResource("/main_pix/new.gif")));
+		setImageDescriptor(ImageDescriptor.createFromURL(getClass()
+				.getResource("/main_pix/new.gif")));
 	}
-	
+
 	public void run() {
-		// workaround as long as class isn't implented: open directly first module
-		main.newInstance(0);
+		ModuleChooseDialog dialog = new ModuleChooseDialog(win.getShell(), win.getParent());
+		dialog.open();
 	}
 
 }

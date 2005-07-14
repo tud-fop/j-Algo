@@ -144,10 +144,10 @@ extends ApplicationWindow {
 		// parent.getShell().setSize(800, 600);
 
 		// start gui to choose module (by michi)
-		CTabItem cti = requestNewCTabItem("Willkommen",
+		/*CTabItem cti = requestNewCTabItem("Willkommen",
 			ImageDescriptor.createFromURL(
 				getClass().getResource("/main_pix/jalgo-file.png")).createImage());
-		new ModuleChooser(jalgo, cti, (Composite)cti.getControl(), SWT.NONE);
+		new ModuleChooser(jalgo, cti, (Composite)cti.getControl(), SWT.NONE);*/
 
 		return ct;
 	}
@@ -199,7 +199,7 @@ extends ApplicationWindow {
 
 		ToolBarManager toolbar = new ToolBarManager(style);
 
-		toolbar.add(new NewModuleAction(parent));
+		toolbar.add(new NewModuleAction(this));
 		toolbar.add(new OpenAction(this));
 		toolbar.add(new Separator());
 		toolbar.add(saveAction);
