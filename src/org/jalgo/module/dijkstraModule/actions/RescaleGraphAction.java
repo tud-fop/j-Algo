@@ -29,10 +29,8 @@ import org.jalgo.module.dijkstraModule.gui.Controller;
  * @author Hannes Stra"s
  *
  */
-public class RescaleGraphAction extends GraphAction
-{
-	public RescaleGraphAction(Controller ctrl) throws Exception
-	{
+public class RescaleGraphAction extends GraphAction {
+	public RescaleGraphAction(Controller ctrl) throws ActionException {
 		super(ctrl);
 		this.registerAndDo(true);
 	}
@@ -40,8 +38,7 @@ public class RescaleGraphAction extends GraphAction
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.dijkstraModule.actions.Action#doAction()
 	 */
-	public boolean doAction() throws Exception
-	{
+	public boolean doAction() throws ActionException {
 		getController().getGraph().rescale();
 		getController().setGraph(getController().getGraph());
 		return true;

@@ -34,19 +34,15 @@ import org.jalgo.module.dijkstraModule.gui.Controller;
 public abstract class ApplyGraphTextAction extends GraphAction {
 
 	protected String m_strText;
-	
+
 	/**
 	 * @param ctrl Controller-Object
 	 * @param strText current text of the nodelist/edgelist textfield
 	 */
-	public ApplyGraphTextAction(Controller ctrl,String strText) throws Exception
-	{
+	public ApplyGraphTextAction(Controller ctrl, String strText) throws ActionException {
 		super(ctrl);
 		m_strText = strText;
 		registerAndDo(true);
 	}
-
-
-	
 
 }

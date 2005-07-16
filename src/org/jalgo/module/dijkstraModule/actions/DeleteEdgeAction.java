@@ -31,17 +31,15 @@ import org.jalgo.module.dijkstraModule.gui.Controller;
  * @author Hannes Strass
  *
  */
-public class DeleteEdgeAction extends GraphAction
-{
+public class DeleteEdgeAction extends GraphAction {
 	private Edge m_Edge;
-	
+
 	/** Creates a new DeleteEdgeAction, which deletes an Edge.
 	 * @param ctrl the Controller
 	 * @param edge the Edge to delete
 	 * @throws Exception
 	 */
-	public DeleteEdgeAction(Controller ctrl, Edge edge) throws Exception
-	{
+	public DeleteEdgeAction(Controller ctrl, Edge edge) throws ActionException {
 		super(ctrl);
 		this.m_Edge = edge;
 		this.registerAndDo(true);
@@ -51,14 +49,11 @@ public class DeleteEdgeAction extends GraphAction
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.dijkstraModule.actions.Action#doAction()
 	 */
-	public boolean doAction() throws Exception
-	{
+	public boolean doAction() throws ActionException {
 		getController().getGraph().setAllChangedFlagsFalse();
 		getController().getGraph().deleteEdge(m_Edge);
 		getController().setGraph(getController().getGraph());
 		return true;
 	}
-
-
 
 }

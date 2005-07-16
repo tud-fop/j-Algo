@@ -56,12 +56,7 @@ public class AlgorithmGraphComposite extends ControllerComposite {
 		}
 
 		public void update(Observable o, Object arg) {
-			Controller ctrl = null;
-			try {
-				ctrl = (Controller) o;
-			} catch (Exception e) {
-				return;
-			}
+			Controller ctrl = (Controller) o;
 
 			if (ctrl == null)
 				return;

@@ -34,28 +34,28 @@ import org.jalgo.module.dijkstraModule.gui.Controller;
  */
 public class StopAnimationAction extends Action {
 
-    protected int m_iMilliseconds;
-   
-    public StopAnimationAction(Controller ctrl)throws Exception {
-        super(ctrl);
-        this.m_iMilliseconds = ctrl.getAnimationMillis();
-        super.registerAndDo(true);
-    }
+	protected int m_iMilliseconds;
 
-    /* (non-Javadoc)
-     * @see org.jalgo.module.dijkstraModule.actions.Action#doAction()
-     */
-    public boolean doAction() throws Exception {
-        getController().stopAnimation();
-        return true;
-    }
+	public StopAnimationAction(Controller ctrl) throws ActionException {
+		super(ctrl);
+		this.m_iMilliseconds = ctrl.getAnimationMillis();
+		super.registerAndDo(true);
+	}
 
-    /* (non-Javadoc)
-     * @see org.jalgo.module.dijkstraModule.actions.Action#undoAction()
-     */
-    public boolean undoAction() throws Exception {
-        getController().startAnimation(this.m_iMilliseconds);
-        return true;
-    }
+	/* (non-Javadoc)
+	 * @see org.jalgo.module.dijkstraModule.actions.Action#doAction()
+	 */
+	public boolean doAction() throws ActionException {
+		getController().stopAnimation();
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jalgo.module.dijkstraModule.actions.Action#undoAction()
+	 */
+	public boolean undoAction() throws ActionException {
+		getController().startAnimation(this.m_iMilliseconds);
+		return true;
+	}
 
 }

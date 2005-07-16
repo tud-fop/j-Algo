@@ -38,6 +38,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -90,57 +91,88 @@ import org.jalgo.module.avl.gui.graphics.PaintArea;
  * 
  * @author Alexander Claus
  */
-public class GUIController
-implements GUIConstants {
-	
+public class GUIController implements GUIConstants {
+
 	//general references
 	private ModuleConnector connector;
+
 	private Controller controller;
+
 	private SearchTree tree;
-	
+
 	//components provided by the jAlgo-framework
 	private ApplicationWindow appWin;
+
 	private Composite comp;
+
 	private SubMenuManager menuManager;
+
 	private SubToolBarManager toolBarManager;
+
 	private SubStatusLineManager statusLineManager;
 
 	//actions for toolbar and menu (based on SWT)
 	private SaveAction saveAction;
-    private SaveAsAction saveAsAction;
+
+	private SaveAsAction saveAsAction;
+
 	private WelcomeAction welcomeAction;
+
 	private ClearTreeAction clearTreeAction;
+
 	private SwingSWTAction abortAction;
+
 	private SwingSWTAction undoBlockStepAction;
+
 	private SwingSWTAction undoAction;
+
 	private SwingSWTAction performAction;
+
 	private SwingSWTAction performBlockStepAction;
+
 	private SwingSWTAction finishAction;
+
 	private HelpAction helpAction;
-	
+
 	//components (based on Swing)
 	private Frame swt_awt_bridge;
+
 	private JPanel contentPane;
+
 	private WelcomeScreen welcomeScreen;
+
 	private RandomGenerationDialog rgd;
+
 	private ControlPane controlPane;
+
 	private InfoPane infoPane;
+
 	private DocuPane docuPane;
+
 	private LogPane logPane;
+
 	private PaintArea paintArea;
+
 	private JScrollPane graphicPane;
 
 	//layout stuff
 	private JSplitPane standardLayoutSplitPane;
+
 	private int graphicPaneInsetsX;
+
 	private int graphicPaneInsetsY;
+
 	private int northEastPaneWidth;
+
 	private int northEastPaneHeight;
+
 	private int logPaneHeight;
 
 	//dummies
 	private boolean saved;
+
 	private boolean changesToSave;
+
 	private boolean isDialogOpen;
 
 	private Animator animator;
@@ -161,23 +193,16 @@ implements GUIConstants {
 	 * @param controller the <code>Controller</code> instance of the AVL module
 	 * @param st the <code>SearchTree</code> instance of the AVL module
 	 */
-	public GUIController(
-			ModuleConnector connector,
-			ApplicationWindow appWin,
-			Composite comp,
-			SubMenuManager menu,
-			SubToolBarManager tb,
-			SubStatusLineManager sl,
-			Controller controller,
-			SearchTree st) {
+	public GUIController(ModuleConnector connector, ApplicationWindow appWin, Composite comp, SubMenuManager menu,
+			SubToolBarManager tb, SubStatusLineManager sl, Controller controller, SearchTree st) {
 
 		this.connector = connector;
 		this.appWin = appWin;
-	    this.comp = comp;
-	    this.menuManager = menu;
-	    this.toolBarManager = tb;
-	    this.statusLineManager = sl;
-		
+		this.comp = comp;
+		this.menuManager = menu;
+		this.toolBarManager = tb;
+		this.statusLineManager = sl;
+
 		this.controller = controller;
 		this.tree = st;
 
@@ -192,10 +217,16 @@ implements GUIConstants {
 		Panel root = new Panel(new BorderLayout());
 		root.add(contentPane, BorderLayout.CENTER);
 		swt_awt_bridge.add(root);
-		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
-		catch (Exception ex) {
-			showErrorMessage("Fehler beim Setzen des nativen LAF:\r\n"+
-				ex.getMessage());
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			showErrorMessage("Fehler beim Setzen des nativen LAF:\r\n" + e.getMessage());
+		} catch (InstantiationException e) {
+			showErrorMessage("Fehler beim Setzen des nativen LAF:\r\n" + e.getMessage());
+		} catch (IllegalAccessException e) {
+			showErrorMessage("Fehler beim Setzen des nativen LAF:\r\n" + e.getMessage());
+		} catch (UnsupportedLookAndFeelException e) {
+			showErrorMessage("Fehler beim Setzen des nativen LAF:\r\n" + e.getMessage());
 		}
 
 		//setup the status line
@@ -203,7 +234,7 @@ implements GUIConstants {
 
 		//initialization of the following components is called before
 		//installToolbar() because of needed references
-		paintArea = new PaintArea(this, tree,controller);
+		paintArea = new PaintArea(this, tree, controller);
 		logPane = new LogPane(this, controller);
 		docuPane = new DocuPane(this, controller);
 		installToolbar();
@@ -214,14 +245,11 @@ implements GUIConstants {
 		controlPane = new ControlPane(this, controller);
 		infoPane = new InfoPane(this, tree);
 		graphicPane = new JScrollPane(paintArea);
-		graphicPane.setCorner(
-			ScrollPaneConstants.LOWER_RIGHT_CORNER, new Navigator(this, paintArea));
+		graphicPane.setCorner(ScrollPaneConstants.LOWER_RIGHT_CORNER, new Navigator(this, paintArea));
 
 		//store current insets for later layout validations (efficiency)
-		graphicPaneInsetsX = graphicPane.getInsets().left+
-			graphicPane.getInsets().right;
-		graphicPaneInsetsY = graphicPane.getInsets().top+
-			graphicPane.getInsets().bottom;
+		graphicPaneInsetsX = graphicPane.getInsets().left + graphicPane.getInsets().right;
+		graphicPaneInsetsY = graphicPane.getInsets().top + graphicPane.getInsets().bottom;
 		//force paint area to resize, if necessary (e.g. splitpane divider moved)
 		graphicPane.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
@@ -244,28 +272,26 @@ implements GUIConstants {
 		//northeast pane the size of the graphic-, log- and docupane are calculated
 		northEastPaneWidth = northEastPane.getMinimumSize().width;
 		northEastPaneHeight = northEastPane.getMinimumSize().height;
-		logPaneHeight =
-			(logPane.getFontMetrics(logPane.getFont()).getHeight()+2)*8+
-			logPane.getInsets().top+logPane.getInsets().bottom;
+		logPaneHeight = (logPane.getFontMetrics(logPane.getFont()).getHeight() + 2) * 8 + logPane.getInsets().top
+				+ logPane.getInsets().bottom;
 		logPane.setMinimumSize(new Dimension(northEastPaneWidth, logPaneHeight));
 		logPane.setPreferredSize(new Dimension(northEastPaneWidth, logPaneHeight));
 		graphicPane.setMinimumSize(new Dimension(0, northEastPaneHeight));
 
 		//splitpane to adjust the height of the docu- and logpane
-		standardLayoutSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-			false, northPane, southPane);
+		standardLayoutSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false, northPane, southPane);
 		standardLayoutSplitPane.setOneTouchExpandable(true);
 		standardLayoutSplitPane.setResizeWeight(0.9);
 		standardLayoutSplitPane.setDividerLocation(northEastPaneHeight);
 
 		setChangesToSave(false);
 		//restore the non-module buttons, when reactivating module
-		final CTabItem thisItem = ((JalgoWindow)appWin).getCTabFolder().getItem(
-			((JalgoWindow)appWin).getCTabFolder().getItemCount()-1);
-		((JalgoWindow)appWin).getCTabFolder().addSelectionListener(
-			new SelectionAdapter() {
+		final CTabItem thisItem = ((JalgoWindow) appWin).getCTabFolder().getItem(
+				((JalgoWindow) appWin).getCTabFolder().getItemCount() - 1);
+		((JalgoWindow) appWin).getCTabFolder().addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent arg0) {
-				if (arg0.item == thisItem) setChangesToSave(areChangesToSave());
+				if (arg0.item == thisItem)
+					setChangesToSave(areChangesToSave());
 			}
 		});
 	}
@@ -274,27 +300,26 @@ implements GUIConstants {
 	 * Sets up the toolbar.
 	 */
 	private void installToolbar() {
-	    saveAction = ((JalgoWindow)appWin).getSaveAction();
-		saveAsAction = ((JalgoWindow)appWin).getSaveAsAction();
-	    
-	    welcomeAction = new WelcomeAction((JalgoWindow)appWin, connector,
-			this, tree);
-	    toolBarManager.add(welcomeAction);
+		saveAction = ((JalgoWindow) appWin).getSaveAction();
+		saveAsAction = ((JalgoWindow) appWin).getSaveAsAction();
+
+		welcomeAction = new WelcomeAction((JalgoWindow) appWin, connector, this, tree);
+		toolBarManager.add(welcomeAction);
 		clearTreeAction = new ClearTreeAction(this, comp, tree);
 		toolBarManager.add(clearTreeAction);
 		toolBarManager.add(new Separator());
 		abortAction = new AbortAction(this, controller);
-	    toolBarManager.add(abortAction);
+		toolBarManager.add(abortAction);
 		undoBlockStepAction = new UndoBlockStepAction(this, controller);
-	    toolBarManager.add(undoBlockStepAction);
+		toolBarManager.add(undoBlockStepAction);
 		undoAction = new UndoAction(this, controller);
-	    toolBarManager.add(undoAction);
+		toolBarManager.add(undoAction);
 		performAction = new PerformAction(this, controller);
-	    toolBarManager.add(performAction);
+		toolBarManager.add(performAction);
 		performBlockStepAction = new PerformBlockStepAction(this, controller);
-	    toolBarManager.add(performBlockStepAction);
+		toolBarManager.add(performBlockStepAction);
 		finishAction = new FinishAction(this, controller);
-	    toolBarManager.add(finishAction);
+		toolBarManager.add(finishAction);
 
 		helpAction = new HelpAction(this);
 		toolBarManager.add(new Separator());
@@ -336,15 +361,15 @@ implements GUIConstants {
 		contentPane.setBackground(STANDARD_BACKGROUND);
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(standardLayoutSplitPane, BorderLayout.CENTER);
-		standardLayoutSplitPane.setDividerLocation(
-			standardLayoutSplitPane.getSize().height-
-			standardLayoutSplitPane.getInsets().bottom-
-			standardLayoutSplitPane.getDividerSize()-
-			logPaneHeight);
+		standardLayoutSplitPane.setDividerLocation(standardLayoutSplitPane.getSize().height
+				- standardLayoutSplitPane.getInsets().bottom - standardLayoutSplitPane.getDividerSize()
+				- logPaneHeight);
 
 		welcomeAction.setEnabled(true);
-		if (tree.getHeight() > 0) clearTreeAction.setEnabled(true);
-		else clearTreeAction.setEnabled(false);
+		if (tree.getHeight() > 0)
+			clearTreeAction.setEnabled(true);
+		else
+			clearTreeAction.setEnabled(false);
 
 		//reset components to clear input fields etc.
 		controlPane.reset();
@@ -385,9 +410,8 @@ implements GUIConstants {
 	 */
 	public void doLayout() {
 		contentPane.validate();
-		paintArea.setPreferredSize(new Dimension(
-				graphicPane.getWidth()-graphicPaneInsetsX,
-				graphicPane.getHeight()-graphicPaneInsetsY));
+		paintArea.setPreferredSize(new Dimension(graphicPane.getWidth() - graphicPaneInsetsX, graphicPane.getHeight()
+				- graphicPaneInsetsY));
 		paintArea.revalidate();
 		paintArea.repaint();
 	}
@@ -398,17 +422,16 @@ implements GUIConstants {
 	public void showOpenDialog() {
 		appWin.getShell().getDisplay().syncExec(new Runnable() {
 			public void run() {
-				FileDialog fileChooser = new FileDialog(
-					appWin.getShell(), SWT.OPEN);
+				FileDialog fileChooser = new FileDialog(appWin.getShell(), SWT.OPEN);
 				fileChooser.setText(Messages.getString("ui.Open_file"));
 				fileChooser.setFilterPath(System.getProperty("user.dir"));
-				fileChooser.setFilterExtensions(new String[] {"*.jalgo", "*.*"});
+				fileChooser.setFilterExtensions(new String[] { "*.jalgo", "*.*" });
 				fileChooser.setFilterNames(new String[] {
-					Messages.getString("OpenAction.jAlgo_files_(*.jalgo)_7"),
-					Messages.getString("OpenAction.All_files_8") });
+						Messages.getString("OpenAction.jAlgo_files_(*.jalgo)_7"),
+						Messages.getString("OpenAction.All_files_8") });
 				String filename = fileChooser.open();
 				if (filename != null)
-					((JalgoWindow)appWin).openFile(filename, true);
+					((JalgoWindow) appWin).openFile(filename, true);
 			}
 		});
 	}
@@ -423,24 +446,23 @@ implements GUIConstants {
 	 */
 	public boolean showSaveDialog() {
 		//ensure that this method is called only from an swt thread!!
-		switch (new MessageDialog(appWin.getShell(), "Beenden", null,
-			"Möchten Sie Ihre Arbeit speichern?", MessageDialog.QUESTION,
-			new String[]{"Ja", "Nein", "Abbrechen"}, 0).open()) {
+		switch (new MessageDialog(appWin.getShell(), "Beenden", null, "Möchten Sie Ihre Arbeit speichern?",
+				MessageDialog.QUESTION, new String[] { "Ja", "Nein", "Abbrechen" }, 0).open()) {
 		case 0:
 			appWin.getShell().getDisplay().syncExec(new Runnable() {
 				public void run() {
-					FileDialog fileChooser = new FileDialog(
-						appWin.getShell(), SWT.SAVE);
+					FileDialog fileChooser = new FileDialog(appWin.getShell(), SWT.SAVE);
 					fileChooser.setText(Messages.getString("ui.Open_file"));
 					fileChooser.setFilterPath(System.getProperty("user.dir"));
-					fileChooser.setFilterExtensions(new String[] {"*.jalgo", "*.*"});
+					fileChooser.setFilterExtensions(new String[] { "*.jalgo", "*.*" });
 					fileChooser.setFilterNames(new String[] {
-						Messages.getString("OpenAction.jAlgo_files_(*.jalgo)_7"),
-						Messages.getString("OpenAction.All_files_8") });
+							Messages.getString("OpenAction.jAlgo_files_(*.jalgo)_7"),
+							Messages.getString("OpenAction.All_files_8") });
 					String filename = fileChooser.open();
 					if (filename != null)
-						saved = ((JalgoWindow)appWin).saveFileAs(filename);
-					else saved = false;
+						saved = ((JalgoWindow) appWin).saveFileAs(filename);
+					else
+						saved = false;
 				}
 			});
 			return saved;
@@ -493,47 +515,42 @@ implements GUIConstants {
 		controller.setAVLMode(true);
 		update();
 		isDialogOpen = true;
-		if (controller.getAVLTestResult()){
-			if (JOptionPane.showConfirmDialog(controlPane,
-				"Der aktuelle Baum hat die AVL - Eigenschaft!\r\n"+
-				"Möchten Sie jetzt in den AVL - Modus wechseln?",
-				"Modus wechseln?", JOptionPane.YES_NO_OPTION) ==
-					JOptionPane.YES_OPTION) {
+		if (controller.getAVLTestResult()) {
+			if (JOptionPane.showConfirmDialog(controlPane, "Der aktuelle Baum hat die AVL - Eigenschaft!\r\n"
+					+ "Möchten Sie jetzt in den AVL - Modus wechseln?", "Modus wechseln?",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				controller.putLogDescription("AVL-Modus angeschalten");
 				setAVLMode(true, true);
 				setChangesToSave(tree.getHeight() > 0);
-			}
-			else {
+			} else {
 				//balance visualisation off
 				controller.setAVLMode(false);
 				//normalize visualisation
-				try {controller.perform();}
-				catch (NoActionException ex) {
+				try {
+					controller.perform();
+				} catch (NoActionException ex) {
 					showErrorMessage(ex.getMessage());
 				}
 				update();
 				setChangesToSave(areChangesToSave());
 			}
 			isDialogOpen = false;
-			if (tree.getHeight() > 0) clearTreeAction.setEnabled(true);
+			if (tree.getHeight() > 0)
+				clearTreeAction.setEnabled(true);
 			welcomeAction.setEnabled(true);
-		}
-		else {
+		} else {
 			//use this approach to show nonmodal dialog, which is always on top
 			//for navigating through highlighted balances
 			//store old state
 			final boolean avlEnabled = controlPane.isAVLToggleEnabled();
-			final boolean buttonsEnabled =
-				(controlPane.validateKey()==VALID_INPUT);
+			final boolean buttonsEnabled = (controlPane.validateKey() == VALID_INPUT);
 			controlPane.setKeyInputEnabled(false);
 			controlPane.setAVLToggleEnabled(false);
 			controlPane.setAlgorithmButtonsEnabled(false);
 
-			final Dialog d = new JOptionPane(
-				"Der aktuelle Baum ist kein AVL - Baum!",
-				JOptionPane.INFORMATION_MESSAGE,
-				JOptionPane.DEFAULT_OPTION).createDialog(
-					controlPane, "Nachricht");
+			final Dialog d = new JOptionPane("Der aktuelle Baum ist kein AVL - Baum!",
+					JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION).createDialog(controlPane,
+					"Nachricht");
 			d.setAlwaysOnTop(true);
 			d.setModal(false);
 			d.addComponentListener(new ComponentAdapter() {
@@ -541,8 +558,9 @@ implements GUIConstants {
 					//balance visualisation off
 					controller.setAVLMode(false);
 					//normalize visualisation
-					try {controller.perform();}
-					catch (NoActionException ex) {
+					try {
+						controller.perform();
+					} catch (NoActionException ex) {
 						showErrorMessage(ex.getMessage());
 					}
 					//restore state
@@ -554,7 +572,8 @@ implements GUIConstants {
 					update();
 					d.dispose();
 					isDialogOpen = false;
-					if (tree.getHeight() > 0) clearTreeAction.setEnabled(true);
+					if (tree.getHeight() > 0)
+						clearTreeAction.setEnabled(true);
 					welcomeAction.setEnabled(true);
 					setChangesToSave(areChangesToSave());
 				}
@@ -599,7 +618,7 @@ implements GUIConstants {
 		welcomeAction.setEnabled(false);
 		clearTreeAction.setEnabled(false);
 	}
-	
+
 	/**
 	 * Sets the enable status of the buttons perform, perform-blockstep,
 	 * finish and abort on toolbar.
@@ -661,8 +680,8 @@ implements GUIConstants {
 			controlPane.setKeyInputEnabled(false);
 			setSaveButtonsEnabled(false);
 			controlPane.setMessage(null, NO_MESSAGE);
-		}
-		else controlPane.setMessage(controller.getResult(), INFORMATION_MESSAGE);
+		} else
+			controlPane.setMessage(controller.getResult(), INFORMATION_MESSAGE);
 		//for explanation of the following step, see DocuPane.update()
 		setStepDirection(true);
 		docuPane.algorithmStarted();
@@ -673,10 +692,12 @@ implements GUIConstants {
 	 * Sets the enable state of the buttons when an algorithm is finished.
 	 */
 	public void algorithmFinished() {
-		if (controller.isAVLMode()) controlPane.setAVLToggleEnabled(true);
+		if (controller.isAVLMode())
+			controlPane.setAVLToggleEnabled(true);
 		setPerformButtonsEnabled(false);
 		setUndoButtonsEnabled(true);
-		if (tree.getHeight() > 0) clearTreeAction.setEnabled(true);
+		if (tree.getHeight() > 0)
+			clearTreeAction.setEnabled(true);
 		controlPane.setKeyInputEnabled(true);
 		controlPane.validateKey();
 		controlPane.setMessage(controller.getResult(), INFORMATION_MESSAGE);
@@ -691,16 +712,17 @@ implements GUIConstants {
 	 * Sets the enable state of the buttons when an algorithm is aborted.
 	 */
 	public void algorithmAborted() {
-		if (getAnimator() != null &&
-			getAnimator().isRunning()) {
+		if (getAnimator() != null && getAnimator().isRunning()) {
 			getAnimator().stopAnim();
 			controlPane.setAnimSpeedEnabled(false);
 			//busy waiting for animator has being stopped to avoid race conditions
-			while (getAnimator().isRunning());
+			while (getAnimator().isRunning())
+				;
 		}
-		if (controller.isAVLMode() ||
-			tree.getHeight() == 0) controlPane.setAVLToggleEnabled(true);
-		if (tree.getHeight() > 0) clearTreeAction.setEnabled(true);
+		if (controller.isAVLMode() || tree.getHeight() == 0)
+			controlPane.setAVLToggleEnabled(true);
+		if (tree.getHeight() > 0)
+			clearTreeAction.setEnabled(true);
 		setPerformButtonsEnabled(false);
 		setUndoButtonsEnabled(false);
 		controlPane.setKeyInputEnabled(true);
@@ -747,7 +769,7 @@ implements GUIConstants {
 		clearTreeAction.setEnabled(false);
 		controlPane.setAVLToggleEnabled(false);
 		controlPane.setAlgorithmButtonsEnabled(false);
-		controlPane.setKeyInputEnabled(false);		
+		controlPane.setKeyInputEnabled(false);
 		controlPane.setMessage(null, NO_MESSAGE);
 		//for explanation of the following step, see DocuPane.update()
 		setStepDirection(true);
@@ -850,8 +872,10 @@ implements GUIConstants {
 	public void setChangesToSave(boolean b) {
 		changesToSave = b;
 		saveAction.setEnabled(b);
-		if (changesToSave) saveAsAction.setEnabled(true);
-		else saveAsAction.setEnabled(tree.getHeight() != 0);
+		if (changesToSave)
+			saveAsAction.setEnabled(true);
+		else
+			saveAsAction.setEnabled(tree.getHeight() != 0);
 		//TODO: if changesToSave is set to true, notify appWin to add '*' to title 
 	}
 
@@ -866,8 +890,7 @@ implements GUIConstants {
 	 * @param anchor the anchor position in the field, when component does not fill the field
 	 * @param fill the mode how to fill the field
 	 */
-	public static void setGBC(Component comp, GridBagLayout gbl,
-			int x, int y, int width, int height, int anchor, int fill) {
+	public static void setGBC(Component comp, GridBagLayout gbl, int x, int y, int width, int height, int anchor, int fill) {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = x;
 		gbc.gridy = y;
@@ -880,6 +903,7 @@ implements GUIConstants {
 
 	/** Determines the direction of the current step. */
 	private boolean performDirection;
+
 	/**
 	 * Sets the direction of the current step. This approach is a necessary
 	 * trick for correctly scrolling in <code>DocuPane</code>.

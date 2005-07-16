@@ -29,6 +29,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.module.dijkstraModule.gui.Controller;
 import org.jalgo.module.dijkstraModule.util.DefaultExceptionHandler;
+import org.jalgo.module.dijkstraModule.actions.ActionException;
 import org.jalgo.module.dijkstraModule.actions.UndoAction;
 
 /**
@@ -50,7 +51,7 @@ public class UndoToolBarAction extends Action implements Serializable {
 	public void run() {
 		try {
 			new UndoAction(controller);
-		} catch (Exception e) {
+		} catch (ActionException e) {
 			new DefaultExceptionHandler(e);
 		}
 	}

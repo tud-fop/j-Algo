@@ -41,19 +41,18 @@ public class ApplyNodeListAction extends ApplyGraphTextAction {
 	 * @param strText The text You want to parse.
 	 * @throws Exception ParsingException thrown by the NodeListParser
 	 */
-	public ApplyNodeListAction(Controller ctrl, String strText) throws Exception {
+	public ApplyNodeListAction(Controller ctrl, String strText) throws ActionException {
 		super(ctrl, strText);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.dijkstra.demo.actions.Action#Do()
 	 */
-	public boolean doAction() throws Exception {
+	public boolean doAction() throws ActionException {
 		try {
 			this.getController().setGraph(new NodeListParser().getParsedNodeList(this.m_strText, getOldGraph()));
 		} catch (ParsingException e) {
 			getController().setGraph(getOldGraph());
-			throw e;
 		}
 		return true;
 	}
@@ -61,7 +60,7 @@ public class ApplyNodeListAction extends ApplyGraphTextAction {
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.dijkstra.demo.actions.Action#Undo()
 	 */
-	public boolean undoAction() throws Exception {
+	public boolean undoAction() throws ActionException {
 		this.getController().setGraph(getOldGraph());
 		return true;
 	}

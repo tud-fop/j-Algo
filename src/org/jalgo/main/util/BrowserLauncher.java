@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// $Id: BrowserLauncher.java,v 1.2 2005/06/27 20:59:07 mischi Exp $
+// $Id: BrowserLauncher.java,v 1.3 2005/07/16 20:36:08 stephancr Exp $
 // Adapted to work with Unix-like OS' with mozilla/firefox
 // by Julian Stecklina.
 package org.jalgo.main.util;
@@ -489,7 +489,9 @@ public class BrowserLauncher {
 							browser = possibleMozillaNames[i];
 							break;
 						}
-					} catch (Exception e) {
+					} catch (InterruptedException e) {
+						
+					} catch (IOException e) {
 						
 					}
 				}
@@ -617,11 +619,4 @@ public class BrowserLauncher {
 	private native static int ICLaunchURL(int instance, byte[] hint, byte[] data, int len,
 											int[] selectionStart, int[] selectionEnd);
 	
-	public static void main(String[] args) {
-	    try {
-	        BrowserLauncher.openURL("http://www.common-lisp.net/");
-	    } catch (Exception e) {
-	        System.out.println("Fehler");
-	    }
-	}
 }

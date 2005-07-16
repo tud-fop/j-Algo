@@ -31,31 +31,28 @@ import org.jalgo.module.dijkstraModule.model.Node;
  * @author Hannes Strass
  *
  */
-public class DeleteNodeAction extends GraphAction
-{
+public class DeleteNodeAction extends GraphAction {
 
 	private Node m_Node;
-	
+
 	/** Creates a new DeleteNodeAction, which deletes a Node.
 	 * @param ctrl the Controller
 	 * @param node the Node to delete
 	 * @throws Exception
 	 */
-	public DeleteNodeAction(Controller ctrl, Node node) throws Exception
-	{
+	public DeleteNodeAction(Controller ctrl, Node node) throws ActionException {
 		super(ctrl);
 		this.m_Node = node;
 		this.registerAndDo(true);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.dijkstraModule.actions.Action#doAction()
 	 */
-	public boolean doAction() throws Exception
-	{	
-		getController().getGraph().setAllChangedFlagsFalse();	
-		getController().getGraph().deleteNode(m_Node);		
-		getController().getGraph().replaceMissingNodes();		
+	public boolean doAction() throws ActionException {
+		getController().getGraph().setAllChangedFlagsFalse();
+		getController().getGraph().deleteNode(m_Node);
+		getController().getGraph().replaceMissingNodes();
 		getController().setGraph(getController().getGraph());
 		return true;
 	}

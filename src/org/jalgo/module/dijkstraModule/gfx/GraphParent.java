@@ -54,20 +54,26 @@ import org.jalgo.module.dijkstraModule.actions.*;
  * However, if the graph parent catches these events and routes them to the node, smooth motion is ensured.
  * @author Martin Winter, Hannes Strass
  */
-public class GraphParent 
-extends Figure 
-implements MouseListener, MouseMotionListener {
-		
+public class GraphParent extends Figure implements MouseListener, MouseMotionListener {
+
 	private Device device;
+
 	private Controller controller;
+
 	private Graph graph;
+
 	private NodeVisual draggingNodeVisual = null;
+
 	private EdgeWeightVisual draggingEdgeWeightVisual = null;
+
 	private EdgeWeightVisual cleanupEdgeWeightVisual = null;
+
 	private NodeVisual newEdgeSource = null;
+
 	private int newEdgeLineInsertionIndex = -1;
+
 	private Rectangle oldBounds = new Rectangle();
-	
+
 	/**
 	 * A custom red color (#CC0000).
 	 */
@@ -102,12 +108,12 @@ implements MouseListener, MouseMotionListener {
 	 * A custom black color (#000000).
 	 */
 	public Color blackColor;
-	
+
 	/**
 	 * These hash maps store associations between model and visual objects.
 	 */
 	private HashMap nodeModelsVisuals, edgeModelsVisuals, nodeVisualsModels, edgeVisualsModels;
-	
+
 	/**
 	 * Creates a new graph parent.
 	 * @param device the current device (needed for creating colors)
@@ -116,7 +122,7 @@ implements MouseListener, MouseMotionListener {
 	public GraphParent(Device device, Controller controller) {
 		this.device = device;
 		this.controller = controller;
-		
+
 		RGB redColorRGB = new RGB(204, 0, 0);
 		redColor = new Color(device, redColorRGB);
 		RGB orangeColorRGB = new RGB(204, 153, 0);
@@ -134,16 +140,16 @@ implements MouseListener, MouseMotionListener {
 
 		// Register for mouse button events.
 		addMouseListener(this);
-		
+
 		// Register for mouse drag (whenever mouse is _outside_ draggingNodeVisual's innerCircle).
 		addMouseMotionListener(this);
-		
+
 		nodeModelsVisuals = new HashMap();
 		edgeModelsVisuals = new HashMap();
 		nodeVisualsModels = new HashMap();
 		edgeVisualsModels = new HashMap();
 	}
-	
+
 	/**
 	 * Returns the controller instance.
 	 * @return the controller instance that was passed to the constructor
@@ -151,7 +157,7 @@ implements MouseListener, MouseMotionListener {
 	public Controller getController() {
 		return controller;
 	}
-	
+
 	/**
 	 * Returns the mode of the controller.
 	 * @return the mode of the controller as an integer field (see constants there)
@@ -159,7 +165,7 @@ implements MouseListener, MouseMotionListener {
 	public int getControllerMode() {
 		return controller.getEditingMode();
 	}
-	
+
 	/**
 	 * Returns <code>true</code> if a node visual is being dragged.
 	 * @return <code>true</code> if a node visual is being dragged
@@ -189,9 +195,9 @@ implements MouseListener, MouseMotionListener {
 	 * @return <code>true</code> if any of the three dragging activities is taking place
 	 */
 	public boolean isDrag() {
-		return ( isDragMoveNode() || isDragAddEdge() || isDragWeighEdge() );
+		return (isDragMoveNode() || isDragAddEdge() || isDragWeighEdge());
 	}
-	
+
 	/**
 	 * Sets the node visual to be dragged.
 	 * @param draggingNodeVisual the node visual to be dragged; set <code>null</code> when drag is over
@@ -200,7 +206,7 @@ implements MouseListener, MouseMotionListener {
 		// Will be null when mouse is released.
 		this.draggingNodeVisual = draggingNodeVisual;
 	}
-	
+
 	/**
 	 * Returns the node visual being dragged.
 	 * @return the node visual being dragged or <code>null</code> if there is none
@@ -208,7 +214,7 @@ implements MouseListener, MouseMotionListener {
 	public NodeVisual getDraggingNodeVisual() {
 		return draggingNodeVisual;
 	}
-	
+
 	/**
 	 * Sets the edge weight visual to be weighed through dragging.
 	 * @param draggingEdgeWeightVisual the edge weight visual to be weighed through dragging; 
@@ -218,7 +224,7 @@ implements MouseListener, MouseMotionListener {
 		// Will be null when mouse is released.
 		this.draggingEdgeWeightVisual = draggingEdgeWeightVisual;
 	}
-	
+
 	/**
 	 * Returns the edge weight visual being weighed through dragging.
 	 * @return the edge weight visual being weighed through dragging or <code>null</code> if there is none
@@ -226,7 +232,7 @@ implements MouseListener, MouseMotionListener {
 	public EdgeWeightVisual getDraggingEdgeWeightVisual() {
 		return draggingEdgeWeightVisual;
 	}
-	
+
 	/**
 	 * Sets the edge weight visual to be "cleaned up".
 	 * In the graph parent's mouseMoved() method, the registered visual's mouseExited() method is called 
@@ -236,7 +242,7 @@ implements MouseListener, MouseMotionListener {
 	public void setCleanupEdgeWeightVisual(EdgeWeightVisual cleanupEdgeWeightVisual) {
 		this.cleanupEdgeWeightVisual = cleanupEdgeWeightVisual;
 	}
-	
+
 	/**
 	 * Sets the node visual that acts as the source for a new edge.
 	 * @param nodeVisual the node visual that acts as the source for a new edge
@@ -244,7 +250,7 @@ implements MouseListener, MouseMotionListener {
 	public void setNewEdgeSource(NodeVisual nodeVisual) {
 		newEdgeSource = nodeVisual;
 	}
-	
+
 	/**
 	 * Returns the node visual that acts as the source for a new edge.
 	 * @return the node visual that acts as the source for a new edge
@@ -252,7 +258,7 @@ implements MouseListener, MouseMotionListener {
 	public NodeVisual getNewEdgeSource() {
 		return newEdgeSource;
 	}
-	
+
 	/**
 	 * Returns the index at which the line representing a new edge is to be inserted.
 	 * This index determines the "layer order" of the children of the graph parent.
@@ -262,7 +268,7 @@ implements MouseListener, MouseMotionListener {
 	public int getNewEdgeLineInsertionIndex() {
 		return newEdgeLineInsertionIndex;
 	}
-	
+
 	/**
 	 * Sets the graph model visualized by this graph parent.
 	 * @param graph the graph model visualized by this graph parent
@@ -270,7 +276,7 @@ implements MouseListener, MouseMotionListener {
 	public void setGraph(Graph graph) {
 		this.graph = graph;
 	}
-	
+
 	/**
 	 * Returns the graph model visualized by this graph parent.
 	 * @return the graph model visualized by this graph parent
@@ -278,43 +284,39 @@ implements MouseListener, MouseMotionListener {
 	public Graph getGraph() {
 		return graph;
 	}
-	
+
 	/**
 	 * Returns the hash map associating the node models with their visuals.
 	 * @return the hash map associating the node models with their visuals
 	 */
-	public HashMap getNodeModelsVisuals()
-	{
+	public HashMap getNodeModelsVisuals() {
 		return this.nodeModelsVisuals;
 	}
-	
+
 	/**
 	 * Returns the hash map associating the edge models with their visuals.
 	 * @return the hash map associating the edge models with their visuals
 	 */
-	public HashMap getEdgeModelsVisuals()
-	{
+	public HashMap getEdgeModelsVisuals() {
 		return this.edgeModelsVisuals;
 	}
-	
+
 	/**
 	 * Returns the hash map associating the node visuals with their models.
 	 * @return the hash map associating the node visuals with their models
 	 */
-	public HashMap getNodeVisualsModels()
-	{
+	public HashMap getNodeVisualsModels() {
 		return this.nodeVisualsModels;
 	}
-	
+
 	/**
 	 * Returns the hash map associating the edge visuals with their models.
 	 * @return the hash map associating the edge visuals with their models
 	 */
-	public HashMap getEdgeVisualsModels()
-	{
+	public HashMap getEdgeVisualsModels() {
 		return this.edgeVisualsModels;
 	}
-	
+
 	/**
 	 * Creates a new node by triggering a {@link NewNodeAction}.
 	 * @param location the location of the new node (pixels)
@@ -322,11 +324,11 @@ implements MouseListener, MouseMotionListener {
 	public void newNode(Point location) {
 		try {
 			new NewNodeAction(controller, location, getBounds());
-		} catch (Exception e) {
+		} catch (ActionException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Moves a node by triggering a {@link MoveNodeAction}.
 	 * @param nodeVisual the node visual associated with the node being moved
@@ -336,11 +338,11 @@ implements MouseListener, MouseMotionListener {
 		Node clickedNode = (Node) nodeVisualsModels.get(nodeVisual);
 		try {
 			new MoveNodeAction(controller, clickedNode, new Position(newLocation, bounds));
-		} catch (Exception e) {
+		} catch (ActionException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Deletes a node by triggering a {@link DeleteNodeAction}.
 	 * @param nodeVisual the node visual associated with the node being deleted
@@ -349,11 +351,11 @@ implements MouseListener, MouseMotionListener {
 		Node clickedNode = (Node) nodeVisualsModels.get(nodeVisual);
 		try {
 			new DeleteNodeAction(controller, clickedNode);
-		} catch (Exception e) {
+		} catch (ActionException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Adds a new edge between two nodes by triggering a {@link NewEdgeAction}.
 	 * @param target the node visual associated with the target node of the new edge
@@ -363,12 +365,12 @@ implements MouseListener, MouseMotionListener {
 		Node targetNode = (Node) nodeVisualsModels.get(target);
 		try {
 			new NewEdgeAction(controller, sourceNode, targetNode);
-		} catch (Exception e) {
+		} catch (ActionException e) {
 			e.printStackTrace();
 		}
 		//newEdgeSource = null;
 	}
-	
+
 	/**
 	 * Changed the weight of an edge by triggering a {@link WeighEdgeAction}.
 	 * @param edgeVisual the edge visual associated with the edge whose weight is being changed
@@ -377,11 +379,11 @@ implements MouseListener, MouseMotionListener {
 		Edge clickedEdge = (Edge) edgeVisualsModels.get(edgeVisual);
 		try {
 			new WeighEdgeAction(controller, clickedEdge, edgeVisual.getWeight());
-		} catch (Exception e) {
+		} catch (ActionException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Deletes an edge by triggering a {@link DeleteEdgeAction}.
 	 * @param edgeVisual the edge visual associated with the edge being deleted
@@ -390,90 +392,81 @@ implements MouseListener, MouseMotionListener {
 		Edge clickedEdge = (Edge) edgeVisualsModels.get(edgeVisual);
 		try {
 			new DeleteEdgeAction(controller, clickedEdge);
-		} catch (Exception e) {
+		} catch (ActionException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Overridden in order to catch resizing and then to redisplay the graph scaled to the new size.
 	 */
 	public void setBounds(Rectangle rect) {
 		super.setBounds(rect);
-		
+
 		// Only proceed if bounds have truly changed.
 		// Also, check if graph is a null pointer (happens when GUI is set up for the first time).
-		if (!rect.equals(oldBounds) && (graph != null))
-		{
+		if (!rect.equals(oldBounds) && (graph != null)) {
 			// Set new bounds for every nodeVisual.
 			// TODO: Accessing the nodeVisuals should be easier and abstracted away (see update() method below).
 			// Perhaps we should rethink the mapping between visuals and nodes ...?
 			ArrayList nodeList = graph.getNodeList();
-			for (int i = 0; i < nodeModelsVisuals.size(); i++)
-			{
-				Node node = (Node)nodeList.get(i);
-				NodeVisual nodeVisual = (NodeVisual)nodeModelsVisuals.get(node);
-				nodeVisual.setCenter(node.getPosition().getScreenPoint(rect));		// Use rect, not getBounds()!
+			for (int i = 0; i < nodeModelsVisuals.size(); i++) {
+				Node node = (Node) nodeList.get(i);
+				NodeVisual nodeVisual = (NodeVisual) nodeModelsVisuals.get(node);
+				nodeVisual.setCenter(node.getPosition().getScreenPoint(rect)); // Use rect, not getBounds()!
 			}
 		}
-		oldBounds = rect.getCopy();	// Save current bounds for next time.
+		oldBounds = rect.getCopy(); // Save current bounds for next time.
 	}
-	
+
 	/**
 	 * Updates the entire visualization.
 	 * setGraph() must be called with a valid graph before calling this method.
 	 */
-	public void update()
-	{
+	public void update() {
 		removeAll();
-		
+
 		Node currentNode;
 		Edge currentEdge;
 		ArrayList nodeList = graph.getNodeList();
 		ArrayList edgeList = graph.getEdgeList();
-		
+
 		/*HashMap */nodeModelsVisuals.clear(); // = new HashMap();
 		/*HashMap */edgeModelsVisuals.clear(); // = new HashMap();
-		
+
 		// create the NodeVisuals, map each Node to its NodeVisual and each NodeVisual to its Node
-		for (int i = 0; i < nodeList.size(); i++)
-		{
+		for (int i = 0; i < nodeList.size(); i++) {
 			currentNode = (Node) nodeList.get(i);
 			NodeVisual n = new NodeVisual(device, this, currentNode);
 			nodeModelsVisuals.put(currentNode, n);
 			nodeVisualsModels.put(n, currentNode);
 		}
-		
+
 		// create the EdgeVisuals, map each Edge to its EdgeVisual and each EdgeVisual to its Edge
-		for (int i = 0; i < edgeList.size(); i++)
-		{
+		for (int i = 0; i < edgeList.size(); i++) {
 			currentEdge = (Edge) edgeList.get(i);
 			NodeVisual startNV, endNV;
-			
+
 			startNV = (NodeVisual) nodeModelsVisuals.get(currentEdge.getStartNode());
 			endNV = (NodeVisual) nodeModelsVisuals.get(currentEdge.getEndNode());
-			
-			if ((startNV != null) && (endNV != null))
-			{
+
+			if ((startNV != null) && (endNV != null)) {
 				EdgeVisual e = new EdgeVisual(device, this, startNV, endNV, currentEdge);
 				edgeModelsVisuals.put(currentEdge, e);
 				edgeVisualsModels.put(e, currentEdge);
-				
+
 				// Add edges first, on lower "layers" (higher indices);
 				e.addToParent(this);
-			}
-			else
-			{
+			} else {
 				//throw new Exception("Internal error.");
 			}
 		}
-		
-		for (int i = 0; i < nodeModelsVisuals.size(); i++)
-		{
+
+		for (int i = 0; i < nodeModelsVisuals.size(); i++) {
 			NodeVisual n = (NodeVisual) nodeModelsVisuals.get(nodeList.get(i));
 			n.addToParent(this);
 		}
-		
+
 		// Determine index (layer) at which temporary edge line should be added (above edges, below nodes).
 		newEdgeLineInsertionIndex = 0;
 		for (int i = 0; i < getChildren().size(); i++) {
@@ -483,10 +476,9 @@ implements MouseListener, MouseMotionListener {
 			}
 		}
 	}
-	
-	
+
 	/* Methods inherited from MouseListener interface. */
-	
+
 	/**
 	 * Responds when the mouse button is pressed.
 	 * <ul>
@@ -494,30 +486,29 @@ implements MouseListener, MouseMotionListener {
 	 * </ul>
 	 */
 	public void mousePressed(MouseEvent event) {
-		switch (getControllerMode())
-		{
-			case (Controller.MODE_NO_TOOL_ACTIVE): {
-				break;
-			}
-			case (Controller.MODE_ADD_MOVE_NODE): {
-				newNode(event.getLocation());
-				break;
-			}
-			case (Controller.MODE_DELETE_NODE): {
-				break;
-			}
-			case (Controller.MODE_ADD_WEIGH_EDGE): {
-				break;
-			}
-			case (Controller.MODE_DELETE_EDGE): {
-				break;
-			}
-			case (Controller.MODE_ALGORITHM): {
-				break;
-			}
+		switch (getControllerMode()) {
+		case (Controller.MODE_NO_TOOL_ACTIVE): {
+			break;
+		}
+		case (Controller.MODE_ADD_MOVE_NODE): {
+			newNode(event.getLocation());
+			break;
+		}
+		case (Controller.MODE_DELETE_NODE): {
+			break;
+		}
+		case (Controller.MODE_ADD_WEIGH_EDGE): {
+			break;
+		}
+		case (Controller.MODE_DELETE_EDGE): {
+			break;
+		}
+		case (Controller.MODE_ALGORITHM): {
+			break;
+		}
 		}
 	}
-	
+
 	/**
 	 * Responds when the mouse button is released.
 	 * <ul>
@@ -526,45 +517,43 @@ implements MouseListener, MouseMotionListener {
 	 * </ul>
 	 */
 	public void mouseReleased(MouseEvent event) {
-		switch (getControllerMode())
-		{
-			case (Controller.MODE_NO_TOOL_ACTIVE): {
-				break;
+		switch (getControllerMode()) {
+		case (Controller.MODE_NO_TOOL_ACTIVE): {
+			break;
+		}
+		case (Controller.MODE_ADD_MOVE_NODE): {
+			if (isDragMoveNode()) {
+				moveNodeForVisual(draggingNodeVisual, event.getLocation());
 			}
-			case (Controller.MODE_ADD_MOVE_NODE): {
-				if (isDragMoveNode()) {
-					moveNodeForVisual(draggingNodeVisual, event.getLocation());
-				}
-				break;
+			break;
+		}
+		case (Controller.MODE_DELETE_NODE): {
+			break;
+		}
+		case (Controller.MODE_ADD_WEIGH_EDGE): {
+			if (isDragAddEdge()) {
+				// Mouse was released outside of a node visual.
+				newEdgeSource.cancelNewEdge();
+				newEdgeSource = null;
+			} else if (isDragWeighEdge()) {
+				draggingEdgeWeightVisual.mouseReleased(event);
 			}
-			case (Controller.MODE_DELETE_NODE): {
-				break;
-			}
-			case (Controller.MODE_ADD_WEIGH_EDGE): {
-				if (isDragAddEdge()) {
-					// Mouse was released outside of a node visual.
-					newEdgeSource.cancelNewEdge();
-					newEdgeSource = null;
-				} else if (isDragWeighEdge()) {
-					draggingEdgeWeightVisual.mouseReleased(event);
-				}
-				break;
-			}
-			case (Controller.MODE_DELETE_EDGE): {
-				break;
-			}
-			case (Controller.MODE_ALGORITHM): {
-				break;
-			}
+			break;
+		}
+		case (Controller.MODE_DELETE_EDGE): {
+			break;
+		}
+		case (Controller.MODE_ALGORITHM): {
+			break;
+		}
 		}
 	}
-	
+
 	public void mouseDoubleClicked(MouseEvent event) {
 	}
-	
-	
+
 	/* Methods inherited from MouseMotionListener interface. */
-	
+
 	/**
 	 * Responds when the mouse is dragged.
 	 * <ul>
@@ -576,34 +565,33 @@ implements MouseListener, MouseMotionListener {
 	public void mouseDragged(MouseEvent event) {
 		// This method gets called when the mouse is outside draggingNodeVisual's innerCircle.
 		// When inside the circle, draggingNodeVisual's mouseDragged() method gets called instead.
-		switch (getControllerMode())
-		{
-			case (Controller.MODE_NO_TOOL_ACTIVE): {
-				break;
+		switch (getControllerMode()) {
+		case (Controller.MODE_NO_TOOL_ACTIVE): {
+			break;
+		}
+		case (Controller.MODE_ADD_MOVE_NODE): {
+			if (isDragMoveNode()) {
+				draggingNodeVisual.mouseDragged(event);
 			}
-			case (Controller.MODE_ADD_MOVE_NODE): {
-				if (isDragMoveNode()) {
-					draggingNodeVisual.mouseDragged(event);
-				}
-				break;
+			break;
+		}
+		case (Controller.MODE_DELETE_NODE): {
+			break;
+		}
+		case (Controller.MODE_ADD_WEIGH_EDGE): {
+			if (isDragWeighEdge()) {
+				draggingEdgeWeightVisual.mouseDragged(event);
+			} else if (isDragAddEdge()) {
+				newEdgeSource.mouseDragged(event);
 			}
-			case (Controller.MODE_DELETE_NODE): {
-				break;
-			}
-			case (Controller.MODE_ADD_WEIGH_EDGE): {
-				if (isDragWeighEdge()) {
-					draggingEdgeWeightVisual.mouseDragged(event);
-				} else if (isDragAddEdge()) {
-					newEdgeSource.mouseDragged(event);
-				}
-				break;
-			}
-			case (Controller.MODE_DELETE_EDGE): {
-				break;
-			}
-			case (Controller.MODE_ALGORITHM): {
-				break;
-			}
+			break;
+		}
+		case (Controller.MODE_DELETE_EDGE): {
+			break;
+		}
+		case (Controller.MODE_ALGORITHM): {
+			break;
+		}
 		}
 	}
 
@@ -625,35 +613,34 @@ implements MouseListener, MouseMotionListener {
 	 * </ul>
 	 */
 	public void mouseMoved(MouseEvent event) {
-		switch (getControllerMode())
-		{
-			case (Controller.MODE_NO_TOOL_ACTIVE): {
-				break;
-			}
-			case (Controller.MODE_ADD_MOVE_NODE): {
-				break;
-			}
-			case (Controller.MODE_DELETE_NODE): {
-				break;
-			}
-			case (Controller.MODE_ADD_WEIGH_EDGE): {
-				if (isDragAddEdge()) {
-					newEdgeSource.mouseMoved(event);
-				} else {
-					// Clean up after exiting weight visual.
-					if (cleanupEdgeWeightVisual != null) {
-						cleanupEdgeWeightVisual.mouseExited(event);
-						cleanupEdgeWeightVisual = null;
-					}
+		switch (getControllerMode()) {
+		case (Controller.MODE_NO_TOOL_ACTIVE): {
+			break;
+		}
+		case (Controller.MODE_ADD_MOVE_NODE): {
+			break;
+		}
+		case (Controller.MODE_DELETE_NODE): {
+			break;
+		}
+		case (Controller.MODE_ADD_WEIGH_EDGE): {
+			if (isDragAddEdge()) {
+				newEdgeSource.mouseMoved(event);
+			} else {
+				// Clean up after exiting weight visual.
+				if (cleanupEdgeWeightVisual != null) {
+					cleanupEdgeWeightVisual.mouseExited(event);
+					cleanupEdgeWeightVisual = null;
 				}
-				break;
 			}
-			case (Controller.MODE_DELETE_EDGE): {
-				break;
-			}
-			case (Controller.MODE_ALGORITHM): {
-				break;
-			}
+			break;
+		}
+		case (Controller.MODE_DELETE_EDGE): {
+			break;
+		}
+		case (Controller.MODE_ALGORITHM): {
+			break;
+		}
 		}
 	}
 }

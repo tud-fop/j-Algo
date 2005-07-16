@@ -53,6 +53,7 @@ import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.gui.actions.SaveAction;
 import org.jalgo.main.gui.actions.SaveAsAction;
 import org.jalgo.module.dijkstraModule.actions.Action;
+import org.jalgo.module.dijkstraModule.actions.ActionException;
 import org.jalgo.module.dijkstraModule.actions.ActionStack;
 import org.jalgo.module.dijkstraModule.actions.ShowAlgorithmPageAction;
 import org.jalgo.module.dijkstraModule.actions.ShowEditPageAction;
@@ -288,7 +289,7 @@ public class Controller extends Observable {
 			}
 
 			this.setModifiedFlag();
-		} catch (Exception e) {
+		} catch (ActionException e) {
 
 		}
 
@@ -364,35 +365,31 @@ public class Controller extends Observable {
 	 * This function recomputes the Dijkstra for the current graph
 	 */
 	protected void computeAlgoStates() {
-		try {
-			m_nCurStep = 0;
-			m_mapNodes2AlgoStatesArrayLists.clear();
-			DijkstraAlgorithm DijkstraAlgorithm = new DijkstraAlgorithm(new ColorFactory(m_composite.getDisplay()),
-					getGraph());
-			Graph gr = getGraph();
-			Iterator iterNodes = gr.getNodeList().iterator();
-			Node prevStartNode = gr.getStartNode();
-			while (iterNodes.hasNext()) {
-				Node node = (Node) iterNodes.next();
-				boolean bStart = node.getStart();
-				DijkstraAlgorithm.generateStates(node);
-				ArrayList arList = new ArrayList();
+		m_nCurStep = 0;
+		m_mapNodes2AlgoStatesArrayLists.clear();
+		DijkstraAlgorithm DijkstraAlgorithm = new DijkstraAlgorithm(new ColorFactory(m_composite.getDisplay()),
+				getGraph());
+		Graph gr = getGraph();
+		Iterator iterNodes = gr.getNodeList().iterator();
+		Node prevStartNode = gr.getStartNode();
+		while (iterNodes.hasNext()) {
+			Node node = (Node) iterNodes.next();
+			boolean bStart = node.getStart();
+			DijkstraAlgorithm.generateStates(node);
+			ArrayList arList = new ArrayList();
 
-				int nStateCount = DijkstraAlgorithm.getStateCount();
+			int nStateCount = DijkstraAlgorithm.getStateCount();
 
-				for (int i = 0; i < nStateCount; i++) {
-					DijkstraAlgorithm.gotoState(i);
-					arList.add(DijkstraAlgorithm.getCurrentState());
-				}
-				node.setStart(bStart);
-				m_mapNodes2AlgoStatesArrayLists.put(new Integer(node.getIndex()), arList);
+			for (int i = 0; i < nStateCount; i++) {
+				DijkstraAlgorithm.gotoState(i);
+				arList.add(DijkstraAlgorithm.getCurrentState());
 			}
+			node.setStart(bStart);
+			m_mapNodes2AlgoStatesArrayLists.put(new Integer(node.getIndex()), arList);
+		}
 
-			if (prevStartNode != null) {
-				prevStartNode.setStart(true);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (prevStartNode != null) {
+			prevStartNode.setStart(true);
 		}
 	}
 
@@ -660,7 +657,7 @@ public class Controller extends Observable {
 	 * @return Returns the result of act.doAction()
 	 * @throws Exception
 	 */
-	public boolean registerAndDoAction(Action act, boolean bRegister) throws Exception {
+	public boolean registerAndDoAction(Action act, boolean bRegister) throws ActionException {
 
 		if (bRegister == true)
 			m_actions.add(act);
@@ -679,7 +676,7 @@ public class Controller extends Observable {
 	 * @return Returns the last actions doAction() function result
 	 * @throws Exception
 	 */
-	public boolean undoAction() throws Exception {
+	public boolean undoAction() throws ActionException {
 		Action pAction = m_actions.movePrevious();
 		return ((pAction == null) ? false : pAction.undoAction());
 	}
@@ -696,7 +693,7 @@ public class Controller extends Observable {
 	 * @return Returns the last actions doAction() function result
 	 * @throws Exception
 	 */
-	public boolean redoAction() throws Exception {
+	public boolean redoAction() throws ActionException {
 		Action pAction = m_actions.moveNext();
 		return ((pAction == null) ? false : pAction.doAction());
 	}

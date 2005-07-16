@@ -24,7 +24,6 @@
 package org.jalgo.main.gui.actions;
 
 import org.eclipse.jface.action.Action;
-import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.JalgoMain;
 
 /**

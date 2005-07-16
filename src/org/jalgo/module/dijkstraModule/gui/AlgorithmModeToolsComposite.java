@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jalgo.module.dijkstraModule.actions.ActionException;
 import org.jalgo.module.dijkstraModule.actions.GotoMacroStepAction;
 import org.jalgo.module.dijkstraModule.actions.GotoMicroStepAction;
 import org.jalgo.module.dijkstraModule.actions.GotoStepAction;
@@ -70,31 +71,27 @@ public class AlgorithmModeToolsComposite extends ControllerComposite {
 		 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 		 */
 		public void update(Observable arg0, Object arg1) {
-			try {
-				super.update(arg0, arg1);
-				if (((Controller) arg0).getEditingMode() != Controller.MODE_ALGORITHM)
-					return;
-				int iSelectedIndex = m_cbStartNode.getSelectionIndex();
-				int iMaxNode = (((Controller) arg0).getGraph().getNodeList() == null) ? 0 : ((Controller) arg0)
-						.getGraph().getNodeList().size();
-				m_cbStartNode.removeAll();
-				for (int i = 0; i < iMaxNode; i++)
-					m_cbStartNode.add("" + (i + 1), i);
-				// if no node is selected as startnode, set the selection to node #1 and generate the states
-				if (iSelectedIndex == -1) {
-					Node node = ((Controller) arg0).getGraph().getStartNode();
-					if (node != null) {
-						m_cbStartNode.select(node.getIndex() - 1);
-					} else {
-						m_cbStartNode.select(0);
-					}
+			super.update(arg0, arg1);
+			if (((Controller) arg0).getEditingMode() != Controller.MODE_ALGORITHM)
+				return;
+			int iSelectedIndex = m_cbStartNode.getSelectionIndex();
+			int iMaxNode = (((Controller) arg0).getGraph().getNodeList() == null) ? 0 : ((Controller) arg0)
+					.getGraph().getNodeList().size();
+			m_cbStartNode.removeAll();
+			for (int i = 0; i < iMaxNode; i++)
+				m_cbStartNode.add("" + (i + 1), i);
+			// if no node is selected as startnode, set the selection to node #1 and generate the states
+			if (iSelectedIndex == -1) {
+				Node node = ((Controller) arg0).getGraph().getStartNode();
+				if (node != null) {
+					m_cbStartNode.select(node.getIndex() - 1);
 				} else {
-					Node node = ((Controller) arg0).getGraph().getStartNode();
-					iSelectedIndex = (node == null) ? iSelectedIndex : (node.getIndex() - 1);
-					m_cbStartNode.select(iSelectedIndex);
+					m_cbStartNode.select(0);
 				}
-			} catch (Exception exc) {
-				new DefaultExceptionHandler(exc);
+			} else {
+				Node node = ((Controller) arg0).getGraph().getStartNode();
+				iSelectedIndex = (node == null) ? iSelectedIndex : (node.getIndex() - 1);
+				m_cbStartNode.select(iSelectedIndex);
 			}
 		}
 	}
@@ -218,7 +215,7 @@ public class AlgorithmModeToolsComposite extends ControllerComposite {
 				} else {
 					new GotoMicroStepAction(m_Ctrl, m_bNext);
 				}
-			} catch (Exception exc) {
+			} catch (ActionException exc) {
 				new DefaultExceptionHandler(exc);
 			}
 		}
@@ -238,7 +235,7 @@ public class AlgorithmModeToolsComposite extends ControllerComposite {
 			try {
 				new GotoStepAction(m_Ctrl, Integer.valueOf(m_edit.getText()).intValue() - 1, true);
 
-			} catch (Exception exc) {
+			} catch (ActionException exc) {
 				new DefaultExceptionHandler(exc);
 			}
 		}
@@ -256,7 +253,7 @@ public class AlgorithmModeToolsComposite extends ControllerComposite {
 				Combo cb = (Combo) e.widget;
 				int iSelIndex = cb.getSelectionIndex();
 				new SetStartNodeAction(m_Ctrl, iSelIndex + 1);
-			} catch (Exception exc) {
+			} catch (ActionException exc) {
 				new DefaultExceptionHandler(exc);
 			}
 		}
@@ -301,7 +298,7 @@ public class AlgorithmModeToolsComposite extends ControllerComposite {
 				} else {
 					new StopAnimationAction(m_Ctrl);
 				}
-			} catch (Exception exc) {
+			} catch (ActionException exc) {
 				new DefaultExceptionHandler(exc);
 			}
 		}

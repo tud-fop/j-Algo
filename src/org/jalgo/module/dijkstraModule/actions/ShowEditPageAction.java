@@ -31,30 +31,28 @@ import org.jalgo.module.dijkstraModule.util.StatusbarText;
  */
 public class ShowEditPageAction extends SetEditingModeAction {
 
-    /**
-     * @param ctrl
-     * @throws Exception
-     */
-    public ShowEditPageAction(Controller ctrl) throws Exception {
-        super(ctrl, Controller.MODE_NO_TOOL_ACTIVE,true);
-    
-    }
-    
-    public boolean doAction() throws Exception
-    {
-        super.doAction();
-        getController().setStatusbarText(new StatusbarText("",null));
-        getController().showEditingPage();
-        return true;
-    }
+	/**
+	 * @param ctrl
+	 * @throws Exception
+	 */
+	public ShowEditPageAction(Controller ctrl) throws ActionException {
+		super(ctrl, Controller.MODE_NO_TOOL_ACTIVE, true);
 
-    /* (non-Javadoc)
-     * @see org.jalgo.module.dijkstraModule.actions.Action#Undo()
-     */
-    public boolean undoAction() throws Exception 
-    {
-        super.undoAction();
-        getController().showAlgorithmPage();
-        return true;
-    }
+	}
+
+	public boolean doAction() throws ActionException {
+		super.doAction();
+		getController().setStatusbarText(new StatusbarText("", null));
+		getController().showEditingPage();
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jalgo.module.dijkstraModule.actions.Action#Undo()
+	 */
+	public boolean undoAction() throws ActionException {
+		super.undoAction();
+		getController().showAlgorithmPage();
+		return true;
+	}
 }

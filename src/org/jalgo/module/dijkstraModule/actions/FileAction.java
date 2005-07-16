@@ -48,13 +48,13 @@ public class FileAction extends GraphAction {
 
 	protected Graph m_newGraph;
 
-	public FileAction(Controller ctrl, boolean bSave) throws Exception {
+	public FileAction(Controller ctrl, boolean bSave) throws ActionException {
 		super(ctrl);
 		m_bSave = bSave;
 		this.registerAndDo(m_bSave == false);
 	}
 
-	public boolean doAction() throws Exception {
+	public boolean doAction() throws ActionException {
 		if (m_bSave == true) {
 			save(getController().getGraph());
 			return false;
@@ -63,7 +63,7 @@ public class FileAction extends GraphAction {
 		return true;
 	}
 
-	public boolean undoAction() throws Exception {
+	public boolean undoAction() throws ActionException {
 		if (m_bSave == false)
 			getController().setGraph(m_oldGraph);
 		return (m_bSave == false);
@@ -75,7 +75,7 @@ public class FileAction extends GraphAction {
 	 * Speichert Graph im FS 
 	 * 
 	 * */
-	protected boolean save(Graph g) throws Exception {
+	protected boolean save(Graph g) throws ActionException {
 		Display disp = Display.getCurrent();
 		Shell shell = new Shell(disp);
 
@@ -94,13 +94,13 @@ public class FileAction extends GraphAction {
 				out.flush();
 				return true;
 			} catch (IOException ioe) {
-				throw ioe;
+				throw new ActionException(ioe.getMessage());
 			} finally {
 				if (out != null) {
 					try {
 						out.close();
 					} catch (IOException ioex) {
-						throw ioex;
+						throw new ActionException(ioex.getMessage());
 					}
 				}
 			}
@@ -111,10 +111,10 @@ public class FileAction extends GraphAction {
 	/*
 	 * Author: Steven Voigt
 	 * 
-	 * L�dt Graph aus Datei im FS 
+	 * Lädt Graph aus Datei im FS 
 	 * 
 	 * */
-	protected boolean open() throws Exception {
+	protected boolean open() throws ActionException {
 		Display disp = Display.getCurrent();
 		Shell shell = new Shell(disp);
 		FileDialog dialog = new FileDialog(shell, SWT.OPEN);
@@ -135,10 +135,10 @@ public class FileAction extends GraphAction {
 				in = new ObjectInputStream(new FileInputStream(file));
 				m_newGraph = (Graph) in.readObject();
 				return true;
-			} catch (Exception ioe) {
-
-				throw ioe;
-
+			} catch (IOException ioe) {
+				throw new ActionException(ioe.getMessage());
+			} catch (ClassNotFoundException cnfe) {
+				throw new ActionException(cnfe.getMessage());
 			} finally {
 				if (in != null) {
 					try {

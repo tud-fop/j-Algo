@@ -32,9 +32,9 @@ import org.jalgo.module.dijkstraModule.model.Node;
  * @author Hannes Strass
  *
  */
-public class MoveNodeAction extends GraphAction
-{
+public class MoveNodeAction extends GraphAction {
 	private Node m_Node;
+
 	private Position m_NewPosition;
 
 	/** Creates a MoveNodeAction, which moves a Node.
@@ -43,37 +43,33 @@ public class MoveNodeAction extends GraphAction
 	 * @param newPosition the new Position of the Node
 	 * @throws Exception
 	 */
-	public MoveNodeAction(Controller ctrl, Node node, Position newPosition) throws Exception
-	{
+	public MoveNodeAction(Controller ctrl, Node node, Position newPosition) throws ActionException {
 		super(ctrl);
 		this.m_Node = node;
 		this.m_NewPosition = newPosition;
 		this.registerAndDo(true);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.dijkstraModule.actions.Action#doAction()
 	 */
-	public boolean doAction() throws Exception
-	{	
-		
-		
+	public boolean doAction() throws ActionException {
+
 		Node node = getController().getGraph().findNode(m_Node.getIndex());
-		if(node.getPosition().equals(m_NewPosition))
-		    return false;
+		if (node.getPosition().equals(m_NewPosition))
+			return false;
 		getController().getGraph().setAllChangedFlagsFalse();
 		node.setChanged(true);
 		node.setPosition(m_NewPosition);
 		getController().setGraph(getController().getGraph());
-		
+
 		return true;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.dijkstraModule.actions.Action#undoAction()
 	 */
-	public boolean undoAction() throws Exception
-	{
+	public boolean undoAction() throws ActionException {
 		getController().setGraph(getOldGraph());
 		return true;
 	}

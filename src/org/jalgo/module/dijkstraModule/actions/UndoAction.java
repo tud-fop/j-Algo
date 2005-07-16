@@ -20,7 +20,7 @@
 /*
  * Created on 09.05.2005
  *
-  */
+ */
 package org.jalgo.module.dijkstraModule.actions;
 
 import org.jalgo.module.dijkstraModule.gui.Controller;
@@ -29,24 +29,17 @@ import org.jalgo.module.dijkstraModule.gui.Controller;
  * @author Frank Staudinger
  *
  */
-public class UndoAction  extends RedoAction 
-{
-	/**
-	 * 
-	 */
-	public UndoAction(Controller ctrl) throws Exception
-	{
+public class UndoAction extends RedoAction {
+
+	public UndoAction(Controller ctrl) throws ActionException {
 		super(ctrl);
-		
 	}
-	
-	public boolean doAction() throws Exception
-	{
+
+	public boolean doAction() throws ActionException {
 		return super.undoAction();
 	}
 
-	public boolean undoAction() throws Exception
-	{
+	public boolean undoAction() throws ActionException {
 		return super.doAction();
 	}
 }

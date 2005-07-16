@@ -31,19 +31,18 @@ import org.jalgo.module.dijkstraModule.gui.Controller;
  * @author Hannes Strass
  *
  */
-public class WeighEdgeAction extends GraphAction
-{
+public class WeighEdgeAction extends GraphAction {
 	private int m_iNewWeight;
+
 	private Edge m_Edge;
-	
+
 	/** Creates a new WeighEdgeAction, which changes the weight of an Edge.
 	 * @param ctrl the Controller
 	 * @param edge the Edge to weigh
 	 * @param newWeight the new weight
 	 * @throws Exception
 	 */
-	public WeighEdgeAction(Controller ctrl, Edge edge, int newWeight) throws Exception
-	{
+	public WeighEdgeAction(Controller ctrl, Edge edge, int newWeight) throws ActionException {
 		super(ctrl);
 		this.m_Edge = edge;
 		this.m_iNewWeight = newWeight;
@@ -53,15 +52,13 @@ public class WeighEdgeAction extends GraphAction
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.dijkstraModule.actions.Action#doAction()
 	 */
-	public boolean doAction() throws Exception
-	{
+	public boolean doAction() throws ActionException {
 		getController().getGraph().setAllChangedFlagsFalse();
-		Edge edge = getController().getGraph().findEdge(m_Edge.getStartNode(),m_Edge.getEndNode());
+		Edge edge = getController().getGraph().findEdge(m_Edge.getStartNode(), m_Edge.getEndNode());
 		edge.setChanged(true);
 		edge.setWeight(this.m_iNewWeight);
 		getController().setGraph(getController().getGraph());
 		return true;
 	}
-
 
 }

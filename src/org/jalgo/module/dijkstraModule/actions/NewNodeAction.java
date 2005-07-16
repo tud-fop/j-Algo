@@ -34,9 +34,9 @@ import org.eclipse.draw2d.geometry.Rectangle;
  * @author Hannes Strass, Martin Winter
  *
  */
-public class NewNodeAction extends GraphAction
-{
+public class NewNodeAction extends GraphAction {
 	private Position position;
+
 	/*
 	 * Changed to Position position; because of this:
 	 * Place a new node in the top right corner of the drawing rectangle
@@ -45,10 +45,10 @@ public class NewNodeAction extends GraphAction
 	 * Redo the last NewNodeAction
 	 * -> the Node will be invisible
 	 * 
-	private Point m_screenCoordinates;
-	private Rectangle m_Bounds;
-	*/
-	
+	 private Point m_screenCoordinates;
+	 private Rectangle m_Bounds;
+	 */
+
 	/** Creates a NewNodeAction, which creates a new Node
 	 * 
 	 * @param ctrl the Controller
@@ -56,24 +56,23 @@ public class NewNodeAction extends GraphAction
 	 * @param bounds bounds of the canvas where Nodes can be drawn
 	 * @throws Exception 
 	 */
-	public NewNodeAction(Controller ctrl, Point screenCoordinates, Rectangle bounds) throws Exception
-	{
+	public NewNodeAction(Controller ctrl, Point screenCoordinates, Rectangle bounds) throws ActionException {
 		super(ctrl);
 		/*
-		this.m_screenCoordinates = screenCoordinates;
-		this.m_Bounds = bounds;
-		*/
+		 this.m_screenCoordinates = screenCoordinates;
+		 this.m_Bounds = bounds;
+		 */
 		position = new Position(screenCoordinates, bounds);
 		this.registerAndDo(true);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.dijkstraModule.actions.Action#doAction()
 	 */
-	public boolean doAction() throws Exception
-	{
-		
-		if (getController().getGraph().getNextNodeIndex() == 10) return false;
+	public boolean doAction() throws ActionException {
+
+		if (getController().getGraph().getNextNodeIndex() == 10)
+			return false;
 		getController().getGraph().setAllChangedFlagsFalse();
 		//Position position = new Position(m_screenCoordinates, m_Bounds);
 		getController().getGraph().addNode(new Node(getController().getGraph().getNextNodeIndex(), position));
