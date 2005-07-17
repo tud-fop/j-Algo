@@ -31,6 +31,7 @@ package org.jalgo.module.dijkstraModule.actions;
  * A value of zero means unlimited size.
  */
 // FIXME wieso kein Adapter zu org.jalgo.main.util.Stack (Stephan)
+// wenn, dann java.util.Stack, org.jalgo.main.util.Stack ist gelöscht (Alexander)
 public class ActionStack 
 {
 	final protected class Node

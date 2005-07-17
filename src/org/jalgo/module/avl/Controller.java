@@ -51,16 +51,13 @@ import org.jalgo.module.avl.datastructure.WorkNode;
  * It provides several functions like: to start a new algorithm, to check if the
  * working algorithm is ready and to get the results of the active algorithm.
  */
-public class Controller implements Constants {
+public class Controller
+implements Constants {
 
 	private SearchTree tree;
-
 	private boolean avlMode = false;
-
 	private MacroCommand currentCommand = null;
-
 	private WorkNode workingNode = null;
-
 	private Queue<String> logDescriptions;
 
 	/**
@@ -82,7 +79,8 @@ public class Controller implements Constants {
 	/**
 	 * Sets the AVL mode
 	 * 
-	 * @param avl <code>true</code> to enable the AVL mode, false to disable it.
+	 * @param avl <code>true</code> to enable the AVL mode, <code>false</code>
+	 *            to disable it.
 	 */
 	public void setAVLMode(boolean avl) {
 		avlMode = avl;
@@ -102,9 +100,8 @@ public class Controller implements Constants {
 	 *         If there is no current command "noCommand" is returned.
 	 */
 	public String getSection() {
-		if (currentCommand == null || !currentCommand.hasNext())
-			return null;
-		return (String) currentCommand.getResults().get(1);
+		if (currentCommand == null || !currentCommand.hasNext()) return null;
+		return (String)currentCommand.getResults().get(1);
 	}
 
 	/**
@@ -125,7 +122,7 @@ public class Controller implements Constants {
 	public void startSearch(int key) {
 		workingNode = new WorkNode(key, tree.getRoot());
 		currentCommand = CommandFactory.createSearch(workingNode);
-		putLogDescription((String) currentCommand.getResult(0));
+		putLogDescription((String)currentCommand.getResult(0));
 	}
 
 	/**
@@ -136,11 +133,10 @@ public class Controller implements Constants {
 	 */
 	public void startInsert(int key) {
 		workingNode = new WorkNode(key, tree.getRoot());
-		if (avlMode)
-			currentCommand = CommandFactory.createInsertAVL(workingNode, tree);
-		else
-			currentCommand = CommandFactory.createInsert(workingNode, tree);
-		putLogDescription((String) currentCommand.getResult(0));
+		if (avlMode) currentCommand = CommandFactory.createInsertAVL(
+			workingNode, tree);
+		else currentCommand = CommandFactory.createInsert(workingNode, tree);
+		putLogDescription((String)currentCommand.getResult(0));
 	}
 
 	/**
@@ -151,11 +147,10 @@ public class Controller implements Constants {
 	 */
 	public void startRemove(int key) {
 		workingNode = new WorkNode(key, tree.getRoot());
-		if (avlMode)
-			currentCommand = CommandFactory.createRemoveAvl(workingNode, tree);
-		else
-			currentCommand = CommandFactory.createRemove(workingNode, tree);
-		putLogDescription((String) currentCommand.getResult(0));
+		if (avlMode) currentCommand = CommandFactory.createRemoveAvl(
+			workingNode, tree);
+		else currentCommand = CommandFactory.createRemove(workingNode, tree);
+		putLogDescription((String)currentCommand.getResult(0));
 	}
 
 	/**
@@ -167,8 +162,9 @@ public class Controller implements Constants {
 	public void createRandomTree(int nodeNumber) {
 		workingNode = new WorkNode(0, tree.getRoot());
 		workingNode.setVisualizationStatus(Visualizable.INVISIBLE);
-		currentCommand = CommandFactory.createCreateRandomTree(nodeNumber, tree, workingNode, avlMode);
-		putLogDescription((String) currentCommand.getResult(0));
+		currentCommand = CommandFactory.createCreateRandomTree(nodeNumber,
+			tree, workingNode, avlMode);
+		putLogDescription((String)currentCommand.getResult(0));
 	}
 
 	/**
@@ -177,32 +173,30 @@ public class Controller implements Constants {
 	public void startAVLTest() {
 		currentCommand = CommandFactory.createAVLTest(tree);
 		currentCommand.perform();
-		putLogDescription((String) currentCommand.getResult(0));
+		putLogDescription((String)currentCommand.getResult(0));
 	}
 
 	/**
 	 * Checks the status of the current command.
 	 * 
 	 * @return <code>false</code> if the current command has no next step or
-	 *					if there is no current command.
+	 *         if there is no current command.
 	 */
 	public boolean algorithmHasNextStep() {
 		boolean next = false;
-		if (currentCommand != null)
-			next = currentCommand.hasNext();
+		if (currentCommand != null) next = currentCommand.hasNext();
 		return next;
 	}
 
 	/**
 	 * Checks the status of the current command.
 	 * 
-	 * @return <code>false</code> if the current command has no previous step or
-	 *				if there is no current command.
+	 * @return <code>false</code> if the current command has no previous step
+	 *         or if there is no current command.
 	 */
 	public boolean algorithmHasPreviousStep() {
 		boolean previous = false;
-		if (currentCommand != null)
-			previous = currentCommand.hasPrevious();
+		if (currentCommand != null) previous = currentCommand.hasPrevious();
 		return previous;
 	}
 
@@ -210,79 +204,95 @@ public class Controller implements Constants {
 	 * Tries to perform one step forward in the active algorithm.
 	 * 
 	 * @throws NoActionException if there is no active algorithm or if it's
-	 * 			impossible to calculate a new step in the active algorithm
+	 *             impossible to calculate a new step in the active algorithm
 	 */
-	public void perform() throws NoActionException {
+	public void perform()
+	throws NoActionException {
 		try {
 			currentCommand.perform();
 			// section = (String) currentCommand.getResults().get(0);
-			putLogDescription((String) currentCommand.getResult(0));
-		} catch (NullPointerException e) {
+			putLogDescription((String)currentCommand.getResult(0));
+		}
+		catch (NullPointerException e) {
 			throw new NoActionException("There is no algorithm running!");
-		} catch (IndexOutOfBoundsException e) {
-			throw new NoActionException("There is no next step in running algorithm!");
+		}
+		catch (IndexOutOfBoundsException e) {
+			throw new NoActionException(
+				"There is no next step in running algorithm!");
 		}
 	}
 
 	/**
 	 * Tries to perform one undo-Step in the active algorithm.
 	 * 
-	 * @throws NoActionException if there is no active algorithm or if
-	 * 				it's impossible to calculate a previous step in the
-	 * 				active algorithm
+	 * @throws NoActionException if there is no active algorithm or if it's
+	 *             impossible to calculate a previous step in the active
+	 *             algorithm
 	 */
-	public void undo() throws NoActionException {
+	public void undo()
+	throws NoActionException {
 		try {
 			currentCommand.hasNext();
-		} catch (NullPointerException e) {
+		}
+		catch (NullPointerException e) {
 			throw new NoActionException("There is no algorithm running!");
 		}
 		try {
 			currentCommand.undo();
 			// section = (String) currentCommand.getResults().get(0);
-			putLogDescription((String) currentCommand.getResult(0));
-		} catch (NullPointerException e) {
-			throw new NoActionException("There is no previous step in running algorithm");
+			putLogDescription((String)currentCommand.getResult(0));
+		}
+		catch (NullPointerException e) {
+			throw new NoActionException(
+				"There is no previous step in running algorithm");
 		}
 	}
 
 	/**
 	 * Tries to perform one BIG step in the active algorithm.
 	 * 
-	 * @throws NoActionException if there is no active algorithm or if
-	 * 			it's impossible to calculate a new step in the active algorithm
+	 * @throws NoActionException if there is no active algorithm or if it's
+	 *             impossible to calculate a new step in the active algorithm
 	 */
-	public void performBlockStep() throws NoActionException {
+	public void performBlockStep()
+	throws NoActionException {
 		try {
 			currentCommand.performBlockStep();
 			// section = (String) currentCommand.getResults().get(0);
-			putLogDescription((String) currentCommand.getResult(0));
-		} catch (NullPointerException e) {
+			putLogDescription((String)currentCommand.getResult(0));
+		}
+		catch (NullPointerException e) {
 			throw new NoActionException("There is no algorithm running!");
-		} catch (IndexOutOfBoundsException e) {
-			throw new NoActionException("There is no next step in running algorithm!");
+		}
+		catch (IndexOutOfBoundsException e) {
+			throw new NoActionException(
+				"There is no next step in running algorithm!");
 		}
 	}
 
 	/**
 	 * Tries to perform one BIG step backwards in the active algorithm.
 	 * 
-	 * @throws NoActionException if there is no active algorithm or if
-	 * 			it's impossible to calculate a previous step in the
-	 * 			active algorithm
+	 * @throws NoActionException if there is no active algorithm or if it's
+	 *             impossible to calculate a previous step in the active
+	 *             algorithm
 	 */
-	public void undoBlockStep() throws NoActionException {
+	public void undoBlockStep()
+	throws NoActionException {
 		try {
 			currentCommand.hasNext();
-		} catch (NullPointerException e) {
+		}
+		catch (NullPointerException e) {
 			throw new NoActionException("There is no algorithm running!");
 		}
 		try {
 			currentCommand.undoBlockStep();
 			// section = (String) currentCommand.getResults().get(0);
-			putLogDescription((String) currentCommand.getResult(0));
-		} catch (NullPointerException e) {
-			throw new NoActionException("There is no previous step in running algorithm!");
+			putLogDescription((String)currentCommand.getResult(0));
+		}
+		catch (NullPointerException e) {
+			throw new NoActionException(
+				"There is no previous step in running algorithm!");
 		}
 	}
 
@@ -291,16 +301,17 @@ public class Controller implements Constants {
 	 * 
 	 * @throws NoActionException if something goes wrong with the Termination.
 	 */
-	public void abort() throws NoActionException {
-		if (currentCommand == null)
-			throw new NoActionException("something goes wrong with the termination");
+	public void abort()
+	throws NoActionException {
+		if (currentCommand == null) throw new NoActionException(
+			"There is no algorithm running!");
 
-		if (currentCommand.hasNext())
-			putLogDescription(getAlgoName() + " abgebrochen");
+		if (currentCommand.hasNext()) putLogDescription(getAlgoName()
+			+ " abgebrochen");
 		currentCommand.abort();
 
-		if (tree.getRoot() != null)
-			tree.getRoot().setVisualizationStatus(Visualizable.NORMAL);
+		if (tree.getRoot() != null) tree.getRoot().setVisualizationStatus(
+			Visualizable.NORMAL);
 		workingNode.setVisualizationStatus(Visualizable.INVISIBLE);
 		Node next;
 		if ((next = workingNode.getNextToMe()) != null)
@@ -313,9 +324,10 @@ public class Controller implements Constants {
 	 * 
 	 * @throws NoActionException if something goes wrong with the Termination.
 	 */
-	public void finish() throws NoActionException {
-		if (currentCommand == null)
-			throw new NoActionException("something goes wrong with the termination");
+	public void finish()
+	throws NoActionException {
+		if (currentCommand == null) throw new NoActionException(
+			"There is no algorithm running!");
 
 		putLogDescription(getAlgoName() + " beendet");
 	}
@@ -329,8 +341,8 @@ public class Controller implements Constants {
 	 *         <code>AVLTest</code>.
 	 */
 	public Boolean getAVLTestResult() {
-		if (currentCommand instanceof AVLTest)
-			return (Boolean) currentCommand.getResult(2);
+		if (currentCommand instanceof AVLTest) return (Boolean)currentCommand
+		.getResult(2);
 		return null;
 	}
 
@@ -377,23 +389,23 @@ public class Controller implements Constants {
 	 */
 	public String getResult() {
 		if (currentCommand != null && !(currentCommand instanceof AVLTest)) {
-			int result = (Integer) currentCommand.getResult(2);
+			int result = (Integer)currentCommand.getResult(2);
 			switch (result) {
-			case FOUND:
-				if (currentCommand instanceof Insert || currentCommand instanceof InsertAVL)
-					return "Schlüssel existiert bereits!";
-				return "Schlüssel gefunden";
-			case DONE:
-				if (currentCommand instanceof Insert || currentCommand instanceof InsertAVL)
-					return "Knoten eingefügt";
-				if (currentCommand instanceof CreateRandomTree)
-					return getAlgoName() + " erfolgreich";
-				if (currentCommand instanceof Remove || currentCommand instanceof RemoveAVL)
-					return "Knoten gelöscht";
-			case NOTFOUND:
-				return "Schlüssel nicht im Baum enthalten";
-			default:
-				return "Algorithmusende noch nicht betrachtet";
+				case FOUND:
+					if (currentCommand instanceof Insert
+						|| currentCommand instanceof InsertAVL) return "Schlüssel existiert bereits!";
+					return "Schlüssel gefunden";
+				case DONE:
+					if (currentCommand instanceof Insert
+						|| currentCommand instanceof InsertAVL) return "Knoten eingefügt";
+					if (currentCommand instanceof CreateRandomTree) return getAlgoName()
+						+ " erfolgreich";
+					if (currentCommand instanceof Remove
+						|| currentCommand instanceof RemoveAVL) return "Knoten gelöscht";
+				case NOTFOUND:
+					return "Schlüssel nicht im Baum enthalten";
+				default:
+					return "Algorithmusende noch nicht betrachtet";
 			}
 		}
 		return "No Command Working";
@@ -405,8 +417,7 @@ public class Controller implements Constants {
 	 * @return the name of the current active <code>MacroCommand</code>
 	 */
 	public String getAlgoName() {
-		if (currentCommand != null)
-			return currentCommand.getName();
+		if (currentCommand != null) return currentCommand.getName();
 		return "nocommand";
 	}
 }
