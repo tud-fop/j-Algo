@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="binary-all" name="J-Algo">
 
-	<property name="version"				value="0.49-RC2"/>
+	<property name="version"				value="0.49-RC3"/>
 	<property name="title"       			value="J-Algo"/>
 	<property name="packages"    			value="org.jalgo."/>
 	<property name="tmpdist"                value="dist/tmp"/>
@@ -15,6 +15,9 @@
 	<property name="start.linux"			value="start.sh" />
 	<property name="classpath"				value="extlibs/boot.jar extlibs/draw2d.jar extlibs/jface.jar extlibs/osgi.jar extlibs/runtime.jar" />
 	
+	<property name="build" location="runtime"/>
+	<property name="modules_dest" location="${build}/modules"/>
+
 	<path id="class.path.all">
 		<pathelement location="extlibs/boot.jar"/>
 		<pathelement location="extlibs/draw2d.jar"/>
@@ -180,10 +183,55 @@
 		<tar tarfile="${dist}/j-algo-src-${version}.tar" basedir="${tmpdist}/" />
 		<gzip zipfile="${dist}/j-algo-src-${version}.tar.gz" src="${dist}/j-algo-src-${version}.tar" />
 		<delete dir="${tmpdist}" />
-		<delete file="${dist}/j-algo-src-${version}.tar" />		
-		
-		
+		<delete file="${dist}/j-algo-src-${version}.tar" />
+	</target>
+	
+	<target name="module_avl">
+		<jar destfile="${modules_dest}/avl.jar">
+			<fileset dir="${build}/classes" includes="org/jalgo/module/avl/**/*.class"/>
+			<fileset dir="res/module/avl"/>
+			<manifest>
+				<attribute name="Specification-Version" value="${version}"/>
+				<attribute name="Class-Path" value="../jalgo.jar"/>
+			</manifest>
+		</jar>
 	</target>
 
+	<target name="module_dijkstra">
+		<jar destfile="${modules_dest}/dijkstraModule.jar">
+			<fileset dir="${build}/classes" includes="org/jalgo/module/dijkstraModule/**/*.class"/>
+			<fileset dir="res/module/dijkstra"/>
+			<manifest>
+				<attribute name="Specification-Version" value="${version}"/>
+				<attribute name="Class-Path" value="../jalgo.jar"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="module_synDiaEBNF">
+		<jar destfile="${modules_dest}/synDiaEBNF.jar">
+			<fileset dir="${build}/classes" includes="org/jalgo/module/synDiaEBNF/**/*.class"/>
+			<fileset dir="res/module/ebnf"/>
+			<manifest>
+				<attribute name="Specification-Version" value="${version}"/>
+				<attribute name="Class-Path" value="../jalgo.jar"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="module_testModule">
+		<jar destfile="${modules_dest}/testModule.jar">
+			<fileset dir="${build}/classes" includes="org/jalgo/module/testModule/**/*.class"/>
+			<fileset dir="res/module/testModule"/>
+			<manifest>
+				<attribute name="Specification-Version" value="${version}"/>
+				<attribute name="Class-Path" value="../jalgo.jar"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="module_jars"
+		depends="module_avl,module_dijkstra,module_synDiaEBNF,module_testModule"
+		description="build module jars"/>
 </project>
 
