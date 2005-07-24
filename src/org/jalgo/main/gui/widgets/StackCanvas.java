@@ -69,7 +69,10 @@ public class StackCanvas extends Composite {
 	}
 
 	public String pop() {
-		String obj = stack.pop();
+		String obj = null;
+		if (!stack.isEmpty()) {
+			obj = stack.pop();
+		}
 		redrawStack();
 		return obj;
 	}
