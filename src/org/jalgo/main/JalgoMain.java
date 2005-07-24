@@ -321,28 +321,38 @@ public class JalgoMain {
 				!jarFileName.equals("jalgo.jar")) {
 				moduleName = jarFileName.substring(0, jarFileName.length()-4);
 				try {
-					knownModules.add((Class<IModuleConnector>)Class.forName("org.jalgo.module."+
-						moduleName+".ModuleConnector"));
-					knownModuleInfos.add((IModuleInfo)Class.forName("org.jalgo.module."+
-						moduleName+".ModuleInfo").newInstance());
+					Class moduleConnector = Class.forName("org.jalgo.module." +
+							moduleName + ".ModuleConnector");
+					Class moduleInfo = Class.forName("org.jalgo.module." +
+							moduleName + ".ModuleInfo");
+					
+					if (implementsInterface(moduleConnector, "org.jalgo.main.IModuleConnector") &&
+							implementsInterface(moduleInfo, "org.jalgo.main.IModuleInfo")) {
+						knownModules.add((Class<IModuleConnector>)moduleConnector);
+						knownModuleInfos.add((IModuleInfo)moduleInfo.newInstance());
+					}
 				}
 				catch (ClassNotFoundException e) {e.printStackTrace();}
 				catch (InstantiationException e) {e.printStackTrace();}
 				catch (IllegalAccessException e) {e.printStackTrace();}
 			}
 		}
-
-//		knownModules.add(org.jalgo.module.avl.ModuleConnector.class);
-//		knownModules.add(org.jalgo.module.dijkstraModule.ModuleConnector.class);
-//		knownModules.add(org.jalgo.module.synDiaEBNF.ModuleConnector.class);
-//		knownModules.add(org.jalgo.module.testModule.ModuleConnector.class);
-		//Add a new ModuleConnector here!!
-
-//		knownModuleInfos.add(new org.jalgo.module.avl.ModuleInfo());
-//		knownModuleInfos.add(new org.jalgo.module.dijkstraModule.ModuleInfo());
-//		knownModuleInfos.add(new org.jalgo.module.synDiaEBNF.ModuleInfo());
-//		knownModuleInfos.add(new org.jalgo.module.testModule.ModuleInfo());
-		//Add a new ModuleInfo here!! 
+	}
+	
+	/*
+	 * checks if a given class implements a specific interface
+	 * @param classObj class object which should checked
+	 * @param interfaceName interface name the class should be implemented 
+	 * @return returns true if the "classObj" implements "interfaceName" otherwise false
+	 */
+	private boolean implementsInterface(Class classObj, String interfaceName) {
+		Class [] interfaces = classObj.getInterfaces();
+		for (int i = 0; i < interfaces.length; i++) {
+			if (interfaces[i].getName().equals(interfaceName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
