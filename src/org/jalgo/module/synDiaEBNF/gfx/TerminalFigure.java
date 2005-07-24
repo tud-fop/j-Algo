@@ -23,6 +23,7 @@
  
 package org.jalgo.module.synDiaEBNF.gfx;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
@@ -67,6 +68,7 @@ public class TerminalFigure extends StandAloneSynDiaFigure {
 		add(interiorFigure);
 		interiorFigure.setText(label);
 		interiorFigure.setIndexVisible(false);
+		interiorFigure.setBackgroundColor(ColorConstants.yellow);
 
 		// Create endFigure
 		endFigure = new EmptyFigure();

@@ -23,6 +23,7 @@
  
 package org.jalgo.module.synDiaEBNF.gfx;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.PolylineConnection;
@@ -45,6 +46,7 @@ public class CloudFigure extends SynDiaFigure {
 	public CloudFigure() {
 
 		initializeLayout();
+		this.setMinimumSize(new Dimension(64, 36));
 		setOpaque(true);
 
 		startGap = 0;
@@ -55,7 +57,10 @@ public class CloudFigure extends SynDiaFigure {
 		add(startFigure);
 
 		interiorFigure = new Ellipse();
-		interiorFigure.setLineStyle(Graphics.LINE_DOT);
+		interiorFigure.setBounds(new Rectangle(0,0,64,36));
+		interiorFigure.setLineStyle(Graphics.LINE_SOLID);
+		interiorFigure.setBackgroundColor(ColorConstants.red);
+		interiorFigure.setFillXOR(true);
 		interiorFigure.setOpaque(true);
 		layout.setConstraint(
 			interiorFigure,
