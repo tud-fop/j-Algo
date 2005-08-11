@@ -45,7 +45,7 @@ public class Insert extends MacroCommand implements Constants {
 	 */
 	public Insert(WorkNode w, SearchTree st) {
 		super();
-		name = "Einf�gen";
+		name = "Einfügen";
 		wn = w;
 		tree = st;
 		if (wn.getNextToMe() != null) { // Tree not empty
