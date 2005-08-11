@@ -78,7 +78,7 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 		logoL = new Label(top, SWT.CENTER);
 		logoL.setImage(ImageDescriptor.createFromURL(getClass().getResource(
 			"/main_pix/jalgo.png")).createImage());
-		logoL.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.FILL_HORIZONTAL));
+		logoL.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_CENTER));
 		
 		// start button
 		button = new Button(top, SWT.PUSH);
