@@ -329,6 +329,7 @@ implements Constants {
 		if (currentCommand == null) throw new NoActionException(
 			"There is no algorithm running!");
 
+		currentCommand.finish();
 		putLogDescription(getAlgoName() + " beendet");
 	}
 
