@@ -5,7 +5,6 @@
 package org.jalgo.main.gui;
 
 import java.util.Iterator;
-import java.util.Random;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -132,13 +131,13 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 			button.setEnabled(true);
 			int modNum = moduleList.getSelectionIndex();
 			// set description text of module
-			descrL.setText(((IModuleInfo) main.getKnownModuleInfos().get(modNum)).getName() + 
-					"\n\n" + ((IModuleInfo) main.getKnownModuleInfos().get(modNum)).getDescription() +
-					"\n\nVersion: " + ((IModuleInfo) main.getKnownModuleInfos().get(modNum)).getVersion() + 
-					"\n\nAutoren: " + ((IModuleInfo) main.getKnownModuleInfos().get(modNum)).getAuthor() +
-					"\n\nLizenz: " + ((IModuleInfo) main.getKnownModuleInfos().get(modNum)).getLicense());
+			descrL.setText(main.getKnownModuleInfos().get(modNum).getName() + 
+					"\n\n" + main.getKnownModuleInfos().get(modNum).getDescription() +
+					"\n\nVersion: " + main.getKnownModuleInfos().get(modNum).getVersion() + 
+					"\n\nAutoren: " + main.getKnownModuleInfos().get(modNum).getAuthor() +
+					"\n\nLizenz: " + main.getKnownModuleInfos().get(modNum).getLicense());
 			// show module's logo
-			logoL.setImage(((IModuleInfo) main.getKnownModuleInfos().get(modNum)).getLogo().createImage());
+			logoL.setImage(main.getKnownModuleInfos().get(modNum).getLogo().createImage());
 		}
  	}
 	
