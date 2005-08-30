@@ -26,6 +26,7 @@
  */
 package org.jalgo.module.avl.algorithm;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Constants;
 import org.jalgo.module.avl.datastructure.WorkNode;
 
@@ -34,9 +35,10 @@ import org.jalgo.module.avl.datastructure.WorkNode;
  * 
  * This Command searches the searchtree for the key, that is next in size to the
  * key next to the worknode. It uses the classes
- * 
  */
-public class FindSuccessor extends MacroCommand implements Constants {
+public class FindSuccessor
+extends MacroCommand
+implements Constants {
 
 	private WorkNode wn;
 
@@ -44,11 +46,12 @@ public class FindSuccessor extends MacroCommand implements Constants {
 	 * @param wn the worknode indicates the position in the tree, where the
 	 *            search is started
 	 */
+	@SuppressWarnings("unchecked")
 	public FindSuccessor(WorkNode wn) {
 		super();
 		this.wn = wn;
-		results.add(0, "");
-		results.add(1, "absatz");
+		results.add(0, ""); //$NON-NLS-1$
+		results.add(1, "absatz"); //$NON-NLS-1$
 		results.add(2, WORKING);
 		commands.add(CommandFactory.createFindSuccessorStart(wn));
 	}
@@ -60,18 +63,17 @@ public class FindSuccessor extends MacroCommand implements Constants {
 	 * 
 	 * @see org.jalgo.module.avl.algorithm.Command#perform()
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void perform() {
 		Command c = commands.get(currentPosition);
 		c.perform();
 		results = c.getResults();
 		int stepresult = (Integer)results.get(2);
-		if (stepresult == WORKING) {
+		if (stepresult == WORKING)
 			commands.add(CommandFactory.createFindSuccessorStep(wn));
-		}
-		if (stepresult == FOUND) {
-			results.set(0, "nächstgrößeren Schlüssel gefunden");
-		}
+		if (stepresult == FOUND)
+			results.set(0, Messages.getString("avl", "Successor_found")); //$NON-NLS-1$ //$NON-NLS-2$
 		currentPosition++;
 	}
 
@@ -89,8 +91,8 @@ public class FindSuccessor extends MacroCommand implements Constants {
 		Command c = commands.get(currentPosition);
 		c.undo();
 
-		if (commands.size() > currentPosition + 1) commands
-			.remove(currentPosition + 1);
+		if (commands.size() > currentPosition + 1)
+			commands.remove(currentPosition + 1);
 
 		results = c.getResults();
 	}

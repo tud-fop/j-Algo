@@ -24,8 +24,9 @@
  */
 package org.jalgo.module.avl.algorithm;
 
-import java.util.Random;
 import java.util.*;
+
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.*;
 import org.jalgo.module.avl.datastructure.*;
 
@@ -35,7 +36,9 @@ import org.jalgo.module.avl.datastructure.*;
  * The class <code>CreateRandomTree</code> creates a random binary tree with a
  * given number of notes. There is the posibility to create an avl tree as well.
  */
-public class CreateRandomTree extends MacroCommand implements Constants {
+public class CreateRandomTree
+extends MacroCommand
+implements Constants {
 
 	int finalNodeNumber;
 	Random rand;
@@ -56,15 +59,15 @@ public class CreateRandomTree extends MacroCommand implements Constants {
 	 * @param wn <code>WorkNode</code> which is always use by the
 	 *            <code>MacroCommand</code>s
 	 */
+	@SuppressWarnings("unchecked")
 	public CreateRandomTree(int nodes, SearchTree st, WorkNode wn, boolean avl) {
 		super();
-		if (avl) name = "AVL-Baum Erstellen";
-		else name = "Suchbaum Erstellen";
+		if (avl) name = Messages.getString("avl", "Alg_name.Create_AVL_tree"); //$NON-NLS-1$ //$NON-NLS-2$
+		else name = Messages.getString("avl", "Alg_name.Create_tree"); //$NON-NLS-1$ //$NON-NLS-2$
 		tree = st;
 		this.wn = wn;
 		this.avl = avl;
 		if (nodes > 0) {
-
 			rand = new Random();
 			finalNodeNumber = nodes;
 			keyList = new ArrayList<Integer>();
@@ -76,13 +79,17 @@ public class CreateRandomTree extends MacroCommand implements Constants {
 			commands.add(1, CommandFactory.createNoOperation());
 			keyList.add(0, firstKey);
 
-			results.add(0, getName() + " mit " + finalNodeNumber + " Knoten");
-			results.add(1, "1");
+			results.add(0, getName()
+				+ Messages.getString("avl", "CreateRandomTree.With") + //$NON-NLS-1$ //$NON-NLS-2$
+				finalNodeNumber
+				+ Messages.getString("avl", "CreateRandomTree.Nodes")); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "1"); //$NON-NLS-1$
 			results.add(2, WORKING);
 		}
 		else {
-			results.add(0, "zufälliger Suchbaum ist fertig");
-			results.add(1, " ");
+			results.add(0, Messages.getString(
+				"avl", "CreateRandomTree.Tree_finished")); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, " "); //$NON-NLS-1$
 			results.add(2, DONE);
 
 		}
@@ -96,6 +103,7 @@ public class CreateRandomTree extends MacroCommand implements Constants {
 	}
 
 	// Stores the log description and the section from a command.
+	@SuppressWarnings("unchecked")
 	private void storeLogAndSectionFrom(Command c) {
 		results.clear();
 		results.add(c.getResult(0));
@@ -109,19 +117,22 @@ public class CreateRandomTree extends MacroCommand implements Constants {
 	 * <code>Node</code>s is not reached, DONE if the <code>SearchTree</code>
 	 * is completed
 	 */
+	@SuppressWarnings("unchecked")
 	public void perform() {
-
 		Command c = commands.get(currentPosition);
 		if (c instanceof NoOperation) {
 			// Test: Ready?
 			if (keyList.size() >= finalNodeNumber) {
-				if (avl) results.set(0, "AVL-Baum ist fertig");
-				else results.set(0, "Suchbaum ist fertig");
+				if (avl) results.set(0, Messages.getString(
+					"avl", "CreateRandomTree.AVL_finished")); //$NON-NLS-1$ //$NON-NLS-2$
+				else results.set(0, Messages.getString(
+					"avl", "CreateRandomTree.Tree_finished")); //$NON-NLS-1$ //$NON-NLS-2$
 				currentPosition++;
 				return;
 			}
 			int newkey = 0;
-			while (keyList.contains(newkey = rand.nextInt(MAX_KEY) + MIN_KEY)) {}
+			while (keyList.contains(newkey = rand.nextInt(MAX_KEY) + MIN_KEY)) {
+				/* search new key*/ }
 			keyList.add(newkey);
 			changeWorkNode(newkey);
 			if (avl) commands.set(0, CommandFactory.createInsertAVL(wn, tree));
@@ -145,18 +156,22 @@ public class CreateRandomTree extends MacroCommand implements Constants {
 	 * <code>Node</code>s is not reached, DONE if the <code>SearchTree</code>
 	 * is completed
 	 */
+	@SuppressWarnings("unchecked")
 	public void performBlockStep() {
 		Command c = commands.get(currentPosition);
 		if (c instanceof NoOperation) {
 			if (keyList.size() >= finalNodeNumber) {
-				if (avl) results.set(0, "AVL-Baum fertig");
-				else results.set(0, "Suchbaum fertig");
+				if (avl) results.set(0, Messages.getString(
+					"avl", "CreateRandomTree.AVL_finished")); //$NON-NLS-1$ //$NON-NLS-2$
+				else results.set(0, Messages.getString(
+					"avl", "CreateRandomTree.Tree_finished")); //$NON-NLS-1$ //$NON-NLS-2$
 
 				currentPosition++;
 				return;
 			}
 			int newkey = 0;
-			while (keyList.contains(newkey = rand.nextInt(MAX_KEY) + MIN_KEY)) {}
+			while (keyList.contains(newkey = rand.nextInt(MAX_KEY) + MIN_KEY)) {
+			/* search new key*/ }
 			keyList.add(newkey);
 			changeWorkNode(newkey);
 			if (avl) commands.set(0, CommandFactory.createInsertAVL(wn, tree));
@@ -179,10 +194,8 @@ public class CreateRandomTree extends MacroCommand implements Constants {
 
 	/**
 	 * Calculates one undo.
-	 * 
 	 */
 	public void undo() {
-
 		if (!hasPrevious()) return;
 
 		MacroCommand mc = (MacroCommand)commands.get(0);
@@ -193,10 +206,8 @@ public class CreateRandomTree extends MacroCommand implements Constants {
 
 	/**
 	 * Calculates one block undo.
-	 * 
 	 */
 	public void undoBlockStep() {
-
 		if (!hasPrevious()) return;
 
 		currentPosition = 0;
@@ -207,10 +218,10 @@ public class CreateRandomTree extends MacroCommand implements Constants {
 	}
 
 	/**
-	 * 
 	 * Terminates the tree generation. After that, the tree has it's current
 	 * number of nodes.
 	 */
+	@SuppressWarnings("unchecked")
 	public void abort() {
 		if (!this.hasPrevious()) return;
 		Command com = commands.get(currentPosition);
@@ -233,8 +244,9 @@ public class CreateRandomTree extends MacroCommand implements Constants {
 		keyList = keyList.subList(0, currentPosition / 2);
 		finalNodeNumber = keyList.size();
 		results.clear();
-		results.add("Suchbaum fertig");
-		results.add(" ");
+		results.add(Messages.getString(
+			"avl", "CreateRandomTree.Tree_finished")); //$NON-NLS-1$ //$NON-NLS-2$
+		results.add(" "); //$NON-NLS-1$
 		results.add(DONE);
 	}
 }

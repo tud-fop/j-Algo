@@ -23,6 +23,7 @@
 
 package org.jalgo.module.avl.algorithm;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.*;
 import org.jalgo.module.avl.datastructure.*;
 
@@ -59,14 +60,15 @@ implements Constants {
 	 * Calculates all balances from the inserted node until it reaches the root
 	 * or the balance of a node is 2 or -2.
 	 */
+	@SuppressWarnings("unchecked")
 	public void perform() {
 		results.clear();
-		results.add(0, "");
-		results.add(1, "absatz");
+		results.add(0, ""); //$NON-NLS-1$
+		results.add(1, "absatz"); //$NON-NLS-1$
 
-		updatednodes.add((AVLNode)wn.getNextToMe());
+		updatednodes.add(wn.getNextToMe());
 
-		Command c = (Command)commands.get(currentPosition);
+		Command c = commands.get(currentPosition);
 		c.perform();
 		currentPosition++;
 
@@ -83,7 +85,10 @@ implements Constants {
 		// else
 		// results.set(0,"Balance aktualisiert: " + balanceresult);
 
-		results.set(0, "Balance auf " + balanceresult + " gesetzt");
+		results.set(0, Messages.getString(
+			"avl", "UpdateBalance.Balance_set_to") + //$NON-NLS-1$ //$NON-NLS-2$
+			balanceresult +
+			Messages.getString("avl", "UpdateBalance.Balance_set")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		currentNode = (AVLNode)wn.getNextToMe();
 
@@ -119,16 +124,14 @@ implements Constants {
 		else if (balanceresult == 0 && currentPosition != 1) {
 			oldsection = (String)c.getResults().get(1);
 			results.add(2, WORKING);
-			if (currentPosition == commands.size()) {
+			if (currentPosition == commands.size())
 				commands.add(CommandFactory.createNoOperation());
-			}
 		}
 		else if (wn.getNextToMe().getParent() == null) {
 			oldsection = (String)c.getResults().get(1);
 			results.add(2, WORKING);
-			if (currentPosition == commands.size()) {
+			if (currentPosition == commands.size())
 				commands.add(CommandFactory.createNoOperation());
-			}
 		}
 		else {
 			results.add(2, WORKING);
@@ -143,17 +146,17 @@ implements Constants {
 	/**
 	 * Sets all balances back to there previous ones.
 	 */
+	@SuppressWarnings("unchecked")
 	public void undo() {
 		if (currentPosition == 0) throw new NullPointerException();
 
 		results.clear();
-		results.add(0, "Schritt rückgängig gemacht");
+		results.add(0, Messages.getString("avl", "Step_undone")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		// necessary for DoubleRotation, sets RotateVisualisationStatus back
 		// to normal
-		if (!hasNext()) for (Node n : updatednodes) {
-			n.setVisualizationStatus(Visualizable.BALANCE | Visualizable.NORMAL);
-		}
+		if (!hasNext()) for (Node n : updatednodes) n.setVisualizationStatus(
+			Visualizable.BALANCE | Visualizable.NORMAL);
 		currentPosition--;
 		Command c = commands.get(currentPosition);
 
@@ -165,7 +168,6 @@ implements Constants {
 			results.add(1, oldsection);
 			results.add(2, WORKING);
 		}
-
 		else {
 			c.undo();
 			results.add(1, c.getResult(1));

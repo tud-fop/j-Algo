@@ -25,6 +25,7 @@ package org.jalgo.module.avl.algorithm;
 
 import java.util.*;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.datastructure.*;
 import org.jalgo.module.avl.*;
 
@@ -34,11 +35,12 @@ import org.jalgo.module.avl.*;
  * The class <code>InsertAVL</code> realizes the insert of a node in an AVL
  * tree. It uses the classes <code>Insert</code> to find the position and
  * insert the key. It then uses the classes <code>UpdateBalance</code>,
- * <code>RotateLeft</code> or <code>
- * RotateRight</code> to restore the AVL
+ * <code>RotateLeft</code> or <code>RotateRight</code> to restore the AVL
  * characteristic.
  */
-public class InsertAVL extends MacroCommand implements Constants {
+public class InsertAVL
+extends MacroCommand
+implements Constants {
 
 	private WorkNode wn;
 	private SearchTree tree;
@@ -51,20 +53,25 @@ public class InsertAVL extends MacroCommand implements Constants {
 	 * @param w reference to the position in the tree, holds the new key
 	 * @param st the searchtree the new node is inserted in
 	 */
+	@SuppressWarnings("unchecked")
 	public InsertAVL(WorkNode w, SearchTree st) {
 		super();
-		name = "AVL-Einfügen";
+		name = Messages.getString("avl", "Alg_name.Insert_AVL"); //$NON-NLS-1$ //$NON-NLS-2$
 		wn = w;
 		tree = st;
 		commands.add(CommandFactory.createInsert(w, tree));
-		results.add(0, "AVL-Einfügen von " + wn.getKey() + " gestartet");
-		results.add(1, "avlinsert1");
+		results.add(0, name +
+			Messages.getString("avl", "_of") + //$NON-NLS-1$ //$NON-NLS-2$
+			wn.getKey() +
+			Messages.getString("avl", "Started")); //$NON-NLS-1$ //$NON-NLS-2$
+		results.add(1, "avlinsert1"); //$NON-NLS-1$
 		results.add(2, WORKING);
 	}
 
 	/**
 	 * Inserts the key and restores the AVL characteristic.
 	 */
+	@SuppressWarnings("unchecked")
 	public void perform() {
 		Command c = commands.get(currentPosition);
 		c.perform();
@@ -76,23 +83,23 @@ public class InsertAVL extends MacroCommand implements Constants {
 			switch (insertresult) {
 				case DONE: {
 					currentPosition++;
-					if (currentPosition == commands.size()) commands
-						.add(CommandFactory.createUpdateBalance(wn));
-					results.add(0, "Knoten eingefügt");
-					results.add(1, "avlinsert2");
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createUpdateBalance(wn));
+					results.add(0, Messages.getString("avl", "Node_inserted")); //$NON-NLS-1$ //$NON-NLS-2$
+					results.add(1, "avlinsert2"); //$NON-NLS-1$
 					break;
 				}
 				case FOUND: {
 					currentPosition++;
 					results.add(0, resultlist.get(0));
-					results.add(1, "avlinsert1");
+					results.add(1, "avlinsert1"); //$NON-NLS-1$
 					results.add(2, FOUND);
 					break;
 					// key already there, AVLInsert is finished
 				}
 				case WORKING:
 					results.add(0, resultlist.get(0));
-					results.add(1, "avl" + resultlist.get(1));
+					results.add(1, "avl" + resultlist.get(1)); //$NON-NLS-1$
 					break;
 			}
 		}
@@ -101,10 +108,11 @@ public class InsertAVL extends MacroCommand implements Constants {
 			balanceperformed = 1;
 			int balanceresult = (Integer)resultlist.get(2);
 			updatebalancelist = resultlist;
-			oldsection = "avlinsert" + resultlist.get(1);
+			oldsection = "avlinsert" + resultlist.get(1); //$NON-NLS-1$
 			if (balanceresult == DONE || balanceresult == ROOT) {
-				results.add(0, resultlist.get(0) + "Baum ausgeglichen");
-				results.add(1, "avlinsert" + resultlist.get(1));
+				results.add(0, resultlist.get(0)
+					+ Messages.getString("avl", "Tree_balanced")); //$NON-NLS-1$ //$NON-NLS-2$
+				results.add(1, "avlinsert" + resultlist.get(1)); //$NON-NLS-1$
 				results.add(2, DONE);
 				currentPosition++;
 				setBalancesNormal((AVLNode)wn.getNextToMe());
@@ -117,15 +125,15 @@ public class InsertAVL extends MacroCommand implements Constants {
 				currentPosition++;
 				int direction = (Integer)resultlist.get(3);
 				if (direction == LEFT) {
-					if (currentPosition == commands.size()) commands
-						.add(CommandFactory.createRotateLeft(wn, tree));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createRotateLeft(wn, tree));
 					wn.getNextToMe().setVisualizationStatus(
 						Visualizable.NORMAL | Visualizable.ROTATE_LEFT_ARROW
 							| Visualizable.BALANCE);
 				}
 				else {
-					if (currentPosition == commands.size()) commands
-						.add(CommandFactory.createRotateRight(wn, tree));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createRotateRight(wn, tree));
 					wn.getNextToMe().setVisualizationStatus(
 						Visualizable.NORMAL | Visualizable.ROTATE_RIGHT_ARROW
 							| Visualizable.BALANCE);
@@ -140,8 +148,8 @@ public class InsertAVL extends MacroCommand implements Constants {
 				if (direction == LEFT) {
 					results.add(0, resultlist.get(0));
 					results.add(1, oldsection);
-					if (currentPosition == commands.size()) commands
-						.add(CommandFactory.createRotateLeft(wn, tree));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createRotateLeft(wn, tree));
 					wn.getNextToMe().setVisualizationStatus(
 						Visualizable.NORMAL | Visualizable.ROTATE_LEFT_ARROW
 							| Visualizable.BALANCE);
@@ -149,19 +157,18 @@ public class InsertAVL extends MacroCommand implements Constants {
 				else {
 					results.add(0, resultlist.get(0));
 					results.add(1, oldsection);
-					if (currentPosition == commands.size()) commands
-						.add(CommandFactory.createRotateRight(wn, tree));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createRotateRight(wn, tree));
 					wn.getNextToMe().setVisualizationStatus(
 						Visualizable.NORMAL | Visualizable.ROTATE_RIGHT_ARROW
 							| Visualizable.BALANCE);
 				}
-
 				help = 0;
 			}
 
 			else {
 				results.add(0, resultlist.get(0));
-				results.add(1, "avlinsert" + resultlist.get(1));
+				results.add(1, "avlinsert" + resultlist.get(1)); //$NON-NLS-1$
 			}
 		}
 
@@ -175,48 +182,48 @@ public class InsertAVL extends MacroCommand implements Constants {
 			if (balanceresult == DOUBLEROTATE && help == 0) {
 				wn.setNextToMe((AVLNode)updatebalancelist.get(6));
 				if (((Integer)updatebalancelist.get(5)) == LEFT) {
-					if (currentPosition == commands.size()) commands
-						.add(CommandFactory.createRotateLeft(wn, tree));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createRotateLeft(wn, tree));
 					wn.getNextToMe().setVisualizationStatus(
 						Visualizable.NORMAL | Visualizable.ROTATE_LEFT_ARROW
 							| Visualizable.BALANCE);
 				}
 				else {
-					if (currentPosition == commands.size()) commands
-						.add(CommandFactory.createRotateRight(wn, tree));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createRotateRight(wn, tree));
 					wn.getNextToMe().setVisualizationStatus(
 						Visualizable.NORMAL | Visualizable.ROTATE_RIGHT_ARROW
 							| Visualizable.BALANCE);
 				}
 				help = 1;
 			}
-			else {
-				results.set(0, resultlist.get(0) + "\nBaum ausgeglichen");
-			}
+			else results.set(0, resultlist.get(0) + Messages.getString(
+				"avl", "Tree_balanced")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
 	/**
 	 * This method recovers the state before calling <code>perform</code>.
 	 */
+	@SuppressWarnings("unchecked")
 	public void undo() {
 		results.clear();
 		if (commands.size() <= currentPosition) currentPosition--;
 		// Checks if there are RotationObjects which haven't been performed yet
 		else if (currentPosition == 2 || currentPosition == 3) currentPosition--;
 
-		Command c = (Command)commands.get(currentPosition);
+		Command c = commands.get(currentPosition);
 
-		results.add(0, "Schritt rückgängig gemacht");
+		results.add(0, Messages.getString("avl", "Step_undone")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		if (c instanceof UpdateBalance) {
 
 			// UpdateBalance is in the Command-List but there was no perform yet
 			if (balanceperformed == 0) {
 				currentPosition--;
-				Command c2 = (Command)commands.get(currentPosition);
+				Command c2 = commands.get(currentPosition);
 				c2.undo();
-				results.add(1, "avlinsert2");
+				results.add(1, "avlinsert2"); //$NON-NLS-1$
 				return;
 			}
 
@@ -224,17 +231,15 @@ public class InsertAVL extends MacroCommand implements Constants {
 			// Check if it was the last UpdateBalance-Undo
 			LinkedList resultlist = (LinkedList)c.getResults();
 			int undoresult = ((Integer)resultlist.get(2)).intValue();
-			if (undoresult == LASTUNDO) {
-				balanceperformed = 0;
-			}
-			results.add(1, "avlinsert" + resultlist.get(1));
+			if (undoresult == LASTUNDO) balanceperformed = 0;
+			results.add(1, "avlinsert" + resultlist.get(1)); //$NON-NLS-1$
 		}
 
 		else if (c instanceof Insert) {
 			if (((Insert)c).hasPrevious()) {
 				c.undo();
 				LinkedList resultlist = (LinkedList)c.getResults();
-				results.add(1, "avl" + resultlist.get(1));
+				results.add(1, "avl" + resultlist.get(1)); //$NON-NLS-1$
 			}
 		}
 
@@ -257,15 +262,16 @@ public class InsertAVL extends MacroCommand implements Constants {
 			if (c4 instanceof UpdateBalance) {
 				Set<Node> updatednodes = ((UpdateBalance)c4).getUpdatednodes();
 				for (Node n : updatednodes) {
-					if (n.getVisualizationStatus() == Visualizable.NORMAL) n
-						.setVisualizationStatus(Visualizable.NORMAL
-							| Visualizable.BALANCE);
+					if (n.getVisualizationStatus() == Visualizable.NORMAL)
+						n.setVisualizationStatus(Visualizable.NORMAL
+						| Visualizable.BALANCE);
 				}
 			}
 			results.add(1, oldsection);
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void performBlockStep() {
 		Command c = commands.get(currentPosition);
 		if (c instanceof Insert) {
@@ -276,16 +282,16 @@ public class InsertAVL extends MacroCommand implements Constants {
 			switch (insertresult) {
 				case DONE:
 					currentPosition++;
-					if (currentPosition == commands.size()) commands
-						.add(CommandFactory.createUpdateBalance(wn));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createUpdateBalance(wn));
 					results.add(0, resultlist.get(0));
-					results.add(1, "avlinsert2");
+					results.add(1, "avlinsert2"); //$NON-NLS-1$
 					results.add(2, DONE);
 					break;
 				case FOUND:
 					currentPosition++;
 					results.add(0, resultlist.get(0));
-					results.add(1, "avlinsert1");
+					results.add(1, "avlinsert1"); //$NON-NLS-1$
 					results.add(2, FOUND);
 					break;
 				// key already there, AVLInsert is finished
@@ -296,35 +302,32 @@ public class InsertAVL extends MacroCommand implements Constants {
 					break;
 			}
 		}
-		else if ((c instanceof RotateLeft) || (c instanceof RotateRight)) {
+		else if ((c instanceof RotateLeft) || (c instanceof RotateRight))
 			perform();
-		}
 		else if (c instanceof UpdateBalance) {
-			while (((UpdateBalance)c).hasNext()) {
-				perform();
-			}
+			while (((UpdateBalance)c).hasNext()) perform();
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void undoBlockStep() {
 		if (commands.size() <= currentPosition) currentPosition--;
 		else if (currentPosition == 2 || currentPosition == 3) currentPosition--;
 
 		Command c = commands.get(currentPosition);
 		results.clear();
-		results.add("Schritt rückgängig gemacht");
-		results.add("absatz");
+		results.add(Messages.getString("avl", "Step_undone")); //$NON-NLS-1$ //$NON-NLS-2$
+		results.add("absatz"); //$NON-NLS-1$
 		if (c instanceof Insert) {
 			((Insert)c).undoBlockStep();
-			results.set(1, "avlinsert1");
+			results.set(1, "avlinsert1"); //$NON-NLS-1$
 		}
-		else if ((c instanceof RotateLeft) || (c instanceof RotateRight)) {
+		else if ((c instanceof RotateLeft) || (c instanceof RotateRight))
 			c.undo();
-		}
 		else if (c instanceof UpdateBalance) {
 			if (balanceperformed == 0) {
 				currentPosition--;
-				Command c2 = (Command)commands.get(currentPosition);
+				Command c2 = commands.get(currentPosition);
 				c2.undo();
 				return;
 			}
@@ -334,10 +337,9 @@ public class InsertAVL extends MacroCommand implements Constants {
 	}
 
 	private void setBalancesNormal(AVLNode n) {
-		if (n != null) {
-			n.setVisualizationStatus(Visualizable.NORMAL);
-			setBalancesNormal((AVLNode)n.getLeftChild());
-			setBalancesNormal((AVLNode)n.getRightChild());
-		}
+		if (n == null) return;
+		n.setVisualizationStatus(Visualizable.NORMAL);
+		setBalancesNormal((AVLNode)n.getLeftChild());
+		setBalancesNormal((AVLNode)n.getRightChild());
 	}
 }

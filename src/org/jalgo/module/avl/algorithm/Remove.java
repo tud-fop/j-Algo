@@ -25,6 +25,7 @@ package org.jalgo.module.avl.algorithm;
 
 import java.util.List;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Constants;
 import org.jalgo.module.avl.datastructure.Node;
 import org.jalgo.module.avl.datastructure.SearchTree;
@@ -37,7 +38,9 @@ import org.jalgo.module.avl.datastructure.WorkNode;
  * 
  * @author Jean Christoph Jung
  */
-public class Remove extends MacroCommand implements Constants {
+public class Remove
+extends MacroCommand
+implements Constants {
 
 	private WorkNode wn;
 	private SearchTree tree;
@@ -48,22 +51,29 @@ public class Remove extends MacroCommand implements Constants {
 	 *            the key that will be deleted from the serchtree st.
 	 * @param st the tree, the algorithm is working on.
 	 */
+	@SuppressWarnings("unchecked")
 	public Remove(WorkNode w, SearchTree st) {
 		super();
-		name = "Löschen";
+		name = Messages.getString("avl", "Alg_name.Remove"); //$NON-NLS-1$ //$NON-NLS-2$
 		wn = w;
 		tree = st;
 		if (st.getRoot() == null) {
-			results.add(0, "Baum ist leer, Schlüssel nicht gefunden");
-			results.add(1, "remove1");
+			results.add(0, Messages.getString(
+				"avl", "Tree_empty_key_not_found")); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "remove1"); //$NON-NLS-1$
 			results.add(2, NOTFOUND);
 			wn.setVisualizationStatus(Visualizable.INVISIBLE);
 		}
 		else { // Tree not empty
 			commands.add(CommandFactory.createSearchAlg(w));
-			results.add(0, "Löschen von " + wn.getKey() + " gestartet\n"
-				+ wn.getKey() + " suchen");
-			results.add(1, "remove1");
+			results.add(0, name +
+				Messages.getString("avl", "_of") + //$NON-NLS-1$ //$NON-NLS-2$
+				wn.getKey() +
+				Messages.getString("avl", "Started") + //$NON-NLS-1$ //$NON-NLS-2$
+				System.getProperty("line.separator") +
+				wn.getKey() +
+				Messages.getString("avl", "Key_search")); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "remove1"); //$NON-NLS-1$
 			results.add(2, WORKING);
 		}
 		tree.exportUncompressedLevelOrder();
@@ -72,6 +82,7 @@ public class Remove extends MacroCommand implements Constants {
 	/**
 	 * <code> perform </code> does one step in the algorithm.
 	 */
+	@SuppressWarnings("unchecked")
 	public void perform() {
 		Command c = commands.get(currentPosition);
 		c.perform();
@@ -82,8 +93,9 @@ public class Remove extends MacroCommand implements Constants {
 			switch (SearchAlgresult) {
 				case FOUND:
 					currentPosition++;
-					results.set(0, resultlist.get(0) + " Knoten gefunden");
-					results.set(1, "remove2");
+					results.set(0, resultlist.get(0) + Messages.getString(
+						"avl", "Node_found")); //$NON-NLS-1$ //$NON-NLS-2$
+					results.set(1, "remove2"); //$NON-NLS-1$
 					results.set(2, WORKING);
 					nodeToDelete = wn.getNextToMe();
 					nodeToDelete.setVisualizationStatus(Visualizable.FOCUSED
@@ -94,12 +106,13 @@ public class Remove extends MacroCommand implements Constants {
 					break;
 				case WORKING:
 					results.set(0, resultlist.get(0));
-					results.set(1, "remove1");
+					results.set(1, "remove1"); //$NON-NLS-1$
 					results.add(2, WORKING);
 					break;
 				case NOTFOUND:
-					results.set(0, resultlist.get(0) + " \nLöschen abgebrochen");
-					results.set(1, "remove1");
+					results.set(0, resultlist.get(0) + Messages.getString(
+						"avl", "Remove_aborted")); //$NON-NLS-1$ //$NON-NLS-2$
+					results.set(1, "remove1"); //$NON-NLS-1$
 					results.set(2, NOTFOUND);
 					currentPosition++;
 					break;
@@ -114,7 +127,7 @@ public class Remove extends MacroCommand implements Constants {
 			switch (result) {
 				case WORKING:
 					results.set(0, resultlist.get(0));
-					results.set(1, "remove3");
+					results.set(1, "remove3"); //$NON-NLS-1$
 					results.set(2, WORKING);
 					break;
 				case FOUND:
@@ -122,7 +135,7 @@ public class Remove extends MacroCommand implements Constants {
 					commands.add(CommandFactory.createRemoveNode(wn, tree,
 						nodeToDelete));
 					results.set(0, resultlist.get(0));
-					results.set(1, "remove4");
+					results.set(1, "remove4"); //$NON-NLS-1$
 					results.set(2, FOUND);
 					break;
 				default:
@@ -131,7 +144,7 @@ public class Remove extends MacroCommand implements Constants {
 		}
 		if (c instanceof RemoveNode) {
 			results = c.getResults();
-			results.set(1, "remove4");
+			results.set(1, "remove4"); //$NON-NLS-1$
 			results.set(2, DONE);
 			currentPosition++;
 		}
@@ -140,6 +153,7 @@ public class Remove extends MacroCommand implements Constants {
 	/**
 	 * recovers the state before the last call of <code> perform </code>
 	 */
+	@SuppressWarnings("unchecked")
 	public void undo() {
 		Command c = null;
 		if (currentPosition >= commands.size()) {
@@ -162,16 +176,16 @@ public class Remove extends MacroCommand implements Constants {
 
 		c.undo();
 
-		if (c instanceof FindSuccessor) results.set(1, "remove3");
-		else if (c instanceof RemoveNode) results.set(1, "remove4");
-		else if (c instanceof SearchAlg) results.set(1, "remove1");
+		if (c instanceof FindSuccessor) results.set(1, "remove3"); //$NON-NLS-1$
+		else if (c instanceof RemoveNode) results.set(1, "remove4"); //$NON-NLS-1$
+		else if (c instanceof SearchAlg) results.set(1, "remove1"); //$NON-NLS-1$
 
 		// delete old objects, perform creates new ones
 		if ((c instanceof SearchAlg) || (c instanceof FindSuccessor)) {
-			if (commands.size() > currentPosition + 1) commands
-				.remove(currentPosition + 1);
+			if (commands.size() > currentPosition + 1)
+				commands.remove(currentPosition + 1);
 		}
-		results.set(0, "Schritt rückgängig gemacht");
+		results.set(0, Messages.getString("avl", "Step_undone")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -218,14 +232,13 @@ public class Remove extends MacroCommand implements Constants {
 		}
 
 		if ((c instanceof SearchAlg) && !((SearchAlg)c).hasPrevious()) return;
-		else if ((c instanceof FindSuccessor) &&
-				!((FindSuccessor)c).hasPrevious()) {
+		else if ((c instanceof FindSuccessor)
+			&& !((FindSuccessor)c).hasPrevious()) {
 			currentPosition--;
 			c = commands.get(currentPosition);
 		}
 
-		if (c instanceof SearchAlg)
-			while (((SearchAlg)c).hasPrevious()) undo();
+		if (c instanceof SearchAlg) while (((SearchAlg)c).hasPrevious()) undo();
 		else if (c instanceof FindSuccessor)
 			while (((FindSuccessor)c).hasPrevious()) undo();
 		else c.undo();

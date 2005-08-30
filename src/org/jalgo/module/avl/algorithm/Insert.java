@@ -23,6 +23,7 @@
 
 package org.jalgo.module.avl.algorithm;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.datastructure.*;
 import org.jalgo.module.avl.Constants;
 import java.util.*;
@@ -33,7 +34,9 @@ import java.util.*;
  * 
  * @author Jean Christoph Jung
  */
-public class Insert extends MacroCommand implements Constants {
+public class Insert
+extends MacroCommand
+implements Constants {
 
 	private WorkNode wn;
 	private SearchTree tree;
@@ -43,21 +46,27 @@ public class Insert extends MacroCommand implements Constants {
 	 *            the key that will be inserted into the serchtree st.
 	 * @param st the tree, the algorithm is working on.
 	 */
+	@SuppressWarnings("unchecked")
 	public Insert(WorkNode w, SearchTree st) {
 		super();
-		name = "Einfügen";
+		name = Messages.getString("avl", "Alg_name.Insert"); //$NON-NLS-1$ //$NON-NLS-2$
 		wn = w;
 		tree = st;
 		if (wn.getNextToMe() != null) { // Tree not empty
-			results.add(0, new String("Einfügen von " + wn.getKey()
-				+ " gestartet"));
-			results.add(1, "insert1");
+			results.add(0, new String(Messages.getString(
+				"avl", "Alg_name.Insert") + //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.getString("avl", "_of") + wn.getKey() + //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.getString("avl", "Started"))); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "insert1"); //$NON-NLS-1$
 			commands.add(CommandFactory.createSearch(w));
 		}
 		else { // Tree empty, search not necessary
-			results.add(0, new String("Einfügen von " + wn.getKey()
-				+ " gestartet"));
-			results.add(1, "insert2");
+			results.add(0, new String(Messages.getString(
+				"avl", "Alg_name.Insert") + //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.getString("avl", "_of") + //$NON-NLS-1$ //$NON-NLS-2$
+				wn.getKey() +
+				Messages.getString("avl", "Started"))); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "insert2"); //$NON-NLS-1$
 			commands.add(CommandFactory.createCreateNode(wn, tree));
 		}
 		results.add(2, WORKING);
@@ -68,6 +77,7 @@ public class Insert extends MacroCommand implements Constants {
 	 * writes into the resultlist: DONE, if Insert is finished, WORKING if not
 	 * finished, FOUND if key already exists
 	 */
+	@SuppressWarnings("unchecked")
 	public void perform() {
 		Command c = commands.get(currentPosition);
 		c.setParameters(parameters);
@@ -79,33 +89,35 @@ public class Insert extends MacroCommand implements Constants {
 			switch (searchresult) {
 				case FOUND:
 					currentPosition++;
-					results.add(0, r.get(0)
-						+ "\nSchlüssel muss nicht eingefügt werden");
-					results.add(1, "insert1");
+					results.add(0, r.get(0) + Messages.getString(
+						"avl", "Insert.Key_found")); //$NON-NLS-1$ //$NON-NLS-2$
+					results.add(1, "insert1"); //$NON-NLS-1$
 					results.add(2, FOUND);
 					break;
 				case WORKING:
 					results.add(0, r.get(0));
-					results.add(1, "insert1");
+					results.add(1, "insert1"); //$NON-NLS-1$
 					results.add(2, WORKING);
 					break;
 				case NOTFOUND:
 					Integer child = (Integer)r.get(3);
 					if (child == LEFT) {
-						results.add(0, r.get(0) + " --> links einfügen");
-						results.add(1, "insert2");
+						results.add(0, r.get(0) + Messages.getString(
+							"avl", "Insert_left")); //$NON-NLS-1$ //$NON-NLS-2$
+						results.add(1, "insert2"); //$NON-NLS-1$
 						wn.setVisualizationStatus(Visualizable.NORMAL
 							| Visualizable.LEFT_ARROW);
 					}
 					else {
-						results.add(0, r.get(0) + " --> rechts einfügen");
-						results.add(1, "insert2");
+						results.add(0, r.get(0) + Messages.getString(
+							"avl", "Insert_right")); //$NON-NLS-1$ //$NON-NLS-2$
+						results.add(1, "insert2"); //$NON-NLS-1$
 						wn.setVisualizationStatus(Visualizable.NORMAL
 							| Visualizable.RIGHT_ARROW);
 					}
 					currentPosition++;
-					if (commands.size() < 2) commands.add(1, CommandFactory
-						.createCreateNode(wn, tree));
+					if (commands.size() < 2) commands.add(
+						1, CommandFactory.createCreateNode(wn, tree));
 					parameters.add(0, child);
 					results.add(2, WORKING);
 					break;
@@ -118,8 +130,9 @@ public class Insert extends MacroCommand implements Constants {
 			Command ch = CommandFactory.createCalcHeight(tree.getRoot());
 			ch.perform();
 
-			results.add(0, "Einfügen beendet");
-			results.add(1, "insert2");
+			results.add(0, Messages.getString(
+				"avl", "Insert_finished")); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "insert2"); //$NON-NLS-1$
 			results.add(2, DONE);
 			currentPosition++;
 			wn.setVisualizationStatus(Visualizable.INVISIBLE);
@@ -129,41 +142,39 @@ public class Insert extends MacroCommand implements Constants {
 	/**
 	 * First blockstep: the search Second blockstep: insert of the new node
 	 */
+	@SuppressWarnings("unchecked")
 	public void performBlockStep() {
 		if (!hasNext()) return;
 		Command c = commands.get(currentPosition);
 		results.clear();
-		results.add("Absatznummer");
-		if (c instanceof Search) while (((Search)c).hasNext()) {
-			perform();
-		}
+		results.add("Absatznummer"); //$NON-NLS-1$
+		if (c instanceof Search) while (((Search)c).hasNext()) perform();
 		else perform();
 	}
 
 	/**
 	 * recovers the state before the last call of <code> perform </code>
 	 */
+	@SuppressWarnings("unchecked")
 	public void undo() {
 		results.clear();
-		results.add(0, "Schritt rückgängig gemacht");
+		results.add(0, Messages.getString("avl", "Step_undone")); //$NON-NLS-1$ //$NON-NLS-2$
 		if (commands.size() <= currentPosition) currentPosition--;
 		else if (currentPosition == 1) currentPosition--;
 
 		Command c = commands.get(currentPosition);
 
 		if (c instanceof Search) {
-			results.add(1, "insert1");
+			results.add(1, "insert1"); //$NON-NLS-1$
 			if (((Search)c).hasPrevious()) {
 				c.undo();
 				results.add(2, DONE);
 			}
-			else {
-				results.add(2, DONE);
-			}
+			else results.add(2, DONE);
 		}
 		if (c instanceof CreateNode) {
 			c.undo();
-			results.add(1, "insert2");
+			results.add(1, "insert2"); //$NON-NLS-1$
 			results.add(2, DONE);
 		}
 	}
@@ -176,9 +187,7 @@ public class Insert extends MacroCommand implements Constants {
 			currentPosition--;
 
 		Command c = commands.get(currentPosition);
-		if (c instanceof Search) while (((Search)c).hasPrevious()) {
-			undo();
-		}
+		if (c instanceof Search) while (((Search)c).hasPrevious()) undo();
 		else undo();
 	}
 }

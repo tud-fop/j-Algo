@@ -1,23 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
- * students and lecturers of computer sience. It is written in Java and
- * platform independant. j-Algo is developed with the help of Dresden
- * University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /**
@@ -25,6 +26,7 @@
  */
 package org.jalgo.module.avl.algorithm;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Constants;
 import org.jalgo.module.avl.datastructure.Node;
 import org.jalgo.module.avl.datastructure.SearchTree;
@@ -54,23 +56,25 @@ implements Constants {
 	 * @param tree is the searchtree that the key is removed from
 	 * @param nodeToRemove the node to be deleted
 	 */
+	@SuppressWarnings("unchecked")
 	public RemoveNode(WorkNode wn, SearchTree tree, Node nodeToRemove) {
 		this.wn = wn;
 		this.tree = tree;
 		this.nodeToRemove = nodeToRemove;
-		results.add(0, "");
-		results.add(1, "absatz");
+		results.add(0, ""); //$NON-NLS-1$
+		results.add(1, "absatz"); //$NON-NLS-1$
 		results.add(2, WORKING);
-		results.add(3, "helpnode");
+		results.add(3, "helpnode"); //$NON-NLS-1$
 	}
 
 	/**
 	 * differentiates the 3 basic cases (according to the algorithm) and
 	 * replaces the node to remove by its successor or its left child
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void perform() {
-		results.set(0, "Knoten gelöscht");
+		results.set(0, Messages.getString("avl", "Node_removed")); //$NON-NLS-1$ //$NON-NLS-2$
 		/* Case 1: right child of node to delete is null */
 		if (nodeToRemove.getRightChild() == null) {
 			fall = 1;
@@ -85,8 +89,8 @@ implements Constants {
 				Node parent = nodeToRemove.getParent();
 				Node n = nodeToRemove.getLeftChild();
 				if (n != null) n.setParent(parent);
-				if (parent.getKey() < nodeToRemove.getKey()) parent
-					.setRightChild(n);
+				if (parent.getKey() < nodeToRemove.getKey())
+					parent.setRightChild(n);
 				else parent.setLeftChild(n);
 				wasRoot = false;
 				results.set(2, FOUND);
@@ -144,9 +148,6 @@ implements Constants {
 			n.setVisualizationStatus(Visualizable.NORMAL);
 
 			results.set(2, FOUND);
-			// if (help.getLeftChild()!=null)
-			// results.set(3, help.getLeftChild());
-			// else
 			results.set(3, help);
 		}
 
@@ -189,12 +190,9 @@ implements Constants {
 					if (nodeToRemove.getLeftChild() != null)
 						nodeToRemove.getLeftChild().setParent(nodeToRemove);
 					Node parent = nodeToRemove.getParent();
-					if (parent.getKey() < nodeToRemove.getKey()) {
+					if (parent.getKey() < nodeToRemove.getKey())
 						parent.setRightChild(nodeToRemove);
-					}
-					else {
-						parent.setLeftChild(nodeToRemove);
-					}
+					else parent.setLeftChild(nodeToRemove);
 					nodeToRemove.getRightChild().setLeftChild(null);
 				}
 				else {
@@ -221,16 +219,11 @@ implements Constants {
 				help.setLeftChild(n);
 				if (wasRoot == false) {
 					Node parent = nodeToRemove.getParent();
-					if (parent.getKey() < nodeToRemove.getKey()) {
+					if (parent.getKey() < nodeToRemove.getKey())
 						parent.setRightChild(nodeToRemove);
-					}
-					else {
-						parent.setLeftChild(nodeToRemove);
-					}
+					else parent.setLeftChild(nodeToRemove);
 				}
-				else {
-					tree.setRoot(nodeToRemove);
-				}
+				else tree.setRoot(nodeToRemove);
 				wn.setNextToMe(help.getLeftChild());
 				wn.getNextToMe().setVisualizationStatus(
 					Visualizable.FOCUSED | Visualizable.LINE_NORMAL);

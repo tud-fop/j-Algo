@@ -26,6 +26,7 @@
  */
 package org.jalgo.module.avl.algorithm;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Constants;
 import org.jalgo.module.avl.datastructure.Node;
 import org.jalgo.module.avl.datastructure.Visualizable;
@@ -46,22 +47,25 @@ implements Constants {
 	/**
 	 * @param wn the WorkNode with the key to be searched in the tree
 	 */
+	@SuppressWarnings("unchecked")
 	public SearchAlg(WorkNode wn) {
 		super();
-		name = "Suchen";
+		name = Messages.getString("avl", "Alg_name.Search"); //$NON-NLS-1$ //$NON-NLS-2$
 		this.wn = wn;
 
 		// checks if the tree is empty
 		if (wn.getNextToMe() == null) {
-			results.add(0, "Baum ist leer, Schlüssel nicht gefunden");
-			results.add(1, "search1");
+			results.add(0, Messages.getString(
+				"avl", "Tree_empty_key_not_found")); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "search1"); //$NON-NLS-1$
 			results.add(2, NOTFOUND);
 			wn.setVisualizationStatus(Visualizable.INVISIBLE);
 		}
 		else {
 			commands.add(CommandFactory.createCompareKey(wn));
-			results.add(0, wn.getKey() + " suchen");
-			results.add(1, "search1");
+			results.add(0, wn.getKey() + Messages.getString(
+				"avl", "Key_search")); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "search1"); //$NON-NLS-1$
 			results.add(2, WORKING);
 			wn.getNextToMe().setVisualizationStatus(Visualizable.FOCUSED);
 		}
@@ -73,19 +77,19 @@ implements Constants {
 	 * key was not found. In the last case Search also returns the position to
 	 * insert (LEFT or RIGHT).
 	 */
+	@SuppressWarnings("unchecked")
 	public void perform() {
 		results.clear();
-		Command c = (Command)commands.get(currentPosition);
+		Command c = commands.get(currentPosition);
 		c.perform();
 		currentPosition++;
 
 		Integer compareresult = (Integer)c.getResults().get(0);
 
 		switch (compareresult) {
-
 			case 0: {
-				results.add(0, wn.getKey() + " = " + wn.getNextToMe().getKey());
-				results.add(1, "search1");
+				results.add(0, wn.getKey() + " = " + wn.getNextToMe().getKey()); //$NON-NLS-1$
+				results.add(1, "search1"); //$NON-NLS-1$
 				results.add(2, FOUND);
 				wn.setVisualizationStatus(Visualizable.INVISIBLE);
 				setNodesTo(wn.getNextToMe(), Visualizable.NORMAL);
@@ -98,9 +102,10 @@ implements Constants {
 
 			case -1: {
 				if (wn.getNextToMe().getLeftChild() == null) {
-					results.add(0, wn.getKey() + " < "
-						+ wn.getNextToMe().getKey() + "\nnicht gefunden");
-					results.add(1, "search1");
+					results.add(0, wn.getKey() + " < " //$NON-NLS-1$
+						+ wn.getNextToMe().getKey()
+						+ Messages.getString("avl", "Search_not_found")); //$NON-NLS-1$ //$NON-NLS-2$
+					results.add(1, "search1"); //$NON-NLS-1$
 					results.add(2, NOTFOUND);
 					results.add(3, LEFT);
 					wn.setVisualizationStatus(Visualizable.INVISIBLE);
@@ -109,9 +114,10 @@ implements Constants {
 					// end of Search, key not found
 				}
 				else {
-					results.add(0, wn.getKey() + " < "
-						+ wn.getNextToMe().getKey() + " --> nach links gehen");
-					results.add(1, "search1");
+					results.add(0, wn.getKey() + " < " //$NON-NLS-1$
+						+ wn.getNextToMe().getKey()
+						+ Messages.getString("avl", "Search_step_to_left")); //$NON-NLS-1$ //$NON-NLS-2$
+					results.add(1, "search1"); //$NON-NLS-1$
 					results.add(2, WORKING);
 					wn.setNextToMe(wn.getNextToMe().getLeftChild());
 					wn.getNextToMe().setVisualizationStatus(
@@ -124,9 +130,10 @@ implements Constants {
 
 			case 1: {
 				if (wn.getNextToMe().getRightChild() == null) {
-					results.add(0, wn.getKey() + " > "
-						+ wn.getNextToMe().getKey() + "\nnicht gefunden");
-					results.add(1, "search1");
+					results.add(0, wn.getKey() + " > " //$NON-NLS-1$
+						+ wn.getNextToMe().getKey()
+						+ Messages.getString("avl", "Search_not_found")); //$NON-NLS-1$ //$NON-NLS-2$
+					results.add(1, "search1"); //$NON-NLS-1$
 					results.add(2, NOTFOUND);
 					results.add(3, RIGHT);
 					wn.setVisualizationStatus(Visualizable.INVISIBLE);
@@ -135,9 +142,10 @@ implements Constants {
 					// end of Search, key not found
 				}
 				else {
-					results.add(0, wn.getKey() + " > "
-						+ wn.getNextToMe().getKey() + " --> nach rechts gehen");
-					results.add(1, "search1");
+					results.add(0, wn.getKey() + " > " //$NON-NLS-1$
+						+ wn.getNextToMe().getKey()
+						+ Messages.getString("avl", "Search_step_to_right")); //$NON-NLS-1$ //$NON-NLS-2$
+					results.add(1, "search1"); //$NON-NLS-1$
 					results.add(2, WORKING);
 					wn.setNextToMe(wn.getNextToMe().getRightChild());
 					wn.getNextToMe().setVisualizationStatus(
@@ -153,13 +161,15 @@ implements Constants {
 	/**
 	 * Realizes undo by changing the position of the WorkNode
 	 */
+	@SuppressWarnings("unchecked")
 	public void undo() {
 		results.clear();
-		results.add("Schritt rückgängig gemacht");
-		results.add("search1");
+		results.add(Messages.getString("avl", "Step_undone")); //$NON-NLS-1$ //$NON-NLS-2$
+		results.add("search1"); //$NON-NLS-1$
 
 		currentPosition--;
-		Command c = (Command)commands.get(currentPosition);
+		//TODO: for what this line is here?
+//		Command c = commands.get(currentPosition);
 
 		if (firstundo) {
 			wn.setVisualizationStatus(Visualizable.NORMAL);

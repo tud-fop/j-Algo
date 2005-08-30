@@ -1,29 +1,31 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
- * students and lecturers of computer sience. It is written in Java and
- * platform independant. j-Algo is developed with the help of Dresden
- * University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 package org.jalgo.module.avl.algorithm;
 
 import java.util.List;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Constants;
 import org.jalgo.module.avl.datastructure.AVLNode;
 import org.jalgo.module.avl.datastructure.Node;
@@ -48,26 +50,33 @@ implements Constants {
 	private int help = 1;
 
 	/**
-	 * @param w Reference to the the current Node; the key of the worknode is
+	 * @param wn Reference to the the current Node; the key of the worknode is
 	 *            the key that will be deleted from the serchtree st.
-	 * @param st the tree, the algorithm is working on.
+	 * @param tree the tree, the algorithm is working on.
 	 */
+	@SuppressWarnings("unchecked")
 	public RemoveAVL(WorkNode wn, SearchTree tree) {
 		super();
-		name = "AVL-Löschen";
+		name = Messages.getString("avl", "Alg_name.Remove_AVL"); //$NON-NLS-1$ //$NON-NLS-2$
 		this.wn = wn;
 		this.tree = tree;
 		if (tree.getRoot() == null) {
-			results.add(0, "Baum ist leer, Schlüssel nicht gefunden");
-			results.add(1, "1");
+			results.add(0, Messages.getString(
+				"avl", "Tree_empty_key_not_found")); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "1"); //$NON-NLS-1$
 			results.add(2, NOTFOUND);
 			wn.setVisualizationStatus(Visualizable.INVISIBLE);
 		}
 		else { // Tree not empty
 			commands.add(CommandFactory.createRemove(wn, tree));
-			results.add(0, "AVL-Löschen von " + wn.getKey() + " gestartet\n"
-				+ wn.getKey() + " suchen");
-			results.add(1, "avlremove1");
+			results.add(0, name +
+				Messages.getString("avl", "_of") + //$NON-NLS-1$ //$NON-NLS-2$
+				wn.getKey() +
+				Messages.getString("avl", "Started") + //$NON-NLS-1$ //$NON-NLS-2$
+				System.getProperty("line.separator") +
+				wn.getKey() +
+				Messages.getString("avl", "Key_search")); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "avlremove1"); //$NON-NLS-1$
 			results.add(2, WORKING);
 		}
 	}
@@ -75,6 +84,7 @@ implements Constants {
 	/**
 	 * <code> perform </code> does one step in the algorithm.
 	 */
+	@SuppressWarnings("unchecked")
 	public void perform() {
 		Command c = commands.get(currentPosition);
 		c.perform();
@@ -86,7 +96,8 @@ implements Constants {
 				case DONE:
 					currentPosition++;
 					if (tree.getHeight() == 0) {
-						results.set(0, "Löschen beendet");
+						results.set(0, Messages.getString(
+							"avl", "Remove_finished")); //$NON-NLS-1$ //$NON-NLS-2$
 						results.set(2, DONE);
 						break;
 					}
@@ -94,16 +105,16 @@ implements Constants {
 					Node n = (Node)resultlist.get(3);
 					wn.setNextToMe(n);
 					commands.add(CommandFactory.createUpdateBalance(wn));
-					results.set(1, "avlremove5");
+					results.set(1, "avlremove5"); //$NON-NLS-1$
 					break;
 				case FOUND:
 				case WORKING:
 					results = resultlist;
-					results.set(1, "avl" + results.get(1));
+					results.set(1, "avl" + results.get(1)); //$NON-NLS-1$
 					break;
 				case NOTFOUND:
 					results = resultlist;
-					results.set(1, "avl" + results.get(1));
+					results.set(1, "avl" + results.get(1)); //$NON-NLS-1$
 					currentPosition++;
 					break;
 				default:
@@ -116,8 +127,8 @@ implements Constants {
 			updatebalancelist = resultlist;
 
 			if (balanceresult == ROOT) {
-				results.set(0, resultlist.get(0)
-					+ "Wurzel erreicht\nBaum ausgeglichen");
+				results.set(0, resultlist.get(0) + Messages.getString(
+					"avl", "Root_reached_tree_balanced")); //$NON-NLS-1$ //$NON-NLS-2$
 				currentPosition++;
 				setBalancesNormal((AVLNode)wn.getNextToMe());
 			}
@@ -128,15 +139,15 @@ implements Constants {
 				currentPosition++;
 				int direction = (Integer)resultlist.get(3);
 				if (direction == LEFT) {
-					if (currentPosition == commands.size())
-						commands.add(CommandFactory.createRotateLeft(wn, tree));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createRotateLeft(wn, tree));
 					wn.getNextToMe().setVisualizationStatus(
 						Visualizable.NORMAL | Visualizable.ROTATE_LEFT_ARROW
 							| Visualizable.BALANCE);
 				}
 				else {
-					if (currentPosition == commands.size())
-						commands.add(CommandFactory.createRotateRight(wn, tree));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createRotateRight(wn, tree));
 					wn.getNextToMe().setVisualizationStatus(
 						Visualizable.NORMAL | Visualizable.ROTATE_RIGHT_ARROW
 							| Visualizable.BALANCE);
@@ -151,8 +162,8 @@ implements Constants {
 				if (direction == LEFT) {
 					results.set(0, resultlist.get(0));
 					results.set(1, resultlist.get(1));
-					if (currentPosition == commands.size())
-						commands.add(CommandFactory.createRotateLeft(wn, tree));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createRotateLeft(wn, tree));
 					wn.getNextToMe().setVisualizationStatus(
 						Visualizable.NORMAL | Visualizable.ROTATE_LEFT_ARROW
 							| Visualizable.BALANCE);
@@ -160,8 +171,8 @@ implements Constants {
 				else {
 					results.set(0, resultlist.get(0));
 					results.set(1, resultlist.get(1));
-					if (currentPosition == commands.size())
-						commands.add(CommandFactory.createRotateRight(wn, tree));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createRotateRight(wn, tree));
 					wn.getNextToMe().setVisualizationStatus(
 						Visualizable.NORMAL | Visualizable.ROTATE_RIGHT_ARROW
 							| Visualizable.BALANCE);
@@ -181,7 +192,7 @@ implements Constants {
 				results.set(0, resultlist.get(0));
 				results.set(1, resultlist.get(1));
 			}
-			results.set(1, "avlremove5");
+			results.set(1, "avlremove5"); //$NON-NLS-1$
 		}
 
 		else if (c instanceof RotateLeft || c instanceof RotateRight) {
@@ -193,15 +204,15 @@ implements Constants {
 			if (balanceresult == DOUBLEROTATE && help == 0) {
 				wn.setNextToMe((AVLNode)updatebalancelist.get(6));
 				if (((Integer)updatebalancelist.get(5)) == LEFT) {
-					if (currentPosition == commands.size())
-						commands.add(CommandFactory.createRotateLeft(wn, tree));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createRotateLeft(wn, tree));
 					wn.getNextToMe().setVisualizationStatus(
 						Visualizable.NORMAL | Visualizable.ROTATE_LEFT_ARROW
 							| Visualizable.BALANCE);
 				}
 				else {
-					if (currentPosition == commands.size())
-						commands.add(CommandFactory.createRotateRight(wn, tree));
+					if (currentPosition == commands.size()) commands.add(
+						CommandFactory.createRotateRight(wn, tree));
 					wn.getNextToMe().setVisualizationStatus(
 						Visualizable.NORMAL | Visualizable.ROTATE_RIGHT_ARROW
 							| Visualizable.BALANCE);
@@ -212,18 +223,20 @@ implements Constants {
 				if (wn.getNextToMe().getParent() != null) {
 					wn.setNextToMe(wn.getNextToMe().getParent());
 					commands.add(CommandFactory.createUpdateBalance(wn));
-					results.set(0, resultlist.get(0)
-						+ "\nTeilbaum ausgeglichen");
+					results.set(0, resultlist.get(0) + Messages.getString(
+						"avl", "Partial_tree_balanced")); //$NON-NLS-1$ //$NON-NLS-2$
 				}
-				else results.set(0, resultlist.get(0) + "\nBaum ausgeglichen");
+				else results.set(0, resultlist.get(0) + Messages.getString(
+					"avl", "N_tree_balanced")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
-			results.set(1, "avlremove5");
+			results.set(1, "avlremove5"); //$NON-NLS-1$
 		}
 	}
 
 	/**
 	 * recovers the state before the last call of <code> perform </code>
 	 */
+	@SuppressWarnings("unchecked")
 	public void undo() {
 		Command c = null;
 		if (currentPosition >= commands.size()) {
@@ -248,45 +261,47 @@ implements Constants {
 				k--;
 				c1 = commands.get(k);
 			}
-			results.set(1, "avlremove5");
+			results.set(1, "avlremove5"); //$NON-NLS-1$
 		}
 		else {
 			c.undo();
-			if (c instanceof Remove) results.set(1, "avl" + results.get(1));
-			else results.set(1, "avlremove5");
+			if (c instanceof Remove) results.set(1, "avl" + results.get(1)); //$NON-NLS-1$
+			else results.set(1, "avlremove5"); //$NON-NLS-1$
 		}
 
 		if ((c instanceof Remove) || (c instanceof UpdateBalance)) {
 			while (commands.size() > currentPosition + 1)
 				commands.remove(currentPosition + 1);
 		}
-		results.set(0, "Schritt rückgängig gemacht");
+		results.set(0, Messages.getString("avl", "Step_undone")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
 	 * Blocksteps: 1. Remove 2. UpdateBalance then either RotateLeft/RotateRight
 	 * or UpdateBalance, perhaps more of them
 	 */
+	@SuppressWarnings("unchecked")
 	public void performBlockStep() {
 		if (!hasNext()) return;
 		Command c = commands.get(currentPosition);
 		if (c instanceof Remove) {
 			((Remove)c).performBlockStep();
 			results = c.getResults();
-			results.set(1, "avl" + results.get(1));
+			results.set(1, "avl" + results.get(1)); //$NON-NLS-1$
 			int removeresult = (Integer)results.get(2);
 			switch (removeresult) {
 				case DONE:
 					currentPosition++;
 					if (tree.getHeight() == 0) {
-						results.set(0, "L�schen beendet");
+						results.set(0, Messages.getString(
+							"avl", "Remove_finished")); //$NON-NLS-1$ //$NON-NLS-2$
 						results.set(2, DONE);
 						break;
 					}
 					Node n = (Node)results.get(3);
 					wn.setNextToMe(n);
 					commands.add(CommandFactory.createUpdateBalance(wn));
-					results.set(1, "avlremove5");
+					results.set(1, "avlremove5"); //$NON-NLS-1$
 					break;
 				case FOUND:
 				case WORKING:
@@ -324,7 +339,8 @@ implements Constants {
 		}
 		else if (c instanceof UpdateBalance) {
 			do {
-				while (((UpdateBalance)c).hasPrevious()) undo();
+				while (((UpdateBalance)c).hasPrevious())
+					undo();
 				c = commands.get(--currentPosition);
 			}
 			while (c instanceof UpdateBalance);

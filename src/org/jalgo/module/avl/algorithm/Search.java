@@ -1,27 +1,29 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
- * students and lecturers of computer sience. It is written in Java and
- * platform independant. j-Algo is developed with the help of Dresden
- * University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 package org.jalgo.module.avl.algorithm;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.datastructure.*;
 import org.jalgo.module.avl.*;
 
@@ -41,22 +43,25 @@ implements Constants {
 	/**
 	 * @param wn reference to the position in the tree, holds the search key
 	 */
+	@SuppressWarnings("unchecked")
 	public Search(WorkNode wn) {
 		super();
-		name = "Suchen";
+		name = Messages.getString("avl", "Alg_name.Search"); //$NON-NLS-1$ //$NON-NLS-2$
 		this.wn = wn;
 
 		// checks if the tree is empty
 		if (wn.getNextToMe() == null) {
-			results.add(0, "Baum ist leer, Schlüssel nicht gefunden");
-			results.add(1, "search1");
+			results.add(0, Messages.getString(
+				"avl", "Tree_empty_key_not_found")); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "search1"); //$NON-NLS-1$
 			results.add(2, NOTFOUND);
 			wn.setVisualizationStatus(Visualizable.INVISIBLE);
 		}
 		else {
 			commands.add(CommandFactory.createCompareKey(wn));
-			results.add(0, wn.getKey() + " suchen");
-			results.add(1, "search1");
+			results.add(0, wn.getKey() + Messages.getString(
+				"avl", "Key_search")); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "search1"); //$NON-NLS-1$
 			results.add(2, WORKING);
 			wn.getNextToMe().setVisualizationStatus(Visualizable.FOCUSED);
 		}
@@ -68,15 +73,16 @@ implements Constants {
 	 * key was not found. In the last case Search also returns the position to
 	 * insert (LEFT or RIGHT).
 	 */
+	@SuppressWarnings("unchecked")
 	public void perform() {
 		results.clear();
-		Command c = (Command)commands.get(currentPosition);
+		Command c = commands.get(currentPosition);
 		c.perform();
 		currentPosition++;
 
 		if (c instanceof NoOperation) {
-			results.add(0, "Schlüssel gefunden");
-			results.add(1, "search1");
+			results.add(0, Messages.getString("avl", "Key_found")); //$NON-NLS-1$ //$NON-NLS-2$
+			results.add(1, "search1"); //$NON-NLS-1$
 			results.add(2, FOUND);
 			wn.getNextToMe().setVisualizationStatus(Visualizable.NORMAL);
 			return;
@@ -86,8 +92,8 @@ implements Constants {
 
 		switch (compareresult) {
 			case 0: {
-				results.add(0, wn.getKey() + " = " + wn.getNextToMe().getKey());
-				results.add(1, "search1");
+				results.add(0, wn.getKey() + " = " + wn.getNextToMe().getKey()); //$NON-NLS-1$
+				results.add(1, "search1"); //$NON-NLS-1$
 				results.add(2, WORKING);
 				wn.setVisualizationStatus(Visualizable.INVISIBLE);
 				setNodesTo(wn.getNextToMe(), Visualizable.NORMAL);
@@ -102,9 +108,10 @@ implements Constants {
 
 			case -1: {
 				if (wn.getNextToMe().getLeftChild() == null) {
-					results.add(0, wn.getKey() + " < "
-						+ wn.getNextToMe().getKey() + "\nnicht gefunden");
-					results.add(1, "search1");
+					results.add(0, wn.getKey() + " < " //$NON-NLS-1$
+						+ wn.getNextToMe().getKey()
+						+ Messages.getString("avl", "Search_not_found")); //$NON-NLS-1$ //$NON-NLS-2$
+					results.add(1, "search1"); //$NON-NLS-1$
 					results.add(2, NOTFOUND);
 					results.add(3, LEFT);
 					wn.setVisualizationStatus(Visualizable.INVISIBLE);
@@ -113,9 +120,10 @@ implements Constants {
 					// end of Search, key not found
 				}
 				else {
-					results.add(0, wn.getKey() + " < "
-						+ wn.getNextToMe().getKey() + " --> nach links gehen");
-					results.add(1, "search1");
+					results.add(0, wn.getKey() + " < " //$NON-NLS-1$
+						+ wn.getNextToMe().getKey()
+						+ Messages.getString("avl", "Search_step_to_left")); //$NON-NLS-1$ //$NON-NLS-2$
+					results.add(1, "search1"); //$NON-NLS-1$
 					results.add(2, WORKING);
 					wn.setNextToMe(wn.getNextToMe().getLeftChild());
 					wn.getNextToMe().setVisualizationStatus(
@@ -128,9 +136,10 @@ implements Constants {
 
 			case 1: {
 				if (wn.getNextToMe().getRightChild() == null) {
-					results.add(0, wn.getKey() + " > "
-						+ wn.getNextToMe().getKey() + "\nnicht gefunden");
-					results.add(1, "search1");
+					results.add(0, wn.getKey() + " > " //$NON-NLS-1$
+						+ wn.getNextToMe().getKey()
+						+ Messages.getString("avl", "Search_not_found")); //$NON-NLS-1$ //$NON-NLS-2$
+					results.add(1, "search1"); //$NON-NLS-1$
 					results.add(2, NOTFOUND);
 					results.add(3, RIGHT);
 					wn.setVisualizationStatus(Visualizable.INVISIBLE);
@@ -139,9 +148,10 @@ implements Constants {
 					// end of Search, key not found
 				}
 				else {
-					results.add(0, wn.getKey() + " > "
-						+ wn.getNextToMe().getKey() + " --> nach rechts gehen");
-					results.add(1, "search1");
+					results.add(0, wn.getKey() + " > " //$NON-NLS-1$
+						+ wn.getNextToMe().getKey()
+						+ Messages.getString("avl", "Search_step_to_right")); //$NON-NLS-1$ //$NON-NLS-2$
+					results.add(1, "search1"); //$NON-NLS-1$
 					results.add(2, WORKING);
 					wn.setNextToMe(wn.getNextToMe().getRightChild());
 					wn.getNextToMe().setVisualizationStatus(
@@ -157,25 +167,22 @@ implements Constants {
 	/**
 	 * Realizes undo by changing the position of the WorkNode
 	 */
+	@SuppressWarnings("unchecked")
 	public void undo() {
 		results.clear();
-		results.add("Schritt rückgängig gemacht");
-		results.add("search1");
+		results.add(Messages.getString("avl", "Step_undone")); //$NON-NLS-1$ //$NON-NLS-2$
+		results.add("search1"); //$NON-NLS-1$
 
 		currentPosition--;
-		Command c = (Command)commands.get(currentPosition);
+		Command c = commands.get(currentPosition);
 
-		if (c instanceof NoOperation) {
-			wn.getNextToMe().setVisualizationStatus(
-				Visualizable.FOCUSED | Visualizable.LINE_NORMAL);
-		}
-
+		if (c instanceof NoOperation) wn.getNextToMe().setVisualizationStatus(
+			Visualizable.FOCUSED | Visualizable.LINE_NORMAL);
 		else if (firstundo) {
 			wn.setVisualizationStatus(Visualizable.NORMAL);
 			setNodesTo(wn.getNextToMe(), Visualizable.FOCUSED);
 			firstundo = false;
 		}
-
 		else {
 			wn.getNextToMe().setVisualizationStatus(Visualizable.NORMAL);
 			wn.setNextToMe(wn.getNextToMe().getParent());

@@ -26,6 +26,7 @@
  */
 package org.jalgo.module.avl.algorithm;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Constants;
 import org.jalgo.module.avl.datastructure.Node;
 import org.jalgo.module.avl.datastructure.Visualizable;
@@ -36,9 +37,10 @@ import org.jalgo.module.avl.datastructure.WorkNode;
  * 
  * <code> FindNextInSizeStart </code> is the first step in searching the key
  * that is next in size to the key that will be removed.
- * 
  */
-public class FindSuccessorStart extends Command implements Constants {
+public class FindSuccessorStart
+extends Command
+implements Constants {
 
 	private WorkNode wn;
 
@@ -46,10 +48,11 @@ public class FindSuccessorStart extends Command implements Constants {
 	 * @param wn the worknode indicates the position in the tree, where the
 	 *            search is started
 	 */
+	@SuppressWarnings("unchecked")
 	public FindSuccessorStart(WorkNode wn) {
 		this.wn = wn;
-		results.add(0, "");
-		results.add(1, "absatz");
+		results.add(0, ""); //$NON-NLS-1$
+		results.add(1, "absatz"); //$NON-NLS-1$
 		results.add(2, WORKING);
 	}
 
@@ -57,8 +60,8 @@ public class FindSuccessorStart extends Command implements Constants {
 	 * <code> perform </code> moves the worknode to the right child of the
 	 * current node next to the worknode, and changes the visualisations of both
 	 * the old and new node next to the worknode
-	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void perform() {
 		Node n = wn.getNextToMe();
@@ -68,7 +71,8 @@ public class FindSuccessorStart extends Command implements Constants {
 		n.setVisualizationStatus(Visualizable.FOCUSED
 			| Visualizable.LINE_NORMAL);
 		if (wn.getNextToMe().getLeftChild() == null) results.set(2, FOUND);
-		results.set(0, "einmal rechts gegangen");
+		results.set(0, Messages.getString(
+			"avl", "FindSuccessorStart.Step_to_right")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -76,6 +80,7 @@ public class FindSuccessorStart extends Command implements Constants {
 	 * next to the worknode, and changes the visualisations of both the old and
 	 * new node next to the worknode
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void undo() {
 		Node n = wn.getNextToMe();
