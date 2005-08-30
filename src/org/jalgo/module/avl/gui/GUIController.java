@@ -42,26 +42,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubStatusLineManager;
 import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
-import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.FileDialog;
+import org.jalgo.main.IModuleConnector;
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.gui.JalgoWindow;
-import org.jalgo.main.gui.actions.Messages;
-import org.jalgo.main.gui.actions.SaveAction;
-import org.jalgo.main.gui.actions.SaveAsAction;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.ModuleConnector;
 import org.jalgo.module.avl.NoActionException;
@@ -76,7 +70,6 @@ import org.jalgo.module.avl.gui.components.WelcomeScreen;
 import org.jalgo.module.avl.gui.event.AbortAction;
 import org.jalgo.module.avl.gui.event.ClearTreeAction;
 import org.jalgo.module.avl.gui.event.FinishAction;
-import org.jalgo.module.avl.gui.event.HelpAction;
 import org.jalgo.module.avl.gui.event.PerformAction;
 import org.jalgo.module.avl.gui.event.PerformBlockStepAction;
 import org.jalgo.module.avl.gui.event.SwingSWTAction;
@@ -105,14 +98,10 @@ implements GUIConstants {
 
 	// components provided by the jAlgo-framework
 	private ApplicationWindow appWin;
-	private Composite comp;
 	private SubMenuManager menuManager;
 	private SubToolBarManager toolBarManager;
 	private SubStatusLineManager statusLineManager;
 
-	// actions for toolbar and menu (based on SWT)
-	private SaveAction saveAction;
-	private SaveAsAction saveAsAction;
 	private WelcomeAction welcomeAction;
 	private ClearTreeAction clearTreeAction;
 	private SwingSWTAction abortAction;
@@ -121,7 +110,6 @@ implements GUIConstants {
 	private SwingSWTAction performAction;
 	private SwingSWTAction performBlockStepAction;
 	private SwingSWTAction finishAction;
-	private HelpAction helpAction;
 
 	// components (based on Swing)
 	private Frame swt_awt_bridge;
@@ -143,11 +131,10 @@ implements GUIConstants {
 	private int northEastPaneHeight;
 	private int logPaneHeight;
 
-	// dummies
-	private boolean saved;
-	private boolean changesToSave;
 	private boolean isDialogOpen;
 	private Animator animator;
+
+	private static final String lineSep = System.getProperty("line.separator"); //$NON-NLS-1$
 
 	/**
 	 * Constructs the <code>GUIController</code> instance for the current AVL
@@ -172,7 +159,6 @@ implements GUIConstants {
 
 		this.connector = connector;
 		this.appWin = appWin;
-		this.comp = comp;
 		this.menuManager = menu;
 		this.toolBarManager = tb;
 		this.statusLineManager = sl;
@@ -195,21 +181,10 @@ implements GUIConstants {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}
-		catch (ClassNotFoundException e) {
-			showErrorMessage("Fehler beim Setzen des nativen LAF:\r\n"
-				+ e.getMessage());
-		}
-		catch (InstantiationException e) {
-			showErrorMessage("Fehler beim Setzen des nativen LAF:\r\n"
-				+ e.getMessage());
-		}
-		catch (IllegalAccessException e) {
-			showErrorMessage("Fehler beim Setzen des nativen LAF:\r\n"
-				+ e.getMessage());
-		}
-		catch (UnsupportedLookAndFeelException e) {
-			showErrorMessage("Fehler beim Setzen des nativen LAF:\r\n"
-				+ e.getMessage());
+		catch (Exception ex) {
+			JAlgoGUIConnector.getInstance().showErrorMessage(
+				Messages.getString("avl", "GUIController.LAF_error") + //$NON-NLS-1$ //$NON-NLS-2$
+				lineSep + ex.getMessage());
 		}
 
 		// setup the status line
@@ -223,7 +198,8 @@ implements GUIConstants {
 		installToolbar();
 		installMenu();
 		// init components
-		rgd = new RandomGenerationDialog(this, swt_awt_bridge, controller);
+		rgd = new RandomGenerationDialog(this, swt_awt_bridge, controller,
+			connector);
 		welcomeScreen = new WelcomeScreen(this);
 		controlPane = new ControlPane(this, controller);
 		infoPane = new InfoPane(this, tree);
@@ -275,29 +251,17 @@ implements GUIConstants {
 		standardLayoutSplitPane.setResizeWeight(0.9);
 		standardLayoutSplitPane.setDividerLocation(northEastPaneHeight);
 
-		setChangesToSave(false);
-		// restore the non-module buttons, when reactivating module
-		final CTabItem thisItem = ((JalgoWindow)appWin).getCTabFolder().getItem(
-			((JalgoWindow)appWin).getCTabFolder().getItemCount() - 1);
-		((JalgoWindow)appWin).getCTabFolder().addSelectionListener(
-			new SelectionAdapter() {
-				public void widgetSelected(SelectionEvent arg0) {
-					if (arg0.item == thisItem) setChangesToSave(areChangesToSave());
-				}
-			});
+		connector.setSaveStatus(IModuleConnector.NOTHING_TO_SAVE);
 	}
 
 	/**
 	 * Sets up the toolbar.
 	 */
 	private void installToolbar() {
-		saveAction = ((JalgoWindow)appWin).getSaveAction();
-		saveAsAction = ((JalgoWindow)appWin).getSaveAsAction();
-
 		welcomeAction = new WelcomeAction((JalgoWindow)appWin, connector, this,
 			tree);
 		toolBarManager.add(welcomeAction);
-		clearTreeAction = new ClearTreeAction(this, comp, tree);
+		clearTreeAction = new ClearTreeAction(this, tree);
 		toolBarManager.add(clearTreeAction);
 		toolBarManager.add(new Separator());
 		abortAction = new AbortAction(this, controller);
@@ -312,17 +276,14 @@ implements GUIConstants {
 		toolBarManager.add(performBlockStepAction);
 		finishAction = new FinishAction(this, controller);
 		toolBarManager.add(finishAction);
-
-		helpAction = new HelpAction(this);
-		toolBarManager.add(new Separator());
-		toolBarManager.add(helpAction);
 	}
 
 	/**
 	 * Sets up the menu.
 	 */
 	private void installMenu() {
-		MenuManager subMenu = new MenuManager("AVL-Baeume");
+		MenuManager subMenu = new MenuManager(Messages.getString(
+			"avl", "Module_name")); //$NON-NLS-1$ //$NON-NLS-2$
 		subMenu.add(welcomeAction);
 		subMenu.add(clearTreeAction);
 		subMenu.add(new Separator());
@@ -337,9 +298,7 @@ implements GUIConstants {
 		ToggleDisplayModeAction.registerTarget(paintArea);
 		ToggleDisplayModeAction.registerTarget(logPane);
 		ToggleDisplayModeAction.registerTarget(docuPane);
-		menuManager.insertBefore("help", subMenu);
-
-		menuManager.findMenuUsingPath("help").add(helpAction);
+		menuManager.insertBefore("help", subMenu); //$NON-NLS-1$
 	}
 
 	/**
@@ -348,7 +307,9 @@ implements GUIConstants {
 	 * components and information/documentation panels.
 	 */
 	public void installStandardLayout() {
-		setChangesToSave(false);
+		connector.setSaveStatus(tree.getHeight() != 0 ?
+			IModuleConnector.NO_CHANGES :
+			IModuleConnector.NOTHING_TO_SAVE);
 		contentPane.removeAll();
 		contentPane.setBackground(STANDARD_BACKGROUND);
 		contentPane.setLayout(new BorderLayout());
@@ -378,6 +339,7 @@ implements GUIConstants {
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(welcomeScreen, BorderLayout.CENTER);
 
+		connector.setSaveStatus(IModuleConnector.NOTHING_TO_SAVE);
 		setToolbarButtonsDisabled();
 		contentPane.updateUI();
 		contentPane.validate();
@@ -415,64 +377,9 @@ implements GUIConstants {
 	public void showOpenDialog() {
 		appWin.getShell().getDisplay().syncExec(new Runnable() {
 			public void run() {
-				FileDialog fileChooser = new FileDialog(appWin.getShell(),
-					SWT.OPEN);
-				fileChooser.setText(Messages.getString("ui.Open_file"));
-				fileChooser.setFilterPath(System.getProperty("user.dir"));
-				fileChooser.setFilterExtensions(
-					new String[] {"*.jalgo", "*.*"});
-				fileChooser.setFilterNames(new String[] {
-					Messages.getString("OpenAction.jAlgo_files_(*.jalgo)_7"),
-					Messages.getString("OpenAction.All_files_8")});
-				String filename = fileChooser.open();
-				if (filename != null)
-					((JalgoWindow)appWin).openFile(filename, true);
+				JAlgoGUIConnector.getInstance().showOpenDialog(true, true);
 			}
 		});
-	}
-
-	/**
-	 * Opens a question dialog to aks the user for saving the current instance
-	 * of <code>SearchTree</code>. If the user wants to save, a filechooser
-	 * dialog is shown for saving the file.
-	 * 
-	 * @return <code>true</code>, if the user don't want to save or saves
-	 *         correctly, <code>false</code>, if the user abort one of the
-	 *         dialogs.
-	 */
-	public boolean showSaveDialog() {
-		// ensure that this method is called only from an swt thread!!
-		switch (new MessageDialog(appWin.getShell(), "Beenden", null,
-			"Möchten Sie Ihre Arbeit speichern?", MessageDialog.QUESTION,
-			new String[] {"Ja", "Nein", "Abbrechen"}, 0).open()) {
-			case 0:
-				appWin.getShell().getDisplay().syncExec(new Runnable() {
-					public void run() {
-						FileDialog fileChooser = new FileDialog(
-							appWin.getShell(), SWT.SAVE);
-						fileChooser.setText(Messages.getString("ui.Open_file"));
-						fileChooser.setFilterPath(
-							System.getProperty("user.dir"));
-						fileChooser.setFilterExtensions(new String[] {
-							"*.jalgo", "*.*"});
-						fileChooser.setFilterNames(new String[] {
-							Messages.getString(
-								"OpenAction.jAlgo_files_(*.jalgo)_7"),
-							Messages.getString("OpenAction.All_files_8")});
-						String filename = fileChooser.open();
-						if (filename != null)
-							saved = ((JalgoWindow)appWin).saveFileAs(filename);
-						else saved = false;
-					}
-				});
-				return saved;
-			case 1:
-				return true;
-			case 2:
-				return false;
-			default:
-				return false;
-		}
 	}
 
 	/**
@@ -483,7 +390,7 @@ implements GUIConstants {
 	public void showErrorMessage(final String msg) {
 		appWin.getShell().getDisplay().syncExec(new Runnable() {
 			public void run() {
-				MessageDialog.openError(appWin.getShell(), "Fehler", msg);
+				JAlgoGUIConnector.getInstance().showErrorMessage(msg);
 			}
 		});
 		// here no Swing dialog is used because of thread problems, when calling
@@ -511,7 +418,7 @@ implements GUIConstants {
 	 * hide the balances.
 	 */
 	public void showAVLTestDialog() {
-		setSaveButtonsEnabled(false);
+		connector.setSavingBlocked(true);
 		clearTreeAction.setEnabled(false);
 		welcomeAction.setEnabled(false);
 		// only for visualisation of balances
@@ -520,12 +427,18 @@ implements GUIConstants {
 		isDialogOpen = true;
 		if (controller.getAVLTestResult()) {
 			if (JOptionPane.showConfirmDialog(controlPane,
-				"Der aktuelle Baum hat die AVL - Eigenschaft!\r\n"
-					+ "Möchten Sie jetzt in den AVL - Modus wechseln?",
-				"Modus wechseln?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				controller.putLogDescription("AVL-Modus angeschalten");
+				Messages.getString("avl", "GUIController.Is_AVL_tree") + //$NON-NLS-1$ //$NON-NLS-2$
+				lineSep +
+				Messages.getString("avl", "GUIController.Wish_to_change_to_AVL_mode"), //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.getString("main", "DialogConstants.Question"), //$NON-NLS-1$ //$NON-NLS-2$
+				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) { //$NON-NLS-1$
+				controller.putLogDescription(
+					Messages.getString("avl", "GUIController.Changed_to_AVL_mode")); //$NON-NLS-1$ //$NON-NLS-2$
 				setAVLMode(true, true);
-				setChangesToSave(tree.getHeight() > 0);
+				connector.setSaveStatus(tree.getHeight() > 0 ?
+					IModuleConnector.CHANGES_TO_SAVE :
+					IModuleConnector.NOTHING_TO_SAVE);
+				connector.setSavingBlocked(false);
 			}
 			else {
 				// balance visualisation off
@@ -538,7 +451,7 @@ implements GUIConstants {
 					showErrorMessage(ex.getMessage());
 				}
 				update();
-				setChangesToSave(areChangesToSave());
+				connector.setSavingBlocked(false);
 			}
 			isDialogOpen = false;
 			if (tree.getHeight() > 0) clearTreeAction.setEnabled(true);
@@ -555,13 +468,14 @@ implements GUIConstants {
 			controlPane.setAlgorithmButtonsEnabled(false);
 
 			final Dialog d = new JOptionPane(
-				"Der aktuelle Baum ist kein AVL - Baum!",
+				Messages.getString("avl", "GUIController.Is_no_AVL_tree"), //$NON-NLS-1$ //$NON-NLS-2$
 				JOptionPane.INFORMATION_MESSAGE,
-				JOptionPane.DEFAULT_OPTION).createDialog(
-					controlPane, "Nachricht");
+				JOptionPane.DEFAULT_OPTION).createDialog(controlPane,
+					Messages.getString("main", "DialogConstants.Info")); //$NON-NLS-1$ //$NON-NLS-2$
 			d.setAlwaysOnTop(true);
 			d.setModal(false);
 			d.addComponentListener(new ComponentAdapter() {
+				@SuppressWarnings("synthetic-access")
 				public void componentHidden(ComponentEvent e) {
 					// balance visualisation off
 					controller.setAVLMode(false);
@@ -583,7 +497,7 @@ implements GUIConstants {
 					isDialogOpen = false;
 					if (tree.getHeight() > 0) clearTreeAction.setEnabled(true);
 					welcomeAction.setEnabled(true);
-					setChangesToSave(areChangesToSave());
+					connector.setSavingBlocked(false);
 				}
 			});
 			d.setVisible(true);
@@ -612,7 +526,7 @@ implements GUIConstants {
 		// directly
 		appWin.getShell().getDisplay().syncExec(new Runnable() {
 			public void run() {
-				statusLineManager.setMessage(msg);
+				JAlgoGUIConnector.getInstance().setStatusMessage(msg);
 			}
 		});
 	}
@@ -623,7 +537,6 @@ implements GUIConstants {
 	public void setToolbarButtonsDisabled() {
 		setPerformButtonsEnabled(false);
 		setUndoButtonsEnabled(false);
-		setSaveButtonsEnabled(false);
 		welcomeAction.setEnabled(false);
 		clearTreeAction.setEnabled(false);
 	}
@@ -654,20 +567,6 @@ implements GUIConstants {
 	}
 
 	/**
-	 * Sets the enable status of the save buttons on toolbar.
-	 * 
-	 * @param b <code>true</code>, if save buttons should be enabled,
-	 * 			<code>false</code> otherwise
-	 */
-	private void setSaveButtonsEnabled(boolean b) {
-		saveAction.setEnabled(b);
-		saveAsAction.setEnabled(b);
-		// TODO: wenn mehrere module offen sind, und eines geschlossen wird, so
-		// werden die save-buttons deaktiviert, obwohl sie im aktuellen modul
-		// aktiviert sein sollten
-	}
-
-	/**
 	 * Returns the documentation panel. This method is currently necessary for
 	 * delegating this reference to the action handler.
 	 * 
@@ -682,7 +581,7 @@ implements GUIConstants {
 	 * method is called, when an algorithm is selected.
 	 */
 	public void algorithmStarted() {
-		setChangesToSave(true);
+		connector.setSaveStatus(IModuleConnector.CHANGES_TO_SAVE);
 		clearTreeAction.setEnabled(false);
 		setUndoButtonsEnabled(false);
 		if (controller.algorithmHasNextStep()) {
@@ -690,7 +589,7 @@ implements GUIConstants {
 			controlPane.setAVLToggleEnabled(false);
 			controlPane.setAlgorithmButtonsEnabled(false);
 			controlPane.setKeyInputEnabled(false);
-			setSaveButtonsEnabled(false);
+			connector.setSavingBlocked(true);
 			controlPane.setMessage(null, NO_MESSAGE);
 		}
 		else controlPane.setMessage(controller.getResult(),
@@ -714,7 +613,7 @@ implements GUIConstants {
 		controlPane.setMessage(controller.getResult(), INFORMATION_MESSAGE);
 		controlPane.setAnimSpeedEnabled(false);
 		// enable save buttons
-		setChangesToSave(areChangesToSave());
+		connector.setSavingBlocked(false);
 		// for explanation of the following step, see DocuPane.update()
 		setStepDirection(false);
 	}
@@ -728,7 +627,7 @@ implements GUIConstants {
 			controlPane.setAnimSpeedEnabled(false);
 			// busy waiting for animator has being stopped to avoid race
 			// conditions
-			while (getAnimator().isRunning());
+			while (getAnimator().isRunning()) {/*busy waiting*/}
 		}
 		if (controller.isAVLMode() || tree.getHeight() == 0)
 			controlPane.setAVLToggleEnabled(true);
@@ -739,7 +638,7 @@ implements GUIConstants {
 		controlPane.validateKey();
 		docuPane.reset();
 		// enable save buttons
-		setChangesToSave(areChangesToSave());
+		connector.setSavingBlocked(false);
 		update();
 	}
 
@@ -749,14 +648,14 @@ implements GUIConstants {
 	 * or perform blockstep is pressed.
 	 */
 	public void algorithmRestarted() {
-		// TODO: currently this method is ivoked at regular algorithm start too
+		// TODO: currently this method is invoked at regular algorithm start too
 		// so it isn't bad, but not efficient
 		setUndoButtonsEnabled(true);
 		if (controller.algorithmHasNextStep()) {
 			setPerformButtonsEnabled(true);
 			controlPane.setAlgorithmButtonsEnabled(false);
 			controlPane.setKeyInputEnabled(false);
-			setSaveButtonsEnabled(false);
+			connector.setSavingBlocked(true);
 			// for explanation of the following step, see DocuPane.update()
 			setStepDirection(true);
 		}
@@ -775,7 +674,7 @@ implements GUIConstants {
 	 */
 	public void algorithmRestartedFromUndo() {
 		setPerformButtonsEnabled(true);
-		setSaveButtonsEnabled(false);
+		connector.setSavingBlocked(true);
 		clearTreeAction.setEnabled(false);
 		controlPane.setAVLToggleEnabled(false);
 		controlPane.setAlgorithmButtonsEnabled(false);
@@ -792,8 +691,8 @@ implements GUIConstants {
 	 * This method is called by <code>RandomGenerationDialogActionHandler</code>.
 	 */
 	public void randomAnimatorStarted() {
-		setChangesToSave(true);
-		setSaveButtonsEnabled(false);
+		connector.setSaveStatus(IModuleConnector.CHANGES_TO_SAVE);
+		connector.setSavingBlocked(true);
 		controlPane.setAnimSpeedEnabled(true);
 		controlPane.setAlgorithmButtonsEnabled(false);
 		controlPane.setKeyInputEnabled(false);
@@ -857,35 +756,6 @@ implements GUIConstants {
 		buttons[4] = performBlockStepAction.createToolbarButton();
 		buttons[5] = finishAction.createToolbarButton();
 		return buttons;
-	}
-
-	/**
-	 * Retrieves the to-save state of this AVL module instance.
-	 * 
-	 * @return <code>true</code>, if there are changes to be saved,
-	 *         <code>false</code> otherwise
-	 */
-	public boolean areChangesToSave() {
-		return changesToSave;
-	}
-
-	/**
-	 * Sets the to-save status in this instance of the AVL module. If the status
-	 * is set to true, the save buttons are enabled. Otherwise the save buttons
-	 * are enabled in the following way:<br>
-	 * The save button is disabled. The save-as button is enabled, if there is a
-	 * tree to be saved, which means, that the tree has more than 0 nodes.
-	 * 
-	 * @param b <code>true</code>, if there are changes to be saved,
-	 *            <code>false</code> otherwise
-	 */
-	public void setChangesToSave(boolean b) {
-		changesToSave = b;
-		saveAction.setEnabled(b);
-		if (changesToSave) saveAsAction.setEnabled(true);
-		else saveAsAction.setEnabled(tree.getHeight() != 0);
-		// TODO: if changesToSave is set to true, notify appWin to add '*' to
-		// title
 	}
 
 	/**
