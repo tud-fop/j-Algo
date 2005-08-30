@@ -25,6 +25,7 @@ package org.jalgo.main.gui.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.main.gui.JalgoWindow;
+import org.jalgo.main.util.Messages;
 
 /**
  * @author Michael Pradel
@@ -36,15 +37,14 @@ public class SaveAction extends Action {
 	public SaveAction(JalgoWindow win) {
 		//this.mc = mc;
 		this.win = win;
-		setText(Messages.getString("ui.Save_file")); //$NON-NLS-1$
-		setId(Messages.getString("ui.Save_file")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ui.Save_file")); //$NON-NLS-1$
+		setText(Messages.getString("main", "ui.Save_file")); //$NON-NLS-1$ //$NON-NLS-2$
+		setId(Messages.getString("main", "ui.Save_file")); //$NON-NLS-1$ //$NON-NLS-2$
+		setToolTipText(Messages.getString("main", "ui.Save_file")); //$NON-NLS-1$ //$NON-NLS-2$
 		setImageDescriptor(ImageDescriptor.createFromURL(
-			getClass().getResource("/main_pix/save.gif")));
+			Messages.getResourceURL("main", "ui.Save_file"))); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public void run() {
 		win.saveFile();
 	}
-
 }

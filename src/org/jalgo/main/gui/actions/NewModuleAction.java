@@ -26,6 +26,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.gui.ModuleChooseDialog;
+import org.jalgo.main.util.Messages;
 
 /**
  * @author Michael Pradel
@@ -36,7 +37,7 @@ public class NewModuleAction extends Action {
 	
 	public NewModuleAction(JalgoWindow win) {
 		this.win = win;
-		setToolTipText(Messages.getString("ui.New"));
+		setToolTipText(Messages.getString("main", "ui.New"));
 		setImageDescriptor(ImageDescriptor.createFromURL(getClass()
 				.getResource("/main_pix/new.gif")));
 	}
@@ -45,5 +46,4 @@ public class NewModuleAction extends Action {
 		ModuleChooseDialog dialog = new ModuleChooseDialog(win.getShell(), win.getParent());
 		dialog.open();
 	}
-
 }
