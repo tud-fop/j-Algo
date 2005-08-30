@@ -366,10 +366,9 @@ public class SearchTree {
 	 */
 	public boolean equals(Object other) {
 		if (other == null) return false;
-		if (other instanceof SearchTree)
-			return Arrays.asList(exportUncompressedLevelOrder()).equals(
-				Arrays.asList(((SearchTree)other)
-				.exportUncompressedLevelOrder()));
+		if (other instanceof SearchTree) return Arrays.asList(
+			exportUncompressedLevelOrder()).equals(
+			Arrays.asList(((SearchTree)other).exportUncompressedLevelOrder()));
 		return false;
 	}
 }
