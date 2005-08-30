@@ -32,18 +32,18 @@ public class Traverse
 extends MacroCommand {
 
 	public void perform() {
-
+	// this method has no effect
 	}
 
 	public void undo() {
-
+	// this method has no effect
 	}
 
 	public void performBlockStep() {
-
+	// this method has no effect
 	}
 
 	public void undoBlockStep() {
-
+	// this method has no effect
 	}
 }
