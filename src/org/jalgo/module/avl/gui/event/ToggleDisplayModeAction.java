@@ -1,20 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /* Created on 12.06.2005 */
@@ -26,6 +30,7 @@ import java.util.List;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.gui.DisplayModeChangeable;
 import org.jalgo.module.avl.gui.GUIConstants;
 import org.jalgo.module.avl.gui.Settings;
@@ -36,26 +41,27 @@ import org.jalgo.module.avl.gui.Settings;
  * Here the Singleton design pattern is implemented, in order that this setting
  * takes global effect for all open instances of the AVL module.<br>
  * Components, which want to be notified, when display mode changes, have to
- * register as observers. So <code>ToggleDisplayAction</code> acts as Observable.
+ * register as observers. So <code>ToggleDisplayAction</code> acts as
+ * Observable.
  * 
  * @author Alexander Claus
  */
 public class ToggleDisplayModeAction
 extends Action {
 
-	//the singleton instance
+	// the singleton instance
 	private static ToggleDisplayModeAction instance;
 
-	//the list of observers
+	// the list of observers
 	private static List<DisplayModeChangeable> observers;
 
 	/**
 	 * Constructs the singleton instance of <code>ToggleDisplayModeAction</code>.
 	 */
 	private ToggleDisplayModeAction() {
-		super("Beamermodus", IAction.AS_CHECK_BOX);
+		super(Messages.getString("avl", "Beamer_mode"), IAction.AS_CHECK_BOX); //$NON-NLS-1$ //$NON-NLS-2$
 		setImageDescriptor(ImageDescriptor.createFromURL(
-			getClass().getResource("/avl_pix/beamer.gif")));
+			Messages.getResourceURL("avl", "Beamer_mode"))); //$NON-NLS-1$ //$NON-NLS-2$
 		setChecked(Settings.getDisplayMode() == GUIConstants.BEAMER_MODE);
 		observers = new LinkedList<DisplayModeChangeable>();
 	}
@@ -75,7 +81,8 @@ extends Action {
 	 * Adds the given components to the list of targets, which will be notified,
 	 * when action is performed. These components acts as observers.
 	 * 
-	 * @param observer a component implementing <code>DisplayModeChangeable</code>
+	 * @param observer a component implementing
+	 *            <code>DisplayModeChangeable</code>
 	 */
 	public static void registerTarget(DisplayModeChangeable observer) {
 		observers.add(observer);
@@ -86,8 +93,8 @@ extends Action {
 	 * notified.
 	 */
 	public void run() {
-		Settings.setDisplayMode(
-			isChecked() ? GUIConstants.BEAMER_MODE : GUIConstants.PC_MODE);
+		Settings.setDisplayMode(isChecked() ? GUIConstants.BEAMER_MODE
+			: GUIConstants.PC_MODE);
 		for (DisplayModeChangeable observer : observers) {
 			observer.displayModeChanged();
 		}

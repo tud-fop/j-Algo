@@ -1,4 +1,8 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -25,7 +29,6 @@ package org.jalgo.module.avl.gui.graphics;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -39,6 +42,7 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.datastructure.AVLNode;
 import org.jalgo.module.avl.datastructure.Node;
@@ -103,7 +107,8 @@ implements DisplayModeChangeable, GraphicsConstants {
 	 * @param tree the <code>SearchTree</code> instance to be displayed
 	 * @param controller the <code>Controller</code> instance of the AVL module
 	 */
-	public PaintArea(GUIController gui, SearchTree tree, Controller controller) {
+	public PaintArea(final GUIController gui, SearchTree tree,
+		Controller controller) {
 		this.gui = gui;
 		this.tree = tree;
 		this.controller = controller;
@@ -114,22 +119,23 @@ implements DisplayModeChangeable, GraphicsConstants {
 		FM_BALANCE_FONT = getFontMetrics(BALANCE_FONT[Settings.getDisplayMode()]);
 		FM_BALANCE_FONT_RED = getFontMetrics(
 			BALANCE_FONT_RED[Settings.getDisplayMode()]);
-		FM_ROTATION_ARROW_FONT = getFontMetrics(ROTATION_ARROW_FONT[Settings.getDisplayMode()]);
+		FM_ROTATION_ARROW_FONT = getFontMetrics(
+			ROTATION_ARROW_FONT[Settings.getDisplayMode()]);
 		KEY_HEIGHT = FM_KEY_FONT.getAscent();
 		BALANCE_RED_HEIGHT = FM_BALANCE_FONT_RED.getAscent();
 
-		//initiale grösse bewusst sehr gross gewählt, um nicht zu oft offscreen
-		//image zu vergrössern -> performance
+		//initiale grï¿½sse bewusst sehr gross gewï¿½hlt, um nicht zu oft offscreen
+		//image zu vergrï¿½ssern -> performance
 		updateOffscreenSize(2000, 2000);
 
 		//the status line updater
 		addMouseListener(new MouseAdapter() {
 			public void mouseExited(MouseEvent e) {
-				PaintArea.this.gui.setStatusMessage(null);
+				gui.setStatusMessage(null);
 			}
 			public void mouseEntered(MouseEvent e) {
-				PaintArea.this.gui.setStatusMessage(
-					"Stellt den Baum graphisch dar");
+				gui.setStatusMessage(Messages.getString("avl", //$NON-NLS-1$
+					"PaintArea.Status_message")); //$NON-NLS-1$
 			}
 		});
 	}

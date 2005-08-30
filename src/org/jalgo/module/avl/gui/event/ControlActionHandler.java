@@ -1,20 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /* Created on 17.05.2005 */
@@ -36,6 +40,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.gui.GUIConstants;
 import org.jalgo.module.avl.gui.GUIController;
@@ -44,15 +49,15 @@ import org.jalgo.module.avl.gui.components.ControlPane;
 
 /**
  * The class <code>ControlActionHandler</code> represents an event handler for
- * the <code>ControlPane</code> class. It handles button clicks, input events on
- * textfields, mouse events for displaying status messages, focus events for
+ * the <code>ControlPane</code> class. It handles button clicks, input events
+ * on textfields, mouse events for displaying status messages, focus events for
  * marking the content of a textfield and change events for option controls.
  * 
  * @author Alexander Claus
  */
 public class ControlActionHandler
-implements ActionListener, DocumentListener, MouseListener,
-			GUIConstants, ChangeListener, FocusListener {
+implements ActionListener, DocumentListener, MouseListener, GUIConstants,
+	ChangeListener, FocusListener {
 
 	private GUIController gui;
 	private ControlPane controlPane;
@@ -63,46 +68,49 @@ implements ActionListener, DocumentListener, MouseListener,
 	 * references.
 	 * 
 	 * @param gui the <code>GUIController</code> instance
-	 * @param controlPane the <code>ControlPane</code> instance, for which events
-	 * 					  are handled here
+	 * @param controlPane the <code>ControlPane</code> instance, for which
+	 *            events are handled here
 	 * @param controller the <code>Controller</code> instance
 	 */
 	public ControlActionHandler(GUIController gui, ControlPane controlPane,
-			Controller controller) {
+		Controller controller) {
 		this.gui = gui;
 		this.controlPane = controlPane;
 		this.controller = controller;
 	}
-	
+
 	/**
 	 * Handles button clicks, starts algorithms.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("randomkey")) controlPane.setRandomKey();
-		else if (e.getActionCommand().equals("search")) {
+		if (e.getActionCommand().equals("randomkey")) //$NON-NLS-1$
+			controlPane.setRandomKey();
+		else if (e.getActionCommand().equals("search")) { //$NON-NLS-1$
 			controller.startSearch(controlPane.getCurrentKey());
 			gui.algorithmStarted();
 		}
-		else if (e.getActionCommand().equals("insert")) {
+		else if (e.getActionCommand().equals("insert")) { //$NON-NLS-1$
 			controller.startInsert(controlPane.getCurrentKey());
 			gui.algorithmStarted();
 		}
-		else if (e.getActionCommand().equals("delete")) {
+		else if (e.getActionCommand().equals("delete")) { //$NON-NLS-1$
 			controller.startRemove(controlPane.getCurrentKey());
 			gui.algorithmStarted();
 		}
-		else if (e.getActionCommand().equals("avltest")) {
+		else if (e.getActionCommand().equals("avltest")) { //$NON-NLS-1$
 			gui.algorithmUndone();
 			controlPane.validateKey();
 			controller.startAVLTest();
 			gui.showAVLTestDialog();
 		}
-		else if (e.getActionCommand().equals("toggleavl")) {
+		else if (e.getActionCommand().equals("toggleavl")) { //$NON-NLS-1$
 			boolean avlMode = ((JCheckBox)e.getSource()).isSelected();
 			gui.algorithmAborted();
 			controlPane.validateKey();
 			controller.putLogDescription(
-				"AVL-Modus " + (avlMode ? "an" : "ab") + "geschalten");
+				Messages.getString("avl", "AVL_mode") + //$NON-NLS-1$ //$NON-NLS-2$
+				(avlMode ? Messages.getString("avl", "Switched_on") : //$NON-NLS-1$ //$NON-NLS-2$
+					Messages.getString("avl", "Switched_off"))); //$NON-NLS-1$ //$NON-NLS-2$
 			gui.setAVLMode(avlMode, true);
 		}
 	}
@@ -124,25 +132,34 @@ implements ActionListener, DocumentListener, MouseListener,
 	/**
 	 * This method has no effect.
 	 */
-	public void changedUpdate(DocumentEvent e) {}
+	public void changedUpdate(DocumentEvent e) {
+	// this method has no effect
+	}
 
 	/**
 	 * This method has no effect.
 	 */
-	public void mouseClicked(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {
+	// this method has no effect
+	}
 
 	/**
 	 * This method has no effect.
 	 */
-	public void mousePressed(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {
+	// this method has no effect
+	}
 
 	/**
 	 * This method has no effect.
 	 */
-	public void mouseReleased(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {
+	// this method has no effect
+	}
 
 	/**
-	 * Causes to display the tooltip text of the event source in the status line.
+	 * Causes to display the tooltip text of the event source in the status
+	 * line.
 	 */
 	public void mouseEntered(MouseEvent e) {
 		gui.setStatusMessage(((JComponent)e.getSource()).getToolTipText());
@@ -159,7 +176,7 @@ implements ActionListener, DocumentListener, MouseListener,
 	 * Invoked if animation speed control has been changed.
 	 */
 	public void stateChanged(ChangeEvent e) {
-		//TODO: check, what happens if more than one AVL modules are open
+		// TODO: check, what happens if more than one AVL modules are open
 		Settings.setStepDelay(((JSlider)e.getSource()).getValue());
 	}
 
@@ -174,5 +191,7 @@ implements ActionListener, DocumentListener, MouseListener,
 	/**
 	 * This method has no effect.
 	 */
-	public void focusLost(FocusEvent e) {}
+	public void focusLost(FocusEvent e) {
+	// this method has no effect
+	}
 }
