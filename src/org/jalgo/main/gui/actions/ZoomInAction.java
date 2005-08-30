@@ -26,6 +26,7 @@ package org.jalgo.main.gui.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.main.gui.widgets.GraphViewForm;
+import org.jalgo.main.util.Messages;
 
 /**
  * This Action can be used to zoom into an Draw2D Figure - Typically this will be a Panel.
@@ -38,12 +39,12 @@ public class ZoomInAction extends Action {
 	
 	/**
 	 * Constructs a new ZoomInAction
-	 * @param panel The Panel which contents should be zoomed.
+	 * @param form
 	 */
 	public ZoomInAction(GraphViewForm form) {
 		this.form = form;
-		setText(Messages.getString("ui.Zoom_in")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ui.Zoom_in")); //$NON-NLS-1$
+		setText(Messages.getString("main", "ui.Zoom_in")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("main", "ui.Zoom_in")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/main_pix/zoom-in.gif")));
 	}
@@ -53,5 +54,4 @@ public class ZoomInAction extends Action {
 		form.zoomIn();
 				
 	}
-
 }
