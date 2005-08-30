@@ -104,7 +104,6 @@ public abstract class GraphElement implements Cloneable
 	}
 	
 	/** Checks whether the given element is "active".
-	 * @return
 	 */
 	public boolean getActive()
 	{
@@ -112,7 +111,6 @@ public abstract class GraphElement implements Cloneable
 	}
 	
 	/** Checks whether the element belongs to the border.
-	 * @return
 	 */
 	public boolean getBorder()
 	{

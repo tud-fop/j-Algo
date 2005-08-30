@@ -53,7 +53,7 @@ private Rectangle oldBounds;
  * Note: Descendants must call setPrintSource(IFigure) to set the IFigure that is to be 
  * printed.
  * @see org.eclipse.draw2d.PrintOperation#PrintOperation(Printer)
- * @see org.eclipse.draw2d.PrintFigureOpration#PrintFigureOpertion(Printer)
+ * @see org.eclipse.draw2d.PrintFigureOperation#PrintFigureOperation(Printer)
  */
 protected PrintScaledFigureOperation(Printer p) {
 	super(p);
@@ -64,7 +64,7 @@ protected PrintScaledFigureOperation(Printer p) {
  * 
  * @param p Printer to print on
  * @param srcFigure Figure to print
- * @see org.eclipse.draw2d.PrintFigureOpration#PrintFigureOpertion(Printer, IFigure)
+ * @see org.eclipse.draw2d.PrintFigureOperation#PrintFigureOperation(Printer, IFigure)
  */
 public PrintScaledFigureOperation(Printer p, IFigure srcFigure) {
 	super(p);

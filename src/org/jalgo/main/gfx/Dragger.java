@@ -44,11 +44,11 @@ public class Dragger extends MouseMotionListener.Stub implements MouseListener {
 	private Figure dragFigure;
 	
 	public void mouseClicked(MouseEvent e) {
-	
+		// this method has no effect
 	}
 	
 	public void mouseDoubleClicked(MouseEvent e) {
-	
+		// this method has no effect
 	}
 	
 	public void mousePressed(MouseEvent e) {
@@ -70,5 +70,4 @@ public class Dragger extends MouseMotionListener.Stub implements MouseListener {
 			last.setLocation(next);
 		}
 	}
-	
 }

@@ -71,7 +71,6 @@ public class Exporter {
 	
 	/**
 	 * sets the Canvas and calls export()
-	 * @param algoCanvas
 	 */
 	public void export(Panel panel) {
 			this.panel = panel;
@@ -79,7 +78,6 @@ public class Exporter {
 
 	/**
 	 * sets the Canvas, and calls setConverter and export
-	 * @param algoCanvas
 	 * @param converter
 	 */
 	public void export(Panel panel, IConverter converter) {

@@ -19,7 +19,7 @@
 
 /*
  * Created on 21.05.2005
- * $Id: State.java,v 1.3 2005/07/13 20:41:09 stephancr Exp $
+ * $Id: State.java,v 1.4 2005/08/30 09:45:08 styjdt Exp $
  */
 package org.jalgo.module.dijkstraModule.model;
 
@@ -117,7 +117,7 @@ public class State {
     }
     
     /** Creates a new state object without discription. 
-     * @see State(Graph,String,boolean,ArrayList)
+     * @see #State(Graph,String,boolean,ArrayList)
      */
     public State(Graph graph, boolean macro, ArrayList borderStates) {
         this(graph,"",macro,borderStates);

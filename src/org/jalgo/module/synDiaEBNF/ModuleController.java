@@ -168,7 +168,7 @@ public class ModuleController implements IModeConstants {
 
 	/**
 	 * Set what the module should do, so the GUI is updated completely and algorithms are initiated if necessary.
-	 * @param mode 
+	 * @param newMode 
 	 *   NO_MODE_SET - no mode set 
 	 *   NORMAL_VIEW_EMPTY - normal view (nothing is displayed, user can choose what to do next)
 	 *   NORMAL_VIEW_EBNF - normal view (ebnf is displayed, user can start trans() )
@@ -296,7 +296,7 @@ public class ModuleController implements IModeConstants {
 	/**
 	 * Returns the current mode of the module.
 	 * @return the current mode
-	 * @see setMode(int)
+	 * @see #setMode(int)
 	 */
 	public int getMode() {
 		return mode;

@@ -100,12 +100,13 @@ public class ClickListener
 	 * @see org.eclipse.draw2d.MouseListener#mouseReleased(org.eclipse.draw2d.MouseEvent)
 	 */
 	public void mouseReleased(MouseEvent arg0) {
+	// this method has no effect
 	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.draw2d.MouseListener#mouseDoubleClicked(org.eclipse.draw2d.MouseEvent)
 	 */
 	public void mouseDoubleClicked(MouseEvent arg0) {
+	// this method has no effect
 	}
-
 }

@@ -19,7 +19,7 @@
 
 /*
  * Created on 21.05.2005
- * $Id: DijkstraAlgorithm.java,v 1.2 2005/06/27 20:59:51 mischi Exp $
+ * $Id: DijkstraAlgorithm.java,v 1.3 2005/08/30 09:45:08 styjdt Exp $
  */
 package org.jalgo.module.dijkstraModule.model;
 
@@ -219,7 +219,7 @@ public class DijkstraAlgorithm {
     			
     		if (other.getChosen() == false) {
     		    if (other.getDistance() == INFINITY) {
-    		        
+    		        // do nothing
     		    } else if ((node.getDistance() + edge.getWeight())
     		            	< other.getDistance()) {
     		        // Conflict case ?!    		        
@@ -262,6 +262,7 @@ public class DijkstraAlgorithm {
     		    other.setPredecessor(node);
     		    other.setDistance(node.getDistance() + edge.getWeight());
     		    if (border.contains(other)) {
+    		    	// do nothing
     			} else border.add(other);
 
     		    // Create state
@@ -464,8 +465,7 @@ public class DijkstraAlgorithm {
         
         if (cur + 1 == stateList.size())
             return INVALID;
-        else
-            return getCurrentStateIndex() + 1;
+		return getCurrentStateIndex() + 1;
     }
     
     /** Returns the index of the previous state.

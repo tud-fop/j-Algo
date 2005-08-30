@@ -88,10 +88,7 @@ public class NodeListParser
 		
 			return retGraph;
 		}
-		else
-		{
-			throw new ParsingException("Knotenliste: Syntaxfehler im Eingabestring: \"" + nodeList + "\"");
-		}
+		throw new ParsingException("Knotenliste: Syntaxfehler im Eingabestring: \"" + nodeList + "\"");
 	}
 	
 	private void enterNodeList() throws ParsingException

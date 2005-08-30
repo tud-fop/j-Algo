@@ -69,7 +69,6 @@ public class Edge extends GraphElement implements Serializable, Comparable {
 	 * 
 	 * @param startNode the start Node
 	 * @param endNode the end Node
-	 * @param weight the weight
 	 */
 	public Edge(Node startNode, Node endNode) {
 		/**

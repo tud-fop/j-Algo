@@ -92,7 +92,7 @@ public class ModuleChooser extends Composite implements SelectionListener {
 	}
 	
 	public void widgetDefaultSelected(SelectionEvent e) {
-		
+	// this method has no effect		
 	}
 	
 	public void widgetSelected(SelectionEvent e) {

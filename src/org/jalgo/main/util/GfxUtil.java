@@ -42,7 +42,7 @@ public class GfxUtil {
 
 	/**
 	 * Returns a collection of all incoming (source) connections of a node/figure.
-	 * @param figure The <code>Figure</code> that contains the node.
+	 * @param panel The <code>Figure</code> that contains the node.
 	 * @param node The <code>Figure</code> in which connections you are interested in.
 	 * @return A collection of all incoming (source) connections of node.
 	 */
@@ -66,7 +66,7 @@ public class GfxUtil {
 
 	/**
 	 * Returns a collection of all outgoing (target) connections of a node/figure.
-	 * @param figure The <code>Figure</code> that contains the node.
+	 * @param panel The <code>Figure</code> that contains the node.
 	 * @param node The <code>Figure</code> in which connections you are interested in.
 	 * @return A collection of all outgoing (target) connections of node.
 	 */
@@ -90,8 +90,8 @@ public class GfxUtil {
 
 	/**
 	 * Returns a collection of all outgoing (target) connections of a node/figure.
-	 * @param figure The <code>Figure</code> that contains the node.
-	 * @param node The <code>Figure</code> in which connections you are interested in.
+	 * @param panel The <code>Figure</code> that contains the node.
+	 * @param sourceNode The <code>Figure</code> in which connections you are interested in.
 	 * @return A collection of all outgoing (target) connections of node.
 	 */
 	public static PolylineConnection getConnection(Figure panel, Figure sourceNode, Figure targetNode) {

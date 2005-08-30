@@ -120,7 +120,7 @@ public class TextCanvas extends Composite {
 	/**
 	 * Marks the textsegment with the given index.
 	 * 
-	 * @param mark
+	 * @param index
 	 */
 	public void mark(int index) {
 		if (index >= textSegments.length) {
@@ -172,7 +172,7 @@ public class TextCanvas extends Composite {
 	/**
 	 * Demarks the textsegment whith the given index.
 	 * 
-	 * @param mark
+	 * @param index
 	 */
 	public void demark(int index) {
 		if (index >= textSegments.length) {
@@ -214,7 +214,6 @@ public class TextCanvas extends Composite {
 
 	/**
 	 * gets the position, which is used by markNext() and markFirst.
-	 * @return
 	 */
 	public int getPosition() {
 		return position;
@@ -276,7 +275,7 @@ public class TextCanvas extends Composite {
 	 * entered in the right order and can be marked using the methods provided
 	 * in this class.
 	 * 
-	 * @param text
+	 * @param textSegments
 	 */
 	public void setTextSegments(String[] textSegments) {
 		this.textSegments = textSegments;
@@ -314,7 +313,7 @@ public class TextCanvas extends Composite {
 	 * The style is set in MarkStyle.
 	 * <li>2: Shows only the activ text segment.
 	 * 
-	 * @param the mode changes the behavior
+	 * @param mode the mode changes the behavior
 	 */
 	public void setMode(int mode) {
 		this.mode = mode;

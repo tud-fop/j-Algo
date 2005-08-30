@@ -144,7 +144,7 @@ public class Position implements Serializable {
 	/**
 	 * Returns the point on screen, computed from internal world coordinates and relative to screenSize.
 	 * Performs operations symmetric to those of setScreenCoordinates().
-	 * @param screenSize screen size as a rectangle (see class description above)
+	 * @param screenBounds screen size as a rectangle (see class description above)
 	 * @return point on screen (pixels)
 	 */
 	public Point getScreenPoint(Rectangle screenBounds) {

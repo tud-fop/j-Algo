@@ -409,8 +409,6 @@ public class RoundedManhattanConnectionRouter extends AbstractRouter {
 				break;				
 			}
 			default:
-			{
-			}
 		}
 		l.addPoint(end);
 		conn.setPoints(l);

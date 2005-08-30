@@ -90,10 +90,7 @@ public class EdgeListParser
 			newGraph.reset();
 			return retGraph;
 		}
-		else
-		{
-			throw new ParsingException("Kantenliste: Syntaxfehler im Eingabestring: " + edgeList + "!");
-		}
+		throw new ParsingException("Kantenliste: Syntaxfehler im Eingabestring: " + edgeList + "!");
 	}
 	
 	private void parseEdge() throws ParsingException

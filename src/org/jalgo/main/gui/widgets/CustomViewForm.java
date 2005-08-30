@@ -128,7 +128,7 @@ public class CustomViewForm extends ViewForm {
 	/**
 	 * Sets title image.
 	 * 
-	 * @param text the image to be displayed in the title
+	 * @param img the image to be displayed in the title
 	 */
 	public void setImage(Image img) {
 		label.setImage(img);

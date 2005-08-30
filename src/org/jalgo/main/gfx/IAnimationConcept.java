@@ -37,7 +37,7 @@ public interface IAnimationConcept {
 	 * 
 	 * @param startPoint	Animation start-point
 	 * @param endPoint		Animation end-point
-	 * @param position		Current position (from 0.0 to 1.0)
+	 * @param percent		Current position (from 0.0 to 1.0)
 	 * @return				The new position
 	 */
 	public Point calculate(Point startPoint, Point endPoint, double percent);

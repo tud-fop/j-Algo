@@ -117,7 +117,7 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 	// <<--------- implementation of SelectionListener
 	
 	public void widgetDefaultSelected(SelectionEvent e) {
-		
+	// this method has no effect
 	}
 	
 	public void widgetSelected(SelectionEvent e) {

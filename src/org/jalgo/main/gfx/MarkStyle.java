@@ -56,23 +56,14 @@ public class MarkStyle {
 		this.fontstyle = fontstyle;
 	}
 
-	/**
-	 * @return
-	 */
 	public Color getBgColor() {
 		return backgound;
 	}
 
-	/**
-	 * @return
-	 */
 	public Color getFgColor() {
 		return forground;
 	}
 
-	/**
-	 * @return
-	 */
 	public int getFontstyle() {
 		return fontstyle;
 	}

@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// $Id: BorderState.java,v 1.2 2005/06/27 20:59:50 mischi Exp $
+// $Id: BorderState.java,v 1.3 2005/08/30 09:45:08 styjdt Exp $
 
 package org.jalgo.module.dijkstraModule.model;
 
@@ -47,7 +47,7 @@ public class BorderState implements Cloneable {
         return graph;
     }
 	/**
-	 * Gets the Border as ArrayList of {@link edge}s.
+	 * Gets the Border as ArrayList of {@link Edge}s.
 	 *  
 	 * @return the Border value.
 	 */
