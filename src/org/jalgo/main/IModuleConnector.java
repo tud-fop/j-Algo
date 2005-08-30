@@ -96,4 +96,39 @@ public interface IModuleConnector {
 	 * 			<code>false</code> otherwise
 	 */
 	boolean close();
+
+	/** Indicates, that there is no file open or nothing to save */
+	public static final int NOTHING_TO_SAVE = 0;
+	/** Indicates, that the current file was saved recently */
+	public static final int NO_CHANGES = 1;
+	/** Indicates, that the current file is 'dirty' and has to be saved */
+	public static final int CHANGES_TO_SAVE = 2;
+	/** Indicates, that the current module has saving mechanism blocked, e.g.
+	 * an algorithm is running, and the user musn't save during this. */
+	public static final int SAVING_BLOCKED = 4;
+
+	/**
+	 * This method retrieves the save status of the module. All modules have to
+	 * implement this method for correctly working of the enabled button status
+	 * of the save buttons and several features.
+	 * 
+	 * @return one of the following constants:
+	 * <ul>
+	 * <li><code>NOTHING_TO_SAVE</code></li> - if there is no file open
+	 * <li><code>NO_CHANGES</code></li> - if the open file was saved recently
+	 * <li><code>CHANGES_TO_SAVE</code></li> - if there are changes to save
+	 * <li><code>SAVING_BLOCKED</code></li> - if save buttons are blocked
+	 * </ul>
+	 */
+	int getSaveStatus();
+
+	/**
+	 * This method is called from main program during a save action. Furthermore
+	 * this method can be used by the module to set the save status centrally.
+	 *  
+	 * @param status the new save status
+	 * 
+	 * @see #getSaveStatus()
+	 */
+	void setSaveStatus(int status);
 }
