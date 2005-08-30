@@ -31,6 +31,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.MissingResourceException;
 
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubStatusLineManager;
@@ -43,6 +44,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.gui.actions.SaveAsAction;
+import org.jalgo.main.util.Messages;
 import org.jalgo.main.util.Storage;
 
 /**
@@ -67,6 +69,7 @@ public class JalgoMain {
 
 	public void createGUI() {
 		appWin = new JalgoWindow(this);
+		JAlgoGUIConnector.initInstance(appWin);
 		appWin.setBlockOnOpen(true);
 		appWin.open();
 
@@ -86,13 +89,16 @@ public class JalgoMain {
 			currentInstance.getToolBarManager().setVisible(false);
 		appWin.getMenuBarManager().update(true);
 		appWin.getToolBarManager().update(true);
-		appWin.getSaveAction().setEnabled(false);
-		appWin.getSaveAsAction().setEnabled(false);
 		/* Remove CTab */
 		openInstances.remove(cti);
 		cti.dispose();
 		//closed tab was the last one
-		if (openInstances.isEmpty()) currentInstance = null;
+		if (openInstances.isEmpty()) {
+			currentInstance = null;
+			appWin.updateSaveButtonEnableStatus(
+				IModuleConnector.NOTHING_TO_SAVE);
+			appWin.setAboutModuleActionEnabled(false);
+		}
 		else itemSelected(appWin.getCTabFolder().getSelection());
 	}
 
@@ -129,6 +135,7 @@ public class JalgoMain {
 
 		appWin.getMenuBarManager().update(true);
 		appWin.getToolBarManager().update(true);
+		appWin.updateSaveButtonEnableStatus(currentInstance.getSaveStatus());
 	}
 
 	/**
@@ -152,10 +159,9 @@ public class JalgoMain {
 	/**
 	 * Creates a new instance of the specified module.
 	 * 
-	 * @param modNumber
-	 *                       Number of new module in <code>knownModules</code>
-	 *                       starting with 0.
-	 * @return
+	 * @param modNumber Number of new module in <code>knownModules</code>
+	 *                  starting with 0.
+	 * @return the new instance of <code>IModuleConnector</code>
 	 */
 	public IModuleConnector newInstance(int modNumber) {
 		// Makes current Module-Tool/MenuBar invisible
@@ -167,7 +173,10 @@ public class JalgoMain {
 				currentInstance.getToolBarManager().setVisible(
 						false);
 		}
-		
+
+		// Disable save buttons
+		appWin.updateSaveButtonEnableStatus(IModuleConnector.NOTHING_TO_SAVE);
+
 		// Requests a fresh CTabItem from the appWin
 		IModuleInfo module = knownModuleInfos.get(modNumber);
 		String ctiText = module.getName();
@@ -227,6 +236,9 @@ public class JalgoMain {
 		// Add module to running instances
 		openInstances.put(cti, currentInstance);
 
+		// Enable 'About module'
+		appWin.setAboutModuleActionEnabled(true);
+
 		currentInstance.run();
 
 		return currentInstance;
@@ -246,7 +258,6 @@ public class JalgoMain {
 
 	/**
 	 * Takes content from module and stores it in currently used file
-	 *  
 	 */
 	public boolean saveFile() {
 	    //FSt
@@ -256,11 +267,9 @@ public class JalgoMain {
 		if (currentInstance.getModuleInfo().getOpenFileName() == null) {
 			SaveAsAction a = new SaveAsAction(appWin);
 			a.run();
-			
-			return true;
+			return a.wasSuccessful();
 		}
-		return saveFileAs(currentInstance.getModuleInfo()
-				.getOpenFileName());
+		return saveFileAs(currentInstance.getModuleInfo().getOpenFileName());
 	}
 
 	/**
@@ -270,6 +279,7 @@ public class JalgoMain {
 	 */
 	public boolean saveFileAs(String filename) {
 		currentInstance.getModuleInfo().setOpenFileName(filename);
+		currentInstance.setSaveStatus(IModuleConnector.NO_CHANGES);
 		return Storage.save(filename);
 	}
 
@@ -310,6 +320,7 @@ public class JalgoMain {
 	 * with content. Module programmers have to alter this method and add
 	 * their module here!
 	 */
+	@SuppressWarnings("unchecked")
 	private void addKnownModules() {
 		String jarFileName, moduleName;
 		String fileSep = System.getProperty("file.separator");
@@ -328,13 +339,20 @@ public class JalgoMain {
 					
 					if (implementsInterface(moduleConnector, "org.jalgo.main.IModuleConnector") &&
 							implementsInterface(moduleInfo, "org.jalgo.main.IModuleInfo")) {
-						knownModules.add((Class<IModuleConnector>)moduleConnector);
+						knownModules.add(moduleConnector);
 						knownModuleInfos.add((IModuleInfo)moduleInfo.newInstance());
 					}
+
+					Messages.registerResourceBundle(moduleName,
+						"org.jalgo.module."+moduleName+".de");
 				}
-				catch (ClassNotFoundException e) {e.printStackTrace();}
-				catch (InstantiationException e) {e.printStackTrace();}
-				catch (IllegalAccessException e) {e.printStackTrace();}
+				catch (ClassNotFoundException ex) {ex.printStackTrace();}
+				catch (InstantiationException ex) {ex.printStackTrace();}
+				catch (IllegalAccessException ex) {ex.printStackTrace();}
+				catch (MissingResourceException ex) {
+					//do nothing, that means only, that the current module has
+					//no strings externalized
+				}
 			}
 		}
 	}
