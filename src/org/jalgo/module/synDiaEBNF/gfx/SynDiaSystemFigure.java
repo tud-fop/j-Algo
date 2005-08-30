@@ -46,9 +46,6 @@ public class SynDiaSystemFigure extends Figure implements Serializable {
 		synDias.add(newInitialFigure);
 	}
 	
-	/**
-	 * @return
-	 */
 	public List getSynDias() {
 		return synDias;
 	}

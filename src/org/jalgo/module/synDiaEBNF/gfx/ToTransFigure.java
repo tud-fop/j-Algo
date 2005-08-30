@@ -51,8 +51,6 @@ public class ToTransFigure extends StandAloneSynDiaFigure {
 
 	/**
 	 * Use this constructor to create a ToTransFigure
-	 * @param label
-	 * @param font
 	 */
 	public ToTransFigure(String text, Font font) {
 		super(text, false);

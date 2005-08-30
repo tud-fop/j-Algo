@@ -248,16 +248,10 @@ public class RepetitionFigure extends CompositeSynDiaFigure {
 		setPositions();
 	}
 
-	/**
-	 * @return
-	 */
 	public SynDiaFigure getBotFigure() {
 		return botFigure;
 	}
 
-	/**
-	 * @return
-	 */
 	public SynDiaFigure getTopFigure() {
 		return topFigure;
 	}
