@@ -1,0 +1,125 @@
+<html>
+<head>
+	<title>AVL-Bäume</title>
+</head>
+
+<body topmargin="30" leftmargin="30">
+
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="600" id="AutoNumber1">
+  <tr>
+    <td width="600">
+
+    <h2>AVL-Bäume</h2>
+    <p align="justify">AVL-Bäume (benannt nach Adelson-Velskij und Landis) sind spezielle Suchbäume: In jedem Knoten
+	unterscheidet sich die Höhe des linken Teilbaums und des rechten Teilbaums um höchstens
+	1. Um diese Eigenschaft (AVL-Eigenschaft) abzusichern wird für jeden Knoten ein Balancefaktor
+	eingeführt. Der Balancefaktor ist die Differenz der Höhen des rechten Teilbaums und des linken
+	Teilbaums. Also gilt für jeden AVL-Baum, dass alle Balancefaktoren aus {&#8722;1, 0, 1} sind. Bäume
+	mit AVL-Eigenschaft sind niemals als lineare Liste entartet, sondern sind immer fast vollständig.
+	Zwischen der Höhe h eines Baumes und der Anzahl n seiner Knoten besteht folgender Zusammenhang:
+	h &lt;= 2 · log<sub>2</sub> n. Das bedeutet, dass für das Suchen logarithmische Komplexität garantiert
+	werden kann (das Suchen erfolgt gemäß Algorithmus 1).</p>
+
+	<p align="center">
+	<img src="pics/avlbsp.png" width="350">
+
+	<p align="justify">Jetzt muss noch untersucht werden, wie groß der zusätzliche Aufwand beim Einfügen ist, um die
+	AVL-Eigenschaft zu wahren. In jedem Fall wird der neue Knoten als Blatt eingefügt (nach demselben
+	Algorithmus wie bei Suchbäumen). Dabei kann sich der Balancefaktor ändern. Allerdings
+	kann man sich leicht klarmachen, dass das nur entlang des Suchpfades passieren kann. Die Aktualisierung
+	von Balancefaktoren erfolgt von der Einfügestelle zur Wurzel. Hier der Algorithmus:</p>
+	<p>
+	<b>Algorithmus 4</b><i> (Algorithmus zum Einfügen eines Elements x in einen AVL-Baum) </i>
+	<ol>
+		<li><i>Füge das neue Element x als direkten Nachfolger des Knotens n als Blatt ein, sodass die
+				Suchbaumeigenschaft erfüllt bleibt. Aktualisiere n.balance.</i></li>
+		<li><i>Setze n auf den Vorgängerknoten von n.</i></li>
+			<ol type="a">
+				<li><i>Falls x im linken Unterbaum von n eingefügt wurde</i></li>
+					<ol type="i">
+						<li><i>wenn n.balance==1 dann n.balance=0 und gehe nach 3.</i></li>
+						<li><i>wenn n.balance==0, dann n.balance=-1 und gehe nach 2.</i></li>
+						<li><i>wenn n.balance==-1 und</i></li>
+							<ul>
+								<li></i><i>wenn n.left.balance==-1, dann Rechts(n)-Rotation.</i></i></li>
+								<li></i><i>wenn n.left.balance==1 dann Links(n.left)-Rechts(n)-Rotation.</i></i></li>
+							</ul>
+							<i>Gehe zu 3. </i>
+					</ol>
+				<li><i>Falls x im rechten Unterbaum von n eingefügt wurde</i></li>
+					<ol type="i">
+						<li></i><i>wenn n.balance==-1 dann n.balance=0 und gehe nach 3.</i></i></li>
+						<li></i><i>wenn n.balance==0, dann n.balance=1 und gehe nach 2.</i></i></li>
+						<li></i><i>wenn n.balance==1 und</i></li> </i>
+							<ul>
+								<li></i><i>wenn n.left.balance==1, dann Links(n)-Rotation.</i></i></li>
+								<li></i><i>wenn n.left.balance==-1 dann Rechts(n.left)-Links(n)-Rotation.</i></i></li>
+							</ul>
+							<i>Gehe zu 3.</i>
+					</ol>
+			</ol>
+		<li><i>Gehe zurück zur Wurzel.</i></li>
+	</ol>
+	
+	<p align="justify">Zur Analyse dieses Algorithmus: Das reine Einfügen erfolgt gemäß Einfügen im Suchbaum (Algorithmus
+	2), allerdings ist hier sichergestellt, dass sich die Höhe logarithmisch zur Anzahl der
+	Knoten verhält, d.h. auch der Aufwand für das Einfügen ist garantiert logarithmisch. Wie gesagt
+	können sich jedoch Balancefaktoren geändert haben, sodass die AVL-Eigenschaft nicht mehr
+	erfüllt ist. Das wird durch so genannte Rotationen behoben. Es gibt zwei Typen von Rotationen –
+	Linksrotation und Rechtsrotation, jeweils um einen Knoten n.</p>
+	
+	<p align="center">
+	<img src="pics/rotateleft.png" width="400">
+	<p>&nbsp
+	<p align="center">
+	<img src="pics/rotateright.png" width="400">
+
+	<p align="justify">Falls durch das Einfügen irgendwo ein Balancefaktor 2(&#8722;2) entsteht (größere 
+    Änderungen können
+	beim Einfügen eines Knotens offensichtlich nicht auftreten), heißt das, dass sich im rechten (linken)
+	Teilbaum die Höhe um 1 erhöht hat. Durch Rotation(en) wie im Algorithmus angegeben, wird
+	aber genau diese Höhe wieder reduziert. Somit ist klar, dass man maximal zweimal rotieren muss,
+	der Aufwand ist also noch erträglich, im Gegensatz zum Löschen, wie man gleich sehen wird.
+	Genauso wie Einfügen verändert auch Löschen eines Knotens aus einem AVL-Baum die Balancefaktoren,
+	also müssen auch hier Rotationen ausgeführt werden. Hier der Algorithmus:</p>
+	
+	<b>Algorithmus 5</b><i> (Löschen eines Knotens aus einem AVL-Baum) </i>
+	<ol>
+		<li><i>Lösche den Knoten analog zum Löschen im Suchbaum (Algorithmus 3). Falls der Knoten
+				ein Blatt war oder nur einen linken Nachbarn hatte, setze aktuellen Knoten auf den Vater.
+				Sonst setze aktuellen Knoten auf den Vater des Knotens mit dem nächst größeren Schlüssel.</i></li>
+		<li><i>Berechne den Balancefaktor des aktuellen Knotens neu. Falls</i></li>
+			<ol type="i">
+				<li><i>Balance 2 und rechte Balance -1, dann Rechts(n.right)-Links(n)-Rotation.</i></li>
+				<li><i>Balance 2 und rechte Balance nicht -1, dann Links(n)-Rotation.</i></li>
+				<li><i>Balance -2 und linke Balance 1, dann Links(n.left)-Rechts(n)-Rotation.</i></li>
+				<li><i>Balance -2 und linke Balance nicht 1, dann Rechts(n)-Rotation.</i></li>
+				<li><i>sonst keine Rotation.</i></li>
+			</ol>
+			<i>Wiederhole diesen Schritt solange, bis die Wurzel erreicht ist.
+        </i>		
+	</ol>
+
+	<p align="justify">Auch hier wollen wir den Aufwand des Algorithmus etwas genauer untersuchen. Schritt 1 entspricht
+	dem Löschen aus dem Suchbaum, nur garantiert mit logarithmischen Aufwand. Die Frage ist nun
+	ob, wie beim Einfügen, der Algorithmus mit maximal zwei Rotationen auskommt. Leider ist das
+	nicht der Fall. Das liegt an der erwähnten Eigenschaft der Rotationen, sie verringern die Höhe
+	eines Teilbaums. Beim Einfügen war das gut, da durch das Anhängen eines Knotens gerade die
+	Höhe vergrößert wurde. Hier jedoch ist das unvorteilhaft, es kann passieren, dass man mehrere
+	Rotationen auf dem Weg zur Wurzel durchführen muss. Die Anzahl der Rotationen ist nur durch
+	die Höhe des Baums beschränkt. Das ist in Anwendungsfällen nicht wünschenswert.
+	Bei zeitkritischen Anwendungen muss man also entweder auf einen anderen Algorithmus ausweichen,
+	oder Varianten wie etwa Lazy-Delete implementieren, d.h. der Knoten wird nur als gelöscht
+	markiert und wird später (wenn Zeit ist) aus dem Baum entfernt.
+		
+	<p>&nbsp
+	<p>&nbsp
+	
+	
+    </td>
+  </tr>
+</table>
+	
+</body>
+
+</html>
