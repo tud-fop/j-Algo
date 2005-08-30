@@ -26,6 +26,7 @@ package org.jalgo.main.gui.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.ApplicationWindow;
+import org.jalgo.main.util.Messages;
 
 /**
  * This class handles the "Exit" button
@@ -38,8 +39,8 @@ public class ExitAction extends Action {
 
 	public ExitAction(ApplicationWindow win) {
 		window = win;
-		setText(Messages.getString("ui.Exit")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ui.Exit")); //$NON-NLS-1$
+		setText(Messages.getString("main", "ui.Exit")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("main", "ui.Exit")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/main_pix/close.gif")));
 	}

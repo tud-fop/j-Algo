@@ -35,6 +35,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.jalgo.main.util.Messages;
 
 /**
  * @author Cornelius Hald
@@ -46,8 +47,8 @@ public class ExportAction extends Action {
 	public ExportAction(IFigure figure) {
 		this.figure = figure;
 
-		setText(Messages.getString("ui.Export")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ui.Export_image")); //$NON-NLS-1$
+		setText(Messages.getString("main", "ui.Export")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("main", "ui.Export_image")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/main_pix/export.gif")));
 	}
@@ -55,11 +56,10 @@ public class ExportAction extends Action {
 	public void run() {
 		
 		// Create Image with double size to enhance quality
-		Image img =
-			new Image(
-				null,
-				figure.getPreferredSize().width,
-				figure.getPreferredSize().height);
+		Image img = new Image(
+			null,
+			figure.getPreferredSize().width,
+			figure.getPreferredSize().height);
 		GC gc = new GC(img);
 		SWTGraphics swtg = new SWTGraphics(gc);
 		ScaledGraphics scaled = new ScaledGraphics(swtg);
@@ -76,14 +76,14 @@ public class ExportAction extends Action {
 
 		// Save to file
 		FileDialog filer = new FileDialog(new Shell(), SWT.SAVE);
-		filer.setText(Messages.getString("ui.Export_file")); //$NON-NLS-1$
+		filer.setText(Messages.getString("main", "ui.Export_file")); //$NON-NLS-1$
 		filer.setFilterExtensions(new String[] { "*.bmp" }); //$NON-NLS-1$
-		filer.setFilterNames(new String[] { Messages.getString("ExportAction.Bitmap_(*.bmp)_6") }); //$NON-NLS-1$
+		filer.setFilterNames(new String[] {
+			Messages.getString("main", "ExportAction.Bitmap_(*.bmp)_6") }); //$NON-NLS-1$
 		String filename = filer.open();
 
 		if (filename != null) {
 			loader.save(filename, SWT.IMAGE_BMP);
 		}
 	}
-
 }

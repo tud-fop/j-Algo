@@ -23,6 +23,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.MessageBox;
 import org.jalgo.main.gui.JalgoWindow;
+import org.jalgo.main.util.Messages;
 
 /*
  * Created on Mar 23, 2004
@@ -31,42 +32,41 @@ import org.jalgo.main.gui.JalgoWindow;
 /**
  * @author Christopher Friedrich
  */
-public class AboutAction extends Action {
+public class AboutAction
+extends Action {
 
 	private JalgoWindow win;
+	private static final String lineSep = System.getProperty("line.separator"); 
 
 	public AboutAction(JalgoWindow win) {
 		this.win = win;
 
-		setText(Messages.getString("AboutAction.About_jAlgo_1")); //$NON-NLS-1$
-		setToolTipText(Messages
-				.getString("AboutAction.Get_infos_about_jAlgo._2")); //$NON-NLS-1$
+		setText(Messages.getString("main", "ui.About")); //$NON-NLS-1$ //$NON-NLS-2$
+		setToolTipText(Messages.getString("main","ui.About_tooltip")); //$NON-NLS-1$ //$NON-NLS-2$
 		setImageDescriptor(ImageDescriptor.createFromURL(
-			getClass().getResource("/main_pix/about.gif")));
+			Messages.getResourceURL("main", "ui.About"))); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public void run() {
-
 		MessageBox dia = new MessageBox(win.getShell());
 
-		dia.setText(Messages.getString("AboutAction.About_jAlgo_4")); //$NON-NLS-1$
-		dia.setMessage(Messages.getString("General.name") //$NON-NLS-1$
+		dia.setText(Messages.getString("main", "ui.About")); //$NON-NLS-1$ //$NON-NLS-2$
+		dia.setMessage(Messages.getString("main", "General.name") //$NON-NLS-1$ //$NON-NLS-2$
 				+ " - " //$NON-NLS-1$
-				+ Messages.getString("General.version") //$NON-NLS-1$
-				+ "\n\n" //$NON-NLS-1$
-				+ Messages.getString("AboutAction.jAlgo_Copyright") //$NON-NLS-1$
-				+ "\n" //$NON-NLS-1$
-				+ Messages.getString("AboutAction.jAlgo_Visit_URL") //$NON-NLS-1$
-				+ "\n\n" //$NON-NLS-1$
-				+ Messages.getString("AboutAction.Authors") //$NON-NLS-1$
-				+ "\n" //$NON-NLS-1$
-				+ Messages.getString("AboutAction.jAlgo_Author_Names") //$NON-NLS-1$
-				+ "\n" //$NON-NLS-1$
-				+ Messages.getString("AboutAction.License") //$NON-NLS-1$
-				+ "\n" //$NON-NLS-1$
-				+ Messages.getString("AboutAction.GPL") //$NON-NLS-1$
+				+ Messages.getString("main", "General.version") //$NON-NLS-1$ //$NON-NLS-2$
+				+ lineSep + lineSep
+				+ Messages.getString("main", "About.Copyright") //$NON-NLS-1$ //$NON-NLS-2$
+				+ lineSep
+				+ Messages.getString("main", "About.URL") //$NON-NLS-1$ //$NON-NLS-2$
+				+ lineSep + lineSep
+				+ Messages.getString("main", "About.Authors") //$NON-NLS-1$ //$NON-NLS-2$
+				+ lineSep
+				+ Messages.getString("main", "About.Author_Names") //$NON-N //$NON-NLS-2$LS-1$
+				+ lineSep + lineSep
+				+ Messages.getString("main", "About.License") //$NON-NLS-1$ //$NON-NLS-2$
+				+ lineSep
+				+ Messages.getString("main", "About.GPL") //$NON-NLS-1$ //$NON-NLS-2$
 		);
 		dia.open();
 	}
-
 }
