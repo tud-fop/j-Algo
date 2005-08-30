@@ -34,15 +34,6 @@ import org.jalgo.module.avl.Constants;
 public interface GUIConstants
 extends Constants {
 
-	/*--------------------------parameters---------------------------*/
-	/** The name of the file that contains the textual algorithm description. */
-	public static final String ALGORITHM_TEXT_BASE = "avl_algdesc.de.xml";
-	/** The name of the online help file */
-	//TODO: access to help from inside a jar?
-	public static final String HELP_FILE_NAME ="res:module:avl:help:index.htm";
-	/** The file format of the online help */
-	public static final String HELP_FILE_FORMAT = "htm";
-
 	/*------------------------display modes--------------------------*/
 	/** Indicates, that display is tuned for working on a pc screen. */
 	public static final int PC_MODE = 0;
