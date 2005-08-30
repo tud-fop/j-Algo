@@ -33,7 +33,8 @@ public class TestGUI {
 
 	public static void performTest() {
 		new Thread() {
-		    public void run() {
+		    @SuppressWarnings("synthetic-access")
+			public void run() {
 				try {
 					//resizing the window
 				    Thread.sleep(4000);
@@ -89,6 +90,7 @@ public class TestGUI {
 		robot.keyRelease(keycode);
 	}
 
+	@SuppressWarnings("unused")
 	private static void type(String s) {
 		for (byte c : s.getBytes()) {
 			if (c == KeyEvent.VK_PERIOD) c = (byte)(c-'A'+'a');

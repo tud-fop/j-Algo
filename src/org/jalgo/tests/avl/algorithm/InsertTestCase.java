@@ -19,12 +19,13 @@
 
 package org.jalgo.tests.avl.algorithm;
 
-import java.util.Arrays;
-
 import junit.framework.TestCase;
+
 import org.jalgo.module.avl.algorithm.CommandFactory;
 import org.jalgo.module.avl.algorithm.MacroCommand;
-import org.jalgo.module.avl.datastructure.*;
+import org.jalgo.module.avl.datastructure.AVLNode;
+import org.jalgo.module.avl.datastructure.SearchTree;
+import org.jalgo.module.avl.datastructure.WorkNode;
 
 
 
@@ -75,19 +76,19 @@ public class InsertTestCase extends TestCase {
 			}
 		}
 		
-		// alles rückgängig
+		// alles rï¿½ckgï¿½ngig
 		while (command.hasPrevious()) {
 			command.undo();
 		}
 		
 		tree.printToConsole();
 		
-		// wieder alles ausführen
+		// wieder alles ausfï¿½hren
 		while (command.hasNext()) command.perform();
 		
 		tree.printToConsole();
 
-		assertTrue("fehlerhaft eingefügt", tree.equals(new SearchTree(node)));
+		assertTrue("fehlerhaft eingefï¿½gt", tree.equals(new SearchTree(node)));
 	}
 	
 	protected void tearDown() throws Exception {

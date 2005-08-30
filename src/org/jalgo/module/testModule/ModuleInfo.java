@@ -84,7 +84,7 @@ public class ModuleInfo implements IModuleInfo {
      * @see org.jalgo.main.IModuleInfo#setOpenFileName(java.lang.String)
      */
     public void setOpenFileName(String string) {
-
+    // here is no action performed in test module
     }
 
 }

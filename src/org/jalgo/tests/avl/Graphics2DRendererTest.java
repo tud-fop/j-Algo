@@ -48,6 +48,7 @@ public class Graphics2DRendererTest {
 		shell.setText("Java2d to Draw2d");
 		LightweightSystem lws = new LightweightSystem(shell);
 		IFigure figure = new Figure() {
+			@SuppressWarnings("synthetic-access")
 			protected void paintClientArea(org.eclipse.draw2d.Graphics graphics) {
 				Dimension controlSize = getSize();
 				renderer.prepareRendering(graphics);
