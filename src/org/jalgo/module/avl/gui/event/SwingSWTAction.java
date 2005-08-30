@@ -1,20 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /* Created on 06.06.2005 */
@@ -23,6 +27,7 @@ package org.jalgo.module.avl.gui.event;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,9 +38,9 @@ import javax.swing.event.SwingPropertyChangeSupport;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
- * The class <code>SwingSWTAction</code> provides an adapter bridge between the
- * both GUI frameworks Swing and SWT. It represents <code>Action</code> objects,
- * which can be used in both frameworks.
+ * The class <code>SwingSWTAction</code> provides an adapter bridge between
+ * the both GUI frameworks Swing and SWT. It represents <code>Action</code>
+ * objects, which can be used in both frameworks.
  * 
  * @author Alexander Claus
  */
@@ -54,16 +59,16 @@ implements javax.swing.Action {
 	}
 
 	/**
-	 * Creates a <code>JButton</code> object without border and text, which can
-	 * be used in <code>JToolBar</code>s
+	 * Creates a <code>JButton</code> object without border and text, which
+	 * can be used in <code>JToolBar</code>s
 	 * 
-	 * @return a <code>JButton</code> instance whose <code>Action</code> is the
-	 * 			current instance of <code>SwingSWTAction</code>
+	 * @return a <code>JButton</code> instance whose <code>Action</code> is
+	 *         the current instance of <code>SwingSWTAction</code>
 	 */
 	public JButton createToolbarButton() {
 		JButton button = new JButton(this);
 		button.setMargin(new Insets(0, 0, 0, 0));
-		button.setText("");
+		button.setText(""); //$NON-NLS-1$
 		return button;
 	}
 
@@ -80,31 +85,36 @@ implements javax.swing.Action {
 	}
 
 	/**
-	 * Sets the icon image to this action to the image with the given file name.
+	 * Sets the icon image to this action to the image with the given URL.
 	 * 
-	 * @param fileName the fileName of the icon image
+	 * @param iconURL the file URL of the icon image
 	 */
-	public void setIconImage(String fileName) {
-		setImageDescriptor(ImageDescriptor.createFromURL(
-			getClass().getResource("/"+fileName)));
-		putValue(SMALL_ICON, new ImageIcon(getClass().getResource("/"+fileName)));
+	public void setIconImage(URL iconURL) {
+		setImageDescriptor(ImageDescriptor.createFromURL(iconURL));
+		putValue(SMALL_ICON, new ImageIcon(iconURL));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.swing.Action#getValue(java.lang.String)
 	 */
 	public Object getValue(String key) {
 		return values.get(key);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.swing.Action#putValue(java.lang.String, java.lang.Object)
 	 */
 	public void putValue(String key, Object value) {
 		values.put(key, value);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.swing.Action#addPropertyChangeListener(java.beans.PropertyChangeListener)
 	 */
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -113,7 +123,9 @@ implements javax.swing.Action {
 		changeSupport.addPropertyChangeListener(listener);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see javax.swing.Action#removePropertyChangeListener(java.beans.PropertyChangeListener)
 	 */
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
@@ -130,17 +142,19 @@ implements javax.swing.Action {
 	 */
 	@Override
 	protected void firePropertyChange(String propertyName, Object oldValue,
-			Object newValue) {
-		//delegate to swt property change event
+		Object newValue) {
+		// delegate to swt property change event
 		super.firePropertyChange(propertyName, oldValue, newValue);
-		//handle swing property change event
-		if (changeSupport == null ||
-			(oldValue != null && newValue != null && oldValue.equals(newValue)))
-			return;
+		// handle swing property change event
+		if (changeSupport == null
+			|| (oldValue != null && newValue != null &&
+				oldValue.equals(newValue))) return;
 		changeSupport.firePropertyChange(propertyName, oldValue, newValue);
-    }
+	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
@@ -151,7 +165,8 @@ implements javax.swing.Action {
 	public void setEnabled(boolean b) {
 		if (isEnabled() != b) {
 			super.setEnabled(b);
-			firePropertyChange("enabled", Boolean.valueOf(!b), Boolean.valueOf(b));
+			firePropertyChange("enabled", Boolean.valueOf(!b), //$NON-NLS-1$
+				Boolean.valueOf(b));
 		}
 	}
 

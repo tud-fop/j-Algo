@@ -1,20 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /* Created on 15.04.2005 */
@@ -30,27 +34,27 @@ import org.jalgo.module.avl.gui.components.WelcomeButton;
 import org.jalgo.module.avl.gui.components.WelcomeScreen;
 
 /**
- * The class <code>WelcomeScreenActionHandler</code> is an event handler for the
- * <code>WelcomeScreen</code> class. It handles button clicks and mouse events for
- * rollover mechanism.
+ * The class <code>WelcomeScreenActionHandler</code> is an event handler for
+ * the <code>WelcomeScreen</code> class. It handles button clicks and mouse
+ * events for rollover mechanism.
  * 
  * @author Alexander Claus
  */
 public class WelcomeScreenActionHandler
 implements ActionListener, MouseListener {
-	
+
 	private GUIController gui;
 	private WelcomeScreen screen;
-	
+
 	/**
-	 * Constructs a <code>WelcomeScreenActionHandler</code> object with the given
-	 * references.
+	 * Constructs a <code>WelcomeScreenActionHandler</code> object with the
+	 * given references.
 	 * 
 	 * @param gui the <code>GUIController</code> instance
 	 * @param screen the <code>WelcomeScreen</code> instance, for which this
-	 * 		  event handler is used
+	 *            event handler is used
 	 */
-	public WelcomeScreenActionHandler(GUIController gui, WelcomeScreen screen){
+	public WelcomeScreenActionHandler(GUIController gui, WelcomeScreen screen) {
 		this.gui = gui;
 		this.screen = screen;
 	}
@@ -59,12 +63,12 @@ implements ActionListener, MouseListener {
 	 * Handles button clicks.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("load")) gui.showOpenDialog();
-		else if (e.getActionCommand().equals("createManually")) {
+		if (e.getActionCommand().equals("load")) gui.showOpenDialog(); //$NON-NLS-1$
+		else if (e.getActionCommand().equals("createManually")) { //$NON-NLS-1$
 			gui.setAVLMode(true, true);
 			gui.installStandardLayout();
 		}
-		else if (e.getActionCommand().equals("createRandomly")) {
+		else if (e.getActionCommand().equals("createRandomly")) { //$NON-NLS-1$
 			screen.setButtonsEnabled(false);
 			gui.showRandomGenerationDialog();
 			screen.setButtonsEnabled(true);
@@ -75,8 +79,8 @@ implements ActionListener, MouseListener {
 	}
 
 	/**
-	 * Causes the event source button to highlight and to display its description
-	 * string on screen.
+	 * Causes the event source button to highlight and to display its
+	 * description string on screen.
 	 */
 	public void mouseEntered(MouseEvent e) {
 		WelcomeButton source = (WelcomeButton)e.getSource();
@@ -97,15 +101,21 @@ implements ActionListener, MouseListener {
 	/**
 	 * This method has no effect.
 	 */
-	public void mouseClicked(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {
+	// This method has no effect
+	}
 
 	/**
 	 * This method has no effect.
 	 */
-	public void mousePressed(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {
+	// This method has no effect
+	}
 
 	/**
 	 * This method has no effect.
 	 */
-	public void mouseReleased(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {
+	// This method has no effect
+	}
 }

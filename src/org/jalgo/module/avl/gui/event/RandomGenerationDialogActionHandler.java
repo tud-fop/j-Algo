@@ -1,20 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /* Created on 26.05.2005 */
@@ -26,7 +30,9 @@ import java.awt.event.ActionListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.jalgo.main.IModuleConnector;
 import org.jalgo.module.avl.Controller;
+import org.jalgo.module.avl.ModuleConnector;
 import org.jalgo.module.avl.NoActionException;
 import org.jalgo.module.avl.gui.GUIConstants;
 import org.jalgo.module.avl.gui.GUIController;
@@ -34,9 +40,9 @@ import org.jalgo.module.avl.gui.components.RandomGenerationDialog;
 import org.jalgo.module.avl.gui.graphics.RandomTreeAnimator;
 
 /**
- * The class <code>RandomGenerationDialogActionHandler</code> represents an event
- * handler for the <code>RandomGenerationDialog</code> class. It handles button
- * clicks and key inputs.
+ * The class <code>RandomGenerationDialogActionHandler</code> represents an
+ * event handler for the <code>RandomGenerationDialog</code> class. It handles
+ * button clicks and key inputs.
  * 
  * @author Alexander Claus
  */
@@ -46,49 +52,58 @@ implements ActionListener, DocumentListener, GUIConstants {
 	private Controller controller;
 	private GUIController gui;
 	private RandomGenerationDialog dialog;
+	private ModuleConnector connector;
 
 	/**
-	 * Constructs a <code>RandomGenerationDialogActionHandler</code> object with
-	 * the given references.
+	 * Constructs a <code>RandomGenerationDialogActionHandler</code> object
+	 * with the given references.
 	 * 
-	 * @param controller the <code>Controller</code> instance of the AVL module
+	 * @param controller the <code>Controller</code> instance of the AVL
+	 *            module
 	 * @param gui the <code>GUIController</code> instance of the AVL module
-	 * @param dialog the <code>RandomGenerationDialog</code> instance, for which
-	 * 					events are handled here
+	 * @param dialog the <code>RandomGenerationDialog</code> instance, for
+	 *            which events are handled here
 	 */
 	public RandomGenerationDialogActionHandler(Controller controller,
-			GUIController gui, RandomGenerationDialog dialog) {
+		GUIController gui, RandomGenerationDialog dialog,
+		ModuleConnector connector) {
 		this.controller = controller;
 		this.gui = gui;
 		this.dialog = dialog;
+		this.connector = connector;
 	}
 
 	/**
 	 * Handles button clicks, starts the algorithm with choosen parameters.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("ok")) {
+		if (e.getActionCommand().equals("ok")) { //$NON-NLS-1$
 			gui.setAVLMode(dialog.isAVLSelected(), false);
 			controller.createRandomTree(dialog.getNodeCount());
 
 			switch (dialog.getVisualizationMode()) {
-			case NO_VISUALIZATION:
-				try {controller.finish();}
-				catch (NoActionException ex) {gui.showErrorMessage(ex.getMessage());}				
-				gui.installStandardLayout();
-				gui.setChangesToSave(true);
-				//use alg.Finished() here, if stepwise backwards should be enabled
-				gui.algorithmAborted();
-				break;
-			case STEPWISE:
-				gui.installStandardLayout();
-				gui.algorithmStarted();
-				break;
-			case AUTOMATICAL:
-				gui.installStandardLayout();
-				gui.randomAnimatorStarted();
-				gui.setAnimator(new RandomTreeAnimator(gui, controller));
-				gui.getAnimator().start();
+				case NO_VISUALIZATION:
+					try {
+						controller.finish();
+					}
+					catch (NoActionException ex) {
+						gui.showErrorMessage(ex.getMessage());
+					}
+					gui.installStandardLayout();
+					connector.setSaveStatus(IModuleConnector.CHANGES_TO_SAVE);
+					// use alg.Finished() here, if stepwise backwards should be
+					// enabled
+					gui.algorithmAborted();
+					break;
+				case STEPWISE:
+					gui.installStandardLayout();
+					gui.algorithmStarted();
+					break;
+				case AUTOMATICAL:
+					gui.installStandardLayout();
+					gui.randomAnimatorStarted();
+					gui.setAnimator(new RandomTreeAnimator(gui, controller));
+					gui.getAnimator().start();
 			}
 		}
 		dialog.dispose();
@@ -111,5 +126,7 @@ implements ActionListener, DocumentListener, GUIConstants {
 	/**
 	 * This method has no effect.
 	 */
-	public void changedUpdate(DocumentEvent e) {}
+	public void changedUpdate(DocumentEvent e) {
+	// this method has no effect
+	}
 }
