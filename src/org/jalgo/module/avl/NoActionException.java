@@ -38,7 +38,9 @@ extends Exception {
 
 	private static final long serialVersionUID = 2348851116967125246L;
 
-	public NoActionException() {}
+	public NoActionException() {
+	// empty constructor
+	}
 
 	public NoActionException(String error) {
 		super(error);
