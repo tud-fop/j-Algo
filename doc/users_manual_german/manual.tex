@@ -22,7 +22,7 @@ jAlgo ist so aufgebaut, dass um ein Hauptprogramm mit allgemeinen Funktionalität
 \section{Das Hauptprogramm}
 Das Hauptprogramm bietet für den Benutzer lediglich einige grundlegende Funktionalitäten. Über den Menüpunkt \textit{Datei - Neu} erreicht man eine Auflistung aller verfügbaren Module:
 \begin{center}
-\includegraphics[scale=1]{ss_hauptprogramm.eps}
+\includegraphics[scale=1]{ss_hauptprogramm}
 \end{center}
 
 Klickt man hier auf \textit{EBNF und Syntaxdiagramme} startet das Modul. Außerdem bietet der Menüpunkt \textit{Datei} die Funktionalitäten Laden und Speichern.
@@ -44,7 +44,7 @@ Eine EBNF-Definition besteht aus einem Tupel der Form: $(V, \Sigma, S, R)$. V is
 Die Eingabe der Variablen und Terminalsymbole erfolgt durch Komma getrennt. Für die Regel-Eingabe ist bereits die Grundform vorgegeben. Jede Regel besteht aus einer Variable, den Zeichen $::=$ und dem dazugehörigen Term. Zur Eingabe der Terme wird für die Metasymbole (also die im Vorlesungskript mit einem Dach versehenen Zeichen) eine an \LaTeX  angelehnte Notation verwendet: Vor jedem Metasymbol ist zur Kennzeichnung $\setminus\wedge$ anzufügen. Eine geschweifte, öffnende Klammer würde also so aussehen: $\setminus\wedge$\{ . Zur einfacheren Handhabung kann man auch die Buttons benutzen. Nachdem man eine Regel vollständig eingegeben hat, fügt man diese durch Klicken von \textit{Hinzufügen} der Liste der Regeln hinzu. Um später eine Regel wieder zu entfernen kann der \textit{Löschen} Button benutzt werden.\\
 Die Eingabe einer EBNF könnte also beispielsweise so aussehen:
 \begin{center}
-\includegraphics[scale=0.7]{ss_ebnf.eps}
+\includegraphics[scale=0.7]{ss_ebnf}
 \end{center}
 
 Die fertige EBNF kann man man durch Klicken von \textit{Fertigstellen} zur Überprüfung auf Korrektheit geben. Sollten Unstimmigkeiten auftreten - z.B. könnte man vergessen einer Variable eine Regel zuzuordnen - erscheint ein Hinweis.\\
@@ -55,18 +55,18 @@ Nun erreicht man die Ansicht der eingegeben EBNF. Metasymbole werden hier zur Un
 
 Wählt man im Wizard den dritten Punkt aus, bekommt man die Möglichkeit ein Syntax-Diagramm-System mit Hilfe der Maus zu erstellen. Dabei hat man folgende Funktionalitäten:
 \begin{center}
-\includegraphics[scale=0.8]{ss_klick.eps}
+\includegraphics[scale=0.8]{ss_klick}
 \end{center}
 
 Die Eingabe eines Syntax-Diagramm-Systems erfolgt Top-Down, also von oben nach unten. Dabei erstellt man zunächst eine Startwolke. Diese wird nun durch eine Wiederholung, eine Alternative oder eine Konkatenation ersetzt, welche wiederum Wolken enthält. Erst zum Schluss werden die Variablen und Terminalsymbole eingesetzt. Die Erstellung eines einfachen Diagramm-Systems könnte also z.B. so ablaufen:
 \begin{center}
-\includegraphics[scale=0.8]{ss_klick1.eps}
+\includegraphics[scale=0.8]{ss_klick1}
 $ $\\$ $\\
-\includegraphics[scale=0.8]{ss_klick2.eps}
+\includegraphics[scale=0.8]{ss_klick2}
 $ $\\$ $\\
-\includegraphics[scale=0.8]{ss_klick3.eps}
+\includegraphics[scale=0.8]{ss_klick3}
 $ $\\$ $\\
-\includegraphics[scale=0.8]{ss_klick4.eps}
+\includegraphics[scale=0.8]{ss_klick4}
 \end{center}
 
 Ist das Diagramm fertig eingegeben, gelangt man durch Klicken des Fähnchens zur Ansicht des erstellten Diagramms. Hier kann man nun die Algorithmen \textit{Wortgenerierung} und \textit{Worterkennung} starten. Sie benutzen beide den aus der Vorlesung \textit{Algorithmen und Datenstrukturen} bekannten Rücksprungalgorithmus.
@@ -80,12 +80,12 @@ Treten in den Rücksprungalgorithmen nicht-deterministische Entscheidungen auf, w
 
 Neben der schrittweisen Ausführung besteht im Trans-Algorithmus außerdem die Möglichkeit, alle Schritte automatisch ausführen zu lassen, um nur das Endergebnis zu erhalten. Der Transalgorithmus in Aktion sieht beispielsweise so aus:
 \begin{center}
-\includegraphics[scale=0.8]{ss_trans.eps}
+\includegraphics[scale=0.8]{ss_trans}
 \end{center}
 
 Mit einem durch den Trans-Algorithmus erstellten Syntax-Diagramm-System kann man anschließend natürlich die Rücksprungalgorithmen durchführen. Die Durchführung der Wortgenerierung könnte z.B. so aussehen:
 \begin{center}
-\includegraphics[scale=0.8]{ss_gw.eps}
+\includegraphics[scale=0.8]{ss_gw}
 \end{center}
 
 \subsection{Laden und Speichern}
