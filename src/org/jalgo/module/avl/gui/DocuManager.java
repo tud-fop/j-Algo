@@ -32,6 +32,7 @@ import java.util.TreeMap;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -41,7 +42,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Jean Christoph Jung
  * 
  * The DocuManager parses an XML-file, that must have a certain form: <!DOCTYPE
- * Kommentarliste [ <!ELEMENT Kommentarliste (Schritt)*> <!ELEMENT Schritt
+ * Kommentarliste [ <!ELEMENT Kommentarliste (Step)*> <!ELEMENT Step
  * (Key,Text)> <!ELEMENT Key (#PCDATA)*> <!ELEMENT Text Line*> <!ELEMENT Line
  * (#PCDATA)*> ]>
  * 
@@ -64,7 +65,7 @@ implements GUIConstants {
 	extends DefaultHandler {
 
 		private final int ALGDESC = -1;
-		private final int SCHRITT = 0;
+		private final int STEP = 0;
 		private final int KEY = 1;
 		private final int TEXT = 2;
 		private final int LINE = 3;
@@ -72,9 +73,9 @@ implements GUIConstants {
 		private Map<String, String> mapOfElements;
 		private int flag = ALGDESC;
 		private String key;
-		private String value = "";
-		private String line = "";
-		private String startstring = "", endstring = "";
+		private String value = ""; //$NON-NLS-1$
+		private String line = ""; //$NON-NLS-1$
+		private String startstring = "", endstring = ""; //$NON-NLS-1$ //$NON-NLS-2$
 
 		public XmlHandler() {
 			super();
@@ -85,11 +86,11 @@ implements GUIConstants {
 		public void startElement(String uri, String localName, String qName,
 			Attributes attr)
 		throws SAXException {
-			if (qName == "AlgorithmDescription") flag = ALGDESC;
-			else if (qName == "Schritt") flag = SCHRITT;
-			else if (qName == "Key") flag = KEY;
-			else if (qName == "Text") flag = TEXT;
-			else if (qName == "Line") flag = LINE;
+			if (qName == "AlgorithmDescription") flag = ALGDESC; //$NON-NLS-1$
+			else if (qName == "Step") flag = STEP; //$NON-NLS-1$
+			else if (qName == "Key") flag = KEY; //$NON-NLS-1$
+			else if (qName == "Text") flag = TEXT; //$NON-NLS-1$
+			else if (qName == "Line") flag = LINE; //$NON-NLS-1$
 
 			if (attr != null) {
 				for (int i = 0; i < attr.getLength(); i++) {
@@ -97,29 +98,29 @@ implements GUIConstants {
 					String temp = attr.getValue(i);
 					int k = -2;
 
-					if (attribute.equals("startswith")) {
-						if (temp.contains("tab"))
-							startstring = startstring.concat("\t");
-						if (temp.contains("nl"))
-							startstring = startstring.concat("\n");
-						k = temp.indexOf("sp");
+					if (attribute.equals("startswith")) { //$NON-NLS-1$
+						if (temp.contains("tab")) //$NON-NLS-1$
+							startstring = startstring.concat("\t"); //$NON-NLS-1$
+						if (temp.contains("nl")) //$NON-NLS-1$
+							startstring = startstring.concat("\n"); //$NON-NLS-1$
+						k = temp.indexOf("sp"); //$NON-NLS-1$
 						if (k >= 0) {
 							char whitespaces = temp.charAt(k + 2);
 							while (whitespaces-- > '0') {
-								startstring = startstring.concat(" ");
+								startstring = startstring.concat(" "); //$NON-NLS-1$
 							}
 						}
 					}
-					if (attribute.equals("endswith")) {
-						if (temp.contains("tab"))
-							endstring = endstring.concat("\t");
-						if (temp.contains("nl"))
-							endstring = endstring.concat("\n");
-						k = temp.indexOf("sp");
+					if (attribute.equals("endswith")) { //$NON-NLS-1$
+						if (temp.contains("tab")) //$NON-NLS-1$
+							endstring = endstring.concat("\t"); //$NON-NLS-1$
+						if (temp.contains("nl")) //$NON-NLS-1$
+							endstring = endstring.concat("\n"); //$NON-NLS-1$
+						k = temp.indexOf("sp"); //$NON-NLS-1$
 						if (k >= 0) {
 							char whitespaces = temp.charAt(k + 2);
 							while (whitespaces-- > '0') {
-								endstring = endstring.concat(" ");
+								endstring = endstring.concat(" "); //$NON-NLS-1$
 							}
 						}
 					}
@@ -130,16 +131,16 @@ implements GUIConstants {
 		@Override
 		public void endElement(String uri, String localName, String qName)
 		throws SAXException {
-			if (qName == "Schritt") {
+			if (qName == "Step") { //$NON-NLS-1$
 				mapOfElements.put(key, value);
 				key = null;
-				value = "";
+				value = ""; //$NON-NLS-1$
 			}
-			if (qName == "Line") {
+			if (qName == "Line") { //$NON-NLS-1$
 				value = value + startstring + line + endstring;
-				line = "";
-				startstring = "";
-				endstring = "";
+				line = ""; //$NON-NLS-1$
+				startstring = ""; //$NON-NLS-1$
+				endstring = ""; //$NON-NLS-1$
 			}
 			flag--;
 		}
@@ -184,35 +185,36 @@ implements GUIConstants {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
 			XmlHandler xmlhandler = new XmlHandler();
-			saxParser.parse(getClass().getResourceAsStream(
-				"/" + ALGORITHM_TEXT_BASE), xmlhandler);
+			saxParser.parse(getClass().getResourceAsStream(Messages.getString(
+				"avl_res", "Algorithm_text_base")), //$NON-NLS-1$ //$NON-NLS-2$
+				 xmlhandler);
 			Map<String, String> mapOfElements = xmlhandler.getMapOfElements();
 
 			mapOfAlgorithms = new TreeMap<String, Map<String, String>>();
 			offsets = new TreeMap<String, Map<String, Integer>>();
 			lengths = new TreeMap<String, Map<String, Integer>>();
 
-			mapOfAlgorithms.put("search", new TreeMap<String, String>());
-			mapOfAlgorithms.put("insert", new TreeMap<String, String>());
-			mapOfAlgorithms.put("avlinsert", new TreeMap<String, String>());
-			mapOfAlgorithms.put("remove", new TreeMap<String, String>());
-			mapOfAlgorithms.put("avlremove", new TreeMap<String, String>());
+			mapOfAlgorithms.put("search", new TreeMap<String, String>()); //$NON-NLS-1$
+			mapOfAlgorithms.put("insert", new TreeMap<String, String>()); //$NON-NLS-1$
+			mapOfAlgorithms.put("avlinsert", new TreeMap<String, String>()); //$NON-NLS-1$
+			mapOfAlgorithms.put("remove", new TreeMap<String, String>()); //$NON-NLS-1$
+			mapOfAlgorithms.put("avlremove", new TreeMap<String, String>()); //$NON-NLS-1$
 
 			for (String key : mapOfElements.keySet()) {
-				if (key.startsWith("search"))
-					mapOfAlgorithms.get("search").put(key,
+				if (key.startsWith("search")) //$NON-NLS-1$
+					mapOfAlgorithms.get("search").put(key, //$NON-NLS-1$
 						mapOfElements.get(key));
-				if (key.startsWith("insert"))
-					mapOfAlgorithms.get("insert").put(key,
+				if (key.startsWith("insert")) //$NON-NLS-1$
+					mapOfAlgorithms.get("insert").put(key, //$NON-NLS-1$
 						mapOfElements.get(key));
-				if (key.startsWith("avlinsert"))
-					mapOfAlgorithms.get("avlinsert").put(key,
+				if (key.startsWith("avlinsert")) //$NON-NLS-1$
+					mapOfAlgorithms.get("avlinsert").put(key, //$NON-NLS-1$
 						mapOfElements.get(key));
-				if (key.startsWith("remove"))
-					mapOfAlgorithms.get("remove").put(key,
+				if (key.startsWith("remove")) //$NON-NLS-1$
+					mapOfAlgorithms.get("remove").put(key, //$NON-NLS-1$
 						mapOfElements.get(key));
-				if (key.startsWith("avlremove"))
-					mapOfAlgorithms.get("avlremove").put(key,
+				if (key.startsWith("avlremove")) //$NON-NLS-1$
+					mapOfAlgorithms.get("avlremove").put(key, //$NON-NLS-1$
 						mapOfElements.get(key));
 			}
 
@@ -236,7 +238,7 @@ implements GUIConstants {
 			}
 		}
 		catch (Throwable t) {
-			System.err.println("Xml-Datei nicht gefunden oder anderer Fehler");
+			System.err.println(Messages.getString("avl", "Alg_desc_not_found_error")); //$NON-NLS-1$
 			t.printStackTrace();
 		}
 	}
@@ -284,14 +286,14 @@ implements GUIConstants {
 	}
 
 	private String getKey(String name) {
-		if (name.equals("Suchen")) return "search";
-		if (name.equals("Einfügen") || name.equals("Suchbaum Erstellen"))
-			return "insert";
-		if (name.equals("AVL-Einfügen") || name.equals("AVL-Baum Erstellen"))
-			return "avlinsert";
-		if (name.equals("Löschen")) return "remove";
-		if (name.equals("AVL-Löschen")) return "avlremove";
-		if (name.equals("AVL-Test")) return "avltest";
+		if (name.equals(Messages.getString("avl", "Alg_name.Search"))) return "search"; //$NON-NLS-1$ //$NON-NLS-2$
+		if (name.equals(Messages.getString("avl", "Alg_name.Insert")) || name.equals(Messages.getString("avl", "Alg_name.Create_tree"))) //$NON-NLS-1$ //$NON-NLS-2$
+			return "insert"; //$NON-NLS-1$
+		if (name.equals(Messages.getString("avl", "Alg_name.Insert_AVL")) || name.equals(Messages.getString("avl", "Alg_name.Create_AVL_tree"))) //$NON-NLS-1$ //$NON-NLS-2$
+			return "avlinsert"; //$NON-NLS-1$
+		if (name.equals(Messages.getString("avl", "Alg_name.Remove"))) return "remove"; //$NON-NLS-1$ //$NON-NLS-2$
+		if (name.equals(Messages.getString("avl", "Alg_name.Remove_AVL"))) return "avlremove"; //$NON-NLS-1$ //$NON-NLS-2$
+		if (name.equals(Messages.getString("avl", "Alg_name.AVL_test"))) return "avltest"; //$NON-NLS-1$ //$NON-NLS-2$
 		return null;
 	}
 }
