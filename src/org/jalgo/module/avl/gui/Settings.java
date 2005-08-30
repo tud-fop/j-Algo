@@ -1,20 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /* Created on 05.06.2005 */
@@ -34,19 +38,30 @@ public class Settings
 implements GraphicsConstants, GUIConstants {
 
 	/**
-	 * The display mode indicates if the user is working on a pc display or
-	 * on a beamer. This integer can be one of the constants
-	 * <code>PC_MODE</code>, <code>BEAMER_MODE</code> defined in
-	 * <code>GUIConstants</code>.
+	 * The display mode indicates if the user is working on a pc display or on a
+	 * beamer. This integer can be one of the constants <code>PC_MODE</code>,
+	 * <code>BEAMER_MODE</code> defined in <code>GUIConstants</code>.
 	 */
 	private static int DISPLAY_MODE = PC_MODE;
-	public static int getDisplayMode() {return DISPLAY_MODE;}
-	public static void setDisplayMode(int mode) {DISPLAY_MODE = mode;}
-	
+
+	public static int getDisplayMode() {
+		return DISPLAY_MODE;
+	}
+
+	public static void setDisplayMode(int mode) {
+		DISPLAY_MODE = mode;
+	}
+
 	/** The delay time of steps in animation in milliseconds. */
-	private static long STEP_DELAY = 500; 
-	public static long getStepDelay() {return STEP_DELAY;}
-	public static void setStepDelay(long delay) {STEP_DELAY = delay;}
+	private static long STEP_DELAY = 500;
+
+	public static long getStepDelay() {
+		return STEP_DELAY;
+	}
+
+	public static void setStepDelay(long delay) {
+		STEP_DELAY = delay;
+	}
 
 	/** The normal font style for log and documentation pane. */
 	public static SimpleAttributeSet[] NORMAL_STYLE;
@@ -58,33 +73,39 @@ implements GraphicsConstants, GUIConstants {
 	public static SimpleAttributeSet[] DOCU_HIGHLIGHTED_STYLE;
 
 	static {
-		NORMAL_STYLE = new SimpleAttributeSet[] {
-			new SimpleAttributeSet(), new SimpleAttributeSet()};
-		StyleConstants.setFontFamily(NORMAL_STYLE[PC_MODE], "SansSerif");
+		NORMAL_STYLE = new SimpleAttributeSet[] {new SimpleAttributeSet(),
+			new SimpleAttributeSet()};
+		StyleConstants.setFontFamily(NORMAL_STYLE[PC_MODE],
+			"SansSerif"); //$NON-NLS-1$
 		StyleConstants.setFontSize(NORMAL_STYLE[PC_MODE], 11);
 
-		StyleConstants.setFontFamily(NORMAL_STYLE[BEAMER_MODE], "SansSerif");
+		StyleConstants.setFontFamily(NORMAL_STYLE[BEAMER_MODE],
+			"SansSerif"); //$NON-NLS-1$
 		StyleConstants.setFontSize(NORMAL_STYLE[BEAMER_MODE], 15);
 
-		HIGHLIGHTED_STYLE = new SimpleAttributeSet[] {
-				new SimpleAttributeSet(), new SimpleAttributeSet()};
-		StyleConstants.setFontFamily(HIGHLIGHTED_STYLE[PC_MODE], "SansSerif");
+		HIGHLIGHTED_STYLE = new SimpleAttributeSet[] {new SimpleAttributeSet(),
+			new SimpleAttributeSet()};
+		StyleConstants.setFontFamily(HIGHLIGHTED_STYLE[PC_MODE],
+			"SansSerif"); //$NON-NLS-1$
 		StyleConstants.setFontSize(HIGHLIGHTED_STYLE[PC_MODE], 11);
 		StyleConstants.setForeground(HIGHLIGHTED_STYLE[PC_MODE], Color.RED);
-		
-		StyleConstants.setFontFamily(HIGHLIGHTED_STYLE[BEAMER_MODE], "SansSerif");
+
+		StyleConstants.setFontFamily(HIGHLIGHTED_STYLE[BEAMER_MODE],
+			"SansSerif"); //$NON-NLS-1$
 		StyleConstants.setFontSize(HIGHLIGHTED_STYLE[BEAMER_MODE], 15);
-		StyleConstants.setForeground(HIGHLIGHTED_STYLE[BEAMER_MODE],
-			Color.RED.darker());
+		StyleConstants.setForeground(HIGHLIGHTED_STYLE[BEAMER_MODE], Color.RED
+		.darker());
 
 		DOCU_HIGHLIGHTED_STYLE = new SimpleAttributeSet[] {
-				new SimpleAttributeSet(), new SimpleAttributeSet()};
-		StyleConstants.setFontFamily(DOCU_HIGHLIGHTED_STYLE[PC_MODE], "SansSerif");
+			new SimpleAttributeSet(), new SimpleAttributeSet()};
+		StyleConstants.setFontFamily(DOCU_HIGHLIGHTED_STYLE[PC_MODE],
+			"SansSerif"); //$NON-NLS-1$
 		StyleConstants.setFontSize(DOCU_HIGHLIGHTED_STYLE[PC_MODE], 11);
-		StyleConstants.setForeground(DOCU_HIGHLIGHTED_STYLE[PC_MODE], Color.RED);
-		
+		StyleConstants
+		.setForeground(DOCU_HIGHLIGHTED_STYLE[PC_MODE], Color.RED);
+
 		StyleConstants.setFontFamily(DOCU_HIGHLIGHTED_STYLE[BEAMER_MODE],
-			"SansSerif");
+			"SansSerif"); //$NON-NLS-1$
 		StyleConstants.setFontSize(DOCU_HIGHLIGHTED_STYLE[BEAMER_MODE], 11);
 		StyleConstants.setForeground(DOCU_HIGHLIGHTED_STYLE[BEAMER_MODE],
 			Color.RED.darker());
