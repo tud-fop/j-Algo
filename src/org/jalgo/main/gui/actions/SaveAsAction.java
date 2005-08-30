@@ -28,6 +28,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.jalgo.main.gui.JalgoWindow;
+import org.jalgo.main.util.Messages;
 
 /**
  * @author Cornelius Hald
@@ -35,26 +36,30 @@ import org.jalgo.main.gui.JalgoWindow;
 public class SaveAsAction extends Action {
 	
 	private JalgoWindow win;
+	private boolean wasSuccessful;
 	
 	public SaveAsAction(JalgoWindow win) {
 		this.win = win;
-		setText(Messages.getString("ui.Save_as")); //$NON-NLS-1$
-		setId(Messages.getString("ui.Save_as")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ui.Save_as")); //$NON-NLS-1$
+		setText(Messages.getString("main", "ui.Save_as")); //$NON-NLS-1$ //$NON-NLS-2$
+		setId(Messages.getString("main", "ui.Save_as")); //$NON-NLS-1$ //$NON-NLS-2$
+		setToolTipText(Messages.getString("main", "ui.Save_as")); //$NON-NLS-1$ //$NON-NLS-2$
 		setImageDescriptor(ImageDescriptor.createFromURL(
-			getClass().getResource("/main_pix/save_as.gif")));
+			Messages.getResourceURL("main", "ui.Save_as"))); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public void run() {
 		FileDialog fileChooser = new FileDialog(win.getShell(), SWT.SAVE);
-		fileChooser.setText(Messages.getString("ui.Save_as")); //$NON-NLS-1$
-		fileChooser.setFilterPath(System.getProperty("user.dir"));
-		fileChooser.setFilterExtensions(new String[] {
-			Messages.getString("SaveAsAction.*.jalgo_6")}); //$NON-NLS-1$
+		fileChooser.setText(Messages.getString("main", "ui.Save_as")); //$NON-NLS-1$ //$NON-NLS-2$
+		fileChooser.setFilterPath(System.getProperty("user.dir")); //$NON-NLS-1$
+		fileChooser.setFilterExtensions(new String[] {"*.jalgo"}); //$NON-NLS-1$ //$NON-NLS-2$
+		fileChooser.setFilterNames(new String[] {
+			Messages.getString("main", "OpenAction.jAlgo_files")}); //$NON-NLS-1$ //$NON-NLS-2$
 		String filename = fileChooser.open();
-		if (filename != null) {
-			win.saveFileAs(filename);
-		}
+		if (filename != null) wasSuccessful = win.saveFileAs(filename);
+		else wasSuccessful = false;
 	}
 
+	public boolean wasSuccessful() {
+		return wasSuccessful;
+	}
 }
