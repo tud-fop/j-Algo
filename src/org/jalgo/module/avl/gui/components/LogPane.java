@@ -1,20 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /* Created on 31.05.2005 */
@@ -34,6 +38,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.gui.DisplayModeChangeable;
 import org.jalgo.module.avl.gui.GUIConstants;
@@ -42,9 +47,9 @@ import org.jalgo.module.avl.gui.Settings;
 
 /**
  * The class <code>LogPane</code> represents a scrollable logbook for logging
- * actions occured during algorithms. The last entry is each highlighted for better
- * recognition of the current action.
- *   
+ * actions occured during algorithms. The last entry is each highlighted for
+ * better recognition of the current action.
+ * 
  * @author Alexander Claus
  */
 public class LogPane
@@ -65,11 +70,12 @@ implements DisplayModeChangeable, GUIConstants {
 	 * Constructs a <code>LogPane</code> object with the given references.
 	 * 
 	 * @param gui the <code>GUIController</code> instance of the AVL module
-	 * @param controller the <code>Controller</code> instance of the AVL module
+	 * @param controller the <code>Controller</code> instance of the AVL
+	 *            module
 	 */
 	public LogPane(final GUIController gui, Controller controller) {
 		this.controller = controller;
-		lineSeparator = System.getProperty("line.separator");
+		lineSeparator = System.getProperty("line.separator"); //$NON-NLS-1$
 
 		textPane = new JTextPane();
 		textPane.setMargin(new Insets(2, 4, 2, 4));
@@ -78,61 +84,67 @@ implements DisplayModeChangeable, GUIConstants {
 		textPane.setDocument(doc);
 
 		setLayout(new BorderLayout());
-		JScrollPane scrollPane = new JScrollPane(
-			textPane,
+		JScrollPane scrollPane = new JScrollPane(textPane,
 			ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 			ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		add(scrollPane, BorderLayout.CENTER);
 
-		//the status line updater
+		// the status line updater
 		textPane.addMouseListener(new MouseAdapter() {
+
 			public void mouseExited(MouseEvent e) {
 				gui.setStatusMessage(null);
 			}
+
 			public void mouseEntered(MouseEvent e) {
-				gui.setStatusMessage("Gibt erfolgte Aktionen logbuchartig wieder");
+				gui.setStatusMessage(Messages.getString(
+					"avl", "LogPane.Status_message")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		});
 	}
 
 	/**
 	 * Takes the last occured actions as queue from the <code>Controller</code>.
-	 * This actions are prepared as strings for easy displaying.
-	 * Highlights the last entry, sets the pre-last entry back to normal style.
+	 * This actions are prepared as strings for easy displaying. Highlights the
+	 * last entry, sets the pre-last entry back to normal style.
 	 */
 	public void update() {
-		doc.setCharacterAttributes(
-			lastHighlightedParagraphOffset, lastHighlightedParagraphLength,
+		doc.setCharacterAttributes(lastHighlightedParagraphOffset,
+			lastHighlightedParagraphLength,
 			Settings.NORMAL_STYLE[Settings.getDisplayMode()], true);
-		
+
 		lastLogDescriptions = controller.getLogDescriptions();
 		for (String logDesc : lastLogDescriptions) {
-			if (logDesc == null || logDesc.equals("")) continue;
+			if (logDesc == null || logDesc.equals("")) continue; //$NON-NLS-1$
 			lastHighlightedParagraphOffset = doc.getLength();
 			try {
-				doc.insertString(doc.getLength(), logDesc+lineSeparator,
+				doc.insertString(doc.getLength(), logDesc + lineSeparator,
 					Settings.NORMAL_STYLE[Settings.getDisplayMode()]);
 			}
 			catch (BadLocationException ex) {
-				System.err.println("Fehler beim Logbuch-Update");
+				System.err.println(Messages.getString(
+					"avl", "LogPane.Update_error")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
-			lastHighlightedParagraphLength =
-				logDesc.length()+lineSeparator.length();
+			lastHighlightedParagraphLength = logDesc.length()
+				+ lineSeparator.length();
 		}
-		doc.setCharacterAttributes(
-			lastHighlightedParagraphOffset, lastHighlightedParagraphLength,
+		doc.setCharacterAttributes(lastHighlightedParagraphOffset,
+			lastHighlightedParagraphLength,
 			Settings.HIGHLIGHTED_STYLE[Settings.getDisplayMode()], true);
-		textPane.setCaretPosition(
-			lastHighlightedParagraphOffset+lastHighlightedParagraphLength);
+		textPane.setCaretPosition(lastHighlightedParagraphOffset
+			+ lastHighlightedParagraphLength);
 	}
 
 	/**
 	 * Clears the logbook.
 	 */
 	public void reset() {
-		try {doc.remove(0, doc.getLength());}
+		try {
+			doc.remove(0, doc.getLength());
+		}
 		catch (BadLocationException ex) {
-			System.err.println("Sollte nicht auftreten...");
+			System.err.println(Messages.getString(
+				"avl", "Unreachable_error")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		lastHighlightedParagraphLength = 0;
 		lastHighlightedParagraphOffset = 0;
@@ -145,17 +157,16 @@ implements DisplayModeChangeable, GUIConstants {
 	public void displayModeChanged() {
 		if (lastHighlightedParagraphOffset+lastHighlightedParagraphLength == 0)
 			return;
-		doc.setCharacterAttributes(
-			0, lastHighlightedParagraphOffset,
+		doc.setCharacterAttributes(0, lastHighlightedParagraphOffset,
 			Settings.NORMAL_STYLE[Settings.getDisplayMode()], true);
-		doc.setCharacterAttributes(
-			lastHighlightedParagraphOffset, lastHighlightedParagraphLength,
+		doc.setCharacterAttributes(lastHighlightedParagraphOffset,
+			lastHighlightedParagraphLength,
 			Settings.HIGHLIGHTED_STYLE[Settings.getDisplayMode()], true);
-		//scroll to end of text
+		// scroll to end of text
 		Rectangle visibleRect = textPane.getVisibleRect();
-		//force recalculating of height
+		// force recalculating of height
 		textPane.getParent().doLayout();
-		visibleRect.y = textPane.getHeight()-visibleRect.height;
+		visibleRect.y = textPane.getHeight() - visibleRect.height;
 		textPane.scrollRectToVisible(visibleRect);
 	}
 }
