@@ -23,7 +23,8 @@
 
 package org.jalgo.module.avl.algorithm;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Ulrike Fischer, Jean Christoph Jung
@@ -33,14 +34,13 @@ import java.util.*;
  * so a macrocommand object can do more complex operations by performing many
  * atomic commands.
  */
-public abstract class MacroCommand extends Command {
+public abstract class MacroCommand
+extends Command {
 
 	protected String name;
 	protected List<Command> commands;
 
-	/**
-	 * "iterator" on the commands List.
-	 */
+	/** "iterator" on the commands List. */
 	protected int currentPosition;
 
 	/**
@@ -52,12 +52,12 @@ public abstract class MacroCommand extends Command {
 	public MacroCommand() {
 		commands = new LinkedList<Command>();
 		currentPosition = 0;
-		name = "noname";
+		name = "noname"; //$NON-NLS-1$
 	}
 
 	/**
 	 * @return <code>true</code>, if there is a command in the command list,
-	 * 				that is not yet performed, <code>false</code> otherwise
+	 *         that is not yet performed, <code>false</code> otherwise
 	 */
 	public boolean hasNext() {
 		if (commands.isEmpty() || (currentPosition >= commands.size()))
@@ -66,15 +66,14 @@ public abstract class MacroCommand extends Command {
 	}
 
 	/**
-	 * @return <code>true</code>, if there is command in the command list, that
-	 * 				can be undone, <code>false</code> otherwise
+	 * @return <code>true</code>, if there is command in the command list,
+	 *         that can be undone, <code>false</code> otherwise
 	 */
 	public boolean hasPrevious() {
 		if (commands.size() > currentPosition) {
 			Command c = commands.get(currentPosition);
-			if ((currentPosition == 0) && (c instanceof MacroCommand)) {
+			if ((currentPosition == 0) && (c instanceof MacroCommand))
 				return ((MacroCommand)c).hasPrevious();
-			}
 			return (currentPosition > 0);
 		}
 		return (currentPosition > 0);
@@ -82,13 +81,11 @@ public abstract class MacroCommand extends Command {
 
 	/**
 	 * This methode need to be specifed by the concrete command.
-	 * 
 	 */
 	public abstract void perform();
 
 	/**
 	 * This methode need to be specifed by the concrete command.
-	 * 
 	 */
 	public abstract void undo();
 
@@ -100,9 +97,7 @@ public abstract class MacroCommand extends Command {
 	public void performBlockStep() {
 		if (!hasNext()) return;
 		Command c = commands.get(currentPosition);
-		if (c instanceof MacroCommand) {
-			((MacroCommand)c).performBlockStep();
-		}
+		if (c instanceof MacroCommand) ((MacroCommand)c).performBlockStep();
 		else {
 			do {
 				perform();
@@ -120,6 +115,7 @@ public abstract class MacroCommand extends Command {
 	 * units are defined by the concrete macrocommand.
 	 */
 	public void undoBlockStep() {
+		//TODO: what should this be?
 		if (!hasPrevious()) return;
 	}
 

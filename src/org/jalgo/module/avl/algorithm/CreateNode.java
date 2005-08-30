@@ -27,12 +27,13 @@ import org.jalgo.module.avl.Constants;
 import org.jalgo.module.avl.datastructure.*;
 
 /**
- * This class provides the creation of a new node. The node is inserted into
- * the searchtree at the place, specified by the worknode and the parameterlist.
+ * This class provides the creation of a new node. The node is inserted into the
+ * searchtree at the place, specified by the worknode and the parameterlist.
  * 
  * @author Jean Christoph Jung
  */
-public class CreateNode extends Command {
+public class CreateNode
+extends Command {
 
 	private WorkNode wn;
 	private SearchTree tree;
