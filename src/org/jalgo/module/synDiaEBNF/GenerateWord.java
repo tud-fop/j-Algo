@@ -1,20 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /*
@@ -29,12 +33,14 @@ import java.util.List;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.gfx.MarkStyle;
+import org.jalgo.main.gui.DialogConstants;
 import org.jalgo.main.gui.TextCanvas;
 import org.jalgo.main.gui.widgets.StackCanvas;
 import org.jalgo.main.util.GfxUtil;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaColors;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure;
@@ -51,9 +57,9 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariableBack;
 
 /**
  * Offers the methods to generate a word, which is recognized by a language
- * shown by a syntactical diagram system. Within the possibility to go step by 
- * the through the system, even backwards.
- * The algorithm can be aborted all the time. 
+ * shown by a syntactical diagram system. Within the possibility to go step by
+ * the through the system, even backwards. The algorithm can be aborted all the
+ * time.
  * 
  * @author Babett Schaliz
  * @author Benjamin Scholz
@@ -62,171 +68,170 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariableBack;
  * @version %I%, %G%
  */
 public class GenerateWord
-	extends SynDiaBacktracking
-	implements SynDiaColors, Serializable {
+extends SynDiaBacktracking
+implements SynDiaColors, Serializable {
 
 	private static final long serialVersionUID = -4764721879157297522L;
 
 	/**
-	* Constructor gets the Figure, Stack, the StackCanavas, the TextCanvases and
-	* also the syntaxtical diagram SynDiaSystem, to work with. It also fill the 
-	* TextCanvas and show the backtracking labels, set the startelement. 
-	* @param figure	The <code> Figure </code> include the diagram system
-	* @param stackCanvas	The <code> StackCanvas </code> of the graphical stack
-	* @param algoTxtCanvas	The <code> TextCanvas </code> where the algorithm is displayed
-	* @param generatedWordCanvas	The <code> TextCanvas </code> to display the generated word
-	* @param synDiaDef	The <code> SynDiaSystem </code> to work with
-	*/
-	public GenerateWord(
-		ModuleController moduleController,
-		Figure figure,
-		StackCanvas stackCanvas,
-		TextCanvas algoTxtCanvas,
-		TextCanvas generatedWordCanvas,
-		SynDiaSystem synDiaDef) {
+	 * Constructor gets the Figure, Stack, the StackCanavas, the TextCanvases
+	 * and also the syntaxtical diagram SynDiaSystem, to work with. It also fill
+	 * the TextCanvas and show the backtracking labels, set the startelement.
+	 * 
+	 * @param figure The <code> Figure </code> include the diagram system
+	 * @param stackCanvas The <code> StackCanvas </code> of the graphical stack
+	 * @param algoTxtCanvas The <code> TextCanvas </code> where the algorithm is
+	 *            displayed
+	 * @param generatedWordCanvas The <code> TextCanvas </code> to display the
+	 *            generated word
+	 * @param synDiaDef The <code> SynDiaSystem </code> to work with
+	 */
+	public GenerateWord(ModuleController moduleController, Figure figure,
+		StackCanvas stackCanvas, TextCanvas algoTxtCanvas,
+		TextCanvas generatedWordCanvas, SynDiaSystem synDiaDef) {
 
-		super(
-			moduleController,
-			figure,
-			stackCanvas,
-			algoTxtCanvas,
-			generatedWordCanvas,
-			synDiaDef);
+		super(moduleController, figure, stackCanvas, algoTxtCanvas,
+			generatedWordCanvas, synDiaDef);
 
 		// algorithm written on page 22 in the script
-		algoTxtCanvas.setTextSegments(new String[] { Messages.getString("GenerateWord.Algo_title_2"), //$NON-NLS-1$
-			Messages.getString("GenerateWord.Algo_description_1_3") //$NON-NLS-1$
-			+Messages.getString("GenerateWord.Algo_description_2_4"), //$NON-NLS-1$
-			Messages.getString("GenerateWord.Algo_description_3_5"), //$NON-NLS-1$
-			Messages.getString("GenerateWord.Algo_description_4_6") //$NON-NLS-1$
-			+Messages.getString("GenerateWord.Algo_description_5_7") //$NON-NLS-1$
-			+Messages.getString("GenerateWord.Algo_description_6_8"), //$NON-NLS-1$
-			Messages.getString("GenerateWord.Algo_description_7_9") //$NON-NLS-1$
-			+Messages.getString("GenerateWord.Algo_description_8_10") //$NON-NLS-1$
-			+Messages.getString("GenerateWord.Algo_description_9_11"), //$NON-NLS-1$
-			Messages.getString("GenerateWord.Algo_description_10_12") //$NON-NLS-1$
-			+Messages.getString("GenerateWord.Algo_description_11_13") //$NON-NLS-1$
-			+Messages.getString("GenerateWord.Algo_description_12_14") //$NON-NLS-1$
-			+Messages.getString("GenerateWord.Algo_description_13_15") //$NON-NLS-1$
-			+Messages.getString("GenerateWord.Algo_description_14_16"), //$NON-NLS-1$
-			Messages.getString("GenerateWord.Algo_description_15_17") //$NON-NLS-1$
-			+Messages.getString("GenerateWord.Algo_description_16_18") //$NON-NLS-1$
-			+Messages.getString("GenerateWord.Algo_description_17_19"), //$NON-NLS-1$
-			Messages.getString("GenerateWord.Algo_description_18_20") //$NON-NLS-1$
-			+Messages.getString("GenerateWord.Algo_description_19_21"), //$NON-NLS-1$
-			Messages.getString("GenerateWord.Algo_description_20_22")}); //$NON-NLS-1$
+		algoTxtCanvas.setTextSegments(new String[] {
+			Messages.getString("synDiaEBNF", "GenerateWord.Algo_title_2"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_1_3") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_2_4"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_3_5"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_4_6") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_5_7") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_6_8"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_7_9") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_8_10") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_9_11"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_10_12") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_11_13") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_12_14") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_13_15") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_14_16"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_15_17") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_16_18") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_17_19"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_18_20") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_19_21"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "GenerateWord.Algo_description_20_22")}); //$NON-NLS-1$
 		algoTxtCanvas.markFirst();
 		algoTxtCanvas.setMarkStyle(new MarkStyle(normal, diagramNormal, 2));
 		algoTxtCanvas.demarkAll();
-		algoTxtCanvas.setMarkStyle(
-			new MarkStyle(textHighlight, diagramNormal, 3));
+		algoTxtCanvas.setMarkStyle(new MarkStyle(textHighlight, diagramNormal, 3));
 
-		outputCanvas.setTextSegments(new String[] { Messages.getString("GenerateWord.The_word_which_was_generated_is__n_23")}); //$NON-NLS-1$
+		outputCanvas.setTextSegments(new String[] {Messages.getString(
+			"synDiaEBNF", "GenerateWord.The_word_which_was_generated_is__n_23")}); //$NON-NLS-1$
 	}
 
 	/**
-	* Test if there is a valid previous element in the history, to go there.
-	* @return 	true, if there is a previous element in the history, so you can go a step back;
-	* 			false if not
-	*/
+	 * Test if there is a valid previous element in the history, to go there.
+	 * 
+	 * @return true, if there is a previous element in the history, so you can
+	 *         go a step back; false if not
+	 */
 	public boolean hasPreviousHistStep() {
 		return (history.getPointer() > 0);
 	}
 
 	/**
-	* Test if there is a valid next element in the history, to go there
-	* @return 	true, if there is a next element, so you can go a step forward in history; 
-	* 			false if not
-	*/
+	 * Test if there is a valid next element in the history, to go there
+	 * 
+	 * @return true, if there is a next element, so you can go a step forward in
+	 *         history; false if not
+	 */
 	public boolean hasNextHistStep() {
 		return (history.getPointer() < history.getSize() - 1);
 	}
 
 	/**
-	* This method is called if the forwardInHistoryButton on the GUI is pushed, 
-	* it restore the next step with the history.
-	* 
-	* @exception IndexOutOfBounds   if there is no further step to go
-	*/
-	public void nextHistStep() throws IndexOutOfBoundsException {
-		if (!hasNextHistStep()) {
-			throw new IndexOutOfBoundsException("there is no further history step to go"); //$NON-NLS-1$
+	 * This method is called if the forwardInHistoryButton on the GUI is pushed,
+	 * it restore the next step with the history.
+	 * 
+	 * @exception IndexOutOfBoundsException if there is no further step to go
+	 */
+	public void nextHistStep()
+	throws IndexOutOfBoundsException {
+		if (!hasNextHistStep()) { throw new IndexOutOfBoundsException(
+			"there is no further history step to go"); //$NON-NLS-1$
 		}
 		restoreStep(history.getNextHistoryStep());
 		refreshGeneratedWord(generatedWord);
-		//MAKE ready and controll if it works
+		// MAKE ready and controll if it works
 		if (currentElement instanceof SynDiaTerminal) {
-			redoNextTerm((SynDiaTerminal) currentElement);
-		} else if (currentElement instanceof SynDiaVariable) { //SynDiaVariable
-			redoNextVariable((SynDiaVariable) currentElement);
-		} else if (currentElement instanceof SynDiaVariableBack) {
-			//SynDiaVariable
-			redoNextVariableBack((SynDiaVariableBack) currentElement);
+			redoNextTerm((SynDiaTerminal)currentElement);
+		}
+		else if (currentElement instanceof SynDiaVariable) { // SynDiaVariable
+			redoNextVariable((SynDiaVariable)currentElement);
+		}
+		else if (currentElement instanceof SynDiaVariableBack) {
+			// SynDiaVariable
+			redoNextVariableBack((SynDiaVariableBack)currentElement);
 		}
 	}
 
 	/**
-	* this method is called if the backwardButton on the GUI is pushed
-	* and should restore the last saved step of the visualisation
-	* 
-	* @exception IndexOutOfBounds   if there is no previous step to go
-	*/
-	public void previousHistStep() throws IndexOutOfBoundsException {
-		if (!hasPreviousHistStep()) {
-			throw new IndexOutOfBoundsException("there is no further history step to go back"); //$NON-NLS-1$
+	 * this method is called if the backwardButton on the GUI is pushed and
+	 * should restore the last saved step of the visualisation
+	 * 
+	 * @exception IndexOutOfBoundsException if there is no previous step to go
+	 */
+	public void previousHistStep()
+	throws IndexOutOfBoundsException {
+		if (!hasPreviousHistStep()) { throw new IndexOutOfBoundsException(
+			"there is no further history step to go back"); //$NON-NLS-1$
 		}
 		restoreStep(history.getLastHistoryStep());
 		refreshGeneratedWord(generatedWord);
 
 		stack.push(currentElement);
 
-		//mark the right algorithm Text-field
+		// mark the right algorithm Text-field
 		algoTxtCanvas.demarkAll();
 		algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
 
 		if (currentElement instanceof SynDiaTerminal) {
 			// mark the SynDiaTerminal
-			 ((SynDiaTerminal) currentElement).unmarkObject(false);
+			((SynDiaTerminal)currentElement).unmarkObject(false);
 
 			// refresh the generatedWord
 			refreshGeneratedWord(generatedWord);
-		} else if (currentElement instanceof SynDiaVariable) {
-			//SynDiaVariable Jump in in the next step
+		}
+		else if (currentElement instanceof SynDiaVariable) {
+			// SynDiaVariable Jump in in the next step
 
 			// mark the currentElem
-			 ((SynDiaVariable) currentElement).unmarkObject(false);
+			((SynDiaVariable)currentElement).unmarkObject(false);
 
 			// remove correspondent backtracking label on StackCanvas
 			stackCanvas.pop();
 
 			// restore Backtracking diagram to set Background
-			colorTheDiagram(
-				((SynDiaVariable) currentElement)
-					.getHelpCopy()
-					.getParentInitial()
-					.getGfx());
+			colorTheDiagram(((SynDiaVariable)currentElement).getHelpCopy()
+			.getParentInitial().getGfx());
 
-			// MAKE first Connection??? 
-		} else if (currentElement instanceof SynDiaVariableBack) {
-			//SynDiaVariableBackjump out!
+			// MAKE first Connection???
+		}
+		else if (currentElement instanceof SynDiaVariableBack) {
+			// SynDiaVariableBackjump out!
 
 			// display correspondent backtracking label on StackCanvas
-			if (((SynDiaVariableBack) currentElement).getOriginal() != null) {
+			if (((SynDiaVariableBack)currentElement).getOriginal() != null) {
 				stackCanvas.push("" //$NON-NLS-1$
-				+ (
-					((SynDiaVariableBack) currentElement)
-						.getOriginal()
-						.getBacktrackingLabel()));
+					+ (((SynDiaVariableBack)currentElement).getOriginal()
+					.getBacktrackingLabel()));
 			}
-		} else {
-			//previousHistStep();
+		}
+		else {
+			// previousHistStep();
 		}
 	}
 
 	/**
 	 * this method is called if the "do algorithm" button on the GUI is pushed
-	 * realize the backtracking algorithm
-	 * has to find the next element in the syntactical diagram and...
+	 * realize the backtracking algorithm has to find the next element in the
+	 * syntactical diagram and...
 	 */
 	public void performNextStep() {
 		// check, if it is actually possible to perform a further step
@@ -236,44 +241,52 @@ public class GenerateWord
 
 		if (stack.peek() != null) {
 
-			//fetch the new SynDiaElement to work with
+			// fetch the new SynDiaElement to work with
 			currentElement = stack.pop();
 
-			//detect type of currentElem and go on accordingly
+			// detect type of currentElem and go on accordingly
 			if (currentElement instanceof SynDiaInitial) {
-				doNextInitial((SynDiaInitial) currentElement);
-			} else if (currentElement instanceof SynDiaEpsilon) {
-				//go on Stack, this is an Epsilon f.e. in a Alternative,
+				doNextInitial((SynDiaInitial)currentElement);
+			}
+			else if (currentElement instanceof SynDiaEpsilon) {
+				// go on Stack, this is an Epsilon f.e. in a Alternative,
 				performNextStep();
-			} else if (currentElement instanceof SynDiaTerminal) {
-				//initialize BackTrackStep to save and restore later!
+			}
+			else if (currentElement instanceof SynDiaTerminal) {
+				// initialize BackTrackStep to save and restore later!
 				history.addNewPosStep(stack, currentElement, generatedWord);
-				doNextTerm((SynDiaTerminal) currentElement);
-			} else if (currentElement instanceof SynDiaVariable) {
-				//initialize BackTrackStep to save and restore later!
+				doNextTerm((SynDiaTerminal)currentElement);
+			}
+			else if (currentElement instanceof SynDiaVariable) {
+				// initialize BackTrackStep to save and restore later!
 				history.addNewPosStep(stack, currentElement, generatedWord);
-				doNextVariable((SynDiaVariable) currentElement);
-			} else if (currentElement instanceof SynDiaVariableBack) {
-				//initialize BackTrackStep to save and restore later!
+				doNextVariable((SynDiaVariable)currentElement);
+			}
+			else if (currentElement instanceof SynDiaVariableBack) {
+				// initialize BackTrackStep to save and restore later!
 				history.addNewPosStep(stack, currentElement, generatedWord);
-				doNextVariableBack((SynDiaVariableBack) currentElement);
-			} else { // Composite
+				doNextVariableBack((SynDiaVariableBack)currentElement);
+			}
+			else { // Composite
 				algoTxtCanvas.demarkAll();
 				algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
-				if (currentElement instanceof SynDiaRepetition) { //repetition?
-					doNextRepetition((SynDiaRepetition) currentElement);
-				} else if (currentElement instanceof SynDiaAlternative) {
-					doNextAlternative((SynDiaAlternative) currentElement);
-				} else if (currentElement instanceof SynDiaConcatenation) {
-					doNextConcatenation((SynDiaConcatenation) currentElement);
+				if (currentElement instanceof SynDiaRepetition) { // repetition?
+					doNextRepetition((SynDiaRepetition)currentElement);
+				}
+				else if (currentElement instanceof SynDiaAlternative) {
+					doNextAlternative((SynDiaAlternative)currentElement);
+				}
+				else if (currentElement instanceof SynDiaConcatenation) {
+					doNextConcatenation((SynDiaConcatenation)currentElement);
 				}
 			}
-		} else { // if null on stack
+		}
+		else { // if null on stack
 			stack.pop();
 			performNextStep();
 		}
 		if (!hasNextStep()) {
-			//mark the right algorithm text field
+			// mark the right algorithm text field
 			algoTxtCanvas.demarkAll();
 			algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
 			// dialog that the Algorithmen is Empty
@@ -286,19 +299,19 @@ public class GenerateWord
 		List list = this.synDiaDef.getGfx().getSynDias();
 
 		for (int k = 0; k < list.size(); k++) {
-			((SynDiaFigure) list.get(k)).setBackgroundColor(diagramNormal);
+			((SynDiaFigure)list.get(k)).setBackgroundColor(diagramNormal);
 		}
 
-		//set the one
+		// set the one
 		current.setBackgroundColor(diagramHighlight);
 	}
 
-	//----------------------PerformNextStep()-----------------------------------
+	// ----------------------PerformNextStep()-----------------------------------
 
 	private void doNextInitial(SynDiaInitial currentElem) {
 		colorTheDiagram(currentElem.getGfx());
 
-		//actualize StackConfiguration
+		// actualize StackConfiguration
 		stack.push(currentElem.getInnerElem());
 	}
 
@@ -315,7 +328,7 @@ public class GenerateWord
 		refreshGeneratedWord(generatedWord);
 	}
 
-	private void doNextVariable(SynDiaVariable currentElem) { //jump in
+	private void doNextVariable(SynDiaVariable currentElem) { // jump in
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
 		algoTxtCanvas.mark(ALGO_DEF_VAR);
@@ -323,7 +336,7 @@ public class GenerateWord
 		// mark the currentElem
 		currentElem.markObject();
 
-		// set internal Stack config 
+		// set internal Stack config
 		stack.push(currentElem.getHelpCopy()); // save to go back
 		stack.push(currentElem.getStartElem());
 
@@ -331,7 +344,6 @@ public class GenerateWord
 		stackCanvas.push("" + currentElem.getBacktrackingLabel()); //$NON-NLS-1$
 
 		// change diagram colors in Initial
-
 	}
 
 	private void doNextVariableBack(SynDiaVariableBack currentElem) { //jump out
@@ -344,7 +356,7 @@ public class GenerateWord
 		// restore Backtracking diagram to set Background
 		colorTheDiagram(currentElem.getParentInitial().getGfx());
 
-		// set new internal StackConfig 
+		// set new internal StackConfig
 		// Variable removed in pop...
 
 		// remove correspondent backtracking label on StackCanvas
@@ -357,10 +369,11 @@ public class GenerateWord
 			currentElem.setStraightAheadElemDone(true);
 			stack.push(currentElem);
 			stack.push(currentElem.getStraightAheadElem());
-		} else { //StraightAheadElem already done
+		}
+		else { // StraightAheadElem already done
 			currentElem.setStraightAheadElemDone(false);
 			if (repetionDialog(currentElem)) {
-				// go into the Repetition 
+				// go into the Repetition
 				stack.push(currentElem);
 				stack.push(currentElem.getRepeatedElem());
 			}
@@ -381,7 +394,7 @@ public class GenerateWord
 		performNextStep();
 	}
 
-	//----------------------------redoNext*XYZ()--------------------------------
+	// ----------------------------redoNext*XYZ()--------------------------------
 
 	private void redoNextTerm(SynDiaTerminal currentElem) {
 		// mark the right algorithmen Text-field
@@ -397,7 +410,7 @@ public class GenerateWord
 	}
 
 	private void redoNextVariable(SynDiaVariable currentElem) {
-		//jump in
+		// jump in
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
 		algoTxtCanvas.mark(ALGO_DEF_VAR);
@@ -405,7 +418,7 @@ public class GenerateWord
 		// mark the currentElem
 		currentElem.markObject();
 
-		// set internal Stack config 
+		// set internal Stack config
 		stack.push(currentElem); // save to go back
 		stack.push(currentElem.getStartElem());
 
@@ -416,7 +429,7 @@ public class GenerateWord
 	}
 
 	private void redoNextVariableBack(SynDiaVariableBack currentElem) {
-		//jump out
+		// jump out
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
 		algoTxtCanvas.mark(ALGO_DEF_DIAGRAM_FINISHED);
@@ -431,14 +444,16 @@ public class GenerateWord
 	}
 
 	private void refreshGeneratedWord(String output) {
-		outputCanvas.addSegment(Messages.getString("GenerateWord.The_word_which_was_generated_is__n_29") + output); //$NON-NLS-1$
+		outputCanvas.addSegment(Messages.getString("synDiaEBNF",
+			"GenerateWord.The_word_which_was_generated_is__n_29") + output); //$NON-NLS-1$
 	}
 
 	private void readyDialog() {
-			boolean result = MessageDialog.openQuestion(stackCanvas.getShell(), Messages.getString("GenerateWord.Algorithm_is_ready_30"), //$NON-NLS-1$
-		Messages.getString("GenerateWord.The_algorithm_has_finished_!_The_generated_Word_is__31") //$NON-NLS-1$
-	+generatedWord + Messages.getString("GenerateWord.._Should_the_algorithm_be_closed__32")); //$NON-NLS-1$
-		if (result) {
+		if (JAlgoGUIConnector.getInstance().showConfirmDialog(
+			Messages.getString("synDiaEBNF", "GenerateWord.The_algorithm_has_finished_!_The_generated_Word_is__31") + //$NON-NLS-1$
+				generatedWord +
+				Messages.getString("synDiaEBNF", "GenerateWord.._Should_the_algorithm_be_closed__32"), //$NON-NLS-1$
+			DialogConstants.YES_NO_OPTION) == DialogConstants.YES_OPTION) {
 			finalTasks();
 			moduleController.algoFinished();
 		}
@@ -448,31 +463,36 @@ public class GenerateWord
 		LinkedList list = alternative.getOptions();
 		int way = list.size(); // int of possible ways
 		// ask the user, which way to go on
-		//return the list index of the choosen way
+		// return the list index of the choosen way
 		int result = 0;
 
 		while (result == 0) {
-				InputDialog inDialog = new InputDialog(GfxUtil.getAppShell(), Messages.getString("GenerateWord.Alternative_Dialog_33"), //$NON-NLS-1$
-		Messages.getString("GenerateWord.The_ways_are_numbered_form_top_to_bottom._There_are__34") //$NON-NLS-1$
-		+way + Messages.getString("GenerateWord._ways_to_go_!_Which_one_do_you_want_to_go__35"), //$NON-NLS-1$
-		"", //$NON-NLS-1$
-	null);
+			InputDialog inDialog = new InputDialog(
+				GfxUtil.getAppShell(),
+				Messages.getString("synDiaEBNF", "GenerateWord.Alternative_Dialog_33"), //$NON-NLS-1$
+				Messages.getString("synDiaEBNF", "GenerateWord.The_ways_are_numbered_form_top_to_bottom._There_are__34") //$NON-NLS-1$
+					+ way
+					+ Messages.getString("synDiaEBNF", "GenerateWord._ways_to_go_!_Which_one_do_you_want_to_go__35"), //$NON-NLS-1$
+				"", //$NON-NLS-1$
+				null);
 			if (inDialog.open() != Window.CANCEL) {
 				try {
 					result = (Integer.valueOf(inDialog.getValue())).intValue();
-				} catch (NumberFormatException e) {
-					//				MessageDialog.openError(
-					//					null,
-					//					"Warning",
-					//					"Please use a integer value. Using default value now: 1.");
+				}
+				catch (NumberFormatException e) {
+					// MessageDialog.openError(
+					// null,
+					// "Warning",
+					// "Please use a integer value. Using default value now:
+					// 1.");
 					result = 0;
 				}
 			}
-			if ((result > 0) && (result <= way)) {
-				return result - 1;
-			}
-			MessageDialog.openError(null, Messages.getString("GenerateWord.Warning_37"), //$NON-NLS-1$
-			Messages.getString("GenerateWord.Please_use_a_value_between_1_and__38") + way + "."); //$NON-NLS-1$ //$NON-NLS-2$
+			if ((result > 0) && (result <= way)) { return result - 1; }
+			JAlgoGUIConnector.getInstance().showWarningMessage(
+				Messages.getString("synDiaEBNF",
+					"GenerateWord.Please_use_a_value_between_1_and__38") + //$NON-NLS-1$
+					way + "."); //$NON-NLS-2$
 			result = 0;
 		}
 		return 0;
@@ -481,8 +501,10 @@ public class GenerateWord
 	private boolean repetionDialog(SynDiaRepetition repetition) {
 		// ask the user, if the repetition should makes!
 		// return boolean if or not
-		return MessageDialog.openQuestion(GfxUtil.getAppShell(), Messages.getString("GenerateWord.Repetition_Dialog_40"), //$NON-NLS-1$
-		Messages.getString("GenerateWord.Do_you_want_to_go_through_the_repetition__41")); //$NON-NLS-1$
+		return JAlgoGUIConnector.getInstance().showConfirmDialog(
+			Messages.getString("synDiaEBNF", 
+				"GenerateWord.Do_you_want_to_go_through_the_repetition__41"), //$NON-NLS-1$
+			DialogConstants.YES_NO_OPTION) == DialogConstants.YES_OPTION;
 	}
 
 	private void restoreStep(BackTrackStep step) {
