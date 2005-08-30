@@ -38,10 +38,12 @@ import org.jalgo.main.IModuleInfo;
  * @author Benjamin Scholz
  * @author Marco Zimmerling
   */
-public class ModuleConnector implements IModuleConnector {
+public class ModuleConnector
+implements IModuleConnector {
 
 	private IModuleInfo moduleInfo;
 	private ModuleController controller;
+	private int saveStatus;
 
 	/**
 	 * @see IModuleConnector
@@ -81,6 +83,7 @@ public class ModuleConnector implements IModuleConnector {
 	 * This method is not used in this module.
 	 */
 	public void print() {
+	// printing is currently not used
 	}
 
 	/**
@@ -119,5 +122,19 @@ public class ModuleConnector implements IModuleConnector {
 
 	public boolean close() {
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jalgo.main.IModuleConnector#getSaveStatus()
+	 */
+	public int getSaveStatus() {
+		return saveStatus;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.jalgo.main.IModuleConnector#setSaveStatus(int)
+	 */
+	public void setSaveStatus(int status) {
+		this.saveStatus = status;
 	}
 }
