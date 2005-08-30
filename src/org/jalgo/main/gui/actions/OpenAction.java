@@ -25,9 +25,8 @@ package org.jalgo.main.gui.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
 import org.jalgo.main.gui.JalgoWindow;
+import org.jalgo.main.util.Messages;
 
 /**
  * This is the action responible for the "File open" request.
@@ -41,8 +40,8 @@ public class OpenAction extends Action {
 	public OpenAction(JalgoWindow win) {
 
 		this.win = win;
-		setText(Messages.getString("ui.Open_file")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ui.Open_file")); //$NON-NLS-1$
+		setText(Messages.getString("main", "ui.Open_file")); //$NON-NLS-1$ //$NON-NLS-2$
+		setToolTipText(Messages.getString("main", "ui.Open_file")); //$NON-NLS-1$ //$NON-NLS-2$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/main_pix/open.gif")));
 	}
@@ -54,26 +53,6 @@ public class OpenAction extends Action {
 	 * @see org.eclipse.jface.action.IAction#run()
 	 */
 	public void run() {
-		run(false);
-	}
-
-	/**
-	 * The method is called if the user presses the "File open" button.
-	 * 
-	 * @see org.eclipse.jface.action.IAction#run()
-	 */
-	public void run(boolean useCurrentModuleInstance) {
-		FileDialog fileChooser = new FileDialog(win.getShell(), SWT.OPEN);
-
-		fileChooser.setText(Messages.getString("ui.Open_file")); //$NON-NLS-1$
-		fileChooser.setFilterPath(System.getProperty("user.dir"));
-		fileChooser.setFilterExtensions(new String[] { "*.jalgo", "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$
-		fileChooser.setFilterNames(
-			new String[] { Messages.getString("OpenAction.jAlgo_files_(*.jalgo)_7"), Messages.getString("OpenAction.All_files_8") }); //$NON-NLS-1$ //$NON-NLS-2$
-
-		String filename = fileChooser.open();
-		if (filename != null) {
-			win.openFile(filename, useCurrentModuleInstance);
-		}
+		win.showOpenDialog(true, false);
 	}
 }
