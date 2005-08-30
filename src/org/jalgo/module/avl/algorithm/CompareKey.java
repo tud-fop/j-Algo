@@ -30,7 +30,8 @@ import org.jalgo.module.avl.datastructure.*;
  * 
  * The class <code>CompareKey</code> compares two keys with eacher other.
  */
-public class CompareKey extends Command {
+public class CompareKey
+extends Command {
 
 	private WorkNode wn;
 
@@ -48,6 +49,7 @@ public class CompareKey extends Command {
 	 * node, returns 0 if the keys are the same, -1 if the key of the WorkNode
 	 * is smaller and 1 otherwise.
 	 */
+	@SuppressWarnings("unchecked")
 	public void perform() {
 
 		Integer worknodekey = wn.getKey();
@@ -60,5 +62,6 @@ public class CompareKey extends Command {
 	 * method is empty, undo not necessary
 	 */
 	public void undo() {
+	// this method has no effect
 	}
 }
