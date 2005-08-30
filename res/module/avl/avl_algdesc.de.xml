@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE AlgorithmDescription [ <!-- SYSTEM "structure.dtd" > !-->
-	<!ELEMENT AlgorithmDescription (Schritt)*>
-	<!ELEMENT Schritt (Key,Text)>
+	<!ELEMENT AlgorithmDescription (Step)*>
+	<!ELEMENT Step (Key,Text)>
 	<!ELEMENT Key (#PCDATA)*>
 	<!ELEMENT Text (Line)*>
 	<!ELEMENT Line (#PCDATA)*>
@@ -9,7 +9,7 @@
 <AlgorithmDescription>
 
 <!-- search algorithm !-->
-<Schritt>
+<Step>
          <Key>search1</Key>
          <Text>
          <Line> Schlüsselsuche im Suchbaum: </Line>
@@ -26,16 +26,16 @@
 		     <Line startswith="sp9">
                wiederhole diesen Schritt im rechten Teilbaum</Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>search1newline</Key>
 		<Line endswith="nl"/>
-</Schritt>
+</Step>
 
 <!-- insert algorithm !-->
-<Schritt>
+<Step>
          <Key>insert1</Key>
          <Text>
          <Line endswith="nl"> 1. Suche Stelle zum Einfügen eines Schlüssels s: </Line>
@@ -54,29 +54,29 @@
 		     <Line startswith="sp9">
                wiederhole diesen Schritt im rechten Teilbaum</Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>insert1newline</Key>
 		<Line startswith="nl" endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>insert2</Key>
          <Text>
          </Text>
          <Line>2. Knoten mit neuem Schlüssel an gefundene Stelle einfügen</Line>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>insert2newline</Key>
 		<Line endswith="nl"/>
-</Schritt>
+</Step>
 
 <!-- avl insert !-->
-<Schritt>
+<Step>
          <Key>avlinsert1</Key>
          <Text>
          <Line> 1. Suche Stelle zum Einfügen: </Line>
@@ -95,15 +95,15 @@
 		     <Line startswith="sp9">
                wiederhole diesen Schritt im rechten Teilbaum</Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>avlinsert1newline</Key>
 		<Line startswith="nl" endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>avlinsert2</Key>
          <Text>
          <Line endswith="nl">
@@ -115,15 +115,15 @@
          <Line startswith="sp3">
                Sonst "fertig". </Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>avlinsert2newline</Key>
 		<Line startswith="nl" endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>avlinsert3a</Key>
          <Text>
          <Line endswith="nl">
@@ -145,15 +145,15 @@
          <Line startswith="sp9">
                dann führe Linksrotation um n-&gt;left und Rechtsrotation um n durch </Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>avlinsert3anewline</Key>
 		<Line startswith="nl" endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>avlinsert3b</Key>
          <Text>
          <Line endswith="nl" startswith="sp3">
@@ -173,15 +173,15 @@
          <Line startswith="sp9">
                dann führe Rechtsrotation um n-&gt;right und Linksrotation um n durch </Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>avlinsert3bnewline</Key>
 		<Line endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>remove1</Key>
          <Text>
          <Line endswith="nl"> 1. Schlüsselsuche: </Line>
@@ -200,15 +200,15 @@
 		     <Line startswith="sp9">
                wiederhole diesen Schritt im rechten Teilbaum</Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>remove1newline</Key>
 		<Line startswith="nl" endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>remove2</Key>
          <Text>
          <Line endswith="nl"> 2. Fallunterscheidung </Line>
@@ -221,15 +221,15 @@
          <Line startswith="sp3">
                c) sonst nächstgrößeren Schlüssel suchen (gehe zu Schritt 3)</Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>remove2newline</Key>
 		<Line startswith="nl" endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>remove3</Key>
          <Text>
          <Line endswith="nl"> 3. Nächstgrößeren Schlüssel suchen </Line>
@@ -238,15 +238,15 @@
          <Line startswith="sp3">
                bis kein linker Nachfolger mehr da ist. </Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>remove3newline</Key>
 		<Line startswith="nl" endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>remove4</Key>
          <Text>
          <Line endswith="nl"> 4. Schlüsselersetzen </Line>
@@ -257,15 +257,15 @@
          <Line startswith="sp3">
                Algorithmus beendet</Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>remove4newline</Key>
 		<Line endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>avlremove1</Key>
          <Text>
          <Line endswith="nl"> 1. Schlüsselsuche: </Line>
@@ -284,15 +284,15 @@
 		     <Line startswith="sp9">
                wiederhole diesen Schritt im rechten Teilbaum</Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>avlremove1newline</Key>
 		<Line startswith="nl" endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>avlremove2</Key>
          <Text>
          <Line endswith="nl"> 2. Fallunterscheidung </Line>
@@ -305,15 +305,15 @@
          <Line startswith="sp3">
                c) sonst nächstgrößeren Schlüssel suchen (gehe zu Schritt 3)</Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>avlremove2newline</Key>
 		<Line startswith="nl" endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>avlremove3</Key>
          <Text>
          <Line endswith="nl"> 3. Nächstgrößeren Schlüssel suchen </Line>
@@ -322,15 +322,15 @@
          <Line startswith="sp3">
                bis kein linker Nachfolger mehr da ist. </Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>avlremove3newline</Key>
 		<Line startswith="nl" endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>avlremove4</Key>
          <Text>
          <Line endswith="nl"> 4. Schlüsselersetzen </Line>
@@ -341,15 +341,15 @@
          <Line startswith="sp3">
                Gehe zu Schritt 5 mit dem Vaterknoten des nächstgrößeren Schlüssels </Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>avlremove4newline</Key>
 		<Line startswith="nl" endswith="nl"/>
-</Schritt>
+</Step>
 
-<Schritt>
+<Step>
          <Key>avlremove5</Key>
          <Text>
          <Line endswith="nl"> 5. Balancieren </Line>
@@ -368,12 +368,12 @@
          <Line startswith="sp3">
                Gehe zum Vaterknoten des aktuellen, falls er existiert, sonst Algorithmus beendet </Line>
          </Text>
-</Schritt>
+</Step>
 
 <!-- only for layout !-->
-<Schritt>
+<Step>
 		<Key>avlremove5newline</Key>
 		<Line endswith="nl"/>
-</Schritt>
+</Step>
 
 </AlgorithmDescription>
