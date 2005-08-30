@@ -41,7 +41,7 @@ public class SetStartNodeAction extends GraphAction {
 	/**
 	 * @param ctrl Controller for this action
 	 * @param nNode Index of the new start node
-	 * @throws Exception
+	 * @throws ActionException
 	 */
 	public SetStartNodeAction(Controller ctrl, int nNode) throws ActionException {
 		super(ctrl);

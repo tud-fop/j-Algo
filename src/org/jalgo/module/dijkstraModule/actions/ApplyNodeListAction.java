@@ -39,7 +39,7 @@ public class ApplyNodeListAction extends ApplyGraphTextAction {
 	/**
 	 * @param ctrl Reference to the Controller object
 	 * @param strText The text You want to parse.
-	 * @throws Exception ParsingException thrown by the NodeListParser
+	 * @throws ActionException ParsingException thrown by the NodeListParser
 	 */
 	public ApplyNodeListAction(Controller ctrl, String strText) throws ActionException {
 		super(ctrl, strText);

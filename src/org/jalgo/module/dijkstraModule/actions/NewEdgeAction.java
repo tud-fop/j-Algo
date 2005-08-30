@@ -41,7 +41,7 @@ public class NewEdgeAction extends GraphAction {
 	 * @param ctrl the Controller
 	 * @param startNode the start Node
 	 * @param endNode the end Node
-	 * @throws Exception
+	 * @throws ActionException
 	 */
 	public NewEdgeAction(Controller ctrl, Node startNode, Node endNode) throws ActionException {
 		super(ctrl);

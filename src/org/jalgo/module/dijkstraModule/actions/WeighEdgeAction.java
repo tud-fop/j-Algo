@@ -40,7 +40,7 @@ public class WeighEdgeAction extends GraphAction {
 	 * @param ctrl the Controller
 	 * @param edge the Edge to weigh
 	 * @param newWeight the new weight
-	 * @throws Exception
+	 * @throws ActionException
 	 */
 	public WeighEdgeAction(Controller ctrl, Edge edge, int newWeight) throws ActionException {
 		super(ctrl);

@@ -60,7 +60,7 @@ public abstract class Action {
 	 * It's intend that You call this function in the constructor of Your derived class.
 	 * @param bRegisterInStack true if You want to register the action in the controller's action stack
 	 * @return Return the result of doAction()
-	 * @throws Exception
+	 * @throws ActionException
 	 */
 	protected boolean registerAndDo(boolean bRegisterInStack) throws ActionException {
 		return m_Controller.registerAndDoAction(this, bRegisterInStack);
@@ -69,14 +69,14 @@ public abstract class Action {
 	/**
 	 * Implement the actions You want to be performed.
 	 * @return return true if the action was successful performed.
-	 * @throws Exception
+	 * @throws ActionException
 	 */
 	public abstract boolean doAction() throws ActionException;
 
 	/**
 	 * Provide code to undo the changes made by the doAction() function.
 	 * @return return true if undoing the action was successful performed.
-	 * @throws Exception
+	 * @throws ActionException
 	 */
 	public abstract boolean undoAction() throws ActionException;
 

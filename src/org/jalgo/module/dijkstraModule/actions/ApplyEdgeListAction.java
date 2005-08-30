@@ -39,7 +39,7 @@ public class ApplyEdgeListAction extends ApplyGraphTextAction {
 	/**
 	 * @param ctrl Reference to the Controller object
 	 * @param strEdgeList The text You want to parse.
-	 * @throws Exception ParsingException thrown by the EdgeListParser
+	 * @throws ActionException ParsingException thrown by the EdgeListParser
 	 */
 	public ApplyEdgeListAction(Controller ctrl, String strEdgeList) throws ActionException {
 		super(ctrl, strEdgeList);

@@ -37,7 +37,7 @@ public class DeleteEdgeAction extends GraphAction {
 	/** Creates a new DeleteEdgeAction, which deletes an Edge.
 	 * @param ctrl the Controller
 	 * @param edge the Edge to delete
-	 * @throws Exception
+	 * @throws ActionException
 	 */
 	public DeleteEdgeAction(Controller ctrl, Edge edge) throws ActionException {
 		super(ctrl);

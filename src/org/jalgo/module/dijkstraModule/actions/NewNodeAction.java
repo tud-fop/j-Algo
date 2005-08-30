@@ -54,7 +54,7 @@ public class NewNodeAction extends GraphAction {
 	 * @param ctrl the Controller
 	 * @param screenCoordinates Point on screen where user wants new Node to appear
 	 * @param bounds bounds of the canvas where Nodes can be drawn
-	 * @throws Exception 
+	 * @throws ActionException 
 	 */
 	public NewNodeAction(Controller ctrl, Point screenCoordinates, Rectangle bounds) throws ActionException {
 		super(ctrl);

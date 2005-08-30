@@ -83,11 +83,6 @@ public class AlgorithmGraphComposite extends ControllerComposite {
 
 	protected GraphParent m_graphParent;
 
-	/**
-	 * @param controller
-	 * @param cmpParent
-	 * @param nStyle
-	 */
 	public AlgorithmGraphComposite(Controller controller, Composite composite, int style, Device device, boolean bEditMode) {
 		super(controller, composite, style);
 		this.setLayout(new FillLayout());

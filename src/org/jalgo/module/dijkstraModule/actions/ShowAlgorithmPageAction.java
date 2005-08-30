@@ -34,9 +34,6 @@ import org.jalgo.module.dijkstraModule.model.State;
  */
 public class ShowAlgorithmPageAction extends SetEditingModeAction {
 
-	/**
-	 * @param ctrl
-	 */
 	Graph m_oldGraph = null;
 
 	public ShowAlgorithmPageAction(Controller ctrl) throws ActionException {

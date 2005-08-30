@@ -270,6 +270,7 @@ implements MouseListener, MouseMotionListener {
 	/* Methods inherited from MouseListener interface. */
 	
 	public void mouseDoubleClicked(MouseEvent event) {
+		// this method has no effect
 	}
 	
 	/**
@@ -564,6 +565,7 @@ implements MouseListener, MouseMotionListener {
 	}
 
 	public void mouseHover(MouseEvent event) {
+		// this method has no effect
 	}
 
 	/**

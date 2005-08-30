@@ -38,7 +38,7 @@ public class DeleteNodeAction extends GraphAction {
 	/** Creates a new DeleteNodeAction, which deletes a Node.
 	 * @param ctrl the Controller
 	 * @param node the Node to delete
-	 * @throws Exception
+	 * @throws ActionException
 	 */
 	public DeleteNodeAction(Controller ctrl, Node node) throws ActionException {
 		super(ctrl);

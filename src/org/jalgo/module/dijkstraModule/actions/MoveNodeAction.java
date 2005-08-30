@@ -41,7 +41,7 @@ public class MoveNodeAction extends GraphAction {
 	 * @param ctrl the Controller
 	 * @param node the Node to move
 	 * @param newPosition the new Position of the Node
-	 * @throws Exception
+	 * @throws ActionException
 	 */
 	public MoveNodeAction(Controller ctrl, Node node, Position newPosition) throws ActionException {
 		super(ctrl);

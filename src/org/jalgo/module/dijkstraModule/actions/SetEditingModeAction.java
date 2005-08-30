@@ -52,7 +52,7 @@ public class SetEditingModeAction extends Action {
 	/**
 	 * @param ctrl	Controller for this action
 	 * @param iMode new Editing mode
-	 * @throws Exception
+	 * @throws ActionException
 	 */
 	public SetEditingModeAction(Controller ctrl, int iMode) throws ActionException {
 		this(ctrl, iMode, false);

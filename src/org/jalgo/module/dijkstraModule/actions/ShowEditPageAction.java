@@ -33,7 +33,7 @@ public class ShowEditPageAction extends SetEditingModeAction {
 
 	/**
 	 * @param ctrl
-	 * @throws Exception
+	 * @throws ActionException
 	 */
 	public ShowEditPageAction(Controller ctrl) throws ActionException {
 		super(ctrl, Controller.MODE_NO_TOOL_ACTIVE, true);

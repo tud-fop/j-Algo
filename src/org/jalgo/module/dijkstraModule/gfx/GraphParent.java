@@ -550,6 +550,7 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 	}
 
 	public void mouseDoubleClicked(MouseEvent event) {
+	// this method has no effect
 	}
 
 	/* Methods inherited from MouseMotionListener interface. */
@@ -596,12 +597,15 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 	}
 
 	public void mouseEntered(MouseEvent event) {
+		// this method has no effect
 	}
 
 	public void mouseExited(MouseEvent event) {
+		// this method has no effect
 	}
 
 	public void mouseHover(MouseEvent event) {
+		// this method has no effect
 	}
 
 	/**
