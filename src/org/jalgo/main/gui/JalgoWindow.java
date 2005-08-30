@@ -33,6 +33,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
@@ -46,15 +47,19 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.FileDialog;
+import org.jalgo.main.IModuleConnector;
 import org.jalgo.main.JalgoMain;
 import org.jalgo.main.gui.actions.AboutAction;
 import org.jalgo.main.gui.actions.AboutModuleAction;
 import org.jalgo.main.gui.actions.ExitAction;
+import org.jalgo.main.gui.actions.HelpAction;
 import org.jalgo.main.gui.actions.NewAction;
 import org.jalgo.main.gui.actions.NewModuleAction;
 import org.jalgo.main.gui.actions.OpenAction;
 import org.jalgo.main.gui.actions.SaveAction;
 import org.jalgo.main.gui.actions.SaveAsAction;
+import org.jalgo.main.util.Messages;
 
 /**
  * This class provides a basic GUI Window with ToolBars, MenuBars and a
@@ -73,6 +78,9 @@ extends ApplicationWindow {
 
 	private SaveAction saveAction;
 	private SaveAsAction saveAsAction;
+	private HelpAction helpAction;
+	private AboutModuleAction aboutModuleAction;
+
 	private CTabFolder ct;
 
 	public JalgoWindow(JalgoMain parent) {
@@ -90,6 +98,10 @@ extends ApplicationWindow {
 		saveAsAction = new SaveAsAction(this);
 		saveAsAction.setEnabled(false);
 
+		helpAction = new HelpAction(this);
+		aboutModuleAction = new AboutModuleAction(this);
+		aboutModuleAction.setEnabled(false);
+
 		addMenuBar();
 		addToolBar(SWT.WRAP | SWT.FLAT);
 		addStatusLine();
@@ -104,27 +116,60 @@ extends ApplicationWindow {
 	 */
 	protected void handleShellCloseEvent() {
 		while (getParent().getCurrentInstance() != null) {
-			if (!getParent().getCurrentInstance().close()) return;
+			if (!getParent().getCurrentInstance().close() ||
+				!showFinalSaveDialog(getParent().getCurrentInstance())) return;
 			getParent().itemClosed(ct.getItem(ct.getSelectionIndex()));
 		}
 		super.handleShellCloseEvent();
 	}
 
+	/**
+	 * If the module data of the current module are not saved, this method asks
+	 * the user for saving his work, when the module / program is intended
+	 * to be closed. This method returns <code>false</code>, if the user presses
+	 * CANCEL during this process, <code>true</code> otherwise.
+	 * 
+	 * @return <code>true</code>, if module data are saved or if the user closes
+	 * 			all dialogs normally, <code>false</code>, if the user presses
+	 * 			CANCEL during saving
+	 */
+	private boolean showFinalSaveDialog(IModuleConnector moduleInstance) {
+		if (moduleInstance.getSaveStatus() == IModuleConnector.NO_CHANGES ||
+			moduleInstance.getSaveStatus() == IModuleConnector.NOTHING_TO_SAVE)
+			return true;
+		switch (showConfirmDialog(Messages.getString("main", "ui.Wish_to_save"), //$NON-NLS-1$ //$NON-NLS-2$
+			DialogConstants.YES_NO_CANCEL_OPTION)) {
+			case DialogConstants.YES_OPTION:
+				return saveFile();
+			case DialogConstants.NO_OPTION:
+				return true;
+			case DialogConstants.CANCEL_OPTION:
+				return false;
+			default:
+				return false;
+		}
+	}
+
 	protected Control createContents(Composite parent) {
-		parent.getShell().setText(Messages.getString("General.name") + " - "
-			+ Messages.getString("General.version")); //$NON-NLS-1$
+		parent.getShell().setText(
+			Messages.getString("main", "General.name") + //$NON-NLS-1$ //$NON-NLS-2$
+			" - " + //$NON-NLS-1$
+			Messages.getString("main", "General.version")); //$NON-NLS-1$ //$NON-NLS-2$
 		parent.getShell().setSize(800, 600);
 		parent.getShell().setImage(ImageDescriptor.createFromURL(
-			getClass().getResource("/main_pix/jalgo.png")).createImage());
+			Messages.getResourceURL("main", "ui.Logo")).createImage()); //$NON-NLS-1$ //$NON-NLS-2$
 
 		final JalgoMain jalgo = this.parent;
 
 		ct = new CTabFolder(parent, SWT.FLAT);
 		ct.addCTabFolder2Listener(new CTabFolder2Adapter() {
+			@SuppressWarnings("synthetic-access")
 			public void close(CTabFolderEvent event) {
 				// Ask user for saving
-				if (!jalgo.getModuleInstanceByTab((CTabItem)event.item).close())
-					event.doit = false;
+				IModuleConnector moduleInstance =
+					jalgo.getModuleInstanceByTab((CTabItem)event.item); 
+				if (!moduleInstance.close() ||
+					!showFinalSaveDialog(moduleInstance)) event.doit = false;
 				else jalgo.itemClosed((CTabItem)event.item);
 			}
 		});
@@ -156,10 +201,10 @@ extends ApplicationWindow {
 	 * Creates standard MenuBar
 	 */
 	protected MenuManager createMenuManager() {
-
 		// ** new_menu (is in file_menu)**
 
-		MenuManager new_menu = new MenuManager(Messages.getString("ui.New")); //$NON-NLS-1$
+		MenuManager new_menu = new MenuManager(
+			Messages.getString("main", "ui.New")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		for (int i = 0; i < newActions.size(); i++) {
 			new_menu.add(newActions.get(i));
@@ -167,7 +212,8 @@ extends ApplicationWindow {
 
 		// ** file_menu **
 
-		MenuManager file_menu = new MenuManager(Messages.getString("ui.File")); //$NON-NLS-1$
+		MenuManager file_menu = new MenuManager(
+			Messages.getString("main", "ui.File")); //$NON-NLS-1$ //$NON-NLS-2$
 		file_menu.add(new_menu);
 		file_menu.add(new Separator());
 		file_menu.add(new OpenAction(this));
@@ -178,10 +224,13 @@ extends ApplicationWindow {
 
 		// ** help_menu **
 
-		MenuManager help_menu = new MenuManager(Messages.getString("ui.Help"),
+		MenuManager help_menu = new MenuManager(
+			Messages.getString("main", "ui.Help"), //$NON-NLS-1$ //$NON-NLS-2$
 			"help"); //$NON-NLS-1$
+		help_menu.add(helpAction);
+		help_menu.add(new Separator());
 		help_menu.add(new AboutAction(this));
-		help_menu.add(new AboutModuleAction(this));
+		help_menu.add(aboutModuleAction);
 
 		// ** menubar **
 
@@ -196,7 +245,6 @@ extends ApplicationWindow {
 	 * Create standard ToolBar
 	 */
 	protected ToolBarManager createToolBarManager(int style) {
-
 		ToolBarManager toolbar = new ToolBarManager(style);
 
 		toolbar.add(new NewModuleAction(this));
@@ -269,9 +317,94 @@ extends ApplicationWindow {
 		return saveAsAction;
 	}
 
+	public void updateSaveButtonEnableStatus(int status) {
+		switch (status) {
+			case IModuleConnector.NOTHING_TO_SAVE:
+				saveAction.setEnabled(false);
+				saveAsAction.setEnabled(false);
+				break;
+			case IModuleConnector.NO_CHANGES:
+				saveAction.setEnabled(false);
+				saveAsAction.setEnabled(true);
+				break;
+			case IModuleConnector.CHANGES_TO_SAVE:
+				saveAction.setEnabled(true);
+				saveAsAction.setEnabled(true);
+				break;
+			case IModuleConnector.SAVING_BLOCKED:
+				saveAction.setEnabled(false);
+				saveAsAction.setEnabled(false);
+		}
+	}
+
 	private void createNewActions() {
 		for (int i = 0; i < parent.getKnownModuleInfos().size(); i++) {
 			newActions.add(new NewAction(parent, i));
 		}
+	}
+
+	/**
+	 * Opens a message box with an error message.
+	 * 
+	 * @param msg the error message to be displayed
+	 */
+	public void showErrorMessage(String msg) {
+		MessageDialog.openError(getShell(),
+			Messages.getString("main", "DialogConstants.Error"), msg); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	/**
+	 * Opens a message box with a warning message.
+	 * 
+	 * @param msg the warning message to be displayed
+	 */
+	public void showWarningMessage(String msg) {
+		MessageDialog.openWarning(getShell(),
+			Messages.getString("main", "DialogConstants.Warning"), msg); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	/**
+	 * Opens a confirm dialog with the given question.
+	 * 
+	 * @param question the question to be displayed
+	 * @param optionType an int designating the options available on the dialog
+	 *  
+	 * @return an integer indicating the option selected by the user
+	 */
+	public int showConfirmDialog(String question, int optionType) {
+		int result = new MessageDialog(getShell(),
+			Messages.getString("main", "DialogConstants.Question"), null, //$NON-NLS-1$ //$NON-NLS-2$
+			question, MessageDialog.QUESTION,
+			DialogConstants.getOptionStrings(optionType), 0).open();
+		if (optionType == DialogConstants.OK_CANCEL_OPTION &&
+			result == DialogConstants.NO_OPTION)
+			return DialogConstants.CANCEL_OPTION;
+		return result;
+	}
+
+	/**
+	 * Sets the enabled state of the 'About module' action to the given value.
+	 * 
+	 * @param b <code>true</code>, if the action should be enabled,
+	 * 			<code>false</code> otherwise
+	 */
+	public void setAboutModuleActionEnabled(boolean b) {
+		aboutModuleAction.setEnabled(b);
+	}
+
+	public String showOpenDialog(boolean openAsJAlgoFile,
+		boolean useCurrentModuleInstance) {
+		FileDialog fileChooser = new FileDialog(getShell(), SWT.OPEN);
+		fileChooser.setText(Messages.getString("main", "ui.Open_file")); //$NON-NLS-1$
+		fileChooser.setFilterPath(System.getProperty("user.dir")); //$NON-NLS-1$
+		fileChooser.setFilterExtensions(new String[] { "*.jalgo", "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$
+		fileChooser.setFilterNames(new String[] {
+			Messages.getString("main", "OpenAction.jAlgo_files"), //$NON-NLS-1$ //$NON-NLS-2$
+			Messages.getString("main", "OpenAction.All_files_8") }); //$NON-NLS-1$ //$NON-NLS-2$
+
+		String filename = fileChooser.open();
+		if (openAsJAlgoFile && filename != null)
+			openFile(filename, useCurrentModuleInstance);
+		return filename;
 	}
 }
