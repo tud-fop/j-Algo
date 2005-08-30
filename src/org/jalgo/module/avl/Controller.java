@@ -30,6 +30,7 @@ package org.jalgo.module.avl;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.algorithm.AVLTest;
 import org.jalgo.module.avl.algorithm.CommandFactory;
 import org.jalgo.module.avl.algorithm.CreateRandomTree;
@@ -214,11 +215,12 @@ implements Constants {
 			putLogDescription((String)currentCommand.getResult(0));
 		}
 		catch (NullPointerException e) {
-			throw new NoActionException("There is no algorithm running!");
+			throw new NoActionException(Messages.getString(
+				"avl", "Controller.No_alg_exception")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		catch (IndexOutOfBoundsException e) {
-			throw new NoActionException(
-				"There is no next step in running algorithm!");
+			throw new NoActionException(Messages.getString(
+				"avl", "Controller.No_next_exception")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -235,7 +237,8 @@ implements Constants {
 			currentCommand.hasNext();
 		}
 		catch (NullPointerException e) {
-			throw new NoActionException("There is no algorithm running!");
+			throw new NoActionException(Messages.getString(
+				"avl", "Controller.No_alg_exception")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		try {
 			currentCommand.undo();
@@ -243,8 +246,8 @@ implements Constants {
 			putLogDescription((String)currentCommand.getResult(0));
 		}
 		catch (NullPointerException e) {
-			throw new NoActionException(
-				"There is no previous step in running algorithm");
+			throw new NoActionException(Messages.getString(
+				"avl", "Controller.No_prev_exception")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -262,11 +265,12 @@ implements Constants {
 			putLogDescription((String)currentCommand.getResult(0));
 		}
 		catch (NullPointerException e) {
-			throw new NoActionException("There is no algorithm running!");
+			throw new NoActionException(Messages.getString(
+				"avl", "Controller.No_alg_exception")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		catch (IndexOutOfBoundsException e) {
-			throw new NoActionException(
-				"There is no next step in running algorithm!");
+			throw new NoActionException(Messages.getString(
+				"avl", "Controller.No_next_exception")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -283,7 +287,8 @@ implements Constants {
 			currentCommand.hasNext();
 		}
 		catch (NullPointerException e) {
-			throw new NoActionException("There is no algorithm running!");
+			throw new NoActionException(Messages.getString(
+				"avl", "Controller.No_alg_exception")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		try {
 			currentCommand.undoBlockStep();
@@ -291,8 +296,8 @@ implements Constants {
 			putLogDescription((String)currentCommand.getResult(0));
 		}
 		catch (NullPointerException e) {
-			throw new NoActionException(
-				"There is no previous step in running algorithm!");
+			throw new NoActionException(Messages.getString(
+				"avl", "Controller.No_prev_exception")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -304,10 +309,11 @@ implements Constants {
 	public void abort()
 	throws NoActionException {
 		if (currentCommand == null) throw new NoActionException(
-			"There is no algorithm running!");
+			Messages.getString(
+				"avl", "Controller.No_alg_exception")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		if (currentCommand.hasNext()) putLogDescription(getAlgoName()
-			+ " abgebrochen");
+			+ Messages.getString("avl", "Controller.aborted")); //$NON-NLS-1$ //$NON-NLS-2$
 		currentCommand.abort();
 
 		if (tree.getRoot() != null) tree.getRoot().setVisualizationStatus(
@@ -327,10 +333,11 @@ implements Constants {
 	public void finish()
 	throws NoActionException {
 		if (currentCommand == null) throw new NoActionException(
-			"There is no algorithm running!");
+			Messages.getString("avl", "Controller.No_alg_exception")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		currentCommand.finish();
-		putLogDescription(getAlgoName() + " beendet");
+		putLogDescription(getAlgoName() + Messages.getString(
+			"avl", "Controller.finished")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -342,8 +349,8 @@ implements Constants {
 	 *         <code>AVLTest</code>.
 	 */
 	public Boolean getAVLTestResult() {
-		if (currentCommand instanceof AVLTest) return (Boolean)currentCommand
-		.getResult(2);
+		if (currentCommand instanceof AVLTest)
+			return (Boolean)currentCommand.getResult(2);
 		return null;
 	}
 
@@ -381,7 +388,7 @@ implements Constants {
 	}
 
 	/**
-	 * Returns a <code>Sting</code> which is shown in a short Message at the
+	 * Returns a <code>String</code> which is shown in a short Message at the
 	 * end of an algorithm.
 	 * 
 	 * @return the result of the active algorithm. <br>
@@ -394,22 +401,31 @@ implements Constants {
 			switch (result) {
 				case FOUND:
 					if (currentCommand instanceof Insert
-						|| currentCommand instanceof InsertAVL) return "Schlüssel existiert bereits!";
-					return "Schlüssel gefunden";
+						|| currentCommand instanceof InsertAVL)
+						return Messages.getString(
+							"avl", "Controller.Key_exists"); //$NON-NLS-1$ //$NON-NLS-2$
+					return Messages.getString("avl", "Key_found"); //$NON-NLS-1$ //$NON-NLS-2$
 				case DONE:
 					if (currentCommand instanceof Insert
-						|| currentCommand instanceof InsertAVL) return "Knoten eingefügt";
-					if (currentCommand instanceof CreateRandomTree) return getAlgoName()
-						+ " erfolgreich";
+						|| currentCommand instanceof InsertAVL)
+						return Messages.getString(
+							"avl", "Node_inserted"); //$NON-NLS-1$ //$NON-NLS-2$
+					if (currentCommand instanceof CreateRandomTree)
+						return getAlgoName() + Messages.getString(
+							"avl", "Controller.Successful"); //$NON-NLS-1$ //$NON-NLS-2$
 					if (currentCommand instanceof Remove
-						|| currentCommand instanceof RemoveAVL) return "Knoten gelöscht";
+						|| currentCommand instanceof RemoveAVL)
+						return Messages.getString(
+							"avl", "Node_removed"); //$NON-NLS-1$ //$NON-NLS-2$
 				case NOTFOUND:
-					return "Schlüssel nicht im Baum enthalten";
+					return Messages.getString(
+						"avl", "Controller.Key_not_found"); //$NON-NLS-1$ //$NON-NLS-2$
 				default:
-					return "Algorithmusende noch nicht betrachtet";
+					return Messages.getString(
+						"avl", "Controller.Log_exception"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
-		return "No Command Working";
+		return Messages.getString("avl", "Controller.No_alg_exception"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -419,6 +435,6 @@ implements Constants {
 	 */
 	public String getAlgoName() {
 		if (currentCommand != null) return currentCommand.getName();
-		return "nocommand";
+		return "nocommand"; //$NON-NLS-1$
 	}
 }
