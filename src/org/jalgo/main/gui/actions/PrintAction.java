@@ -25,6 +25,7 @@ package org.jalgo.main.gui.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jalgo.main.util.Messages;
 
 /**
  * @author Cornelius Hald
@@ -32,14 +33,13 @@ import org.eclipse.jface.resource.ImageDescriptor;
 public class PrintAction extends Action {
 
 	public PrintAction() {
-		setText(Messages.getString("ui.Print")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ui.Print")); //$NON-NLS-1$
+		setText(Messages.getString("main", "ui.Print")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("main", "ui.Print")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/main_pix/print.gif")));
 	}
 
 	public void run() {
-
+	// printing is currently not supported
 	}
-
 }

@@ -24,6 +24,7 @@
 package org.jalgo.main.gui.actions;
 
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.PrintFigureOperation;
 import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -31,6 +32,7 @@ import org.eclipse.swt.printing.PrintDialog;
 import org.eclipse.swt.printing.Printer;
 import org.eclipse.swt.printing.PrinterData;
 import org.eclipse.swt.widgets.Shell;
+import org.jalgo.main.util.Messages;
 import org.jalgo.main.util.PrintDialogNext;
 import org.jalgo.main.util.PrintScaledFigureOperation;
 
@@ -44,8 +46,8 @@ public class PrintViewAction extends Action {
 
 	public PrintViewAction(IFigure figure) {
 		this.figure = figure;
-		setText(Messages.getString("ui.Print_view")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("ui.Print_view")); //$NON-NLS-1$
+		setText(Messages.getString("main", "ui.Print_view")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("main", "ui.Print_view")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/main_pix/print.gif")));
 	}
@@ -55,7 +57,7 @@ public class PrintViewAction extends Action {
 
 		// New Print-Dialog
 		PrintDialog printDialog = new PrintDialog(shell);
-		printDialog.setText(Messages.getString("ui.Select_printer")); //$NON-NLS-1$
+		printDialog.setText(Messages.getString("main", "ui.Select_printer")); //$NON-NLS-1$
 		PrinterData printerData = printDialog.open();
 		if(printerData==null) return;
 		
@@ -67,19 +69,19 @@ public class PrintViewAction extends Action {
 		PrintDialogNext dialog=new PrintDialogNext(shell);
 		switch(dialog.open())
 		{
-			case PrintScaledFigureOperation.TILE: 
+			case PrintFigureOperation.TILE: 
 				operation.run("JAlgo"); //$NON-NLS-1$
 				break;
-			case PrintScaledFigureOperation.FIT_PAGE: 
-				operation.setPrintMode(PrintScaledFigureOperation.FIT_PAGE);
+			case PrintFigureOperation.FIT_PAGE: 
+				operation.setPrintMode(PrintFigureOperation.FIT_PAGE);
 				operation.run("JAlgo"); //$NON-NLS-1$
 				break;
-			case PrintScaledFigureOperation.FIT_WIDTH: 
-				operation.setPrintMode(PrintScaledFigureOperation.FIT_WIDTH);
+			case PrintFigureOperation.FIT_WIDTH: 
+				operation.setPrintMode(PrintFigureOperation.FIT_WIDTH);
 				operation.run("JAlgo"); //$NON-NLS-1$
 				break;
-			case PrintScaledFigureOperation.FIT_HEIGHT:
-				operation.setPrintMode(PrintScaledFigureOperation.FIT_HEIGHT);
+			case PrintFigureOperation.FIT_HEIGHT:
+				operation.setPrintMode(PrintFigureOperation.FIT_HEIGHT);
 				operation.run("JAlgo"); //$NON-NLS-1$
 				break;
 			case PrintScaledFigureOperation.USE_LAYOUT:
@@ -91,5 +93,4 @@ public class PrintViewAction extends Action {
 
 		printer.dispose();
 	}
-
 }
