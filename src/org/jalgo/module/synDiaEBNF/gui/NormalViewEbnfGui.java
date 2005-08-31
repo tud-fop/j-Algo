@@ -46,26 +46,16 @@ public class NormalViewEbnfGui extends Gui {
 		//viewForm.setImage(new Image(parent.getDisplay(), "./pix/new.gif"));
 	}
 	
-	/**
-	 * @return
-	 */
 	public StyledText getEbnfText() {
 		return ebnfText;
 	}
 	
-	/**
-	 * @param text
-	 */
 	public void setEbnfText(StyledText text) {
 		ebnfText = text;
 		viewForm.setContent(ebnfText);
 	}
 
-	/**
-	 * @return
-	 */
 	public StyledTextViewForm getViewForm() {
 		return viewForm;
 	}
-
 }

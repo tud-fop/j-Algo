@@ -28,6 +28,7 @@ import java.io.Serializable;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.Figure;
+import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.LineBorder;
@@ -40,7 +41,6 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.jalgo.main.gfx.BorderFlowLayout;
@@ -192,18 +192,18 @@ public class ExampleGui extends Gui  implements Serializable{
 		label.setBorder(new LineBorder());
 		conn1.add(label, new MidpointLocator(conn1, 0));
 		BorderFlowLayout flowlayout = new BorderFlowLayout();
-		flowlayout.setMajorAlignment(BorderFlowLayout.ALIGN_CENTER);
+		flowlayout.setMajorAlignment(FlowLayout.ALIGN_CENTER);
 		//Ausrichtung des gesamten Systems
-		flowlayout.setMinorAlignment(BorderFlowLayout.ALIGN_CENTER);
+		flowlayout.setMinorAlignment(FlowLayout.ALIGN_CENTER);
 		//Ausrichtung der einzelnen Knoten in den Reihen
 		flowlayout.setMajorSpacing(100); //Abstand der Knoten in y-Richtung
 		flowlayout.setMinorSpacing(100); //Abstand der Knoten in x-Richtung
 		//flowlayout.setStretchMinorAxis(true);
 		form2.getPanel().setLayoutManager(flowlayout);
 		BorderFlowLayout flowlayout2 = new BorderFlowLayout();
-		flowlayout2.setMajorAlignment(BorderFlowLayout.ALIGN_CENTER);
+		flowlayout2.setMajorAlignment(FlowLayout.ALIGN_CENTER);
 		flowlayout2.setHorizontal(false); //vertikales FlowLayout
-		flowlayout2.setMinorAlignment(BorderFlowLayout.ALIGN_LEFTTOP);
+		flowlayout2.setMinorAlignment(FlowLayout.ALIGN_LEFTTOP);
 		flowlayout2.setMajorSpacing(100); //Abstand der Knoten in x-Richtung
 		flowlayout2.setMinorSpacing(50); //Abstand der Knoten in y-Richtung
 		f.setLayoutManager(flowlayout2);

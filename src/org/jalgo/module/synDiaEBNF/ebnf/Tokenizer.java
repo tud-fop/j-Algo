@@ -126,7 +126,7 @@ public abstract class Tokenizer {
 
 	/**
 	 * Constructor for a Tokenizer object.
-	 * @param String to tokenize
+	 * @param str to tokenize
 	 */
 	Tokenizer(String str) {
 		this.str = str;
