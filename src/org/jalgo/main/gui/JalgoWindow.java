@@ -392,6 +392,24 @@ extends ApplicationWindow {
 		aboutModuleAction.setEnabled(b);
 	}
 
+	/**
+	 * Opens a filechooser for opening files. The file selected by the user can
+	 * be opened automatically as j-Algo file. When selected this option the
+	 * second parameter specifies, if the selected file should be opened in the
+	 * current instance of the module or if a new module instance should be
+	 * opened.<br>
+	 * If the file should not be opened automatically, e.g. for using the file
+	 * in other ways, the file name is returned as string.
+	 * 
+	 * @param openAsJAlgoFile <code>true</code>, if the file should be opened as
+	 * 			j-Algo file, <code>false</code> otherwise
+	 * @param useCurrentModuleInstance <code>true</code>, if the file should be
+	 * 			opened in current module instance, <code>false</code> otherwise
+	 * 
+	 * @return the file name of the selected file, if the first parameter is set
+	 * 			to <code>false</code>
+	 * 
+	 */
 	public String showOpenDialog(boolean openAsJAlgoFile,
 		boolean useCurrentModuleInstance) {
 		FileDialog fileChooser = new FileDialog(getShell(), SWT.OPEN);
