@@ -28,8 +28,8 @@ package org.jalgo.module.synDiaEBNF.gui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -37,8 +37,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.jalgo.main.gui.JalgoWindow;
-import org.jalgo.main.gui.actions.OpenAction;
+import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.IModeConstants;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
@@ -85,26 +85,15 @@ public class NormalViewEmptyGui extends Gui {
 		openFileImage.setImage(img1.createImage());
 
 		Label openFileText = new Label(group1, SWT.WRAP);
-		openFileText.setText(Messages
-				.getString("FirstChoice.Load_sample_EBNF_4")); //$NON-NLS-1$
+		openFileText.setText(Messages.getString("synDiaEBNF",
+			"FirstChoice.Load_sample_EBNF_4")); //$NON-NLS-1$
 		openFileText.setLayoutData(gridData);
 
 		Button openFileButton = new Button(group1, SWT.CENTER);
 		openFileButton.setText("Auswählen");
-		openFileButton.addSelectionListener(new SelectionListener() {
-
-			public void widgetDefaultSelected(SelectionEvent event) {
-			}
-
+		openFileButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
-				OpenAction oa = new OpenAction(
-						(JalgoWindow) mc_final
-								.getAppWin());
-				/*
-				 * 'true' tells open action to use current
-				 * instance of this module
-				 */
-				oa.run(true);
+				JAlgoGUIConnector.getInstance().showOpenDialog(true, true);
 			}
 		});
 
@@ -118,18 +107,13 @@ public class NormalViewEmptyGui extends Gui {
 		createEbnfImage.setImage(img2.createImage());
 
 		Label createEbnfText = new Label(group2, SWT.WRAP);
-		createEbnfText
-				.setText(Messages
-						.getString("FirstChoice.Enter_new_EBNF_definition._6") + "      "); //$NON-NLS-1$
+		createEbnfText.setText(Messages.getString("synDiaEBNF",
+			"FirstChoice.Enter_new_EBNF_definition._6") + "      "); //$NON-NLS-1$
 		createEbnfText.setLayoutData(gridData);
 
 		Button createEbnfButton = new Button(group2, SWT.CENTER);
 		createEbnfButton.setText("Auswählen");
-		createEbnfButton.addSelectionListener(new SelectionListener() {
-
-			public void widgetDefaultSelected(SelectionEvent event) {
-			}
-
+		createEbnfButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				mc_final.setMode(IModeConstants.EBNF_INPUT);
 			}
@@ -145,26 +129,17 @@ public class NormalViewEmptyGui extends Gui {
 		createSynDiaImage.setImage(img3.createImage());
 
 		Label createSynDiaText = new Label(group3, SWT.WRAP);
-		createSynDiaText
-				.setText(Messages
-						.getString("FirstChoice.Create_SynDia_using_mouse_8")); //$NON-NLS-1$
+		createSynDiaText.setText(Messages.getString("synDiaEBNF",
+			"FirstChoice.Create_SynDia_using_mouse_8")); //$NON-NLS-1$
 		createSynDiaText.setLayoutData(gridData);
 
 		Button createSynDiaButton = new Button(group3, SWT.CENTER);
 		createSynDiaButton.setText("Auswählen");
-		createSynDiaButton
-				.addSelectionListener(new SelectionListener() {
-
-					public void widgetDefaultSelected(
-							SelectionEvent event) {
-					}
-
-					public void widgetSelected(
-							SelectionEvent event) {
-						mc_final
-								.setMode(IModeConstants.CREATE_SYNDIA);
-					}
-				});
+		createSynDiaButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				mc_final.setMode(IModeConstants.CREATE_SYNDIA);
+			}
+		});
 		
 		parent.redraw();
 	}

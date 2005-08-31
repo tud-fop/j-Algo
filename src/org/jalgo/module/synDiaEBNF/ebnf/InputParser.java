@@ -26,6 +26,8 @@ package org.jalgo.module.synDiaEBNF.ebnf;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jalgo.main.util.Messages;
+
 /**
  * @author Stephan Creutz
  */
@@ -45,13 +47,15 @@ public class InputParser extends Parser {
 
 	public Set<String> analyse() throws EbnfParseException {
 		if (!tokenizer.hasNextToken()) {
-			throw new EbnfParseException(Messages.getString("InputParser.Input_empty_1")); //$NON-NLS-1$
+			throw new EbnfParseException(Messages.getString("synDiaEBNF",
+				"InputParser.Input_empty_1")); //$NON-NLS-1$
 		}
 		while (tokenizer.hasNextToken()) {
 			state.check();
 		}
 		if (state == errorState) {
-			throw new EbnfParseException(Messages.getString("InputParser.Invalid_input_2")); //$NON-NLS-1$
+			throw new EbnfParseException(Messages.getString("synDiaEBNF",
+				"InputParser.Invalid_input_2")); //$NON-NLS-1$
 		}
 		return set;
 	}
@@ -66,6 +70,7 @@ public class InputParser extends Parser {
 	}
 
 	private class BeginState extends InputState {
+		@SuppressWarnings("synthetic-access")
 		public void check() {
 			Token t = tokenizer.getNextToken();
 			if (t.getTokenName().equals(SYMBOL)) {
@@ -78,6 +83,7 @@ public class InputParser extends Parser {
 	}
 
 	private class ConcBeginState extends InputState {
+		@SuppressWarnings("synthetic-access")
 		public void check() {
 			Token t = tokenizer.getNextToken();
 			if (t.getTokenName().equals(COMMA)) {
@@ -89,6 +95,7 @@ public class InputParser extends Parser {
 	}
 
 	private class ConcState extends InputState {
+		@SuppressWarnings("synthetic-access")
 		public void check() {
 			Token t = tokenizer.getNextToken();
 			if (t.getTokenName().equals(COMMA)) {
@@ -103,6 +110,7 @@ public class InputParser extends Parser {
 	}
 
 	private class ErrorState extends InputState {
+		@SuppressWarnings("synthetic-access")
 		public void check(){
 			tokenizer.getNextToken();
 			state = errorState;

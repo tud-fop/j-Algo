@@ -33,6 +33,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Composite;
+import org.jalgo.main.util.Messages;
 
 /**
  * symbolize an Extended Backus-Naur-Form, which consist of a final set of EBNF-Rules, 
@@ -145,7 +146,7 @@ public class EbnfDefinition implements Serializable {
 
 	/**
 	 * you can't add a terminal symbol to a Set if it already exists in it
-	 * @param term   a terminal symbol
+	 * @param terminal a terminal symbol
 	 */
 	public void addTerminal(EbnfTerminal terminal) {
 		alphabet.add(terminal);
@@ -153,16 +154,16 @@ public class EbnfDefinition implements Serializable {
 
 	/**
 	 * this method creates the graphical representation of a <code>Definition</code> object
-	 * @param shell a <code>org.eclipse.swt.widgets.Shell</code> object
+	 * @param parent
 	 * @return a "StyledText" object
 	 * @see org.eclipse.swt.widgets.Shell
 	 * @see org.eclipse.swt.custom.StyledText
 	 */
 	public StyledText styledText(Composite parent) {
 		StyledText widget = new StyledText(parent, SWT.BORDER);
-		widget
-				.append(label
-						+ " = (V, \u03A3, " + startVariable.getLabel() + Messages.getString("EbnfDefinition.,_R)_mit_n_2")); //$NON-NLS-1$ //$NON-NLS-2$
+		widget.append(label + " = (V, \u03A3, " + startVariable.getLabel() +
+			Messages.getString("synDiaEBNF",
+				"EbnfDefinition.,_R)_mit_n_2")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		/* variables */
 		widget.append("  V = {"); //$NON-NLS-1$
@@ -181,7 +182,8 @@ public class EbnfDefinition implements Serializable {
 		}
 		widget.append("},\n"); //$NON-NLS-1$
 		/* rules */
-		widget.append(Messages.getString("EbnfDefinition.__und_R__n_9")); //$NON-NLS-1$
+		widget.append(Messages.getString("synDiaEBNF",
+			"EbnfDefinition.__und_R__n_9")); //$NON-NLS-1$
 		for (Iterator it = variables.iterator(); it.hasNext();) {
 			EbnfSynVariable var = (EbnfSynVariable) it.next();
 			EbnfElement elem = var.getStartElem();

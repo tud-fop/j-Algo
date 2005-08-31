@@ -38,8 +38,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -49,6 +47,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 import org.jalgo.main.gui.widgets.CustomViewForm;
 import org.jalgo.main.gui.widgets.Splitter;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 import org.jalgo.module.synDiaEBNF.ebnf.EbnfDefinition;
 import org.jalgo.module.synDiaEBNF.ebnf.EbnfParseException;
@@ -71,6 +70,7 @@ public class EbnfInputGui extends Gui implements Serializable {
 	// list of text (String) with variables in rule-lines
 	private ArrayList<String> terms;
 
+	@SuppressWarnings("synthetic-access")
 	public EbnfInputGui(Composite parent, ModuleController mc) {
 
 		super(parent);
@@ -79,7 +79,8 @@ public class EbnfInputGui extends Gui implements Serializable {
 
 		Splitter sash = new Splitter(parent, SWT.HORIZONTAL);
 		CustomViewForm form = new CustomViewForm(sash, SWT.BORDER);
-		form.setText(Messages.getString("EbnfInputGui.Ebnf_Input_1")); //$NON-NLS-1$
+		form.setText(Messages.getString("synDiaEBNF",
+			"EbnfInputGui.Ebnf_Input_1")); //$NON-NLS-1$
 		form.setImage(ImageDescriptor.createFromURL(
 			getClass().getResource("/main_pix/new.gif")).createImage());
 
@@ -97,43 +98,51 @@ public class EbnfInputGui extends Gui implements Serializable {
 
 		GridData data1_1 = new GridData();
 		Label label1 = new Label(mainComp, SWT.NULL);
-		label1.setText(Messages.getString("EbnfInputGui.Variables_3")); //$NON-NLS-1$
+		label1.setText(Messages.getString("synDiaEBNF",
+			"EbnfInputGui.Variables_3")); //$NON-NLS-1$
 		label1.setLayoutData(data1_1);
 
 		GridData data1_2 = new GridData(GridData.FILL_HORIZONTAL);
 		Text text1 = new Text(mainComp, SWT.BORDER);
-		text1.setToolTipText(
-			Messages.getString("EbnfInputGui.Set_of_SynVars_4") + Messages.getString("EbnfInputGui.Colon_separated_5")); //$NON-NLS-1$ //$NON-NLS-2$
+		text1.setToolTipText(Messages.getString("synDiaEBNF",
+			"EbnfInputGui.Set_of_SynVars_4") +
+			Messages.getString("synDiaEBNF", "EbnfInputGui.Colon_separated_5")); //$NON-NLS-1$ //$NON-NLS-2$
 		text1.setLayoutData(data1_2);
 
 		GridData data1_3 = new GridData();
 		Label label1b = new Label(mainComp, SWT.NULL);
-		label1b.setText(Messages.getString("EbnfInputGui.e.g._A,B_6")); //$NON-NLS-1$
+		label1b.setText(Messages.getString("synDiaEBNF",
+			"EbnfInputGui.e.g._A,B_6")); //$NON-NLS-1$
 		label1b.setLayoutData(data1_3);
 
 		// Row 2
 
 		GridData data2_1 = new GridData();
 		Label label2 = new Label(mainComp, SWT.NULL);
-		label2.setText(Messages.getString("EbnfInputGui.Terminalsymbols__7")); //$NON-NLS-1$
+		label2.setText(Messages.getString("synDiaEBNF",
+			"EbnfInputGui.Terminalsymbols__7")); //$NON-NLS-1$
 		label2.setLayoutData(data2_1);
 
 		GridData data2_2 = new GridData(GridData.FILL_HORIZONTAL);
 		Text text2 = new Text(mainComp, SWT.BORDER);
 		text2.setToolTipText(
-			Messages.getString("EbnfInputGui.Set_of_terminalsymbols_n_8") + Messages.getString("EbnfInputGui.Colon_separated_9")); //$NON-NLS-1$ //$NON-NLS-2$
+			Messages.getString("synDiaEBNF",
+				"EbnfInputGui.Set_of_terminalsymbols_n_8") +
+				Messages.getString("synDiaEBNF", "EbnfInputGui.Colon_separated_9")); //$NON-NLS-1$ //$NON-NLS-2$
 		text2.setLayoutData(data2_2);
 
 		GridData data2_3 = new GridData();
 		Label label2b = new Label(mainComp, SWT.NULL);
-		label2b.setText(Messages.getString("EbnfInputGui.e.g._a,b_10")); //$NON-NLS-1$
+		label2b.setText(Messages.getString("synDiaEBNF",
+			"EbnfInputGui.e.g._a,b_10")); //$NON-NLS-1$
 		label2b.setLayoutData(data2_3);
 
 		// Row 3
 
 		GridData data3_1 = new GridData();
 		Label label3 = new Label(mainComp, SWT.NULL);
-		label3.setText(Messages.getString("EbnfInputGui.Startvariable__11")); //$NON-NLS-1$
+		label3.setText(Messages.getString("synDiaEBNF",
+			"EbnfInputGui.Startvariable__11")); //$NON-NLS-1$
 		label3.setLayoutData(data3_1);
 
 		GridData data3_2 = new GridData();
@@ -143,14 +152,16 @@ public class EbnfInputGui extends Gui implements Serializable {
 
 		GridData data3_3 = new GridData();
 		Label label3b = new Label(mainComp, SWT.NULL);
-		label3b.setText(Messages.getString("EbnfInputGui.e.g._S_12")); //$NON-NLS-1$
+		label3b.setText(Messages.getString("synDiaEBNF",
+			"EbnfInputGui.e.g._S_12")); //$NON-NLS-1$
 		label3b.setLayoutData(data3_3);
 
 		// Row 4_1
 
 		GridData data4_1 = new GridData();
 		Label label4 = new Label(mainComp, SWT.NULL);
-		label4.setText(Messages.getString("EbnfInputGui.Specialchar__13")); //$NON-NLS-1$
+		label4.setText(Messages.getString("synDiaEBNF",
+			"EbnfInputGui.Specialchar__13")); //$NON-NLS-1$
 		label4.setLayoutData(data4_1);
 
 		// Row 4_2
@@ -222,7 +233,8 @@ public class EbnfInputGui extends Gui implements Serializable {
 
 		GridData data5_1 = new GridData();
 		Label label5 = new Label(mainComp, SWT.NULL);
-		label5.setText(Messages.getString("EbnfInputGui.Rules__22")); //$NON-NLS-1$
+		label5.setText(Messages.getString("synDiaEBNF",
+			"EbnfInputGui.Rules__22")); //$NON-NLS-1$
 		label5.setLayoutData(data5_1);
 
 		// Row 5_2
@@ -238,8 +250,8 @@ public class EbnfInputGui extends Gui implements Serializable {
 
 		GridData data5_2_1 = new GridData();
 		final Text text5a = new Text(data5_2_container, SWT.BORDER);
-		text5a.setToolTipText(
-			Messages.getString("EbnfInputGui.Name_of_SynDiaVar_23")); //$NON-NLS-1$
+		text5a.setToolTipText(Messages.getString("synDiaEBNF",
+			"EbnfInputGui.Name_of_SynDiaVar_23")); //$NON-NLS-1$
 		data5_2_1.widthHint = 100;
 		text5a.setLayoutData(data5_2_1);
 
@@ -254,8 +266,10 @@ public class EbnfInputGui extends Gui implements Serializable {
 		GridData data5_2_3 = new GridData();
 		final Text text5b = new Text(data5_2_container, SWT.BORDER);
 		text5b.setToolTipText(
-			Messages.getString("EbnfInputGui.Rules_in_latex_notation__n_25") //$NON-NLS-1$
-				+ Messages.getString("EbnfInputGui.__^_converts_the_following_character_26")); //$NON-NLS-1$
+			Messages.getString("synDiaEBNF",
+				"EbnfInputGui.Rules_in_latex_notation__n_25") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF",
+					"EbnfInputGui.__^_converts_the_following_character_26")); //$NON-NLS-1$
 
 		//TODO set width to 680 for presentation
 		data5_2_3.widthHint = 400;
@@ -266,8 +280,8 @@ public class EbnfInputGui extends Gui implements Serializable {
 		GridData data5_3 = new GridData();
 		final Button button5 = new Button(mainComp, SWT.PUSH);
 		button5.setEnabled(false);
-		button5.setText(Messages.getString("EbnfInputGui.add_27")); //$NON-NLS-1$
-		button5.setToolTipText(Messages.getString("EbnfInputGui.Add_new_line._28")); //$NON-NLS-1$
+		button5.setText(Messages.getString("synDiaEBNF", "EbnfInputGui.add_27")); //$NON-NLS-1$
+		button5.setToolTipText(Messages.getString("synDiaEBNF", "EbnfInputGui.Add_new_line._28")); //$NON-NLS-1$
 		button5.setLayoutData(data5_3);
 
 		// Row 6
@@ -285,8 +299,9 @@ public class EbnfInputGui extends Gui implements Serializable {
 		GridData data6_3 = new GridData();
 		final Button button6 = new Button(mainComp, SWT.PUSH);
 		button6.setEnabled(false);
-		button6.setText(Messages.getString("EbnfInputGui.Delete_30")); //$NON-NLS-1$
-		button6.setToolTipText(Messages.getString("EbnfInputGui.Delete_line._31")); //$NON-NLS-1$
+		button6.setText(Messages.getString("synDiaEBNF", "EbnfInputGui.Delete_30")); //$NON-NLS-1$
+		button6.setToolTipText(Messages.getString("synDiaEBNF",
+			"EbnfInputGui.Delete_line._31")); //$NON-NLS-1$
 		button6.setLayoutData(data6_3);
 
 		// Row 7
@@ -299,7 +314,7 @@ public class EbnfInputGui extends Gui implements Serializable {
 		GridData data7_2 = new GridData();
 		final Button button7 = new Button(mainComp, SWT.PUSH);
 		button7.setEnabled(false);
-		button7.setText(Messages.getString("EbnfInputGui.Apply_33")); //$NON-NLS-1$
+		button7.setText(Messages.getString("synDiaEBNF", "EbnfInputGui.Apply_33")); //$NON-NLS-1$
 		button7.setLayoutData(data7_2);
 
 		GridData data7_3 = new GridData();
@@ -341,72 +356,56 @@ public class EbnfInputGui extends Gui implements Serializable {
 			}
 		});
 
-		button4_2_1.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(SelectionEvent event) {
-			}
+		button4_2_1.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				text5b.insert("\\^("); //$NON-NLS-1$
 				text5b.setFocus();
 			}
 		});
 
-		button4_2_2.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(SelectionEvent event) {
-			}
+		button4_2_2.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				text5b.insert("\\^)"); //$NON-NLS-1$
 				text5b.setFocus();
 			}
 		});
 
-		button4_2_3.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(SelectionEvent event) {
-			}
+		button4_2_3.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				text5b.insert("\\^["); //$NON-NLS-1$
 				text5b.setFocus();
 			}
 		});
 
-		button4_2_4.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(SelectionEvent event) {
-			}
+		button4_2_4.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				text5b.insert("\\^]"); //$NON-NLS-1$
 				text5b.setFocus();
 			}
 		});
 
-		button4_2_5.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(SelectionEvent event) {
-			}
+		button4_2_5.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				text5b.insert("\\^{"); //$NON-NLS-1$
 				text5b.setFocus();
 			}
 		});
 
-		button4_2_6.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(SelectionEvent event) {
-			}
+		button4_2_6.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				text5b.insert("\\^}"); //$NON-NLS-1$
 				text5b.setFocus();
 			}
 		});
 
-		button4_2_7.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(SelectionEvent event) {
-			}
+		button4_2_7.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				text5b.insert("\\^|"); //$NON-NLS-1$
 				text5b.setFocus();
 			}
 		});
 
-		button5.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(SelectionEvent event) {
-			}
+		button5.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				//if (!variables.contains(text5a.getText())) {
 				variables.add(text5a.getText());
@@ -419,9 +418,7 @@ public class EbnfInputGui extends Gui implements Serializable {
 			}
 		});
 
-		button6.addSelectionListener(new SelectionListener() {
-			public void widgetDefaultSelected(SelectionEvent event) {
-			}
+		button6.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				int index = list6.getSelectionIndex();
 				variables.remove(index);
@@ -435,8 +432,6 @@ public class EbnfInputGui extends Gui implements Serializable {
 		});
 
 		list6.addSelectionListener(new SelectionAdapter() {
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
 			public void widgetSelected(SelectionEvent e) {
 				//int index = list6.getSelectionIndex();
 				//text5a.setText((String) variables.get(index));
@@ -446,6 +441,7 @@ public class EbnfInputGui extends Gui implements Serializable {
 		});
 
 		button7.addSelectionListener(new SelectionAdapter() {
+			@SuppressWarnings("synthetic-access")
 			public void widgetSelected(SelectionEvent arg0) {
 
 				EbnfParser p =
@@ -460,12 +456,14 @@ public class EbnfInputGui extends Gui implements Serializable {
 					def = p.analyse();
 				} catch (EbnfParseException e) {
 
-					System.err.println(Messages.getString("EbnfInputGui.Error_analyzing_EBNF_47")); //$NON-NLS-1$
+					System.err.println(Messages.getString("synDiaEBNF",
+						"EbnfInputGui.Error_analyzing_EBNF_47")); //$NON-NLS-1$
 
 					// open pop-up with error message
 					MessageDialog.openWarning(
 						mainComp.getShell(),
-						Messages.getString("EbnfInputGui.Error_analyzing_EBNF_48"), //$NON-NLS-1$
+						Messages.getString("synDiaEBNF",
+							"EbnfInputGui.Error_analyzing_EBNF_48"), //$NON-NLS-1$
 						e.getMessage());
 					return;
 				}

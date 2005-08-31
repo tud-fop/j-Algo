@@ -34,6 +34,7 @@ import org.jalgo.main.gui.widgets.Splitter;
 import org.jalgo.main.gui.widgets.StackCanvas;
 import org.jalgo.main.gui.widgets.StackViewForm;
 import org.jalgo.main.gui.widgets.TextViewForm;
+import org.jalgo.main.util.Messages;
 
 /**
  * @author Michael Pradel
@@ -65,18 +66,22 @@ public class BackTrackingAlgoGui extends Gui implements Serializable {
 		Splitter sash2 = new Splitter(sash, SWT.HORIZONTAL);
 
 		synDiaViewForm = new GraphViewForm(sash1, SWT.BORDER);
-		synDiaViewForm.setText(Messages.getString("BackTrackingAlgoGui.SynDiaSystem_1")); //$NON-NLS-1$
+		synDiaViewForm.setText(Messages.getString("synDiaEBNF",
+			"BackTrackingAlgoGui.SynDiaSystem_1")); //$NON-NLS-1$
 		
 		StackViewForm form2 = new StackViewForm(sash1, SWT.BORDER);
-		form2.setText(Messages.getString("BackTrackingAlgoGui.Stack_2")); //$NON-NLS-1$
+		form2.setText(Messages.getString("synDiaEBNF",
+			"BackTrackingAlgoGui.Stack_2")); //$NON-NLS-1$
 		stackCanvas = form2.getStackCanvas();
 		
 		TextViewForm form3 = new TextViewForm(sash2, SWT.BORDER);
-		form3.setText(Messages.getString("BackTrackingAlgoGui.Algo_definition_3")); //$NON-NLS-1$
+		form3.setText(Messages.getString("synDiaEBNF",
+			"BackTrackingAlgoGui.Algo_definition_3")); //$NON-NLS-1$
 		algoText = form3.getTextCanvas();
 		
 		TextViewForm form4 = new TextViewForm(sash2, SWT.BORDER);
-		form4.setText(Messages.getString("BackTrackingAlgoGui.Generated_word_4")); //$NON-NLS-1$
+		form4.setText(Messages.getString("synDiaEBNF",
+			"BackTrackingAlgoGui.Generated_word_4")); //$NON-NLS-1$
 		word = form4.getTextCanvas();
 
 		sash.setWeights(new int[] { 60, 40 });
@@ -84,30 +89,18 @@ public class BackTrackingAlgoGui extends Gui implements Serializable {
 		sash2.setWeights(new int[] { 60, 40 });
 	}
 
-	/**
-	 * @return
-	 */
 	public TextCanvas getAlgoText() {
 		return algoText;
 	}
 
-	/**
-	 * @return
-	 */
 	public Figure getFigure() {
 		return figure;
 	}
 
-	/**
-	 * @return
-	 */
 	public TextCanvas getWord() {
 		return word;
 	}
 
-	/**
-	 * @return
-	 */
 	public StackCanvas getStackCanvas() {
 		return stackCanvas;
 	}
@@ -116,5 +109,4 @@ public class BackTrackingAlgoGui extends Gui implements Serializable {
 		synDiaViewForm.setPanel(figure);
 		this.figure = (Figure) synDiaViewForm.getPanel();
 	}
-
 }
