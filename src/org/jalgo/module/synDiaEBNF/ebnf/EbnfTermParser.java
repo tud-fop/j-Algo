@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.main.util.Sets;
 
 /**
@@ -88,25 +89,29 @@ implements IEbnfTokenConstants {
 	public EbnfElement analyse()
 	throws EbnfParseException {
 		tokenizer.reset();
-		if (!tokenizer.hasNextToken()) { throw new EbnfParseException(
-			errorMsg(Messages
-			.getString("EbnfTermParser.EbnfParseException_1_1"))); //$NON-NLS-1$
-		}
+		if (!tokenizer.hasNextToken()) throw new EbnfParseException(
+			errorMsg(Messages.getString("synDiaEBNF",
+				"EbnfTermParser.EbnfParseException_1_1"))); //$NON-NLS-1$
+
 		begin(0);
 		tokenizer.hasNextToken();
-		if (tokenizer.hasNextToken()) { throw new EbnfParseException(
-			errorMsg(Messages
-			.getString("EbnfTermParser.EbnfParseException_2_2") //$NON-NLS-1$
-				+ tokenizer.getNextToken().getTokenValue())); }
+		if (tokenizer.hasNextToken()) throw new EbnfParseException(
+			errorMsg(Messages.getString("synDiaEBNF",
+				"EbnfTermParser.EbnfParseException_2_2") //$NON-NLS-1$
+				+ tokenizer.getNextToken().getTokenValue()));
+
 		EbnfElement result = buildEbnfTree(0);
-		if (result == null) { throw new EbnfParseException(errorMsg(Messages
-		.getString("EbnfTermParser.EbnfParseException_3_3"))); //$NON-NLS-1$
-		}
+		if (result == null) throw new EbnfParseException(errorMsg(
+			Messages.getString("synDiaEBNF",
+				"EbnfTermParser.EbnfParseException_3_3"))); //$NON-NLS-1$
+
 		return result;
 	}
 
 	private String errorMsg(String msg) {
-		return Messages.getString("EbnfTermParser.EbnfParseException_4_4") + variable + "\") " + msg; //$NON-NLS-1$ //$NON-NLS-2$
+		return Messages.getString("synDiaEBNF",
+			"EbnfTermParser.EbnfParseException_4_4") +
+			variable + "\") " + msg; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private void begin(int level)
@@ -127,10 +132,10 @@ implements IEbnfTokenConstants {
 				tokenizer.consume();
 				begin(level + 1);
 				concatenation(level + 1);
-				if (!tokenizer.hasNextToken()) { throw new EbnfParseException(
-					errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_5_5"))); //$NON-NLS-1$
-				}
+				if (!tokenizer.hasNextToken()) throw new EbnfParseException(
+					errorMsg(Messages.getString("synDiaEBNF",
+						"EbnfTermParser.EbnfParseException_5_5"))); //$NON-NLS-1$
+
 				token = tokenizer.lookahead(0);
 				tName = token.getTokenName();
 				if (tName.equals(RIGHT_CURLY_BRACKET)) {
@@ -140,18 +145,18 @@ implements IEbnfTokenConstants {
 					concatenation(level);
 					return;
 				}
-				throw new EbnfParseException(errorMsg(Messages
-				.getString("EbnfTermParser.EbnfParseException_6_6") //$NON-NLS-1$
+				throw new EbnfParseException(errorMsg(Messages.getString(
+					"synDiaEBNF", "EbnfTermParser.EbnfParseException_6_6") //$NON-NLS-1$
 					+ token.getTokenValue()), token.getPosition());
 			}
 			else if (tName.equals(LEFT_SQUARED_BRACKET)) {
 				tokenizer.consume();
 				begin(level + 1);
 				concatenation(level + 1);
-				if (!tokenizer.hasNextToken()) { throw new EbnfParseException(
-					errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_7_7"))); //$NON-NLS-1$
-				}
+				if (!tokenizer.hasNextToken()) throw new EbnfParseException(
+					errorMsg(Messages.getString("synDiaEBNF",
+						"EbnfTermParser.EbnfParseException_7_7"))); //$NON-NLS-1$
+
 				token = tokenizer.lookahead(0);
 				tName = token.getTokenName();
 				if (tName.equals(RIGHT_SQUARED_BRACKET)) {
@@ -162,18 +167,18 @@ implements IEbnfTokenConstants {
 					return;
 				}
 				throw new EbnfParseException(
-					errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_8_8") + token.getTokenValue()), //$NON-NLS-1$
+					errorMsg(Messages.getString("synDiaEBNF",
+						"EbnfTermParser.EbnfParseException_8_8") + token.getTokenValue()), //$NON-NLS-1$
 					token.getPosition());
 			}
 			else if (tName.equals(LEFT_BRACKET)) {
 				tokenizer.consume();
 				begin(level + 1);
 				concatenation(level + 1);
-				if (!tokenizer.hasNextToken()) { throw new EbnfParseException(
-					errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_9_9"))); //$NON-NLS-1$
-				}
+				if (!tokenizer.hasNextToken()) throw new EbnfParseException(
+					errorMsg(Messages.getString("synDiaEBNF",
+						"EbnfTermParser.EbnfParseException_9_9"))); //$NON-NLS-1$
+
 				token = tokenizer.lookahead(0);
 				tName = token.getTokenName();
 				if (tName.equals(PIPE)) {
@@ -182,10 +187,10 @@ implements IEbnfTokenConstants {
 					.getTokenValue(), level));
 					begin(level + 1);
 					concatenation(level + 1);
-					if (!tokenizer.hasNextToken()) { throw new EbnfParseException(
-						errorMsg(Messages
-						.getString("EbnfTermParser.EbnfParseException_10_10"))); //$NON-NLS-1$
-					}
+					if (!tokenizer.hasNextToken()) throw new EbnfParseException(
+						errorMsg(Messages.getString("synDiaEBNF",
+							"EbnfTermParser.EbnfParseException_10_10"))); //$NON-NLS-1$
+
 					token = tokenizer.lookahead(0);
 					tName = token.getTokenName();
 					if (tName.equals(RIGHT_BRACKET)) {
@@ -195,8 +200,8 @@ implements IEbnfTokenConstants {
 						concatenation(level);
 						return;
 					}
-					throw new EbnfParseException(errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_11_11") //$NON-NLS-1$
+					throw new EbnfParseException(errorMsg(Messages.getString(
+						"synDiaEBNF", "EbnfTermParser.EbnfParseException_11_11") //$NON-NLS-1$
 						+ token.getTokenValue()), token.getPosition());
 				}
 				else if (tName.equals(RIGHT_BRACKET)) {
@@ -206,20 +211,17 @@ implements IEbnfTokenConstants {
 					concatenation(level);
 					return;
 				}
-				else {
-					throw new EbnfParseException(errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_12_12") //$NON-NLS-1$
-						+ token.getTokenValue()), token.getPosition());
-				}
+				else throw new EbnfParseException(errorMsg(Messages.getString(
+					"synDiaEBNF", "EbnfTermParser.EbnfParseException_12_12") //$NON-NLS-1$
+					+ token.getTokenValue()), token.getPosition());
+
 			}
 			else if (tName.equals(DOT) && !tokenizer.hasLookahead(1)) {
 				tokenizer.consume();
 			}
-			else {
-				throw new EbnfParseException(
-					errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_13_13") + token.getTokenValue())); //$NON-NLS-1$
-			}
+			else throw new EbnfParseException(errorMsg(Messages.getString(
+				"synDiaEBNF","EbnfTermParser.EbnfParseException_13_13") +
+				token.getTokenValue())); //$NON-NLS-1$
 		}
 	}
 
@@ -243,8 +245,8 @@ implements IEbnfTokenConstants {
 				begin(level + 1);
 				concatenation(level);
 				if (!tokenizer.hasNextToken()) { throw new EbnfParseException(
-					errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_14_14"))); //$NON-NLS-1$
+					errorMsg(Messages.getString("synDiaEBNF",
+						"EbnfTermParser.EbnfParseException_14_14"))); //$NON-NLS-1$
 				}
 				token = tokenizer.lookahead(0);
 				tName = token.getTokenName();
@@ -257,8 +259,8 @@ implements IEbnfTokenConstants {
 					concatenation(level);
 					return;
 				}
-				throw new EbnfParseException(errorMsg(Messages
-				.getString("EbnfTermParser.EbnfParseException_15_15") //$NON-NLS-1$
+				throw new EbnfParseException(errorMsg(Messages.getString(
+					"synDiaEBNF", "EbnfTermParser.EbnfParseException_15_15") //$NON-NLS-1$
 					+ token.getTokenValue()), token.getPosition());
 			}
 			else if (tName.equals(LEFT_SQUARED_BRACKET)) {
@@ -266,8 +268,8 @@ implements IEbnfTokenConstants {
 				begin(level + 1);
 				concatenation(level);
 				if (!tokenizer.hasNextToken()) { throw new EbnfParseException(
-					errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_16_16"))); //$NON-NLS-1$
+					errorMsg(Messages.getString("synDiaEBNF",
+						"EbnfTermParser.EbnfParseException_16_16"))); //$NON-NLS-1$
 				}
 				token = tokenizer.lookahead(0);
 				tName = token.getTokenName();
@@ -281,8 +283,8 @@ implements IEbnfTokenConstants {
 					return;
 				}
 				throw new EbnfParseException(
-					errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_17_17") + token.getTokenValue()), //$NON-NLS-1$
+					errorMsg(Messages.getString("synDiaEBNF",
+						"EbnfTermParser.EbnfParseException_17_17") + token.getTokenValue()), //$NON-NLS-1$
 					token.getPosition());
 			}
 			else if (tName.equals(LEFT_BRACKET)) {
@@ -290,8 +292,8 @@ implements IEbnfTokenConstants {
 				begin(level + 1);
 				concatenation(level);
 				if (!tokenizer.hasNextToken()) { throw new EbnfParseException(
-					errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_18_18"))); //$NON-NLS-1$
+					errorMsg(Messages.getString("synDiaEBNF",
+						"EbnfTermParser.EbnfParseException_18_18"))); //$NON-NLS-1$
 				}
 				token = tokenizer.lookahead(0);
 				tName = token.getTokenName();
@@ -302,8 +304,8 @@ implements IEbnfTokenConstants {
 					begin(level + 1);
 					concatenation(level);
 					if (!tokenizer.hasNextToken()) { throw new EbnfParseException(
-						errorMsg(Messages
-						.getString("EbnfTermParser.EbnfParseException_19_19"))); //$NON-NLS-1$
+						errorMsg(Messages.getString("synDiaEBNF",
+							"EbnfTermParser.EbnfParseException_19_19"))); //$NON-NLS-1$
 					}
 					token = tokenizer.lookahead(0);
 					tName = token.getTokenName();
@@ -316,8 +318,8 @@ implements IEbnfTokenConstants {
 						concatenation(level);
 						return;
 					}
-					throw new EbnfParseException(errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_20_20") //$NON-NLS-1$
+					throw new EbnfParseException(errorMsg(Messages.getString(
+						"synDiaEBNF", "EbnfTermParser.EbnfParseException_20_20") //$NON-NLS-1$
 						+ token.getTokenValue()), token.getPosition());
 				}
 				else if (tName.equals(RIGHT_BRACKET)) {
@@ -330,8 +332,8 @@ implements IEbnfTokenConstants {
 					return;
 				}
 				else {
-					throw new EbnfParseException(errorMsg(Messages
-					.getString("EbnfTermParser.EbnfParseException_21_21") //$NON-NLS-1$
+					throw new EbnfParseException(errorMsg(Messages.getString(
+						"synDiaEBNF", "EbnfTermParser.EbnfParseException_21_21") //$NON-NLS-1$
 						+ token.getTokenValue()), token.getPosition());
 				}
 			}
@@ -397,14 +399,12 @@ implements IEbnfTokenConstants {
 						new EbnfSynVariable(elem.getValue()));
 				}
 				else {
-					throw new EbnfParseException(Messages
-					.getString("EbnfTermParser.EbnfParseException_22_22") //$NON-NLS-1$
+					throw new EbnfParseException(Messages.getString(
+						"synDiaEBNF", "EbnfTermParser.EbnfParseException_22_22") //$NON-NLS-1$
 						+ elem.getValue() + "\")"); //$NON-NLS-1$
 				}
 			}
-			else {
-				return null;
-			}
+			else return null;
 		}
 		return null;
 	}
@@ -435,5 +435,4 @@ implements IEbnfTokenConstants {
 			return level;
 		}
 	}
-
 }
