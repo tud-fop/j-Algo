@@ -33,12 +33,14 @@ import java.util.List;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.gfx.MarkStyle;
+import org.jalgo.main.gui.DialogConstants;
 import org.jalgo.main.gui.TextCanvas;
 import org.jalgo.main.gui.widgets.StackCanvas;
 import org.jalgo.main.util.GfxUtil;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaColors;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure;
@@ -98,38 +100,38 @@ implements IAlgorithm, SynDiaColors, Serializable {
 
 		// algorithm written on page 22 in the script
 		algoTxtCanvas.setTextSegments(new String[] {
-			Messages.getString("RecognizeWord.Algo_title_3"), //$NON-NLS-1$
-			Messages.getString("RecognizeWord.Algo_Description_1_4") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_2_5"), //$NON-NLS-1$
-			Messages.getString("RecognizeWord.Algo_Description_3_6"), //$NON-NLS-1$
-			Messages.getString("RecognizeWord.Algo_Description_4_7") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_5_8") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_6_9"), //$NON-NLS-1$
-			Messages.getString("RecognizeWord.Algo_Description_7_10") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_8_11") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_9_12") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_10_13") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_11_14") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_12_15"), //$NON-NLS-1$
-			Messages.getString("RecognizeWord.Algo_Description_13_16") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_14_17") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_15_18") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_16_19") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_17_20"), //$NON-NLS-1$
-			Messages.getString("RecognizeWord.Algo_Description_18_21") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_19_22") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_20_23"), //$NON-NLS-1$
-			Messages.getString("RecognizeWord.Algo_Description_21_24") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.Algo_Description_22_25"), //$NON-NLS-1$
-			Messages.getString("RecognizeWord.Algo_Description_23_26")}); //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "RecognizeWord.Algo_title_3"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_1_4") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_2_5"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_3_6"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_4_7") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_5_8") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_6_9"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_7_10") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_8_11") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_9_12") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_10_13") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_11_14") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_12_15"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_13_16") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_14_17") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_15_18") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_16_19") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_17_20"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_18_21") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_19_22") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_20_23"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_21_24") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_22_25"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "RecognizeWord.Algo_Description_23_26")}); //$NON-NLS-1$
 		algoTxtCanvas.markFirst();
 		algoTxtCanvas.setMarkStyle(new MarkStyle(normal, diagramNormal, 2));
 		algoTxtCanvas.demarkAll();
 		algoTxtCanvas.setMarkStyle(new MarkStyle(textHighlight, diagramNormal,
 			3));
 
-		outputCanvas.setTextSegments(new String[] {Messages
-		.getString("RecognizeWord.Algo_Description_24_27")}); //$NON-NLS-1$
+		outputCanvas.setTextSegments(new String[] {Messages.getString(
+			"synDiaEBNF", "RecognizeWord.Algo_Description_24_27")}); //$NON-NLS-1$
 
 		// show backtracking labels
 		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
@@ -484,12 +486,11 @@ implements IAlgorithm, SynDiaColors, Serializable {
 	}
 
 	private void refreshGeneratedWord(String output) {
-		outputCanvas
-		.addSegment(Messages
-		.getString("RecognizeWord.the_word_to_recognize_is___n_33") //$NON-NLS-1$
+		outputCanvas.addSegment(Messages.getString("synDiaEBNF", 
+			"RecognizeWord.the_word_to_recognize_is___n_33") //$NON-NLS-1$
 			+ word
-			+ Messages
-			.getString("RecognizeWord._nthe_word_generated_until_here_is___n_34") //$NON-NLS-1$
+			+ Messages.getString("synDiaEBNF", 
+				"RecognizeWord._nthe_word_generated_until_here_is___n_34") //$NON-NLS-1$
 			+ output);
 
 	}
@@ -499,23 +500,20 @@ implements IAlgorithm, SynDiaColors, Serializable {
 	 * stores the word in the variable "word"
 	 */
 	private void wordInputDialog() {
-		InputDialog inDialog = new InputDialog(GfxUtil.getAppShell(), Messages
-		.getString("RecognizeWord.WordInput_35"), //$NON-NLS-1$
-			Messages.getString("RecognizeWord.Word_to_recognize__36"), //$NON-NLS-1$
+		InputDialog inDialog = new InputDialog(GfxUtil.getAppShell(),
+			Messages.getString("synDiaEBNF", "RecognizeWord.WordInput_35"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "RecognizeWord.Word_to_recognize__36"), //$NON-NLS-1$
 			"", //$NON-NLS-1$
 			null);
 		if (inDialog.open() != Window.CANCEL) {
 			word = inDialog.getValue();
 		}
 		else {
-			MessageDialog
-			.openError(
-				null,
-				Messages.getString("RecognizeWord.Warning_39"), //$NON-NLS-1$
-				Messages
-				.getString("RecognizeWord.You_must_enter_a_proper_string_40") //$NON-NLS-1$
-					+ Messages
-					.getString("RecognizeWord.Now_the_Algo_will_be_finished_!_41")); //$NON-NLS-1$
+			JAlgoGUIConnector.getInstance().showWarningMessage(
+				Messages.getString(
+					"synDiaEBNF", "RecognizeWord.You_must_enter_a_proper_string_40") + //$NON-NLS-1$
+				Messages.getString(
+					"synDiaEBNF", "RecognizeWord.Now_the_Algo_will_be_finished_!_41")); //$NON-NLS-1$
 			finalTasks();
 			moduleController.algoFinished();
 		}
@@ -527,12 +525,15 @@ implements IAlgorithm, SynDiaColors, Serializable {
 	 * @return boolean false if the want abort
 	 */
 	private boolean missMatchDialog() {
-		return MessageDialog.openQuestion(stackCanvas.getShell(), Messages
-		.getString("RecognizeWord.recognize_missmatch_1_42"), //$NON-NLS-1$
-			Messages.getString("RecognizeWord.recognize_missmatch_2_43") //$NON-NLS-1$
-				+ word
-				+ Messages.getString("RecognizeWord.recognize_missmatch_3_44") //$NON-NLS-1$
-				+ Messages.getString("RecognizeWord.recognize_missmatch_4_45")); //$NON-NLS-1$
+		return JAlgoGUIConnector.getInstance().showConfirmDialog(
+			Messages.getString("synDiaEBNF",
+				"RecognizeWord.recognize_missmatch_2_43") //$NON-NLS-1$
+			+ word
+			+ Messages.getString("synDiaEBNF",
+				"RecognizeWord.recognize_missmatch_3_44") //$NON-NLS-1$
+			+ Messages.getString("synDiaEBNF",
+				"RecognizeWord.recognize_missmatch_4_45"), //$NON-NLS-1$
+			DialogConstants.YES_NO_OPTION) == DialogConstants.YES_OPTION;
 	}
 
 	/**
@@ -540,24 +541,18 @@ implements IAlgorithm, SynDiaColors, Serializable {
 	 */
 	private void readyDialog() {
 		if (generatedWord.equals(word)) {
-			boolean result = MessageDialog
-			.openQuestion(
-				stackCanvas.getShell(),
-				Messages
-				.getString("RecognizeWord.Algo_finished_unsuccessfull_1_46"), //$NON-NLS-1$
-				Messages
-				.getString("RecognizeWord.Algo_finished_unsuccessfull_2_47") //$NON-NLS-1$
-					+ generatedWord
-					+ Messages
-					.getString("RecognizeWord.Algo_finished_unsuccessfull_3_48")); //$NON-NLS-1$
-			if (result) {
+			if (JAlgoGUIConnector.getInstance().showConfirmDialog(
+				Messages.getString("synDiaEBNF",
+					"RecognizeWord.Algo_finished_unsuccessfull_2_47") //$NON-NLS-1$
+				+ generatedWord
+				+ Messages.getString("synDiaEBNF",
+					"RecognizeWord.Algo_finished_unsuccessfull_3_48"),
+				DialogConstants.YES_NO_OPTION) == DialogConstants.YES_OPTION) { //$NON-NLS-1$
 				finalTasks();
 				moduleController.algoFinished();
 			}
 		}
-		else {
-			missMatchDialog();
-		}
+		else missMatchDialog();
 	}
 
 	private int alternativeDialog(SynDiaAlternative alternative) {
@@ -569,11 +564,10 @@ implements IAlgorithm, SynDiaColors, Serializable {
 
 		while (result == 0) {
 			InputDialog inDialog = new InputDialog(GfxUtil.getAppShell(),
-				Messages.getString("RecognizeWord.Alternative_Dialog_1_49"), //$NON-NLS-1$
-				Messages.getString("RecognizeWord.Alternative_Dialog_2_50") //$NON-NLS-1$
-					+ way
-					+ Messages
-					.getString("RecognizeWord.Alternative_Dialog_3_51"), //$NON-NLS-1$
+				Messages.getString("synDiaEBNF", "RecognizeWord.Alternative_Dialog_1_49"), //$NON-NLS-1$
+				Messages.getString("synDiaEBNF", "RecognizeWord.Alternative_Dialog_2_50") + //$NON-NLS-1$
+				way +
+				Messages.getString("synDiaEBNF", "RecognizeWord.Alternative_Dialog_3_51"), //$NON-NLS-1$
 				"", //$NON-NLS-1$
 				null);
 			if (inDialog.open() != Window.CANCEL) {
@@ -590,12 +584,10 @@ implements IAlgorithm, SynDiaColors, Serializable {
 				}
 			}
 			if ((result > 0) && (result <= way)) { return result - 1; }
-			MessageDialog
-			.openError(
-				null,
-				Messages.getString("RecognizeWord.Warning_53"), //$NON-NLS-1$
-				Messages
-				.getString("RecognizeWord.Please_use_a_value_between_1_and__54") + way + "."); //$NON-NLS-1$ //$NON-NLS-2$
+			JAlgoGUIConnector.getInstance().showWarningMessage(
+				Messages.getString("synDiaEBNF", 
+					"RecognizeWord.Please_use_a_value_between_1_and__54") + //$NON-NLS-1$
+					way + "."); //$NON-NLS-2$
 			result = 0;
 		}
 
@@ -605,9 +597,9 @@ implements IAlgorithm, SynDiaColors, Serializable {
 	private boolean repetionDialog(SynDiaRepetition repetition) {
 		// ask the user, if the repetition should makes!
 		// return boolean if or not
-		return MessageDialog.openQuestion(GfxUtil.getAppShell(), Messages
-		.getString("RecognizeWord.Repetition_Dialog__1_56"), //$NON-NLS-1$
-			Messages.getString("RecognizeWord.Repetition_Dialog__2_57")); //$NON-NLS-1$
+		return JAlgoGUIConnector.getInstance().showConfirmDialog(
+			Messages.getString("synDiaEBNF", "RecognizeWord.Repetition_Dialog__2_57"), //$NON-NLS-1$
+			DialogConstants.YES_NO_OPTION) == DialogConstants.YES_OPTION;
 	}
 
 	private void restoreStep(BackTrackStep step) {
@@ -615,5 +607,4 @@ implements IAlgorithm, SynDiaColors, Serializable {
 		stack = step.getStackConfig();
 		currentElement = step.getElem();
 	}
-
 }

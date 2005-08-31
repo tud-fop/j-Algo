@@ -40,6 +40,7 @@ import org.jalgo.main.gui.actions.ZoomInAction;
 import org.jalgo.main.gui.actions.ZoomOutAction;
 import org.jalgo.main.gui.widgets.GraphViewForm;
 import org.jalgo.main.util.GfxUtil;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 import org.jalgo.module.synDiaEBNF.gui.actions.AddAlternativeAction;
 import org.jalgo.module.synDiaEBNF.gui.actions.AddConcatenationAction;
@@ -123,7 +124,8 @@ public class CreateSynDiaClickGui extends Gui implements Serializable {
 
 		//		Attach all to ViewForm
 		form2.setTopCenter(toolbar2);
-		form2.setText(Messages.getString("CreateSynDiaClickGui.Use_the_buttons_below_to_get_a_new_syntax_diagram._1")); //$NON-NLS-1$
+		form2.setText(Messages.getString("synDiaEBNF",
+			"CreateSynDiaClickGui.Use_the_buttons_below_to_get_a_new_syntax_diagram._1")); //$NON-NLS-1$
 		form2.setImage(ImageDescriptor.createFromURL(
 			getClass().getResource("/main_pix/new.gif")).createImage());
 		

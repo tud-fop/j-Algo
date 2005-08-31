@@ -29,6 +29,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.jalgo.main.util.Messages;
+
 /**
  * @author Stephan Creutz
  */
@@ -86,25 +88,32 @@ public class EbnfParser extends Parser {
 		variableSet = variableSetParser.analyse();
 		terminalSet = terminalSetParser.analyse();
 		if (!Collections.disjoint(variableSet, terminalSet)) {
-			throw new EbnfParseException(Messages.getString("EbnfParser.EbnfParseException_1_9")); //$NON-NLS-1$
+			throw new EbnfParseException(Messages.getString("synDiaEBNF",
+				"EbnfParser.EbnfParseException_1_9")); //$NON-NLS-1$
 		}
 		if (!Collections.disjoint(variableSet, metaSymbols)) {
-			throw new EbnfParseException(Messages.getString("EbnfParser.EbnfParseException_2_10")); //$NON-NLS-1$
+			throw new EbnfParseException(Messages.getString("synDiaEBNF",
+				"EbnfParser.EbnfParseException_2_10")); //$NON-NLS-1$
 		}
 		if (!Collections.disjoint(terminalSet, metaSymbols)) {
-			throw new EbnfParseException(Messages.getString("EbnfParser.EbnfParseException_3_11")); //$NON-NLS-1$
+			throw new EbnfParseException(Messages.getString("synDiaEBNF",
+				"EbnfParser.EbnfParseException_3_11")); //$NON-NLS-1$
 		}
 		if (startVariable.equals("")) { //$NON-NLS-1$
-			throw new EbnfParseException(Messages.getString("EbnfParser.EbnfParseException_4_12")); //$NON-NLS-1$
+			throw new EbnfParseException(Messages.getString("synDiaEBNF",
+				"EbnfParser.EbnfParseException_4_12")); //$NON-NLS-1$
 		}
 		if (rules.keySet().contains("")) { //$NON-NLS-1$
-			throw new EbnfParseException(Messages.getString("EbnfParser.EbnfParseException_5_13")); //$NON-NLS-1$
+			throw new EbnfParseException(Messages.getString("synDiaEBNF",
+				"EbnfParser.EbnfParseException_5_13")); //$NON-NLS-1$
 		}
 		if (!variableSet.equals(rules.keySet())) {
-			throw new EbnfParseException(Messages.getString("EbnfParser.EbnfParseException_6_14")); //$NON-NLS-1$
+			throw new EbnfParseException(Messages.getString("synDiaEBNF",
+				"EbnfParser.EbnfParseException_6_14")); //$NON-NLS-1$
 		}
 		if (!variableSet.contains(startVariable)) {
-			throw new EbnfParseException(Messages.getString("EbnfParser.EbnfParseException_7_15")); //$NON-NLS-1$
+			throw new EbnfParseException(Messages.getString("synDiaEBNF",
+				"EbnfParser.EbnfParseException_7_15")); //$NON-NLS-1$
 		}
 
 		for (Iterator it = variableSet.iterator(); it.hasNext();) {

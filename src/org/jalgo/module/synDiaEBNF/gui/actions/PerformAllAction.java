@@ -25,6 +25,7 @@ package org.jalgo.module.synDiaEBNF.gui.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
 /**
@@ -35,11 +36,14 @@ public class PerformAllAction extends Action {
 
 	public PerformAllAction(ModuleController mc) {
 		this.mc = mc;
-		setText(Messages.getString("PerformAllAction.Perform_All_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("PerformAllAction.Perform_trans-algorithm_automatically_to_the_end._2")); //$NON-NLS-1$
+		setText(Messages.getString("synDiaEBNF",
+			"PerformAllAction.Perform_All_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("synDiaEBNF",
+			"PerformAllAction.Perform_trans-algorithm_automatically_to_the_end._2")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/transalgoend.gif")));
-		setId(Messages.getString("PerformAllAction.performAll_4")); //$NON-NLS-1$
+		setId(Messages.getString("synDiaEBNF",
+			"PerformAllAction.performAll_4")); //$NON-NLS-1$
 	}
 
 	public void run() {

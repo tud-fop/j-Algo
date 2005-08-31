@@ -27,6 +27,7 @@ import java.io.Serializable;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
 /**
@@ -40,12 +41,15 @@ public class PerformNextAction extends Action implements Serializable {
 	
 	public PerformNextAction(ModuleController mc) {
 		this.mc = mc;
-		setText(Messages.getString("PerformNextAction.Next_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("PerformNextAction.Perform_next_step._2")); //$NON-NLS-1$
+		setText(Messages.getString("synDiaEBNF",
+			"PerformNextAction.Next_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("synDiaEBNF",
+			"PerformNextAction.Perform_next_step._2")); //$NON-NLS-1$
 		// TODO: find or design nice buttons
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/performNext.gif")));
-		setId(Messages.getString("PerformNextAction.performNext_4")); //$NON-NLS-1$
+		setId(Messages.getString("synDiaEBNF",
+			"PerformNextAction.performNext_4")); //$NON-NLS-1$
 	}
 
 	public void run() {

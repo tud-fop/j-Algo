@@ -35,6 +35,7 @@ import java.util.Set;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Composite;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaSystemFigure;
 
 /**
@@ -140,7 +141,8 @@ public class SynDiaSystem implements Serializable {
 
 	public StyledText getTuple(Composite parent) {
 		StyledText widget = new StyledText(parent, SWT.BORDER);
-		widget.append(label + Messages.getString("SynDiaSystem.(_u03A3,_V)_mit_n___u03A3___{_4")); //$NON-NLS-1$
+		widget.append(label + Messages.getString("synDiaEBNF",
+			"SynDiaSystem.(_u03A3,_V)_mit_n___u03A3___{_4")); //$NON-NLS-1$
 		for (Iterator it = terminalSymbols.iterator(); it.hasNext();) {
 			widget.append((String) it.next());
 			if (it.hasNext())

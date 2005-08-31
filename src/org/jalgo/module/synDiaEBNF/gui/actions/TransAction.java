@@ -28,6 +28,7 @@ package org.jalgo.module.synDiaEBNF.gui.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.IModeConstants;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
@@ -39,9 +40,10 @@ public class TransAction extends Action implements IModeConstants {
 
 	public TransAction(ModuleController mc) {
 		this.mc = mc;
-		setText(Messages.getString("TransAction.trans_algorithm_1")); //$NON-NLS-1$
-		setToolTipText(Messages
-				.getString("TransAction.Start_trans_algorithm._2")); //$NON-NLS-1$
+		setText(Messages.getString("synDiaEBNF",
+			"TransAction.trans_algorithm_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("synDiaEBNF",
+			"TransAction.Start_trans_algorithm._2")); //$NON-NLS-1$
 		//  TODO: add button-image
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/transalgo.gif")));
@@ -50,5 +52,4 @@ public class TransAction extends Action implements IModeConstants {
 	public void run() {
 		mc.setMode(TRANS_ALGO);
 	}
-
 }

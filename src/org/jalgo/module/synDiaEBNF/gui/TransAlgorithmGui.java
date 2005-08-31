@@ -35,6 +35,7 @@ import org.jalgo.main.gui.widgets.Splitter;
 import org.jalgo.main.gui.widgets.StackCanvas;
 import org.jalgo.main.gui.widgets.StackViewForm;
 import org.jalgo.main.gui.widgets.TextViewForm;
+import org.jalgo.main.util.Messages;
 
 /**
  * @author Michael Pradel
@@ -56,17 +57,20 @@ public class TransAlgorithmGui extends Gui  implements Serializable{
 		Splitter sash1 = new Splitter(sash, SWT.HORIZONTAL);
 
 		GraphViewForm form1 = new GraphViewForm(sash1, SWT.BORDER);
-		form1.setText(Messages.getString("TransAlgorithmGui.translation_1")); //$NON-NLS-1$
+		form1.setText(Messages.getString("synDiaEBNF",
+			"TransAlgorithmGui.translation_1")); //$NON-NLS-1$
 		form1.setImage(ImageDescriptor.createFromURL(
 			getClass().getResource("/main_pix/new.gif")).createImage());
 		figure = form1.getPanel();
 		
 		StackViewForm form2 = new StackViewForm(sash1, SWT.BORDER);
-		form2.setText(Messages.getString("TransAlgorithmGui.Rest_variables_3")); //$NON-NLS-1$
+		form2.setText(Messages.getString("synDiaEBNF",
+			"TransAlgorithmGui.Rest_variables_3")); //$NON-NLS-1$
 		stackCanvas = form2.getStackCanvas();
 		
 		TextViewForm form3 = new TextViewForm(sash, SWT.BORDER);
-		form3.setText(Messages.getString("TransAlgorithmGui.Algo_definition_4")); //$NON-NLS-1$
+		form3.setText(Messages.getString(
+			"synDiaEBNF", "TransAlgorithmGui.Algo_definition_4")); //$NON-NLS-1$
 		form3.setImage(ImageDescriptor.createFromURL(
 			getClass().getResource("/main_pix/new.gif")).createImage());
 		textCanvas = form3.getTextCanvas();

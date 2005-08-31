@@ -26,6 +26,7 @@ package org.jalgo.module.synDiaEBNF.gui.actions;
 import java.io.Serializable;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
 /**
@@ -39,8 +40,10 @@ public class RightAction extends NavAction implements Serializable {
 
 	public RightAction(ModuleController mc) {
 		this.mc = mc;
-		setText(Messages.getString("RightAction.Next_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("RightAction.Perform_next_step._2")); //$NON-NLS-1$
+		setText(Messages.getString("synDiaEBNF",
+			"RightAction.Next_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("synDiaEBNF",
+			"RightAction.Perform_next_step._2")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/right.gif")));
 	}
@@ -48,5 +51,4 @@ public class RightAction extends NavAction implements Serializable {
 	public void run() {
 		mc.nextHistStep();
 	}
-
 }

@@ -44,6 +44,7 @@ import org.jalgo.main.InternalErrorException;
 import org.jalgo.main.gfx.MarkStyle;
 import org.jalgo.main.gui.TextCanvas;
 import org.jalgo.main.gui.widgets.StackCanvas;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.ebnf.EbnfAlternative;
 import org.jalgo.module.synDiaEBNF.ebnf.EbnfConcatenation;
 import org.jalgo.module.synDiaEBNF.ebnf.EbnfDefinition;
@@ -187,24 +188,24 @@ implements IAlgorithm, Serializable {
 
 		// inititialize the txtCanvas, display the written trans algorithm
 		txtCanvas.setTextSegments(new String[] {
-			Messages.getString("TransAlgorithm.Algo_Description_1_1") //$NON-NLS-1$
-				+ Messages.getString("TransAlgorithm.Algo_Description_2_2") //$NON-NLS-1$
-				+ Messages.getString("TransAlgorithm.Algo_Description_3_3") //$NON-NLS-1$
-				+ Messages.getString("TransAlgorithm.Algo_Description_4_4") //$NON-NLS-1$
-				+ Messages.getString("TransAlgorithm.Algo_Description_5_5") //$NON-NLS-1$
-				+ Messages.getString("TransAlgorithm.Algo_Description_6_6"), //$NON-NLS-1$
-			Messages.getString("TransAlgorithm.Algo_Description_7_7") //$NON-NLS-1$
-				+ Messages.getString("TransAlgorithm.Algo_Description_8_8"), //$NON-NLS-1$
-			Messages.getString("TransAlgorithm.Algo_Description_9_9") //$NON-NLS-1$
-				+ Messages.getString("TransAlgorithm.Algo_Description_10_10"), //$NON-NLS-1$
-			Messages.getString("TransAlgorithm.Algo_Description_11_11"), //$NON-NLS-1$
-			Messages.getString("TransAlgorithm.Algo_Description_12_12") //$NON-NLS-1$
-				+ Messages.getString("TransAlgorithm.Algo_Description_13_13"), //$NON-NLS-1$
-			Messages.getString("TransAlgorithm.Algo_Description_14_14"), //$NON-NLS-1$
-			Messages.getString("TransAlgorithm.Algo_Description_15_15"), //$NON-NLS-1$
-			Messages.getString("TransAlgorithm.Algo_Description_16_16"), //$NON-NLS-1$
-			Messages.getString("TransAlgorithm.Algo_Description_17_17"), //$NON-NLS-1$
-			Messages.getString("TransAlgorithm.Algo_Description_18_18") //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_1_1") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_2_2") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_3_3") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_4_4") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_5_5") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_6_6"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_7_7") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_8_8"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_9_9") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_10_10"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_11_11"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_12_12") //$NON-NLS-1$
+				+ Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_13_13"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_14_14"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_15_15"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_16_16"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_17_17"), //$NON-NLS-1$
+			Messages.getString("synDiaEBNF", "TransAlgorithm.Algo_Description_18_18") //$NON-NLS-1$
 		});
 		txtCanvas.setMarkStyle(new MarkStyle(SynDiaColors.textHighlight,
 			SynDiaColors.diagramNormal, 3));
@@ -391,10 +392,11 @@ implements IAlgorithm, Serializable {
 	}
 
 	private void showDialogFinished() {
-		MessageDialog
-		.openInformation(
-			toTransCanvas.getShell(),
-			Messages.getString("TransAlgorithm.Algorithm_completed_19"), Messages.getString("TransAlgorithm.The_algorithm_has_been_completed_!_20")); //$NON-NLS-1$ //$NON-NLS-2$
+		MessageDialog.openInformation(toTransCanvas.getShell(),
+			Messages.getString("synDiaEBNF",
+				"TransAlgorithm.Algorithm_completed_19"),
+			Messages.getString("synDiaEBNF",
+				"TransAlgorithm.The_algorithm_has_been_completed_!_20")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private void highlightTxtAndElem() {

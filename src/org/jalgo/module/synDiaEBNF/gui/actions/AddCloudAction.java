@@ -31,6 +31,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.main.gfx.IClickAction;
 import org.jalgo.main.util.ClickCollector;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.gfx.AlternativeFigure;
 import org.jalgo.module.synDiaEBNF.gfx.CloudFigure;
 import org.jalgo.module.synDiaEBNF.gfx.CompositeSynDiaFigure;
@@ -46,8 +47,10 @@ public class AddCloudAction extends Action implements IClickAction {
 
 	public AddCloudAction(IFigure figure) {
 		this.figure = figure;
-		setText(Messages.getString("AddCloudAction.Cloud_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("AddCloudAction.Add_cloud._2")); //$NON-NLS-1$
+		setText(Messages.getString("synDiaEBNF",
+			"AddCloudAction.Cloud_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("synDiaEBNF",
+			"AddCloudAction.Add_cloud._2")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/rectangle.gif")));
 	}
@@ -68,5 +71,4 @@ public class AddCloudAction extends Action implements IClickAction {
 		}
 
 	}
-
 }

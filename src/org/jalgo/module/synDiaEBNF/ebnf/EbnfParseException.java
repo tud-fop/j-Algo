@@ -22,6 +22,8 @@
  */
 package org.jalgo.module.synDiaEBNF.ebnf;
 
+import org.jalgo.main.util.Messages;
+
 /**
  * this is a new <code>Exception</code> for the EBNF parser
  * 
@@ -36,7 +38,7 @@ public class EbnfParseException extends Exception {
 	}
 
 	public EbnfParseException(String message, int position) {
-		super(message + Messages.getString("EbnfParseException.._char___1") + position); //$NON-NLS-1$
+		super(message + Messages.getString("synDiaEBNF",
+			"EbnfParseException.._char___1") + position); //$NON-NLS-1$
 	}
-
 }
