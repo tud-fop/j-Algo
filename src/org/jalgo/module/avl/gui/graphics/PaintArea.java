@@ -42,6 +42,7 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.datastructure.AVLNode;
@@ -131,11 +132,11 @@ implements DisplayModeChangeable, GraphicsConstants {
 		//the status line updater
 		addMouseListener(new MouseAdapter() {
 			public void mouseExited(MouseEvent e) {
-				gui.setStatusMessage(null);
+				JAlgoGUIConnector.getInstance().setStatusMessage(null);
 			}
 			public void mouseEntered(MouseEvent e) {
-				gui.setStatusMessage(Messages.getString("avl", //$NON-NLS-1$
-					"PaintArea.Status_message")); //$NON-NLS-1$
+				JAlgoGUIConnector.getInstance().setStatusMessage(
+					Messages.getString("avl", "PaintArea.Status_message")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		});
 	}

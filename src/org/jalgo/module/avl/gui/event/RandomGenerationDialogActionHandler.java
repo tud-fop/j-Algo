@@ -31,6 +31,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import org.jalgo.main.IModuleConnector;
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.ModuleConnector;
 import org.jalgo.module.avl.NoActionException;
@@ -87,7 +88,8 @@ implements ActionListener, DocumentListener, GUIConstants {
 						controller.finish();
 					}
 					catch (NoActionException ex) {
-						gui.showErrorMessage(ex.getMessage());
+						JAlgoGUIConnector.getInstance().showErrorMessage(
+							ex.getMessage());
 					}
 					gui.installStandardLayout();
 					connector.setSaveStatus(IModuleConnector.CHANGES_TO_SAVE);

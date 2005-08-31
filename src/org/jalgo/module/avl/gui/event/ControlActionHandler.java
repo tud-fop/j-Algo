@@ -40,6 +40,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.gui.GUIConstants;
@@ -162,14 +163,15 @@ implements ActionListener, DocumentListener, MouseListener, GUIConstants,
 	 * line.
 	 */
 	public void mouseEntered(MouseEvent e) {
-		gui.setStatusMessage(((JComponent)e.getSource()).getToolTipText());
+		JAlgoGUIConnector.getInstance().setStatusMessage(
+			((JComponent)e.getSource()).getToolTipText());
 	}
 
 	/**
 	 * Causes to remove the message from the status line.
 	 */
 	public void mouseExited(MouseEvent e) {
-		gui.setStatusMessage(null);
+		JAlgoGUIConnector.getInstance().setStatusMessage(null);
 	}
 
 	/**

@@ -37,6 +37,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.gui.DisplayModeChangeable;
@@ -91,14 +92,13 @@ implements DisplayModeChangeable, GUIConstants {
 
 		// the status line updater
 		textPane.addMouseListener(new MouseAdapter() {
-
 			public void mouseExited(MouseEvent e) {
-				gui.setStatusMessage(null);
+				JAlgoGUIConnector.getInstance().setStatusMessage(null);
 			}
 
 			public void mouseEntered(MouseEvent e) {
-				gui.setStatusMessage(Messages.getString(
-					"avl", "DocuPane.Status_message")); //$NON-NLS-1$ //$NON-NLS-2$
+				JAlgoGUIConnector.getInstance().setStatusMessage(
+					Messages.getString("avl", "DocuPane.Status_message")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		});
 	}
@@ -158,8 +158,8 @@ implements DisplayModeChangeable, GUIConstants {
 			}
 		}
 		catch (BadLocationException ex) {
-			gui.showErrorMessage(Messages.getString(
-				"avl", "DocuPane.Update_error") + //$NON-NLS-1$ //$NON-NLS-2$
+			JAlgoGUIConnector.getInstance().showErrorMessage(
+				Messages.getString("avl", "DocuPane.Update_error") + //$NON-NLS-1$ //$NON-NLS-2$
 				System.getProperty("line.separator") + //$NON-NLS-1$
 				ex.getMessage());
 		}

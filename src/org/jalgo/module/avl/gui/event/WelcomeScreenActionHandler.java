@@ -29,6 +29,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.module.avl.gui.GUIController;
 import org.jalgo.module.avl.gui.components.WelcomeButton;
 import org.jalgo.module.avl.gui.components.WelcomeScreen;
@@ -63,7 +64,8 @@ implements ActionListener, MouseListener {
 	 * Handles button clicks.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("load")) gui.showOpenDialog(); //$NON-NLS-1$
+		if (e.getActionCommand().equals("load")) //$NON-NLS-1$
+			JAlgoGUIConnector.getInstance().showOpenDialog(true, true);
 		else if (e.getActionCommand().equals("createManually")) { //$NON-NLS-1$
 			gui.setAVLMode(true, true);
 			gui.installStandardLayout();

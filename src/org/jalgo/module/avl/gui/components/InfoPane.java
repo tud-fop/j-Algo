@@ -34,6 +34,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.datastructure.Node;
 import org.jalgo.module.avl.datastructure.SearchTree;
@@ -67,7 +68,7 @@ extends JPanel {
 	 * @param tree the <code>SearchTree</code> for which informations should
 	 *            be provided
 	 */
-	public InfoPane(final GUIController gui, SearchTree tree) {
+	public InfoPane(SearchTree tree) {
 		this.tree = tree;
 
 		GridBagLayout gbl = new GridBagLayout();
@@ -109,12 +110,12 @@ extends JPanel {
 		addMouseListener(new MouseAdapter() {
 
 			public void mouseExited(MouseEvent e) {
-				gui.setStatusMessage(null);
+				JAlgoGUIConnector.getInstance().setStatusMessage(null);
 			}
 
 			public void mouseEntered(MouseEvent e) {
-				gui.setStatusMessage(Messages.getString(
-					"avl", "InfoPane.Status_message")); //$NON-NLS-1$ //$NON-NLS-2$
+				JAlgoGUIConnector.getInstance().setStatusMessage(
+					Messages.getString("avl", "InfoPane.Status_message")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		});
 

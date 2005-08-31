@@ -24,6 +24,7 @@
 /* Created on 21.05.2005 */
 package org.jalgo.module.avl.gui.graphics;
 
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.NoActionException;
@@ -67,13 +68,14 @@ extends Animator {
 				sleep(Settings.getStepDelay());
 			}
 			catch (InterruptedException ex) {
-				gui.showErrorMessage(
+				JAlgoGUIConnector.getInstance().showErrorMessage(
 					Messages.getString("avl", "Hard_exception") //$NON-NLS-1$ //$NON-NLS-2$
 					+ System.getProperty("line.separator") + ex.getMessage()); //$NON-NLS-1$
 				return;
 			}
 			catch (NoActionException ex) {
-				gui.showErrorMessage(ex.getMessage());
+				JAlgoGUIConnector.getInstance().showErrorMessage(
+					ex.getMessage());
 				return;
 			}
 		}

@@ -27,9 +27,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.gui.DialogConstants;
-import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.util.Messages;
-import org.jalgo.module.avl.ModuleConnector;
 import org.jalgo.module.avl.datastructure.SearchTree;
 import org.jalgo.module.avl.gui.GUIController;
 
@@ -46,8 +44,6 @@ import org.jalgo.module.avl.gui.GUIController;
 public class WelcomeAction
 extends Action {
 
-	private JalgoWindow parent;
-	private ModuleConnector connector;
 	private GUIController gui;
 	private SearchTree tree;
 
@@ -55,23 +51,17 @@ extends Action {
 	 * Constructs a <code>WelcomeAction</code> object with the given
 	 * references.
 	 * 
-	 * @param parent the current instance of <code>JalgoWindow</code>
-	 * @param connector the <code>ModuleConnector</code> instance of the AVL
-	 *            module
 	 * @param gui the <code>GUIController</code> instance of the AVL module
 	 * @param tree the <code>SearchTree</code> instance of the AVL module
 	 */
-	public WelcomeAction(JalgoWindow parent, ModuleConnector connector,
-		GUIController gui, SearchTree tree) {
-		this.parent = parent;
-		this.connector = connector;
+	public WelcomeAction(GUIController gui, SearchTree tree) {
 		this.gui = gui;
 		this.tree = tree;
 		setText(Messages.getString("avl", "Show_welcome_screen")); //$NON-NLS-1$ //$NON-NLS-2$
 		setToolTipText(Messages.getString(
 			"avl", "Show_welcome_screen_tooltip")); //$NON-NLS-1$ //$NON-NLS-2$
-		setImageDescriptor(ImageDescriptor.createFromURL(Messages
-		.getResourceURL("avl", "Module_logo"))); //$NON-NLS-1$ //$NON-NLS-2$
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			Messages.getResourceURL("avl", "Module_logo"))); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -86,8 +76,8 @@ extends Action {
 				gui.installWelcomeScreen();
 				break;
 			case DialogConstants.NO_OPTION:
-				parent.getParent().newInstanceByName(
-					connector.getModuleInfo().getName());
+				JAlgoGUIConnector.getInstance().newModuleInstanceByName(
+					Messages.getString("avl", "Module_name")); //$NON-NLS-1$ //$NON-NLS-2$
 				break;
 			case DialogConstants.CANCEL_OPTION:
 				return;

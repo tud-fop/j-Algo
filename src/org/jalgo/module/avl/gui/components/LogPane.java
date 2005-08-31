@@ -38,11 +38,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.gui.DisplayModeChangeable;
 import org.jalgo.module.avl.gui.GUIConstants;
-import org.jalgo.module.avl.gui.GUIController;
 import org.jalgo.module.avl.gui.Settings;
 
 /**
@@ -69,11 +69,10 @@ implements DisplayModeChangeable, GUIConstants {
 	/**
 	 * Constructs a <code>LogPane</code> object with the given references.
 	 * 
-	 * @param gui the <code>GUIController</code> instance of the AVL module
 	 * @param controller the <code>Controller</code> instance of the AVL
 	 *            module
 	 */
-	public LogPane(final GUIController gui, Controller controller) {
+	public LogPane(Controller controller) {
 		this.controller = controller;
 		lineSeparator = System.getProperty("line.separator"); //$NON-NLS-1$
 
@@ -93,12 +92,12 @@ implements DisplayModeChangeable, GUIConstants {
 		textPane.addMouseListener(new MouseAdapter() {
 
 			public void mouseExited(MouseEvent e) {
-				gui.setStatusMessage(null);
+				JAlgoGUIConnector.getInstance().setStatusMessage(null);
 			}
 
 			public void mouseEntered(MouseEvent e) {
-				gui.setStatusMessage(Messages.getString(
-					"avl", "LogPane.Status_message")); //$NON-NLS-1$ //$NON-NLS-2$
+				JAlgoGUIConnector.getInstance().setStatusMessage(
+					Messages.getString("avl", "LogPane.Status_message")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		});
 	}

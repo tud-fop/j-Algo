@@ -24,6 +24,7 @@
 /* Created on 10.05.2005 */
 package org.jalgo.module.avl.gui.event;
 
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.NoActionException;
@@ -70,7 +71,7 @@ extends SwingSWTAction {
 			controller.perform();
 		}
 		catch (NoActionException ex) {
-			gui.showErrorMessage(ex.getMessage());
+			JAlgoGUIConnector.getInstance().showErrorMessage(ex.getMessage());
 		}
 
 		// for explanation of the following step, see DocuPane.update()

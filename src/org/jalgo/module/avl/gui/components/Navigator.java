@@ -44,6 +44,7 @@ import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.border.EtchedBorder;
 
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.gui.GUIController;
 import org.jalgo.module.avl.gui.graphics.PaintArea;
@@ -127,7 +128,7 @@ implements MouseListener, MouseMotionListener {
 			robot = new Robot();
 		}
 		catch (AWTException ex) {
-			gui.showErrorMessage(Messages.getString(
+			JAlgoGUIConnector.getInstance().showErrorMessage(Messages.getString(
 				"avl", "No_robot_error")); //$NON-NLS-1$ //$NON-NLS-2$
 			ex.printStackTrace();
 			robot = null;

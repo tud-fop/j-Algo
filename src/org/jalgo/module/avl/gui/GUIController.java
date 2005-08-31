@@ -46,15 +46,12 @@ import javax.swing.UIManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubMenuManager;
-import org.eclipse.jface.action.SubStatusLineManager;
 import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.IModuleConnector;
 import org.jalgo.main.JAlgoGUIConnector;
-import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.ModuleConnector;
@@ -97,11 +94,10 @@ implements GUIConstants {
 	private SearchTree tree;
 
 	// components provided by the jAlgo-framework
-	private ApplicationWindow appWin;
 	private SubMenuManager menuManager;
 	private SubToolBarManager toolBarManager;
-	private SubStatusLineManager statusLineManager;
 
+	// components (based on SWT)
 	private WelcomeAction welcomeAction;
 	private ClearTreeAction clearTreeAction;
 	private SwingSWTAction abortAction;
@@ -144,25 +140,19 @@ implements GUIConstants {
 	 * GUI of the AVL module can be created on Swing base.
 	 * 
 	 * @param connector the <code>ModuleConnector</code> of the AVL module
-	 * @param appWin the current instance of <code>JalgoWindow</code>
 	 * @param comp the parent component
 	 * @param menu the menu manager
 	 * @param tb the toolbar manager
-	 * @param sl the status line manager
 	 * @param controller the <code>Controller</code> instance of the AVL
 	 *            module
 	 * @param st the <code>SearchTree</code> instance of the AVL module
 	 */
-	public GUIController(ModuleConnector connector, ApplicationWindow appWin,
-		Composite comp, SubMenuManager menu, SubToolBarManager tb,
-		SubStatusLineManager sl, Controller controller, SearchTree st) {
+	public GUIController(ModuleConnector connector, Composite comp,
+		SubMenuManager menu, SubToolBarManager tb, Controller controller, SearchTree st) {
 
 		this.connector = connector;
-		this.appWin = appWin;
 		this.menuManager = menu;
 		this.toolBarManager = tb;
-		this.statusLineManager = sl;
-
 		this.controller = controller;
 		this.tree = st;
 
@@ -187,13 +177,10 @@ implements GUIConstants {
 				lineSep + ex.getMessage());
 		}
 
-		// setup the status line
-		statusLineManager.setVisible(true);
-
 		// initialization of the following components is called before
 		// installToolbar() because of needed references
 		paintArea = new PaintArea(this, tree, controller);
-		logPane = new LogPane(this, controller);
+		logPane = new LogPane(controller);
 		docuPane = new DocuPane(this, controller);
 		installToolbar();
 		installMenu();
@@ -202,7 +189,7 @@ implements GUIConstants {
 			connector);
 		welcomeScreen = new WelcomeScreen(this);
 		controlPane = new ControlPane(this, controller);
-		infoPane = new InfoPane(this, tree);
+		infoPane = new InfoPane(tree);
 		graphicPane = new JScrollPane(paintArea);
 		graphicPane.setCorner(ScrollPaneConstants.LOWER_RIGHT_CORNER,
 			new Navigator(this, paintArea));
@@ -258,8 +245,7 @@ implements GUIConstants {
 	 * Sets up the toolbar.
 	 */
 	private void installToolbar() {
-		welcomeAction = new WelcomeAction((JalgoWindow)appWin, connector, this,
-			tree);
+		welcomeAction = new WelcomeAction(this, tree);
 		toolBarManager.add(welcomeAction);
 		clearTreeAction = new ClearTreeAction(this, tree);
 		toolBarManager.add(clearTreeAction);
@@ -372,36 +358,6 @@ implements GUIConstants {
 	}
 
 	/**
-	 * Opens a filechooser dialog for opening files of the AVL module.
-	 */
-	public void showOpenDialog() {
-		appWin.getShell().getDisplay().syncExec(new Runnable() {
-			public void run() {
-				JAlgoGUIConnector.getInstance().showOpenDialog(true, true);
-			}
-		});
-	}
-
-	/**
-	 * Shows an error message with the given message string.
-	 * 
-	 * @param msg the error message
-	 */
-	public void showErrorMessage(final String msg) {
-		appWin.getShell().getDisplay().syncExec(new Runnable() {
-			public void run() {
-				JAlgoGUIConnector.getInstance().showErrorMessage(msg);
-			}
-		});
-		// here no Swing dialog is used because of thread problems, when calling
-		// this method from SWT
-		// JOptionPane.showMessageDialog(contentPane, msg, "Fehler",
-		// JOptionPane.ERROR_MESSAGE);
-		// FIXME: wenn harte exception geworfen, muss ausser message noch
-		// fehlerbehandlung erfolgen
-	}
-
-	/**
 	 * Shows a dialog, where user can create a random tree.
 	 */
 	public void showRandomGenerationDialog() {
@@ -448,7 +404,8 @@ implements GUIConstants {
 					controller.perform();
 				}
 				catch (NoActionException ex) {
-					showErrorMessage(ex.getMessage());
+					JAlgoGUIConnector.getInstance().showErrorMessage(
+						ex.getMessage());
 				}
 				update();
 				connector.setSavingBlocked(false);
@@ -484,7 +441,8 @@ implements GUIConstants {
 						controller.perform();
 					}
 					catch (NoActionException ex) {
-						showErrorMessage(ex.getMessage());
+						JAlgoGUIConnector.getInstance().showErrorMessage(
+							ex.getMessage());
 					}
 					// restore state
 					controlPane.setKeyInputEnabled(true);
@@ -513,22 +471,6 @@ implements GUIConstants {
 	 */
 	public boolean isDialogOpen() {
 		return isDialogOpen;
-	}
-
-	/**
-	 * Displays the given message string to the status line.
-	 * 
-	 * @param msg the message to be displayed
-	 */
-	public void setStatusMessage(final String msg) {
-		// the following approach is necessary, because of getting an
-		// invalid thread access, when calling SubStatusLineManager.setMessage()
-		// directly
-		appWin.getShell().getDisplay().syncExec(new Runnable() {
-			public void run() {
-				JAlgoGUIConnector.getInstance().setStatusMessage(msg);
-			}
-		});
 	}
 
 	/**
