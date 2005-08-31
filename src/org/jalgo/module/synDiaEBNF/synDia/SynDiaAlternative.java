@@ -79,18 +79,12 @@ public class SynDiaAlternative
 		return options.remove(optionToRemove);
 
 	}
-	/**
-	 * @return
-	 */
+
 	public AlternativeFigure getGfx() {
 		return gfx;
 	}
 
-	/**
-	 * @param figure
-	 */
 	public void setGfx(AlternativeFigure figure) {
 		gfx = figure;
 	}
-
 }

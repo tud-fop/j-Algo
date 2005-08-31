@@ -130,16 +130,10 @@ public class SynDiaVariable extends SynDiaElement implements SynDiaColors,
 		highlightObject(bool);
 	}
 
-	/**
-	 * @return
-	 */
 	public VariableFigure getGfx() {
 		return rectangle;
 	}
 
-	/**
-	 * @param figure
-	 */
 	public void setGfx(VariableFigure figure) {
 		rectangle = figure;
 		if (figure != null) {
@@ -147,9 +141,6 @@ public class SynDiaVariable extends SynDiaElement implements SynDiaColors,
 		}
 	}
 
-	/**
-	 * @return
-	 */
 	public SynDiaVariableBack getHelpCopy() {
 		return helpCopy;
 	}
@@ -164,5 +155,4 @@ public class SynDiaVariable extends SynDiaElement implements SynDiaColors,
 	public void setHelpCopy(SynDiaVariableBack back) {
 		helpCopy = back;
 	}
-
 }

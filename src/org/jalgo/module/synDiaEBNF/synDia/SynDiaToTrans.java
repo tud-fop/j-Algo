@@ -58,16 +58,10 @@ public class SynDiaToTrans extends SynDiaElement implements Serializable {
 		return stillToTrans.toString();
 	}
 
-	/**
-	 * @return
-	 */
 	public ToTransFigure getGfx() {
 		return gfx;
 	}
 
-	/**
-	 * @param figure
-	 */
 	public void setGfx(ToTransFigure figure) {
 		gfx = figure;
 	}

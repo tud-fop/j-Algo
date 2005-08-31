@@ -102,18 +102,11 @@ public class SynDiaRepetition extends SynDiaComposition implements Serializable 
 		this.straightAheadElem = straightAheadElem;
 	}
 
-	/**
-	 * @return
-	 */
 	public RepetitionFigure getGfx() {
 		return gfx;
 	}
 
-	/**
-	 * @param figure
-	 */
 	public void setGfx(RepetitionFigure figure) {
 		gfx = figure;
 	}
-
 }

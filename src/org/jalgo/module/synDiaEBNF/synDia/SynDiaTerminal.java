@@ -85,18 +85,11 @@ public class SynDiaTerminal extends SynDiaElement
 		highlightObject(bool);
 	}
 
-	/**
-	 * @return
-	 */
 	public TerminalFigure getGfx() {
 		return ellipse;
 	}
 
-	/**
-	 * @param figure
-	 */
 	public void setGfx(TerminalFigure figure) {
 		ellipse = figure;
 	}
-
 }

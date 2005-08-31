@@ -91,16 +91,10 @@ public class SynDiaConcatenation extends SynDiaComposition implements Serializab
 		return elements.remove(elem);
 	}
 
-	/**
-	 * @return
-	 */
 	public ConcatenationFigure getGfx() {
 		return gfx;
 	}
 
-	/**
-	 * @param figure
-	 */
 	public void setGfx(ConcatenationFigure figure) {
 		gfx = figure;
 	}
