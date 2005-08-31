@@ -121,7 +121,7 @@ public class JAlgoGUIConnector {
 	 * @param msg the message string
 	 */
 	public void setStatusMessage(String msg) {
-		appWin.setStatus(msg);
+		appWin.setStatusMessage(msg);
 	}
 
 	/**
@@ -146,5 +146,21 @@ public class JAlgoGUIConnector {
 	public String showOpenDialog(boolean openAsJAlgoFile,
 		boolean useCurrentModuleInstance) {
 		return appWin.showOpenDialog(openAsJAlgoFile, useCurrentModuleInstance);
+	}
+
+	/**
+	 * Creates a new instance of the module with the given name.
+	 * Returns <code>null</code>, if the given name does not match to any known
+	 * module name.
+	 * 
+	 * @param moduleName the name of the module to be created
+	 * 
+	 * @return the <code>IModuleConnector</code> instance of the module, if it
+	 * 			is created, <code>null</code> otherwise
+	 *
+	 * @see JalgoMain#newInstanceByName(String)
+	 */
+	public IModuleConnector newModuleInstanceByName(String moduleName) {
+		return appWin.getParent().newInstanceByName(moduleName);
 	}
 }
