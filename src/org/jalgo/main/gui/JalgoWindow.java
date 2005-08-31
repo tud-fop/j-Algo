@@ -344,42 +344,84 @@ extends ApplicationWindow {
 	}
 
 	/**
-	 * Opens a message box with an error message.
+	 * Sets the message at the status line to the given message string.
+	 * This action is encapsulated within a new <code>Runnable</code> object,
+	 * which is executed, because of interacting of Swing and SWT. Otherwise
+	 * there would be thread problems.
+	 * 
+	 * @param msg the message string
+	 */
+	public void setStatusMessage(final String msg) {
+		getShell().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				setStatus(msg);
+			}
+		});
+	}
+
+	/**
+	 * Opens a message box with an error message.<br>
+	 * The dialog is encapsulated within a new <code>Runnable</code> object,
+	 * which is executed, because of interacting of Swing and SWT. Otherwise
+	 * there would be thread problems.
 	 * 
 	 * @param msg the error message to be displayed
 	 */
-	public void showErrorMessage(String msg) {
-		MessageDialog.openError(getShell(),
-			Messages.getString("main", "DialogConstants.Error"), msg); //$NON-NLS-1$ //$NON-NLS-2$
+	public void showErrorMessage(final String msg) {
+		getShell().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				MessageDialog.openError(getShell(), Messages.getString(
+					"main", "DialogConstants.Error"), msg); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		});
+		
 	}
 
 	/**
-	 * Opens a message box with a warning message.
+	 * Opens a message box with a warning message.<br>
+	 * The dialog is encapsulated within a new <code>Runnable</code> object,
+	 * which is executed, because of interacting of Swing and SWT. Otherwise
+	 * there would be thread problems.
 	 * 
 	 * @param msg the warning message to be displayed
 	 */
-	public void showWarningMessage(String msg) {
-		MessageDialog.openWarning(getShell(),
-			Messages.getString("main", "DialogConstants.Warning"), msg); //$NON-NLS-1$ //$NON-NLS-2$
+	public void showWarningMessage(final String msg) {
+		getShell().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				MessageDialog.openWarning(getShell(), Messages.getString(
+					"main", "DialogConstants.Warning"), msg); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		});
 	}
 
+	/* the following variable is necessary for ecapsulate the dialog within a
+	   Runnable object*/
+	private int _result;
 	/**
-	 * Opens a confirm dialog with the given question.
+	 * Opens a confirm dialog with the given question.<br>
+	 * The dialog is encapsulated within a new <code>Runnable</code> object,
+	 * which is executed, because of interacting of Swing and SWT. Otherwise
+	 * there would be thread problems.
 	 * 
 	 * @param question the question to be displayed
 	 * @param optionType an int designating the options available on the dialog
 	 *  
 	 * @return an integer indicating the option selected by the user
 	 */
-	public int showConfirmDialog(String question, int optionType) {
-		int result = new MessageDialog(getShell(),
-			Messages.getString("main", "DialogConstants.Question"), null, //$NON-NLS-1$ //$NON-NLS-2$
-			question, MessageDialog.QUESTION,
-			DialogConstants.getOptionStrings(optionType), 0).open();
-		if (optionType == DialogConstants.OK_CANCEL_OPTION &&
-			result == DialogConstants.NO_OPTION)
-			return DialogConstants.CANCEL_OPTION;
-		return result;
+	public int showConfirmDialog(final String question, final int optionType) {
+		getShell().getDisplay().syncExec(new Runnable() {
+			@SuppressWarnings("synthetic-access")
+			public void run() {
+				_result = new MessageDialog(getShell(), Messages.getString(
+					"main", "DialogConstants.Question"), null, //$NON-NLS-1$ //$NON-NLS-2$
+					question, MessageDialog.QUESTION,
+					DialogConstants.getOptionStrings(optionType), 0).open();
+				if (optionType == DialogConstants.OK_CANCEL_OPTION &&
+					_result == DialogConstants.NO_OPTION)
+					_result = DialogConstants.CANCEL_OPTION;
+			}
+		});
+		return _result;
 	}
 
 	/**
@@ -392,6 +434,9 @@ extends ApplicationWindow {
 		aboutModuleAction.setEnabled(b);
 	}
 
+	/* the following variable is necessary for ecapsulate the dialog within a
+	   Runnable object*/
+	private String _filename;
 	/**
 	 * Opens a filechooser for opening files. The file selected by the user can
 	 * be opened automatically as j-Algo file. When selected this option the
@@ -399,7 +444,10 @@ extends ApplicationWindow {
 	 * current instance of the module or if a new module instance should be
 	 * opened.<br>
 	 * If the file should not be opened automatically, e.g. for using the file
-	 * in other ways, the file name is returned as string.
+	 * in other ways, the file name is returned as string.<br>
+	 * The dialog is encapsulated within a new <code>Runnable</code> object,
+	 * which is executed, because of interacting of Swing and SWT. Otherwise
+	 * there would be thread problems.
 	 * 
 	 * @param openAsJAlgoFile <code>true</code>, if the file should be opened as
 	 * 			j-Algo file, <code>false</code> otherwise
@@ -410,19 +458,24 @@ extends ApplicationWindow {
 	 * 			to <code>false</code>
 	 * 
 	 */
-	public String showOpenDialog(boolean openAsJAlgoFile,
-		boolean useCurrentModuleInstance) {
-		FileDialog fileChooser = new FileDialog(getShell(), SWT.OPEN);
-		fileChooser.setText(Messages.getString("main", "ui.Open_file")); //$NON-NLS-1$
-		fileChooser.setFilterPath(System.getProperty("user.dir")); //$NON-NLS-1$
-		fileChooser.setFilterExtensions(new String[] { "*.jalgo", "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$
-		fileChooser.setFilterNames(new String[] {
-			Messages.getString("main", "OpenAction.jAlgo_files"), //$NON-NLS-1$ //$NON-NLS-2$
-			Messages.getString("main", "OpenAction.All_files_8") }); //$NON-NLS-1$ //$NON-NLS-2$
+	public String showOpenDialog(final boolean openAsJAlgoFile,
+		final boolean useCurrentModuleInstance) {
+		getShell().getDisplay().syncExec(new Runnable() {
+			@SuppressWarnings("synthetic-access")
+			public void run() {
+				FileDialog fileChooser = new FileDialog(getShell(), SWT.OPEN);
+				fileChooser.setText(Messages.getString("main", "ui.Open_file")); //$NON-NLS-1$
+				fileChooser.setFilterPath(System.getProperty("user.dir")); //$NON-NLS-1$
+				fileChooser.setFilterExtensions(new String[] { "*.jalgo", "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$
+				fileChooser.setFilterNames(new String[] {
+					Messages.getString("main", "OpenAction.jAlgo_files"), //$NON-NLS-1$ //$NON-NLS-2$
+					Messages.getString("main", "OpenAction.All_files_8") }); //$NON-NLS-1$ //$NON-NLS-2$
 
-		String filename = fileChooser.open();
-		if (openAsJAlgoFile && filename != null)
-			openFile(filename, useCurrentModuleInstance);
-		return filename;
+				_filename = fileChooser.open();
+				if (openAsJAlgoFile && _filename != null)
+					openFile(_filename, useCurrentModuleInstance);
+			}
+		});
+		return _filename;
 	}
 }
