@@ -29,19 +29,20 @@ package org.jalgo.module.synDiaEBNF.gui.actions;
 import java.io.Serializable;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Composite;
+import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.gui.DialogConstants;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.IModeConstants;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
 /**
  * @author Michael Pradel
  */
-public class CreateSynDiaAction extends Action
-		implements
-			IModeConstants,
-			Serializable {
+public class CreateSynDiaAction
+extends Action
+implements IModeConstants, Serializable {
 
 	private static final long serialVersionUID = 1888795917445235903L;
 	private Composite parent;
@@ -50,10 +51,10 @@ public class CreateSynDiaAction extends Action
 	public CreateSynDiaAction(ModuleController mc, Composite parent) {
 		this.parent = parent;
 		this.mc = mc;
-		setText(Messages
-				.getString("CreateSynDiaAction.Syntaxdiagramme_erstellen_1")); //$NON-NLS-1$
-		setToolTipText(Messages
-				.getString("CreateSynDiaAction.Erstellen_eines_Syntaxdiagramm-Systems_mit_Hilfe_der_Maus._2")); //$NON-NLS-1$
+		setText(Messages.getString("synDiaEBNF",
+			"CreateSynDiaAction.Syntaxdiagramme_erstellen_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("synDiaEBNF",
+			"CreateSynDiaAction.Erstellen_eines_Syntaxdiagramm-Systems_mit_Hilfe_der_Maus._2")); //$NON-NLS-1$
 		//		TODO: find or design nice buttons
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/createSynDia.gif")));
@@ -61,17 +62,12 @@ public class CreateSynDiaAction extends Action
 
 	public void run() {
 		if (mc.getMode() != NORMAL_VIEW_EMPTY) {
-			if (!(MessageDialog
-					.openQuestion(
-							parent.getShell(),
-							Messages
-									.getString("CreateSynDiaAction.Really_create_new_syntactical_diagram__4"), //$NON-NLS-1$
-							Messages
-									.getString("CreateSynDiaAction.Creating_a_new_syntactical_diagram_will_destroy_all_you_have_done_with_this_module_up_to_now_!_5")))) { //$NON-NLS-1$
+			if (JAlgoGUIConnector.getInstance().showConfirmDialog(
+				Messages.getString("synDiaEBNF",
+					"CreateSynDiaAction.Creating_a_new_syntactical_diagram_will_destroy_all_you_have_done_with_this_module_up_to_now_!_5"), //$NON-NLS-1$
+				DialogConstants.OK_CANCEL_OPTION) == DialogConstants.CANCEL_OPTION)
 				return;
-			}
 		}
 		mc.setMode(CREATE_SYNDIA);
 	}
-
 }
