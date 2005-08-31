@@ -53,7 +53,6 @@ implements IModuleConnector {
 	private Composite comp;
 	private SubMenuManager menuManager;
 	private SubToolBarManager toolBarManager;
-	private SubStatusLineManager statusLineManager;
 	private Controller controller;
 	private int saveStatus;
 
@@ -69,7 +68,6 @@ implements IModuleConnector {
 		this.comp = comp;
 		this.menuManager = menu;
 		this.toolBarManager = tb;
-		this.statusLineManager = sl;
 	}
 
 	/*
@@ -124,15 +122,6 @@ implements IModuleConnector {
 	 */
 	public SubToolBarManager getToolBarManager() {
 		return toolBarManager;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#getStatusLineManager()
-	 */
-	public SubStatusLineManager getStatusLineManager() {
-		return statusLineManager;
 	}
 
 	/*

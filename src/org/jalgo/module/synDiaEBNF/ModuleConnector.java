@@ -55,7 +55,7 @@ implements IModuleConnector {
 		SubToolBarManager tb,
 		SubStatusLineManager sl) {
 		moduleInfo = new ModuleInfo();
-		controller = new ModuleController((ModuleInfo)moduleInfo, appWin, comp, menu, tb, sl);
+		controller = new ModuleController((ModuleInfo)moduleInfo, appWin, comp, menu, tb);
 	}
 
 	/**
@@ -104,13 +104,6 @@ implements IModuleConnector {
 	 */	
 	public SubToolBarManager getToolBarManager() {
 		return controller.getToolBarManager();
-	}
-
-	/**
-	 * @see IModuleConnector#getStatusLineManager()
-	 */
-	public SubStatusLineManager getStatusLineManager() {
-		return controller.getStatusLineManager();
 	}
 
 	/**

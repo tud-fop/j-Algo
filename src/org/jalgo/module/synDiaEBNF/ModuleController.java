@@ -36,7 +36,6 @@ import org.eclipse.draw2d.Figure;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubMenuManager;
-import org.eclipse.jface.action.SubStatusLineManager;
 import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.custom.StyledText;
@@ -85,7 +84,6 @@ public class ModuleController implements IModeConstants {
 	private ApplicationWindow appWin;
 	private SubMenuManager menuManager;
 	private SubToolBarManager toolBarManager;
-	private SubStatusLineManager statusLineManager;
 	private Composite comp;
 	private Gui gui;
 	private Figure synDias;
@@ -129,15 +127,13 @@ public class ModuleController implements IModeConstants {
 	 * @param comp the <code>Composite</code>, that should be filled by the module
 	 * @param menuManager the modules <code>MenuManager</code>
 	 * @param toolBarManager the modules <code>ToolBarManager</code>
-	 * @param statusLineManager the modules <code>StatusLineManager</code>
 	 */
 	public ModuleController(
 		ModuleInfo moduleInfo,
 		ApplicationWindow appWin,
 		Composite comp,
 		SubMenuManager menuManager,
-		SubToolBarManager toolBarManager,
-		SubStatusLineManager statusLineManager) {
+		SubToolBarManager toolBarManager) {
 
 		this.moduleInfo = moduleInfo;
 		this.appWin = appWin;
@@ -156,10 +152,6 @@ public class ModuleController implements IModeConstants {
 		createMenu();
 		addWizardButton();
 		addNavButtons();
-
-		// Create StatusLine
-		this.statusLineManager = statusLineManager;
-		createStatusLine();
 	}
 
 	public void run() {
@@ -457,14 +449,6 @@ public class ModuleController implements IModeConstants {
 	}
 
 	/**
-	* Get the statusline-manager of this module instance. Right now, the statusbar is unused.
-	* @return the statusline-manager
-	*/
-	public SubStatusLineManager getStatusLineManager() {
-		return statusLineManager;
-	}
-
-	/**
 	 * A running algorithm can call this method, when it has finished and wishes to be disposed.
 	 *
 	 */
@@ -697,9 +681,6 @@ public class ModuleController implements IModeConstants {
 
 		leftAction.setEnabled(algo.hasPreviousHistStep());
 		firstAction.setEnabled(algo.hasPreviousHistStep());
-	}
-
-	private void createStatusLine() {
 	}
 
 	private void createActions() {

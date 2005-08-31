@@ -58,7 +58,6 @@ implements IModuleConnector {
 	// gui components
 	private SubMenuManager menuManager;
 	private SubToolBarManager toolBarManager;
-	private SubStatusLineManager statusLineManager;
 
 	// singleton references for each module opened
 	private ModuleInfo moduleInfo;
@@ -81,7 +80,6 @@ implements IModuleConnector {
 
 		this.menuManager = menu;
 		this.toolBarManager = tb;
-		this.statusLineManager = sl;
 
 		moduleInfo = new ModuleInfo();
 
@@ -202,15 +200,6 @@ implements IModuleConnector {
 	 */
 	public SubToolBarManager getToolBarManager() {
 		return toolBarManager;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#getStatusLineManager()
-	 */
-	public SubStatusLineManager getStatusLineManager() {
-		return statusLineManager;
 	}
 
 	/*
