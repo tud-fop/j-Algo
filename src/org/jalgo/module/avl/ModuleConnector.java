@@ -33,7 +33,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.jface.action.SubMenuManager;
-import org.eclipse.jface.action.SubStatusLineManager;
 import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.widgets.Composite;
@@ -76,7 +75,7 @@ implements IModuleConnector {
 	 * @see IModuleConnector
 	 */
 	public ModuleConnector(ApplicationWindow appWin, Composite comp,
-		SubMenuManager menu, SubToolBarManager tb, SubStatusLineManager sl) {
+		SubMenuManager menu, SubToolBarManager tb) {
 
 		this.menuManager = menu;
 		this.toolBarManager = tb;
@@ -85,8 +84,7 @@ implements IModuleConnector {
 
 		tree = new SearchTree();
 		controller = new Controller(tree);
-		gui = new GUIController(this, appWin, comp, menu, tb, sl, controller,
-			tree);
+		gui = new GUIController(this, comp, menu, tb, controller, tree);
 	}
 
 	/**
@@ -138,11 +136,11 @@ implements IModuleConnector {
 			gui.installStandardLayout();
 		}
 		catch (IOException ex) {
-			gui.showErrorMessage(Messages.getString(
+			JAlgoGUIConnector.getInstance().showErrorMessage(Messages.getString(
 				"avl", "ModuleConnector.No_valid_AVL_file")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		catch (ClassNotFoundException ex) {
-			gui.showErrorMessage(Messages.getString(
+			JAlgoGUIConnector.getInstance().showErrorMessage(Messages.getString(
 				"avl", "ModuleConnector.Loading_error") + //$NON-NLS-1$ //$NON-NLS-2$
 				System.getProperty("line.separator") + //$NON-NLS-1$
 				Messages.getString("avl", "ModuleConnector.File_damaged")); //$NON-NLS-1$ //$NON-NLS-2$

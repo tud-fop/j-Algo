@@ -52,8 +52,7 @@ implements IModuleConnector {
 		ApplicationWindow appWin,
 		Composite comp,
 		SubMenuManager menu,
-		SubToolBarManager tb,
-		SubStatusLineManager sl) {
+		SubToolBarManager tb) {
 		moduleInfo = new ModuleInfo();
 		controller = new ModuleController((ModuleInfo)moduleInfo, appWin, comp, menu, tb);
 	}

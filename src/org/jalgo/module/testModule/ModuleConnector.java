@@ -30,7 +30,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import org.eclipse.jface.action.SubMenuManager;
-import org.eclipse.jface.action.SubStatusLineManager;
 import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.widgets.Composite;
@@ -53,7 +52,7 @@ implements IModuleConnector {
 	 * @see IModuleConnector
 	 */
 	public ModuleConnector(ApplicationWindow appWin, Composite comp,
-		SubMenuManager menu, SubToolBarManager tb, SubStatusLineManager sl) {
+		SubMenuManager menu, SubToolBarManager tb) {
 
 		moduleInfo = new ModuleInfo();
 
