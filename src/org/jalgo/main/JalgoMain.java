@@ -34,7 +34,6 @@ import java.util.LinkedList;
 import java.util.MissingResourceException;
 
 import org.eclipse.jface.action.SubMenuManager;
-import org.eclipse.jface.action.SubStatusLineManager;
 import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.ApplicationWindow;
@@ -195,16 +194,13 @@ public class JalgoMain {
 		// Create a new instance of a module.
 		Class constrArgs[] = new Class[] { ApplicationWindow.class,
 				Composite.class, SubMenuManager.class,
-				SubToolBarManager.class,
-				SubStatusLineManager.class };
+				SubToolBarManager.class };
 		Object[] args = new Object[] {
 				appWin,
 				(Composite) cti.getControl(),
 				new SubMenuManager(appWin.getMenuBarManager()),
 				new SubToolBarManager(appWin
-						.getToolBarManager()),
-				new SubStatusLineManager(appWin
-						.getTheStatusLineManager()) };
+						.getToolBarManager()) };
 		try {
 			Constructor constr = ((Class) knownModules
 					.get(modNumber))
@@ -357,7 +353,7 @@ public class JalgoMain {
 		}
 	}
 	
-	/*
+	/**
 	 * checks if a given class implements a specific interface
 	 * @param classObj class object which should checked
 	 * @param interfaceName interface name the class should be implemented 
