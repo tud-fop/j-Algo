@@ -29,9 +29,10 @@ import java.util.List;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.widgets.Shell;
+import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.gui.DialogConstants;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 import org.jalgo.module.synDiaEBNF.gfx.CloudFigure;
 import org.jalgo.module.synDiaEBNF.gfx.CompositeSynDiaFigure;
@@ -51,8 +52,10 @@ public class SynDiaDoneAction extends Action {
 	public SynDiaDoneAction(IFigure figure, ModuleController mc) {
 		this.figure = (Figure) figure;
 		this.mc = mc;
-		setText(Messages.getString("SynDiaDoneAction.Diagram_done_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("SynDiaDoneAction.Done_2")); //$NON-NLS-1$
+		setText(Messages.getString("synDiaEBNF",
+			"SynDiaDoneAction.Diagram_done_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("synDiaEBNF",
+			"SynDiaDoneAction.Done_2")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/finish.gif")));
 	}
@@ -64,18 +67,15 @@ public class SynDiaDoneAction extends Action {
 		List<String> initial = new ArrayList<String>();
 		children.addAll(figure.getChildren());
 		if (children.isEmpty()) {
-			MessageDialog
-					.openError(
-							new Shell(),
-							Messages.getString("SynDiaDoneAction.Warning_4"),
-							Messages
-									.getString("SynDiaDoneAction.There_is_no_syntax_diagram._5")); //$NON-NLS-1$ //$NON-NLS-2$
+			JAlgoGUIConnector.getInstance().showWarningMessage(
+				Messages.getString("synDiaEBNF",
+					"SynDiaDoneAction.There_is_no_syntax_diagram._5")); //$NON-NLS-1$ //$NON-NLS-2$
 			return;
 		} else if ((children.size() == 1)
 				&& (children.get(0) instanceof CloudFigure)) {
-			MessageDialog.openError(new Shell(), Messages
-					.getString("SynDiaDoneAction.Warning_4"), Messages
-					.getString("SynDiaDoneAction.0"));
+			JAlgoGUIConnector.getInstance().showWarningMessage(
+				Messages.getString("synDiaEBNF",
+					"SynDiaDoneAction.0"));
 			return;
 		}
 
@@ -95,13 +95,10 @@ public class SynDiaDoneAction extends Action {
 			o = it.next();
 			if (o instanceof CloudFigure) {
 				if (a == 0) {
-					if (MessageDialog
-							.openQuestion(
-									new Shell(),
-									Messages
-											.getString("SynDiaDoneAction.Question_6"), //$NON-NLS-1$
-									Messages
-											.getString("SynDiaDoneAction.There_are_still_clouds_left._Do_you_want_them_replaced_by_simple_lines__7"))) { //$NON-NLS-1$
+					if (JAlgoGUIConnector.getInstance().showConfirmDialog(
+						Messages.getString("synDiaEBNF",
+							"SynDiaDoneAction.There_are_still_clouds_left._Do_you_want_them_replaced_by_simple_lines__7"), //$NON-NLS-1$
+						DialogConstants.YES_NO_OPTION) == DialogConstants.YES_OPTION) {
 						try {
 							((CompositeSynDiaFigure) ((CloudFigure) o)
 									.getParent()).replace(((CloudFigure) o),
@@ -131,11 +128,10 @@ public class SynDiaDoneAction extends Action {
 				if (!initial.get(j).equals(variables.get(i)))
 					a++;
 			if (a == initial.size()) {
-				MessageDialog
-						.openError(
-								new Shell(),
-								Messages
-										.getString("SynDiaDoneAction.Warning_8"), Messages.getString("SynDiaDoneAction.There_is_no_definition_for_9") + variables.get(i)); //$NON-NLS-1$ //$NON-NLS-2$
+				JAlgoGUIConnector.getInstance().showWarningMessage(
+					Messages.getString("synDiaEBNF",
+						"SynDiaDoneAction.There_is_no_definition_for_9") + //$NON-NLS-1$
+					variables.get(i));
 				return;
 			}
 		}

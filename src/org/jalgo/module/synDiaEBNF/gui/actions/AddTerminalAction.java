@@ -29,12 +29,13 @@ import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.gfx.IClickAction;
 import org.jalgo.main.util.ClickCollector;
 import org.jalgo.main.util.GfxUtil;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.gfx.CloudFigure;
 import org.jalgo.module.synDiaEBNF.gfx.CompositeSynDiaFigure;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaException;
@@ -49,15 +50,15 @@ public class AddTerminalAction extends Action implements IClickAction {
 
 	public AddTerminalAction(IFigure figure) {
 		this.figure = figure;
-		setText(Messages.getString("AddTerminalAction.Terminal_symbol_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("AddTerminalAction.Add_terminal_symbol._2")); //$NON-NLS-1$
+		setText(Messages.getString("synDiaEBNF",
+			"AddTerminalAction.Terminal_symbol_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("synDiaEBNF","AddTerminalAction.Add_terminal_symbol._2")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/terminalsymbol.gif")));
 	}
 
 	public void run() {
 		ClickCollector.init(1, this);
-
 	}
 
 	public void performAction(ArrayList items) {
@@ -68,8 +69,10 @@ public class AddTerminalAction extends Action implements IClickAction {
 				InputDialog inDialog =
 					new InputDialog(
 						GfxUtil.getAppShell(),
-						Messages.getString("AddTerminalAction.Terminal_symbol_4"), //$NON-NLS-1$
-						Messages.getString("AddTerminalAction.Terminal_symbol__5"), //$NON-NLS-1$
+						Messages.getString("synDiaEBNF",
+							"AddTerminalAction.Terminal_symbol_4"), //$NON-NLS-1$
+						Messages.getString("synDiaEBNF",
+							"AddTerminalAction.Terminal_symbol__5"), //$NON-NLS-1$
 						"", //$NON-NLS-1$
 						null);
 				String result = ""; //$NON-NLS-1$
@@ -80,22 +83,18 @@ public class AddTerminalAction extends Action implements IClickAction {
 						((CompositeSynDiaFigure) help.getParent()).replace(
 							(SynDiaFigure) help,
 							new TerminalFigure(result, help.getFont()));
-					else
-						MessageDialog.openError(
-							null,
-							Messages.getString("AddTerminalAction.Warning_9"), //$NON-NLS-1$
-							Messages.getString("AddTerminalAction.You_must_enter_a_proper_string_for_a_terminal_symbol._10")); //$NON-NLS-1$
+					else JAlgoGUIConnector.getInstance().showWarningMessage(
+						Messages.getString("synDiaEBNF",
+							"AddTerminalAction.You_must_enter_a_proper_string_for_a_terminal_symbol._10")); //$NON-NLS-1$
 				}
-			} else
-				MessageDialog.openError(
-					null,
-					Messages.getString("AddTerminalAction.Warning_11"), //$NON-NLS-1$
-					Messages.getString("AddTerminalAction.Click_on_a_cloud_to_add_a_new_element._12")); //$NON-NLS-1$
+			}
+			else JAlgoGUIConnector.getInstance().showWarningMessage(
+				Messages.getString("synDiaEBNF",
+					"AddTerminalAction.Click_on_a_cloud_to_add_a_new_element._12")); //$NON-NLS-1$
 
-		} catch (SynDiaException e) {
+		}
+		catch (SynDiaException e) {
 			//TODO: handle e
 		}
-
 	}
-
 }

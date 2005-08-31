@@ -29,12 +29,13 @@ import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.gfx.IClickAction;
 import org.jalgo.main.util.ClickCollector;
 import org.jalgo.main.util.GfxUtil;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.gfx.AlternativeFigure;
 import org.jalgo.module.synDiaEBNF.gfx.CloudFigure;
 import org.jalgo.module.synDiaEBNF.gfx.CompositeSynDiaFigure;
@@ -50,8 +51,10 @@ public class AddAlternativeAction extends Action implements IClickAction {
 	public AddAlternativeAction(IFigure figure) {
 		this.figure = figure;
 		
-		setText(Messages.getString("AddAlternativeAction.Alternative_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("AddAlternativeAction.Add_alternative._2")); //$NON-NLS-1$
+		setText(Messages.getString("synDiaEBNF",
+			"AddAlternativeAction.Alternative_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("synDiaEBNF",
+			"AddAlternativeAction.Add_alternative._2")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/alternative.gif")));
 	}
@@ -68,8 +71,10 @@ public class AddAlternativeAction extends Action implements IClickAction {
 				InputDialog inDialog =
 					new InputDialog(
 						GfxUtil.getAppShell(),
-						Messages.getString("AddAlternativeAction.Alternative_4"), //$NON-NLS-1$
-						Messages.getString("AddAlternativeAction.How_many_alternative_ways_do_you_want_to_have__5"), //$NON-NLS-1$
+						Messages.getString("synDiaEBNF",
+							"AddAlternativeAction.Alternative_4"), //$NON-NLS-1$
+						Messages.getString("synDiaEBNF",
+							"AddAlternativeAction.How_many_alternative_ways_do_you_want_to_have__5"), //$NON-NLS-1$
 						"2", //$NON-NLS-1$
 						null);
 				int result = 0;
@@ -82,20 +87,18 @@ public class AddAlternativeAction extends Action implements IClickAction {
 					}
 
 					if (result < 2) {
-						MessageDialog.openError(
-							null,
-							Messages.getString("AddAlternativeAction.Warning_7"), //$NON-NLS-1$
-							Messages.getString("AddAlternativeAction.Please_use_a_value_of_2_or_more._8")); //$NON-NLS-1$
+						JAlgoGUIConnector.getInstance().showWarningMessage(
+							Messages.getString("synDiaEBNF",
+								"AddAlternativeAction.Please_use_a_value_of_2_or_more._8")); //$NON-NLS-1$
 					} else
 						((CompositeSynDiaFigure) help.getParent()).replace(
 							(SynDiaFigure) help,
 							new AlternativeFigure(result));
 				}
 			} else
-				MessageDialog.openError(
-					null,
-					Messages.getString("AddAlternativeAction.Warning_9"), //$NON-NLS-1$
-					Messages.getString("AddAlternativeAction.Click_on_a_cloud_to_add_a_new_element._10")); //$NON-NLS-1$
+				JAlgoGUIConnector.getInstance().showWarningMessage(
+					Messages.getString("synDiaEBNF",
+						"AddAlternativeAction.Click_on_a_cloud_to_add_a_new_element._10")); //$NON-NLS-1$
 
 		} catch (SynDiaException e) {
 			//TODO: handle e

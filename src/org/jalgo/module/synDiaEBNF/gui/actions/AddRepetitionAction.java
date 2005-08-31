@@ -28,10 +28,11 @@ import java.util.ArrayList;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.gfx.IClickAction;
 import org.jalgo.main.util.ClickCollector;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.gfx.CloudFigure;
 import org.jalgo.module.synDiaEBNF.gfx.CompositeSynDiaFigure;
 import org.jalgo.module.synDiaEBNF.gfx.RepetitionFigure;
@@ -50,8 +51,10 @@ public class AddRepetitionAction extends Action implements IClickAction {
 	public AddRepetitionAction(IFigure figure){
 		this.figure = figure;
 		//this.appWindow = appWindow;
-		setText(Messages.getString("AddRepetitionAction.Repetition_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("AddRepetitionAction.Add_repetition_2")); //$NON-NLS-1$
+		setText(Messages.getString("synDiaEBNF",
+			"AddRepetitionAction.Repetition_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("synDiaEBNF",
+			"AddRepetitionAction.Add_repetition_2")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/repetition.gif")));
 	}
@@ -65,20 +68,14 @@ public class AddRepetitionAction extends Action implements IClickAction {
 		try {
 			IFigure help = ((Figure) items.get(0)).getParent();
 		
-			if (help instanceof CloudFigure){
+			if (help instanceof CloudFigure)
 				((CompositeSynDiaFigure) help.getParent()).replace((SynDiaFigure) help, new RepetitionFigure());
-			}
-			else
-				MessageDialog.openError(
-					null,
-					Messages.getString("AddRepetitionAction.Warning_4"), //$NON-NLS-1$
-					Messages.getString("AddRepetitionAction.Click_on_a_cloud_to_add_a_new_element._5")); //$NON-NLS-1$
-			
-
-		} catch (SynDiaException e) {
+			else JAlgoGUIConnector.getInstance().showWarningMessage(
+				Messages.getString("synDiaEBNF",
+					"AddRepetitionAction.Click_on_a_cloud_to_add_a_new_element._5")); //$NON-NLS-1$
+		}
+		catch (SynDiaException e) {
 			//TODO: handle e
 		}
-
 	}
-
 }

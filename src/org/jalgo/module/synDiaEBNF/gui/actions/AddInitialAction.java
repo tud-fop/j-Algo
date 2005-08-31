@@ -29,12 +29,13 @@ import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.gfx.IClickAction;
 import org.jalgo.main.util.ClickCollector;
 import org.jalgo.main.util.GfxUtil;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.gfx.CloudFigure;
 import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
 
@@ -51,8 +52,10 @@ public class AddInitialAction extends Action implements IClickAction {
 		this.figure = figure;
 		this.firstSet = false;
 		this.labelList = new ArrayList<String>();
-		setText(Messages.getString("AddInitialAction.New_Diagram_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("AddInitialAction.Add_initial_diagram._2")); //$NON-NLS-1$
+		setText(Messages.getString("synDiaEBNF",
+			"AddInitialAction.New_Diagram_1")); //$NON-NLS-1$
+		setToolTipText(Messages.getString("synDiaEBNF",
+			"AddInitialAction.Add_initial_diagram._2")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/newsyndia.gif")));
 	}
@@ -66,17 +69,16 @@ public class AddInitialAction extends Action implements IClickAction {
 		IFigure help = ((Figure) items.get(0)).getParent();
 
 		if (help instanceof CloudFigure)
-			MessageDialog.openError(
-				null,
-				Messages.getString("AddInitialAction.Warning_4"), //$NON-NLS-1$
-				Messages.getString("AddInitialAction.Click_on_a_panel_to_add_a_new_initial_figure._5")); //$NON-NLS-1$
+			JAlgoGUIConnector.getInstance().showWarningMessage(
+				Messages.getString("synDiaEBNF", 
+					"AddInitialAction.Click_on_a_panel_to_add_a_new_initial_figure._5")); //$NON-NLS-1$
 		else {
 			InitialFigure startcloud;
 			InputDialog inDialog =
 				new InputDialog(
 					GfxUtil.getAppShell(),
-					Messages.getString("AddInitialAction.Initial_figure_6"), //$NON-NLS-1$
-					Messages.getString("AddInitialAction.Name__7"), //$NON-NLS-1$
+					Messages.getString("synDiaEBNF", "AddInitialAction.Initial_figure_6"), //$NON-NLS-1$
+					Messages.getString("synDiaEBNF", "AddInitialAction.Name__7"), //$NON-NLS-1$
 					"S", //$NON-NLS-1$
 					null);
 			String result = ""; //$NON-NLS-1$
@@ -92,15 +94,11 @@ public class AddInitialAction extends Action implements IClickAction {
 				}
 
 				if (errorInList)
-					MessageDialog.openError(
-						null,
-						Messages.getString("AddInitialAction.Warning_10"), //$NON-NLS-1$
-						Messages.getString("AddInitialAction.EBNF_does_not_allow_multiple_diagrams_with_same_names._11")); //$NON-NLS-1$
+					JAlgoGUIConnector.getInstance().showWarningMessage(
+						Messages.getString("synDiaEBNF", "AddInitialAction.EBNF_does_not_allow_multiple_diagrams_with_same_names._11")); //$NON-NLS-1$
 				else if (result.equals("")) //$NON-NLS-1$
-					MessageDialog.openError(
-						null,
-						Messages.getString("AddInitialAction.Warning_13"), //$NON-NLS-1$
-						Messages.getString("AddInitialAction.EBNF_does_not_allow_diagrams_without_names._14")); //$NON-NLS-1$
+					JAlgoGUIConnector.getInstance().showWarningMessage(
+						Messages.getString("synDiaEBNF", "AddInitialAction.EBNF_does_not_allow_diagrams_without_names._14")); //$NON-NLS-1$
 				else {
 					labelList.add(result);
 					startcloud = new InitialFigure(result);
@@ -112,9 +110,6 @@ public class AddInitialAction extends Action implements IClickAction {
 					startcloud.setLocation(ClickCollector.getLastPoint());
 				}
 			}
-
 		}
-
 	}
-
 }
