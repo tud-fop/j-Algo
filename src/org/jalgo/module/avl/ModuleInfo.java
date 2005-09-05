@@ -24,7 +24,8 @@
 /* Created on 12.04.2005 */
 package org.jalgo.module.avl;
 
-import org.eclipse.jface.resource.ImageDescriptor;
+import java.net.URL;
+
 import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.util.Messages;
 
@@ -36,7 +37,26 @@ import org.jalgo.main.util.Messages;
 public class ModuleInfo
 implements IModuleInfo {
 
-	private String openFileName;
+	/** The singleton instance */
+	private static IModuleInfo instance;
+
+	/**
+	 * The only constructor is unusable from outside this class. This is part of
+	 * the singleton design pattern.
+	 */
+	private ModuleInfo() {
+	// unusable from outside
+	}
+
+	/**
+	 * Retrieves the singleton instance of <code>IModuleInfo</code>.
+	 * 
+	 * @return the singleton instance
+	 */
+	public static IModuleInfo getInstance() {
+		if (instance == null) instance = new ModuleInfo();
+		return instance;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -81,9 +101,8 @@ implements IModuleInfo {
 	 * 
 	 * @see org.jalgo.main.IModuleInfo#getLogo()
 	 */
-	public ImageDescriptor getLogo() {
-		return ImageDescriptor.createFromURL(Messages.getResourceURL(
-			"avl", "Module_logo")); //$NON-NLS-1$ //$NON-NLS-2$
+	public URL getLogoURL() {
+		return Messages.getResourceURL("avl", "Module_logo"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/*
@@ -93,23 +112,5 @@ implements IModuleInfo {
 	 */
 	public String getLicense() {
 		return Messages.getString("avl", "Module_license"); //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleInfo#getOpenFileName()
-	 */
-	public String getOpenFileName() {
-		return openFileName;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleInfo#setOpenFileName(java.lang.String)
-	 */
-	public void setOpenFileName(String fileName) {
-		openFileName = fileName;
 	}
 }

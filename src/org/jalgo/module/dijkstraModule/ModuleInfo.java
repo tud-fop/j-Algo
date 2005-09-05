@@ -19,23 +19,41 @@
 
 /*
  * Created on Aug 15, 2004
- * $Id: ModuleInfo.java,v 1.5 2005/07/17 12:22:40 styjdt Exp $
+ * $Id: ModuleInfo.java,v 1.6 2005/09/05 12:44:00 styjdt Exp $
  */
 package org.jalgo.module.dijkstraModule;
 
-import org.eclipse.jface.resource.ImageDescriptor;
+import java.net.URL;
+
 import org.jalgo.main.IModuleInfo;
 
 /**
  * @author Julian Stecklina
  */
-public class ModuleInfo implements IModuleInfo {
+public class ModuleInfo
+implements IModuleInfo {
 
-    protected String m_strOpenFileName;
+	/** The singleton instance */
+	private static IModuleInfo instance;
 
-	public ModuleInfo() {
-		super();
+	/**
+	 * The only constructor is unusable from outside this class. This is part of
+	 * the singleton design pattern.
+	 */
+	private ModuleInfo() {
+	// unusable from outside
 	}
+
+	/**
+	 * Retrieves the singleton instance of <code>IModuleInfo</code>.
+	 * 
+	 * @return the singleton instance
+	 */
+	public static IModuleInfo getInstance() {
+		if (instance == null) instance = new ModuleInfo();
+		return instance;
+	}
+
     /* (non-Javadoc)
      * @see org.jalgo.main.IModuleInfo#getName()
      */
@@ -67,9 +85,8 @@ public class ModuleInfo implements IModuleInfo {
     /* (non-Javadoc)
      * @see org.jalgo.main.IModuleInfo#getLogo()
      */
-    public ImageDescriptor getLogo() {
-    	return ImageDescriptor.createFromURL(
-    		getClass().getResource("/dijkstra_pix/logo.gif"));
+    public URL getLogoURL() {
+    	return getClass().getResource("/dijkstra_pix/logo.gif");
     }
 
     /* (non-Javadoc)
@@ -78,19 +95,4 @@ public class ModuleInfo implements IModuleInfo {
     public String getLicense() {
         return "GPL";
     }
-
-    /* (non-Javadoc)
-     * @see org.jalgo.main.IModuleInfo#getOpenFileName()
-     */
-    public String getOpenFileName() {
-        return m_strOpenFileName;
-    }
-
-    /* (non-Javadoc)
-     * @see org.jalgo.main.IModuleInfo#setOpenFileName(java.lang.String)
-     */
-    public void setOpenFileName(String string) {
-        m_strOpenFileName = string;
-    }
-
 }

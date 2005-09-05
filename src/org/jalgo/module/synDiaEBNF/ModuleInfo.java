@@ -26,7 +26,8 @@
  */
 package org.jalgo.module.synDiaEBNF;
 
-import org.eclipse.jface.resource.ImageDescriptor;
+import java.net.URL;
+
 import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.util.Messages;
 
@@ -42,7 +43,26 @@ import org.jalgo.main.util.Messages;
 public class ModuleInfo
 implements IModuleInfo {
 
-	private String openFileName;
+	/** The singleton instance */
+	private static IModuleInfo instance;
+
+	/**
+	 * The only constructor is unusable from outside this class. This is part of
+	 * the singleton design pattern.
+	 */
+	private ModuleInfo() {
+	// unusable from outside
+	}
+
+	/**
+	 * Retrieves the singleton instance of <code>IModuleInfo</code>.
+	 * 
+	 * @return the singleton instance
+	 */
+	public static IModuleInfo getInstance() {
+		if (instance == null) instance = new ModuleInfo();
+		return instance;
+	}
 
 	/**
 	 * @see IModuleInfo#getName()
@@ -79,12 +99,11 @@ implements IModuleInfo {
 	}
 
 	/**
-	 * @see IModuleInfo#getLogo()
+	 * @see IModuleInfo#getLogoURL()
 	 */
-	public ImageDescriptor getLogo() { // TODO: design logo and provide it here
-										// as an org.eclipse.swt.graphics.Image
-		return ImageDescriptor.createFromURL(getClass().getResource(
-			"/ebnf_pix/logo.gif"));
+	public URL getLogoURL() {
+		// TODO: design logo and provide it here as an java.net.URL
+		return getClass().getResource("/ebnf_pix/logo.gif");
 	}
 
 	/**
@@ -93,19 +112,5 @@ implements IModuleInfo {
 	public String getLicense() {
 		return Messages.getString("synDiaEBNF",
 			"ModuleInfo.GNU_General_Public_License_10"); //$NON-NLS-1$
-	}
-
-	/**
-	 * @see IModuleInfo#getOpenFileName()
-	 */
-	public String getOpenFileName() {
-		return openFileName;
-	}
-
-	/**
-	 * @see IModuleInfo#setOpenFileName(String)
-	 */
-	public void setOpenFileName(String string) {
-		openFileName = string;
 	}
 }

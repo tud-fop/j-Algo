@@ -22,13 +22,36 @@
  */
 package org.jalgo.module.testModule;
 
-import org.eclipse.jface.resource.ImageDescriptor;
+import java.net.URL;
+
 import org.jalgo.main.IModuleInfo;
 
 /**
  * @author Michael Pradel
  */
-public class ModuleInfo implements IModuleInfo {
+public class ModuleInfo
+implements IModuleInfo {
+
+	/** The singleton instance */
+	private static IModuleInfo instance;
+
+	/**
+	 * The only constructor is unusable from outside this class. This is part of
+	 * the singleton design pattern.
+	 */
+	private ModuleInfo() {
+	// unusable from outside
+	}
+
+	/**
+	 * Retrieves the singleton instance of <code>IModuleInfo</code>.
+	 * 
+	 * @return the singleton instance
+	 */
+	public static IModuleInfo getInstance() {
+		if (instance == null) instance = new ModuleInfo();
+		return instance;
+	}
 
     /* (non-Javadoc)
      * @see org.jalgo.main.IModuleInfo#getName()
@@ -61,9 +84,8 @@ public class ModuleInfo implements IModuleInfo {
     /* (non-Javadoc)
      * @see org.jalgo.main.IModuleInfo#getLogo()
      */
-    public ImageDescriptor getLogo() {
-    	return ImageDescriptor.createFromURL(
-    		getClass().getResource("/test_pix/logo.gif"));
+    public URL getLogoURL() {
+    	return getClass().getResource("/test_pix/logo.gif");
     }
 
     /* (non-Javadoc)
@@ -72,19 +94,4 @@ public class ModuleInfo implements IModuleInfo {
     public String getLicense() {
         return "GPL";
     }
-
-    /* (non-Javadoc)
-     * @see org.jalgo.main.IModuleInfo#getOpenFileName()
-     */
-    public String getOpenFileName() {
-        return null;
-    }
-
-    /* (non-Javadoc)
-     * @see org.jalgo.main.IModuleInfo#setOpenFileName(java.lang.String)
-     */
-    public void setOpenFileName(String string) {
-    // here is no action performed in test module
-    }
-
 }
