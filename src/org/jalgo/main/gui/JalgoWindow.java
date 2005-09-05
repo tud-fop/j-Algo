@@ -151,10 +151,7 @@ extends ApplicationWindow {
 	}
 
 	protected Control createContents(Composite parent) {
-		parent.getShell().setText(
-			Messages.getString("main", "General.name") + //$NON-NLS-1$ //$NON-NLS-2$
-			" - " + //$NON-NLS-1$
-			Messages.getString("main", "General.version")); //$NON-NLS-1$ //$NON-NLS-2$
+		updateTitle(null);
 		parent.getShell().setSize(800, 600);
 		parent.getShell().setImage(ImageDescriptor.createFromURL(
 			Messages.getResourceURL("main", "ui.Logo")).createImage()); //$NON-NLS-1$ //$NON-NLS-2$
@@ -289,8 +286,30 @@ extends ApplicationWindow {
 		return cti;
 	}
 
-	public void setTitle(String title) {
-		getShell().setText(title);
+	public void setTitle(final String title) {
+		getShell().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				getShell().setText(title);
+			}
+		});
+	}
+
+	public void updateTitle(IModuleConnector currentInstance) {
+		StringBuffer title = new StringBuffer();
+		if (currentInstance != null) {
+			if (currentInstance.getOpenFileName() != null) {
+				if (currentInstance.getOpenFileName().length() == 0)
+					title.append(Messages.getString("main", "ui.Untitled"));
+				else title.append(currentInstance.getOpenFileName());
+				if (currentInstance.getSaveStatus() >=
+					IModuleConnector.CHANGES_TO_SAVE) title.append("* - ");
+				else title.append(" - ");				
+			}
+			title.append(currentInstance.getModuleInfo().getName());
+			title.append(" - ");
+		}
+		title.append(Messages.getString("main", "General.name")); //$NON-NLS-1$ //$NON-NLS-2$
+		setTitle(title.toString());
 	}
 
 	public boolean saveFile() {
@@ -299,10 +318,6 @@ extends ApplicationWindow {
 
 	public boolean saveFileAs(String filename) {
 		return parent.saveFileAs(filename);
-	}
-
-	public boolean openFile(String filename) {
-		return parent.openFile(filename);
 	}
 
 	public boolean openFile(String filename, boolean useCurrentInstance) {
