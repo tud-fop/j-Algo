@@ -37,13 +37,10 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Composite;
+import org.jalgo.main.IModuleConnector;
 import org.jalgo.main.InternalErrorException;
-import org.jalgo.main.gui.JalgoWindow;
-import org.jalgo.main.gui.actions.SaveAction;
-import org.jalgo.main.gui.actions.SaveAsAction;
 import org.jalgo.module.synDiaEBNF.ebnf.EbnfDefinition;
 import org.jalgo.module.synDiaEBNF.gui.BackTrackingAlgoGui;
 import org.jalgo.module.synDiaEBNF.gui.CreateSynDiaClickGui;
@@ -80,17 +77,13 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaSystem;
 
 public class ModuleController implements IModeConstants {
 
-	private ModuleInfo moduleInfo;
-	private ApplicationWindow appWin;
+	private final ModuleConnector connector;
+
 	private SubMenuManager menuManager;
 	private SubToolBarManager toolBarManager;
 	private Composite comp;
 	private Gui gui;
 	private Figure synDias;
-
-	// buttons created in main program
-	private SaveAction saveAction;
-	private SaveAsAction saveAsAction;
 
 	// buttons to start algorithms or creation of ebnf/synDia
 	private TransAction transAction;
@@ -111,7 +104,7 @@ public class ModuleController implements IModeConstants {
 	private PerformAllAction performAllAction;
 	private AbortAlgoAction abortAlgoAction;
 
-	private org.jalgo.module.synDiaEBNF.synDia.SynDiaSystem synDiaSystem;
+	private SynDiaSystem synDiaSystem;
 	private EbnfDefinition ebnfDef;
 
 	private IAlgorithm algo = null;
@@ -123,28 +116,21 @@ public class ModuleController implements IModeConstants {
 	// ------ public methods ----------------
 
 	/**
-	 * @param appWin the <code>ApplicationWindow</code> jAlgo is running in.
 	 * @param comp the <code>Composite</code>, that should be filled by the module
 	 * @param menuManager the modules <code>MenuManager</code>
 	 * @param toolBarManager the modules <code>ToolBarManager</code>
 	 */
 	public ModuleController(
-		ModuleInfo moduleInfo,
-		ApplicationWindow appWin,
+		ModuleConnector connector,
 		Composite comp,
 		SubMenuManager menuManager,
 		SubToolBarManager toolBarManager) {
 
-		this.moduleInfo = moduleInfo;
-		this.appWin = appWin;
+		this.connector = connector;
 		this.comp = comp;
 
 		// Create Menu
 		this.menuManager = menuManager;
-
-		//	get "save" and "save as" actions from toolbar
-		saveAction = ((JalgoWindow) appWin).getSaveAction();
-		saveAsAction = ((JalgoWindow) appWin).getSaveAsAction();
 
 		// Create ToolBar
 		this.toolBarManager = toolBarManager;
@@ -194,7 +180,7 @@ public class ModuleController implements IModeConstants {
 
 			case NORMAL_VIEW_EBNF :
 				mode = NORMAL_VIEW_EBNF;
-				enableSaveButtons();
+				connector.setSaveStatus(IModuleConnector.CHANGES_TO_SAVE);
 				addTransButton();
 				gui = new NormalViewEbnfGui(comp);
 				StyledText ebnfText =
@@ -505,7 +491,7 @@ public class ModuleController implements IModeConstants {
 
 			case NORMAL_VIEW_EBNF :
 				removeTransButton();
-				disableSaveButtons();
+				connector.setSaveStatus(IModuleConnector.NOTHING_TO_SAVE);
 				break;
 
 			case NORMAL_VIEW_SYNDIA :
@@ -531,7 +517,7 @@ public class ModuleController implements IModeConstants {
 	}
 
 	private void createMenu() {
-		MenuManager menu = new MenuManager("&" + this.moduleInfo.getName()); //$NON-NLS-1$
+		MenuManager menu = new MenuManager("&" + ModuleInfo.getInstance().getName()); //$NON-NLS-1$
 		// start wizard
 		menu.add(wizardAction);
 		menu.add(new Separator());
@@ -642,17 +628,6 @@ public class ModuleController implements IModeConstants {
 		toolBarManager.add(new Separator());
 	}
 
-	private void enableSaveButtons() {
-		saveAction.setEnabled(true);
-		saveAsAction.setEnabled(true);
-		menuManager.update(false);
-	}
-
-	private void disableSaveButtons() {
-		saveAction.setEnabled(false);
-		saveAsAction.setEnabled(false);
-	}
-
 	private void enableNavButtons(boolean value) {
 		firstAction.setEnabled(value);
 		leftAction.setEnabled(value);
@@ -710,9 +685,6 @@ public class ModuleController implements IModeConstants {
 		transAction.setEnabled(false);
 		wizardAction = new WizardAction(this, comp);
 		wizardAction.setEnabled(true);
-
-		saveAction.setEnabled(false);
-		saveAsAction.setEnabled(false);
 	}
 
 	private ByteArrayOutputStream serialize() {
@@ -778,13 +750,4 @@ public class ModuleController implements IModeConstants {
 		}
 
 	}
-
-	public ApplicationWindow getAppWin() {
-		return appWin;
-	}
-
-	public ModuleInfo getModuleInfo() {
-		return moduleInfo;
-	}
-
 }
