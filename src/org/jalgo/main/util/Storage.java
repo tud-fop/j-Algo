@@ -44,10 +44,6 @@ import org.jalgo.main.Jalgo;
  */
 public class Storage {
 
-	public static boolean load(String filename) {
-		return load(filename, null);
-	}
-
 	public static boolean load(String filename, IModuleConnector currentInstance) {
 		byte[] buf = null;
 
@@ -141,9 +137,8 @@ public class Storage {
 		}
 		catch (FileNotFoundException e) {
 			JAlgoGUIConnector.getInstance().showErrorMessage(
-				Messages.getString("main", "Storage.Could_not_write_file_7") + //$NON-NLS-1$
+				Messages.getString("main", "Storage.Could_not_write_the_file._8") + //$NON-NLS-1$
 				System.getProperty("line.separator") +
-				Messages.getString("main", "Storage.Could_not_write_the_file._n_8") + //$NON-NLS-1$
 				Messages.getString("main", "Storage.Maybe_out_of_diskspace_9")); //$NON-NLS-1$
 			e.printStackTrace();
 		}
