@@ -41,7 +41,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.layout.FillLayout;
@@ -167,14 +166,13 @@ extends Observable {
 	protected int m_nCurStep = 0;
 
 	private final ModuleConnector connector;
-	private ApplicationWindow m_appWindow;
 	private SubToolBarManager m_toolBarManager;
 	private UndoToolBarAction m_undoToolBarAction;
 	private RedoToolBarAction m_redoToolBarAction;
 	private _AlgoAnimator m_animator;
 
 	public Controller(ModuleConnector connector, Composite parent,
-		SubToolBarManager toolBarManager, ApplicationWindow appWindow) {
+		SubToolBarManager toolBarManager) {
 		super();
 		this.connector = connector;
 		m_actions = new ActionStack(0);
@@ -184,8 +182,6 @@ extends Observable {
 		m_composite = parent;
 
 		this.m_toolBarManager = toolBarManager;
-		this.m_appWindow = appWindow;
-
 		// Create stuff here...
 		createGUI();
 		m_animator = new _AlgoAnimator(this);
