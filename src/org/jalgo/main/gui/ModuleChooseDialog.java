@@ -137,7 +137,9 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 					"\n\nAutoren: " + main.getKnownModuleInfos().get(modNum).getAuthor() +
 					"\n\nLizenz: " + main.getKnownModuleInfos().get(modNum).getLicense());
 			// show module's logo
-			logoL.setImage(main.getKnownModuleInfos().get(modNum).getLogo().createImage());
+			logoL.setImage(ImageDescriptor.createFromURL(
+				main.getKnownModuleInfos().get(modNum).getLogoURL()).
+				createImage());
 		}
  	}
 	

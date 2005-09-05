@@ -24,6 +24,7 @@
 package org.jalgo.main.gui.actions;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.main.JalgoMain;
 
 /**
@@ -41,7 +42,8 @@ public class NewAction extends Action {
 
 		setText( (main.getKnownModuleInfos().get(modNumber)).getName() ); 
 		setToolTipText((main.getKnownModuleInfos().get(modNumber)).getDescription()); 
-		setImageDescriptor((main.getKnownModuleInfos().get(modNumber)).getLogo());
+		setImageDescriptor(ImageDescriptor.createFromURL(
+			main.getKnownModuleInfos().get(modNumber).getLogoURL()));
 	}
 
 	public void run() {
