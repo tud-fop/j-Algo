@@ -65,6 +65,7 @@ public class JAlgoGUIConnector {
 	public void saveStatusChanged(IModuleConnector moduleInstance) {
 		if (appWin.getParent().getCurrentInstance() != moduleInstance) return;
 		appWin.updateSaveButtonEnableStatus(moduleInstance.getSaveStatus());
+		appWin.updateTitle(moduleInstance);
 	}
 
 	/**
