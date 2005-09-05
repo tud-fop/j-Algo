@@ -36,7 +36,6 @@ import java.util.MissingResourceException;
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -47,7 +46,7 @@ import org.jalgo.main.util.Messages;
 import org.jalgo.main.util.Storage;
 
 /**
- * @author Christopher Friedrich, Michael Pradel
+ * @author Alexander Claus, Christopher Friedrich, Michael Pradel
  */
 public class JalgoMain {
 
@@ -96,6 +95,7 @@ public class JalgoMain {
 			currentInstance = null;
 			appWin.updateSaveButtonEnableStatus(
 				IModuleConnector.NOTHING_TO_SAVE);
+			appWin.updateTitle(null);
 			appWin.setAboutModuleActionEnabled(false);
 		}
 		else itemSelected(appWin.getCTabFolder().getSelection());
@@ -135,6 +135,7 @@ public class JalgoMain {
 		appWin.getMenuBarManager().update(true);
 		appWin.getToolBarManager().update(true);
 		appWin.updateSaveButtonEnableStatus(currentInstance.getSaveStatus());
+		appWin.updateTitle(currentInstance);
 	}
 
 	/**
@@ -179,7 +180,8 @@ public class JalgoMain {
 		// Requests a fresh CTabItem from the appWin
 		IModuleInfo module = knownModuleInfos.get(modNumber);
 		String ctiText = module.getName();
-		ImageDescriptor imageDescriptor = module.getLogo();
+		ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(
+			module.getLogoURL());
 		Image image;
 		if (imageDescriptor == null) {
 			// Default "jAlgo File" icon.
@@ -192,19 +194,16 @@ public class JalgoMain {
 		CTabItem cti = appWin.requestNewCTabItem(ctiText, image);
 		
 		// Create a new instance of a module.
-		Class constrArgs[] = new Class[] { ApplicationWindow.class,
+		Class constrArgs[] = new Class[] {
 				Composite.class, SubMenuManager.class,
 				SubToolBarManager.class };
 		Object[] args = new Object[] {
-				appWin,
 				(Composite) cti.getControl(),
 				new SubMenuManager(appWin.getMenuBarManager()),
-				new SubToolBarManager(appWin
-						.getToolBarManager()) };
+				new SubToolBarManager(appWin.getToolBarManager()) };
 		try {
-			Constructor constr = ((Class) knownModules
-					.get(modNumber))
-					.getConstructor(constrArgs);
+			Constructor constr =
+				((Class)knownModules.get(modNumber)).getConstructor(constrArgs);
 			currentInstance = (IModuleConnector) constr
 					.newInstance(args);
 		} catch (NoSuchMethodException e) {
@@ -236,6 +235,7 @@ public class JalgoMain {
 		appWin.setAboutModuleActionEnabled(true);
 
 		currentInstance.run();
+		appWin.updateTitle(currentInstance);
 
 		return currentInstance;
 	}
@@ -256,16 +256,14 @@ public class JalgoMain {
 	 * Takes content from module and stores it in currently used file
 	 */
 	public boolean saveFile() {
-	    //FSt
-	    if(this.currentInstance == null)
-	        return false;
-	    //~FSt
-		if (currentInstance.getModuleInfo().getOpenFileName() == null) {
+	    if (currentInstance == null) return false;
+		if (currentInstance.getOpenFileName() == null ||
+			currentInstance.getOpenFileName().length() == 0) {
 			SaveAsAction a = new SaveAsAction(appWin);
 			a.run();
 			return a.wasSuccessful();
 		}
-		return saveFileAs(currentInstance.getModuleInfo().getOpenFileName());
+		return saveFileAs(currentInstance.getOpenFileName());
 	}
 
 	/**
@@ -274,23 +272,9 @@ public class JalgoMain {
 	 * @param filename
 	 */
 	public boolean saveFileAs(String filename) {
-		currentInstance.getModuleInfo().setOpenFileName(filename);
+		currentInstance.setOpenFileName(filename);
 		currentInstance.setSaveStatus(IModuleConnector.NO_CHANGES);
 		return Storage.save(filename);
-	}
-
-	/**
-	 * Opens file
-	 * 
-	 * @param filename
-	 */
-	public boolean openFile(String filename) {
-		if( Storage.load(filename) == true)
-		{
-		    this.currentInstance.getModuleInfo().setOpenFileName(filename);
-		    return true;
-		}
-		return false;
 	}
 
 	/**
@@ -299,16 +283,13 @@ public class JalgoMain {
 	 * @param filename
 	 */
 	public boolean openFile(String filename, boolean useCurrentInstance) {
-		if (useCurrentInstance) {
-		   
-			if( Storage.load(filename, currentInstance) == true)
-			{
-			    currentInstance.getModuleInfo().setOpenFileName(filename);
-			    return true;
-			}
-			return false;
+		if ((useCurrentInstance && Storage.load(filename, currentInstance)) ||
+			!useCurrentInstance && Storage.load(filename, null)) {
+			currentInstance.setOpenFileName(filename);
+			currentInstance.setSaveStatus(IModuleConnector.NO_CHANGES);
+			return true;
 		}
-		return openFile( filename);
+		return false;
 	}
 
 	/**
@@ -333,22 +314,29 @@ public class JalgoMain {
 					Class moduleInfo = Class.forName("org.jalgo.module." +
 							moduleName + ".ModuleInfo");
 					
-					if (implementsInterface(moduleConnector, "org.jalgo.main.IModuleConnector") &&
-							implementsInterface(moduleInfo, "org.jalgo.main.IModuleInfo")) {
+					if (implementsInterface(moduleConnector,
+							"org.jalgo.main.IModuleConnector") &&
+						implementsInterface(moduleInfo,
+							"org.jalgo.main.IModuleInfo")) {
 						knownModules.add(moduleConnector);
-						knownModuleInfos.add((IModuleInfo)moduleInfo.newInstance());
+						knownModuleInfos.add((IModuleInfo)
+							moduleInfo.getMethod("getInstance", new Class[] {}).
+							invoke(null, new Object[] {}));
 					}
 
 					Messages.registerResourceBundle(moduleName,
 						"org.jalgo.module."+moduleName+".de");
 				}
 				catch (ClassNotFoundException ex) {ex.printStackTrace();}
-				catch (InstantiationException ex) {ex.printStackTrace();}
 				catch (IllegalAccessException ex) {ex.printStackTrace();}
 				catch (MissingResourceException ex) {
 					//do nothing, that means only, that the current module has
 					//no strings externalized
 				}
+				catch (IllegalArgumentException ex) {ex.printStackTrace();}
+				catch (SecurityException ex) {ex.printStackTrace();}
+				catch (InvocationTargetException ex) {ex.printStackTrace();}
+				catch (NoSuchMethodException ex) {ex.printStackTrace();}
 			}
 		}
 	}
