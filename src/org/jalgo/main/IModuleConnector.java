@@ -124,7 +124,7 @@ public interface IModuleConnector {
 	 *         recently
 	 *         <li><code>CHANGES_TO_SAVE</code></li> - if there are changes
 	 *         to save
-	 *         <li><code>SAVING_BLOCKED</code></li> - if save buttons are
+	 *         <li><code>SAVING_BLOCKED</code></li> - if save buttons should be
 	 *         blocked
 	 *         </ul>
 	 */
@@ -139,4 +139,21 @@ public interface IModuleConnector {
 	 * @see #getSaveStatus()
 	 */
 	void setSaveStatus(int status);
+
+	/**
+	 * Retrieves the file name of the currently opened file. This file name is
+	 * shown on the title bar of the main program.
+	 * 
+	 * @return the file name of the currently opened file
+	 */
+	String getOpenFileName();
+
+	/**
+	 * Sets the file name of the currently opened file. This method is called by
+	 * the main program, when a file is opened or when a file is saved with a
+	 * new name (save as).
+	 * 
+	 * @param filename the file name of the currently opened file.
+	 */
+	void setOpenFileName(String filename);
 }
