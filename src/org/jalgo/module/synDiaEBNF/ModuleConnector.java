@@ -1,60 +1,60 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /*
  * Created on 13.04.2004
  */
- 
+
 package org.jalgo.module.synDiaEBNF;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+
 import org.eclipse.jface.action.SubMenuManager;
-import org.eclipse.jface.action.SubStatusLineManager;
 import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.IModuleConnector;
 import org.jalgo.main.IModuleInfo;
+import org.jalgo.main.JAlgoGUIConnector;
 
 /**
  * @author Michael Pradel
  * @author Benjamin Scholz
  * @author Marco Zimmerling
-  */
+ */
 public class ModuleConnector
 implements IModuleConnector {
 
-	private IModuleInfo moduleInfo;
 	private ModuleController controller;
 	private int saveStatus;
+	private String openFileName = "";
 
 	/**
 	 * @see IModuleConnector
 	 */
-	public ModuleConnector(
-		ApplicationWindow appWin,
-		Composite comp,
-		SubMenuManager menu,
+	public ModuleConnector(Composite comp, SubMenuManager menu,
 		SubToolBarManager tb) {
-		moduleInfo = new ModuleInfo();
-		controller = new ModuleController((ModuleInfo)moduleInfo, appWin, comp, menu, tb);
+		controller = new ModuleController(this, comp, menu, tb);
 	}
 
 	/**
@@ -86,7 +86,9 @@ implements IModuleConnector {
 	}
 
 	/**
-	 * Returns the <code>ModuleController</code>, which is controlling this module.
+	 * Returns the <code>ModuleController</code>, which is controlling this
+	 * module.
+	 * 
 	 * @return the <code>ModuleController</code>
 	 * @see ModuleController
 	 */
@@ -100,7 +102,7 @@ implements IModuleConnector {
 
 	/**
 	 * @see IModuleConnector#getToolBarManager()
-	 */	
+	 */
 	public SubToolBarManager getToolBarManager() {
 		return controller.getToolBarManager();
 	}
@@ -109,24 +111,43 @@ implements IModuleConnector {
 	 * @see IModuleConnector#getModuleInfo()
 	 */
 	public IModuleInfo getModuleInfo() {
-		return moduleInfo; 
+		return ModuleInfo.getInstance(); 
 	}
 
 	public boolean close() {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jalgo.main.IModuleConnector#getSaveStatus()
 	 */
 	public int getSaveStatus() {
 		return saveStatus;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jalgo.main.IModuleConnector#setSaveStatus(int)
 	 */
 	public void setSaveStatus(int status) {
 		this.saveStatus = status;
+		JAlgoGUIConnector.getInstance().saveStatusChanged(this);
+	}
+
+	/**
+	 * @see IModuleConnector#getOpenFileName()
+	 */
+	public String getOpenFileName() {
+		return openFileName;
+	}
+
+	/**
+	 * @see IModuleConnector#setOpenFileName(String)
+	 */
+	public void setOpenFileName(String string) {
+		openFileName = string;
 	}
 }

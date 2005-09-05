@@ -31,7 +31,6 @@ import java.io.ByteArrayOutputStream;
 
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.IModuleConnector;
 import org.jalgo.main.IModuleInfo;
@@ -42,8 +41,6 @@ import org.jalgo.main.IModuleInfo;
 public class ModuleConnector
 implements IModuleConnector {
 
-	private ModuleInfo moduleInfo;
-
 	private SubMenuManager menuManager;
 	private SubToolBarManager toolBarManager;
 	private int saveStatus;
@@ -51,10 +48,8 @@ implements IModuleConnector {
 	/**
 	 * @see IModuleConnector
 	 */
-	public ModuleConnector(ApplicationWindow appWin, Composite comp,
-		SubMenuManager menu, SubToolBarManager tb) {
-
-		moduleInfo = new ModuleInfo();
+	public ModuleConnector(Composite comp, SubMenuManager menu,
+		SubToolBarManager tb) {
 
 		this.menuManager = menu;
 		this.toolBarManager = tb;
@@ -120,7 +115,7 @@ implements IModuleConnector {
 	 * @see org.jalgo.main.IModuleConnector#getModuleInfo()
 	 */
 	public IModuleInfo getModuleInfo() {
-		return moduleInfo;
+		return ModuleInfo.getInstance();
 	}
 
 	public boolean close() {
@@ -144,4 +139,18 @@ implements IModuleConnector {
 	public void setSaveStatus(int status) {
 		this.saveStatus = status;
 	}
+
+	/* (non-Javadoc)
+     * @see org.jalgo.main.IModuleInfo#getOpenFileName()
+     */
+    public String getOpenFileName() {
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see org.jalgo.main.IModuleInfo#setOpenFileName(java.lang.String)
+     */
+    public void setOpenFileName(String string) {
+    // here is no action performed in test module
+    }
 }

@@ -34,7 +34,6 @@ import java.util.List;
 
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.IModuleConnector;
 import org.jalgo.main.IModuleInfo;
@@ -58,13 +57,11 @@ implements IModuleConnector {
 	private SubMenuManager menuManager;
 	private SubToolBarManager toolBarManager;
 
-	// singleton references for each module opened
-	private ModuleInfo moduleInfo;
-
 	private SearchTree tree;
 	private Controller controller;
 	private GUIController gui;
 	private int saveStatus;
+	private String openFileName;
 
 	/**
 	 * Constructs a <code>ModuleConnector</code> object for the AVL module.
@@ -74,13 +71,11 @@ implements IModuleConnector {
 	 * 
 	 * @see IModuleConnector
 	 */
-	public ModuleConnector(ApplicationWindow appWin, Composite comp,
-		SubMenuManager menu, SubToolBarManager tb) {
+	public ModuleConnector(Composite comp, SubMenuManager menu,
+		SubToolBarManager tb) {
 
 		this.menuManager = menu;
 		this.toolBarManager = tb;
-
-		moduleInfo = new ModuleInfo();
 
 		tree = new SearchTree();
 		controller = new Controller(tree);
@@ -206,7 +201,7 @@ implements IModuleConnector {
 	 * @see org.jalgo.main.IModuleConnector#getModuleInfo()
 	 */
 	public IModuleInfo getModuleInfo() {
-		return moduleInfo;
+		return ModuleInfo.getInstance();
 	}
 
 	/*
@@ -226,11 +221,32 @@ implements IModuleConnector {
 	 */
 	public void setSaveStatus(int status) {
 		this.saveStatus = status;
+		if (status == NOTHING_TO_SAVE) setOpenFileName(null);
+		else if (status == CHANGES_TO_SAVE && openFileName == null)
+			setOpenFileName("");
 		JAlgoGUIConnector.getInstance().saveStatusChanged(this);
 	}
 
 	public void setSavingBlocked(boolean blocked) {
 		if (blocked) setSaveStatus(saveStatus | SAVING_BLOCKED);
 		else setSaveStatus(saveStatus & ~SAVING_BLOCKED);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jalgo.main.IModuleInfo#getOpenFileName()
+	 */
+	public String getOpenFileName() {
+		return openFileName;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.jalgo.main.IModuleInfo#setOpenFileName(java.lang.String)
+	 */
+	public void setOpenFileName(String fileName) {
+		openFileName = fileName;
 	}
 }

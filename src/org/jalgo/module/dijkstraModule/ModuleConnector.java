@@ -32,7 +32,6 @@ import java.io.ByteArrayOutputStream;
 
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.IModuleConnector;
 import org.jalgo.main.IModuleInfo;
@@ -47,23 +46,18 @@ import org.jalgo.module.dijkstraModule.gui.Controller;
 public class ModuleConnector
 implements IModuleConnector {
 
-	private ModuleInfo moduleInfo;
-	private ApplicationWindow appWin;
 	private Composite comp;
 	private SubMenuManager menuManager;
 	private SubToolBarManager toolBarManager;
 	private Controller controller;
 	private int saveStatus;
+    private String m_strOpenFileName = "";
 
 	/**
 	 * @see IModuleConnector
 	 */
-	public ModuleConnector(ApplicationWindow appWin, Composite comp,
-		SubMenuManager menu, SubToolBarManager tb) {
-
-		moduleInfo = new ModuleInfo();
-
-		this.appWin = appWin;
+	public ModuleConnector(Composite comp, SubMenuManager menu,
+		SubToolBarManager tb) {
 		this.comp = comp;
 		this.menuManager = menu;
 		this.toolBarManager = tb;
@@ -75,7 +69,7 @@ implements IModuleConnector {
 	 * @see org.jalgo.main.IModuleConnector#run()
 	 */
 	public void run() {
-		controller = new Controller(this, comp, toolBarManager, appWin);
+		controller = new Controller(this, comp, toolBarManager);
 	}
 
 	/*
@@ -129,7 +123,7 @@ implements IModuleConnector {
 	 * @see org.jalgo.main.IModuleConnector#getModuleInfo()
 	 */
 	public IModuleInfo getModuleInfo() {
-		return moduleInfo;
+		return ModuleInfo.getInstance();
 	}
 
 	public boolean close() {
@@ -154,4 +148,18 @@ implements IModuleConnector {
 		this.saveStatus = status;
 		JAlgoGUIConnector.getInstance().saveStatusChanged(this);
 	}
+
+	/* (non-Javadoc)
+     * @see org.jalgo.main.IModuleInfo#getOpenFileName()
+     */
+    public String getOpenFileName() {
+        return m_strOpenFileName;
+    }
+
+    /* (non-Javadoc)
+     * @see org.jalgo.main.IModuleInfo#setOpenFileName(java.lang.String)
+     */
+    public void setOpenFileName(String string) {
+        m_strOpenFileName = string;
+    }
 }
