@@ -34,7 +34,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import org.jalgo.main.IModuleConnector;
+import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.Jalgo;
@@ -44,7 +44,7 @@ import org.jalgo.main.Jalgo;
  */
 public class Storage {
 
-	public static boolean load(String filename, IModuleConnector currentInstance) {
+	public static boolean load(String filename, AbstractModuleConnector currentInstance) {
 		byte[] buf = null;
 
 		// Create InputStream

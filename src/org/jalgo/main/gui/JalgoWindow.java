@@ -48,7 +48,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
-import org.jalgo.main.IModuleConnector;
+import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.JalgoMain;
 import org.jalgo.main.gui.actions.AboutAction;
 import org.jalgo.main.gui.actions.AboutModuleAction;
@@ -133,9 +133,9 @@ extends ApplicationWindow {
 	 * 			all dialogs normally, <code>false</code>, if the user presses
 	 * 			CANCEL during saving
 	 */
-	private boolean showFinalSaveDialog(IModuleConnector moduleInstance) {
-		if (moduleInstance.getSaveStatus() == IModuleConnector.NO_CHANGES ||
-			moduleInstance.getSaveStatus() == IModuleConnector.NOTHING_TO_SAVE)
+	private boolean showFinalSaveDialog(AbstractModuleConnector moduleInstance) {
+		if (moduleInstance.getSaveStatus() == AbstractModuleConnector.NO_CHANGES ||
+			moduleInstance.getSaveStatus() == AbstractModuleConnector.NOTHING_TO_SAVE)
 			return true;
 		switch (showConfirmDialog(Messages.getString("main", "ui.Wish_to_save"), //$NON-NLS-1$ //$NON-NLS-2$
 			DialogConstants.YES_NO_CANCEL_OPTION)) {
@@ -163,7 +163,7 @@ extends ApplicationWindow {
 			@SuppressWarnings("synthetic-access")
 			public void close(CTabFolderEvent event) {
 				// Ask user for saving
-				IModuleConnector moduleInstance =
+				AbstractModuleConnector moduleInstance =
 					jalgo.getModuleInstanceByTab((CTabItem)event.item); 
 				if (!moduleInstance.close() ||
 					!showFinalSaveDialog(moduleInstance)) event.doit = false;
@@ -294,7 +294,7 @@ extends ApplicationWindow {
 		});
 	}
 
-	public void updateTitle(IModuleConnector currentInstance) {
+	public void updateTitle(AbstractModuleConnector currentInstance) {
 		StringBuffer title = new StringBuffer();
 		if (currentInstance != null) {
 			if (currentInstance.getOpenFileName() != null) {
@@ -302,7 +302,7 @@ extends ApplicationWindow {
 					title.append(Messages.getString("main", "ui.Untitled"));
 				else title.append(currentInstance.getOpenFileName());
 				if (currentInstance.getSaveStatus() >=
-					IModuleConnector.CHANGES_TO_SAVE) title.append("* - ");
+					AbstractModuleConnector.CHANGES_TO_SAVE) title.append("* - ");
 				else title.append(" - ");				
 			}
 			title.append(currentInstance.getModuleInfo().getName());
@@ -334,19 +334,19 @@ extends ApplicationWindow {
 
 	public void updateSaveButtonEnableStatus(int status) {
 		switch (status) {
-			case IModuleConnector.NOTHING_TO_SAVE:
+			case AbstractModuleConnector.NOTHING_TO_SAVE:
 				saveAction.setEnabled(false);
 				saveAsAction.setEnabled(false);
 				break;
-			case IModuleConnector.NO_CHANGES:
+			case AbstractModuleConnector.NO_CHANGES:
 				saveAction.setEnabled(false);
 				saveAsAction.setEnabled(true);
 				break;
-			case IModuleConnector.CHANGES_TO_SAVE:
+			case AbstractModuleConnector.CHANGES_TO_SAVE:
 				saveAction.setEnabled(true);
 				saveAsAction.setEnabled(true);
 				break;
-			case IModuleConnector.SAVING_BLOCKED:
+			case AbstractModuleConnector.SAVING_BLOCKED:
 				saveAction.setEnabled(false);
 				saveAsAction.setEnabled(false);
 		}

@@ -35,8 +35,7 @@ import java.util.List;
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.swt.widgets.Composite;
-import org.jalgo.main.IModuleConnector;
-import org.jalgo.main.IModuleInfo;
+import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.datastructure.Node;
@@ -46,22 +45,16 @@ import org.jalgo.module.avl.gui.GUIController;
 /**
  * This class provides the bridge between the main program and the current
  * instance of the AVL module. It handles the references of several objects and
- * provides some getters used in the main program.
+ * provides some methods used in the main program.
  * 
  * @author Alexander Claus
  */
 public class ModuleConnector
-implements IModuleConnector {
-
-	// gui components
-	private SubMenuManager menuManager;
-	private SubToolBarManager toolBarManager;
+extends AbstractModuleConnector {
 
 	private SearchTree tree;
 	private Controller controller;
 	private GUIController gui;
-	private int saveStatus;
-	private String openFileName;
 
 	/**
 	 * Constructs a <code>ModuleConnector</code> object for the AVL module.
@@ -69,13 +62,11 @@ implements IModuleConnector {
 	 * <code>Controller</code> and <code>GUIController</code> are created
 	 * here.
 	 * 
-	 * @see IModuleConnector
+	 * @see AbstractModuleConnector
 	 */
 	public ModuleConnector(Composite comp, SubMenuManager menu,
 		SubToolBarManager tb) {
-
-		this.menuManager = menu;
-		this.toolBarManager = tb;
+		super(comp, menu, tb);
 
 		tree = new SearchTree();
 		controller = new Controller(tree);
@@ -86,7 +77,7 @@ implements IModuleConnector {
 	 * The "program code" of the AVL module. Currently there is only the welcome
 	 * screen displayed.
 	 * 
-	 * @see org.jalgo.main.IModuleConnector#run()
+	 * @see org.jalgo.main.AbstractModuleConnector#run()
 	 */
 	public void run() {
 		gui.installWelcomeScreen();
@@ -119,7 +110,7 @@ implements IModuleConnector {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jalgo.main.IModuleConnector#setDataFromFile(java.io.ByteArrayInputStream)
+	 * @see org.jalgo.main.AbstractModuleConnector#setDataFromFile(java.io.ByteArrayInputStream)
 	 */
 	@SuppressWarnings("unchecked")
 	public void setDataFromFile(ByteArrayInputStream data) {
@@ -148,7 +139,7 @@ implements IModuleConnector {
 	 * AVL-tree. Secondly the integer keys of the <code>Node</code>s are
 	 * serialized in a levelordered linked list.
 	 * 
-	 * @see org.jalgo.main.IModuleConnector#getDataForFile()
+	 * @see org.jalgo.main.AbstractModuleConnector#getDataForFile()
 	 */
 	public ByteArrayOutputStream getDataForFile() {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -171,82 +162,9 @@ implements IModuleConnector {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jalgo.main.IModuleConnector#print()
+	 * @see org.jalgo.main.AbstractModuleConnector#print()
 	 */
 	public void print() {
 	// printing is currently not supported
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#getMenuManager()
-	 */
-	public SubMenuManager getMenuManager() {
-		return menuManager;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#getToolBarManager()
-	 */
-	public SubToolBarManager getToolBarManager() {
-		return toolBarManager;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#getModuleInfo()
-	 */
-	public IModuleInfo getModuleInfo() {
-		return ModuleInfo.getInstance();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#getSaveStatus()
-	 */
-	public int getSaveStatus() {
-		if ((saveStatus & SAVING_BLOCKED) != 0) return SAVING_BLOCKED;
-		return saveStatus;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#setSaveStatus(int)
-	 */
-	public void setSaveStatus(int status) {
-		this.saveStatus = status;
-		if (status == NOTHING_TO_SAVE) setOpenFileName(null);
-		else if (status == CHANGES_TO_SAVE && openFileName == null)
-			setOpenFileName("");
-		JAlgoGUIConnector.getInstance().saveStatusChanged(this);
-	}
-
-	public void setSavingBlocked(boolean blocked) {
-		if (blocked) setSaveStatus(saveStatus | SAVING_BLOCKED);
-		else setSaveStatus(saveStatus & ~SAVING_BLOCKED);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleInfo#getOpenFileName()
-	 */
-	public String getOpenFileName() {
-		return openFileName;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleInfo#setOpenFileName(java.lang.String)
-	 */
-	public void setOpenFileName(String fileName) {
-		openFileName = fileName;
 	}
 }

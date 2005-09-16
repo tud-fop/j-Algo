@@ -52,17 +52,17 @@ public class JalgoMain {
 
 	private JalgoWindow appWin;
 
-	private LinkedList<Class<IModuleConnector>> knownModules;
+	private LinkedList<Class<AbstractModuleConnector>> knownModules;
 	private LinkedList<IModuleInfo> knownModuleInfos;
-	private HashMap<CTabItem, IModuleConnector> openInstances;
+	private HashMap<CTabItem, AbstractModuleConnector> openInstances;
 	
-	private IModuleConnector currentInstance;
+	private AbstractModuleConnector currentInstance;
 
 	public JalgoMain() {
-		knownModules = new LinkedList<Class<IModuleConnector>>();
+		knownModules = new LinkedList<Class<AbstractModuleConnector>>();
 		knownModuleInfos = new LinkedList<IModuleInfo>();
 		addKnownModules();
-		openInstances = new HashMap<CTabItem, IModuleConnector>();
+		openInstances = new HashMap<CTabItem, AbstractModuleConnector>();
 	}
 
 	public void createGUI() {
@@ -94,7 +94,7 @@ public class JalgoMain {
 		if (openInstances.isEmpty()) {
 			currentInstance = null;
 			appWin.updateSaveButtonEnableStatus(
-				IModuleConnector.NOTHING_TO_SAVE);
+				AbstractModuleConnector.NOTHING_TO_SAVE);
 			appWin.updateTitle(null);
 			appWin.setAboutModuleActionEnabled(false);
 		}
@@ -145,10 +145,10 @@ public class JalgoMain {
 	 * 
 	 * @param moduleName the name of the module to be created
 	 * 
-	 * @return the <code>IModuleConnector</code> instance of the module, if it is
+	 * @return the <code>AbstractModuleConnector</code> instance of the module, if it is
 	 * 			created, <code>null</code> otherwise
 	 */
-	public IModuleConnector newInstanceByName(String moduleName) {
+	public AbstractModuleConnector newInstanceByName(String moduleName) {
 		for (int i=0; i<knownModuleInfos.size(); i++) {
 			if ((knownModuleInfos.get(i)).getName().equals(moduleName))
 				return newInstance(i);
@@ -161,9 +161,9 @@ public class JalgoMain {
 	 * 
 	 * @param modNumber Number of new module in <code>knownModules</code>
 	 *                  starting with 0.
-	 * @return the new instance of <code>IModuleConnector</code>
+	 * @return the new instance of <code>AbstractModuleConnector</code>
 	 */
-	public IModuleConnector newInstance(int modNumber) {
+	public AbstractModuleConnector newInstance(int modNumber) {
 		// Makes current Module-Tool/MenuBar invisible
 		if (currentInstance != null) {
 			if (currentInstance.getMenuManager() != null)
@@ -175,7 +175,7 @@ public class JalgoMain {
 		}
 
 		// Disable save buttons
-		appWin.updateSaveButtonEnableStatus(IModuleConnector.NOTHING_TO_SAVE);
+		appWin.updateSaveButtonEnableStatus(AbstractModuleConnector.NOTHING_TO_SAVE);
 
 		// Requests a fresh CTabItem from the appWin
 		IModuleInfo module = knownModuleInfos.get(modNumber);
@@ -204,7 +204,7 @@ public class JalgoMain {
 		try {
 			Constructor constr =
 				((Class)knownModules.get(modNumber)).getConstructor(constrArgs);
-			currentInstance = (IModuleConnector) constr
+			currentInstance = (AbstractModuleConnector) constr
 					.newInstance(args);
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
@@ -240,7 +240,7 @@ public class JalgoMain {
 		return currentInstance;
 	}
 
-	public LinkedList<Class<IModuleConnector>> getKnownModules() {
+	public LinkedList<Class<AbstractModuleConnector>> getKnownModules() {
 		return knownModules;
 	}
 
@@ -248,7 +248,7 @@ public class JalgoMain {
 		return knownModuleInfos;
 	}
 
-	public IModuleConnector getCurrentInstance() {
+	public AbstractModuleConnector getCurrentInstance() {
 		return currentInstance;
 	}
 
@@ -273,7 +273,7 @@ public class JalgoMain {
 	 */
 	public boolean saveFileAs(String filename) {
 		currentInstance.setOpenFileName(filename);
-		currentInstance.setSaveStatus(IModuleConnector.NO_CHANGES);
+		currentInstance.setSaveStatus(AbstractModuleConnector.NO_CHANGES);
 		return Storage.save(filename);
 	}
 
@@ -286,7 +286,7 @@ public class JalgoMain {
 		if ((useCurrentInstance && Storage.load(filename, currentInstance)) ||
 			!useCurrentInstance && Storage.load(filename, null)) {
 			currentInstance.setOpenFileName(filename);
-			currentInstance.setSaveStatus(IModuleConnector.NO_CHANGES);
+			currentInstance.setSaveStatus(AbstractModuleConnector.NO_CHANGES);
 			return true;
 		}
 		return false;
@@ -314,8 +314,8 @@ public class JalgoMain {
 					Class moduleInfo = Class.forName("org.jalgo.module." +
 							moduleName + ".ModuleInfo");
 					
-					if (implementsInterface(moduleConnector,
-							"org.jalgo.main.IModuleConnector") &&
+					if (moduleConnector.getSuperclass().equals(
+						AbstractModuleConnector.class) &&
 						implementsInterface(moduleInfo,
 							"org.jalgo.main.IModuleInfo")) {
 						knownModules.add(moduleConnector);
@@ -364,7 +364,7 @@ public class JalgoMain {
 	 * 
 	 * @return the module instance belonging to the given tab item
 	 */
-	public IModuleConnector getModuleInstanceByTab(CTabItem item) {
+	public AbstractModuleConnector getModuleInstanceByTab(CTabItem item) {
 		return openInstances.get(item);
 	}
 }

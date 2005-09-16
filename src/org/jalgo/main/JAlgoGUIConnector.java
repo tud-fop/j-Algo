@@ -4,7 +4,7 @@ import org.jalgo.main.gui.JalgoWindow;
 
 /**
  * Class <code>JAlgoGUIConnector</code> represents the counterpart to the
- * <code>IModuleConnector</code> interface. It contains methods to use from
+ * <code>AbstractModuleConnector</code> interface. It contains methods to use from
  * module instances or several non-GUI parts of the program. So it provides
  * a kind of encapsulation and helps to split strictly the main program from the
  * modules.<br>
@@ -55,14 +55,14 @@ public class JAlgoGUIConnector {
 	 * controlled in the right way and so get the well known semantics of "save"
 	 * and "save as".<br>
 	 * A module, which save status changes, has to call this method with the
-	 * current instance of its <code>IModuleConnector</code> as argument. If the
+	 * current instance of its <code>AbstractModuleConnector</code> as argument. If the
 	 * current active module instance is not the relating module instance, this
 	 * method has no effect.
 	 * 
-	 * @param moduleInstance the instance of the <code>IModuleConnector</code>
+	 * @param moduleInstance the instance of the <code>AbstractModuleConnector</code>
 	 * 			of the relating module
 	 */
-	public void saveStatusChanged(IModuleConnector moduleInstance) {
+	public void saveStatusChanged(AbstractModuleConnector moduleInstance) {
 		if (appWin.getParent().getCurrentInstance() != moduleInstance) return;
 		appWin.updateSaveButtonEnableStatus(moduleInstance.getSaveStatus());
 		appWin.updateTitle(moduleInstance);
@@ -156,12 +156,12 @@ public class JAlgoGUIConnector {
 	 * 
 	 * @param moduleName the name of the module to be created
 	 * 
-	 * @return the <code>IModuleConnector</code> instance of the module, if it
+	 * @return the <code>AbstractModuleConnector</code> instance of the module, if it
 	 * 			is created, <code>null</code> otherwise
 	 *
 	 * @see JalgoMain#newInstanceByName(String)
 	 */
-	public IModuleConnector newModuleInstanceByName(String moduleName) {
+	public AbstractModuleConnector newModuleInstanceByName(String moduleName) {
 		return appWin.getParent().newInstanceByName(moduleName);
 	}
 }

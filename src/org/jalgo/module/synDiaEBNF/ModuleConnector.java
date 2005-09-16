@@ -33,9 +33,7 @@ import java.io.ByteArrayOutputStream;
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.swt.widgets.Composite;
-import org.jalgo.main.IModuleConnector;
-import org.jalgo.main.IModuleInfo;
-import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.AbstractModuleConnector;
 
 /**
  * @author Michael Pradel
@@ -43,36 +41,35 @@ import org.jalgo.main.JAlgoGUIConnector;
  * @author Marco Zimmerling
  */
 public class ModuleConnector
-implements IModuleConnector {
+extends AbstractModuleConnector {
 
 	private ModuleController controller;
-	private int saveStatus;
-	private String openFileName = "";
 
 	/**
-	 * @see IModuleConnector
+	 * @see AbstractModuleConnector
 	 */
 	public ModuleConnector(Composite comp, SubMenuManager menu,
 		SubToolBarManager tb) {
+		super(comp, menu, tb);
 		controller = new ModuleController(this, comp, menu, tb);
 	}
 
 	/**
-	 * @see IModuleConnector#run()
+	 * @see AbstractModuleConnector#run()
 	 */
 	public void run() {
 		controller.run();
 	}
 
 	/**
-	 * @see IModuleConnector#setDataFromFile(ByteArrayInputStream)
+	 * @see AbstractModuleConnector#setDataFromFile(ByteArrayInputStream)
 	 */
 	public void setDataFromFile(ByteArrayInputStream data) {
 		controller.setSerializedData(data);
 	}
 
 	/**
-	 * @see IModuleConnector#getDataForFile()
+	 * @see AbstractModuleConnector#getDataForFile()
 	 */
 	public ByteArrayOutputStream getDataForFile() {
 		return controller.getSerializedData();
@@ -94,60 +91,5 @@ implements IModuleConnector {
 	 */
 	public ModuleController getController() {
 		return controller;
-	}
-
-	public SubMenuManager getMenuManager() {
-		return controller.getMenuManager();
-	}
-
-	/**
-	 * @see IModuleConnector#getToolBarManager()
-	 */
-	public SubToolBarManager getToolBarManager() {
-		return controller.getToolBarManager();
-	}
-
-	/**
-	 * @see IModuleConnector#getModuleInfo()
-	 */
-	public IModuleInfo getModuleInfo() {
-		return ModuleInfo.getInstance(); 
-	}
-
-	public boolean close() {
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#getSaveStatus()
-	 */
-	public int getSaveStatus() {
-		return saveStatus;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#setSaveStatus(int)
-	 */
-	public void setSaveStatus(int status) {
-		this.saveStatus = status;
-		JAlgoGUIConnector.getInstance().saveStatusChanged(this);
-	}
-
-	/**
-	 * @see IModuleConnector#getOpenFileName()
-	 */
-	public String getOpenFileName() {
-		return openFileName;
-	}
-
-	/**
-	 * @see IModuleConnector#setOpenFileName(String)
-	 */
-	public void setOpenFileName(String string) {
-		openFileName = string;
 	}
 }

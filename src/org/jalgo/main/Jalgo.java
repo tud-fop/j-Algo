@@ -52,7 +52,7 @@ public class Jalgo {
 		if (errorLog != null) errorLog.close();
 	}
 
-	public static IModuleConnector getCurrentModule() {
+	public static AbstractModuleConnector getCurrentModule() {
 		return jalgo.getCurrentInstance();
 	}
 

@@ -32,33 +32,26 @@ import java.io.ByteArrayOutputStream;
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.swt.widgets.Composite;
-import org.jalgo.main.IModuleConnector;
-import org.jalgo.main.IModuleInfo;
+import org.jalgo.main.AbstractModuleConnector;
 
 /**
  * @author Michael Pradel
  */
 public class ModuleConnector
-implements IModuleConnector {
-
-	private SubMenuManager menuManager;
-	private SubToolBarManager toolBarManager;
-	private int saveStatus;
+extends AbstractModuleConnector {
 
 	/**
-	 * @see IModuleConnector
+	 * @see AbstractModuleConnector
 	 */
 	public ModuleConnector(Composite comp, SubMenuManager menu,
 		SubToolBarManager tb) {
-
-		this.menuManager = menu;
-		this.toolBarManager = tb;
+		super(comp, menu, tb);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jalgo.main.IModuleConnector#run()
+	 * @see org.jalgo.main.AbstractModuleConnector#run()
 	 */
 	public void run() {
 		System.err.println("testModule is running");
@@ -67,7 +60,7 @@ implements IModuleConnector {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jalgo.main.IModuleConnector#setDataFromFile(java.io.ByteArrayInputStream)
+	 * @see org.jalgo.main.AbstractModuleConnector#setDataFromFile(java.io.ByteArrayInputStream)
 	 */
 	public void setDataFromFile(ByteArrayInputStream data) {
 	// here is no action performed in test module
@@ -76,7 +69,7 @@ implements IModuleConnector {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jalgo.main.IModuleConnector#getDataForFile()
+	 * @see org.jalgo.main.AbstractModuleConnector#getDataForFile()
 	 */
 	public ByteArrayOutputStream getDataForFile() {
 		return null;
@@ -85,72 +78,9 @@ implements IModuleConnector {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.jalgo.main.IModuleConnector#print()
+	 * @see org.jalgo.main.AbstractModuleConnector#print()
 	 */
 	public void print() {
 	// here is no action performed in test module
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#getMenuManager()
-	 */
-	public SubMenuManager getMenuManager() {
-		return menuManager;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#getToolBarManager()
-	 */
-	public SubToolBarManager getToolBarManager() {
-		return toolBarManager;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#getModuleInfo()
-	 */
-	public IModuleInfo getModuleInfo() {
-		return ModuleInfo.getInstance();
-	}
-
-	public boolean close() {
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#getSaveStatus()
-	 */
-	public int getSaveStatus() {
-		return saveStatus;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.IModuleConnector#setSaveStatus(int)
-	 */
-	public void setSaveStatus(int status) {
-		this.saveStatus = status;
-	}
-
-	/* (non-Javadoc)
-     * @see org.jalgo.main.IModuleInfo#getOpenFileName()
-     */
-    public String getOpenFileName() {
-        return null;
-    }
-
-    /* (non-Javadoc)
-     * @see org.jalgo.main.IModuleInfo#setOpenFileName(java.lang.String)
-     */
-    public void setOpenFileName(String string) {
-    // here is no action performed in test module
-    }
 }
