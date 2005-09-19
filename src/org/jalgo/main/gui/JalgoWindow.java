@@ -413,6 +413,32 @@ extends ApplicationWindow {
 		});
 	}
 
+	/**
+	 * Opens a message box with an info message and standard title.
+	 * 
+	 * @param msg the info message to be displayed
+	 */
+	public void showInfoMessage(String msg) {
+		showInfoMessage(Messages.getString(
+			"main", "DialogConstants.Info"), msg); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	/**
+	 * Opens a message box with an info message and the given title.<br>
+	 * The dialog is encapsulated within a new <code>Runnable</code> object,
+	 * which is executed, because of interacting of Swing and SWT. Otherwise
+	 * there would be thread problems.
+	 * 
+	 * @param msg the info message to be displayed
+	 */
+	public void showInfoMessage(final String title, final String msg) {
+		getShell().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				MessageDialog.openInformation(getShell(), title, msg);
+			}
+		});		
+	}
+
 	/* the following variable is necessary for ecapsulate the dialog within a
 	   Runnable object*/
 	private int _result;

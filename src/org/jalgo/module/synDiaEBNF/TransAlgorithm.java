@@ -39,8 +39,8 @@ import java.util.Stack;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.ToolbarLayout;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.jalgo.main.InternalErrorException;
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.gfx.MarkStyle;
 import org.jalgo.main.gui.TextCanvas;
 import org.jalgo.main.gui.widgets.StackCanvas;
@@ -392,11 +392,9 @@ implements IAlgorithm, Serializable {
 	}
 
 	private void showDialogFinished() {
-		MessageDialog.openInformation(toTransCanvas.getShell(),
-			Messages.getString("synDiaEBNF",
-				"TransAlgorithm.Algorithm_completed_19"),
-			Messages.getString("synDiaEBNF",
-				"TransAlgorithm.The_algorithm_has_been_completed_!_20")); //$NON-NLS-1$ //$NON-NLS-2$
+		JAlgoGUIConnector.getInstance().showInfoMessage(
+			Messages.getString("synDiaEBNF", //$NON-NLS-1$
+				"TransAlgorithm.The_algorithm_has_been_completed_!_20")); //$NON-NLS-2$
 	}
 
 	private void highlightTxtAndElem() {

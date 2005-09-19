@@ -25,7 +25,6 @@ package org.jalgo.main.util;
 
 import org.eclipse.draw2d.PrintFigureOperation;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -36,6 +35,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.gui.DialogConstants;
 
 /**
  * Used after a usual PrintDialog to decide about the scaling.
@@ -118,9 +119,9 @@ extends Dialog {
 				selectionIndex = PrintFigureOperation.FIT_HEIGHT;
 				break;
 			case 4:
-				if (MessageDialog.openQuestion(getParentShell(),
-					Messages.getString("main", "PrintDialogNext.Warning__6"),
-					Messages.getString("main", "PrintDialogNext.Layout_warning_7")))
+				if (JAlgoGUIConnector.getInstance().showConfirmDialog(
+					Messages.getString("main", "PrintDialogNext.Layout_warning_7"),
+					DialogConstants.YES_NO_OPTION) == DialogConstants.YES_OPTION)
 				selectionIndex = PrintScaledFigureOperation.USE_LAYOUT; //$NON-NLS-1$ //$NON-NLS-2$
 				else selectionIndex = -1;
 				break;

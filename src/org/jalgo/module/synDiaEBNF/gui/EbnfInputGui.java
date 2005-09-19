@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -45,6 +44,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
+import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.gui.widgets.CustomViewForm;
 import org.jalgo.main.gui.widgets.Splitter;
 import org.jalgo.main.util.Messages;
@@ -460,10 +460,9 @@ public class EbnfInputGui extends Gui implements Serializable {
 						"EbnfInputGui.Error_analyzing_EBNF_47")); //$NON-NLS-1$
 
 					// open pop-up with error message
-					MessageDialog.openWarning(
-						mainComp.getShell(),
+					JAlgoGUIConnector.getInstance().showWarningMessage(
 						Messages.getString("synDiaEBNF",
-							"EbnfInputGui.Error_analyzing_EBNF_48"), //$NON-NLS-1$
+							"EbnfInputGui.Error_analyzing_EBNF_48") + //$NON-NLS-1$
 						e.getMessage());
 					return;
 				}

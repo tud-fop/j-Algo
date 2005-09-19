@@ -24,7 +24,7 @@ package org.jalgo.main.gui.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.widgets.MessageBox;
+import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.util.Messages;
 
@@ -47,23 +47,25 @@ extends Action {
 	}
 
 	public void run() {
-		MessageBox dia = new MessageBox(win.getShell());
-		dia.setText(Messages.getString("main", "ui.About_module")); //$NON-NLS-1$ //$NON-NLS-2$
-		dia.setMessage(
-			win.getParent().getCurrentInstance().getModuleInfo().getName()
-			+ Messages.getString("main", "AboutModule.Version") //$NON-NLS-1$ //$NON-NLS-2$
-			+ win.getParent().getCurrentInstance().getModuleInfo().getVersion()
-			+ lineSep + lineSep
-			+ win.getParent().getCurrentInstance().getModuleInfo().getDescription()
-			+ lineSep + lineSep
-			+ Messages.getString("main", "About.Authors") //$NON-NLS-1$ //$NON-NLS-2$
-			+ lineSep
-			+ win.getParent().getCurrentInstance().getModuleInfo().getAuthor()
-			+ lineSep + lineSep
-			+ Messages.getString("main", "About.License") //$NON-NLS-1$ //$NON-NLS-2$
-			+ lineSep
-			+ win.getParent().getCurrentInstance().getModuleInfo().getLicense()
-		);
-		dia.open();
+		IModuleInfo moduleInfo =
+			win.getParent().getCurrentInstance().getModuleInfo();
+		StringBuffer content = new StringBuffer();
+		content.append(moduleInfo.getName());
+		content.append(Messages.getString("main", "AboutModule.Version")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(moduleInfo.getVersion());
+		content.append(lineSep).append(lineSep);
+		content.append(moduleInfo.getDescription());
+		content.append(lineSep).append(lineSep);
+		content.append(Messages.getString("main", "About.Authors")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(lineSep);
+		content.append(moduleInfo.getAuthor());
+		content.append(lineSep).append(lineSep);
+		content.append(Messages.getString("main", "About.License")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(lineSep);
+		content.append(moduleInfo.getLicense());
+
+		win.showInfoMessage(
+			Messages.getString("main", "ui.About_module"), //$NON-NLS-1$ //$NON-NLS-2$
+			content.toString());
 	}
 }

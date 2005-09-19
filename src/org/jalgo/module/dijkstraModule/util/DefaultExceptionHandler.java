@@ -23,8 +23,7 @@
  */
 package org.jalgo.module.dijkstraModule.util;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MessageBox;
+import org.jalgo.main.JAlgoGUIConnector;
 
 /**
  * @author Frank
@@ -35,11 +34,7 @@ public class DefaultExceptionHandler {
 
 	public DefaultExceptionHandler(Exception e) {
 		e.printStackTrace();
-		MessageBox fault = new MessageBox(Display.getCurrent().getActiveShell());
-		if (e.getMessage() == null) {
-			return;
-		}
-		fault.setMessage(e.getMessage());
-		fault.open();
+		if (e.getMessage() == null) return;
+		JAlgoGUIConnector.getInstance().showErrorMessage(e.getMessage());
 	}
 }

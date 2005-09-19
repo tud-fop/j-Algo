@@ -21,7 +21,6 @@ package org.jalgo.main.gui.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.widgets.MessageBox;
 import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.util.Messages;
 
@@ -48,25 +47,25 @@ extends Action {
 	}
 
 	public void run() {
-		MessageBox dia = new MessageBox(win.getShell());
+		StringBuffer content = new StringBuffer();
+		content.append(Messages.getString("main", "General.name")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(" - "); //$NON-NLS-1$
+		content.append(Messages.getString("main", "General.version")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(lineSep).append(lineSep);
+		content.append(Messages.getString("main", "About.Copyright")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(lineSep);
+		content.append(Messages.getString("main", "About.URL")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(lineSep).append(lineSep);
+		content.append(Messages.getString("main", "About.Authors")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(lineSep);
+		content.append(Messages.getString("main", "About.Author_Names")); //$NON-N //$NON-NLS-2$LS-1$
+		content.append(lineSep).append(lineSep);
+		content.append(Messages.getString("main", "About.License")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(lineSep);
+		content.append(Messages.getString("main", "About.GPL")); //$NON-NLS-1$ //$NON-NLS-2$
 
-		dia.setText(Messages.getString("main", "ui.About")); //$NON-NLS-1$ //$NON-NLS-2$
-		dia.setMessage(Messages.getString("main", "General.name") //$NON-NLS-1$ //$NON-NLS-2$
-				+ " - " //$NON-NLS-1$
-				+ Messages.getString("main", "General.version") //$NON-NLS-1$ //$NON-NLS-2$
-				+ lineSep + lineSep
-				+ Messages.getString("main", "About.Copyright") //$NON-NLS-1$ //$NON-NLS-2$
-				+ lineSep
-				+ Messages.getString("main", "About.URL") //$NON-NLS-1$ //$NON-NLS-2$
-				+ lineSep + lineSep
-				+ Messages.getString("main", "About.Authors") //$NON-NLS-1$ //$NON-NLS-2$
-				+ lineSep
-				+ Messages.getString("main", "About.Author_Names") //$NON-N //$NON-NLS-2$LS-1$
-				+ lineSep + lineSep
-				+ Messages.getString("main", "About.License") //$NON-NLS-1$ //$NON-NLS-2$
-				+ lineSep
-				+ Messages.getString("main", "About.GPL") //$NON-NLS-1$ //$NON-NLS-2$
-		);
-		dia.open();
+		win.showInfoMessage(
+			Messages.getString("main", "ui.About"), //$NON-NLS-1$ //$NON-NLS-2$
+			content.toString());
 	}
 }
