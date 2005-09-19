@@ -79,6 +79,7 @@ public abstract class AbstractModuleConnector {
 		this.comp = comp;
 		this.menuManager = menuManager;
 		this.toolBarManager = toolBarManager;
+		saveStatus = SaveStatus.NOTHING_TO_SAVE;
 	}
 
 	/**

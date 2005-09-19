@@ -237,8 +237,6 @@ implements GUIConstants {
 		standardLayoutSplitPane.setOneTouchExpandable(true);
 		standardLayoutSplitPane.setResizeWeight(0.9);
 		standardLayoutSplitPane.setDividerLocation(northEastPaneHeight);
-
-		connector.setSaveStatus(SaveStatus.NOTHING_TO_SAVE);
 	}
 
 	/**
