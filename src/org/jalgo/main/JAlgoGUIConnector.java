@@ -91,6 +91,17 @@ public class JAlgoGUIConnector {
 	}
 
 	/**
+	 * Opens an info message box with the given message string.
+	 * 
+	 * @param msg the message string
+	 * 
+	 * @see JalgoWindow#showInfoMessage(String)
+	 */
+	public void showInfoMessage(String msg) {
+		appWin.showInfoMessage(msg);
+	}
+
+	/**
 	 * Opens a confirm dialog with the given question string. The type of option
 	 * buttons can be selected using the second argument. It can be one of the
 	 * following constants defined in {@link org.jalgo.main.gui.DialogConstants}:
