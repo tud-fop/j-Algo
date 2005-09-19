@@ -30,8 +30,8 @@ import java.awt.event.ActionListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.AbstractModuleConnector.SaveStatus;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.ModuleConnector;
 import org.jalgo.module.avl.NoActionException;
@@ -92,7 +92,7 @@ implements ActionListener, DocumentListener, GUIConstants {
 							ex.getMessage());
 					}
 					gui.installStandardLayout();
-					connector.setSaveStatus(AbstractModuleConnector.CHANGES_TO_SAVE);
+					connector.setSaveStatus(SaveStatus.CHANGES_TO_SAVE);
 					// use alg.Finished() here, if stepwise backwards should be
 					// enabled
 					gui.algorithmAborted();

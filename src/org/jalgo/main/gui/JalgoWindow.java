@@ -50,6 +50,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.JalgoMain;
+import org.jalgo.main.AbstractModuleConnector.SaveStatus;
 import org.jalgo.main.gui.actions.AboutAction;
 import org.jalgo.main.gui.actions.AboutModuleAction;
 import org.jalgo.main.gui.actions.ExitAction;
@@ -134,8 +135,8 @@ extends ApplicationWindow {
 	 * 			CANCEL during saving
 	 */
 	private boolean showFinalSaveDialog(AbstractModuleConnector moduleInstance) {
-		if (moduleInstance.getSaveStatus() == AbstractModuleConnector.NO_CHANGES ||
-			moduleInstance.getSaveStatus() == AbstractModuleConnector.NOTHING_TO_SAVE)
+		if (moduleInstance.getSaveStatus() == SaveStatus.NO_CHANGES ||
+			moduleInstance.getSaveStatus() == SaveStatus.NOTHING_TO_SAVE)
 			return true;
 		switch (showConfirmDialog(Messages.getString("main", "ui.Wish_to_save"), //$NON-NLS-1$ //$NON-NLS-2$
 			DialogConstants.YES_NO_CANCEL_OPTION)) {
@@ -301,12 +302,12 @@ extends ApplicationWindow {
 				if (currentInstance.getOpenFileName().length() == 0)
 					title.append(Messages.getString("main", "ui.Untitled"));
 				else title.append(currentInstance.getOpenFileName());
-				if (currentInstance.getSaveStatus() >=
-					AbstractModuleConnector.CHANGES_TO_SAVE) title.append("* - ");
-				else title.append(" - ");				
+				if (currentInstance.getSaveStatus() ==
+					SaveStatus.CHANGES_TO_SAVE) title.append("*  -  ");
+				else title.append("  -  ");
 			}
 			title.append(currentInstance.getModuleInfo().getName());
-			title.append(" - ");
+			title.append("  -  ");
 		}
 		title.append(Messages.getString("main", "General.name")); //$NON-NLS-1$ //$NON-NLS-2$
 		setTitle(title.toString());
@@ -332,23 +333,26 @@ extends ApplicationWindow {
 		return saveAsAction;
 	}
 
-	public void updateSaveButtonEnableStatus(int status) {
-		switch (status) {
-			case AbstractModuleConnector.NOTHING_TO_SAVE:
+	public void updateSaveButtonEnableStatus(
+		AbstractModuleConnector moduleInstance) {
+		if (moduleInstance == null ||
+			moduleInstance.isSavingBlocked()) {
+			saveAction.setEnabled(false);
+			saveAsAction.setEnabled(false);
+		}
+		else switch (moduleInstance.getSaveStatus()) {
+			case NOTHING_TO_SAVE:
 				saveAction.setEnabled(false);
 				saveAsAction.setEnabled(false);
 				break;
-			case AbstractModuleConnector.NO_CHANGES:
+			case NO_CHANGES:
 				saveAction.setEnabled(false);
 				saveAsAction.setEnabled(true);
 				break;
-			case AbstractModuleConnector.CHANGES_TO_SAVE:
+			case CHANGES_TO_SAVE:
 				saveAction.setEnabled(true);
 				saveAsAction.setEnabled(true);
 				break;
-			case AbstractModuleConnector.SAVING_BLOCKED:
-				saveAction.setEnabled(false);
-				saveAsAction.setEnabled(false);
 		}
 	}
 

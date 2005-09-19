@@ -48,10 +48,9 @@ import org.eclipse.swt.widgets.Composite;
  * declared with <code>final</code>.<br>
  * All subclasses have to implement a constructor with the signature of the only
  * constructor of this class ({@link #AbstractModuleConnector(Composite,
- * SubMenuManager, SubToolBarManager)}).
- * This constructor must call the constructor of the superclass with the given
- * arguments. This mechanism is necessary for accurately working of the plugin
- * structure of j-Algo.
+ * SubMenuManager, SubToolBarManager)}). This constructor must call the
+ * constructor of the superclass with the given arguments. This mechanism is
+ * necessary for accurately working of the plugin structure of j-Algo.
  * 
  * @author Alexander Claus, Michael Pradel, Christopher Friedrich, Stephan
  *         Creutz
@@ -63,7 +62,8 @@ public abstract class AbstractModuleConnector {
 	private SubMenuManager menuManager;
 	private SubToolBarManager toolBarManager;
 
-	private int saveStatus;
+	private SaveStatus saveStatus;
+	private boolean savingBlocked;
 	private String openFileName;
 
 	/**
@@ -117,8 +117,8 @@ public abstract class AbstractModuleConnector {
 	 * This method is called, when module or program are intended to be closed.
 	 * Here final operations can be performed, before closing the module, or, if
 	 * the module is currently not ready to be closed, this method can return
-	 * <code>false</code>. When this method returns <code>true</code>, the user
-	 * will be asked for saving his work (if there is something to save).
+	 * <code>false</code>. When this method returns <code>true</code>, the
+	 * user will be asked for saving his work (if there is something to save).
 	 * Otherwise the closing of the module / program is ignored.
 	 * 
 	 * @return <code>true</code>, if module is ready to be closed,
@@ -139,8 +139,8 @@ public abstract class AbstractModuleConnector {
 	}
 
 	/**
-	 * Retrieves the <code>SubToolBarManager</code> representing the toolbar of
-	 * the module.
+	 * Retrieves the <code>SubToolBarManager</code> representing the toolbar
+	 * of the module.
 	 * 
 	 * @return the toolbar of the module
 	 */
@@ -183,24 +183,26 @@ public abstract class AbstractModuleConnector {
 		return null;
 	}
 
-	/** Indicates, that there is no file open or nothing to save */
-	public static final int NOTHING_TO_SAVE = 0;
-	/** Indicates, that the current file was saved recently */
-	public static final int NO_CHANGES = 1;
-	/** Indicates, that the current file is 'dirty' and has to be saved */
-	public static final int CHANGES_TO_SAVE = 2;
 	/**
-	 * Indicates, that the current module has saving mechanism blocked, e.g. an
-	 * algorithm is running, and the user musn't save during this.
+	 * The enum type <code>SaveStatus</code> is used by modules to indicate if
+	 * module content has changed or not. This status is evaluated to set the
+	 * enabled status of the save buttons in the main program.
 	 */
-	public static final int SAVING_BLOCKED = 4;
+	public enum SaveStatus {
+		/** Indicates, that there is no file open or nothing to save */
+		NOTHING_TO_SAVE,
+		/** Indicates, that the current file was saved recently */
+		NO_CHANGES,
+		/** Indicates, that the current file is 'dirty' and has to be saved */
+		CHANGES_TO_SAVE
+	}
 
 	/**
 	 * This method retrieves the save status of the module. This method is
 	 * necessary for correctly working of the enabled button status of the save
 	 * buttons and several features.
 	 * 
-	 * @return one of the following constants:
+	 * @return one of the {@link SaveStatus} enum constants:
 	 *         <ul>
 	 *         <li><code>NOTHING_TO_SAVE</code></li> - if there is no file
 	 *         open
@@ -208,12 +210,9 @@ public abstract class AbstractModuleConnector {
 	 *         recently
 	 *         <li><code>CHANGES_TO_SAVE</code></li> - if there are changes
 	 *         to save
-	 *         <li><code>SAVING_BLOCKED</code></li> - if save buttons should
-	 *         be blocked
 	 *         </ul>
 	 */
-	public final int getSaveStatus() {
-		if ((saveStatus & SAVING_BLOCKED) != 0) return SAVING_BLOCKED;
+	public final SaveStatus getSaveStatus() {
 		return saveStatus;
 	}
 
@@ -224,11 +223,12 @@ public abstract class AbstractModuleConnector {
 	 * @param status the new save status
 	 * 
 	 * @see #getSaveStatus()
+	 * @see SaveStatus
 	 */
-	public final void setSaveStatus(int status) {
+	public final void setSaveStatus(SaveStatus status) {
 		saveStatus = status;
-		if (status == NOTHING_TO_SAVE) setOpenFileName(null);
-		else if (status == CHANGES_TO_SAVE && openFileName == null) setOpenFileName("");
+		if (status == SaveStatus.NOTHING_TO_SAVE) setOpenFileName(null);
+		else if (status == SaveStatus.CHANGES_TO_SAVE && openFileName == null) setOpenFileName("");
 		JAlgoGUIConnector.getInstance().saveStatusChanged(this);
 	}
 
@@ -238,12 +238,25 @@ public abstract class AbstractModuleConnector {
 	 * consistent states of module contents can be saved. Ensure to deblock the
 	 * save buttons !!!
 	 * 
-	 * @param blocked <code>true</code>, if the save buttons should be blocked,
-	 * <code>false</code> otherwise
+	 * @param blocked <code>true</code>, if the save buttons should be
+	 *            blocked, <code>false</code> otherwise
+	 * 
+	 * @see #isSavingBlocked()
 	 */
 	public final void setSavingBlocked(boolean blocked) {
-		if (blocked) setSaveStatus(saveStatus | SAVING_BLOCKED);
-		else setSaveStatus(saveStatus & ~SAVING_BLOCKED);
+		savingBlocked = blocked;
+		JAlgoGUIConnector.getInstance().saveStatusChanged(this);
+	}
+
+	/**
+	 * Retrieves, if saving mechanism is blocked or not, e.g. during a running
+	 * algorithm.
+	 * 
+	 * @return <code>true</code> if saving mechanism is blocked,
+	 *         <code>false</code> otherwise
+	 */
+	public final boolean isSavingBlocked() {
+		return savingBlocked;
 	}
 
 	/**

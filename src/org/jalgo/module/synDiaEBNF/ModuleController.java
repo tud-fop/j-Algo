@@ -39,8 +39,8 @@ import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Composite;
-import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.InternalErrorException;
+import org.jalgo.main.AbstractModuleConnector.SaveStatus;
 import org.jalgo.module.synDiaEBNF.ebnf.EbnfDefinition;
 import org.jalgo.module.synDiaEBNF.gui.BackTrackingAlgoGui;
 import org.jalgo.module.synDiaEBNF.gui.CreateSynDiaClickGui;
@@ -180,7 +180,7 @@ public class ModuleController implements IModeConstants {
 
 			case NORMAL_VIEW_EBNF :
 				mode = NORMAL_VIEW_EBNF;
-				connector.setSaveStatus(AbstractModuleConnector.CHANGES_TO_SAVE);
+				connector.setSaveStatus(SaveStatus.CHANGES_TO_SAVE);
 				addTransButton();
 				gui = new NormalViewEbnfGui(comp);
 				StyledText ebnfText =
@@ -491,7 +491,7 @@ public class ModuleController implements IModeConstants {
 
 			case NORMAL_VIEW_EBNF :
 				removeTransButton();
-				connector.setSaveStatus(AbstractModuleConnector.NOTHING_TO_SAVE);
+				connector.setSaveStatus(SaveStatus.NOTHING_TO_SAVE);
 				break;
 
 			case NORMAL_VIEW_SYNDIA :

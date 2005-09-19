@@ -45,8 +45,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.InternalErrorException;
+import org.jalgo.main.AbstractModuleConnector.SaveStatus;
 import org.jalgo.module.dijkstraModule.ModuleConnector;
 import org.jalgo.module.dijkstraModule.actions.Action;
 import org.jalgo.module.dijkstraModule.actions.ActionException;
@@ -577,7 +577,7 @@ extends Observable {
 		this.m_curGraph = graph;
 		if (this.m_iEditingMode == Controller.MODE_ALGORITHM) computeAlgoStates();
 		if (oldGraph.equals(graph) == false)
-			connector.setSaveStatus(AbstractModuleConnector.CHANGES_TO_SAVE);
+			connector.setSaveStatus(SaveStatus.CHANGES_TO_SAVE);
 		return oldGraph;
 	}
 

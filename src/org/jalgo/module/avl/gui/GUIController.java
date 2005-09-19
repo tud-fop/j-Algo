@@ -50,8 +50,8 @@ import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.widgets.Composite;
-import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.AbstractModuleConnector.SaveStatus;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.ModuleConnector;
@@ -238,7 +238,7 @@ implements GUIConstants {
 		standardLayoutSplitPane.setResizeWeight(0.9);
 		standardLayoutSplitPane.setDividerLocation(northEastPaneHeight);
 
-		connector.setSaveStatus(AbstractModuleConnector.NOTHING_TO_SAVE);
+		connector.setSaveStatus(SaveStatus.NOTHING_TO_SAVE);
 	}
 
 	/**
@@ -294,8 +294,7 @@ implements GUIConstants {
 	 */
 	public void installStandardLayout() {
 		connector.setSaveStatus(tree.getHeight() != 0 ?
-			AbstractModuleConnector.NO_CHANGES :
-			AbstractModuleConnector.NOTHING_TO_SAVE);
+			SaveStatus.NO_CHANGES : SaveStatus.NOTHING_TO_SAVE);
 		contentPane.removeAll();
 		contentPane.setBackground(STANDARD_BACKGROUND);
 		contentPane.setLayout(new BorderLayout());
@@ -325,7 +324,7 @@ implements GUIConstants {
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(welcomeScreen, BorderLayout.CENTER);
 
-		connector.setSaveStatus(AbstractModuleConnector.NOTHING_TO_SAVE);
+		connector.setSaveStatus(SaveStatus.NOTHING_TO_SAVE);
 		setToolbarButtonsDisabled();
 		contentPane.updateUI();
 		contentPane.validate();
@@ -392,8 +391,7 @@ implements GUIConstants {
 					Messages.getString("avl", "GUIController.Changed_to_AVL_mode")); //$NON-NLS-1$ //$NON-NLS-2$
 				setAVLMode(true, true);
 				connector.setSaveStatus(tree.getHeight() > 0 ?
-					AbstractModuleConnector.CHANGES_TO_SAVE :
-					AbstractModuleConnector.NOTHING_TO_SAVE);
+					SaveStatus.CHANGES_TO_SAVE : SaveStatus.NOTHING_TO_SAVE);
 				connector.setSavingBlocked(false);
 			}
 			else {
@@ -523,7 +521,7 @@ implements GUIConstants {
 	 * method is called, when an algorithm is selected.
 	 */
 	public void algorithmStarted() {
-		connector.setSaveStatus(AbstractModuleConnector.CHANGES_TO_SAVE);
+		connector.setSaveStatus(SaveStatus.CHANGES_TO_SAVE);
 		clearTreeAction.setEnabled(false);
 		setUndoButtonsEnabled(false);
 		if (controller.algorithmHasNextStep()) {
@@ -633,7 +631,7 @@ implements GUIConstants {
 	 * This method is called by <code>RandomGenerationDialogActionHandler</code>.
 	 */
 	public void randomAnimatorStarted() {
-		connector.setSaveStatus(AbstractModuleConnector.CHANGES_TO_SAVE);
+		connector.setSaveStatus(SaveStatus.CHANGES_TO_SAVE);
 		connector.setSavingBlocked(true);
 		controlPane.setAnimSpeedEnabled(true);
 		controlPane.setAlgorithmButtonsEnabled(false);

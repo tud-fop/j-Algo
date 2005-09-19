@@ -40,6 +40,7 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.jalgo.main.AbstractModuleConnector.SaveStatus;
 import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.gui.actions.SaveAsAction;
 import org.jalgo.main.util.Messages;
@@ -93,8 +94,7 @@ public class JalgoMain {
 		//closed tab was the last one
 		if (openInstances.isEmpty()) {
 			currentInstance = null;
-			appWin.updateSaveButtonEnableStatus(
-				AbstractModuleConnector.NOTHING_TO_SAVE);
+			appWin.updateSaveButtonEnableStatus(null);
 			appWin.updateTitle(null);
 			appWin.setAboutModuleActionEnabled(false);
 		}
@@ -134,7 +134,7 @@ public class JalgoMain {
 
 		appWin.getMenuBarManager().update(true);
 		appWin.getToolBarManager().update(true);
-		appWin.updateSaveButtonEnableStatus(currentInstance.getSaveStatus());
+		appWin.updateSaveButtonEnableStatus(currentInstance);
 		appWin.updateTitle(currentInstance);
 	}
 
@@ -175,7 +175,7 @@ public class JalgoMain {
 		}
 
 		// Disable save buttons
-		appWin.updateSaveButtonEnableStatus(AbstractModuleConnector.NOTHING_TO_SAVE);
+		appWin.updateSaveButtonEnableStatus(null);
 
 		// Requests a fresh CTabItem from the appWin
 		IModuleInfo module = knownModuleInfos.get(modNumber);
@@ -273,7 +273,7 @@ public class JalgoMain {
 	 */
 	public boolean saveFileAs(String filename) {
 		currentInstance.setOpenFileName(filename);
-		currentInstance.setSaveStatus(AbstractModuleConnector.NO_CHANGES);
+		currentInstance.setSaveStatus(SaveStatus.NO_CHANGES);
 		return Storage.save(filename);
 	}
 
@@ -286,7 +286,7 @@ public class JalgoMain {
 		if ((useCurrentInstance && Storage.load(filename, currentInstance)) ||
 			!useCurrentInstance && Storage.load(filename, null)) {
 			currentInstance.setOpenFileName(filename);
-			currentInstance.setSaveStatus(AbstractModuleConnector.NO_CHANGES);
+			currentInstance.setSaveStatus(SaveStatus.NO_CHANGES);
 			return true;
 		}
 		return false;
