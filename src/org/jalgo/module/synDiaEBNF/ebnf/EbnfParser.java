@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -26,7 +29,6 @@ package org.jalgo.module.synDiaEBNF.ebnf;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.jalgo.main.util.Messages;
@@ -116,8 +118,7 @@ public class EbnfParser extends Parser {
 				"EbnfParser.EbnfParseException_7_15")); //$NON-NLS-1$
 		}
 
-		for (Iterator it = variableSet.iterator(); it.hasNext();) {
-			String key = (String) it.next();
+		for (String key : variableSet) {
 			EbnfSynVariable syn = new EbnfSynVariable(key);
 			definition.addVariable(syn);
 			if (key.equals(startVariable)) {
@@ -125,14 +126,11 @@ public class EbnfParser extends Parser {
 			}
 		}
 
-		for (Iterator it = terminalSet.iterator(); it.hasNext();) {
-			definition.addTerminal(new EbnfTerminal((String) it.next()));
+		for (String key : terminalSet) {
+			definition.addTerminal(new EbnfTerminal(key));
 		}
 
-		for (Iterator it = definition.getVariables().iterator();
-			it.hasNext();
-			) {
-			EbnfSynVariable syn = (EbnfSynVariable) it.next();
+		for (EbnfSynVariable syn : definition.getVariables()) {
 			String key = syn.getLabel();
 			EbnfTermParser termParser =
 				new EbnfTermParser(

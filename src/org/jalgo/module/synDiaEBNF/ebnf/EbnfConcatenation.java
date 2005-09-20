@@ -27,7 +27,6 @@
 package org.jalgo.module.synDiaEBNF.ebnf;
 
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -89,16 +88,16 @@ public class EbnfConcatenation extends EbnfComposition implements Serializable {
 	}
 
 	public int render(Shell shell, List<StyleRange> styleList, int pos) {
-		for (Iterator it = elements.iterator(); it.hasNext();) {
-			pos = ((EbnfElement) it.next()).render(shell, styleList, pos);
+		for (EbnfElement element : elements) {
+			pos = element.render(shell, styleList, pos);
 		}
 		return pos;
 	}
 
 	public String toString() {
 		StringBuffer strBuffer = new StringBuffer();
-		for (Iterator it = elements.iterator(); it.hasNext();) {
-			strBuffer.append(((EbnfElement) it.next()).toString());
+		for (EbnfElement element : elements) {
+			strBuffer.append(element.toString());
 		}
 		return strBuffer.toString();
 	}
