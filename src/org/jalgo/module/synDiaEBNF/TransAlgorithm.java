@@ -33,8 +33,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
 import org.eclipse.draw2d.Figure;
@@ -128,12 +128,12 @@ implements IAlgorithm, Serializable {
 	private Stack<EbnfSynVariable> toTransVariables;
 	// holds all SynDiaVariables (key->this, value->label) which are
 	// already created but have no appropriate reference to its startElem
-	private LinkedList<SynDiaVariable> alreadyCreatedVariables;
+	private List<SynDiaVariable> alreadyCreatedVariables;
 	// holds all SynDiaVariables which represent a complete syntactical
 	// diagram, befor finishing the elements of alreadyCreatedVariables have
 	// to be finalized where its startElem has to reference the startElem of
 	// the appropriate element in alreadyCreatedDias
-	private LinkedList<SynDiaVariable> alreadyCreatedDias;
+	private List<SynDiaVariable> alreadyCreatedDias;
 
 	// true if the algorithm should perform automatically, otherwise false
 	private boolean auto;
@@ -219,34 +219,20 @@ implements IAlgorithm, Serializable {
 		// (toTransVariables), S will be on top of the stack afterwards
 		LinkedList<EbnfSynVariable> tVarList = new LinkedList<EbnfSynVariable>(
 			ebnfDef.getVariables()); // get them from the ebnfDef
-		// S already on top?
-		if (tVarList.getFirst() == ebnfDef.getStartVariable()) {
-			toTransVariables = new Stack<EbnfSynVariable>();
-			toTransVariables.addAll(tVarList);
-		}
+		toTransVariables = new Stack<EbnfSynVariable>();
+		
 		// S already at bottom?
-		else if (tVarList.getLast() == ebnfDef.getStartVariable()) {
-			toTransVariables = new Stack<EbnfSynVariable>();
-			toTransVariables.addAll(tVarList);
-			Collections.reverse(toTransVariables);
+		if (tVarList.getLast() == ebnfDef.getStartVariable()) {
+			Collections.reverse(tVarList);
 		}
 		// S anywhere else
-		else {
-			boolean finished = false;
-			int i = 1;
-			do {
-				if (tVarList.get(i) == ebnfDef.getStartVariable()) {
-					tVarList.set(i, tVarList.getFirst());
-					tVarList.set(0, ebnfDef.getStartVariable());
-					finished = true;
-				}
-				++i;
-			}
-			while (!finished);
-			toTransVariables = new Stack<EbnfSynVariable>();
-			toTransVariables.addAll(tVarList);
+		else  if (tVarList.getFirst() != ebnfDef.getStartVariable()) {
+			EbnfSynVariable startVar = ebnfDef.getStartVariable();
+			tVarList.set(tVarList.indexOf(startVar), tVarList.getFirst());
+			tVarList.set(0, startVar);
 		}
-
+		toTransVariables.addAll(tVarList);
+		System.out.println("trans algo start var: " + toTransVariables.firstElement().getLabel());
 		// also put the variables onto the toTransCanvas apart from S
 		for (int i = toTransVariables.size() - 1; i >= 1; i--)
 			toTransCanvas.push(toTransVariables.get(i).getLabel());
@@ -272,16 +258,12 @@ implements IAlgorithm, Serializable {
 			newInitial, gfxCanvas.getFont());
 
 		stillToTrans = new Stack<SynDiaElement>();
-		stillToTrans.push(newSynDia.getStartElem().getInnerElem()); // put the
-		// initial
-		// SynDiaToTrans
-		// element
-		// on the
-		// stack
+		// put the initial SynDiaToTrans element on the stack
+		stillToTrans.push(newSynDia.getStartElem().getInnerElem());
+		 
 		parentToTrans = new Stack<SynDiaElement>();
-		parentToTrans.push(newSynDia.getStartElem()); // put the initial
-		// SynDiaInitial on the
-		// stack
+		// put the initial SynDiaInitial on the stack
+		parentToTrans.push(newSynDia.getStartElem());  
 
 		alreadyCreatedVariables = new LinkedList<SynDiaVariable>();
 
@@ -300,14 +282,14 @@ implements IAlgorithm, Serializable {
 		// algorithm, the terminals and variables are already set here
 		synDiaSystem = new SynDiaSystem();
 		HashSet<String> variables = new HashSet<String>();
-		Iterator it1 = ebnfDef.getVariables().iterator();
-		while (it1.hasNext())
-			variables.add(((EbnfSynVariable)it1.next()).getLabel());
+		for (EbnfSynVariable ebnfSynVariable : ebnfDef.getVariables()) {
+			variables.add(ebnfSynVariable.getLabel());
+		}
 		synDiaSystem.setSynVariables(variables);
 		HashSet<String> alphabet = new HashSet<String>();
-		Iterator it2 = ebnfDef.getAlphabet().iterator();
-		while (it2.hasNext())
-			alphabet.add(((EbnfTerminal)it2.next()).getLabel());
+		for (EbnfTerminal ebnfTerminal : ebnfDef.getAlphabet()) {
+			alphabet.add(ebnfTerminal.getLabel());
+		}
 		synDiaSystem.setTerminalSymbols(alphabet);
 	}
 
@@ -462,44 +444,34 @@ implements IAlgorithm, Serializable {
 	 * @exception IndexOutOfBoundsException if there is no further step to go
 	 * @see TransAlgorithm#stillToTrans
 	 */
+	// FIXME: fix this bloat (Stephan)
 	public void performNextStep()
 	throws IndexOutOfBoundsException, SynDiaException {
 		if (stillToTrans.isEmpty()) { // syntactical variable finished?
-			// get next varibale from stack
 			EbnfSynVariable newEbnfSynDia = toTransVariables.pop();
-			// create new SynDiaToTrans by passing the startElement and its
-			// grafical object
+			
+			System.out.println("to trans pop: " + newEbnfSynDia.getLabel());
 			SynDiaToTrans newTrans = new SynDiaToTrans(newEbnfSynDia
 			.getStartElem());
 			ToTransFigure newTransFigure = new ToTransFigure(newEbnfSynDia
 			.getStartElem().toString(), gfxCanvas.getFont());
 			newTrans.setGfx(newTransFigure);
-			// create new InitialFigure labeled with the name of the new
-			// syntactical diagram
+			
 			InitialFigure newInitialFigure = new InitialFigure(newEbnfSynDia
 			.getLabel());
 			newInitialFigure.replace(newTransFigure, 0);
-			// create new abstract initial element by passing its figure and its
-			// inner element
+			
 			SynDiaInitial newInitial = new SynDiaInitial(newInitialFigure,
 				newTrans);
-			// create new abstract syntactical variable (diagram)
+
 			SynDiaVariable newSynDia = new SynDiaVariable(newEbnfSynDia
 			.getLabel(), newInitial, gfxCanvas.getFont());
 
-			stillToTrans.push(newSynDia.getStartElem().getInnerElem()); // put
-			// the
-			// initial
-			// SynDiaToTrans
-			// element
-			// on
-			// the
-			// stack
-			parentToTrans.push(newSynDia.getStartElem()); // put the initial
-			// SynDiaInitial on
-			// the stack
+			stillToTrans.push(newSynDia.getStartElem().getInnerElem());
+			parentToTrans.push(newSynDia.getStartElem());
 
 			alreadyCreatedDias.add(newSynDia); // add it to the list
+			System.out.println("add: " + newSynDia.getLabel());
 
 			currentSynDia = newSynDia; // set currentSynDia to the new one
 
@@ -508,8 +480,6 @@ implements IAlgorithm, Serializable {
 			toTransCanvas.pop(); // also refresh display of variables to be
 			// transformed
 			highlightTxtAndElem();
-
-			return;
 		}
 
 		SynDiaToTrans trans = (SynDiaToTrans)stillToTrans.pop();
@@ -527,16 +497,12 @@ implements IAlgorithm, Serializable {
 			// algorithm
 			alreadyCreatedVariables.add(newVariable);
 
-			if (parentToTrans.peek() instanceof SynDiaInitial) { // parent is
-				// a
-				// SynDiaInitial?
+			if (parentToTrans.peek() instanceof SynDiaInitial) {
 				SynDiaInitial topElem = (SynDiaInitial)parentToTrans.pop();
 				topElem.setInnerElem(newVariable);
 				topElem.getGfx().replace(newVariable.getGfx(), 0);
 			}
-			else if (parentToTrans.peek() instanceof SynDiaAlternative) { // parent
-				// is a
-				// SynDiaAlternative?
+			else if (parentToTrans.peek() instanceof SynDiaAlternative) {
 				SynDiaAlternative topElem = (SynDiaAlternative)parentToTrans
 				.peek();
 				int index = 0;
@@ -547,9 +513,7 @@ implements IAlgorithm, Serializable {
 				topElem.setOption(index, newVariable);
 				topElem.getGfx().replace(newVariable.getGfx(), index);
 			}
-			else if (parentToTrans.peek() instanceof SynDiaConcatenation) { // parent
-				// is a
-				// SynDiaConcatenation?
+			else if (parentToTrans.peek() instanceof SynDiaConcatenation) {
 				SynDiaConcatenation topElem = (SynDiaConcatenation)parentToTrans
 				.peek();
 				int index = 0;
@@ -560,9 +524,7 @@ implements IAlgorithm, Serializable {
 				topElem.setContent(index, newVariable);
 				topElem.getGfx().replace(newVariable.getGfx(), index);
 			}
-			else if (parentToTrans.peek() instanceof SynDiaRepetition) { // parent
-				// is a
-				// SynDiaRepetition?
+			else if (parentToTrans.peek() instanceof SynDiaRepetition) {
 				SynDiaRepetition topElem = (SynDiaRepetition)parentToTrans
 				.pop();
 				topElem.setRepeatedElem(newVariable);
@@ -580,16 +542,12 @@ implements IAlgorithm, Serializable {
 			newTerminal.setGfx(new TerminalFigure(newTerminal.getLabel(),
 				gfxCanvas.getFont()));
 
-			if (parentToTrans.peek() instanceof SynDiaInitial) { // parent is
-				// a
-				// SynDiaInitial?
+			if (parentToTrans.peek() instanceof SynDiaInitial) {
 				SynDiaInitial topElem = (SynDiaInitial)parentToTrans.pop();
 				topElem.setInnerElem(newTerminal);
 				topElem.getGfx().replace(newTerminal.getGfx(), 0);
 			}
-			else if (parentToTrans.peek() instanceof SynDiaAlternative) { // parent
-				// is a
-				// SynDiaAlternative?
+			else if (parentToTrans.peek() instanceof SynDiaAlternative) {
 				SynDiaAlternative topElem = (SynDiaAlternative)parentToTrans
 				.peek();
 				int index = 0;
@@ -600,9 +558,7 @@ implements IAlgorithm, Serializable {
 				topElem.setOption(index, newTerminal);
 				topElem.getGfx().replace(newTerminal.getGfx(), index);
 			}
-			else if (parentToTrans.peek() instanceof SynDiaConcatenation) { // parent
-				// is a
-				// SynDiaConcatenation?
+			else if (parentToTrans.peek() instanceof SynDiaConcatenation) {
 				SynDiaConcatenation topElem = (SynDiaConcatenation)parentToTrans
 				.peek();
 				int index = 0;
@@ -613,9 +569,7 @@ implements IAlgorithm, Serializable {
 				topElem.setContent(index, newTerminal);
 				topElem.getGfx().replace(newTerminal.getGfx(), index);
 			}
-			else if (parentToTrans.peek() instanceof SynDiaRepetition) { // parent
-				// is a
-				// SynDiaRepetition?
+			else if (parentToTrans.peek() instanceof SynDiaRepetition) {
 				SynDiaRepetition topElem = (SynDiaRepetition)parentToTrans
 				.pop();
 				topElem.setRepeatedElem(newTerminal);
@@ -644,17 +598,13 @@ implements IAlgorithm, Serializable {
 				newRepetitionFigure, new SynDiaEpsilon(), newTrans);
 			stillToTrans.push(newRepetition.getRepeatedElem());
 
-			if (parentToTrans.peek() instanceof SynDiaInitial) { // parent is
-				// a
-				// SynDiaInitial?
+			if (parentToTrans.peek() instanceof SynDiaInitial) {
 				SynDiaInitial topElem = (SynDiaInitial)parentToTrans.pop();
 				topElem.setInnerElem(newRepetition);
 				topElem.getGfx().replace(newRepetition.getGfx(), 0);
 				parentToTrans.push(topElem.getInnerElem());
 			}
-			else if (parentToTrans.peek() instanceof SynDiaAlternative) { // parent
-				// is a
-				// SynDiaAlternative?
+			else if (parentToTrans.peek() instanceof SynDiaAlternative) {
 				SynDiaAlternative topElem = (SynDiaAlternative)parentToTrans
 				.peek();
 				int index = 0;
@@ -666,9 +616,7 @@ implements IAlgorithm, Serializable {
 				topElem.getGfx().replace(newRepetition.getGfx(), index);
 				parentToTrans.push(topElem.getOption(index));
 			}
-			else if (parentToTrans.peek() instanceof SynDiaConcatenation) { // parent
-				// is a
-				// SynDiaConcatenation?
+			else if (parentToTrans.peek() instanceof SynDiaConcatenation) {
 				SynDiaConcatenation topElem = (SynDiaConcatenation)parentToTrans
 				.peek();
 				int index = 0;
@@ -680,9 +628,7 @@ implements IAlgorithm, Serializable {
 				topElem.getGfx().replace(newRepetition.getGfx(), index);
 				parentToTrans.push(topElem.getContent(index));
 			}
-			else if (parentToTrans.peek() instanceof SynDiaRepetition) { // parent
-				// is a
-				// SynDiaRepetition?
+			else if (parentToTrans.peek() instanceof SynDiaRepetition) {
 				SynDiaRepetition topElem = (SynDiaRepetition)parentToTrans
 				.pop();
 				topElem.setRepeatedElem(newRepetition);
@@ -694,7 +640,6 @@ implements IAlgorithm, Serializable {
 		}
 		// *** EbnfOption ***
 		else if (trans.getEbnf() instanceof EbnfOption) {
-			// create new SynDiaToTrans element
 			SynDiaToTrans newTrans = new SynDiaToTrans(((EbnfOption)trans
 			.getEbnf()).getContent());
 			ToTransFigure newTransFigure = new ToTransFigure(newTrans
@@ -707,24 +652,20 @@ implements IAlgorithm, Serializable {
 			newAlternativeFigure.replace(new EmptyFigure(), 1);
 			// create a new abstract repetition by passing its grafical
 			// representation and its abstract elements
-			LinkedList<SynDiaElement> elements = new LinkedList<SynDiaElement>();
+			List<SynDiaElement> elements = new LinkedList<SynDiaElement>();
 			elements.add(newTrans);
 			elements.add(new SynDiaEpsilon());
 			SynDiaAlternative newAlternative = new SynDiaAlternative(
 				newAlternativeFigure, elements);
 			stillToTrans.push(newAlternative.getOption(0));
 
-			if (parentToTrans.peek() instanceof SynDiaInitial) { // parent is
-				// a
-				// SynDiaInitial?
+			if (parentToTrans.peek() instanceof SynDiaInitial) {
 				SynDiaInitial topElem = (SynDiaInitial)parentToTrans.pop();
 				topElem.setInnerElem(newAlternative);
 				topElem.getGfx().replace(newAlternative.getGfx(), 0);
 				parentToTrans.push(topElem.getInnerElem());
 			}
-			else if (parentToTrans.peek() instanceof SynDiaAlternative) { // parent
-				// is a
-				// SynDiaAlternative?
+			else if (parentToTrans.peek() instanceof SynDiaAlternative) {
 				SynDiaAlternative topElem = (SynDiaAlternative)parentToTrans
 				.peek();
 				int index = 0;
@@ -736,9 +677,7 @@ implements IAlgorithm, Serializable {
 				topElem.getGfx().replace(newAlternative.getGfx(), index);
 				parentToTrans.push(topElem.getOption(index));
 			}
-			else if (parentToTrans.peek() instanceof SynDiaConcatenation) { // parent
-				// is a
-				// SynDiaConcatenation?
+			else if (parentToTrans.peek() instanceof SynDiaConcatenation) {
 				SynDiaConcatenation topElem = (SynDiaConcatenation)parentToTrans
 				.peek();
 				int index = 0;
@@ -750,9 +689,7 @@ implements IAlgorithm, Serializable {
 				topElem.getGfx().replace(newAlternative.getGfx(), index);
 				parentToTrans.push(topElem.getContent(index));
 			}
-			else if (parentToTrans.peek() instanceof SynDiaRepetition) { // parent
-				// is a
-				// SynDiaRepetition?
+			else if (parentToTrans.peek() instanceof SynDiaRepetition) {
 				SynDiaRepetition topElem = (SynDiaRepetition)parentToTrans
 				.pop();
 				topElem.setRepeatedElem(newAlternative);
@@ -764,24 +701,19 @@ implements IAlgorithm, Serializable {
 		}
 		// *** EbnfPrecedence ***
 		else if (trans.getEbnf() instanceof EbnfPrecedence) {
-			// create new abstract SynDiaToTrans
 			SynDiaToTrans newTrans = new SynDiaToTrans(((EbnfPrecedence)trans
 			.getEbnf()).getContent());
 			newTrans.setGfx(new ToTransFigure(newTrans.getEbnf().toString(),
 				gfxCanvas.getFont()));
 			stillToTrans.push(newTrans);
 
-			if (parentToTrans.peek() instanceof SynDiaInitial) { // parent is
-				// a
-				// SynDiaInitial?
+			if (parentToTrans.peek() instanceof SynDiaInitial) {
 				SynDiaInitial topElem = (SynDiaInitial)parentToTrans.pop();
 				topElem.setInnerElem(newTrans);
 				topElem.getGfx().replace(newTrans.getGfx(), 0);
 				parentToTrans.push(topElem);
 			}
-			else if (parentToTrans.peek() instanceof SynDiaAlternative) { // parent
-				// is a
-				// SynDiaAlternative?
+			else if (parentToTrans.peek() instanceof SynDiaAlternative) {
 				SynDiaAlternative topElem = (SynDiaAlternative)parentToTrans
 				.peek();
 				int index = 0;
@@ -789,9 +721,7 @@ implements IAlgorithm, Serializable {
 				topElem.setOption(index, newTrans);
 				topElem.getGfx().replace(newTrans.getGfx(), index);
 			}
-			else if (parentToTrans.peek() instanceof SynDiaConcatenation) { // parent
-				// is a
-				// SynDiaConcatenation?
+			else if (parentToTrans.peek() instanceof SynDiaConcatenation) {
 				SynDiaConcatenation topElem = (SynDiaConcatenation)parentToTrans
 				.peek();
 				int index = 0;
@@ -800,9 +730,7 @@ implements IAlgorithm, Serializable {
 				topElem.setContent(index, newTrans);
 				topElem.getGfx().replace(newTrans.getGfx(), index);
 			}
-			else if (parentToTrans.peek() instanceof SynDiaRepetition) { // parent
-				// is a
-				// SynDiaRepetition?
+			else if (parentToTrans.peek() instanceof SynDiaRepetition) {
 				SynDiaRepetition topElem = (SynDiaRepetition)parentToTrans
 				.pop();
 				topElem.setRepeatedElem(newTrans);
@@ -814,7 +742,7 @@ implements IAlgorithm, Serializable {
 		}
 		// *** EBNFConcatenation ***
 		else if (trans.getEbnf() instanceof EbnfConcatenation) {
-			LinkedList<SynDiaElement> elements = new LinkedList<SynDiaElement>(); // list
+			List<SynDiaElement> elements = new LinkedList<SynDiaElement>(); // list
 			// of
 			// new
 			// SynDiaToTrans-elements
@@ -837,8 +765,7 @@ implements IAlgorithm, Serializable {
 				newConcatenationFigure.replace(newTransFigure, i);
 				elements.add(newTrans);
 			}
-			// create a new abstract concatenation (SynDiaConcatenation) by
-			// passing its figure and its elements
+			
 			SynDiaConcatenation newConcatenation = new SynDiaConcatenation(
 				newConcatenationFigure, elements);
 			// push all new SynDiaToTrans elements of the new abstract
@@ -846,17 +773,13 @@ implements IAlgorithm, Serializable {
 			for (int i = newConcatenation.getNumOfElements() - 1; i >= 0; i--)
 				stillToTrans.push(newConcatenation.getContent(i));
 
-			if (parentToTrans.peek() instanceof SynDiaInitial) { // parent is
-				// a
-				// SynDiaInitial?
+			if (parentToTrans.peek() instanceof SynDiaInitial) {
 				SynDiaInitial topElem = (SynDiaInitial)parentToTrans.pop();
 				topElem.setInnerElem(newConcatenation);
 				topElem.getGfx().replace(newConcatenation.getGfx(), 0);
 				parentToTrans.push(topElem.getInnerElem());
 			}
-			else if (parentToTrans.peek() instanceof SynDiaAlternative) { // parent
-				// is a
-				// SynDiaAlternative?
+			else if (parentToTrans.peek() instanceof SynDiaAlternative) {
 				SynDiaAlternative topElem = (SynDiaAlternative)parentToTrans
 				.peek();
 				int index = 0;
@@ -868,9 +791,7 @@ implements IAlgorithm, Serializable {
 				topElem.getGfx().replace(newConcatenation.getGfx(), index);
 				parentToTrans.push(topElem.getOption(index));
 			}
-			else if (parentToTrans.peek() instanceof SynDiaConcatenation) { // parent
-				// is a
-				// SynDiaConcatenation?
+			else if (parentToTrans.peek() instanceof SynDiaConcatenation) {
 				SynDiaConcatenation topElem = (SynDiaConcatenation)parentToTrans
 				.peek();
 				int index = 0;
@@ -882,9 +803,7 @@ implements IAlgorithm, Serializable {
 				topElem.getGfx().replace(newConcatenation.getGfx(), index);
 				parentToTrans.push(topElem.getContent(index));
 			}
-			else if (parentToTrans.peek() instanceof SynDiaRepetition) { // parent
-				// is a
-				// SynDiaRepetition?
+			else if (parentToTrans.peek() instanceof SynDiaRepetition) {
 				SynDiaRepetition topElem = (SynDiaRepetition)parentToTrans
 				.pop();
 				topElem.setRepeatedElem(newConcatenation);
@@ -924,17 +843,13 @@ implements IAlgorithm, Serializable {
 			for (int i = newAlternative.getNumOfOptions() - 1; i >= 0; i--)
 				stillToTrans.push(newAlternative.getOption(i));
 
-			if (parentToTrans.peek() instanceof SynDiaInitial) { // parent is
-				// a
-				// SynDiaInitial?
+			if (parentToTrans.peek() instanceof SynDiaInitial) {
 				SynDiaInitial topElem = (SynDiaInitial)parentToTrans.pop();
 				topElem.setInnerElem(newAlternative);
 				topElem.getGfx().replace(newAlternative.getGfx(), 0);
 				parentToTrans.push(topElem.getInnerElem());
 			}
-			else if (parentToTrans.peek() instanceof SynDiaAlternative) { // parent
-				// is a
-				// SynDiaAlternative?
+			else if (parentToTrans.peek() instanceof SynDiaAlternative) {
 				SynDiaAlternative topElem = (SynDiaAlternative)parentToTrans
 				.peek();
 				int index = 0;
@@ -946,9 +861,7 @@ implements IAlgorithm, Serializable {
 				topElem.getGfx().replace(newAlternative.getGfx(), index);
 				parentToTrans.push(topElem.getOption(index));
 			}
-			else if (parentToTrans.peek() instanceof SynDiaConcatenation) { // parent
-				// is a
-				// SynDiaConcatenation?
+			else if (parentToTrans.peek() instanceof SynDiaConcatenation) {
 				SynDiaConcatenation topElem = (SynDiaConcatenation)parentToTrans
 				.peek();
 				int index = 0;
@@ -960,9 +873,7 @@ implements IAlgorithm, Serializable {
 				topElem.getGfx().replace(newAlternative.getGfx(), index);
 				parentToTrans.push(topElem.getContent(index));
 			}
-			else if (parentToTrans.peek() instanceof SynDiaRepetition) { // parent
-				// is a
-				// SynDiaRepetition?
+			else if (parentToTrans.peek() instanceof SynDiaRepetition) {
 				SynDiaRepetition topElem = (SynDiaRepetition)parentToTrans
 				.pop();
 				topElem.setRepeatedElem(newAlternative);
@@ -981,28 +892,26 @@ implements IAlgorithm, Serializable {
 
 		if (!hasNextStep()) { // transformation completly finished?
 			// find SynDiaVariables' corresponding SynDia
-			int j = 0;
 			for (int i = 0; i < alreadyCreatedVariables.size(); i++) {
-				j = 0;
-				while (alreadyCreatedVariables.get(i).getStartElem() == null) {
+				for (int j = 0; alreadyCreatedVariables.get(i).getStartElem() == null; j++) {
 					if (j >= alreadyCreatedDias.size()) throw new InternalErrorException(
 						"no path in the Algorithm matches"); //$NON-NLS-1$
-					if (alreadyCreatedVariables.get(i).getLabel() == alreadyCreatedDias
-					.get(j).getLabel()) alreadyCreatedVariables.get(i)
-					.setStartElem(alreadyCreatedDias.get(j).getStartElem());
-
-					++j;
+					if (alreadyCreatedVariables.get(i).getLabel() ==
+						alreadyCreatedDias.get(j).getLabel())
+						alreadyCreatedVariables.get(i).setStartElem(alreadyCreatedDias.get(j)
+								.getStartElem());
 				}
 			}
 			// set entiere start element
-			synDiaSystem.setStartElem(alreadyCreatedDias.getFirst()
+			System.out.println("already: " + alreadyCreatedDias.get(0).getLabel());
+			synDiaSystem.setStartElem(alreadyCreatedDias.get(0)
 			.getStartElem());
 			// set the SynDiaInitial's
-			LinkedList<SynDiaInitial> initialDias = new LinkedList<SynDiaInitial>();
+			List<SynDiaInitial> initialDias = new LinkedList<SynDiaInitial>();
 			for (int i = 0; i < alreadyCreatedDias.size(); i++)
 				initialDias.add(alreadyCreatedDias.get(i).getStartElem());
 			synDiaSystem.setInitialDiagrams(initialDias);
-			LinkedList<InitialFigure> initialFigures = new LinkedList<InitialFigure>();
+			List<InitialFigure> initialFigures = new LinkedList<InitialFigure>();
 			for (int i = 0; i < initialDias.size(); i++)
 				initialFigures.add(initialDias.get(i).getGfx());
 			synDiaSystem.setGfx(new SynDiaSystemFigure(initialFigures));
@@ -1036,6 +945,7 @@ implements IAlgorithm, Serializable {
 	 * Reads ealier serialized objects from stream and restores class. When
 	 * chanching here also change writeObject() !
 	 */
+	@SuppressWarnings("unchecked")
 	private synchronized void readObject(ObjectInputStream s)
 	throws IOException, ClassNotFoundException {
 		try {
@@ -1045,7 +955,6 @@ implements IAlgorithm, Serializable {
 			stillToTrans = (Stack<SynDiaElement>)s.readObject();
 			toTransVariables = (Stack<EbnfSynVariable>)s.readObject();
 			unpackTxtCanvas((Object[])s.readObject());
-			// FIXME find the right solution (Stephan)
 			toTransCanvas.setStack((Stack<String>)s.readObject());
 			// moduleController will be set from moduleController when
 			// deserializing

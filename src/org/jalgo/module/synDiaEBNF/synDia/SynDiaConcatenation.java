@@ -28,6 +28,7 @@ package org.jalgo.module.synDiaEBNF.synDia;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.jalgo.module.synDiaEBNF.gfx.ConcatenationFigure;
 
@@ -38,7 +39,7 @@ public class SynDiaConcatenation extends SynDiaComposition implements Serializab
 
 	private static final long serialVersionUID = 5490760021030232097L;
 
-	private LinkedList<SynDiaElement> elements;
+	private List<SynDiaElement> elements;
 
 	private ConcatenationFigure gfx;
 
@@ -46,7 +47,7 @@ public class SynDiaConcatenation extends SynDiaComposition implements Serializab
 		elements = new LinkedList<SynDiaElement>();
 	}
 
-	public SynDiaConcatenation(ConcatenationFigure gfx, LinkedList<SynDiaElement> elements) {
+	public SynDiaConcatenation(ConcatenationFigure gfx, List<SynDiaElement> elements) {
 		this.gfx = gfx;
 		this.elements = elements;
 	}
@@ -55,7 +56,7 @@ public class SynDiaConcatenation extends SynDiaComposition implements Serializab
 		return elements.size();
 	}
 
-	public LinkedList<SynDiaElement> getContent() {
+	public List<SynDiaElement> getContent() {
 		//read from left-to-right? --> inverse list!
 		if (this.getReadingOrder() == RIGHT_TO_LEFT)
 			return inverse(elements);
@@ -65,7 +66,7 @@ public class SynDiaConcatenation extends SynDiaComposition implements Serializab
 	public SynDiaElement getContent(int num) {
 		//read from left-to-right? --> inverse list!
 		if (this.getReadingOrder() == RIGHT_TO_LEFT) {
-			LinkedList elementsInverted = inverse(elements);
+			List elementsInverted = inverse(elements);
 			if (elementsInverted.get(num) instanceof SynDiaElement) {
 				return (SynDiaElement) elementsInverted.get(num);
 			}
@@ -79,12 +80,12 @@ public class SynDiaConcatenation extends SynDiaComposition implements Serializab
 		elements.set(num, newElem);
 	}
 
-	public void setContent(LinkedList<SynDiaElement> elements) {
+	public void setContent(List<SynDiaElement> elements) {
 		this.elements = elements;
 	}
 
 	public void addElem(SynDiaElement elem) {
-		elements.addLast(elem);
+		elements.add(elem);
 	}
 
 	public boolean removeElem(SynDiaElement elem) {
@@ -104,12 +105,11 @@ public class SynDiaConcatenation extends SynDiaComposition implements Serializab
 	 * @param l The list to invert.
 	 * @return The inverted list.
 	 */
-	private <T> LinkedList<T> inverse(LinkedList<T> l) {
-		LinkedList<T> li = new LinkedList<T>();
-		for (T item : l) {
-			li.add(item);
+	private <T> List<T> inverse(List<T> list) {
+		List<T> invertedList = new LinkedList<T>();
+		for (T item : list) {
+			invertedList.add(0, item);
 		}
-		return li;
+		return invertedList;
 	}
-
 }

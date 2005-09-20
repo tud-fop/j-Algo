@@ -28,7 +28,6 @@
 package org.jalgo.module.synDiaEBNF;
 
 import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.draw2d.Figure;
@@ -387,7 +386,7 @@ implements SynDiaColors, Serializable {
 	}
 
 	private void doNextConcatenation(SynDiaConcatenation currentElem) {
-		LinkedList<SynDiaElement> list = currentElem.getContent();
+		List<SynDiaElement> list = currentElem.getContent();
 		for (int i = list.size() - 1; i >= 0; i--) {
 			stack.push(list.get(i));
 		}
@@ -460,7 +459,7 @@ implements SynDiaColors, Serializable {
 	}
 
 	private int alternativeDialog(SynDiaAlternative alternative) {
-		LinkedList list = alternative.getOptions();
+		List list = alternative.getOptions();
 		int way = list.size(); // int of possible ways
 		// ask the user, which way to go on
 		// return the list index of the choosen way

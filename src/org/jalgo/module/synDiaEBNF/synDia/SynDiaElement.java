@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -25,8 +28,11 @@ package org.jalgo.module.synDiaEBNF.synDia;
 
 import java.io.Serializable;
 
+import org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure;
+
 /**
  * @author Michael Pradel
+ * @author Stephan Creutz
  */
 public abstract class SynDiaElement
 	implements Serializable, IReadingOrderConstants {
@@ -37,8 +43,8 @@ public abstract class SynDiaElement
 		return readingOrder;
 	}
 
-	public void setReadingOrder(int r) {
-		readingOrder = r;
+	public void setReadingOrder(int readingOrder) {
+		this.readingOrder = readingOrder;
 	}
 
 	public void changeReadingOrder() {
@@ -54,32 +60,34 @@ public abstract class SynDiaElement
 	 * right-to-left) you have to go through in a syntactical diagram.
 	 * @param r The reading order of the element to start with.
 	 */
-	public void checkReadingOrder(int r) {
-		this.setReadingOrder(r);
+	public void checkReadingOrder(int readingOrder) {
+		this.setReadingOrder(readingOrder);
 		if (this instanceof SynDiaComposition) {
 			if (this instanceof SynDiaConcatenation) {
 				//set all inner elements of concatenation to value of this element
 				for (int i = 0;
 					i < (((SynDiaConcatenation) this).getContent()).size();i++) {
-					((SynDiaConcatenation) this).getContent(i).checkReadingOrder(r);
+					((SynDiaConcatenation) this).getContent(i).checkReadingOrder(readingOrder);
 				}
 			} else if (this instanceof SynDiaAlternative) {
 				//set all inner elements of alternative to value of this element
 				for (int i = 0;
 					i < (((SynDiaAlternative) this).getOptions()).size();i++) {
-					((SynDiaAlternative) this).getOption(i).checkReadingOrder(r);
+					((SynDiaAlternative) this).getOption(i).checkReadingOrder(readingOrder);
 				}
 			} else if (this instanceof SynDiaRepetition) {
 				//set straightAheadElement to value of this element and repeatedElement to inverse
 				int rInverse;
-				if (r == LEFT_TO_RIGHT)
+				if (readingOrder == LEFT_TO_RIGHT)
 					rInverse = RIGHT_TO_LEFT;
 				else
 					rInverse = LEFT_TO_RIGHT;
-				((SynDiaRepetition) this).getStraightAheadElem().checkReadingOrder(r);
+				((SynDiaRepetition) this).getStraightAheadElem().checkReadingOrder(readingOrder);
 				((SynDiaRepetition) this).getRepeatedElem().checkReadingOrder(rInverse);
 			}
 		}
 	}
 
+	public abstract SynDiaFigure getGfx();
+	//public abstract void setGfx(SynDiaFigure figure);
 }

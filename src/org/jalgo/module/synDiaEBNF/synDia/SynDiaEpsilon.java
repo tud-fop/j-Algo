@@ -32,6 +32,7 @@ import org.jalgo.module.synDiaEBNF.gfx.EmptyFigure;
 
 /**
  * @author Babett Schaliz
+ * @author Stephan Creutz
  */
 public class SynDiaEpsilon extends SynDiaElement implements Serializable {
 
@@ -47,11 +48,11 @@ public class SynDiaEpsilon extends SynDiaElement implements Serializable {
 		this.epsilon = epsilon;
 	}
 
-	public EmptyFigure getFigure() {
-		return epsilon;
-	}
-
-	public void setFigure(EmptyFigure epsilon) {
+	public void setGfx(EmptyFigure epsilon) {
 		this.epsilon = epsilon;
+	}
+	
+	public EmptyFigure getGfx() {
+		return epsilon;
 	}
 }

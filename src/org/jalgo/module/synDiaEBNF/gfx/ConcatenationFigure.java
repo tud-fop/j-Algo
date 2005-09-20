@@ -25,6 +25,7 @@ package org.jalgo.module.synDiaEBNF.gfx;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.PolylineConnection;
@@ -207,7 +208,7 @@ public class ConcatenationFigure extends CompositeSynDiaFigure {
 		return new Dimension(width, heigth + 2);
 	}
 
-	public LinkedList getInteriorFigures() {
+	public List getInteriorFigures() {
 		LinkedList innerFigures = (LinkedList) interiorFigures.clone();
 
 		// Cut away startFigure and endFigure

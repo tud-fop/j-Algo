@@ -24,6 +24,7 @@
 package org.jalgo.module.synDiaEBNF.gfx;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.ToolbarLayout;
@@ -102,7 +103,7 @@ public class InitialFigure extends CompositeSynDiaFigure {
 		return concat.getPreferredSize(arg0, arg1);
 	}
 
-	public LinkedList getInteriorFigures() {
+	public List getInteriorFigures() {
 		return concat.getInteriorFigures();
 	}
 

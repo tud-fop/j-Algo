@@ -145,8 +145,8 @@ public class TransformSynDia {
 	}
 
 	private SynDiaAlternative transformAlternativeFigure(AlternativeFigure figure) {
-		LinkedList inputList = figure.getInteriorFigures();
-		LinkedList<SynDiaElement> outputList = new LinkedList<SynDiaElement>();
+		List inputList = figure.getInteriorFigures();
+		List<SynDiaElement> outputList = new LinkedList<SynDiaElement>();
 
 		for (int i = 0; i < inputList.size(); i++) {
 			SynDiaElement listElem = searchTypAndTransform((Figure) inputList.get(i));
@@ -156,8 +156,8 @@ public class TransformSynDia {
 	}
 
 	private SynDiaConcatenation transformConcatenationFigure(ConcatenationFigure figure) {
-		LinkedList inputList = figure.getInteriorFigures();
-		LinkedList<SynDiaElement> outputList = new LinkedList<SynDiaElement>();
+		List inputList = figure.getInteriorFigures();
+		List<SynDiaElement> outputList = new LinkedList<SynDiaElement>();
 		for (int i = 0; i < inputList.size(); i++) {
 			SynDiaElement listElem = searchTypAndTransform((Figure) inputList.get(i));
 			outputList.add(listElem);

@@ -29,7 +29,7 @@ package org.jalgo.module.synDiaEBNF;
 
 import java.io.Serializable;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
 import org.eclipse.draw2d.Figure;
@@ -170,7 +170,7 @@ implements IAlgorithm, Serializable, IAlgoDefConstants, SynDiaColors {
 	 * @param synDiaDef The <code>SynDiaSystem</code> to check.
 	 */
 	protected void checkReadingOrder(SynDiaSystem synDiaDef) {
-		LinkedList synDiaInitials = synDiaDef.getInitialDiagrams();
+		List synDiaInitials = synDiaDef.getInitialDiagrams();
 		for (int i = 0; i < synDiaInitials.size(); i++) {
 			((SynDiaInitial)synDiaInitials.get(i)).getInnerElem()
 			.checkReadingOrder(0);

@@ -30,6 +30,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
@@ -61,7 +62,7 @@ public class SynDiaSystem implements Serializable {
 	/* the figure including the hole Diagramsystem! */
 	private SynDiaSystemFigure gfx;
 
-	private LinkedList<SynDiaInitial> initialDia = new LinkedList<SynDiaInitial>(); //diagramms
+	private List<SynDiaInitial> initialDia = new LinkedList<SynDiaInitial>(); //diagramms
 
 	private SynDiaInitial startElem; // decorated StartElem
 
@@ -169,7 +170,7 @@ public class SynDiaSystem implements Serializable {
 		gfx = figure;
 	}
 
-	public LinkedList getInitialDiagrams() {
+	public List getInitialDiagrams() {
 		return initialDia;
 	}
 
@@ -177,7 +178,7 @@ public class SynDiaSystem implements Serializable {
 		return initialDia.get(i);
 	}
 
-	public void setInitialDiagrams(LinkedList<SynDiaInitial> list) {
+	public void setInitialDiagrams(List<SynDiaInitial> list) {
 		initialDia = list;
 	}
 

@@ -28,6 +28,7 @@ package org.jalgo.module.synDiaEBNF.synDia;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.jalgo.module.synDiaEBNF.gfx.AlternativeFigure;
 
@@ -39,14 +40,14 @@ public class SynDiaAlternative
 	implements Serializable {
 
 	private static final long serialVersionUID = 9111449357455734662L;
-	private LinkedList<SynDiaElement> options;
+	private List<SynDiaElement> options;
 	private AlternativeFigure gfx;
 
 	public SynDiaAlternative() {
 		options = new LinkedList<SynDiaElement>();
 	}
 
-	public SynDiaAlternative(AlternativeFigure gfx, LinkedList<SynDiaElement> options) {
+	public SynDiaAlternative(AlternativeFigure gfx, List<SynDiaElement> options) {
 		this.options = options;
 		this.gfx = gfx;
 	}
@@ -55,7 +56,7 @@ public class SynDiaAlternative
 		return options.size();
 	}
 
-	public LinkedList getOptions() {
+	public List getOptions() {
 		return options;
 	}
 
@@ -67,12 +68,12 @@ public class SynDiaAlternative
 		options.set(num, newOption);
 	}
 
-	public void setOptions(LinkedList<SynDiaElement> options) {
+	public void setOptions(List<SynDiaElement> options) {
 		this.options = options;
 	}
 
 	public void addOption(SynDiaElement option) {
-		options.addLast(option);
+		options.add(option);
 	}
 
 	public boolean removeOption(SynDiaElement optionToRemove) {

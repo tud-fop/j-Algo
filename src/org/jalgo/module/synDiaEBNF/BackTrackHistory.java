@@ -28,6 +28,7 @@
 package org.jalgo.module.synDiaEBNF;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaElement;
@@ -37,7 +38,7 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaElement;
  */
 public class BackTrackHistory {
 
-	private LinkedList<BackTrackStep> history;
+	private List<BackTrackStep> history;
 
 	private int historyPointer;
 
