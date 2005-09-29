@@ -30,8 +30,8 @@ import java.awt.event.ActionListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.AbstractModuleConnector.SaveStatus;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.ModuleConnector;
 import org.jalgo.module.avl.NoActionException;

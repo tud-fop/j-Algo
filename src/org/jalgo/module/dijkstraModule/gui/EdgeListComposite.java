@@ -40,7 +40,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
-import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.module.dijkstraModule.actions.ActionException;
 import org.jalgo.module.dijkstraModule.actions.ApplyEdgeListAction;
 import org.jalgo.module.dijkstraModule.model.Graph;

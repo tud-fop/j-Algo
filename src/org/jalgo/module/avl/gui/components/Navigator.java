@@ -44,7 +44,7 @@ import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.border.EtchedBorder;
 
-import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.gui.GUIController;
 import org.jalgo.module.avl.gui.graphics.PaintArea;

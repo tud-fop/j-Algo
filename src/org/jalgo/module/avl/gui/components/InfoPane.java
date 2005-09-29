@@ -34,7 +34,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.datastructure.Node;
 import org.jalgo.module.avl.datastructure.SearchTree;

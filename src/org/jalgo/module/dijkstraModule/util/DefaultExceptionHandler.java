@@ -23,7 +23,7 @@
  */
 package org.jalgo.module.dijkstraModule.util;
 
-import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 
 /**
  * @author Frank

@@ -44,7 +44,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
-import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.gui.widgets.CustomViewForm;
 import org.jalgo.main.gui.widgets.Splitter;
 import org.jalgo.main.util.Messages;

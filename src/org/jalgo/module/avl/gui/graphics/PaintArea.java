@@ -42,7 +42,7 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
-import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.datastructure.AVLNode;

@@ -29,7 +29,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.module.avl.gui.GUIController;
 import org.jalgo.module.avl.gui.components.WelcomeButton;
 import org.jalgo.module.avl.gui.components.WelcomeScreen;

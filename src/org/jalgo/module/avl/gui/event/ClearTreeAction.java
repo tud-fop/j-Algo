@@ -26,8 +26,8 @@ package org.jalgo.module.avl.gui.event;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.gui.DialogConstants;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.datastructure.SearchTree;
 import org.jalgo.module.avl.gui.GUIController;
