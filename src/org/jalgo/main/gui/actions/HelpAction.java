@@ -56,7 +56,7 @@ extends Action {
 		setText(Messages.getString("main", "ui.Help")); //$NON-NLS-1$ //$NON-NLS-2$
 		setToolTipText(Messages.getString("main", "ui.Help_tooltip")); //$NON-NLS-1$ //$NON-NLS-2$
 		setImageDescriptor(ImageDescriptor.createFromURL(
-			Messages.getResourceURL("main", "ui.Help_pic"))); //$NON-NLS-1$ //$NON-NLS-2$
+			Messages.getResourceURL("main", "ui.Help"))); //$NON-NLS-1$ //$NON-NLS-2$
 		setAccelerator(SWT.F1);
 	}
 
