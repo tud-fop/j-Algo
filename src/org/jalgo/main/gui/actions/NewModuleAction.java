@@ -24,6 +24,7 @@ package org.jalgo.main.gui.actions;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jalgo.main.JalgoMain;
 import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.gui.ModuleChooseDialog;
 import org.jalgo.main.util.Messages;
@@ -43,7 +44,8 @@ public class NewModuleAction extends Action {
 	}
 
 	public void run() {
-		ModuleChooseDialog dialog = new ModuleChooseDialog(win.getShell(), win.getParent());
+		ModuleChooseDialog dialog = new ModuleChooseDialog(win.getShell(),
+			JalgoMain.getInstance());
 		dialog.open();
 	}
 }

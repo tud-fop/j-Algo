@@ -25,6 +25,7 @@ package org.jalgo.main.gui.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.main.IModuleInfo;
+import org.jalgo.main.JalgoMain;
 import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.util.Messages;
 
@@ -48,7 +49,7 @@ extends Action {
 
 	public void run() {
 		IModuleInfo moduleInfo =
-			win.getParent().getCurrentInstance().getModuleInfo();
+			JalgoMain.getInstance().getCurrentInstance().getModuleInfo();
 		StringBuffer content = new StringBuffer();
 		content.append(moduleInfo.getName());
 		content.append(Messages.getString("main", "AboutModule.Version")); //$NON-NLS-1$ //$NON-NLS-2$

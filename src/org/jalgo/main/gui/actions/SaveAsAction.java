@@ -26,8 +26,9 @@ package org.jalgo.main.gui.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
-import org.jalgo.main.gui.JalgoWindow;
+import org.jalgo.main.JalgoMain;
 import org.jalgo.main.util.Messages;
 
 /**
@@ -35,11 +36,9 @@ import org.jalgo.main.util.Messages;
  */
 public class SaveAsAction extends Action {
 	
-	private JalgoWindow win;
 	private boolean wasSuccessful;
 	
-	public SaveAsAction(JalgoWindow win) {
-		this.win = win;
+	public SaveAsAction() {
 		setText(Messages.getString("main", "ui.Save_as")); //$NON-NLS-1$ //$NON-NLS-2$
 		setId(Messages.getString("main", "ui.Save_as")); //$NON-NLS-1$ //$NON-NLS-2$
 		setToolTipText(Messages.getString("main", "ui.Save_as")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -48,14 +47,16 @@ public class SaveAsAction extends Action {
 	}
 
 	public void run() {
-		FileDialog fileChooser = new FileDialog(win.getShell(), SWT.SAVE);
+		FileDialog fileChooser = new FileDialog(
+			Display.getCurrent().getActiveShell(), SWT.SAVE);
 		fileChooser.setText(Messages.getString("main", "ui.Save_as")); //$NON-NLS-1$ //$NON-NLS-2$
 		fileChooser.setFilterPath(System.getProperty("user.dir")); //$NON-NLS-1$
 		fileChooser.setFilterExtensions(new String[] {"*.jalgo"}); //$NON-NLS-1$ //$NON-NLS-2$
 		fileChooser.setFilterNames(new String[] {
 			Messages.getString("main", "OpenAction.jAlgo_files")}); //$NON-NLS-1$ //$NON-NLS-2$
 		String filename = fileChooser.open();
-		if (filename != null) wasSuccessful = win.saveFileAs(filename);
+		if (filename != null)
+			wasSuccessful = JalgoMain.getInstance().saveFileAs(filename);
 		else wasSuccessful = false;
 	}
 
