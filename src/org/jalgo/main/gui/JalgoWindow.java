@@ -27,11 +27,13 @@
 
 package org.jalgo.main.gui;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.action.StatusLineManager;
+import org.eclipse.jface.action.SubMenuManager;
+import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -43,12 +45,13 @@ import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.jalgo.main.AbstractModuleConnector;
+import org.jalgo.main.IModuleInfo;
+import org.jalgo.main.InternalErrorException;
 import org.jalgo.main.JalgoMain;
 import org.jalgo.main.AbstractModuleConnector.SaveStatus;
 import org.jalgo.main.gui.actions.AboutAction;
@@ -63,50 +66,76 @@ import org.jalgo.main.gui.actions.SaveAsAction;
 import org.jalgo.main.util.Messages;
 
 /**
- * This class provides a basic GUI Window with ToolBars, MenuBars and a
- * StatusLine.
+ * The class <code>JalgoWindow</code> represents the main window of the j-Algo
+ * main program. It provides a basic GUI with toolbars, menubars and a status
+ * line. The content area in the middle of the window is realized as a tabbed
+ * pane for easyly switching between open module instances.<br>
+ * This class provides several methods for displaying message boxes and dialogs.
+ * Also this class controlls the gui components for the opened module instances.
  * 
- * @author Christopher Friedrich
- * @author Cornelius Hald
- * @author Alexander Claus
+ * @author Alexander Claus, Christopher Friedrich, Cornelius Hald
  */
 public class JalgoWindow
 extends ApplicationWindow {
 
-	private JalgoMain parent;
+	/** The singleton instance of <code>JalgoWindow</code> */
+	private static JalgoWindow instance;
 
 	private LinkedList<NewAction> newActions;
+	private HashMap<CTabItem, AbstractModuleConnector> openInstances;
+	//management of module gui compontents
+	private HashMap<AbstractModuleConnector, Composite> moduleComponents;
+	private HashMap<AbstractModuleConnector, SubMenuManager> moduleMenus;
+	private HashMap<AbstractModuleConnector, SubToolBarManager> moduleToolbars;
 
 	private SaveAction saveAction;
 	private SaveAsAction saveAsAction;
-	private HelpAction helpAction;
 	private AboutModuleAction aboutModuleAction;
 
 	private CTabFolder ct;
 
-	public JalgoWindow(JalgoMain parent) {
-
+	/**
+	 * Constructs an object of <code>JalgoWindow</code>. This constructor is
+	 * declared as private to avoid access from outside this class. This
+	 * mechanism is part of the Singleton design pattern.
+	 */
+	private JalgoWindow() {
 		super(null);
 
-		this.parent = parent;
+		setDefaultImage(ImageDescriptor.createFromURL(
+			Messages.getResourceURL("main", "ui.Logo")).createImage()); //$NON-NLS-1$ //$NON-NLS-2$
+
+		openInstances = new HashMap<CTabItem, AbstractModuleConnector>();
+		moduleComponents = new HashMap<AbstractModuleConnector, Composite>();
+		moduleMenus = new HashMap<AbstractModuleConnector, SubMenuManager>();
+		moduleToolbars = new HashMap<AbstractModuleConnector, SubToolBarManager>();
 
 		newActions = new LinkedList<NewAction>();
 		createNewActions();
 
-		saveAction = new SaveAction(this);
+		saveAction = new SaveAction();
 		saveAction.setEnabled(false);
 
-		saveAsAction = new SaveAsAction(this);
+		saveAsAction = new SaveAsAction();
 		saveAsAction.setEnabled(false);
 
-		helpAction = new HelpAction(this);
 		aboutModuleAction = new AboutModuleAction(this);
 		aboutModuleAction.setEnabled(false);
 
 		addMenuBar();
 		addToolBar(SWT.WRAP | SWT.FLAT);
 		addStatusLine();
+	}
 
+	/**
+	 * Retrieves the singleton instance of this class. This method is part of
+	 * the Singleton design pattern.
+	 * 
+	 * @return the singleton instance of <code>JalgoWindow</code>
+	 */
+	public static JalgoWindow getInstance() {
+		if (instance == null) instance = new JalgoWindow();
+		return instance;
 	}
 
 	/**
@@ -116,10 +145,11 @@ extends ApplicationWindow {
 	 * <code>true</code>.
 	 */
 	protected void handleShellCloseEvent() {
-		while (getParent().getCurrentInstance() != null) {
-			if (!getParent().getCurrentInstance().close() ||
-				!showFinalSaveDialog(getParent().getCurrentInstance())) return;
-			getParent().itemClosed(ct.getItem(ct.getSelectionIndex()));
+		while (JalgoMain.getInstance().getCurrentInstance() != null) {
+			if (!JalgoMain.getInstance().getCurrentInstance().close() ||
+				!showFinalSaveDialog(JalgoMain.getInstance().getCurrentInstance()))
+				return;
+			itemClosed(ct.getItem(ct.getSelectionIndex()));
 		}
 		super.handleShellCloseEvent();
 	}
@@ -128,11 +158,11 @@ extends ApplicationWindow {
 	 * If the module data of the current module are not saved, this method asks
 	 * the user for saving his work, when the module / program is intended
 	 * to be closed. This method returns <code>false</code>, if the user presses
-	 * CANCEL during this process, <code>true</code> otherwise.
+	 * <code>CANCEL</code> during this process, <code>true</code> otherwise.
 	 * 
 	 * @return <code>true</code>, if module data are saved or if the user closes
 	 * 			all dialogs normally, <code>false</code>, if the user presses
-	 * 			CANCEL during saving
+	 * 			<code>CANCEL</code> during saving
 	 */
 	private boolean showFinalSaveDialog(AbstractModuleConnector moduleInstance) {
 		if (moduleInstance.getSaveStatus() == SaveStatus.NO_CHANGES ||
@@ -141,7 +171,7 @@ extends ApplicationWindow {
 		switch (showConfirmDialog(Messages.getString("main", "ui.Wish_to_save"), //$NON-NLS-1$ //$NON-NLS-2$
 			DialogConstants.YES_NO_CANCEL_OPTION)) {
 			case DialogConstants.YES_OPTION:
-				return saveFile();
+				return JalgoMain.getInstance().saveFile();
 			case DialogConstants.NO_OPTION:
 				return true;
 			case DialogConstants.CANCEL_OPTION:
@@ -151,13 +181,17 @@ extends ApplicationWindow {
 		}
 	}
 
+	/**
+	 * Creates the main component; the tabbed pane. Registers listeners on it to
+	 * handle selection and closing events.
+	 * Sets also title and size of the main window.<br>
+	 * This method is called by the SWT framework.
+	 * 
+	 * @param parent the parent component of the content pane
+	 */
 	protected Control createContents(Composite parent) {
-		updateTitle(null);
+		updateTitle();
 		parent.getShell().setSize(800, 600);
-		parent.getShell().setImage(ImageDescriptor.createFromURL(
-			Messages.getResourceURL("main", "ui.Logo")).createImage()); //$NON-NLS-1$ //$NON-NLS-2$
-
-		final JalgoMain jalgo = this.parent;
 
 		ct = new CTabFolder(parent, SWT.FLAT);
 		ct.addCTabFolder2Listener(new CTabFolder2Adapter() {
@@ -165,16 +199,17 @@ extends ApplicationWindow {
 			public void close(CTabFolderEvent event) {
 				// Ask user for saving
 				AbstractModuleConnector moduleInstance =
-					jalgo.getModuleInstanceByTab((CTabItem)event.item); 
+					openInstances.get(event.item); 
 				if (!moduleInstance.close() ||
 					!showFinalSaveDialog(moduleInstance)) event.doit = false;
-				else jalgo.itemClosed((CTabItem)event.item);
+				else itemClosed((CTabItem)event.item);
 			}
 		});
 
 		ct.addSelectionListener(new SelectionAdapter() {
+			@SuppressWarnings("synthetic-access")
 			public void widgetSelected(SelectionEvent event) {
-				jalgo.itemSelected((CTabItem)event.item);
+				itemSelected((CTabItem)event.item);
 			}
 		});
 
@@ -183,33 +218,24 @@ extends ApplicationWindow {
 
 		// no more need for the following lines when using the swt v 3.138
 		// -alexander
-		// parent.pack();
-		// parent.getShell().setSize(800, 600);
-
-		// start gui to choose module (by michi)
-		/*CTabItem cti = requestNewCTabItem("Willkommen",
-			ImageDescriptor.createFromURL(
-				getClass().getResource("/main_pix/jalgo-file.png")).createImage());
-		new ModuleChooser(jalgo, cti, (Composite)cti.getControl(), SWT.NONE);*/
+		// main.pack();
+		// main.getShell().setSize(800, 600);
 
 		return ct;
 	}
 
 	/**
-	 * Creates standard MenuBar
+	 * Creates the standard menu with file and help menu. This method is called
+	 * by the SWT framework.
 	 */
 	protected MenuManager createMenuManager() {
-		// ** new_menu (is in file_menu)**
-
+		// new menu (is in file_menu)
 		MenuManager new_menu = new MenuManager(
 			Messages.getString("main", "ui.New")); //$NON-NLS-1$ //$NON-NLS-2$
-
-		for (int i = 0; i < newActions.size(); i++) {
+		for (int i = 0; i < newActions.size(); i++)
 			new_menu.add(newActions.get(i));
-		}
 
-		// ** file_menu **
-
+		// file_menu
 		MenuManager file_menu = new MenuManager(
 			Messages.getString("main", "ui.File")); //$NON-NLS-1$ //$NON-NLS-2$
 		file_menu.add(new_menu);
@@ -220,18 +246,16 @@ extends ApplicationWindow {
 		file_menu.add(new Separator());
 		file_menu.add(new ExitAction(this));
 
-		// ** help_menu **
-
+		// help_menu
 		MenuManager help_menu = new MenuManager(
 			Messages.getString("main", "ui.Help"), //$NON-NLS-1$ //$NON-NLS-2$
 			"help"); //$NON-NLS-1$
-		help_menu.add(helpAction);
+		help_menu.add(new HelpAction(this));
 		help_menu.add(new Separator());
 		help_menu.add(new AboutAction(this));
 		help_menu.add(aboutModuleAction);
 
-		// ** menubar **
-
+		// menubar
 		MenuManager menubar = new MenuManager(""); //$NON-NLS-1$
 		menubar.add(file_menu);
 		menubar.add(help_menu);
@@ -240,7 +264,9 @@ extends ApplicationWindow {
 	}
 
 	/**
-	 * Create standard ToolBar
+	 * Creates the standard ToolBar. This method is called by the SWT framework.
+	 * 
+	 * @param style the style of the toolbar, see the SWT documentation
 	 */
 	protected ToolBarManager createToolBarManager(int style) {
 		ToolBarManager toolbar = new ToolBarManager(style);
@@ -255,29 +281,26 @@ extends ApplicationWindow {
 		return toolbar;
 	}
 
-	public CTabFolder getCTabFolder() {
-		return ct;
-	}
-
-	public StatusLineManager getTheStatusLineManager() {
-		return getStatusLineManager();
-	}
-
-	public JalgoMain getParent() {
-		return parent;
-	}
-
 	/**
-	 * Returns new CTabItem which should be used to put the module GUI into.
+	 * Returns a new <code>CTabItem</code> which should be used to put the
+	 * module GUI into. The informations about title text and image are taken
+	 * from the parameter <code>module</code>, which is an instance of the
+	 * <code>IModuleInfo</code> of the interesting module.
 	 * 
-	 * @param text The Title for the CTabItem
-	 * @param img The Image for the CTabItem
-	 * @return The Composite which should be used to put the module GUI into
+	 * @param module the instance of <code>IModuleInfo</code> of the module
+	 *
+	 * @return the composite which should be used to put the module GUI into
 	 */
-	public CTabItem requestNewCTabItem(String text, Image img) {
-		CTabItem cti = new CTabItem(this.ct, SWT.FLAT | SWT.CLOSE);
-		cti.setText(text);
-		cti.setImage(img);
+	public CTabItem requestNewCTabItem(IModuleInfo module) {
+		ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(
+			module.getLogoURL());
+		if (imageDescriptor == null) // create default "jAlgo File" icon.
+			imageDescriptor = ImageDescriptor.createFromURL(
+				getClass().getResource("/main_pix/jalgo-file.png"));
+
+		CTabItem cti = new CTabItem(ct, SWT.FLAT | SWT.CLOSE);
+		cti.setText(module.getName());
+		cti.setImage(imageDescriptor.createImage());
 
 		Composite comp = new Composite(ct, SWT.NONE);
 		comp.setLayout(new FillLayout());
@@ -287,6 +310,65 @@ extends ApplicationWindow {
 		return cti;
 	}
 
+	/**
+	 * This method is called, when the specified tab item is closed.
+	 * 
+	 * @param cti the tab item, which is closed
+	 */
+	private void itemClosed(CTabItem cti) {
+		/* Delete menu and toolbar of CTab */
+		setCurrentInstanceVisible(false);
+		/* Remove CTab */
+		openInstances.remove(cti);
+		cti.dispose();
+		//closed tab was the last one
+		if (openInstances.isEmpty()) {
+			JalgoMain.getInstance().setCurrentInstance(null);
+			updateSaveButtonEnableStatus();
+			updateTitle();
+			setAboutModuleActionEnabled(false);
+		}
+		else itemSelected(ct.getSelection());
+	}
+
+	/**
+	 * This method is called, when a tab is selected. Sets the currently active
+	 * module instance to the corresponding <code>CTabItem</code> and updates
+	 * the GUI.
+	 * 
+	 * @param cti the <code>CTabItem</code> which was selected
+	 */
+	private void itemSelected(CTabItem cti) {
+		//happends only, when program is launched
+		if (openInstances.isEmpty()) return;
+
+		//makes current Module-Tool/MenuBar invisible
+		if (JalgoMain.getInstance().getCurrentInstance() != null)
+			setCurrentInstanceVisible(false);
+
+		JalgoMain.getInstance().setCurrentInstance(openInstances.get(cti));
+
+		//makes Module-Tool/MenuBar from new tab's module visible
+		if (JalgoMain.getInstance().getCurrentInstance() == null) {
+			throw new InternalErrorException(
+					"itemSelected() called, but new tab item's module is null");
+		}
+		setCurrentInstanceVisible(true);
+
+		updateTitle();
+	}
+
+	/**
+	 * Sets the title of the main window to the given string. This method should
+	 * never be called directly, but <code>updateTitle</code> should be called.<br>
+	 * This action is encapsulated within a new <code>Runnable</code> object,
+	 * which is executed, because of interacting of Swing and SWT. Otherwise
+	 * there would be thread problems.
+	 * 
+	 * @param title the new title of the window
+	 * 
+	 * @see #updateTitle()
+	 */
 	public void setTitle(final String title) {
 		getShell().getDisplay().syncExec(new Runnable() {
 			public void run() {
@@ -295,7 +377,17 @@ extends ApplicationWindow {
 		});
 	}
 
-	public void updateTitle(AbstractModuleConnector currentInstance) {
+	/**
+	 * Updates the title string of the application window. Takes file name and
+	 * save status from the currently opened module, and composes the title
+	 * string from it.<br>
+	 * Note: If a module's open file name is <code>null</code>, there is no file
+	 * name displayed. If the module's open file name is an empty string (""),
+	 * the displayed file name is "untitled".
+	 */
+	public void updateTitle() {
+		AbstractModuleConnector currentInstance =
+			JalgoMain.getInstance().getCurrentInstance();
 		StringBuffer title = new StringBuffer();
 		if (currentInstance != null) {
 			if (currentInstance.getOpenFileName() != null) {
@@ -313,34 +405,20 @@ extends ApplicationWindow {
 		setTitle(title.toString());
 	}
 
-	public boolean saveFile() {
-		return parent.saveFile();
-	}
-
-	public boolean saveFileAs(String filename) {
-		return parent.saveFileAs(filename);
-	}
-
-	public boolean openFile(String filename, boolean useCurrentInstance) {
-		return parent.openFile(filename, useCurrentInstance);
-	}
-
-	public SaveAction getSaveAction() {
-		return saveAction;
-	}
-
-	public SaveAsAction getSaveAsAction() {
-		return saveAsAction;
-	}
-
-	public void updateSaveButtonEnableStatus(
-		AbstractModuleConnector moduleInstance) {
-		if (moduleInstance == null ||
-			moduleInstance.isSavingBlocked()) {
+	/**
+	 * Updates the enabled status of the buttons "Save" and "Save as" to provide
+	 * correct semantics. The necessary information to do so is taken from the
+	 * currently opened module instance.
+	 */
+	public void updateSaveButtonEnableStatus() {
+		AbstractModuleConnector currentInstance =
+			JalgoMain.getInstance().getCurrentInstance();
+		if (currentInstance == null ||
+			currentInstance.isSavingBlocked()) {
 			saveAction.setEnabled(false);
 			saveAsAction.setEnabled(false);
 		}
-		else switch (moduleInstance.getSaveStatus()) {
+		else switch (currentInstance.getSaveStatus()) {
 			case NOTHING_TO_SAVE:
 				saveAction.setEnabled(false);
 				saveAsAction.setEnabled(false);
@@ -356,14 +434,17 @@ extends ApplicationWindow {
 		}
 	}
 
+	/**
+	 * Creates the <code>Action</code> objects for each registered module. This
+	 * objects are later displayed as menu items in the "New" menu.
+	 */
 	private void createNewActions() {
-		for (int i = 0; i < parent.getKnownModuleInfos().size(); i++) {
-			newActions.add(new NewAction(parent, i));
-		}
+		for (int i=0; i<JalgoMain.getInstance().getKnownModuleInfos().size(); i++)
+			newActions.add(new NewAction(JalgoMain.getInstance(), i));
 	}
 
 	/**
-	 * Sets the message at the status line to the given message string.
+	 * Sets the message at the status line to the given message string.<br>
 	 * This action is encapsulated within a new <code>Runnable</code> object,
 	 * which is executed, because of interacting of Swing and SWT. Otherwise
 	 * there would be thread problems.
@@ -475,13 +556,14 @@ extends ApplicationWindow {
 	 * @param b <code>true</code>, if the action should be enabled,
 	 * 			<code>false</code> otherwise
 	 */
-	public void setAboutModuleActionEnabled(boolean b) {
+	private void setAboutModuleActionEnabled(boolean b) {
 		aboutModuleAction.setEnabled(b);
 	}
 
 	/* the following variable is necessary for ecapsulate the dialog within a
 	   Runnable object*/
 	private String _filename;
+
 	/**
 	 * Opens a filechooser for opening files. The file selected by the user can
 	 * be opened automatically as j-Algo file. When selected this option the
@@ -518,9 +600,135 @@ extends ApplicationWindow {
 
 				_filename = fileChooser.open();
 				if (openAsJAlgoFile && _filename != null)
-					openFile(_filename, useCurrentModuleInstance);
+					JalgoMain.getInstance().openFile(
+						_filename, useCurrentModuleInstance);
 			}
 		});
 		return _filename;
+	}
+
+	/**
+	 * Sets the visibility status of the currently opened module instance to the
+	 * given value. Setting (in)visible a module instance means to show/hide the
+	 * module's menu and toolbar and to update the enabled status of the save
+	 * buttons according to the save status of the module instance.
+	 * 
+	 * @param visible <code>true</code>, if the module instance should be shown,
+	 * 				<code>false</code> otherwise
+	 */
+	public void setCurrentInstanceVisible(boolean visible) {
+		AbstractModuleConnector currentInstance =
+			JalgoMain.getInstance().getCurrentInstance();
+		if (getModuleMenu(currentInstance) != null)
+			getModuleMenu(currentInstance).setVisible(visible);
+		if (getModuleToolbar(currentInstance) != null)
+			getModuleToolbar(currentInstance).setVisible(visible);		
+		getMenuBarManager().update(true);
+		getToolBarManager().update(true);
+		updateSaveButtonEnableStatus();
+	}
+
+	/**
+	 * This method is invoked during initialization of a new module instance. It
+	 * activates the corresponding tab in the tabbed pane, activates the menu
+	 * and the toolbar of the module instance and guarantees, that the menu item
+	 * 'About module' is enabled.
+	 */
+	public void activateNewInstance() {
+		// Set CTabItem selected
+		ct.setSelection(ct.getItemCount() - 1);
+		// Set module visible
+		setCurrentInstanceVisible(true);
+		// Enable 'About module'
+		setAboutModuleActionEnabled(true);
+	}
+
+	/*--------------Management of module's GUI components---------------*/
+
+	/**
+	 * Retrieves the main GUI component of the module instance, having the given
+	 * <code>AbstractModuleConnector</code>.
+	 * 
+	 * @param module the <code>AbstractModuleConnector</code> instance of module
+	 * 
+	 * @return the main GUI component of the module instance
+	 */
+	protected Composite getModuleComponent(AbstractModuleConnector module) {
+		return moduleComponents.get(module);
+	}
+
+	/**
+	 * Sets the main GUI component of the module instance, having the given
+	 * <code>AbstractModuleConnector</code>.
+	 * 
+	 * @param module the <code>AbstractModuleConnector</code> of the module
+	 * @param comp the main GUI component of the module instance
+	 */
+	protected void setModuleComponent(AbstractModuleConnector module,
+		Composite comp) {
+		moduleComponents.put(module, comp);
+	}
+
+	/**
+	 * Retrieves the menu of the module instance, having the given
+	 * <code>AbstractModuleConnector</code>.
+	 * 
+	 * @param module the <code>AbstractModuleConnector</code> instance of module
+	 * 
+	 * @return the menu of the module instance
+	 */
+	protected SubMenuManager getModuleMenu(AbstractModuleConnector module) {
+		return moduleMenus.get(module);
+	}
+
+	/**
+	 * Sets the menu of the module instance, having the given
+	 * <code>AbstractModuleConnector</code>.
+	 * 
+	 * @param module the <code>AbstractModuleConnector</code> of the module
+	 * @param menu the menu of the module instance
+	 */
+	protected void setModuleMenu(AbstractModuleConnector module,
+		SubMenuManager menu) {
+		moduleMenus.put(module, menu);
+	}
+
+	/**
+	 * Retrieves the toolbar of the module instance, having the given
+	 * <code>AbstractModuleConnector</code>.
+	 * 
+	 * @param module the <code>AbstractModuleConnector</code> instance of module
+	 * 
+	 * @return the toolbar of the module instance
+	 */
+	protected SubToolBarManager getModuleToolbar(AbstractModuleConnector module) {
+		return moduleToolbars.get(module);
+	}
+
+	/**
+	 * Sets the toolbar of the module instance, having the given
+	 * <code>AbstractModuleConnector</code>.
+	 * 
+	 * @param module the <code>AbstractModuleConnector</code> of the module
+	 * @param toolbar the toolbar of the module instance
+	 */
+	protected void setModuleToolbar(AbstractModuleConnector module,
+		SubToolBarManager toolbar) {
+		moduleToolbars.put(module, toolbar);
+	}
+
+	/**
+	 * Creates new GUI components for the recently instanciated module instance
+	 * and makes them available for getter- and setter-methods.
+	 */
+	public void createNewModuleGUIComponents() {
+		AbstractModuleConnector module =
+			JalgoMain.getInstance().getCurrentInstance();
+		CTabItem cti = requestNewCTabItem(module.getModuleInfo());
+		moduleComponents.put(module, (Composite)cti.getControl());
+		moduleMenus.put(module, new SubMenuManager(getMenuBarManager()));
+		moduleToolbars.put(module, new SubToolBarManager(getToolBarManager()));
+		// Add module to running instances
+		openInstances.put(cti, JalgoMain.getInstance().getCurrentInstance());
 	}
 }
