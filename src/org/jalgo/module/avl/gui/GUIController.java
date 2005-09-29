@@ -45,13 +45,12 @@ import javax.swing.UIManager;
 
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.widgets.Composite;
-import org.jalgo.main.JAlgoGUIConnector;
 import org.jalgo.main.AbstractModuleConnector.SaveStatus;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.ModuleConnector;
@@ -92,10 +91,6 @@ implements GUIConstants {
 	private ModuleConnector connector;
 	private Controller controller;
 	private SearchTree tree;
-
-	// components provided by the jAlgo-framework
-	private SubMenuManager menuManager;
-	private SubToolBarManager toolBarManager;
 
 	// components (based on SWT)
 	private WelcomeAction welcomeAction;
@@ -140,24 +135,21 @@ implements GUIConstants {
 	 * GUI of the AVL module can be created on Swing base.
 	 * 
 	 * @param connector the <code>ModuleConnector</code> of the AVL module
-	 * @param comp the parent component
-	 * @param menu the menu manager
-	 * @param tb the toolbar manager
 	 * @param controller the <code>Controller</code> instance of the AVL
 	 *            module
 	 * @param st the <code>SearchTree</code> instance of the AVL module
 	 */
-	public GUIController(ModuleConnector connector, Composite comp,
-		SubMenuManager menu, SubToolBarManager tb, Controller controller, SearchTree st) {
+	public GUIController(ModuleConnector connector, Controller controller,
+		SearchTree st) {
 
 		this.connector = connector;
-		this.menuManager = menu;
-		this.toolBarManager = tb;
 		this.controller = controller;
 		this.tree = st;
 
 		// install the main panel on swing base
-		Composite locationComp = new Composite(comp, SWT.EMBEDDED);
+		Composite locationComp = new Composite(
+			JAlgoGUIConnector.getInstance().getModuleComponent(connector),
+			SWT.EMBEDDED);
 		swt_awt_bridge = SWT_AWT.new_Frame(locationComp);
 
 		contentPane = new JPanel();
@@ -243,6 +235,8 @@ implements GUIConstants {
 	 * Sets up the toolbar.
 	 */
 	private void installToolbar() {
+		SubToolBarManager toolBarManager =
+			JAlgoGUIConnector.getInstance().getModuleToolbar(connector);
 		welcomeAction = new WelcomeAction(this, tree);
 		toolBarManager.add(welcomeAction);
 		clearTreeAction = new ClearTreeAction(this, tree);
@@ -282,7 +276,8 @@ implements GUIConstants {
 		ToggleDisplayModeAction.registerTarget(paintArea);
 		ToggleDisplayModeAction.registerTarget(logPane);
 		ToggleDisplayModeAction.registerTarget(docuPane);
-		menuManager.insertBefore("help", subMenu); //$NON-NLS-1$
+		JAlgoGUIConnector.getInstance().getModuleMenu(connector).insertBefore(
+			"help", subMenu); //$NON-NLS-1$
 	}
 
 	/**

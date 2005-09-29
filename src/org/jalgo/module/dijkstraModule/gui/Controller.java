@@ -47,6 +47,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.InternalErrorException;
 import org.jalgo.main.AbstractModuleConnector.SaveStatus;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.module.dijkstraModule.ModuleConnector;
 import org.jalgo.module.dijkstraModule.actions.Action;
 import org.jalgo.module.dijkstraModule.actions.ActionException;
@@ -171,17 +172,16 @@ extends Observable {
 	private RedoToolBarAction m_redoToolBarAction;
 	private _AlgoAnimator m_animator;
 
-	public Controller(ModuleConnector connector, Composite parent,
-		SubToolBarManager toolBarManager) {
+	public Controller(ModuleConnector connector) {
 		super();
 		this.connector = connector;
 		m_actions = new ActionStack(0);
 		m_curGraph = new Graph(new ArrayList(), new ArrayList());
 		m_StatusbarObservable = new _Observable();
 
-		m_composite = parent;
+		m_composite = JAlgoGUIConnector.getInstance().getModuleComponent(connector);
 
-		this.m_toolBarManager = toolBarManager;
+		m_toolBarManager = JAlgoGUIConnector.getInstance().getModuleToolbar(connector);
 		// Create stuff here...
 		createGUI();
 		m_animator = new _AlgoAnimator(this);
