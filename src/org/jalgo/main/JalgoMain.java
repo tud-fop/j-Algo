@@ -27,115 +27,68 @@
 package org.jalgo.main;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.MissingResourceException;
 
-import org.eclipse.jface.action.SubMenuManager;
-import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.jalgo.main.AbstractModuleConnector.SaveStatus;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.gui.actions.SaveAsAction;
+import org.jalgo.main.util.ErrorLog;
 import org.jalgo.main.util.Messages;
 import org.jalgo.main.util.Storage;
 
 /**
+ * The class <code>JalgoMain</code> is the entry point for the application. This
+ * class implements the Singleton design pattern. It handles the management of
+ * open module instances and provides useful methods for file handling.
+ * 
  * @author Alexander Claus, Christopher Friedrich, Michael Pradel
  */
 public class JalgoMain {
 
-	private JalgoWindow appWin;
+	/** The singleton instance of <code>JalgoMain</code> */
+	private static JalgoMain instance;
 
 	private LinkedList<Class<AbstractModuleConnector>> knownModules;
 	private LinkedList<IModuleInfo> knownModuleInfos;
-	private HashMap<CTabItem, AbstractModuleConnector> openInstances;
-	
 	private AbstractModuleConnector currentInstance;
 
-	public JalgoMain() {
-		knownModules = new LinkedList<Class<AbstractModuleConnector>>();
-		knownModuleInfos = new LinkedList<IModuleInfo>();
+	/**
+	 * Constructs an object of <code>JalgoMain</code>. This constructor is
+	 * declared as private to avoid access from outside this class. This
+	 * mechanism is part of the Singleton design pattern.
+	 */
+	private JalgoMain() {
 		addKnownModules();
-		openInstances = new HashMap<CTabItem, AbstractModuleConnector>();
 	}
 
+	/**
+	 * Retrieves the singleton instance of this class. This method is part of
+	 * the Singleton design pattern.
+	 * 
+	 * @return the singleton instance of <code>JalgoMain</code>
+	 */
+	public static JalgoMain getInstance() {
+		// here no test to null is necessary, because instance was created in main()
+		return instance;
+	}
+
+	/**
+	 * Initializes the GUI of j-Algo. Opens the main frame.
+	 */
 	public void createGUI() {
-		appWin = new JalgoWindow(this);
-		JAlgoGUIConnector.initInstance(appWin);
-		appWin.setBlockOnOpen(true);
-		appWin.open();
+		// init main frame
+		JalgoWindow.getInstance();
+		// init gui connector
+		JAlgoGUIConnector.getInstance();
+		// open main frame
+		JalgoWindow.getInstance().setBlockOnOpen(true);
+		JalgoWindow.getInstance().open();
 
 		Display.getCurrent().dispose();	
-	}
-
-	/**
-	 * Is called, when the specified tab item is closed.
-	 * 
-	 * @param cti The tab item, which is closed.
-	 */
-	public void itemClosed(CTabItem cti) {
-		/* Delete menu and toolbar of CTab */
-		if (currentInstance.getMenuManager() != null)
-			currentInstance.getMenuManager().setVisible(false);
-		if (currentInstance.getToolBarManager() != null)
-			currentInstance.getToolBarManager().setVisible(false);
-		appWin.getMenuBarManager().update(true);
-		appWin.getToolBarManager().update(true);
-		/* Remove CTab */
-		openInstances.remove(cti);
-		cti.dispose();
-		//closed tab was the last one
-		if (openInstances.isEmpty()) {
-			currentInstance = null;
-			appWin.updateSaveButtonEnableStatus(null);
-			appWin.updateTitle(null);
-			appWin.setAboutModuleActionEnabled(false);
-		}
-		else itemSelected(appWin.getCTabFolder().getSelection());
-	}
-
-	/**
-	 * Set currentInstance to corresponding CTabItem
-	 * 
-	 * @param cti
-	 */
-	public void itemSelected(CTabItem cti) {
-		//happends only, when program is launched
-		if (openInstances.isEmpty()) return;
-
-		//makes current Module-Tool/MenuBar invisible
-		if (currentInstance != null) {
-			if (currentInstance.getMenuManager() != null)
-				currentInstance.getMenuManager().setVisible(
-						false);
-			if (currentInstance.getToolBarManager() != null)
-				currentInstance.getToolBarManager().setVisible(
-						false);
-		}
-
-		currentInstance = openInstances.get(cti);
-
-		//makes Module-Tool/MenuBar from new tab's module visible
-		if (currentInstance == null) {
-			throw new InternalErrorException(
-					"itemSelected() called, but new tab item's module is null");
-		}
-		if (currentInstance.getMenuManager() != null)
-			currentInstance.getMenuManager().setVisible(true);
-		if (currentInstance.getToolBarManager() != null)
-			currentInstance.getToolBarManager().setVisible(true);
-
-		appWin.getMenuBarManager().update(true);
-		appWin.getToolBarManager().update(true);
-		appWin.updateSaveButtonEnableStatus(currentInstance);
-		appWin.updateTitle(currentInstance);
 	}
 
 	/**
@@ -145,8 +98,8 @@ public class JalgoMain {
 	 * 
 	 * @param moduleName the name of the module to be created
 	 * 
-	 * @return the <code>AbstractModuleConnector</code> instance of the module, if it is
-	 * 			created, <code>null</code> otherwise
+	 * @return the <code>AbstractModuleConnector</code> instance of the module,
+	 * 			if it is created, <code>null</code> otherwise
 	 */
 	public AbstractModuleConnector newInstanceByName(String moduleName) {
 		for (int i=0; i<knownModuleInfos.size(); i++) {
@@ -159,107 +112,63 @@ public class JalgoMain {
 	/**
 	 * Creates a new instance of the specified module.
 	 * 
-	 * @param modNumber Number of new module in <code>knownModules</code>
+	 * @param modNumber number of new module in <code>knownModules</code>
 	 *                  starting with 0.
 	 * @return the new instance of <code>AbstractModuleConnector</code>
 	 */
 	public AbstractModuleConnector newInstance(int modNumber) {
-		// Makes current Module-Tool/MenuBar invisible
-		if (currentInstance != null) {
-			if (currentInstance.getMenuManager() != null)
-				currentInstance.getMenuManager().setVisible(
-						false);
-			if (currentInstance.getToolBarManager() != null)
-				currentInstance.getToolBarManager().setVisible(
-						false);
-		}
+		// hides current modules toolbar and menubar
+		if (currentInstance != null)
+			JalgoWindow.getInstance().setCurrentInstanceVisible(false);
+		currentInstance = null;
 
-		// Disable save buttons
-		appWin.updateSaveButtonEnableStatus(null);
-
-		// Requests a fresh CTabItem from the appWin
-		IModuleInfo module = knownModuleInfos.get(modNumber);
-		String ctiText = module.getName();
-		ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(
-			module.getLogoURL());
-		Image image;
-		if (imageDescriptor == null) {
-			// Default "jAlgo File" icon.
-			image = ImageDescriptor.createFromURL(
-				getClass().getResource("/main_pix/jalgo-file.png")).createImage();
-		} else {
-			// Custom icon as defined in the module info.
-			image = imageDescriptor.createImage(appWin.getShell().getDisplay());
-		}
-		CTabItem cti = appWin.requestNewCTabItem(ctiText, image);
-		
-		// Create a new instance of a module.
-		Class constrArgs[] = new Class[] {
-				Composite.class, SubMenuManager.class,
-				SubToolBarManager.class };
-		Object[] args = new Object[] {
-				(Composite) cti.getControl(),
-				new SubMenuManager(appWin.getMenuBarManager()),
-				new SubToolBarManager(appWin.getToolBarManager()) };
 		try {
-			Constructor constr =
-				((Class)knownModules.get(modNumber)).getConstructor(constrArgs);
-			currentInstance = (AbstractModuleConnector) constr
-					.newInstance(args);
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			currentInstance = knownModules.get(modNumber).newInstance();
 		}
+		catch (Exception ex) {ex.printStackTrace();}
 
-		// Set CTabItem selected
-		appWin.getCTabFolder().setSelection(
-				appWin.getCTabFolder().getItemCount() - 1);
-
-		// Activate the modules Menu
-		currentInstance.getMenuManager().setVisible(true);
-		appWin.getMenuBarManager().update(true);
-
-		// Activate the modules ToolBar
-		currentInstance.getToolBarManager().setVisible(true);
-		appWin.getToolBarManager().update(true);
-
-		// Add module to running instances
-		openInstances.put(cti, currentInstance);
-
-		// Enable 'About module'
-		appWin.setAboutModuleActionEnabled(true);
+		JalgoWindow.getInstance().createNewModuleGUIComponents();
+		currentInstance.init();
+		JalgoWindow.getInstance().activateNewInstance();
 
 		currentInstance.run();
-		appWin.updateTitle(currentInstance);
+		JalgoWindow.getInstance().updateTitle();
 
 		return currentInstance;
 	}
 
-	public LinkedList<Class<AbstractModuleConnector>> getKnownModules() {
-		return knownModules;
-	}
-
+	/**
+	 * Retrieves a list of the <code>IModuleInfo</code>s of the registered
+	 * modules. This list ist used for module choosing mechanisms and for
+	 * opening j-Algo files.
+	 *  
+	 * @return a list of all registered <code>IModuleInfo</code>s
+	 */
 	public LinkedList<IModuleInfo> getKnownModuleInfos() {
 		return knownModuleInfos;
 	}
 
+	/**
+	 * Retrieves the <code>AbstractModuleConnector</code> of the currently
+	 * active module instance.
+	 *  
+	 * @return the currently active module instance
+	 */
 	public AbstractModuleConnector getCurrentInstance() {
 		return currentInstance;
 	}
 
 	/**
-	 * Takes content from module and stores it in currently used file
+	 * Takes content from module and stores it in currently used file. If no
+	 * file is currently used, a filechooser dialog is opened to select a file
+	 * to be saved.
 	 */
 	public boolean saveFile() {
 	    if (currentInstance == null) return false;
 		if (currentInstance.getOpenFileName() == null ||
 			currentInstance.getOpenFileName().length() == 0) {
-			SaveAsAction a = new SaveAsAction(appWin);
+			//if no name was given to current module content, open a filechooser
+			SaveAsAction a = new SaveAsAction();
 			a.run();
 			return a.wasSuccessful();
 		}
@@ -267,9 +176,9 @@ public class JalgoMain {
 	}
 
 	/**
-	 * Takes content from module and stores it in file with given filename
+	 * Takes content from module and stores it in a file with the given filename.
 	 * 
-	 * @param filename
+	 * @param filename the path to the file to be saved
 	 */
 	public boolean saveFileAs(String filename) {
 		currentInstance.setOpenFileName(filename);
@@ -278,9 +187,12 @@ public class JalgoMain {
 	}
 
 	/**
-	 * Opens file and gives content to Module
+	 * Opens file and gives content to module instance.
 	 * 
-	 * @param filename
+	 * @param filename the path to the file to be opened
+	 * @param useCurrentInstance <code>true</code>, if file content should be
+	 * 			delegated to the currently active module instance,
+	 * 			<code>false</code>, if a new module instance should be opened
 	 */
 	public boolean openFile(String filename, boolean useCurrentInstance) {
 		if ((useCurrentInstance && Storage.load(filename, currentInstance)) ||
@@ -293,12 +205,17 @@ public class JalgoMain {
 	}
 
 	/**
+	 * Searches the folder <i>runtime/modules</i> for jar files with modules.
 	 * Fills <code>knownModules</code> and <code>knownModuleInfos</code>
-	 * with content. Module programmers have to alter this method and add
-	 * their module here!
+	 * with the found modules.<br>
+	 * For detailled description of writing and registering a module, read the
+	 * "Module programmers guide" available as pdf.
 	 */
 	@SuppressWarnings("unchecked")
 	private void addKnownModules() {
+		knownModules = new LinkedList<Class<AbstractModuleConnector>>();
+		knownModuleInfos = new LinkedList<IModuleInfo>();
+
 		String jarFileName, moduleName;
 		String fileSep = System.getProperty("file.separator");
 		for (File file : new File(System.getProperty("user.dir") + fileSep +
@@ -310,9 +227,9 @@ public class JalgoMain {
 				moduleName = jarFileName.substring(0, jarFileName.length()-4);
 				try {
 					Class moduleConnector = Class.forName("org.jalgo.module." +
-							moduleName + ".ModuleConnector");
+						moduleName + ".ModuleConnector");
 					Class moduleInfo = Class.forName("org.jalgo.module." +
-							moduleName + ".ModuleInfo");
+						moduleName + ".ModuleInfo");
 					
 					if (moduleConnector.getSuperclass().equals(
 						AbstractModuleConnector.class) &&
@@ -342,29 +259,52 @@ public class JalgoMain {
 	}
 	
 	/**
-	 * checks if a given class implements a specific interface
-	 * @param classObj class object which should checked
-	 * @param interfaceName interface name the class should be implemented 
-	 * @return returns true if the "classObj" implements "interfaceName" otherwise false
+	 * Checks if a given class implements a specific interface.
+	 * 
+	 * @param classObj <code>Class</code> object which should checked
+	 * @param interfaceName the name of the interface the class should implement 
+	 *
+	 * @return <code>true</code> if the interface is implemented,
+	 * 			<code>false</code> otherwise
 	 */
 	private boolean implementsInterface(Class classObj, String interfaceName) {
 		Class [] interfaces = classObj.getInterfaces();
 		for (int i = 0; i < interfaces.length; i++) {
-			if (interfaces[i].getName().equals(interfaceName)) {
-				return true;
-			}
+			if (interfaces[i].getName().equals(interfaceName)) return true;
 		}
 		return false;
 	}
 
 	/**
-	 * Retrieves the module instance belonging to the given tab item.
+	 * The entry point of the j-Algo main program.<br>
+	 * When releasing the product, start the program with the flag "errorLogOn".
+	 * So an error log file could be created for easy debugging.
 	 * 
-	 * @param item the interesting tab item
+	 * @param args the program arguments
 	 * 
-	 * @return the module instance belonging to the given tab item
+	 * @see ErrorLog
 	 */
-	public AbstractModuleConnector getModuleInstanceByTab(CTabItem item) {
-		return openInstances.get(item);
+	public static void main(String[] args) {
+		//saves exceptions to file
+		ErrorLog errorLog = null;
+		if (args.length > 0 && args[0].equalsIgnoreCase("errorlogon"))
+			errorLog = new ErrorLog();
+
+		instance = new JalgoMain();
+		instance.createGUI();
+			
+		if (errorLog != null) errorLog.close();
+	}
+
+	/**
+	 * Sets the currently active module instance to the given instance of
+	 * <code>AbstractModuleConnector</code>. This is only for intern management
+	 * and does not influence the GUI!<br>
+	 * Selecting another module is handled by <code>JalgoWindow</code>.
+	 * 
+	 * @param instance the new module instance
+	 */
+	public void setCurrentInstance(AbstractModuleConnector instance) {
+		currentInstance = instance;
 	}
 }
