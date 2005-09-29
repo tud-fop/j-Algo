@@ -41,6 +41,7 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.InternalErrorException;
 import org.jalgo.main.AbstractModuleConnector.SaveStatus;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.module.synDiaEBNF.ebnf.EbnfDefinition;
 import org.jalgo.module.synDiaEBNF.gui.BackTrackingAlgoGui;
 import org.jalgo.module.synDiaEBNF.gui.CreateSynDiaClickGui;
@@ -115,25 +116,16 @@ public class ModuleController implements IModeConstants {
 
 	// ------ public methods ----------------
 
-	/**
-	 * @param comp the <code>Composite</code>, that should be filled by the module
-	 * @param menuManager the modules <code>MenuManager</code>
-	 * @param toolBarManager the modules <code>ToolBarManager</code>
-	 */
-	public ModuleController(
-		ModuleConnector connector,
-		Composite comp,
-		SubMenuManager menuManager,
-		SubToolBarManager toolBarManager) {
+	public ModuleController(ModuleConnector connector) {
 
 		this.connector = connector;
-		this.comp = comp;
+		this.comp = JAlgoGUIConnector.getInstance().getModuleComponent(connector);
 
 		// Create Menu
-		this.menuManager = menuManager;
+		this.menuManager = JAlgoGUIConnector.getInstance().getModuleMenu(connector);
 
 		// Create ToolBar
-		this.toolBarManager = toolBarManager;
+		this.toolBarManager = JAlgoGUIConnector.getInstance().getModuleToolbar(connector);
 		createActions();
 		createMenu();
 		addWizardButton();

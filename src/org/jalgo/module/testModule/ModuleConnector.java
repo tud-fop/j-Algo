@@ -29,9 +29,6 @@ package org.jalgo.module.testModule;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-import org.eclipse.jface.action.SubMenuManager;
-import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.AbstractModuleConnector;
 
 /**
@@ -40,14 +37,9 @@ import org.jalgo.main.AbstractModuleConnector;
 public class ModuleConnector
 extends AbstractModuleConnector {
 
-	/**
-	 * @see AbstractModuleConnector
-	 */
-	public ModuleConnector(Composite comp, SubMenuManager menu,
-		SubToolBarManager tb) {
-		super(comp, menu, tb);
+	public void init() {
+		// no GUI initialization here in test module
 	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
