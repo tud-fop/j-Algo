@@ -24,7 +24,6 @@
 /*
  * Created on May 18, 2004
  */
-
 package org.jalgo.main;
 
 import java.io.ByteArrayInputStream;
@@ -34,23 +33,26 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.jface.action.SubMenuManager;
 import org.eclipse.jface.action.SubToolBarManager;
 import org.eclipse.swt.widgets.Composite;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 
 /**
  * The class <code>AbstractModuleConnector</code> defines the module side
  * interface between the j-Algo main program and a module to be implemented.<br>
  * This class contains methods for cooperation between the main program and the
- * module. Some methods the module programmer has to override, so {@link #run()},
+ * module. Some methods the module programmer has to override, so
+ * {@link #init()}, {@link #run()},
  * {@link #setDataFromFile(ByteArrayInputStream)}, {@link #getDataForFile()}
  * and {@link #print()}, because they are module specific. Other methods the
  * module programmer can implement, when there is the need for higher
  * sophisticated semantics, such as {@link #close()}. Finally some methods must
  * have well defined semantics and are therefore implemented in this class and
  * declared with <code>final</code>.<br>
- * All subclasses have to implement a constructor with the signature of the only
- * constructor of this class ({@link #AbstractModuleConnector(Composite,
- * SubMenuManager, SubToolBarManager)}). This constructor must call the
- * constructor of the superclass with the given arguments. This mechanism is
- * necessary for accurately working of the plugin structure of j-Algo.
+ * Because the constructor of a module instance is invoked automatically and in
+ * interaction with creation of module's GUI components by the main program,
+ * subclasses doesn't have to declare a constructor. Initialization of the GUI
+ * of the module has to be placed in the <code>init</code> method. Furthermore
+ * the GUI components for the module aren't available yet at the time of the
+ * constructor call.
  * 
  * @author Alexander Claus, Michael Pradel, Christopher Friedrich, Stephan
  *         Creutz
@@ -67,20 +69,16 @@ public abstract class AbstractModuleConnector {
 	private String openFileName;
 
 	/**
-	 * Constructs an <code>AbstractModuleConnector</code> with the given
-	 * arguments.
-	 * 
-	 * @param comp the gui component to place the contents of the module
-	 * @param menuManager the menu manager for the module
-	 * @param toolBarManager the toolbar manager for the module
+	 * Constructs an <code>AbstractModuleConnector</code>.
 	 */
-	public AbstractModuleConnector(Composite comp, SubMenuManager menuManager,
-		SubToolBarManager toolBarManager) {
-		this.comp = comp;
-		this.menuManager = menuManager;
-		this.toolBarManager = toolBarManager;
+	public AbstractModuleConnector() {
 		saveStatus = SaveStatus.NOTHING_TO_SAVE;
 	}
+
+	/**
+	 * Modules have to override this method to initialize their GUI.
+	 */
+	public abstract void init();
 
 	/**
 	 * After the module has been initialized using the constructor (and maybe
