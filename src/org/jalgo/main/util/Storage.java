@@ -36,8 +36,8 @@ import java.util.LinkedList;
 
 import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.IModuleInfo;
-import org.jalgo.main.JAlgoGUIConnector;
-import org.jalgo.main.Jalgo;
+import org.jalgo.main.JalgoMain;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 
 /**
  * @author Hauke Menges, Michael Pradel
@@ -83,7 +83,7 @@ public class Storage {
 
 			// get modNumber of module corresponding to this file
 			int modNumber = -1;
-			LinkedList moduleInfos = Jalgo.getJalgoMain().getKnownModuleInfos();
+			LinkedList moduleInfos = JalgoMain.getInstance().getKnownModuleInfos();
 			for (int i = 0; i < moduleInfos.size(); i++) {
 				if (((IModuleInfo)moduleInfos.get(i)).getName().equals(name)) modNumber = i;
 			}
@@ -96,7 +96,7 @@ public class Storage {
 			}
 
 			if (currentInstance == null)
-				currentInstance = Jalgo.getJalgoMain().newInstance(modNumber); //$NON-NLS-1$
+				currentInstance = JalgoMain.getInstance().newInstance(modNumber); //$NON-NLS-1$
 
 			// Read module data
 			buf = new byte[in.available()];
@@ -126,9 +126,9 @@ public class Storage {
 	public static boolean save(String filename) {
 		// Generate Headers
 		int nameLength =
-			Jalgo.getCurrentModule().getModuleInfo().getName().getBytes().length;
+			JalgoMain.getInstance().getCurrentInstance().getModuleInfo().getName().getBytes().length;
 		int versionLength =
-			Jalgo.getCurrentModule().getModuleInfo().getVersion().getBytes().length;
+			JalgoMain.getInstance().getCurrentInstance().getModuleInfo().getVersion().getBytes().length;
 
 		// Create OutputStream
 		FileOutputStream out = null;
@@ -149,12 +149,12 @@ public class Storage {
 			out.write(nameLength);
 			out.write(versionLength);
 			out.write(
-				Jalgo.getCurrentModule().getModuleInfo().getName().getBytes());
+				JalgoMain.getInstance().getCurrentInstance().getModuleInfo().getName().getBytes());
 			out.write(
-				Jalgo.getCurrentModule().getModuleInfo().getVersion().getBytes());
+				JalgoMain.getInstance().getCurrentInstance().getModuleInfo().getVersion().getBytes());
 
 			// Write module data
-			out.write(Jalgo.getCurrentModule().getDataForFile().toByteArray());
+			out.write(JalgoMain.getInstance().getCurrentInstance().getDataForFile().toByteArray());
 
 		}
 		catch (IOException e) {
