@@ -30,9 +30,6 @@ package org.jalgo.module.dijkstraModule;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-import org.eclipse.jface.action.SubMenuManager;
-import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.module.dijkstraModule.gui.Controller;
 
@@ -46,12 +43,8 @@ extends AbstractModuleConnector {
 
 	private Controller controller;
 
-	/**
-	 * @see AbstractModuleConnector
-	 */
-	public ModuleConnector(Composite comp, SubMenuManager menu,
-		SubToolBarManager tb) {
-		super(comp, menu, tb);
+	public void init() {
+		// initialization is taken here in run()
 	}
 
 	/*
@@ -60,7 +53,7 @@ extends AbstractModuleConnector {
 	 * @see org.jalgo.main.AbstractModuleConnector#run()
 	 */
 	public void run() {
-		controller = new Controller(this, comp, getToolBarManager());
+		controller = new Controller(this);
 	}
 
 	/*

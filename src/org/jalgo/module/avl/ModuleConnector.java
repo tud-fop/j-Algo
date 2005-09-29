@@ -32,11 +32,8 @@ import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.jface.action.SubMenuManager;
-import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.AbstractModuleConnector;
-import org.jalgo.main.JAlgoGUIConnector;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.datastructure.Node;
 import org.jalgo.module.avl.datastructure.SearchTree;
@@ -57,20 +54,17 @@ extends AbstractModuleConnector {
 	private GUIController gui;
 
 	/**
-	 * Constructs a <code>ModuleConnector</code> object for the AVL module.
+	 * Initializes the <code>ModuleConnector</code> instance for the AVL module.
 	 * Instances of the module specific <code>SearchTree</code>,
 	 * <code>Controller</code> and <code>GUIController</code> are created
 	 * here.
 	 * 
-	 * @see AbstractModuleConnector
+	 * @see AbstractModuleConnector#init()
 	 */
-	public ModuleConnector(Composite comp, SubMenuManager menu,
-		SubToolBarManager tb) {
-		super(comp, menu, tb);
-
+	public void init() {
 		tree = new SearchTree();
 		controller = new Controller(tree);
-		gui = new GUIController(this, comp, menu, tb, controller, tree);
+		gui = new GUIController(this, controller, tree);
 	}
 
 	/**
