@@ -28,14 +28,13 @@
 package org.jalgo.module.synDiaEBNF;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Stack;
 
 import org.eclipse.draw2d.Figure;
 import org.jalgo.main.gui.TextCanvas;
 import org.jalgo.main.gui.widgets.StackCanvas;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaColors;
+import org.jalgo.module.synDiaEBNF.synDia.ReadingOrder;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaAlternative;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaConcatenation;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaElement;
@@ -103,9 +102,10 @@ implements IAlgorithm, Serializable, IAlgoDefConstants, SynDiaColors {
 		stack.push(synDiaDef.getStartElem());
 
 		// show backtracking labels
-		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
-			backtrackingLabels(synDiaDef.getInitialDiagram(k), true);
+		for (SynDiaInitial item : synDiaDef.getInitialDiagrams()) {
+			backtrackingLabels(item, true);
 		}
+		
 		history = new BackTrackHistory();
 	}
 
@@ -170,19 +170,17 @@ implements IAlgorithm, Serializable, IAlgoDefConstants, SynDiaColors {
 	 * @param synDiaDef The <code>SynDiaSystem</code> to check.
 	 */
 	protected void checkReadingOrder(SynDiaSystem synDiaDef) {
-		List synDiaInitials = synDiaDef.getInitialDiagrams();
-		for (int i = 0; i < synDiaInitials.size(); i++) {
-			((SynDiaInitial)synDiaInitials.get(i)).getInnerElem()
-			.checkReadingOrder(0);
+		for (SynDiaInitial item : synDiaDef.getInitialDiagrams()) {
+			item.getInnerElem().checkReadingOrder(ReadingOrder.LEFT_TO_RIGHT);
 		}
 	}
 
 	/**
 	 * Recursively goes through <code>help</code> and its inner elements and
-		 * (i) unmarks them, if they are marked,
-		 * (ii) adds his backtracking label to each <code>SynDiaVariable</code> and
-		 * makes a copy of it, which saves the information where to jump back to, after 
-		 * the diagram it is pointing to was executed.
+	 * (i) unmarks them, if they are marked,
+	 * (ii) adds his backtracking label to each <code>SynDiaVariable</code> and
+	 * makes a copy of it, which saves the information where to jump back to, after 
+	 * the diagram it is pointing to was executed.
 	 * <p>
 	 * This function is called at the beginning of the algorithm, in order to
 	 * set the backtracking labels.
@@ -210,15 +208,12 @@ implements IAlgorithm, Serializable, IAlgoDefConstants, SynDiaColors {
 			backtrackingLabels(((SynDiaRepetition)help).getRepeatedElem(), bool);
 		}
 		if (help instanceof SynDiaAlternative) {
-			for (int i = 0; i < (((SynDiaAlternative)help).getNumOfOptions()); i++) {
-				backtrackingLabels(((SynDiaAlternative)help).getOption(i), bool);
-			}
+			for (SynDiaElement item : ((SynDiaAlternative) help).getOptions())
+				backtrackingLabels(item, bool);
 		}
 		if (help instanceof SynDiaConcatenation) {
-			for (int j = 0; j < ((SynDiaConcatenation)help).getNumOfElements(); j++) {
-				backtrackingLabels(((SynDiaConcatenation)help).getContent(j),
-					bool);
-			}
+			for (SynDiaElement item : ((SynDiaConcatenation) help).getContent())
+				backtrackingLabels(item, bool);
 		}
 	}
 
@@ -243,18 +238,9 @@ implements IAlgorithm, Serializable, IAlgoDefConstants, SynDiaColors {
 	public void finalTasks() {
 		hideBacktrackingLabels();
 
-		Iterator it = synDiaDef.getInitialDiagrams().iterator();
-		SynDiaInitial synDiaInitial;
-		// for each initialfigure ...
-		while (it.hasNext()) {
-			synDiaInitial = (SynDiaInitial)it.next();
-			// reset background color to normal color (should be white)
+		for (SynDiaInitial synDiaInitial : synDiaDef.getInitialDiagrams()) {
+			// reset background color to normal color
 			synDiaInitial.getGfx().setBackgroundColor(diagramNormal);
-
-			// search recursively through the diagram and unmark highlighted
-			// borders
-			// (all borders of elements which were on the path are highlighted)
-			// ... (to do)
 		}
 	}
 
@@ -264,9 +250,8 @@ implements IAlgorithm, Serializable, IAlgoDefConstants, SynDiaColors {
 	 */
 	public void hideBacktrackingLabels() {
 		// hide backtracking labels
-		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
-			backtrackingLabels(synDiaDef.getInitialDiagram(k), false);
+		for (SynDiaInitial synDiaInitial : synDiaDef.getInitialDiagrams()) {
+			backtrackingLabels(synDiaInitial, false);
 		}
 	}
-
 }

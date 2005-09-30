@@ -59,7 +59,7 @@ public class BackTrackHistory {
 		return history.get(++historyPointer);
 	}
 
-	public BackTrackStep getLastHistoryStep() {
+	public BackTrackStep getPreviousHistoryStep() {
 		return history.get(--historyPointer);
 	}
 
@@ -67,8 +67,8 @@ public class BackTrackHistory {
 		return history.get(num).getElem();
 	}
 
-	public void addNewPosStep(Stack currentStack, SynDiaElement currentElem,
-		String generatedWord) {
+	public void addNewPosStep(Stack<SynDiaElement> currentStack,
+			SynDiaElement currentElem, String generatedWord) {
 		BackTrackStep help = new BackTrackStep(currentStack, currentElem,
 			generatedWord);
 		// new Step
@@ -78,17 +78,10 @@ public class BackTrackHistory {
 		if (historyPointer < history.size()) {
 			// another forwardStep already exists, if they are not equal (new
 			// Way) remove the rest
-			if (help.getElem().hashCode() == (history.get(historyPointer)
-			.getElem()).hashCode()) {
-				// everything stay in history
-			}
-			else {
+			if (!(help.getElem().hashCode() == history.get(historyPointer)
+			.getElem().hashCode())) {
 				// go back until currentElement is Rep or Alt
-				LinkedList<BackTrackStep> newList = new LinkedList<BackTrackStep>();
-				for (int i = 0; i < historyPointer; i++) {
-					newList.add(history.get(i));
-				}
-				history = newList;
+				history = history.subList(0, historyPointer);
 				history.add(help);
 			}
 		}

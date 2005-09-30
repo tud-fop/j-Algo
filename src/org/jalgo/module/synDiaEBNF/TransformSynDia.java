@@ -60,14 +60,10 @@ public class TransformSynDia {
 
 	private HashSet<String> terminalSymbols = new HashSet<String>(); // Strings
 
-	private Figure panel;
-
 	private SynDiaSystem def;
 
 	//	ruft Rekursion auf + textcanvas und Definition erstellen
 	public TransformSynDia(Figure panel) {
-		this.panel = panel;
-
 		//get childs
 		List list = panel.getChildren();
 		def = new SynDiaSystem(new SynDiaSystemFigure(list));
@@ -79,18 +75,16 @@ public class TransformSynDia {
 
 		// die Startelemente eines jeden Objektes 
 		//noch rausfinden und in den SynVar setzen 
-		for (int i = 0; i < def.getInitialDiagrams().size(); i++) {
-			for (int j = 0; j < synVariables.size(); j++) {
-				if (def.getInitialDiagram(i).getGfx().getLabel().equals(synVariables.get(j).getLabel())) {
-					synVariables.get(j).setStartElem(def.getInitialDiagram(i));
-				}
+		for (SynDiaInitial synDiaInitial : def.getInitialDiagrams()) {
+			for (SynDiaVariable synVariable : synVariables) {
+				if (synDiaInitial.getGfx().getLabel().equals(synVariable.getLabel()))
+					synVariable.setStartElem(synDiaInitial);
 			}
 		}
 
 		//copy labels of the SynDiaVarialbes in the list into the HashSet
-		for (int i = 0; i < synVariables.size(); i++) {
-			synVariablesSet.add(synVariables.get(i).getLabel());
-		}
+		for (SynDiaVariable synDiaVariable : synVariables)
+			synVariablesSet.add(synDiaVariable.getLabel());
 
 		// every partdiagram is performed
 		def.setSynVariables(synVariablesSet);
@@ -126,7 +120,7 @@ public class TransformSynDia {
 		SynDiaInitial elem = new SynDiaInitial(diagram, startElem);
 		// set StartElement in Definition
 		if (diagram.isStartFigure()) {
-			this.def.setStartElem(elem);
+			def.setStartElem(elem);
 		}
 
 		// store the variables, ther could exsist Diagrams, which are as SynVar,
@@ -139,9 +133,9 @@ public class TransformSynDia {
 		//TODO in geraden Tiefen eigentlich die Concatenationen umdrehen!
 
 		SynDiaElement straightAheadElem = searchTypAndTransform(figure.getTopFigure());
-		SynDiaElement repetedElem = searchTypAndTransform(figure.getBotFigure());
+		SynDiaElement repeatedElem = searchTypAndTransform(figure.getBotFigure());
 
-		return new SynDiaRepetition(figure, straightAheadElem, repetedElem);
+		return new SynDiaRepetition(figure, straightAheadElem, repeatedElem);
 	}
 
 	private SynDiaAlternative transformAlternativeFigure(AlternativeFigure figure) {
@@ -158,6 +152,7 @@ public class TransformSynDia {
 	private SynDiaConcatenation transformConcatenationFigure(ConcatenationFigure figure) {
 		List inputList = figure.getInteriorFigures();
 		List<SynDiaElement> outputList = new LinkedList<SynDiaElement>();
+		
 		for (int i = 0; i < inputList.size(); i++) {
 			SynDiaElement listElem = searchTypAndTransform((Figure) inputList.get(i));
 			outputList.add(listElem);
@@ -170,16 +165,12 @@ public class TransformSynDia {
 	}
 
 	private SynDiaTerminal transformTerminalFigure(TerminalFigure figure) {
-		//store Label in the list
 		terminalSymbols.add(figure.getLabel());
-		// create new abstract Terminal
 		return new SynDiaTerminal(figure);
 	}
 
 	private SynDiaVariable transformSynDiaFigure(VariableFigure figure) {
-		// create new abstract Variable
 		SynDiaVariable elem = new SynDiaVariable(figure);
-		//store Variable in list
 		synVariables.add(elem);
 		return elem;
 	}

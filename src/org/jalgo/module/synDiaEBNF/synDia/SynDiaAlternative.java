@@ -56,7 +56,7 @@ public class SynDiaAlternative
 		return options.size();
 	}
 
-	public List getOptions() {
+	public List<SynDiaElement> getOptions() {
 		return options;
 	}
 

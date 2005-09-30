@@ -23,7 +23,6 @@
 
 package org.jalgo.module.synDiaEBNF.gfx;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.draw2d.Label;

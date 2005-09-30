@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -32,7 +35,6 @@ import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.ToolBar;
 import org.jalgo.main.gfx.ClickListener;
 import org.jalgo.main.gui.actions.ExportAction;
 import org.jalgo.main.gui.actions.PrintViewAction;
@@ -60,14 +62,11 @@ public class CreateSynDiaClickGui extends Gui implements Serializable {
 
 	private static final long serialVersionUID = -557820845220356421L;
 	private GraphViewForm form2;
-	private ModuleController mc;
 	private ClickListener form2ClickListener;
 
 	public CreateSynDiaClickGui(Composite parent, ModuleController mc)
 	{
 		super(parent);
-		
-		this.mc = mc;
 		
 		GfxUtil.setAppShell(parent.getShell());
 
@@ -120,10 +119,8 @@ public class CreateSynDiaClickGui extends Gui implements Serializable {
 		toolbarMgr2.add(new Separator());	
 		toolbarMgr2.add(new SynDiaDoneAction(form2.getPanel(), mc));
 
-		ToolBar toolbar2 = toolbarMgr2.createControl(form2);
-
-		//		Attach all to ViewForm
-		form2.setTopCenter(toolbar2);
+		// Attach all to ViewForm
+		form2.setTopCenter(toolbarMgr2.createControl(form2));
 		form2.setText(Messages.getString("synDiaEBNF",
 			"CreateSynDiaClickGui.Use_the_buttons_below_to_get_a_new_syntax_diagram._1")); //$NON-NLS-1$
 		form2.setImage(ImageDescriptor.createFromURL(
@@ -140,5 +137,4 @@ public class CreateSynDiaClickGui extends Gui implements Serializable {
 	public Figure getSynDiaPanel() {
 		return (Figure) form2.getPanel();
 	}
-
 }

@@ -170,7 +170,7 @@ public class SynDiaSystem implements Serializable {
 		gfx = figure;
 	}
 
-	public List getInitialDiagrams() {
+	public List<SynDiaInitial> getInitialDiagrams() {
 		return initialDia;
 	}
 

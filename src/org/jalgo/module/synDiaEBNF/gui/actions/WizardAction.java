@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for 
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -41,11 +44,9 @@ public class WizardAction extends Action implements Serializable {
 
 	private static final long serialVersionUID = -2670334124635815595L;
 	private ModuleController mc;
-	private Composite parent;
 
 	public WizardAction(ModuleController mc, Composite parent) {
 		this.mc = mc;
-		this.parent = parent;
 		setText(Messages.getString("synDiaEBNF",
 			"WizardAction.Wizard_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("synDiaEBNF",

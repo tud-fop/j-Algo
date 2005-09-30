@@ -37,7 +37,6 @@ public class StandAloneSynDiaFigure extends SynDiaFigure {
 
 	private static final long serialVersionUID = 1932335076118213879L;
 	private String label;
-	private boolean isTerminal;
 	private PolylineConnection incomingConnection;
 	private PolylineConnection exitingConnection;
 
@@ -50,7 +49,6 @@ public class StandAloneSynDiaFigure extends SynDiaFigure {
 	 */
 	protected StandAloneSynDiaFigure(String label, boolean isTerminal) {
 		this.label = label;
-		this.isTerminal = isTerminal;
 	}
 
 	/**

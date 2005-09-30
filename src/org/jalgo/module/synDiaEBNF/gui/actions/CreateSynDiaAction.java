@@ -45,11 +45,9 @@ extends Action
 implements IModeConstants, Serializable {
 
 	private static final long serialVersionUID = 1888795917445235903L;
-	private Composite parent;
 	private ModuleController mc;
 
 	public CreateSynDiaAction(ModuleController mc, Composite parent) {
-		this.parent = parent;
 		this.mc = mc;
 		setText(Messages.getString("synDiaEBNF",
 			"CreateSynDiaAction.Syntaxdiagramme_erstellen_1")); //$NON-NLS-1$

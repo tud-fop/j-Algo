@@ -44,7 +44,7 @@ implements Serializable {
 	private static final long serialVersionUID = -315723239856067064L;
 
 	// the Stack configuration of this step
-	private Stack currentStack;
+	private Stack<SynDiaElement> currentStack;
 
 	// the Element which is worked with in this step
 	private SynDiaElement currentElem;
@@ -54,7 +54,7 @@ implements Serializable {
 	/**
 	 * @param currentStack The Stack Configuration of this step
 	 */
-	public BackTrackStep(Stack currentStack, SynDiaElement currentElem,
+	public BackTrackStep(Stack<SynDiaElement> currentStack, SynDiaElement currentElem,
 		String generatedWord) {
 		this.currentStack = currentStack;
 		this.currentElem = currentElem;
@@ -75,11 +75,11 @@ implements Serializable {
 	/**
 	 * @return The Stack Configuration of this step
 	 */
-	public Stack getStackConfig() {
+	public Stack<SynDiaElement> getStackConfig() {
 		return currentStack;
 	}
 
-	public void setStackConfig(Stack currentStack) {
+	public void setStackConfig(Stack<SynDiaElement> currentStack) {
 		this.currentStack = currentStack;
 	}
 

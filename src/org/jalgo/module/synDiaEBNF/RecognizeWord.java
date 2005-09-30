@@ -42,7 +42,6 @@ import org.jalgo.main.util.GfxUtil;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaColors;
-import org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaAlternative;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaConcatenation;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaElement;
@@ -133,9 +132,9 @@ implements IAlgorithm, SynDiaColors, Serializable {
 			"synDiaEBNF", "RecognizeWord.Algo_Description_24_27")}); //$NON-NLS-1$
 
 		// show backtracking labels
-		for (int k = 0; k < this.synDiaDef.getInitialDiagrams().size(); k++) {
-			backtrackingLabels(synDiaDef.getInitialDiagram(k), true);
-		}
+		for (SynDiaInitial synDiaInitial : synDiaDef.getInitialDiagrams())
+			backtrackingLabels(synDiaInitial, true);
+		
 		history = new BackTrackHistory();
 		wordInputDialog();
 	}
@@ -202,7 +201,7 @@ implements IAlgorithm, SynDiaColors, Serializable {
 		if (!hasPreviousHistStep()) { throw new IndexOutOfBoundsException(
 			"there is no further history step to go back"); //$NON-NLS-1$
 		}
-		restoreStep(history.getLastHistoryStep());
+		restoreStep(history.getPreviousHistoryStep());
 		refreshGeneratedWord(generatedWord);
 
 		stack.push(currentElement);
@@ -259,7 +258,7 @@ implements IAlgorithm, SynDiaColors, Serializable {
 		}
 
 		// check, if it is actually possible to perform a further step
-		if ((stack.peek() != null)) {
+		if (stack.peek() != null) {
 
 			// fetch the new SynDiaElement to work with
 			currentElement = stack.pop();
@@ -313,12 +312,9 @@ implements IAlgorithm, SynDiaColors, Serializable {
 
 	private void colorTheDiagram(InitialFigure current) {
 		// reset all diagrams white
-		List list = this.synDiaDef.getGfx().getSynDias();
-
-		for (int k = 0; k < list.size(); k++) {
-			((SynDiaFigure)list.get(k)).setBackgroundColor(diagramNormal);
-		}
-
+		for (InitialFigure initialFigure : synDiaDef.getGfx().getSynDias())
+			initialFigure.setBackgroundColor(diagramNormal);
+		
 		// set the one
 		current.setBackgroundColor(diagramHighlight);
 	}
@@ -395,7 +391,7 @@ implements IAlgorithm, SynDiaColors, Serializable {
 	}
 
 	private void doNextRepetition(SynDiaRepetition currentElem) {
-		if (!(currentElem.isStraightAheadElemDone())) {// StraightAheadElement
+		if (!currentElem.isStraightAheadElemDone()) {// StraightAheadElement
 			// not done so far
 			// set new Stack Configuration
 			currentElem.setStraightAheadElemDone(true);
@@ -574,11 +570,6 @@ implements IAlgorithm, SynDiaColors, Serializable {
 					result = (Integer.valueOf(inDialog.getValue())).intValue();
 				}
 				catch (NumberFormatException e) {
-					// MessageDialog.openError(
-					// null,
-					// "Warning",
-					// "Please use a integer value. Using default value now:
-					// 1.");
 					result = 0;
 				}
 			}

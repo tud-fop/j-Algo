@@ -42,7 +42,6 @@ import org.jalgo.main.util.GfxUtil;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaColors;
-import org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaAlternative;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaConcatenation;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaElement;
@@ -181,7 +180,7 @@ implements SynDiaColors, Serializable {
 		if (!hasPreviousHistStep()) { throw new IndexOutOfBoundsException(
 			"there is no further history step to go back"); //$NON-NLS-1$
 		}
-		restoreStep(history.getLastHistoryStep());
+		restoreStep(history.getPreviousHistoryStep());
 		refreshGeneratedWord(generatedWord);
 
 		stack.push(currentElement);
@@ -191,16 +190,11 @@ implements SynDiaColors, Serializable {
 		algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
 
 		if (currentElement instanceof SynDiaTerminal) {
-			// mark the SynDiaTerminal
 			((SynDiaTerminal)currentElement).unmarkObject(false);
-
-			// refresh the generatedWord
 			refreshGeneratedWord(generatedWord);
 		}
 		else if (currentElement instanceof SynDiaVariable) {
 			// SynDiaVariable Jump in in the next step
-
-			// mark the currentElem
 			((SynDiaVariable)currentElement).unmarkObject(false);
 
 			// remove correspondent backtracking label on StackCanvas
@@ -239,7 +233,6 @@ implements SynDiaColors, Serializable {
 		}
 
 		if (stack.peek() != null) {
-
 			// fetch the new SynDiaElement to work with
 			currentElement = stack.pop();
 
@@ -295,11 +288,8 @@ implements SynDiaColors, Serializable {
 
 	private void colorTheDiagram(InitialFigure current) {
 		// reset all diagrams white
-		List list = this.synDiaDef.getGfx().getSynDias();
-
-		for (int k = 0; k < list.size(); k++) {
-			((SynDiaFigure)list.get(k)).setBackgroundColor(diagramNormal);
-		}
+		for (InitialFigure initialFigure : synDiaDef.getGfx().getSynDias())
+			initialFigure.setBackgroundColor(diagramNormal);
 
 		// set the one
 		current.setBackgroundColor(diagramHighlight);
@@ -393,8 +383,6 @@ implements SynDiaColors, Serializable {
 		performNextStep();
 	}
 
-	// ----------------------------redoNext*XYZ()--------------------------------
-
 	private void redoNextTerm(SynDiaTerminal currentElem) {
 		// mark the right algorithmen Text-field
 		algoTxtCanvas.demarkAll();
@@ -404,7 +392,7 @@ implements SynDiaColors, Serializable {
 		currentElem.markObject();
 
 		// refresh the generatedWord
-		generatedWord = generatedWord + currentElem.getLabel();
+		generatedWord += currentElem.getLabel();
 		refreshGeneratedWord(generatedWord);
 	}
 
@@ -479,15 +467,10 @@ implements SynDiaColors, Serializable {
 					result = (Integer.valueOf(inDialog.getValue())).intValue();
 				}
 				catch (NumberFormatException e) {
-					// MessageDialog.openError(
-					// null,
-					// "Warning",
-					// "Please use a integer value. Using default value now:
-					// 1.");
 					result = 0;
 				}
 			}
-			if ((result > 0) && (result <= way)) { return result - 1; }
+			if ((result > 0) && (result <= way)) return result - 1;
 			JAlgoGUIConnector.getInstance().showWarningMessage(
 				Messages.getString("synDiaEBNF",
 					"GenerateWord.Please_use_a_value_between_1_and__38") + //$NON-NLS-1$
@@ -497,9 +480,12 @@ implements SynDiaColors, Serializable {
 		return 0;
 	}
 
+	/**
+	 * ask the user, whether the repetition should repeated
+	 * @param repetition the repetition
+	 * @return the user answer
+	 */
 	private boolean repetionDialog(SynDiaRepetition repetition) {
-		// ask the user, if the repetition should makes!
-		// return boolean if or not
 		return JAlgoGUIConnector.getInstance().showConfirmDialog(
 			Messages.getString("synDiaEBNF", 
 				"GenerateWord.Do_you_want_to_go_through_the_repetition__41"), //$NON-NLS-1$

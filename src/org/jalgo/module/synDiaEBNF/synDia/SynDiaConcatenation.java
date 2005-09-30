@@ -58,22 +58,20 @@ public class SynDiaConcatenation extends SynDiaComposition implements Serializab
 
 	public List<SynDiaElement> getContent() {
 		//read from left-to-right? --> inverse list!
-		if (this.getReadingOrder() == RIGHT_TO_LEFT)
+		if (this.getReadingOrder() == ReadingOrder.RIGHT_TO_LEFT)
 			return inverse(elements);
 		return elements;
 	}
 
 	public SynDiaElement getContent(int num) {
 		//read from left-to-right? --> inverse list!
-		if (this.getReadingOrder() == RIGHT_TO_LEFT) {
+		if (this.getReadingOrder() == ReadingOrder.RIGHT_TO_LEFT) {
 			List elementsInverted = inverse(elements);
 			if (elementsInverted.get(num) instanceof SynDiaElement) {
 				return (SynDiaElement) elementsInverted.get(num);
 			}
-		} else {
-			return elements.get(num);
 		}
-		return null;
+		return elements.get(num);
 	}
 
 	public void setContent(int num, SynDiaElement newElem) {

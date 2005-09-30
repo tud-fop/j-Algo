@@ -1,5 +1,4 @@
-/*
- * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
  * students and lecturers of computer sience. It is written in Java and platform
  * independant. j-Algo is developed with the help of Dresden University of
  * Technology.
@@ -46,17 +45,14 @@ extends Action
 implements IModeConstants, Serializable {
 
 	private static final long serialVersionUID = 6893127259423133755L;
-	private Composite parent;
 	private ModuleController mc;
 
 	public CreateEbnfAction(ModuleController mc, Composite parent) {
 		this.mc = mc;
-		this.parent = parent;
 		setText(Messages.getString("synDiaEBNF",
 			"CreateEbnfAction.EBNF_erstellen_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("synDiaEBNF",
 			"CreateEbnfAction.Eingabe_von_EBNF_Termen._2")); //$NON-NLS-1$
-		// TODO: find or design nice buttons
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/createEbnf.gif")));
 	}

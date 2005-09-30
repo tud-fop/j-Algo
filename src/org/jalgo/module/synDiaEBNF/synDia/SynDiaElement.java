@@ -35,23 +35,23 @@ import org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure;
  * @author Stephan Creutz
  */
 public abstract class SynDiaElement
-	implements Serializable, IReadingOrderConstants {
+	implements Serializable {
 
-	private int readingOrder = LEFT_TO_RIGHT;
+	private ReadingOrder readingOrder = ReadingOrder.LEFT_TO_RIGHT;
 
-	public int getReadingOrder() {
+	public ReadingOrder getReadingOrder() {
 		return readingOrder;
 	}
 
-	public void setReadingOrder(int readingOrder) {
+	public void setReadingOrder(ReadingOrder readingOrder) {
 		this.readingOrder = readingOrder;
 	}
 
 	public void changeReadingOrder() {
-		if (readingOrder == LEFT_TO_RIGHT)
-			readingOrder = RIGHT_TO_LEFT;
+		if (readingOrder == ReadingOrder.LEFT_TO_RIGHT)
+			readingOrder = ReadingOrder.RIGHT_TO_LEFT;
 		else
-			readingOrder = LEFT_TO_RIGHT;
+			readingOrder = ReadingOrder.LEFT_TO_RIGHT;
 	}
 
 	/**
@@ -60,28 +60,24 @@ public abstract class SynDiaElement
 	 * right-to-left) you have to go through in a syntactical diagram.
 	 * @param r The reading order of the element to start with.
 	 */
-	public void checkReadingOrder(int readingOrder) {
+	public void checkReadingOrder(ReadingOrder readingOrder) {
 		this.setReadingOrder(readingOrder);
 		if (this instanceof SynDiaComposition) {
 			if (this instanceof SynDiaConcatenation) {
 				//set all inner elements of concatenation to value of this element
-				for (int i = 0;
-					i < (((SynDiaConcatenation) this).getContent()).size();i++) {
-					((SynDiaConcatenation) this).getContent(i).checkReadingOrder(readingOrder);
-				}
+				for (SynDiaElement item : ((SynDiaConcatenation) this).getContent())
+					item.checkReadingOrder(readingOrder);
 			} else if (this instanceof SynDiaAlternative) {
 				//set all inner elements of alternative to value of this element
-				for (int i = 0;
-					i < (((SynDiaAlternative) this).getOptions()).size();i++) {
-					((SynDiaAlternative) this).getOption(i).checkReadingOrder(readingOrder);
-				}
+				for (SynDiaElement item : ((SynDiaAlternative) this).getOptions())
+					item.checkReadingOrder(readingOrder);
 			} else if (this instanceof SynDiaRepetition) {
 				//set straightAheadElement to value of this element and repeatedElement to inverse
-				int rInverse;
-				if (readingOrder == LEFT_TO_RIGHT)
-					rInverse = RIGHT_TO_LEFT;
+				ReadingOrder rInverse;
+				if (readingOrder == ReadingOrder.LEFT_TO_RIGHT)
+					rInverse = ReadingOrder.RIGHT_TO_LEFT;
 				else
-					rInverse = LEFT_TO_RIGHT;
+					rInverse = ReadingOrder.LEFT_TO_RIGHT;
 				((SynDiaRepetition) this).getStraightAheadElem().checkReadingOrder(readingOrder);
 				((SynDiaRepetition) this).getRepeatedElem().checkReadingOrder(rInverse);
 			}

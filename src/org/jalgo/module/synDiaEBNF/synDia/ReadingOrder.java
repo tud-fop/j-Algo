@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -18,14 +21,14 @@
  */
 
 /*
- * Created on 30.01.2005
+ * Created on 30.09.2005
  */
 package org.jalgo.module.synDiaEBNF.synDia;
 
 /**
- * @author Michael Pradel
+ * @author Stephan Creutz
  */
-public interface IReadingOrderConstants {
-	public final int LEFT_TO_RIGHT = 0;
-	public final int RIGHT_TO_LEFT = 1;
+public enum ReadingOrder {
+	LEFT_TO_RIGHT,
+	RIGHT_TO_LEFT
 }
