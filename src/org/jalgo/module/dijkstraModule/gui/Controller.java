@@ -55,6 +55,7 @@ import org.jalgo.module.dijkstraModule.actions.ActionStack;
 import org.jalgo.module.dijkstraModule.actions.ShowAlgorithmPageAction;
 import org.jalgo.module.dijkstraModule.actions.ShowEditPageAction;
 import org.jalgo.module.dijkstraModule.model.DijkstraAlgorithm;
+import org.jalgo.module.dijkstraModule.model.Edge;
 import org.jalgo.module.dijkstraModule.model.Graph;
 import org.jalgo.module.dijkstraModule.model.Node;
 import org.jalgo.module.dijkstraModule.model.State;
@@ -162,7 +163,8 @@ extends Observable {
 
 	protected _Observable m_StatusbarObservable;
 	protected StatusbarText m_strStatusbarText;
-	protected HashMap m_mapNodes2AlgoStatesArrayLists = new HashMap();
+	protected HashMap<Integer, ArrayList<State>> m_mapNodes2AlgoStatesArrayLists =
+		new HashMap<Integer, ArrayList<State>>();
 
 	protected int m_nCurStep = 0;
 
@@ -176,7 +178,7 @@ extends Observable {
 		super();
 		this.connector = connector;
 		m_actions = new ActionStack(0);
-		m_curGraph = new Graph(new ArrayList(), new ArrayList());
+		m_curGraph = new Graph(new ArrayList<Node>(), new ArrayList<Edge>());
 		m_StatusbarObservable = new _Observable();
 
 		m_composite = JAlgoGUIConnector.getInstance().getModuleComponent(connector);
@@ -326,14 +328,12 @@ extends Observable {
 		m_mapNodes2AlgoStatesArrayLists.clear();
 		DijkstraAlgorithm DijkstraAlgorithm = new DijkstraAlgorithm(
 			new ColorFactory(m_composite.getDisplay()), getGraph());
-		Graph gr = getGraph();
-		Iterator iterNodes = gr.getNodeList().iterator();
-		Node prevStartNode = gr.getStartNode();
-		while (iterNodes.hasNext()) {
-			Node node = (Node)iterNodes.next();
+		Graph graph = getGraph();
+		Node prevStartNode = graph.getStartNode();
+		for (Node node : graph.getNodeList()) {
 			boolean bStart = node.getStart();
 			DijkstraAlgorithm.generateStates(node);
-			ArrayList arList = new ArrayList();
+			ArrayList<State> arList = new ArrayList<State>();
 
 			int nStateCount = DijkstraAlgorithm.getStateCount();
 
@@ -358,7 +358,7 @@ extends Observable {
 	public State getState(int nStep) {
 		Node node = getGraph().getStartNode();
 		if (node == null) return null;
-		ArrayList arList = (ArrayList)m_mapNodes2AlgoStatesArrayLists
+		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
 		.get(new Integer(node.getIndex()));
 		if (nStep >= arList.size()) nStep = arList.size() - 1;
 		else if (nStep < 0) nStep = 0;
@@ -389,7 +389,7 @@ extends Observable {
 	public int getStepCount() {
 		Node node = getGraph().getStartNode();
 		if (node == null) return 0;
-		ArrayList arList = (ArrayList)m_mapNodes2AlgoStatesArrayLists
+		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
 		.get(new Integer(node.getIndex()));
 		return ((arList != null) ? (arList.size()) : 0);
 	}
@@ -401,7 +401,7 @@ extends Observable {
 	public boolean hasNextStep(int nStep) {
 		Node node = getGraph().getStartNode();
 		if (node == null) return false;
-		ArrayList arList = (ArrayList)m_mapNodes2AlgoStatesArrayLists
+		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
 		.get(new Integer(node.getIndex()));
 		return ((arList != null) ? (nStep + 1) < arList.size() : false);
 	}
@@ -413,7 +413,7 @@ extends Observable {
 	public boolean hasPrevStep(int nStep) {
 		Node node = getGraph().getStartNode();
 		if (node == null) return false;
-		ArrayList arList = (ArrayList)m_mapNodes2AlgoStatesArrayLists
+		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
 		.get(new Integer(node.getIndex()));
 		return ((arList != null) ? (nStep > 0) : false);
 	}
@@ -426,7 +426,7 @@ extends Observable {
 		if (hasNextStep(nStep) == false) return false;
 		Node node = getGraph().getStartNode();
 		if (node == null) return false;
-		ArrayList arList = (ArrayList)m_mapNodes2AlgoStatesArrayLists
+		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
 		.get(new Integer(node.getIndex()));
 		Iterator iter = arList.iterator();
 		for (int i = 0; iter.hasNext(); i++) {
@@ -444,7 +444,7 @@ extends Observable {
 		if (hasPrevStep(nStep) == false) return false;
 		Node node = getGraph().getStartNode();
 		if (node == null) return false;
-		ArrayList arList = (ArrayList)m_mapNodes2AlgoStatesArrayLists
+		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
 		.get(new Integer(node.getIndex()));
 		Iterator iter = arList.iterator();
 		for (int i = 0; iter.hasNext(); i++) {
@@ -474,7 +474,7 @@ extends Observable {
 	public int getPrevMacroStepIndex() {
 		Node node = getGraph().getStartNode();
 		if (node == null) return 0;
-		ArrayList arList = (ArrayList)m_mapNodes2AlgoStatesArrayLists
+		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
 		.get(new Integer(node.getIndex()));
 
 		for (int i = getCurrentStep() - 1; i >= 0; i--) {
@@ -491,7 +491,7 @@ extends Observable {
 	public int getNextMacroStepIndex() {
 		Node node = getGraph().getStartNode();
 		if (node == null) return 0;
-		ArrayList arList = (ArrayList)m_mapNodes2AlgoStatesArrayLists
+		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
 		.get(new Integer(node.getIndex()));
 
 		for (int i = getCurrentStep() + 1; i < arList.size(); i++) {
@@ -544,7 +544,7 @@ extends Observable {
 		// the right size from the start.
 		m_folder.pack();
 		m_folder.setSize(m_composite.getSize());
-
+		
 		// HS -- create toolbar
 		m_undoToolBarAction = new UndoToolBarAction(this);
 		m_undoToolBarAction.setEnabled(false);
@@ -648,12 +648,10 @@ extends Observable {
 	 * Call this function to inform the Controller's observers about changes
 	 */
 	public void setModifiedFlag() {
-
 		this.updateToolBar();
 		super.setChanged();
 		super.notifyObservers(this);
 		super.clearChanged();
-
 	}
 
 	public void registerStatusbarObserver(Observer observer) {

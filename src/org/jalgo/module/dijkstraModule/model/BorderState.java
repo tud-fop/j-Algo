@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// $Id: BorderState.java,v 1.3 2005/08/30 09:45:08 styjdt Exp $
+// $Id: BorderState.java,v 1.4 2005/10/03 10:34:12 stephancr Exp $
 
 package org.jalgo.module.dijkstraModule.model;
 
@@ -59,7 +59,7 @@ public class BorderState implements Cloneable {
 	 * @see java.lang.Object#clone()
 	 */
 	public Object clone() {
-	    ArrayList newBorder = new ArrayList(border.size());
+	    ArrayList<Object> newBorder = new ArrayList<Object>(border.size());
 	    Iterator it = border.iterator();
 	    
 	    while (it.hasNext()) {

@@ -32,7 +32,7 @@ import java.lang.Comparable;
  * Represents a Node which is characterized by its index -- an integer between 1 and 9.
  *
  */
-public class Node extends GraphElement implements Serializable, Comparable {
+public class Node extends GraphElement implements Serializable, Comparable<Node> {
 
 	private static final long serialVersionUID = 3662600887046879993L;
 
@@ -157,21 +157,13 @@ public class Node extends GraphElement implements Serializable, Comparable {
 	 *  @param anotherNode Node to compare with
 	 *  @return -1 for less, 0 for equal and 1 for greater (this than anotherNode)
 	 */
-	public int compareTo(Object anotherNode) {
-		try {
-			Node node = (Node) anotherNode;
-
-			if (node.getIndex() < this.index) {
-				return 1;
-			}
-			if (node.getIndex() == this.index) {
-				return 0;
-			}
-			// (node.getIndex() > this.index)
-			return -1;
-		} catch (ClassCastException e) {
-			return -1;
-		}
+	public int compareTo(Node anotherNode) {
+		if (anotherNode.getIndex() < this.index)
+			return 1;
+		if (anotherNode.getIndex() == this.index)
+			return 0;
+		// (node.getIndex() > this.index)
+		return -1;
 	}
 
 	/** Sets the position of this node on the screen.

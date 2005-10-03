@@ -25,7 +25,6 @@
  */
 package org.jalgo.module.dijkstraModule.gui;
 
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -38,7 +37,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.jalgo.module.dijkstraModule.gfx.GraphParent;
 import org.jalgo.module.dijkstraModule.model.Graph;
-import org.jalgo.module.dijkstraModule.model.Node;
 import org.jalgo.module.dijkstraModule.model.State;
 
 /**
@@ -65,10 +63,6 @@ public class AlgorithmGraphComposite extends ControllerComposite {
 			State dj = ctrl.getState(ctrl.getCurrentStep());
 			if (dj != null) {
 				Graph gr = dj.getGraph();
-				Iterator nodeIter = gr.getNodeList().iterator();
-				while (nodeIter.hasNext()) {
-					Node node = (Node) nodeIter.next();
-				}
 
 				m_graphParent.setGraph(gr);
 				m_graphParent.update();

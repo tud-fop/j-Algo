@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -27,6 +30,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Hannes Strass, Martin Winter
@@ -38,9 +42,9 @@ public class Graph implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = -5343300138161726312L;
 
-	private ArrayList<Node> nodeList;
+	private List<Node> nodeList;
 
-	private ArrayList<Edge> edgeList;
+	private List<Edge> edgeList;
 
 	/**
 	 *  creates a new Graph with new, empty ArrayLists
@@ -55,7 +59,7 @@ public class Graph implements Serializable, Cloneable {
 	 * @param nodes the Node list
 	 * @param edges the Edge list
 	 */
-	public Graph(ArrayList<Node> nodes, ArrayList<Edge> edges) {
+	public Graph(List<Node> nodes, List<Edge> edges) {
 		nodeList = nodes;
 		edgeList = edges;
 	}
@@ -204,32 +208,32 @@ public class Graph implements Serializable, Cloneable {
 	 * @return the Edge list according to Prof. Vogler's script without leading and trailing braces
 	 */
 	public String getEdgeListText() {
-		String returnValue = "";
+		StringBuffer returnValue = new StringBuffer();
 
 		if (edgeList.size() > 0) {
-			returnValue = returnValue + edgeList.get(0).getText();
+			returnValue.append(edgeList.get(0).getText());
 		}
 		for (int i = 1; i < edgeList.size(); i++) {
-			returnValue = returnValue + ", " + edgeList.get(i).getText();
+			returnValue.append(", ").append(edgeList.get(i).getText());
 		}
 
-		return returnValue;
+		return returnValue.toString();
 	}
 
 	/**
 	 * @return the Node list according to Prof. Vogler's script  without leading and trailing braces
 	 */
 	public String getNodeListText() {
-		String returnValue = "";
+		StringBuffer returnValue = new StringBuffer();
 
 		if (nodeList.size() > 0) {
-			returnValue = returnValue + nodeList.get(0).getIndex();
+			returnValue.append(nodeList.get(0).getIndex());
 		}
 		for (int i = 1; i < nodeList.size(); i++) {
-			returnValue = returnValue + ", " + nodeList.get(i).getIndex();
+			returnValue.append(", ").append(nodeList.get(i).getIndex());
 		}
 
-		return returnValue;
+		return returnValue.toString();
 	}
 
 	/** Automaticly changes Node Positions and arranges Nodes in a circle with their indexes ascending clockwise.
@@ -345,7 +349,7 @@ public class Graph implements Serializable, Cloneable {
 	/**
 	 * @return the Node list
 	 */
-	public ArrayList getNodeList() {
+	public List<Node> getNodeList() {
 		return nodeList;
 	}
 
@@ -365,7 +369,7 @@ public class Graph implements Serializable, Cloneable {
 	/**
 	 * @return the Edge list
 	 */
-	public ArrayList getEdgeList() {
+	public List<Edge> getEdgeList() {
 		return edgeList;
 	}
 
@@ -456,14 +460,14 @@ public class Graph implements Serializable, Cloneable {
 		 * 				already existing elements should not be overwritten (changed-flag)
 		 */
 
-		ArrayList anotherNodeList = anotherGraph.getNodeList(); // NOT ANOTHER NODE LIST! (coming to cinemas soon)
-		ArrayList anotherEdgeList = anotherGraph.getEdgeList();
+		List<Node> anotherNodeList = anotherGraph.getNodeList(); // NOT ANOTHER NODE LIST! (coming to cinemas soon)
+		List<Edge> anotherEdgeList = anotherGraph.getEdgeList();
 
 		for (int i = 0; i < anotherNodeList.size(); i++) {
-			this.addNode((Node) anotherNodeList.get(i));
+			this.addNode(anotherNodeList.get(i));
 		}
 		for (int i = 0; i < anotherEdgeList.size(); i++) {
-			this.addEdge((Edge) anotherEdgeList.get(i));
+			this.addEdge(anotherEdgeList.get(i));
 		}
 
 		/* direction 2:
@@ -481,7 +485,7 @@ public class Graph implements Serializable, Cloneable {
 			currentNode = nodeList.get(i); // get an element from this Graph
 
 			for (int j = 0; j < anotherNodeList.size(); j++) {
-				if (currentNode.getIndex() == ((Node) anotherNodeList.get(j)).getIndex())
+				if (currentNode.getIndex() == anotherNodeList.get(j).getIndex())
 					deleteIt = false;
 			}
 			if (deleteIt)
@@ -495,7 +499,7 @@ public class Graph implements Serializable, Cloneable {
 			currentEdge = edgeList.get(i); // get an element from this Graph
 
 			for (int j = 0; j < anotherEdgeList.size(); j++) {
-				if (currentEdge.equals((Edge) anotherEdgeList.get(j)))
+				if (currentEdge.equals(anotherEdgeList.get(j)))
 					deleteIt = false;
 			}
 			if (deleteIt)

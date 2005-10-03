@@ -63,7 +63,6 @@ implements MouseListener, MouseMotionListener {
 	private boolean inOperation = false;			// Set when this node visual is the subject of the current operation.
 	private boolean containsMouse = false;			// Set when mouse enters, reset when mouse exits.
 	
-	private Device device;
 	private Label label;
 	
 	/**
@@ -75,7 +74,6 @@ implements MouseListener, MouseMotionListener {
 	public NodeVisual(Device device, GraphParent parent, Node modelNode) {
 		super(parent);
 		
-		this.device = device;
 		this.center = modelNode.getPosition().getScreenPoint(parent.getBounds());
 		
 		setFlags(modelNode.getFlags());

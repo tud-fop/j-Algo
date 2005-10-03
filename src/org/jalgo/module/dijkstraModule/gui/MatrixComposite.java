@@ -23,7 +23,6 @@
  */
 package org.jalgo.module.dijkstraModule.gui;
 
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -149,16 +148,16 @@ public class MatrixComposite extends ControllerComposite {
 		setLayout(new FillLayout());
 
 		Composite compo = new Composite(this, SWT.NONE);
-		GridLayout l = new GridLayout();
-		l.numColumns = 10;
-		l.makeColumnsEqualWidth = true;
-		compo.setLayout(l);
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 10;
+		layout.makeColumnsEqualWidth = true;
+		compo.setLayout(layout);
 		compo
 				.addMouseTrackListener(new StatusbarTextMouseTrackAdapter(
 						getController(),
 						"Eingabe von Kantengewichten zwischen je zwei Knoten. Gewichte werden automatisch zur Hauptdiagonale symmetrisch erg\u00E4nzt, da Graph ungerichtet ist. Kante l\u00F6schen durch Eingabe von Minus (-)."));
 
-		for (int i = 0; i < l.numColumns; i++) {
+		for (int i = 0; i < layout.numColumns; i++) {
 			Label label = new Label(compo, SWT.CENTER);
 			if (i > 0)
 				m_arColLabels[i - 1] = label;
@@ -169,7 +168,7 @@ public class MatrixComposite extends ControllerComposite {
 			label.setLayoutData(g);
 		}
 
-		for (int i = 0; i < l.numColumns - 1; i++) {
+		for (int i = 0; i < layout.numColumns - 1; i++) {
 			createOneRowEditFields(compo, i + 1);
 		}
 		Label label = new Label(compo, SWT.CENTER);
@@ -299,7 +298,6 @@ public class MatrixComposite extends ControllerComposite {
 	 * set all textfields of the matrix empty 
 	 */
 	protected void clearGraph() {
-
 		for (int l = 0; l < 9; l++) {
 			for (int i = 0; i < 9; i++) {
 				m_arTextfields[i][l].setText("");
@@ -330,17 +328,14 @@ public class MatrixComposite extends ControllerComposite {
 			}
 
 		}
-		Iterator iter = graph.getEdgeList().iterator();
-		while (iter.hasNext()) {
-			Edge edge = (Edge) iter.next();
+		
+		for (Edge edge : graph.getEdgeList()) {
 			int i = edge.getStartNodeIndex() - 1;
 			int l = edge.getEndNodeIndex() - 1;
 			if ((i >= 0) && (i <= 8) && (l >= 0) && (l <= 8)) {
-
 				m_arTextfields[i][l].setText("" + edge.getWeight());
 				m_arTextfields[l][i].setText("" + edge.getWeight());
 			}
-
 		}
 
 	}
@@ -355,28 +350,21 @@ public class MatrixComposite extends ControllerComposite {
 		String edgeList = "";
 		for (int m = 0; m < 9; m++) {
 			if (nodeExist(m + 1)) {
-
-				for (int n = (0); n < 9; n++) {
-					boolean notminus = (!(m_arTextfields[n][m].getText().equals("-")));
-					boolean notnull = (!(m_arTextfields[n][m].getText().equals("")));
-					if (notminus && (!(n == m)) && notnull) {
+				for (int n = 0; n < 9; n++) {
+					boolean notminus = (!m_arTextfields[n][m].getText().equals("-"));
+					boolean notnull = (!m_arTextfields[n][m].getText().equals(""));
+					if (notminus && !(n == m) && notnull) {
 						edgeList = edgeList + "(" + (m + 1) + "," + m_arTextfields[n][m].getText()
 								+ "," + (n + 1) + "),";
-
 					}
-					if (!notminus) {
-
+					if (!notminus)
 						edgeList = edgeList + "(" + (m + 1) + "," + "1," + (m + 1) + "),";
-
-					}
-
 				}
 			}
-
 		}
-		if (edgeList.endsWith(",") == true)
+		if (edgeList.endsWith(","))
 			edgeList = edgeList.substring(0, edgeList.length() - 1);
-		return edgeList + "";
+		return edgeList;
 	}
 
 	/**
@@ -387,16 +375,10 @@ public class MatrixComposite extends ControllerComposite {
 	 * 
 	 */
 	protected boolean nodeExist(int nodeNr) {
-		int i;
-		boolean bol = true;
-
-		for (i = 0; i < nodeNr; i++) {
-			if (m_arTextfields[i][nodeNr - 1].getText().equals("")) {
-				bol = false;
-			}
-
-		}
-		return bol;
+		for (int i = 0; i < nodeNr; i++)
+			if (m_arTextfields[i][nodeNr - 1].getText().equals(""))
+				return false;
+		return true;
 	}
 
 }

@@ -43,7 +43,6 @@ import org.jalgo.module.dijkstraModule.model.Edge;
 public class EdgeVisual 
 extends Visual {
 
-	private Device device;
 	private PolylineConnection arrowConnection;
 	private PolylineConnection lineConnection;	
 	private EdgeWeightVisual weightVisual;
@@ -58,8 +57,6 @@ extends Visual {
 	 */
 	public EdgeVisual(Device device, GraphParent parent, NodeVisual source, NodeVisual target, Edge modelEdge) {
 		super(parent);
-		
-		this.device = device;
 		
 		setFlags(modelEdge.getFlags());
 		

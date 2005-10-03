@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -34,22 +37,22 @@ import org.eclipse.swt.widgets.Composite;
 public class ControllerComposite extends Composite {
 
 	private Controller m_Controller;
-	
+
 	/**
-	 * @return	Returns the m_Controller field
+	 * @return Returns the m_Controller field
 	 */
-	protected Controller getController()
-	{
+	protected Controller getController() {
 		return this.m_Controller;
 	}
+
 	/**
-	 * @param ctrl			Current controller for this composite
-	 * @param cmpParent		Parent of this composite
-	 * @param nStyle		Window style for this composite
+	 * @param ctrl Current controller for this composite
+	 * @param cmpParent Parent of this composite
+	 * @param nStyle Window style for this composite
 	 */
-	public ControllerComposite(Controller ctrl,Composite cmpParent, int nStyle)
-	{
-		super(cmpParent,nStyle);
+	public ControllerComposite(Controller ctrl, Composite cmpParent,
+			int nStyle) {
+		super(cmpParent, nStyle);
 		this.m_Controller = ctrl;
 	}
 }

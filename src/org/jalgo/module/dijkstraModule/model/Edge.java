@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -31,7 +34,7 @@ import java.io.Serializable;
  * Represents an weighted edge between two nodes.
  *
  */
-public class Edge extends GraphElement implements Serializable, Comparable {
+public class Edge extends GraphElement implements Serializable, Comparable<Edge>{
 
 	private static final long serialVersionUID = 18238242054685159L;
 
@@ -136,21 +139,15 @@ public class Edge extends GraphElement implements Serializable, Comparable {
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	public int compareTo(Object anotherObject) {
-		try {
-			Edge anotherEdge = (Edge) anotherObject;
-
-			if (this.startNode.getIndex() < anotherEdge.getStartNode().getIndex())
-				return -1;
-			if (this.startNode.getIndex() > anotherEdge.getStartNode().getIndex())
-				return 1;
-			if (this.endNode.getIndex() < anotherEdge.getEndNode().getIndex())
-				return -1;
-			if (this.endNode.getIndex() > anotherEdge.getEndNode().getIndex())
-				return 1;
-			return 0;
-		} catch (ClassCastException e) {
-		}
+	public int compareTo(Edge anotherEdge) {
+		if (this.startNode.getIndex() < anotherEdge.getStartNode().getIndex())
+			return -1;
+		if (this.startNode.getIndex() > anotherEdge.getStartNode().getIndex())
+			return 1;
+		if (this.endNode.getIndex() < anotherEdge.getEndNode().getIndex())
+			return -1;
+		if (this.endNode.getIndex() > anotherEdge.getEndNode().getIndex())
+			return 1;
 		return 0;
 	}
 

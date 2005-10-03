@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -19,7 +22,7 @@
 
 /*
  * Created on 12.05.2005
- * $Id: Page.java,v 1.2 2005/06/27 20:59:01 mischi Exp $
+ * $Id: Page.java,v 1.3 2005/10/03 10:34:11 stephancr Exp $
  */
 package org.jalgo.module.dijkstraModule.gui;
 
@@ -40,14 +43,14 @@ public class Page extends Composite {
 	public void createContents() {
 		// Do nothing per default
 	}
-	
+
 	/**
 	 * @return The parent as PageFolder.
 	 */
 	public PageFolder getPageFolder() {
-		return (PageFolder)(getParent());
+		return (PageFolder) getParent();
 	}
-	
+
 	/**
 	 * Switch to the page after this in our PageFolder parent. 
 	 */
@@ -57,19 +60,19 @@ public class Page extends Composite {
 		int pos = 0;
 
 		// (show-page (or (first (member page pages)) (first pages)))
-		for (int i = 0;i<pages.length;i++)
+		for (int i = 0; i < pages.length; i++)
 			if (pages[i] == this) {
-				pos = (i+1 == pages.length) ? 0 : i+1; 
+				pos = (i + 1 == pages.length) ? 0 : i + 1;
 			}
 
 		folder.showPage(pages[pos]);
 	}
-	
+
 	/** Creates a page with the given folder as parent.
 	 * @param parent a page folder.
 	 */
 	Page(PageFolder parent) {
-		super(parent,SWT.NONE);
+		super(parent, SWT.NONE);
 		createContents();
 	}
 }

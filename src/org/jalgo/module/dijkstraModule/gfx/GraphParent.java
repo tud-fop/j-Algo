@@ -23,8 +23,8 @@
 
 package org.jalgo.module.dijkstraModule.gfx;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.MouseEvent;
@@ -112,7 +112,13 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 	/**
 	 * These hash maps store associations between model and visual objects.
 	 */
-	private HashMap nodeModelsVisuals, edgeModelsVisuals, nodeVisualsModels, edgeVisualsModels;
+	private HashMap<Node, NodeVisual> nodeModelsVisuals;
+	
+	private HashMap<Edge, EdgeVisual> edgeModelsVisuals;
+	
+	private HashMap<NodeVisual, Node> nodeVisualsModels;
+	
+	private HashMap<EdgeVisual, Edge> edgeVisualsModels;
 
 	/**
 	 * Creates a new graph parent.
@@ -144,10 +150,10 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 		// Register for mouse drag (whenever mouse is _outside_ draggingNodeVisual's innerCircle).
 		addMouseMotionListener(this);
 
-		nodeModelsVisuals = new HashMap();
-		edgeModelsVisuals = new HashMap();
-		nodeVisualsModels = new HashMap();
-		edgeVisualsModels = new HashMap();
+		nodeModelsVisuals = new HashMap<Node, NodeVisual>();
+		edgeModelsVisuals = new HashMap<Edge, EdgeVisual>();
+		nodeVisualsModels = new HashMap<NodeVisual, Node>();
+		edgeVisualsModels = new HashMap<EdgeVisual, Edge>();
 	}
 
 	/**
@@ -335,7 +341,7 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 	 * @param newLocation the new location of the node
 	 */
 	public void moveNodeForVisual(NodeVisual nodeVisual, Point newLocation) {
-		Node clickedNode = (Node) nodeVisualsModels.get(nodeVisual);
+		Node clickedNode = nodeVisualsModels.get(nodeVisual);
 		try {
 			new MoveNodeAction(controller, clickedNode, new Position(newLocation, bounds));
 		} catch (ActionException e) {
@@ -348,7 +354,7 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 	 * @param nodeVisual the node visual associated with the node being deleted
 	 */
 	public void deleteNodeForVisual(NodeVisual nodeVisual) {
-		Node clickedNode = (Node) nodeVisualsModels.get(nodeVisual);
+		Node clickedNode = nodeVisualsModels.get(nodeVisual);
 		try {
 			new DeleteNodeAction(controller, clickedNode);
 		} catch (ActionException e) {
@@ -361,8 +367,8 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 	 * @param target the node visual associated with the target node of the new edge
 	 */
 	public void addEdgeForVisual(NodeVisual target) {
-		Node sourceNode = (Node) nodeVisualsModels.get(newEdgeSource);
-		Node targetNode = (Node) nodeVisualsModels.get(target);
+		Node sourceNode = nodeVisualsModels.get(newEdgeSource);
+		Node targetNode = nodeVisualsModels.get(target);
 		try {
 			new NewEdgeAction(controller, sourceNode, targetNode);
 		} catch (ActionException e) {
@@ -376,7 +382,7 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 	 * @param edgeVisual the edge visual associated with the edge whose weight is being changed
 	 */
 	public void weighEdgeForVisual(EdgeVisual edgeVisual) {
-		Edge clickedEdge = (Edge) edgeVisualsModels.get(edgeVisual);
+		Edge clickedEdge = edgeVisualsModels.get(edgeVisual);
 		try {
 			new WeighEdgeAction(controller, clickedEdge, edgeVisual.getWeight());
 		} catch (ActionException e) {
@@ -389,7 +395,7 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 	 * @param edgeVisual the edge visual associated with the edge being deleted
 	 */
 	public void deleteEdgeForVisual(EdgeVisual edgeVisual) {
-		Edge clickedEdge = (Edge) edgeVisualsModels.get(edgeVisual);
+		Edge clickedEdge = edgeVisualsModels.get(edgeVisual);
 		try {
 			new DeleteEdgeAction(controller, clickedEdge);
 		} catch (ActionException e) {
@@ -409,10 +415,10 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 			// Set new bounds for every nodeVisual.
 			// TODO: Accessing the nodeVisuals should be easier and abstracted away (see update() method below).
 			// Perhaps we should rethink the mapping between visuals and nodes ...?
-			ArrayList nodeList = graph.getNodeList();
+			List nodeList = graph.getNodeList();
 			for (int i = 0; i < nodeModelsVisuals.size(); i++) {
 				Node node = (Node) nodeList.get(i);
-				NodeVisual nodeVisual = (NodeVisual) nodeModelsVisuals.get(node);
+				NodeVisual nodeVisual = nodeModelsVisuals.get(node);
 				nodeVisual.setCenter(node.getPosition().getScreenPoint(rect)); // Use rect, not getBounds()!
 			}
 		}
@@ -428,8 +434,8 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 
 		Node currentNode;
 		Edge currentEdge;
-		ArrayList nodeList = graph.getNodeList();
-		ArrayList edgeList = graph.getEdgeList();
+		List nodeList = graph.getNodeList();
+		List edgeList = graph.getEdgeList();
 
 		/*HashMap */nodeModelsVisuals.clear(); // = new HashMap();
 		/*HashMap */edgeModelsVisuals.clear(); // = new HashMap();
@@ -447,8 +453,8 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 			currentEdge = (Edge) edgeList.get(i);
 			NodeVisual startNV, endNV;
 
-			startNV = (NodeVisual) nodeModelsVisuals.get(currentEdge.getStartNode());
-			endNV = (NodeVisual) nodeModelsVisuals.get(currentEdge.getEndNode());
+			startNV = nodeModelsVisuals.get(currentEdge.getStartNode());
+			endNV = nodeModelsVisuals.get(currentEdge.getEndNode());
 
 			if ((startNV != null) && (endNV != null)) {
 				EdgeVisual e = new EdgeVisual(device, this, startNV, endNV, currentEdge);
@@ -463,7 +469,7 @@ public class GraphParent extends Figure implements MouseListener, MouseMotionLis
 		}
 
 		for (int i = 0; i < nodeModelsVisuals.size(); i++) {
-			NodeVisual n = (NodeVisual) nodeModelsVisuals.get(nodeList.get(i));
+			NodeVisual n = nodeModelsVisuals.get(nodeList.get(i));
 			n.addToParent(this);
 		}
 
