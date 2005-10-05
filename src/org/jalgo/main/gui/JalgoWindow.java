@@ -72,6 +72,13 @@ import org.jalgo.main.util.Messages;
  * pane for easyly switching between open module instances.<br>
  * This class provides several methods for displaying message boxes and dialogs.
  * Also this class controlls the gui components for the opened module instances.
+ * <br>
+ * This class realizes a mutation of the singleton pattern. There should be only
+ * one instance of <code>JalgoWindow</code>, but: This instance should not be
+ * accessed by classes from outside org.jalgo.main.*, furthermore the
+ * instantiator (<code>JalgoMain</code>) is in another package than this class.
+ * because of this, the classic implementation of the singleton design pattern
+ * cannot be used.
  * 
  * @author Alexander Claus, Christopher Friedrich, Cornelius Hald
  */
@@ -95,12 +102,20 @@ extends ApplicationWindow {
 	private CTabFolder ct;
 
 	/**
-	 * Constructs an object of <code>JalgoWindow</code>. This constructor is
-	 * declared as private to avoid access from outside this class. This
-	 * mechanism is part of the Singleton design pattern.
+	 * Constructs an object of <code>JalgoWindow</code>. This constructor has
+	 * the ability to stop the application, when called a second time. This
+	 * guarantees, that only a singleton instance of this class exists.
 	 */
-	private JalgoWindow() {
+	public JalgoWindow() {
 		super(null);
+
+		if (instance != null) {
+			System.err.println(Messages.getString(
+				"main", "JalgoWindow.No_second_instance")); //$NON-NLS-1$ //$NON-NLS-2$
+			System.err.println(Messages.getString(
+				"main", "JalgoWindow.Application_terminates")); //$NON-NLS-1$ //$NON-NLS-2$
+			System.exit(1);
+		}
 
 		setDefaultImage(ImageDescriptor.createFromURL(
 			Messages.getResourceURL("main", "ui.Logo")).createImage()); //$NON-NLS-1$ //$NON-NLS-2$
@@ -125,17 +140,8 @@ extends ApplicationWindow {
 		addMenuBar();
 		addToolBar(SWT.WRAP | SWT.FLAT);
 		addStatusLine();
-	}
 
-	/**
-	 * Retrieves the singleton instance of this class. This method is part of
-	 * the Singleton design pattern.
-	 * 
-	 * @return the singleton instance of <code>JalgoWindow</code>
-	 */
-	public static JalgoWindow getInstance() {
-		if (instance == null) instance = new JalgoWindow();
-		return instance;
+		instance = this;
 	}
 
 	/**

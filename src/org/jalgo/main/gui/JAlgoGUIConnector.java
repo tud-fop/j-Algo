@@ -25,14 +25,30 @@ public class JAlgoGUIConnector {
 
 	/** The singleton instance of <code>JAlgoGUIConnector</code> */
 	private static JAlgoGUIConnector instance;
+	/** The singleton instance of <code>JalgoWindow</code> */
+	private JalgoWindow appWin;
 
 	/**
 	 * Constructs an object of <code>JAlgoGUIConnector</code>. This constructor
 	 * is declared as private to avoid access from outside this class. This
 	 * mechanism is part of the Singleton design pattern.
+	 * 
+	 * @param appWin the singleton instance of <code>JalgoWindow</code>
 	 */
-	private JAlgoGUIConnector() {
-	// nothing to initialize
+	private JAlgoGUIConnector(JalgoWindow appWin) {
+		this.appWin = appWin;
+	}
+
+	/**
+	 * Initializes the singleton instance of <code>JAlgoGUIConnector</code>.
+	 * This approach has been choosen to manage the singleton instance of
+	 * <code>JalgoWindow</code>.<br>
+	 * This method should called only once by <code>JalgoMain</code> !!!
+	 *  
+	 * @param appWin the singleton instance of <code>JalgoWindow</code>
+	 */
+	public static void initInstance(JalgoWindow appWin) {
+		instance = new JAlgoGUIConnector(appWin);
 	}
 
 	/**
@@ -41,7 +57,6 @@ public class JAlgoGUIConnector {
 	 * @return the singleton instance of <code>JAlgoGUIConnector</code>
 	 */
 	public static JAlgoGUIConnector getInstance() {
-		if (instance == null) instance = new JAlgoGUIConnector();
 		return instance;
 	}
 
@@ -60,8 +75,8 @@ public class JAlgoGUIConnector {
 	 */
 	public void saveStatusChanged(AbstractModuleConnector moduleInstance) {
 		if (JalgoMain.getInstance().getCurrentInstance() != moduleInstance) return;
-		JalgoWindow.getInstance().updateSaveButtonEnableStatus();
-		JalgoWindow.getInstance().updateTitle();
+		appWin.updateSaveButtonEnableStatus();
+		appWin.updateTitle();
 	}
 
 	/**
@@ -72,7 +87,7 @@ public class JAlgoGUIConnector {
 	 * @see JalgoWindow#showErrorMessage(String)
 	 */
 	public void showErrorMessage(String msg) {
-		JalgoWindow.getInstance().showErrorMessage(msg);
+		appWin.showErrorMessage(msg);
 	}
 
 	/**
@@ -83,7 +98,7 @@ public class JAlgoGUIConnector {
 	 * @see JalgoWindow#showWarningMessage(String)
 	 */
 	public void showWarningMessage(String msg) {
-		JalgoWindow.getInstance().showWarningMessage(msg);
+		appWin.showWarningMessage(msg);
 	}
 
 	/**
@@ -94,7 +109,7 @@ public class JAlgoGUIConnector {
 	 * @see JalgoWindow#showInfoMessage(String)
 	 */
 	public void showInfoMessage(String msg) {
-		JalgoWindow.getInstance().showInfoMessage(msg);
+		appWin.showInfoMessage(msg);
 	}
 
 	/**
@@ -123,7 +138,7 @@ public class JAlgoGUIConnector {
 	 * @see JalgoWindow#showConfirmDialog(String, int)
 	 */
 	public int showConfirmDialog(String question, int optionType) {
-		return JalgoWindow.getInstance().showConfirmDialog(question, optionType);
+		return appWin.showConfirmDialog(question, optionType);
 	}
 
 	/**
@@ -133,7 +148,7 @@ public class JAlgoGUIConnector {
 	 * @param msg the message string
 	 */
 	public void setStatusMessage(String msg) {
-		JalgoWindow.getInstance().setStatusMessage(msg);
+		appWin.setStatusMessage(msg);
 	}
 
 	/**
@@ -158,7 +173,7 @@ public class JAlgoGUIConnector {
 	 */
 	public String showOpenDialog(boolean openAsJAlgoFile,
 		boolean useCurrentModuleInstance) {
-		return JalgoWindow.getInstance().showOpenDialog(openAsJAlgoFile, useCurrentModuleInstance);
+		return appWin.showOpenDialog(openAsJAlgoFile, useCurrentModuleInstance);
 	}
 
 	/**
@@ -186,7 +201,7 @@ public class JAlgoGUIConnector {
 	 * @return the main GUI component of the module instance
 	 */
 	public Composite getModuleComponent(AbstractModuleConnector module) {
-		return JalgoWindow.getInstance().getModuleComponent(module);
+		return appWin.getModuleComponent(module);
 	}
 
 	/**
@@ -198,7 +213,7 @@ public class JAlgoGUIConnector {
 	 */
 	public void setModuleComponent(AbstractModuleConnector module,
 		Composite comp) {
-		JalgoWindow.getInstance().setModuleComponent(module, comp);
+		appWin.setModuleComponent(module, comp);
 	}
 
 	/**
@@ -210,7 +225,7 @@ public class JAlgoGUIConnector {
 	 * @return the menu of the module instance
 	 */
 	public SubMenuManager getModuleMenu(AbstractModuleConnector module) {
-		return JalgoWindow.getInstance().getModuleMenu(module);
+		return appWin.getModuleMenu(module);
 	}
 
 	/**
@@ -222,7 +237,7 @@ public class JAlgoGUIConnector {
 	 */
 	public void setModuleMenu(AbstractModuleConnector module,
 		SubMenuManager menu) {
-		JalgoWindow.getInstance().setModuleMenu(module, menu);
+		appWin.setModuleMenu(module, menu);
 	}
 
 	/**
@@ -234,7 +249,7 @@ public class JAlgoGUIConnector {
 	 * @return the toolbar of the module instance
 	 */
 	public SubToolBarManager getModuleToolbar(AbstractModuleConnector module) {
-		return JalgoWindow.getInstance().getModuleToolbar(module);
+		return appWin.getModuleToolbar(module);
 	}
 
 	/**
@@ -246,6 +261,6 @@ public class JAlgoGUIConnector {
 	 */
 	public void setModuleToolbar(AbstractModuleConnector module,
 		SubToolBarManager toolbar) {
-		JalgoWindow.getInstance().setModuleToolbar(module, toolbar);
+		appWin.setModuleToolbar(module, toolbar);
 	}
 }

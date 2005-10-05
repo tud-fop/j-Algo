@@ -51,6 +51,8 @@ public class JalgoMain {
 
 	/** The singleton instance of <code>JalgoMain</code> */
 	private static JalgoMain instance;
+	/** The singleton instance of <code>JalgoWindow</code> */ 
+	private JalgoWindow appWin;
 
 	private LinkedList<Class<AbstractModuleConnector>> knownModules;
 	private LinkedList<IModuleInfo> knownModuleInfos;
@@ -81,12 +83,12 @@ public class JalgoMain {
 	 */
 	public void createGUI() {
 		// init main frame
-		JalgoWindow.getInstance();
+		appWin = new JalgoWindow();
 		// init gui connector
-		JAlgoGUIConnector.getInstance();
+		JAlgoGUIConnector.initInstance(appWin);
 		// open main frame
-		JalgoWindow.getInstance().setBlockOnOpen(true);
-		JalgoWindow.getInstance().open();
+		appWin.setBlockOnOpen(true);
+		appWin.open();
 
 		Display.getCurrent().dispose();	
 	}
@@ -119,7 +121,7 @@ public class JalgoMain {
 	public AbstractModuleConnector newInstance(int modNumber) {
 		// hides current modules toolbar and menubar
 		if (currentInstance != null)
-			JalgoWindow.getInstance().setCurrentInstanceVisible(false);
+			appWin.setCurrentInstanceVisible(false);
 		currentInstance = null;
 
 		try {
@@ -127,12 +129,12 @@ public class JalgoMain {
 		}
 		catch (Exception ex) {ex.printStackTrace();}
 
-		JalgoWindow.getInstance().createNewModuleGUIComponents();
+		appWin.createNewModuleGUIComponents();
 		currentInstance.init();
-		JalgoWindow.getInstance().activateNewInstance();
+		appWin.activateNewInstance();
 
 		currentInstance.run();
-		JalgoWindow.getInstance().updateTitle();
+		appWin.updateTitle();
 
 		return currentInstance;
 	}
