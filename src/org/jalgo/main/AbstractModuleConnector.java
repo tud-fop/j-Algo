@@ -28,11 +28,7 @@ package org.jalgo.main;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.jface.action.SubMenuManager;
-import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.gui.JAlgoGUIConnector;
 
 /**
@@ -58,11 +54,6 @@ import org.jalgo.main.gui.JAlgoGUIConnector;
  *         Creutz
  */
 public abstract class AbstractModuleConnector {
-
-	// gui components
-	protected Composite comp;
-	private SubMenuManager menuManager;
-	private SubToolBarManager toolBarManager;
 
 	private SaveStatus saveStatus;
 	private boolean savingBlocked;
@@ -128,26 +119,6 @@ public abstract class AbstractModuleConnector {
 	}
 
 	/**
-	 * Retrieves the <code>SubMenuManager</code> representing the menu of the
-	 * module.
-	 * 
-	 * @return the menu of the module
-	 */
-	public final SubMenuManager getMenuManager() {
-		return menuManager;
-	}
-
-	/**
-	 * Retrieves the <code>SubToolBarManager</code> representing the toolbar
-	 * of the module.
-	 * 
-	 * @return the toolbar of the module
-	 */
-	public final SubToolBarManager getToolBarManager() {
-		return toolBarManager;
-	}
-
-	/**
 	 * Retrieves the singleton instance of the <code>IModuleInfo</code>
 	 * corresponding to this module.
 	 * 
@@ -161,22 +132,7 @@ public abstract class AbstractModuleConnector {
 				getClass().getPackage().getName() + ".ModuleInfo").getMethod(
 				"getInstance", new Class[] {}).invoke(null, new Object[] {});
 		}
-		catch (IllegalAccessException ex) {
-			ex.printStackTrace();
-		}
-		catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
-		}
-		catch (IllegalArgumentException ex) {
-			ex.printStackTrace();
-		}
-		catch (SecurityException ex) {
-			ex.printStackTrace();
-		}
-		catch (InvocationTargetException ex) {
-			ex.printStackTrace();
-		}
-		catch (NoSuchMethodException ex) {
+		catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return null;
