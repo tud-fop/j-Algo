@@ -125,7 +125,6 @@ extends ApplicationWindow {
 		moduleMenus = new HashMap<AbstractModuleConnector, SubMenuManager>();
 		moduleToolbars = new HashMap<AbstractModuleConnector, SubToolBarManager>();
 
-		newActions = new LinkedList<NewAction>();
 		createNewActions();
 
 		saveAction = new SaveAction();
@@ -445,6 +444,7 @@ extends ApplicationWindow {
 	 * objects are later displayed as menu items in the "New" menu.
 	 */
 	private void createNewActions() {
+		newActions = new LinkedList<NewAction>();
 		for (int i=0; i<JalgoMain.getInstance().getKnownModuleInfos().size(); i++)
 			newActions.add(new NewAction(JalgoMain.getInstance(), i));
 	}
