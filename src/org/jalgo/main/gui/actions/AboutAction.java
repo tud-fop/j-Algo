@@ -47,25 +47,9 @@ extends Action {
 	}
 
 	public void run() {
-		StringBuffer content = new StringBuffer();
-		content.append(Messages.getString("main", "General.name")); //$NON-NLS-1$ //$NON-NLS-2$
-		content.append(" - "); //$NON-NLS-1$
-		content.append(Messages.getString("main", "General.version")); //$NON-NLS-1$ //$NON-NLS-2$
-		content.append(lineSep).append(lineSep);
-		content.append(Messages.getString("main", "About.Copyright")); //$NON-NLS-1$ //$NON-NLS-2$
-		content.append(lineSep);
-		content.append(Messages.getString("main", "About.URL")); //$NON-NLS-1$ //$NON-NLS-2$
-		content.append(lineSep).append(lineSep);
-		content.append(Messages.getString("main", "About.Authors")); //$NON-NLS-1$ //$NON-NLS-2$
-		content.append(lineSep);
-		content.append(Messages.getString("main", "About.Author_Names")); //$NON-N //$NON-NLS-2$LS-1$
-		content.append(lineSep).append(lineSep);
-		content.append(Messages.getString("main", "About.License")); //$NON-NLS-1$ //$NON-NLS-2$
-		content.append(lineSep);
-		content.append(Messages.getString("main", "About.GPL")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		win.showInfoMessage(
 			Messages.getString("main", "ui.About"), //$NON-NLS-1$ //$NON-NLS-2$
-			content.toString());
+			Messages.getJalgoInfo());
 	}
 }

@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.JalgoMain;
+import org.jalgo.main.util.Messages;
 
 public class ModuleChooseDialog extends Dialog implements SelectionListener {
 
@@ -70,7 +71,7 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 			moduleList.add(modInfo.getName());
 		}
 		moduleList.addSelectionListener(this);
-		moduleList.setSelection(0);
+		moduleList.setSelection(-1);
 		moduleListViewer.getControl().setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.FILL_HORIZONTAL));
 	
 		// logo
@@ -88,7 +89,9 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 		
 		// module description
 		descrL = new Label(down, SWT.LEFT | SWT.WRAP);
-		descrL.setText("Klicken Sie auf ein Modul, um seine Beschreibung zu sehen.");
+		descrL.setText(Messages.getJalgoInfo());
+		
+		//descrL.setText("Klicken Sie auf ein Modul, um seine Beschreibung zu sehen.");
 		descrL.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL
 				| GridData.FILL_BOTH));		
 

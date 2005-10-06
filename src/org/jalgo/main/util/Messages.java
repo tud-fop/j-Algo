@@ -102,4 +102,30 @@ public abstract class Messages {
 			return null;
 		}
 	}
+	
+	/**
+	 * Retrieves an <code>String</code> object, which contains the informations 
+	 * about J-Algo with the right layout.
+	 */
+	public static String getJalgoInfo(){
+		final String lineSep = System.getProperty("line.separator");
+		StringBuffer info = new StringBuffer();
+		info.append(Messages.getString("main", "General.name")); //$NON-NLS-1$ //$NON-NLS-2$
+		info.append(" - "); //$NON-NLS-1$
+		info.append(Messages.getString("main", "General.version")); //$NON-NLS-1$ //$NON-NLS-2$
+		info.append(lineSep).append(lineSep);
+		info.append(Messages.getString("main", "About.Copyright")); //$NON-NLS-1$ //$NON-NLS-2$
+		info.append(lineSep);
+		info.append(Messages.getString("main", "About.URL")); //$NON-NLS-1$ //$NON-NLS-2$
+		info.append(lineSep).append(lineSep);
+		info.append(Messages.getString("main", "About.Authors")); //$NON-NLS-1$ //$NON-NLS-2$
+		info.append(lineSep);
+		info.append(Messages.getString("main", "About.Author_Names")); //$NON-N //$NON-NLS-2$LS-1$
+		info.append(lineSep).append(lineSep);
+		info.append(Messages.getString("main", "About.License")); //$NON-NLS-1$ //$NON-NLS-2$
+		info.append(lineSep);
+		info.append(Messages.getString("main", "About.GPL")); //$NON-NLS-1$ //$NON-NLS-2$
+		
+		return info.toString();
+	}
 }
