@@ -1,0 +1,40 @@
+\section{Graph erstellen}
+Nach dem Start des Moduls wird die Oberfläche für das Erstellen eines Graphen angezeigt. Sie ist
+in die Bereiche
+\begin{enumerate}
+	\item "`Werkzeuge"'
+	\item "`Graph"'
+	\item "`Knotenliste"'
+	\item "`Kantenliste"'
+	\item "`Distanzmatrix"'
+\end{enumerate}
+aufgeteilt.
+
+\subsection{Graphische Eingabe/Erstellen eines Graphen per Maus}
+Das Erstellen eines Graphen per Maus wird durch die Werkzeuge
+\begin{enumerate}
+	\item "`Knoten hinzufügen/verschieben"' --- Durch Klicken auf die Zeichenfläche wird ein neuer Knoten erzeugt. Ein bestehender Knoten kann durch Ziehen mit der Maus bewegt werden.
+	\item "`Kante hinzufügen/bewerten"' --- Indem man die Maus von einem Knoten zu einem anderen zieht, entsteht zwischen ihnen eine neue Kante. Die Kantenbewertung wird geändert, wenn man sie herauf- bzw. hinunterzieht.
+	\item "`Knoten löschen"' --- Ein angeklickter Knoten wird gelöscht.
+	\item "`Kante löschen"' --- Eine angeklickte Kante wird gelöscht.
+\end{enumerate}
+unterstützt.
+Dabei geht man wie folgt vor: Nach der Auswahl des Werkzeugs "`Knoten hinzufügen / verschieben"' kann man durch einfaches Klicken auf die weiße Zeichenfläche Knoten erstellen. Vorhandene Knoten können mit Drag\&Drop verschoben werden.\\
+Nachdem man alle Knoten angelegt hat, kann man nach Auswahl des Werkzeugs "`Kante hinzufügen/bewerten"' den Graphen vervollständigen. Um eine Kante zu erstellen, klickt man erst den "`Startknoten"' und dann den "`Endknoten"' der Kante an. Es erscheint eine Kante zwischen den Knoten mit der Bewertung fünf. Diese Bewertung (auch Kantengewicht) kann verändert werden, indem man das Kantengewicht mit der Maus "`festhält"' und nach oben (das Gewicht wird größer) oder unten (das Gewicht wird kleiner) zieht.
+\newpage
+\centerpic{dijkstra/edit}{0.5}{Graphisches Erstellen eines Graphen}
+
+\subsection{Die Knotenliste}
+Die Knotenliste zeigt die Indizes aller Knoten durch Kommata getrennt. Durch Hinzufügen von
+Indizes werden auch neue Knoten erzeugt. Änderungen in der Knotenliste werden nach Betätigen der Schaltfläche "`Anwenden"' übernommen.
+
+\subsection{Die Kantenliste}
+Die Kantenliste zeigt alle Kanten des Graphen im Format ( VON, WEG, ZU ). Durch Editieren
+dieser Liste können bestehende Kanten geändert und neue hinzufügt werden. Auch hier ist zu
+beachten, dass Änderungen erst durch Klicken von "`Anwenden"' übernommen werden.
+
+\subsection{Die Adjazenzmatrix}
+Die Adjazenzrelation des Graphen ist in dieser Matrix dargestellt. Kanten und Knoten können in jener durch einfaches Eingeben einer Kantenbewertung erzeugt werden. Dabei muss nicht beachtet werden, daß die Matrix symmetrisch bleibt, da dies automatisch gewährleistet wird.\\
+Nach dem Bearbeiten der Matrix darf nicht vergessen werden, den "`Anwenden"' - Button zu betätigen, damit die Änderungen übernommen werden.
+
+\newpage

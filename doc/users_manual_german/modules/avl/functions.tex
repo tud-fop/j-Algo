@@ -1,0 +1,39 @@
+\section{Modulfunktionen}
+Alle Funktionen des Moduls \avl lassen sich über den Kontroll-Bereich der Arbeitsfläche bedienen. Sie stellen die verschiedenen Baumalgorithmen dar, deren Visualisierung Aufgabe dieses Moduls ist. Grundlegend läuft die Arbeit mit den Algorithmen immer nach dem gleichen Schema ab:
+\begin{enumerate}
+	\item Schlüsseleingabe
+	\item Starten des Algorithmus per Klick auf den entsprechenden Button
+\end{enumerate}
+Es gibt natürlich auch Algorithmen, wie der AVL-Test, die keinen Schlüssel benötigen und ohne Schritt 1 auskommen.\\
+Es folgen nun die einzelnen Funktionen im Detail. 
+
+\subsection{Schlüsseleingabe}
+Für die Eingabe der Schlüsselwerte steht ein Textfeld und ein Button für zufällige Werte zur Verfügung. Es sind nur ganzzahlige Schlüsselwerte zwischen 1 und 99 erlaubt.\\
+Über dem Textfeld befindet sich eine Nachrichtenzeile, in welcher Sie auf eventuelle Fehleingaben aufmerksam gemacht werden. Hier werden später ebenfalls kurze Ergebnismeldungen zu den Algorithmen eingeblendet.
+
+\subsection{Algorithmusfunktionen}
+\subsubsection*{Knoten einfügen}
+Der eingegebene Wert wird als Schlüssel für einen neuen Knoten verwendet, der in den Baum eingefügt werden soll. Ist bereits ein Knoten mit dem gleichen Schlüssel im Baum enthalten, so bricht der Algorithmus erfolglos ab.
+\subsubsection*{Knoten suchen}
+Nach dem Starten dieses Algorithmus beginnt die Suche nach dem eingegebenen Schlüssel im Baum.
+\subsubsection*{Knoten löschen}
+Nach dem eingegebenen Schlüssel wird gesucht, und wenn ein entsprechender Knoten gefunden wurde, wird dieser aus der Baumstruktur entfernt.
+
+\subsection{AVL-Modus}
+Ist dieses Kästchen aktiviert, werden die entsprechenden Algorithmen so ausgeführt, dass die AVL-Eigenschaft gewahrt bleibt.\\
+Achtung: Es ist keine Funktion implementiert, die an einem beliebigen Suchbaum die AVL-Eigenschaft herstellt!\\
+Ist das Kästchen deaktiviert, ist es daher nicht immer ohne weiteres wieder zu aktivieren. Dazu muss zuerst getestet werden, ob der Baum die AVL-Eigenschaft hat. Es ist jedoch jederzeit möglich, das Kästchen zu deaktivieren und einen unbalancierten Baum zu erzeugen.
+
+\subsection{Baum auf AVL-Eigenschaft testen}
+\medskip
+\centerpic{avl/avltest}{1}{Hinweisfenster des AVL-Tests}
+Wenn der AVL-Modus einmal deaktiviert sein sollte, so ermöglicht das Programm einen Test des Baumes auf die AVL-Eigenschaft. Dabei erfolgt eine Berechnung und Anzeige der Balancen aller Knoten und das eventuelle Markieren von Knoten, deren Balance sich nicht mehr im Rahmen der AVL-Eigenschaft bewegt.\\
+Es wird ein Hinweis-Dialog geöffnet, der Ihnen das Ergebnis des Tests präsentiert. Sollte der Baum tatsächlich die AVL-Eigenschaft besitzen, so wird Ihnen angeboten, direkt in den AVL-Modus zu wechseln.
+
+\newpage
+\subsection{Baum löschen}
+Mit einem Klick auf den Button \raisebox{-1.5ex}{\includegraphics[scale=1]{\pfad avl/icon_clear}} in der Werkzeugleiste können Sie nach einer Sicherheitsabfrage die gesamte Baumstruktur löschen und mit einer leeren Arbeitsfläche neu beginnen.
+\medskip
+\centerpic{avl/cleartreemessage}{1}{Sicherheitsabfrage beim Löschen des Baumes}
+
+\vfill
