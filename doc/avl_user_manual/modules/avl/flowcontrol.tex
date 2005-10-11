@@ -1,0 +1,29 @@
+\section{Algorithmussteuerung}
+Aufgabe des Moduls \avl ist es, Baumalgorithmen, wie das Einfügen und Löschen von Knoten, zu visualisieren. Jeder Algorithmus ist in verschiedene Teilschritte unterteilt, die nacheinander angezeigt werden. Das Visualisieren erfolgt dabei durch das Zeichnen des Baumes, durch die Erklärung der Schritte im Dokumentationsbereich und im Logbuch und durch die Neuberechnung der baumspezifischen Daten, die im Infobereich präsentiert werden.\\
+Nachdem Sie einen Algorithmus gestartet haben, verweilt er in einem Initialzustand und wartet auf Ihre Eingabe. Nun haben Sie die Möglichkeit, den Algorithmus in kleinen oder großen Schritten zu durchlaufen; Sie können ihn sofort beenden oder direkt abbrechen. Dafür bietet die Algorithmussteuerung die entsprechenden Werkzeuge.
+
+\subsection{Schritt-Pfeile}
+Mittels der Schritt-Pfeile steuern Sie die Abfolge der Einzelschritte und bekommen so eine detaillierte Sicht auf die Arbeitsweise des Algorithmus. Das Programm bietet Ihnen die Möglichkeit, einen Teilschritt rückgängig zu machen und damit gewisse Abläufe zu wiederholen. Die Schritt-Pfeile, welche die Rückgängigfunktion anbieten, weisen in ihrer Richtung nach links und sind dadurch intuitiv von den Vorwärts-Pfeilen zu unterscheiden.\\
+Zusätzlich gibt es für jede Richtung einen großen und einen kleinen Schritt, der per Knopfdruck ausgeführt wird.
+
+Kleine Schritte beim Einfügen eines Knotens stellen Schlüsselvergleiche, Balancenberechnungen und Rotationen dar. Große Schritte hingegen sind zum Beispiel das Suchen der Einfügestelle, das Einfügen an dieser und die gesamte Balancenaktualisierung.
+
+\subsubsectiondoubleicon{Einzel-Schritt-Pfeile}{avl/icon_undo}{avl/icon_perform}
+Ein Klick auf diese Buttons realisiert einen kleinen Algorithmusschritt zurück bzw. nach vorn.
+\subsubsectiondoubleicon{Block-Schritt-Pfeile}{avl/icon_undo_blockstep}{avl/icon_perform_blockstep}
+Ein Klick auf diese Buttons realisiert einen großen Schritt zurück bzw. nach vorn. Sollte der Algorithmusablauf an eine Stelle geraten, an der es nur noch einen kleinen Schritt nach vorn bzw. zurück gibt, so hat der Block-Schritt die selbe Funktionalität wie ein Einzel-Schritt.
+
+\subsectiondoubleicon{Abbruch und Beenden-Buttons}{avl/icon_abort}{avl/icon_finish}
+Klicken Sie auf den Beenden-Button \raisebox{-1ex}{\includegraphics[scale=0.8]{\pfad avl/icon_finish}} um den laufenden Algorithmus bis zum Ende auszuführen.\\
+Klicken Sie auf den Abbruch-Button \raisebox{-1ex}{\includegraphics[scale=0.8]{\pfad avl/icon_abort}} um den laufenden Algorithmus abzubrechen. Der Baum hat danach den gleichen Status wie vor Beginn des Algorithmus.\\
+Ist ein Algorithmus beendet, so steht Ihnen diese Option nicht mehr zur Verfügung, weil nur der
+\textit{laufende} Algorithmus abgebrochen werden kann.
+
+\subsection{Animationsgeschwindigkeit}
+Beim Generieren eines Zufallsbaumes haben Sie die Option, den Ablauf der Baumerzeugung als Animation ablaufen zu lassen. Starten Sie in diesem Modus, so beginnt die Animation sofort und kann mit dem Geschwindigkeitsregler schneller oder langsamer abgespielt werden. Zu Beginn steht dieser auf der mittleren Position. Verschieben Sie den Regler nach links, um die Animation zu verlangsamen bzw. nach rechts, um sie zu beschleunigen.\\
+Eine Animation der anderen Algorithmenabläufe ist in dieser Version von \avl nicht integriert.
+
+\bigskip
+\centerpic{avl/animregler}{1}{Der Regler für die Animationsgeschwindigkeit}
+
+\bigskip

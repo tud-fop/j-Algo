@@ -1,0 +1,39 @@
+\section{Grundfunktionen}
+\jalgo bietet eine Reihe von Grundfunktionen, die unabhängig von den Modulen zur Verfügung stehen, bzw. für jedes Modul die gleiche Bedeutung haben. Im Einzelnen sind das das Öffnen von Modulen sowie das Laden und Speichern von Sitzungsdaten. Die Grundfunktionen sind über die Werkzeugleiste oder den Menüpunkt <\textsc{Datei}> erreichbar.
+
+\subsectionicon{Neues Modul öffnen}{main/icon_new}
+Ein Klick auf den Button <\textsc{Neu}> in der Werkzeugleiste gibt Ihnen die Möglichkeit, ein beliebiges neues Modul zu öffnen. Dabei wird ein Auswahldialog geöffnet, in welchem die installierten Module aufgelistet sind. Hier werden Ihnen außerdem kurze Informationen zu diesen Modulen angezeigt. Sie können wählen, ob dieser Auswahldialog bei jedem Start des Programmes angezeigt werden soll oder nicht.\\
+Alternativ dazu kann über das Menü \textsc{<Datei>$\rightarrow$<Neu>} das gewünschte Modul geladen werden. Dies ist der schnellere Weg und zu empfehlen, wenn man bereits einen Überblick über die installierten Module hat.
+
+\subsectionicon{Gespeicherte Sitzungsdaten laden}{main/icon_open}
+Mit einem Klick auf den Button <\textsc{Öffnen}> erscheint ein Dialog zur Dateiauswahl. Hier haben Sie die Möglichkeit, eine Datei auszuwählen, in welcher modulspezifische Sitzungsdaten gespeichert wurden. Die Dateien, die von \jalgo gespeichert werden, tragen die Dateiendung \emph{"`.jalgo"'}.\\
+Achtung: Da jedes Modul von \jalgo seine Daten in einer solchen Datei ablegt, kann man beim Blick auf die ungeöffnete Datei nicht erkennen, mit welchem Modul diese assoziiert wurde. Es wird jeweils das assoziierte Modul zu der geladenen Datei geöffnet. Achten Sie daher bei der Vergabe der Dateinamen auf möglichst eindeutige Bezeichner.\\
+Anmerkung: In einer späteren Version wird direkt bei der Dateiauswahl das zugehörige Modul mit angezeigt.
+\centerpic{main/loaddialog}{0.45}{Das Dialogfenster zum Öffnen}
+
+\medskip
+\subsectiondoubleicon{Sitzungsdaten speichern}{main/icon_save}{main/icon_save_as}
+Per Klick auf die Buttons <\textsc{Speichern}> und <\textsc{Speichern unter}> können Sie die Sitzungsdaten des gerade aktiven Moduls in einer Datei speichern. Wie beim Laden öffnet sich auch hier ein Dialog zur Dateiauswahl, in welchem Sie Zielpfad und Name der neuen Datei eintragen können. Die Angabe der Dateiendung ist nicht nötig, das Programm 
+ergänzt diese automatisch.\\
+Je nach Implementierung des aktiven Moduls steht die Speicherfunktion nur zur Verfügung, wenn gerade kein Algorithmus läuft. Sollte noch ein Algorithmus aktiv sein, so beenden Sie diesen bitte vorher oder brechen ihn ab.
+
+\subsection{Modul schließen}
+Sie haben die Möglichkeit, jede Modulinstanz durch Klick auf das Kreuz der dazugehörigen Registerkarte zu schließen. Dabei werden Sie gegebenenfalls gefragt, ob Sie Ihre Arbeit speichern wollen. Um das gesamte Programm zu schließen, ist es nicht nötig, die Module einzeln zu schliessen, das erledigt das Programm für Sie.
+
+\bigskip
+\begin{center}
+	\raisebox{-7ex}{\includegraphics[scale=0.8]{\pfad main/closebutton}} \hfill
+	\includegraphics[scale=0.55]{\pfad main/closemessage} \\
+	{\small Der Knopf zum Schließen eines Moduls.} \hfill
+	{\small Die Abfrage, ob der Baum gespeichert werden soll.}
+\end{center}
+
+\subsectionicon{Hilfe}{main/icon_help}
+Die Hilfe stellt ein wichtiges Nachschlagewerk für all diejenigen dar, die nicht auf Anhieb mit allen Funktionen von \jalgo und seinen Modulen klar kommen. Hier können Sie noch einmal eine genaue Beschreibung zu den einzelnen Programmelementen nachlesen.\\
+Die Hilfe ist kontextspezifisch aufgebaut, d.h. ist ein Modul geöffnet, so wird in der Hilfe automatisch an die entsprechende Stelle gesprungen.\\
+Sie erreichen die Hilfe über den Menüpunkt \textsc{<Hilfe>$\rightarrow$<Inhalt>} oder indem Sie einfach auf die Taste <\textsc{F1}> Ihrer Tastatur drücken.
+
+\subsection{Hinweis-Tipps}
+Zusätzlich wird zu den meisten Kontrollelementen, also Buttons, Menüeinträge, etc., ein kurzer Hinweistext neben dem Mauszeiger bzw. in der Statuszeile des Programmes angezeigt. Dies sollte als schnelle Hilfestellung den meisten Anforderungen genügen.
+
+\newpage

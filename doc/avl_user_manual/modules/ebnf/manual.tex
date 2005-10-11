@@ -1,0 +1,101 @@
+%\documentclass[12pt]{article}
+%\usepackage{a4wide, listings, url}
+%\usepackage[latin1]{inputenc}
+%\usepackage{ngerman}
+%\usepackage{graphicx}
+%\usepackage{geometry}
+%\geometry{left=2cm,top=2cm}
+
+%\title{jAlgo\\- Benutzerhandbuch -}
+%\author{jAlgo - Team}
+%\date{\today}
+
+
+%\begin{document}
+%\maketitle
+
+\section{Einleitung}
+jAlgo ist ein Programm zur Visualisierung von Algorithmen. Es wurde im Rahmen des Softwarepraktikums im Sommersemester 2004 an der Fakultät Informatik der TU-Dresden in Zusammenarbeit mit dem Lehrstuhl \textit{Theoretische Informatik} entwickelt.\\
+Die Anwendung soll dazu dienen, verschiedene Algorithmen zu veranschaulichen, um sie Studenten und anderen Interessierten verständlicher zu machen. Die Auswahl der visualisierten Algorithmen orientiert sich an den Vorlesungen \textit{Algorithmen und Datenstrukturen} und \textit{Programmierung} im Grundstudium Informatik an der TU-Dresden. Das Programm sollte aber ohne Probleme auch für andere Universitäten nutzbar sein.\\
+jAlgo ist so aufgebaut, dass um ein Hauptprogramm mit allgemeinen Funktionalitäten verschiedene Module eingesetzt werden können. Jedes dieser Module soll eine inhaltliche Gruppe von Algorithmen abdecken. Während des Softwarepraktikums ist zunächst ein solches Modul entstanden. Es behandelt die Themen EBNF (Erweiterte Backus-Naur-Form) und Syntaxdiagramme.
+
+\section{Das Hauptprogramm}
+Das Hauptprogramm bietet für den Benutzer lediglich einige grundlegende Funktionalitäten. Über den Menüpunkt \textit{Datei - Neu} erreicht man eine Auflistung aller verfügbaren Module:
+\begin{center}
+\includegraphics[scale=1]{ss_hauptprogramm}
+\end{center}
+
+Klickt man hier auf \textit{EBNF und Syntaxdiagramme} startet das Modul. Außerdem bietet der Menüpunkt \textit{Datei} die Funktionalitäten Laden und Speichern.
+
+\section{Das Modul \textit{EBNF und Syntaxdiagramme}}
+Nach dem Starten des Moduls \textit{EBNF und Syntaxdiagramme} wird der Benutzer durch einen kleinen Wizard begrüßt. Hier werden ihm drei Wege vorgeschlagen:
+\begin{itemize}
+  \item EBNF laden: Dies ermöglicht das Laden einer früher eingegebenen EBNF-Definition. Zum Probieren liegt dem Programm eine Beispieldefiniton bei (EBNF\_Bsp.jalgo).
+  \item EBNF eingeben: Hier kann man eine neue EBNF-Definition der Form $\varepsilon = (V, \Sigma, S, R)$ eingeben.
+  \item Syntax-Diagramm-System erstellen: Durch Auswahl dieser Möglichkeit kann ein neues Syntax-Diagramm-System mit Hilfe der Maus erstellt werden.
+\end{itemize} 
+
+\subsection{Eingabe einer EBNF}
+
+Durch Auswahl des zweiten Punktes im Wizard gelangt man zur Eingabe einer neuen EBNF:\\
+
+Eine EBNF-Definition besteht aus einem Tupel der Form: $(V, \Sigma, S, R)$. V ist die Menge der Variablen und $\Sigma$ stellt die Menge der Terminalsymbole dar. S wird durch die jeweilige Startvariable des Syntax-Diagramm-Systems ersetzt. Die Menge R beinhaltet alle Regeln des Systems.\\
+
+Die Eingabe der Variablen und Terminalsymbole erfolgt durch Komma getrennt. Für die Regel-Eingabe ist bereits die Grundform vorgegeben. Jede Regel besteht aus einer Variable, den Zeichen $::=$ und dem dazugehörigen Term. Zur Eingabe der Terme wird für die Metasymbole (also die im Vorlesungskript mit einem Dach versehenen Zeichen) eine an \LaTeX  angelehnte Notation verwendet: Vor jedem Metasymbol ist zur Kennzeichnung $\setminus\wedge$ anzufügen. Eine geschweifte, öffnende Klammer würde also so aussehen: $\setminus\wedge$\{ . Zur einfacheren Handhabung kann man auch die Buttons benutzen. Nachdem man eine Regel vollständig eingegeben hat, fügt man diese durch Klicken von \textit{Hinzufügen} der Liste der Regeln hinzu. Um später eine Regel wieder zu entfernen kann der \textit{Löschen} Button benutzt werden.\\
+Die Eingabe einer EBNF könnte also beispielsweise so aussehen:
+\begin{center}
+\includegraphics[scale=0.7]{ss_ebnf}
+\end{center}
+
+Die fertige EBNF kann man man durch Klicken von \textit{Fertigstellen} zur Überprüfung auf Korrektheit geben. Sollten Unstimmigkeiten auftreten - z.B. könnte man vergessen einer Variable eine Regel zuzuordnen - erscheint ein Hinweis.\\
+
+Nun erreicht man die Ansicht der eingegeben EBNF. Metasymbole werden hier zur Unterscheidung von Terminalen und Variablen blau dargestellt. Um die EBNF in ein äquivalentes Syntax-Diagramm-System umzuwandeln kann man nun den Trans-Algorithmus (aus der Vorlesung \textit{Programmierung} bekannt) starten.
+
+\subsection{Eingabe eines Syntax-Diagramm-Systems}
+
+Wählt man im Wizard den dritten Punkt aus, bekommt man die Möglichkeit ein Syntax-Diagramm-System mit Hilfe der Maus zu erstellen. Dabei hat man folgende Funktionalitäten:
+\begin{center}
+\includegraphics[scale=0.8]{ss_klick}
+\end{center}
+
+Die Eingabe eines Syntax-Diagramm-Systems erfolgt Top-Down, also von oben nach unten. Dabei erstellt man zunächst eine Startwolke. Diese wird nun durch eine Wiederholung, eine Alternative oder eine Konkatenation ersetzt, welche wiederum Wolken enthält. Erst zum Schluss werden die Variablen und Terminalsymbole eingesetzt. Die Erstellung eines einfachen Diagramm-Systems könnte also z.B. so ablaufen:
+\begin{center}
+\includegraphics[scale=0.8]{ss_klick1}
+$ $\\$ $\\
+\includegraphics[scale=0.8]{ss_klick2}
+$ $\\$ $\\
+\includegraphics[scale=0.8]{ss_klick3}
+$ $\\$ $\\
+\includegraphics[scale=0.8]{ss_klick4}
+\end{center}
+
+Ist das Diagramm fertig eingegeben, gelangt man durch Klicken des Fähnchens zur Ansicht des erstellten Diagramms. Hier kann man nun die Algorithmen \textit{Wortgenerierung} und \textit{Worterkennung} starten. Sie benutzen beide den aus der Vorlesung \textit{Algorithmen und Datenstrukturen} bekannten Rücksprungalgorithmus.
+
+\subsection{Ausführung der Algorithmen}
+
+Die Ausführung der Algorithmen erfolgt schrittweise. Im unteren Teil des Bildschirms wird die verbale Form des Algorithmus' in der aus dem Vorlesungskript bekannten Form angezeigt. Dabei wird während des Ablaufes der gerade interessante Teil rot hervorgehoben.\\
+Um den nächsten Schritt des jeweiligen Algorithmus durchführen zu lassen muss der Button mit dem Schuh geklickt werden. In den beiden Rücksprungalgorithmen ist es außerdem möglich, Schritte wieder rückgängig zu machen. Um in der entstehenden Geschichte zu navigieren sind die Pfeil-Buttons zu benutzen.\\
+
+Treten in den Rücksprungalgorithmen nicht-deterministische Entscheidungen auf, wird der Benutzer gefragt, welcher Weg einzuschlagen ist. Steht man vor einer Alternative ist ein Zahlenwert einzugeben, wobei \textit{1} das Einschlagen der obersten Option zur Folge hat.\\
+
+Neben der schrittweisen Ausführung besteht im Trans-Algorithmus außerdem die Möglichkeit, alle Schritte automatisch ausführen zu lassen, um nur das Endergebnis zu erhalten. Der Transalgorithmus in Aktion sieht beispielsweise so aus:
+\begin{center}
+\includegraphics[scale=0.8]{ss_trans}
+\end{center}
+
+Mit einem durch den Trans-Algorithmus erstellten Syntax-Diagramm-System kann man anschließend natürlich die Rücksprungalgorithmen durchführen. Die Durchführung der Wortgenerierung könnte z.B. so aussehen:
+\begin{center}
+\includegraphics[scale=0.8]{ss_gw}
+\end{center}
+
+\subsection{Laden und Speichern}
+
+In Version 0.42 des Moduls \textit{EBNF und Syntaxdiagramme} ist nur das Laden und Speichern von EBNF-Definitionen möglich.
+
+\section{Weitere Informationen}
+
+Weitere Informationen zum Programm gibt es auf unserer Homepage: $http://www.inf.tu-dresden.de/~swt04-p1/$\\
+Sie können uns auch gerne eine Mail schicken: $sopra@binaervarianz.de$
+
+
+%\end{document}
