@@ -25,6 +25,8 @@ import java.io.IOException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
+import org.jalgo.main.AbstractModuleConnector;
+import org.jalgo.main.JalgoMain;
 import org.jalgo.main.gui.JalgoWindow;
 import org.jalgo.main.util.BrowserLauncher;
 import org.jalgo.main.util.Messages;
@@ -40,8 +42,12 @@ import org.jalgo.main.util.Messages;
 public class HelpAction
 extends Action {
 
-	private final String helpPath = System.getProperty("user.dir")+ //$NON-NLS-1$
+	private final String helpPathMain = System.getProperty("user.dir")+ //$NON-NLS-1$
 		Messages.getString("main_res", "ui.Help_file"); //$NON-NLS-1$ //$NON-NLS-2$
+	private final String helpPathAVL = System.getProperty("user.dir")+ //$NON-NLS-1$
+		Messages.getString("main_res", "ui.Help_file_avl"); //$NON-NLS-1$ //$NON-NLS-2$
+	private final String helpPathDijkstra = System.getProperty("user.dir")+ //$NON-NLS-1$
+		Messages.getString("main_res", "ui.Help_file_dijkstra"); //$NON-NLS-1$ //$NON-NLS-2$
 	private JalgoWindow appWin;
 	private static final String lineSep = System.getProperty("line.separator");
 	
@@ -64,7 +70,16 @@ extends Action {
 	 * Performs the action.
 	 */
 	public void run() {
-		try {BrowserLauncher.openURL(helpPath);}
+		try {
+			AbstractModuleConnector currentInstance =
+				JalgoMain.getInstance().getCurrentInstance();
+			if (currentInstance == null) BrowserLauncher.openURL(helpPathMain);
+			else if (currentInstance.getModuleInfo().getName().equals(
+				Messages.getString("avl", "Module_name")))
+				BrowserLauncher.openURL(helpPathAVL);
+			else if (currentInstance.getModuleInfo().getName().equals("Dijkstra"))
+				BrowserLauncher.openURL(helpPathDijkstra);
+		}
 		catch (IOException ex) {
 			appWin.showErrorMessage(Messages.getString(
 				"main", "HelpAction.Error_1") + lineSep + //$NON-NLS-1$ //$NON-NLS-2$
