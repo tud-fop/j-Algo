@@ -1,0 +1,79 @@
+<html>
+	<head>
+		<title>Modulfunktionen</title>
+	</head>
+	<body topmargin="30" leftmargin="30">
+		<table border="0" cellpadding="0" cellspacing="0" style="BORDER-COLLAPSE: collapse" bordercolor="#111111"
+			width="600" id="AutoNumber1">
+			<tr>
+				<td width="600">
+					<h2>Modulfunktionen</h2>
+					<p align="justify">Alle Funktionen des Moduls <STRONG>AVL-Bäume</STRONG> lassen 
+						sich über den Kontroll-Bereich der Arbeitsfläche bedienen. Sie stellen die 
+						verschiedenen Baumalgorithmen dar, deren Visualisierung Aufgabe dieses Moduls 
+						ist. Grundlegend läuft die Arbeit mit den Algorithmen immer nach dem gleichen 
+						Schema ab:</p>
+					<ol>
+						<li>
+						Schlüsseleingabe
+						<li>
+							Starten des Algorithmus per Klick auf den entsprechenden Button</li>
+					</ol>
+					Es gibt natürlich auch Algorithmen, wie der AVL-Test, die keinen Schlüssel 
+					benötigen und ohne Schritt 1 auskommen.
+					<p>Es folgen nun die einzelnen Funktionen im Detail. 
+						<!------------------------------------Schlüsseleingabe------------------------------------------------------>
+						<h3><a name="insert_key">Schlüsseleingabe</a></h3>
+					<p align="justify">Für die Eingabe der Schlüsselwerte steht ein Textfeld und ein 
+						Button für zufällige Werte zur Verfügung. Es sind nur ganzzahlige 
+						Schlüsselwerte von 1&nbsp;bis 99 erlaubt.<BR>
+						Über dem Textfeld befindet sich eine Nachrichtenzeile, in welcher Sie auf 
+						eventuelle Fehleingaben aufmerksam gemacht werden. Hier werden später ebenfalls 
+						kurze Ergebnismeldungen zu den Algorithmen eingeblendet.<BR>
+						<!------------------------------------Algorithmusfunktionen------------------------------------------------>
+					</p>
+					<h3><a name="algorithm_functions">Algorithmusfunktionen</a></h3>
+					<p align="justify">
+						<b>Knoten einfügen</b><br>
+						Der eingegebene Wert wird als Schlüssel für einen neuen Knoten verwendet, der 
+						in den Baum eingefügt werden soll. Ist bereits ein Knoten mit dem gleichen 
+						Schlüssel im Baum enthalten, so bricht der Algorithmus erfolglos ab.<br>
+						<b>Knoten suchen</b><br>
+						Nach dem Starten dieses Algorithmus beginnt die Suche nach dem eingegebenen 
+						Schlüssel im Baum.<br>
+						<b>Knoten löschen</b><br>
+						Nach dem eingegebenen Schlüssel wird gesucht und wenn ein entsprechender Knoten 
+						gefunden wurde wird dieser aus der Baumstruktur entfernt.<BR>
+						<!------------------------------------AVL-Modus----------------------------------------------------------></p>
+					<h3><a name="avl_modus">AVL-Modus</a></h3>
+					<p align="justify">Ist dieses Kästchen aktiviert, werden die entsprechenden 
+						Algorithmen so ausgeführt, dass die AVL-Eigenschaft gewahrt bleibt.<BR>
+						<STRONG>Achtung: </STRONG>Es ist keine Funktion implementiert, die an einem 
+						beliebigen Suchbaum die AVL-Eigenschaft herstellt!<BR>
+						Ist das Kästchen deaktiviert, ist es daher nicht immer ohne weiteres wieder zu 
+						aktivieren. Dazu muss zuerst getestet werden, ob der Baum die AVL-Eigenschaft 
+						hat. Es ist jedoch jederzeit möglich, das Kästchen zu deaktivieren und einen 
+						unbalancierten Baum zu erzeugen.<BR>
+						<!------------------------------------Baum auf AVL-Eigenschaft testen------------------------------------>
+						<h3><a name="avl_test">Baum auf AVL-Eigenschaft testen</a></h3>
+						Wenn der AVL-Modus einmal deaktiviert sein sollte, so ermöglicht das Programm 
+						einen Test des Baumes auf die AVL-Eigenschaft. Dabei erfolgt eine Berechnung 
+						und Anzeige der Balancen aller Knoten und das eventuelle Markieren von Knoten, 
+						deren Balance sich nicht mehr im Rahmen der AVL-Eigenschaft bewegt.<BR>
+					Es wird ein Hinweis-Dialog geöffnet, der Ihnen das Ergebnis des Tests 
+					präsentiert. Sollte der Baum tatsächlich die AVL-Eigenschaft besitzen, so wird 
+					Ihnen angeboten, direkt in den AVL-Modus zu wechseln.
+					<p align="center">
+						<img src="../../pics/avl/avltest.png"><BR>
+						<!------------------------------------Baum löschen------------------------------------------------------->
+						<h3><a name="delete_tree">Baum löschen</a></h3>
+						Mit einem Klick auf den Button <img src="../../pics/avl/icon_clear.png" align="absMiddle">
+					in der Werkzeugleiste können Sie nach einer Sicherheitsabfrage die gesamte 
+					Baumstruktur löschen und mit einer leeren Arbeitsfläche neu beginnen.
+					<p align="center">
+						<img src="../../pics/avl/treedel.png"></p>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
