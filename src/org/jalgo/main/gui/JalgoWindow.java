@@ -331,7 +331,7 @@ extends ApplicationWindow {
 			JalgoMain.getInstance().setCurrentInstance(null);
 			updateSaveButtonEnableStatus();
 			updateTitle();
-			setAboutModuleActionEnabled(false);
+			aboutModuleAction.setEnabled(false);
 		}
 		else itemSelected(ct.getSelection());
 	}
@@ -556,16 +556,6 @@ extends ApplicationWindow {
 		return _result;
 	}
 
-	/**
-	 * Sets the enabled state of the 'About module' action to the given value.
-	 * 
-	 * @param b <code>true</code>, if the action should be enabled,
-	 * 			<code>false</code> otherwise
-	 */
-	private void setAboutModuleActionEnabled(boolean b) {
-		aboutModuleAction.setEnabled(b);
-	}
-
 	/* the following variable is necessary for ecapsulate the dialog within a
 	   Runnable object*/
 	private String _filename;
@@ -646,7 +636,7 @@ extends ApplicationWindow {
 		// Set module visible
 		setCurrentInstanceVisible(true);
 		// Enable 'About module'
-		setAboutModuleActionEnabled(true);
+		aboutModuleAction.setEnabled(true);
 	}
 
 	/*--------------Management of module's GUI components---------------*/
@@ -664,18 +654,6 @@ extends ApplicationWindow {
 	}
 
 	/**
-	 * Sets the main GUI component of the module instance, having the given
-	 * <code>AbstractModuleConnector</code>.
-	 * 
-	 * @param module the <code>AbstractModuleConnector</code> of the module
-	 * @param comp the main GUI component of the module instance
-	 */
-	protected void setModuleComponent(AbstractModuleConnector module,
-		Composite comp) {
-		moduleComponents.put(module, comp);
-	}
-
-	/**
 	 * Retrieves the menu of the module instance, having the given
 	 * <code>AbstractModuleConnector</code>.
 	 * 
@@ -688,18 +666,6 @@ extends ApplicationWindow {
 	}
 
 	/**
-	 * Sets the menu of the module instance, having the given
-	 * <code>AbstractModuleConnector</code>.
-	 * 
-	 * @param module the <code>AbstractModuleConnector</code> of the module
-	 * @param menu the menu of the module instance
-	 */
-	protected void setModuleMenu(AbstractModuleConnector module,
-		SubMenuManager menu) {
-		moduleMenus.put(module, menu);
-	}
-
-	/**
 	 * Retrieves the toolbar of the module instance, having the given
 	 * <code>AbstractModuleConnector</code>.
 	 * 
@@ -709,18 +675,6 @@ extends ApplicationWindow {
 	 */
 	protected SubToolBarManager getModuleToolbar(AbstractModuleConnector module) {
 		return moduleToolbars.get(module);
-	}
-
-	/**
-	 * Sets the toolbar of the module instance, having the given
-	 * <code>AbstractModuleConnector</code>.
-	 * 
-	 * @param module the <code>AbstractModuleConnector</code> of the module
-	 * @param toolbar the toolbar of the module instance
-	 */
-	protected void setModuleToolbar(AbstractModuleConnector module,
-		SubToolBarManager toolbar) {
-		moduleToolbars.put(module, toolbar);
 	}
 
 	/**

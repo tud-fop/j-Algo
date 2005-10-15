@@ -205,18 +205,6 @@ public class JAlgoGUIConnector {
 	}
 
 	/**
-	 * Sets the main GUI component of the module instance, having the given
-	 * <code>AbstractModuleConnector</code>.
-	 * 
-	 * @param module the <code>AbstractModuleConnector</code> of the module
-	 * @param comp the main GUI component of the module instance
-	 */
-	public void setModuleComponent(AbstractModuleConnector module,
-		Composite comp) {
-		appWin.setModuleComponent(module, comp);
-	}
-
-	/**
 	 * Retrieves the menu of the module instance, having the given
 	 * <code>AbstractModuleConnector</code>.
 	 * 
@@ -229,18 +217,6 @@ public class JAlgoGUIConnector {
 	}
 
 	/**
-	 * Sets the menu of the module instance, having the given
-	 * <code>AbstractModuleConnector</code>.
-	 * 
-	 * @param module the <code>AbstractModuleConnector</code> of the module
-	 * @param menu the menu of the module instance
-	 */
-	public void setModuleMenu(AbstractModuleConnector module,
-		SubMenuManager menu) {
-		appWin.setModuleMenu(module, menu);
-	}
-
-	/**
 	 * Retrieves the toolbar of the module instance, having the given
 	 * <code>AbstractModuleConnector</code>.
 	 * 
@@ -250,17 +226,5 @@ public class JAlgoGUIConnector {
 	 */
 	public SubToolBarManager getModuleToolbar(AbstractModuleConnector module) {
 		return appWin.getModuleToolbar(module);
-	}
-
-	/**
-	 * Sets the toolbar of the module instance, having the given
-	 * <code>AbstractModuleConnector</code>.
-	 * 
-	 * @param module the <code>AbstractModuleConnector</code> of the module
-	 * @param toolbar the toolbar of the module instance
-	 */
-	public void setModuleToolbar(AbstractModuleConnector module,
-		SubToolBarManager toolbar) {
-		appWin.setModuleToolbar(module, toolbar);
 	}
 }
