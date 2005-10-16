@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -27,6 +30,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.draw2d.ScaledGraphics;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
@@ -54,8 +58,11 @@ public class ExportAction extends Action {
 	}
 
 	public void run() {
-		
 		// Create Image with double size to enhance quality
+		if (figure.getPreferredSize().width * figure.getPreferredSize().height == 0) {
+			MessageDialog.openError(new Shell(), "Export failure", "Nothing to export");
+			return;
+		}
 		Image img = new Image(
 			null,
 			figure.getPreferredSize().width,
