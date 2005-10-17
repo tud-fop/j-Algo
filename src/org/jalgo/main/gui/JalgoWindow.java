@@ -63,6 +63,7 @@ import org.jalgo.main.gui.actions.NewModuleAction;
 import org.jalgo.main.gui.actions.OpenAction;
 import org.jalgo.main.gui.actions.SaveAction;
 import org.jalgo.main.gui.actions.SaveAsAction;
+import org.jalgo.main.util.FileActivity;
 import org.jalgo.main.util.Messages;
 
 /**
@@ -100,6 +101,9 @@ extends ApplicationWindow {
 	private AboutModuleAction aboutModuleAction;
 
 	private CTabFolder ct;
+	
+	private String iniPath;
+	
 
 	/**
 	 * Constructs an object of <code>JalgoWindow</code>. This constructor has
@@ -124,7 +128,7 @@ extends ApplicationWindow {
 		moduleComponents = new HashMap<AbstractModuleConnector, Composite>();
 		moduleMenus = new HashMap<AbstractModuleConnector, SubMenuManager>();
 		moduleToolbars = new HashMap<AbstractModuleConnector, SubToolBarManager>();
-
+		
 		createNewActions();
 
 		saveAction = new SaveAction();
@@ -132,10 +136,14 @@ extends ApplicationWindow {
 
 		saveAsAction = new SaveAsAction();
 		saveAsAction.setEnabled(false);
-
+		
 		aboutModuleAction = new AboutModuleAction(this);
 		aboutModuleAction.setEnabled(false);
-
+		
+		// file, where the visibilty state of the ModuleChooseDialog is saved
+		iniPath = getClass().getResource("/../main/vis.ini").toString();
+		iniPath = iniPath.substring(6,iniPath.length()); 
+	
 		addMenuBar();
 		addToolBar(SWT.WRAP | SWT.FLAT);
 		addStatusLine();
@@ -221,6 +229,14 @@ extends ApplicationWindow {
 		ct.setSimple(false);
 		ct.setFocus();
 
+		
+		// Show ModuleChooseDialog if necessary
+		if (FileActivity.loadBooleanFrom(iniPath)){
+			ModuleChooseDialog dialog = new ModuleChooseDialog(this.getShell(),
+					JalgoMain.getInstance(),iniPath);
+			dialog.open();
+		}
+		
 		// no more need for the following lines when using the swt v 3.138
 		// -alexander
 		// main.pack();
@@ -276,7 +292,7 @@ extends ApplicationWindow {
 	protected ToolBarManager createToolBarManager(int style) {
 		ToolBarManager toolbar = new ToolBarManager(style);
 
-		toolbar.add(new NewModuleAction(this));
+		toolbar.add(new NewModuleAction(this,iniPath));
 		toolbar.add(new OpenAction(this));
 		toolbar.add(new Separator());
 		toolbar.add(saveAction);
