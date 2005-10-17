@@ -1,0 +1,13 @@
+hey alex!
+
+du siehst ... ich hab das mal probiert, mit dem ModuleChooseDialog(MCD), so wie wir's heute nach Optimierung besprochen hatten, 
+aber es klappt trotzdem nicht.
+Der MCD wird nachwievor allein angezeigt und nicht mit dem J-Algo-Hauptfenster im Hintergrund.
+Ich weiﬂ an der Stell nicht mehr weiter - schau's dir am besten mal an, vielleicht hast du noch ne Option.
+
+Desweiteren l‰uft jetzt der Doppelklick bei der Modulauswahl im MCD. 
+
+Ich werd mich nochmal ans Dijkstra machen, kann aber nicht sagen, ob ich Erfolg haben werde. Mal schaun. ^^
+
+das wars erstmal
+Matthias
