@@ -35,17 +35,20 @@ import org.jalgo.main.util.Messages;
 public class NewModuleAction extends Action {
 
 	JalgoWindow win;
+	//file, where the visibilty state of the ModuleChooseDialog is saved
+	private String path;
 	
-	public NewModuleAction(JalgoWindow win) {
+	public NewModuleAction(JalgoWindow win, String iniPath) {
 		this.win = win;
 		setToolTipText(Messages.getString("main", "ui.New"));
 		setImageDescriptor(ImageDescriptor.createFromURL(getClass()
 				.getResource("/main_pix/new.gif")));
+		path = iniPath;
 	}
 
 	public void run() {
 		ModuleChooseDialog dialog = new ModuleChooseDialog(win.getShell(),
-			JalgoMain.getInstance());
+			JalgoMain.getInstance(),path);
 		dialog.open();
 	}
 }

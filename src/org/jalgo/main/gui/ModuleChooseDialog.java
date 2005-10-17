@@ -4,12 +4,20 @@
  */
 package org.jalgo.main.gui;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Iterator;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -25,7 +33,9 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.JalgoMain;
+import org.jalgo.main.util.FileActivity;
 import org.jalgo.main.util.Messages;
+import org.jalgo.module.avl.gui.GUIController;
 
 public class ModuleChooseDialog extends Dialog implements SelectionListener {
 
@@ -35,10 +45,15 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 	private Button button;
 	private Label logoL;
 	private Label descrL;
+	private Button check; 
+	private boolean visibilityState;
+    // file, where the visibilty state of the ModuleChooseDialog is saved
+	private String iniPath;
 	
-	public ModuleChooseDialog(Shell shell, JalgoMain main) {
+	public ModuleChooseDialog(Shell shell, JalgoMain main, String iniPath) {
 		super(shell);
 		this.main = main;
+		this.iniPath = iniPath;
 	}
 	
 	public Control createContents(Composite parent) {
@@ -52,6 +67,7 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 		topLayout.makeColumnsEqualWidth = true;
 		topLayout.marginHeight = 20;
 		GridLayout downLayout = new GridLayout();
+		GridLayout bottomLayout = new GridLayout();
 				
 		container.setLayout(allLayout);
 		
@@ -64,6 +80,12 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 		down.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL
 				| GridData.FILL_BOTH));
 		
+		Composite bottom = new Composite(container, SWT.NONE);
+		bottom.setLayout(bottomLayout);
+		bottom.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL
+				| GridData.FILL_BOTH));
+		
+		// modul list
 		moduleList = new List(top, SWT.BORDER | SWT.SIMPLE);
 		moduleListViewer = new ListViewer(moduleList);
 		for (Iterator modIt = main.getKnownModuleInfos().iterator(); modIt.hasNext();) {
@@ -72,8 +94,15 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 		}
 		moduleList.addSelectionListener(this);
 		moduleList.setSelection(-1);
-		moduleListViewer.getControl().setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.FILL_HORIZONTAL));
-	
+		moduleListViewer.getControl().setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.FILL_HORIZONTAL));	
+		
+		moduleList.addMouseListener(new MouseAdapter(){
+			public void mouseDoubleClick(MouseEvent e){
+				main.newInstance(moduleList.getSelectionIndex());
+				close();
+			}
+		});
+		
 		// logo
 		logoL = new Label(top, SWT.CENTER);
 		logoL.setImage(ImageDescriptor.createFromURL(getClass().getResource(
@@ -94,7 +123,14 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 		//descrL.setText("Klicken Sie auf ein Modul, um seine Beschreibung zu sehen.");
 		descrL.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL
 				| GridData.FILL_BOTH));		
-
+		
+		// check-box
+		check = new Button(bottom, SWT.CHECK);
+		check.setText("Dieses Fenster bei jedem Programmstart anzeigen.");
+		check.addSelectionListener(this);
+		visibilityState = FileActivity.readBooleanFrom(iniPath);
+		check.setSelection(visibilityState);
+		
 		return container;
 		
 	}
@@ -123,14 +159,14 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 	// this method has no effect
 	}
 	
-	public void widgetSelected(SelectionEvent e) {
+	public void widgetSelected(SelectionEvent ev) {
 		// button is clicked
-		if (e.widget == button) {
+		if (ev.widget == button) {
 			main.newInstance(moduleList.getSelectionIndex());
 			close();
 		} 
 		// selection in list is changed
-		else if (e.widget == moduleList) {
+		else if (ev.widget == moduleList) {
 			button.setEnabled(true);
 			int modNum = moduleList.getSelectionIndex();
 			// set description text of module
@@ -143,6 +179,10 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 			logoL.setImage(ImageDescriptor.createFromURL(
 				main.getKnownModuleInfos().get(modNum).getLogoURL()).
 				createImage());
+		}
+		else if (ev.widget == check) {
+			// store the visiblity state
+			FileActivity.writeBooleanTo(iniPath,check.getSelection());
 		}
  	}
 	

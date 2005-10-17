@@ -231,7 +231,7 @@ extends ApplicationWindow {
 
 		
 		// Show ModuleChooseDialog if necessary
-		if (FileActivity.loadBooleanFrom(iniPath)){
+		if (FileActivity.readBooleanFrom(iniPath)){
 			ModuleChooseDialog dialog = new ModuleChooseDialog(this.getShell(),
 					JalgoMain.getInstance(),iniPath);
 			dialog.open();
