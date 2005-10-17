@@ -141,8 +141,7 @@ extends ApplicationWindow {
 		aboutModuleAction.setEnabled(false);
 		
 		// file, where the visibilty state of the ModuleChooseDialog is saved
-		iniPath = getClass().getResource("/../main/vis.ini").toString();
-		iniPath = iniPath.substring(6,iniPath.length()); 
+		iniPath = "./res./main/vis.ini";
 	
 		addMenuBar();
 		addToolBar(SWT.WRAP | SWT.FLAT);
