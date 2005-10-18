@@ -231,9 +231,14 @@ extends ApplicationWindow {
 		
 		// Show ModuleChooseDialog if necessary
 		if (FileActivity.readBooleanFrom(iniPath)){
-			ModuleChooseDialog dialog = new ModuleChooseDialog(this.getShell(),
-					JalgoMain.getInstance(),iniPath);
-			dialog.open();
+			getShell().getDisplay().asyncExec(new Runnable() {
+				@SuppressWarnings("synthetic-access")
+				public void run() {
+					ModuleChooseDialog dialog = new ModuleChooseDialog(getShell(),
+						JalgoMain.getInstance(),iniPath);
+				dialog.open();					
+				}
+			});
 		}
 		
 		// no more need for the following lines when using the swt v 3.138
