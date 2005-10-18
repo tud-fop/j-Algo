@@ -30,7 +30,6 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.draw2d.ScaledGraphics;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
@@ -39,6 +38,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 
 /**
@@ -60,7 +60,8 @@ public class ExportAction extends Action {
 	public void run() {
 		// Create Image with double size to enhance quality
 		if (figure.getPreferredSize().width * figure.getPreferredSize().height == 0) {
-			MessageDialog.openError(new Shell(), "Export failure", "Nothing to export");
+			JAlgoGUIConnector.getInstance().showErrorMessage(
+				"Export failure: Nothing to export"); //$NON-NLS-1$
 			return;
 		}
 		Image img = new Image(
