@@ -88,30 +88,6 @@ public class VariableFigure extends StandAloneSynDiaFigure {
 		reposition();
 	}
 
-	/*
-	 * TODO: Remove, as soon as all classes are migrated to the new construcor
-	 */
-	public VariableFigure(String label) {
-		super(label, true);
-
-		// StackLayout acts like a FillLayout in SWT
-		setLayoutManager(new StackLayout());
-		startGap = endGap = 0;
-
-		startFigure = new EmptyFigure();
-		add(startFigure);
-
-		interiorFigure = new RectangleLabel();
-		//ell.setFont(font);
-		add(interiorFigure);
-		interiorFigure.setText(label);
-
-		endFigure = new EmptyFigure();
-		add(endFigure);
-
-		reposition();
-	}
-
 	/* (non-Javadoc)
 	 * @see org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure#getLeftAnchor()
 	 */

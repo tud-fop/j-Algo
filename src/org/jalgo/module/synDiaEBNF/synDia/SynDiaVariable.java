@@ -64,22 +64,6 @@ public class SynDiaVariable extends SynDiaElement implements SynDiaColors,
 		backtrackingLabel = maxBacktrackingLabel++;
 	}
 
-	public SynDiaVariable(String label) {
-		/*
-		 * the cast is necessary, thus the compiler is able to choose
-		 * the right constructor
-		 */
-		this(label, (SynDiaInitial) null);
-	}
-
-	public SynDiaVariable(String label, SynDiaInitial startElem) {
-		this.rectangle = new VariableFigure(label);
-		this.startElem = startElem;
-		backtrackingLabel = maxBacktrackingLabel++;
-		if (rectangle != null) {
-			rectangle.setIndexText("" + backtrackingLabel);} //$NON-NLS-1$
-	}
-
 	public SynDiaVariable(String label, SynDiaInitial startElem, Font font) {
 		this.rectangle = new VariableFigure(label, font);
 		this.startElem = startElem;

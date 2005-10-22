@@ -25,7 +25,6 @@ package org.jalgo.module.synDiaEBNF.gfx;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.PolylineConnection;
-import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.SWT;
@@ -84,30 +83,6 @@ public class TerminalFigure extends StandAloneSynDiaFigure {
 		toOut.setSourceAnchor(new FixPointAnchor(interiorFigure, SWT.RIGHT));
 		toOut.setTargetAnchor(endFigure.getLeftAnchor());
 		add(toOut);
-
-		reposition();
-	}
-
-	/*
-	 * TODO: Remove, as soon as all classes are migrated to the new construcor
-	 */
-	public TerminalFigure(String label) {
-		super(label, true);
-
-		// StackLayout acts like a FillLayout in SWT
-		setLayoutManager(new StackLayout());
-		startGap = endGap = 0;
-
-		startFigure = new EmptyFigure();
-		add(startFigure);
-
-		interiorFigure = new EllipseLabel();
-		//ell.setFont(font);
-		add(interiorFigure);
-		interiorFigure.setText(label);
-
-		endFigure = new EmptyFigure();
-		add(endFigure);
 
 		reposition();
 	}

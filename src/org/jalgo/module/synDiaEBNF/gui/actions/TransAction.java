@@ -44,7 +44,6 @@ public class TransAction extends Action {
 			"TransAction.trans_algorithm_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("synDiaEBNF",
 			"TransAction.Start_trans_algorithm._2")); //$NON-NLS-1$
-		//  TODO: add button-image
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/transalgo.gif")));
 	}

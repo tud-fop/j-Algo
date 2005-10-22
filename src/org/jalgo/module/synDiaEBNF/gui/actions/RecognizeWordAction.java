@@ -46,7 +46,6 @@ public class RecognizeWordAction extends Action {
 			"RecognizeWordAction.Start_recognize_word_algorithm._2")); //$NON-NLS-1$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			getClass().getResource("/ebnf_pix/recognizeWord.gif")));
-		//  TODO: add button-image
 	}
 
 	public void run() {

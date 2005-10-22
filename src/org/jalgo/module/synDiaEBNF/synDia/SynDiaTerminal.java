@@ -49,10 +49,6 @@ public class SynDiaTerminal extends SynDiaElement
 		this.ellipse = new TerminalFigure(label, font);
 	}
 
-	public SynDiaTerminal(String label) {
-		this.ellipse = new TerminalFigure(label);
-	}
-
 	public SynDiaTerminal(TerminalFigure figure) {
 		this.ellipse = figure;
 	}
