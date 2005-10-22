@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.gui.DialogConstants;
 import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
-import org.jalgo.module.synDiaEBNF.IModeConstants;
+import org.jalgo.module.synDiaEBNF.ModeEnum;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
 /**
@@ -42,7 +42,7 @@ import org.jalgo.module.synDiaEBNF.ModuleController;
  */
 public class CreateSynDiaAction
 extends Action
-implements IModeConstants, Serializable {
+implements Serializable {
 
 	private static final long serialVersionUID = 1888795917445235903L;
 	private ModuleController mc;
@@ -59,13 +59,13 @@ implements IModeConstants, Serializable {
 	}
 
 	public void run() {
-		if (mc.getMode() != NORMAL_VIEW_EMPTY) {
+		if (mc.getMode() != ModeEnum.NORMAL_VIEW_EMPTY) {
 			if (JAlgoGUIConnector.getInstance().showConfirmDialog(
 				Messages.getString("synDiaEBNF",
 					"CreateSynDiaAction.Creating_a_new_syntactical_diagram_will_destroy_all_you_have_done_with_this_module_up_to_now_!_5"), //$NON-NLS-1$
 				DialogConstants.OK_CANCEL_OPTION) == DialogConstants.CANCEL_OPTION)
 				return;
 		}
-		mc.setMode(CREATE_SYNDIA);
+		mc.setMode(ModeEnum.CREATE_SYNDIA);
 	}
 }

@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -182,12 +185,10 @@ public class ToTransFigure extends StandAloneSynDiaFigure {
 	public void highlight(boolean highlight) {
 		if (highlight) {
 			inner.setForegroundColor(SynDiaColors.highlightEntireFigure);
-			label1.setForegroundColor(SynDiaColors.normal);
-			label2.setForegroundColor(SynDiaColors.normal);
 		} else {
 			inner.setForegroundColor(SynDiaColors.normal);
-			label1.setForegroundColor(SynDiaColors.normal);
-			label2.setForegroundColor(SynDiaColors.normal);
 		}
+		label1.setForegroundColor(SynDiaColors.normal);
+		label2.setForegroundColor(SynDiaColors.normal);
 	}
 }

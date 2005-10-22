@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.gui.DialogConstants;
 import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
-import org.jalgo.module.synDiaEBNF.IModeConstants;
+import org.jalgo.module.synDiaEBNF.ModeEnum;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
 /**
@@ -42,7 +42,7 @@ import org.jalgo.module.synDiaEBNF.ModuleController;
  */
 public class CreateEbnfAction
 extends Action
-implements IModeConstants, Serializable {
+implements Serializable {
 
 	private static final long serialVersionUID = 6893127259423133755L;
 	private ModuleController mc;
@@ -58,13 +58,13 @@ implements IModeConstants, Serializable {
 	}
 
 	public void run() {
-		if (mc.getMode() != NORMAL_VIEW_EMPTY) {
+		if (mc.getMode() != ModeEnum.NORMAL_VIEW_EMPTY) {
 			if (JAlgoGUIConnector.getInstance().showConfirmDialog(
 				Messages.getString("synDiaEBNF",
 					"CreateEbnfAction.Creating_a_new_EBNF_will_destroy_all_you_have_done_with_this_module_up_to_now_!_5"),
 				DialogConstants.OK_CANCEL_OPTION) == DialogConstants.CANCEL_OPTION) //$NON-NLS-1$
 			return;
 		}
-		mc.setMode(EBNF_INPUT);
+		mc.setMode(ModeEnum.EBNF_INPUT);
 	}
 }

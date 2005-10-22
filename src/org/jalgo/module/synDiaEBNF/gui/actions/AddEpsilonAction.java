@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -19,7 +22,7 @@
 
 package org.jalgo.module.synDiaEBNF.gui.actions;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
@@ -39,12 +42,9 @@ import org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure;
  * @author Anne Kersten
  *
  */
-public class AddEpsilonAction extends Action implements IClickAction {
-
-	Figure figure;
+public class AddEpsilonAction extends Action implements IClickAction<Figure> {
 
 	public AddEpsilonAction(IFigure figure) {
-		this.figure = (Figure) figure;
 		//this.appWindow = appWindow;
 		setText(Messages.getString("synDiaEBNF",
 			"AddEpsilonAction.Empty_Figure_1")); //$NON-NLS-1$
@@ -58,9 +58,9 @@ public class AddEpsilonAction extends Action implements IClickAction {
 		ClickCollector.init(1, this);
 	}
 
-	public void performAction(ArrayList items) {
+	public void performAction(List<Figure> items) {
 		EmptyFigure epsilon = new EmptyFigure();
-		IFigure help = ((Figure) items.get(0)).getParent();
+		IFigure help = items.get(0).getParent();
 		try {
 			if (help instanceof CloudFigure) {
 				((CompositeSynDiaFigure) help.getParent()).replace(
@@ -71,7 +71,7 @@ public class AddEpsilonAction extends Action implements IClickAction {
 				Messages.getString("synDiaEBNF",
 					"AddEpsilonAction.Click_on_a_cloud_to_add_a_new_element._5")); //$NON-NLS-1$
 		} catch (SynDiaException e) {
-			// TODO: handle e
+			System.err.println("replacing error");
 		}
 	}
 }

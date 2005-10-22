@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -66,15 +69,16 @@ public class ClickListener
 		return lastPoint;
 	}
 
-	public void mousePressed(MouseEvent e) {
-		lastPoint = e.getLocation();
+	public void mousePressed(MouseEvent event) {
+		lastPoint = event.getLocation();
 		ClickCollector.addItem(this);
 		if (!ClickCollector.isCollecting()){
-			 mouseExited(e); 
+			 mouseExited(event); 
 		}
 	}
 
-	public void mouseEntered(MouseEvent e) {
+	@Override
+	public void mouseEntered(MouseEvent event) {
 		oldColor = this.myFigure.getBackgroundColor();
 		if (ClickCollector.isCollecting()) {
 			GfxUtil.getAppShell().setCursor(
@@ -87,8 +91,8 @@ public class ClickListener
 		}
 	}
 
-	public void mouseExited(MouseEvent e) {
-
+	@Override
+	public void mouseExited(MouseEvent event) {
 		GfxUtil.getAppShell().setCursor(
 			new Cursor(
 				GfxUtil.getAppShell().getDisplay(),
@@ -99,14 +103,14 @@ public class ClickListener
 	/* (non-Javadoc)
 	 * @see org.eclipse.draw2d.MouseListener#mouseReleased(org.eclipse.draw2d.MouseEvent)
 	 */
-	public void mouseReleased(MouseEvent arg0) {
+	public void mouseReleased(MouseEvent event) {
 	// this method has no effect
 	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.draw2d.MouseListener#mouseDoubleClicked(org.eclipse.draw2d.MouseEvent)
 	 */
-	public void mouseDoubleClicked(MouseEvent arg0) {
+	public void mouseDoubleClicked(MouseEvent event) {
 	// this method has no effect
 	}
 }

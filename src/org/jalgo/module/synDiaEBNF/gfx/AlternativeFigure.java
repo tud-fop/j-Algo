@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -23,8 +26,7 @@
 
 package org.jalgo.module.synDiaEBNF.gfx;
 
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.PolylineConnection;
@@ -115,19 +117,18 @@ public class AlternativeFigure extends CompositeSynDiaFigure {
 		// get die widest interiorFigure
 		maxWidth = 0;
 		int width = 0;
-		Iterator it = interiorFigures.iterator();
-		while (it.hasNext()) {
-			width = ((Figure) it.next()).getPreferredSize().width;
+		
+		for (SynDiaFigure figure : interiorFigures) {
+			width = figure.getPreferredSize().width;
 			if (width > maxWidth)
 				maxWidth = width;
 		}
 
 		// Layout interiorFigures
-		it = interiorFigures.iterator();
 		int x = 0;
 		int y = 0;
-		while (it.hasNext()) {
-			SynDiaFigure figure = (SynDiaFigure) it.next();
+		
+		for (SynDiaFigure figure : interiorFigures) {
 			Rectangle rect = new Rectangle(x, y, -1, -1);
 
 			if (figure.getPreferredSize().width < maxWidth) {
@@ -155,7 +156,6 @@ public class AlternativeFigure extends CompositeSynDiaFigure {
 	 * @see org.jalgo.module.synDiaEBNF.gfx.CompositeSynDiaFigure#replace(org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure, org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure)
 	 */
 	public void replace(SynDiaFigure oldFigure, SynDiaFigure newFigure) throws SynDiaException {
-
 		for (int i = 0; i < interiorFigures.size(); i++) {
 			if (interiorFigures.get(i).equals(oldFigure)) {
 				replace(newFigure, i);
@@ -167,7 +167,6 @@ public class AlternativeFigure extends CompositeSynDiaFigure {
 	 * @see org.jalgo.module.synDiaEBNF.gfx.CompositeSynDiaFigure#replace(org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure, int)
 	 */
 	public void replace(SynDiaFigure newFigure, int index) throws SynDiaException {
-
 		// Update Figures
 		Figure oldFigure = interiorFigures.get(index);
 		interiorFigures.set(index, newFigure);
@@ -192,9 +191,8 @@ public class AlternativeFigure extends CompositeSynDiaFigure {
 				+ endFigure.getPreferredSize().width + endGap;
 
 		// Get total heigth
-		Iterator it = interiorFigures.iterator();
-		while (it.hasNext()) {
-			heigth += vSpacing + ((Figure) it.next()).getPreferredSize().height;
+		for (SynDiaFigure figure : interiorFigures) {
+			heigth += vSpacing + figure.getPreferredSize().height;
 		}
 		// Correct the heigth
 		heigth -= vSpacing;
@@ -226,7 +224,7 @@ public class AlternativeFigure extends CompositeSynDiaFigure {
 		setPositions();
 	}
 
-	public LinkedList getInteriorFigures() {
+	public List<SynDiaFigure> getInteriorFigures() {
 		return interiorFigures;
 	}
 

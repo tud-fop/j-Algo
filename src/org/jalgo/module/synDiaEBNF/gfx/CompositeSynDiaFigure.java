@@ -24,6 +24,7 @@
 package org.jalgo.module.synDiaEBNF.gfx;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.draw2d.PolylineConnection;
 
@@ -36,7 +37,7 @@ public abstract class CompositeSynDiaFigure extends SynDiaFigure {
 
 	protected int numOfInteriorFigures; // number of interior figures
 	// figures inside
-	protected LinkedList<SynDiaFigure> interiorFigures = new LinkedList<SynDiaFigure>(); 
+	protected List<SynDiaFigure> interiorFigures = new LinkedList<SynDiaFigure>(); 
 	// connections from startFigure to interior ones
 	protected LinkedList<PolylineConnection> connectionsToInteriorFigures = new LinkedList<PolylineConnection>();
 	// connections from interior figures to endFigure

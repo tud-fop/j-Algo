@@ -62,7 +62,6 @@ public class CreateSynDiaClickGui extends Gui implements Serializable {
 
 	private static final long serialVersionUID = -557820845220356421L;
 	private GraphViewForm form2;
-	private ClickListener form2ClickListener;
 
 	public CreateSynDiaClickGui(Composite parent, ModuleController mc)
 	{
@@ -86,22 +85,10 @@ public class CreateSynDiaClickGui extends Gui implements Serializable {
 		ToolbarLayout layout = new ToolbarLayout();
 		layout.setSpacing(50);
 		form2.getPanel().setLayoutManager(layout);
-//		MarginBorder b = new MarginBorder(10, 10, 0, 0);
-//		form2.getPanel().setBorder(b);
 
-		//		Create Toolbar
+		// Create Toolbar
 		ToolBarManager toolbarMgr2 = new ToolBarManager(SWT.FLAT);
-		/*
-		toolbarMgr2.add(new AddCircleAction(form2.getPanel()));
-		toolbarMgr2.add(new AddRectangleAction(form2.getPanel()));
-		toolbarMgr2.add(new AddRoundedRectangleAction(form2.getPanel()));
-		toolbarMgr2.add(new Separator());
-		toolbarMgr2.add(new AddLineAction());
-		toolbarMgr2.add(new AddCurvedLineAction());
-		toolbarMgr2.add(new Separator());
-		*/
-
-
+		
 		toolbarMgr2.add(new ZoomInAction(form2));
 		toolbarMgr2.add(new ZoomOutAction(form2));
 		toolbarMgr2.add(new Separator());
@@ -126,12 +113,7 @@ public class CreateSynDiaClickGui extends Gui implements Serializable {
 		form2.setImage(ImageDescriptor.createFromURL(
 			getClass().getResource("/main_pix/new.gif")).createImage());
 		
-		/* - the original code was "new ClickListener(form2.getPanel());" without an assignment
-		 * - didn't understand this because in my way of thinking this would be thrownaway by the
-		 * garbage collector. please enlight me!!!
-		 * Stephan
-		 */
-		form2ClickListener = new ClickListener(form2.getPanel());
+		new ClickListener(form2.getPanel());
 	}
 	
 	public Figure getSynDiaPanel() {

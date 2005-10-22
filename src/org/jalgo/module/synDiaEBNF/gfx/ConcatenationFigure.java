@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -23,7 +26,6 @@
 
 package org.jalgo.module.synDiaEBNF.gfx;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -145,19 +147,17 @@ public class ConcatenationFigure extends CompositeSynDiaFigure {
 
 	private void setPositions() {
 		// position the figures
-		Iterator it = interiorFigures.iterator();
 
 		int x = 0;
-		while (it.hasNext()) {
-			Figure f = (Figure) it.next();
+		for (SynDiaFigure figure : interiorFigures) {
 			// Case it's the endFigure
-			if (f.equals(endFigure))
+			if (figure.equals(endFigure))
 				x += endGap;
-			layout.setConstraint(f, new Rectangle(x, 0, -1, -1));
+			layout.setConstraint(figure, new Rectangle(x, 0, -1, -1));
 			// Case it's the endFigure
-			if (f.equals(startFigure))
+			if (figure.equals(startFigure))
 				x += startGap;
-			x += hSpacing + f.getPreferredSize().width;
+			x += hSpacing + figure.getPreferredSize().width;
 		}
 
 		// update connections
@@ -180,9 +180,8 @@ public class ConcatenationFigure extends CompositeSynDiaFigure {
 
 	private int width() {
 		int width = 0;
-		Iterator it = interiorFigures.iterator();
-		while (it.hasNext()) {
-			width += ((Figure) it.next()).getPreferredSize().width;
+		for (SynDiaFigure figure : interiorFigures) {
+			width += figure.getPreferredSize().width;
 		}
 		width += startGap + endGap + (interiorFigures.size() - 1) * hSpacing;
 		return width;
@@ -198,19 +197,18 @@ public class ConcatenationFigure extends CompositeSynDiaFigure {
 		int heigth = 0;
 
 		// Find maximal height of interior Figures
-		Iterator it = interiorFigures.iterator();
-		while (it.hasNext()) {
-			Figure f = (Figure) it.next();
-			if (f.getPreferredSize().height > heigth) {
-				heigth = f.getPreferredSize().height;
+		for (SynDiaFigure figure : interiorFigures) {
+			if (figure.getPreferredSize().height > heigth) {
+				heigth = figure.getPreferredSize().height;
 			}
 		}
 		return new Dimension(width, heigth + 2);
 	}
 
-	public List getInteriorFigures() {
-		LinkedList innerFigures = (LinkedList) interiorFigures.clone();
-
+	public List<SynDiaFigure> getInteriorFigures() {
+		LinkedList<SynDiaFigure> innerFigures = new LinkedList<SynDiaFigure>();
+		
+		innerFigures.addAll(interiorFigures);
 		// Cut away startFigure and endFigure
 		innerFigures.removeFirst();
 		innerFigures.removeLast();

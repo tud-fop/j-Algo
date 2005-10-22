@@ -23,7 +23,6 @@
 package org.jalgo.module.synDiaEBNF.gui.actions;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.Figure;
@@ -61,10 +60,10 @@ public class SynDiaDoneAction extends Action {
 	}
 
 	public void run() {
-		int a = 0, i = 0, j;
+		int a = 0, i = 0;
 		List<Figure> children = new ArrayList<Figure>();
 		List<String> variables = new ArrayList<String>();
-		List<String> initial = new ArrayList<String>();
+		List<String> initials = new ArrayList<String>();
 		children.addAll(figure.getChildren());
 		if (children.isEmpty()) {
 			JAlgoGUIConnector.getInstance().showWarningMessage(
@@ -79,59 +78,51 @@ public class SynDiaDoneAction extends Action {
 			return;
 		}
 
-		Object o;
-
 		while (i < children.size()) {
-			o = children.get(i);
+			Object o = children.get(i);
 			if (o != null) {
 				children.addAll(((Figure) o).getChildren());
 				i++;
 			} else
 				children.remove(i);
 		}
-
-		Iterator it = children.iterator();
-		while (it.hasNext()) {
-			o = it.next();
-			if (o instanceof CloudFigure) {
+		
+		for (Figure child : children) {
+			if (child instanceof CloudFigure) {
 				if (a == 0) {
 					if (JAlgoGUIConnector.getInstance().showConfirmDialog(
 						Messages.getString("synDiaEBNF",
 							"SynDiaDoneAction.There_are_still_clouds_left._Do_you_want_them_replaced_by_simple_lines__7"), //$NON-NLS-1$
 						DialogConstants.YES_NO_OPTION) == DialogConstants.YES_OPTION) {
 						try {
-							((CompositeSynDiaFigure) ((CloudFigure) o)
-									.getParent()).replace(((CloudFigure) o),
+							((CompositeSynDiaFigure) ((CloudFigure) child)
+									.getParent()).replace(((CloudFigure) child),
 									new EmptyFigure());
 						} catch (SynDiaException e) {
-							// TODO handle e
+							System.err.println(e.getMessage());
 						}
 						a = 1;
 					} else
 						return;
 				} else
 					try {
-						((CompositeSynDiaFigure) ((CloudFigure) o).getParent())
-								.replace(((CloudFigure) o), new EmptyFigure());
+						((CompositeSynDiaFigure) ((CloudFigure) child).getParent())
+								.replace(((CloudFigure) child), new EmptyFigure());
 					} catch (SynDiaException e) {
-						// TODO handle e
+						System.err.println(e.getMessage());
 					}
-			} else if (o instanceof VariableFigure)
-				variables.add(((VariableFigure) o).getText());
-			else if (o instanceof InitialFigure)
-				initial.add(((InitialFigure) o).getLabel());
+			} else if (child instanceof VariableFigure)
+				variables.add(((VariableFigure)child).getText());
+			else if (child instanceof InitialFigure)
+				initials.add(((InitialFigure) child).getLabel());
 		}
-
-		for (i = 0; i < variables.size(); i++) {
-			a = 0;
-			for (j = 0; j < initial.size(); j++)
-				if (!initial.get(j).equals(variables.get(i)))
-					a++;
-			if (a == initial.size()) {
+		
+		for (String variable : variables) {
+			if (!initials.contains(variable)) {
 				JAlgoGUIConnector.getInstance().showWarningMessage(
-					Messages.getString("synDiaEBNF",
-						"SynDiaDoneAction.There_is_no_definition_for_9") + //$NON-NLS-1$
-					variables.get(i));
+						Messages.getString("synDiaEBNF",
+							"SynDiaDoneAction.There_is_no_definition_for_9") + //$NON-NLS-1$
+						variable);
 				return;
 			}
 		}

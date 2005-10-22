@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -23,7 +26,7 @@
  
 package org.jalgo.module.synDiaEBNF.gui.actions;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
@@ -45,11 +48,9 @@ import org.jalgo.module.synDiaEBNF.gfx.VariableFigure;
 /**
  * @author Hauke Menges
  */
-public class AddSynVariAction extends Action implements IClickAction {
-	IFigure figure;
-
+public class AddSynVariAction extends Action implements IClickAction<Figure> {
+	
 	public AddSynVariAction(IFigure figure) {
-		this.figure = figure;
 		setText(Messages.getString("synDiaEBNF",
 			"AddSynVariAction.Syntax_variable_1")); //$NON-NLS-1$
 		setToolTipText(Messages.getString("synDiaEBNF",
@@ -60,13 +61,11 @@ public class AddSynVariAction extends Action implements IClickAction {
 
 	public void run() {
 		ClickCollector.init(1, this);
-
 	}
 
-	public void performAction(ArrayList items) {
+	public void performAction(List<Figure> items) {
+		IFigure help = items.get(0).getParent();
 		try {
-			IFigure help = ((Figure) items.get(0)).getParent();
-
 			if (help instanceof CloudFigure) {
 				InputDialog inDialog =
 					new InputDialog(
@@ -77,11 +76,10 @@ public class AddSynVariAction extends Action implements IClickAction {
 							"AddSynVariAction.Syntax_variable__5"), //$NON-NLS-1$
 						"", //$NON-NLS-1$
 						null);
-				String result = ""; //$NON-NLS-1$
 				if (inDialog.open() != Window.CANCEL) {
-					result = inDialog.getValue();
+					String result = inDialog.getValue();
 
-					if (result != "") //$NON-NLS-1$
+					if (!result.equals("")) //$NON-NLS-1$
 						((CompositeSynDiaFigure) help.getParent()).replace(
 							(SynDiaFigure) help,
 							new VariableFigure(result, help.getFont()));
@@ -97,7 +95,7 @@ public class AddSynVariAction extends Action implements IClickAction {
 
 		}
 		catch (SynDiaException e) {
-			//TODO: handle e
+			System.err.println("replacing error");
 		}
 	}
 }

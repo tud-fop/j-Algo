@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -23,7 +26,7 @@
 
 package org.jalgo.main.gfx;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class that implements IClickAction can be called by the ClickCollector
@@ -31,7 +34,7 @@ import java.util.ArrayList;
  * 
  * @author Hauke Menges
  */
-public interface IClickAction {
-	public void performAction(ArrayList items);
+public interface IClickAction <T>{
+	public void performAction(List<T> items);
 
 }

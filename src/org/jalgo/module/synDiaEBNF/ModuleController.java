@@ -76,7 +76,7 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaSystem;
  * @author Michael Pradel
  */
 
-public class ModuleController implements IModeConstants {
+public class ModuleController {
 
 	private final ModuleConnector connector;
 
@@ -111,7 +111,7 @@ public class ModuleController implements IModeConstants {
 	private IAlgorithm algo = null;
 	// currently performed algorithm, or null, if no algorithm is performed right now
 
-	private int mode = NO_MODE_SET;
+	private ModeEnum mode = ModeEnum.NO_MODE_SET;
 	// indicated what the module is doing at this moment (see modes-table in setMode() comment)
 
 	// ------ public methods ----------------
@@ -133,7 +133,7 @@ public class ModuleController implements IModeConstants {
 	}
 
 	public void run() {
-		setMode(NORMAL_VIEW_EMPTY);
+		setMode(ModeEnum.NORMAL_VIEW_EMPTY);
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class ModuleController implements IModeConstants {
 	 *   RECOGNIZE_WORD_ALGO - syndia is loaded; user performs recognize-word-algorithm
 	 *   GENERATE_WORD_ALGO -  syndia is loaded; user performs generate-word-algorithm
 	 */
-	public void setMode(int newMode) {
+	public void setMode(ModeEnum newMode) {
 		// leave old mode (delete buttons etc) ...
 		leaveMode(mode);
 
@@ -161,48 +161,50 @@ public class ModuleController implements IModeConstants {
 		// ... and set new mode
 		switch (newMode) {
 			case NO_MODE_SET :
-				mode = NO_MODE_SET;
+				mode = ModeEnum.NO_MODE_SET;
 				break;
 
 			case NORMAL_VIEW_EMPTY :
-				mode = NORMAL_VIEW_EMPTY;
+				mode = ModeEnum.NORMAL_VIEW_EMPTY;
 				addCreationButtons();
 				gui = new NormalViewEmptyGui(comp, this);
 				break;
 
 			case NORMAL_VIEW_EBNF :
-				mode = NORMAL_VIEW_EBNF;
+				mode = ModeEnum.NORMAL_VIEW_EBNF;
 				connector.setSaveStatus(SaveStatus.CHANGES_TO_SAVE);
 				addTransButton();
 				gui = new NormalViewEbnfGui(comp);
 				StyledText ebnfText =
 					ebnfDef.styledText(((NormalViewEbnfGui) gui).getViewForm());
+				ebnfText.setEditable(false);
 				((NormalViewEbnfGui) gui).setEbnfText(ebnfText);
 				break;
 
 			case NORMAL_VIEW_SYNDIA :
-				mode = NORMAL_VIEW_SYNDIA;
+				mode = ModeEnum.NORMAL_VIEW_SYNDIA;
 				addBacktrackingButtons();
 				gui = new NormalViewSynDiaGui(comp);
 				StyledText tuple =
 					synDiaSystem.getTuple(
 						((NormalViewSynDiaGui) gui).getTupleForm());
+				tuple.setEditable(false);
 				((NormalViewSynDiaGui) gui).setTuple(tuple);
 				((NormalViewSynDiaGui) gui).setSynDia(synDias);
 				break;
 
 			case CREATE_SYNDIA :
-				mode = CREATE_SYNDIA;
+				mode = ModeEnum.CREATE_SYNDIA;
 				gui = new CreateSynDiaClickGui(comp, this);
 				break;
 
 			case EBNF_INPUT :
-				mode = EBNF_INPUT;
+				mode = ModeEnum.EBNF_INPUT;
 				gui = new EbnfInputGui(comp, this);
 				break;
 
 			case TRANS_ALGO :
-				mode = TRANS_ALGO;
+				mode = ModeEnum.TRANS_ALGO;
 				gui = new TransAlgorithmGui(comp);
 				// need to cast for having getFigure() and getText()
 				algo =
@@ -224,7 +226,7 @@ public class ModuleController implements IModeConstants {
 				break;
 
 			case RECOGNIZE_WORD_ALGO :
-				mode = RECOGNIZE_WORD_ALGO;
+				mode = ModeEnum.RECOGNIZE_WORD_ALGO;
 				gui = new BackTrackingAlgoGui(comp);
 				((BackTrackingAlgoGui) gui).setFigure(synDias);
 				algo =
@@ -241,7 +243,7 @@ public class ModuleController implements IModeConstants {
 				break;
 
 			case GENERATE_WORD_ALGO :
-				mode = GENERATE_WORD_ALGO;
+				mode = ModeEnum.GENERATE_WORD_ALGO;
 				gui = new BackTrackingAlgoGui(comp);
 				((BackTrackingAlgoGui) gui).setFigure(synDias);
 				algo =
@@ -268,7 +270,7 @@ public class ModuleController implements IModeConstants {
 	 * @return the current mode
 	 * @see #setMode(int)
 	 */
-	public int getMode() {
+	public ModeEnum getMode() {
 		return mode;
 	}
 
@@ -294,7 +296,7 @@ public class ModuleController implements IModeConstants {
 	 */
 	public void performNextStep() throws InternalErrorException {
 		// we are not performing any algorithm; should never be reached
-		if ((mode < TRANS_ALGO) || (mode > GENERATE_WORD_ALGO)) {
+		if (!isModeAlgo()) {
 			throw new InternalErrorException("trying to perfom next step in ModuleController, when no algorithm is running; buttons should be disabled!"); //$NON-NLS-1$
 		}
 
@@ -312,7 +314,7 @@ public class ModuleController implements IModeConstants {
 	 */
 	public void nextHistStep() throws InternalErrorException {
 		//		we are not performing any algorithm; should never be reached
-		if ((mode < TRANS_ALGO) || (mode > GENERATE_WORD_ALGO)) {
+		if (!isModeAlgo()) {
 			throw new InternalErrorException("trying to perfom next history step in ModuleController, when no algorithm is running; buttons should be disabled!"); //$NON-NLS-1$
 		}
 
@@ -329,7 +331,7 @@ public class ModuleController implements IModeConstants {
 	 * @throws InternalErrorException Will be thrown if trans-algorithm is not running.
 	 */
 	public void performAll() throws InternalErrorException {
-		if (mode != TRANS_ALGO)
+		if (mode != ModeEnum.TRANS_ALGO)
 			throw new InternalErrorException("EBNF_SynDia; ModuleController: performAll() was called, when trans-algorithm was not running"); //$NON-NLS-1$
 
 		 ((TransAlgorithm) algo).autoTransAll();
@@ -342,7 +344,7 @@ public class ModuleController implements IModeConstants {
 	 */
 	public void previousHistStep() throws InternalErrorException {
 		// we are not performing any algorithm; should never be reached
-		if ((mode < TRANS_ALGO) || (mode > GENERATE_WORD_ALGO)) {
+		if (!isModeAlgo()) {
 			throw new InternalErrorException("trying to go to previous hist step in ModuleController, when no algorithm is running; buttons should be disabled!"); //$NON-NLS-1$
 		}
 
@@ -360,7 +362,7 @@ public class ModuleController implements IModeConstants {
 	 */
 	public void goToFirstStep() throws InternalErrorException {
 		//		we are not performing any algorithm; should never be reached
-		if ((mode < TRANS_ALGO) || (mode > GENERATE_WORD_ALGO)) {
+		if (!isModeAlgo()) {
 			throw new InternalErrorException("trying to go to first history step in ModuleController, when no algorithm is running; buttons should be disabled!"); //$NON-NLS-1$
 		}
 
@@ -377,7 +379,7 @@ public class ModuleController implements IModeConstants {
 	 */
 	public void goToLastStep() throws InternalErrorException {
 		//		we are not performing any algorithm; should never be reached
-		if ((mode < TRANS_ALGO) || (mode > GENERATE_WORD_ALGO)) {
+		if (!isModeAlgo()) {
 			throw new InternalErrorException("trying to go to last history step in ModuleController, when no algorithm is running; buttons should be disabled!"); //$NON-NLS-1$
 		}
 
@@ -394,7 +396,7 @@ public class ModuleController implements IModeConstants {
 	 */
 	public void setAuto(boolean auto) {
 		//		we are not performing any algorithm; should never be reached
-		if (mode != TRANS_ALGO) {
+		if (mode != ModeEnum.TRANS_ALGO) {
 			throw new InternalErrorException("trying to set automatically algorithm performance, when trans-algorithm isn't running; checkbox should be invisible!"); //$NON-NLS-1$
 		}
 
@@ -433,11 +435,11 @@ public class ModuleController implements IModeConstants {
 	public void algoFinished() {
 		if ((algo instanceof RecognizeWord)
 			|| (algo instanceof GenerateWord)) {
-			setMode(NORMAL_VIEW_SYNDIA);
+			setMode(ModeEnum.NORMAL_VIEW_SYNDIA);
 		} else if (algo instanceof TransAlgorithm) {
 			synDiaSystem = ((TransAlgorithm) algo).getSynDiaSystem();
 			synDias = ((TransAlgorithm) algo).getSynDiaFigure();
-			setMode(NORMAL_VIEW_SYNDIA);
+			setMode(ModeEnum.NORMAL_VIEW_SYNDIA);
 		} else {
 			throw new InternalErrorException("EBNFSynDia-ModuleController: someone calls algoFinished(), but no known algorithm is running"); //$NON-NLS-1$
 		}
@@ -451,7 +453,7 @@ public class ModuleController implements IModeConstants {
 		synDias = ((CreateSynDiaClickGui) gui).getSynDiaPanel();
 		TransformSynDia tsd = new TransformSynDia(synDias);
 		synDiaSystem = tsd.getSynDiaSystem();
-		setMode(NORMAL_VIEW_SYNDIA);
+		setMode(ModeEnum.NORMAL_VIEW_SYNDIA);
 	}
 
 	/**
@@ -461,13 +463,13 @@ public class ModuleController implements IModeConstants {
 	 */
 	public void abortAlgo() {
 		if (algo instanceof TransAlgorithm) {
-			setMode(NORMAL_VIEW_EBNF);
+			setMode(ModeEnum.NORMAL_VIEW_EBNF);
 		} else if (algo instanceof RecognizeWord) {
 			((RecognizeWord) algo).finalTasks();
-			setMode(NORMAL_VIEW_SYNDIA);
+			setMode(ModeEnum.NORMAL_VIEW_SYNDIA);
 		} else if (algo instanceof GenerateWord) {
 			((GenerateWord) algo).finalTasks();
-			setMode(NORMAL_VIEW_SYNDIA);
+			setMode(ModeEnum.NORMAL_VIEW_SYNDIA);
 		} else {
 			throw new InternalErrorException("SynDiaEBNF, ModuleController: someone calls abortAlgo() while no algorithm is running"); //$NON-NLS-1$
 		}
@@ -475,7 +477,7 @@ public class ModuleController implements IModeConstants {
 
 	//------- private methods --------------
 
-	private void leaveMode(int oldMode) {
+	private void leaveMode(ModeEnum oldMode) {
 		switch (oldMode) {
 			case NORMAL_VIEW_EMPTY :
 				removeCreationButtons();
@@ -678,6 +680,16 @@ public class ModuleController implements IModeConstants {
 		wizardAction = new WizardAction(this, comp);
 		wizardAction.setEnabled(true);
 	}
+	
+	/*
+	 * bad hack, remove this as fast as possible
+	 */
+	private boolean isModeAlgo() {
+		if ((mode == ModeEnum.TRANS_ALGO) ||
+				(mode == ModeEnum.RECOGNIZE_WORD_ALGO) ||
+				(mode == ModeEnum.GENERATE_WORD_ALGO)) return true;
+		return false;
+	}
 
 	private ByteArrayOutputStream serialize() {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -685,7 +697,7 @@ public class ModuleController implements IModeConstants {
 			ObjectOutputStream serializedObjects =
 				new ObjectOutputStream(outputStream);
 
-			serializedObjects.writeInt(mode);
+			serializedObjects.writeObject(mode);
 
 			switch (mode) {
 				case NORMAL_VIEW_EBNF :
@@ -713,19 +725,19 @@ public class ModuleController implements IModeConstants {
 		try {
 			ObjectInputStream serializedObjects = new ObjectInputStream(data);
 
-			int newMode = serializedObjects.readInt();
+			ModeEnum newMode = (ModeEnum) serializedObjects.readObject();
 
 			switch (newMode) {
 				case NORMAL_VIEW_EBNF :
 					ebnfDef = (EbnfDefinition) serializedObjects.readObject();
-					setMode(NORMAL_VIEW_EBNF);
+					setMode(ModeEnum.NORMAL_VIEW_EBNF);
 					break;
 
 				case NORMAL_VIEW_SYNDIA :
 					synDiaSystem =
 						(SynDiaSystem) serializedObjects.readObject();
 					synDias = (Figure) serializedObjects.readObject();
-					setMode(NORMAL_VIEW_SYNDIA);
+					setMode(ModeEnum.NORMAL_VIEW_SYNDIA);
 					break;
 
 				default :

@@ -29,13 +29,13 @@ package org.jalgo.module.synDiaEBNF.gui.actions;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jalgo.main.util.Messages;
-import org.jalgo.module.synDiaEBNF.IModeConstants;
+import org.jalgo.module.synDiaEBNF.ModeEnum;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
 /**
  * @author Michael Pradel
  */
-public class TransAction extends Action implements IModeConstants {
+public class TransAction extends Action {
 	private ModuleController mc;
 
 	public TransAction(ModuleController mc) {
@@ -50,6 +50,6 @@ public class TransAction extends Action implements IModeConstants {
 	}
 
 	public void run() {
-		mc.setMode(TRANS_ALGO);
+		mc.setMode(ModeEnum.TRANS_ALGO);
 	}
 }

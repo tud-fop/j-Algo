@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -24,6 +27,7 @@ package org.jalgo.module.synDiaEBNF.gui.actions;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
@@ -42,7 +46,7 @@ import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
 /**
  * @author Hauke Menges
  */
-public class AddInitialAction extends Action implements IClickAction {
+public class AddInitialAction extends Action implements IClickAction<Figure> {
 
 	private IFigure figure;
 	private boolean firstSet;
@@ -62,11 +66,10 @@ public class AddInitialAction extends Action implements IClickAction {
 
 	public void run() {
 		ClickCollector.init(1, this);
-
 	}
 
-	public void performAction(ArrayList items) {
-		IFigure help = ((Figure) items.get(0)).getParent();
+	public void performAction(List<Figure> items) {
+		IFigure help = items.get(0).getParent();
 
 		if (help instanceof CloudFigure)
 			JAlgoGUIConnector.getInstance().showWarningMessage(
@@ -81,9 +84,8 @@ public class AddInitialAction extends Action implements IClickAction {
 					Messages.getString("synDiaEBNF", "AddInitialAction.Name__7"), //$NON-NLS-1$
 					"S", //$NON-NLS-1$
 					null);
-			String result = ""; //$NON-NLS-1$
 			if (inDialog.open() != Window.CANCEL) {
-				result = inDialog.getValue();
+				String result = inDialog.getValue();
 				boolean errorInList = false;
 
 				Iterator it = labelList.iterator();

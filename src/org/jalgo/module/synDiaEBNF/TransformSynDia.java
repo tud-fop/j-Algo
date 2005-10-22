@@ -29,6 +29,7 @@ package org.jalgo.module.synDiaEBNF;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.draw2d.Figure;
 import org.jalgo.module.synDiaEBNF.gfx.AlternativeFigure;
@@ -36,6 +37,7 @@ import org.jalgo.module.synDiaEBNF.gfx.ConcatenationFigure;
 import org.jalgo.module.synDiaEBNF.gfx.EmptyFigure;
 import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
 import org.jalgo.module.synDiaEBNF.gfx.RepetitionFigure;
+import org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaSystemFigure;
 import org.jalgo.module.synDiaEBNF.gfx.TerminalFigure;
 import org.jalgo.module.synDiaEBNF.gfx.VariableFigure;
@@ -54,17 +56,17 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariable;
  */
 public class TransformSynDia {
 
-	private LinkedList<SynDiaVariable> synVariables = new LinkedList<SynDiaVariable>(); // List of SynDiaInitial
+	private List<SynDiaVariable> synVariables = new LinkedList<SynDiaVariable>(); // List of SynDiaInitial
 
-	private HashSet<String> synVariablesSet = new HashSet<String>(); // Set of Labels
+	private Set<String> synVariablesSet = new HashSet<String>(); // Set of Labels
 
-	private HashSet<String> terminalSymbols = new HashSet<String>(); // Strings
-
+	private Set<String> terminalSymbols = new HashSet<String>();
+	
 	private SynDiaSystem def;
 
 	//	ruft Rekursion auf + textcanvas und Definition erstellen
+	@SuppressWarnings("unchecked")
 	public TransformSynDia(Figure panel) {
-		//get childs
 		List list = panel.getChildren();
 		def = new SynDiaSystem(new SynDiaSystemFigure(list));
 		for (int i = 0; i < list.size(); i++) {
@@ -139,22 +141,20 @@ public class TransformSynDia {
 	}
 
 	private SynDiaAlternative transformAlternativeFigure(AlternativeFigure figure) {
-		List inputList = figure.getInteriorFigures();
 		List<SynDiaElement> outputList = new LinkedList<SynDiaElement>();
 
-		for (int i = 0; i < inputList.size(); i++) {
-			SynDiaElement listElem = searchTypAndTransform((Figure) inputList.get(i));
+		for (SynDiaFigure synDiaFigure : figure.getInteriorFigures()) {
+			SynDiaElement listElem = searchTypAndTransform(synDiaFigure);
 			outputList.add(listElem);
 		}
 		return new SynDiaAlternative(figure, outputList);
 	}
 
 	private SynDiaConcatenation transformConcatenationFigure(ConcatenationFigure figure) {
-		List inputList = figure.getInteriorFigures();
 		List<SynDiaElement> outputList = new LinkedList<SynDiaElement>();
 		
-		for (int i = 0; i < inputList.size(); i++) {
-			SynDiaElement listElem = searchTypAndTransform((Figure) inputList.get(i));
+		for (SynDiaFigure synDiaFigure : figure.getInteriorFigures()) {
+			SynDiaElement listElem = searchTypAndTransform(synDiaFigure);
 			outputList.add(listElem);
 		}
 		return new SynDiaConcatenation(figure, outputList);

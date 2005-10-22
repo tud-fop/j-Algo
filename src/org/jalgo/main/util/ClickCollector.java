@@ -43,25 +43,24 @@ public class ClickCollector {
 	
 	private static boolean isCollecting;
 	private static int numberOfClicks;
-	private static IClickAction actionObject;
+	private static IClickAction<Figure> actionObject;
 	private static ArrayList<Figure> items;
 	
 	private static Point lastPoint;
 	
-	
-	public static void init(int numberOfClicks_, IClickAction actionObject_){
+	public static void init(int numberOfClicks_, IClickAction actionObject_) {
 		isCollecting = true;
 		numberOfClicks = numberOfClicks_;
 		actionObject = actionObject_;
 		items = new ArrayList<Figure>();
 	}
 	
-	public static boolean addItem(ClickListener clickListener){
-		if ((isCollecting == true) && (numberOfClicks > 0)){
+	public static boolean addItem(ClickListener clickListener) {
+		if ((isCollecting == true) && (numberOfClicks > 0)) {
 			items.add(clickListener.getFigure());
 			lastPoint = clickListener.getLastPoint();
 			numberOfClicks--;
-			if (numberOfClicks == 0){
+			if (numberOfClicks == 0) {
 				actionObject.performAction(items);
 				stopCollecting();
 				return true;
@@ -70,7 +69,7 @@ public class ClickCollector {
 		return false;
 	}
 	
-	public static void stopCollecting(){
+	public static void stopCollecting() {
 		isCollecting = false;
 		numberOfClicks = 0;
 		actionObject = null;

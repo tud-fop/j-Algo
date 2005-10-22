@@ -48,6 +48,7 @@ import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.gui.widgets.CustomViewForm;
 import org.jalgo.main.gui.widgets.Splitter;
 import org.jalgo.main.util.Messages;
+import org.jalgo.module.synDiaEBNF.ModeEnum;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 import org.jalgo.module.synDiaEBNF.ebnf.EbnfDefinition;
 import org.jalgo.module.synDiaEBNF.ebnf.EbnfParseException;
@@ -469,7 +470,7 @@ public class EbnfInputGui extends Gui implements Serializable {
 				// ebnf could be analysed correctly
 
 				modcon.setEbnfDef(def);
-				modcon.setMode(8);
+				modcon.setMode(ModeEnum.NORMAL_VIEW_EBNF);
 			}
 		});
 

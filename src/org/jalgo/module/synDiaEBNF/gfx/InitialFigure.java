@@ -67,7 +67,7 @@ public class InitialFigure extends CompositeSynDiaFigure {
 	}
 
 	public SynDiaFigure getSynDia() {
-		return (SynDiaFigure) concat.getInteriorFigures().get(0);
+		return concat.getInteriorFigures().get(0);
 	}
 
 	public void setStartFigure() {

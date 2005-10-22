@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.gui.DialogConstants;
 import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
-import org.jalgo.module.synDiaEBNF.IModeConstants;
+import org.jalgo.module.synDiaEBNF.ModeEnum;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
 /**
@@ -60,6 +60,6 @@ public class WizardAction extends Action implements Serializable {
 			Messages.getString("synDiaEBNF",
 				"WizardAction.Starting_the_wizard_will_destroy_all_you_have_done_with_this_module_up_to_now_!_5"), //$NON-NLS-1$
 			DialogConstants.OK_CANCEL_OPTION) == DialogConstants.OK_OPTION)
-			mc.setMode(IModeConstants.NORMAL_VIEW_EMPTY);
+			mc.setMode(ModeEnum.NORMAL_VIEW_EMPTY);
 	}
 }

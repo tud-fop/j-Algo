@@ -21,35 +21,22 @@
  */
 
 /*
- * Created on 16.06.2004
+ * Created on 03.10.2005
  */
-
-package org.jalgo.module.synDiaEBNF.gui.actions;
-
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.jalgo.main.util.Messages;
-import org.jalgo.module.synDiaEBNF.ModeEnum;
-import org.jalgo.module.synDiaEBNF.ModuleController;
+package org.jalgo.module.synDiaEBNF;
 
 /**
- * @author Michael Pradel
+ * @author Stephan Creutz
  */
-public class RecognizeWordAction extends Action {
-	private ModuleController mc;
-
-	public RecognizeWordAction(ModuleController mc) {
-		this.mc = mc;
-		setText(Messages.getString("synDiaEBNF",
-			"RecognizeWordAction.recognize_word_algorithm_1")); //$NON-NLS-1$
-		setToolTipText(Messages.getString("synDiaEBNF",
-			"RecognizeWordAction.Start_recognize_word_algorithm._2")); //$NON-NLS-1$
-		setImageDescriptor(ImageDescriptor.createFromURL(
-			getClass().getResource("/ebnf_pix/recognizeWord.gif")));
-		//  TODO: add button-image
-	}
-
-	public void run() {
-		mc.setMode(ModeEnum.RECOGNIZE_WORD_ALGO);
-	}
+public enum ModeEnum {
+	NO_MODE_SET,
+	START_WITH_WIZARD,
+	NORMAL_VIEW_EMPTY,
+	CREATE_SYNDIA,
+	EBNF_INPUT,
+	TRANS_ALGO,
+	RECOGNIZE_WORD_ALGO,
+	GENERATE_WORD_ALGO,
+	NORMAL_VIEW_EBNF,
+	NORMAL_VIEW_SYNDIA
 }

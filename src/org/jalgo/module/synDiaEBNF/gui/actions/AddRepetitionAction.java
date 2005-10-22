@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -23,7 +26,7 @@
  */
 package org.jalgo.module.synDiaEBNF.gui.actions;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
@@ -44,12 +47,9 @@ import org.jalgo.module.synDiaEBNF.gfx.SynDiaFigure;
  * @author Anne Kersten
  *
  */
-public class AddRepetitionAction extends Action implements IClickAction {
-	
-	IFigure figure;
+public class AddRepetitionAction extends Action implements IClickAction<Figure> {
 	
 	public AddRepetitionAction(IFigure figure){
-		this.figure = figure;
 		//this.appWindow = appWindow;
 		setText(Messages.getString("synDiaEBNF",
 			"AddRepetitionAction.Repetition_1")); //$NON-NLS-1$
@@ -61,21 +61,22 @@ public class AddRepetitionAction extends Action implements IClickAction {
 	
 	public void run() {
 		ClickCollector.init(1, this);
-
 	}
 
-	public void performAction(ArrayList items) {
-		try {
-			IFigure help = ((Figure) items.get(0)).getParent();
+	public void performAction(List<Figure> items) {
+		IFigure help = items.get(0).getParent();
 		
-			if (help instanceof CloudFigure)
-				((CompositeSynDiaFigure) help.getParent()).replace((SynDiaFigure) help, new RepetitionFigure());
-			else JAlgoGUIConnector.getInstance().showWarningMessage(
-				Messages.getString("synDiaEBNF",
-					"AddRepetitionAction.Click_on_a_cloud_to_add_a_new_element._5")); //$NON-NLS-1$
+		if (!(help instanceof CloudFigure)) {
+			JAlgoGUIConnector.getInstance().showWarningMessage(
+					Messages.getString("synDiaEBNF",
+						"AddRepetitionAction.Click_on_a_cloud_to_add_a_new_element._5")); //$NON-NLS-1$
+			return;
 		}
-		catch (SynDiaException e) {
-			//TODO: handle e
+		
+		try {
+			((CompositeSynDiaFigure) help.getParent()).replace((SynDiaFigure) help, new RepetitionFigure());
+		} catch (SynDiaException e) {
+			System.err.println("replacing error");
 		}
 	}
 }

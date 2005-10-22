@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
-import org.jalgo.module.synDiaEBNF.IModeConstants;
+import org.jalgo.module.synDiaEBNF.ModeEnum;
 import org.jalgo.module.synDiaEBNF.ModuleController;
 
 /**
@@ -115,7 +115,7 @@ public class NormalViewEmptyGui extends Gui {
 		createEbnfButton.setText("Auswählen");
 		createEbnfButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
-				mc_final.setMode(IModeConstants.EBNF_INPUT);
+				mc_final.setMode(ModeEnum.EBNF_INPUT);
 			}
 		});
 
@@ -137,7 +137,7 @@ public class NormalViewEmptyGui extends Gui {
 		createSynDiaButton.setText("Auswählen");
 		createSynDiaButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
-				mc_final.setMode(IModeConstants.CREATE_SYNDIA);
+				mc_final.setMode(ModeEnum.CREATE_SYNDIA);
 			}
 		});
 		

@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -52,8 +55,8 @@ public class CustomViewForm extends ViewForm {
 	private Color titleBG;
 	private Color titleFG;
 	private Color widgetBG;
-	private Color[] activeGradient, inactiveGradient;
-	private int[] activeGradientPercents, inactiveGradientPercents;
+	private Color[] activeGradient;
+	private int[] activeGradientPercents;
 
 	/**
 	 * @param parent
@@ -72,8 +75,6 @@ public class CustomViewForm extends ViewForm {
 			parent.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
 		activeGradient = new Color[] { titleBG, widgetBG, widgetBG };
 		activeGradientPercents = new int[] { 80, 100 };
-		inactiveGradient = new Color[] { widgetBG, widgetBG };
-		inactiveGradientPercents = new int[] { 100 };
 
 		// Create Label
 		label = new CLabel(this, SWT.BORDER) {
@@ -137,5 +138,4 @@ public class CustomViewForm extends ViewForm {
 	public ToolBarManager getToolBarManager() {
 		return toolbarMgrCenter;
 	}
-
 }

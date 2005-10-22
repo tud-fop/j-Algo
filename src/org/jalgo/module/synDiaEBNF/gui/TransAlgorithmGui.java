@@ -1,4 +1,7 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
+/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and
+ * platform independant. j-Algo is developed with the help of Dresden
+ * University of Technology.
  *
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
  *
@@ -67,6 +70,7 @@ public class TransAlgorithmGui extends Gui  implements Serializable{
 		form2.setText(Messages.getString("synDiaEBNF",
 			"TransAlgorithmGui.Rest_variables_3")); //$NON-NLS-1$
 		stackCanvas = form2.getStackCanvas();
+		stackCanvas.setEnabled(false);
 		
 		TextViewForm form3 = new TextViewForm(sash, SWT.BORDER);
 		form3.setText(Messages.getString(
