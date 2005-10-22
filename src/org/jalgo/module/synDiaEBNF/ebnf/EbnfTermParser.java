@@ -32,7 +32,6 @@ import java.util.Set;
 import java.util.Stack;
 
 import org.jalgo.main.util.Messages;
-import org.jalgo.main.util.Sets;
 
 /**
  * an object of this class is able to parse an EBNF term (the right side of an
@@ -387,16 +386,10 @@ implements IEbnfTokenConstants {
 			else if (elem.getType().equals(SYMBOL) && elem.getLevel() == level) {
 				parseStack.pop();
 				if (terminals.contains(elem.getValue())) {
-					//TODO: for what is search() used here?
-					//when it is used for realizing a singleton instance of the
-					//terminal/variable element, perhaps another solution is better
-					//-> HashMap ?
-					return Sets.search(definition.getAlphabet(),
-						new EbnfTerminal(elem.getValue()));
+					return definition.getTerminal(elem.getValue());
 				}
 				else if (variables.contains(elem.getValue())) {
-					return Sets.search(definition.getVariables(),
-						new EbnfSynVariable(elem.getValue()));
+					return definition.getVariable(elem.getValue());
 				}
 				else {
 					throw new EbnfParseException(Messages.getString(

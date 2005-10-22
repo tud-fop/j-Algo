@@ -25,6 +25,7 @@ package org.jalgo.module.synDiaEBNF.ebnf;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -43,8 +44,7 @@ import org.jalgo.main.util.Messages;
  * S is included in V, and is the startsymbol
  * R is a final set of Rules on the form af v::=...
  *  
- * @author Benjamin Scholz
- * @author Babett Schaliz
+ * @author Benjamin Scholz, Babett Schaliz, Stephan Creutz
  */
 public class EbnfDefinition implements Serializable {
 
@@ -54,9 +54,11 @@ public class EbnfDefinition implements Serializable {
 
 	// Name of the EbnfDefinition, mostly the greek "epsilon"
 	private Set<EbnfSynVariable> variables;
+	private HashMap<String, EbnfSynVariable> variablesMap;
 
 	// Set of "EbnfSynVariable"s (the syntactical variables)
 	private Set<EbnfTerminal> alphabet;
+	private HashMap<String, EbnfTerminal> alphabetMap;
 
 	// Set of "EbnfTerminal"s (the terminal symbols)
 	private EbnfSynVariable startVariable;
@@ -86,6 +88,10 @@ public class EbnfDefinition implements Serializable {
 		this.startVariable = startVariable;
 		this.variables = new HashSet<EbnfSynVariable>();
 		this.alphabet = new HashSet<EbnfTerminal>();
+		alphabetMap = new HashMap<String, EbnfTerminal>();
+		variablesMap = new HashMap<String, EbnfSynVariable>();
+		if (startVariable != null)
+			variablesMap.put(startVariable.getLabel(), startVariable);
 	}
 
 	/**
@@ -94,6 +100,10 @@ public class EbnfDefinition implements Serializable {
 	 */
 	public Set<EbnfTerminal> getAlphabet() {
 		return alphabet;
+	}
+	
+	public EbnfTerminal getTerminal(String terminalLabel) {
+		return alphabetMap.get(terminalLabel);
 	}
 
 	/**
@@ -119,6 +129,10 @@ public class EbnfDefinition implements Serializable {
 	public Set<EbnfSynVariable> getVariables() {
 		return variables;
 	}
+	
+	public EbnfSynVariable getVariable(String variableLabel) {
+		return variablesMap.get(variableLabel);
+	}
 
 	/**
 	 * You can give EbnfDefinition a name.
@@ -134,6 +148,7 @@ public class EbnfDefinition implements Serializable {
 	 */
 	public void setStartVariable(EbnfSynVariable startVariable) {
 		this.startVariable = startVariable;
+		variablesMap.put(startVariable.getLabel(), startVariable);
 	}
 
 	/**
@@ -142,6 +157,7 @@ public class EbnfDefinition implements Serializable {
 	 */
 	public void addVariable(EbnfSynVariable variable) {
 		variables.add(variable);
+		variablesMap.put(variable.getLabel(), variable);
 	}
 
 	/**
@@ -150,6 +166,7 @@ public class EbnfDefinition implements Serializable {
 	 */
 	public void addTerminal(EbnfTerminal terminal) {
 		alphabet.add(terminal);
+		alphabetMap.put(terminal.getLabel(), terminal);
 	}
 
 	/**
