@@ -59,7 +59,7 @@ extends Action {
 	public HelpAction(JalgoWindow appWin) {
 		this.appWin = appWin;
 
-		setText(Messages.getString("main", "ui.Help")); //$NON-NLS-1$ //$NON-NLS-2$
+		setText(Messages.getString("main", "ui.Help.Contents")); //$NON-NLS-1$ //$NON-NLS-2$
 		setToolTipText(Messages.getString("main", "ui.Help_tooltip")); //$NON-NLS-1$ //$NON-NLS-2$
 		setImageDescriptor(ImageDescriptor.createFromURL(
 			Messages.getResourceURL("main", "ui.Help"))); //$NON-NLS-1$ //$NON-NLS-2$
