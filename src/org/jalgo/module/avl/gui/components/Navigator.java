@@ -46,7 +46,6 @@ import javax.swing.border.EtchedBorder;
 
 import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
-import org.jalgo.module.avl.gui.GUIController;
 import org.jalgo.module.avl.gui.graphics.PaintArea;
 
 /**
@@ -87,10 +86,9 @@ implements MouseListener, MouseMotionListener {
 	/**
 	 * Constructs a <code>Navigator</code> object with the given references.
 	 * 
-	 * @param gui the parent <code>GUIController</code>
 	 * @param paintArea the viewport of the scrollpane
 	 */
-	public Navigator(GUIController gui, PaintArea paintArea) {
+	public Navigator(PaintArea paintArea) {
 		this.paintArea = paintArea;
 
 		setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));

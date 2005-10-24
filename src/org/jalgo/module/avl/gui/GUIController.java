@@ -184,7 +184,7 @@ implements GUIConstants {
 		infoPane = new InfoPane(tree);
 		graphicPane = new JScrollPane(paintArea);
 		graphicPane.setCorner(ScrollPaneConstants.LOWER_RIGHT_CORNER,
-			new Navigator(this, paintArea));
+			new Navigator(paintArea));
 
 		// store current insets for later layout validations (efficiency)
 		graphicPaneInsetsX = graphicPane.getInsets().left
