@@ -1,25 +1,10 @@
-> hey alex!
-hey zurück...
+hey alex ...
+wollt dir doch nochmal n paar änderungsgeschichten fürs handbuch schicken ...
+also:
 
-> du siehst ... ich hab das mal probiert, mit dem ModuleChooseDialog(MCD), so wie wir's heute nach Optimierung besprochen hatten, 
-> aber es klappt trotzdem nicht.
-> Der MCD wird nachwievor allein angezeigt und nicht mit dem J-Algo-Hauptfenster im Hintergrund.
-> Ich wei� an der Stell nicht mehr weiter - schau's dir am besten mal an, vielleicht hast du noch ne Option.
-Problem behoben, ich erkläre Dir die Funktionsweise später.
+seite 10
 
-> Desweiteren l�uft jetzt der Doppelklick bei der Modulauswahl im MCD. 
-Schön, sehr hilfreich...
+--  Bildunterschrift des rechten Bildes:  "Die Abfrage, ob Sitzungsdaten gespeichert werden sollen."
+--  Punkt 1.3.5:  ... über den Menüpunkt <Hilfe>-><Hilfe> oder indem ...
 
-> Ich werd mich nochmal ans Dijkstra machen, kann aber nicht sagen, ob ich Erfolg haben werde. Mal schaun. ^^
-Ja, mal schaun...
-
-> das wars erstmal
-> Matthias
-
-Ich sehe an diesem Schriftstück, dass Du die Textkodierung bei Dir noch nicht
-überall auf UTF-8 umgestellt hast (siehe Umlaute ä,Ü, und "sz" ß).
-Bitte stelle dies um, damit wir später keine Probleme wie die Dijkstra-Leute
-bekommen:
-Menü Window->Preferences...->General->Editors->Text File Encoding->Other->UTF-8
-
-Alexander
+gutt das wars
