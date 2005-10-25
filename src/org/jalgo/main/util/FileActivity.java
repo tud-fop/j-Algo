@@ -20,12 +20,14 @@
 
 package org.jalgo.main.util;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 
 /*
  * Created on Okt 15, 2005
@@ -38,8 +40,11 @@ import java.io.ObjectOutputStream;
  */
 public class FileActivity {
 	
+	private static String mcd = "Module choose dialog visibility = ";
+	
+	
 	/**
-	 * Stores a <code>boolean</code> into a file.
+	 * Stores a <code>boolean</code> into a file by writing it as a String.
 	 * 
 	 * @param file path and file name
 	 * @param value <code>boolean</code> to be stored
@@ -47,9 +52,9 @@ public class FileActivity {
 	public static void writeBooleanTo(String file, boolean value){
 		try{
 			FileOutputStream iniOut = new FileOutputStream(file);
-			ObjectOutputStream valueOut = new ObjectOutputStream(iniOut);
-			valueOut.writeBoolean(value);
-			valueOut.close();
+			PrintStream print = new PrintStream(iniOut);
+			if (value) print.print(mcd+"true");
+			else print.print(mcd+"false");
 			iniOut.close();		
 		}
 		catch(IOException ex){
@@ -58,7 +63,7 @@ public class FileActivity {
 	}
 	
 	/**
-	 * Retrieves a <code>boolean</code> from a file.
+	 * Retrieves a <code>boolean</code> from a file while the boolean value is written as a String.
 	 * 
 	 * @param file path and file name
 	 * @return the stored value
@@ -67,10 +72,16 @@ public class FileActivity {
 		try{
 			boolean value;
 			FileInputStream iniIn = new FileInputStream(file);
-			ObjectInputStream valueIn = new ObjectInputStream(iniIn);
-			value = valueIn.readBoolean();
-			valueIn.close();
+			InputStreamReader reader = new InputStreamReader(iniIn);
+			BufferedReader in = new BufferedReader(reader);
+			String valueString="";
+			
+			valueString=in.readLine();
+			if (valueString.equals(mcd+"true")) value=true;
+			else value=false;
+			in.close();
 		 	iniIn.close();
+		 	
 		 	return value;
 		}
 		catch(FileNotFoundException ex){
