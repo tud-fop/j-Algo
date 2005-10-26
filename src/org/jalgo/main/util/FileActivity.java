@@ -40,7 +40,7 @@ import java.io.PrintStream;
  */
 public class FileActivity {
 
-	private static String mcd = "Module choose dialog visibility = ";
+	private static String mcd = "ShowModuleChooserOnStartup=";
 
 	/**
 	 * Stores a <code>boolean</code> into a file by writing it as a String.
