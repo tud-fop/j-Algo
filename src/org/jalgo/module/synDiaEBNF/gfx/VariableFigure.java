@@ -25,7 +25,6 @@ package org.jalgo.module.synDiaEBNF.gfx;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.PolylineConnection;
-import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.SWT;

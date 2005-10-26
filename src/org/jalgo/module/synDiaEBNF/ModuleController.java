@@ -268,7 +268,7 @@ public class ModuleController {
 	/**
 	 * Returns the current mode of the module.
 	 * @return the current mode
-	 * @see #setMode(int)
+	 * @see #setMode(ModeEnum)
 	 */
 	public ModeEnum getMode() {
 		return mode;
