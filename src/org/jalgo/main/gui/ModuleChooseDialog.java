@@ -4,11 +4,6 @@
  */
 package org.jalgo.main.gui;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Iterator;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -17,7 +12,6 @@ import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -35,7 +29,6 @@ import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.JalgoMain;
 import org.jalgo.main.util.FileActivity;
 import org.jalgo.main.util.Messages;
-import org.jalgo.module.avl.gui.GUIController;
 
 public class ModuleChooseDialog extends Dialog implements SelectionListener {
 
@@ -97,6 +90,7 @@ public class ModuleChooseDialog extends Dialog implements SelectionListener {
 		moduleListViewer.getControl().setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.FILL_HORIZONTAL));	
 		
 		moduleList.addMouseListener(new MouseAdapter(){
+			@SuppressWarnings("synthetic-access")
 			public void mouseDoubleClick(MouseEvent e){
 				main.newInstance(moduleList.getSelectionIndex());
 				close();
