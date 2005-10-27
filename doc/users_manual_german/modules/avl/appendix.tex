@@ -25,6 +25,7 @@ Aus der Suchbaumeigenschaft kann man sich leicht rekursive Algorithmen für das E
 	\end {enumerate}
 \end{alg}
 
+\newpage
 \begin{alg} \label{insert}
 	(Einfügen eines Schlüssels $s$ in einen Suchbaum)
 	\begin {enumerate}
@@ -52,6 +53,7 @@ Zuerst muss der zu löschende Schlüssel gesucht werden. Ist der betreffende Knote
 \medskip
 Nach dem Ersetzen bleibt die Suchbaumeigenschaft erhalten, weil alle Schlüssel aus dem linken Teilbaum ohnehin kleiner sind als die aus dem rechten. Außerdem sind auch alle Schlüssel aus dem rechten Teilbaum größer, sonst wäre es nicht der nächst größere Schlüssel gewesen. Aus diesen Überlegungen erhält man folgende verbale Beschreibung des Löschen-Algorithmus:
 
+\newpage
 \begin{alg} \label{delete}
 	(Löschen eines Schlüssels $s$ aus einem Suchbaum)
 	\begin{enumerate}
@@ -73,6 +75,7 @@ AVL-Bäume (benannt nach Adelson-Velskij und Landis) sind spezielle Suchbäume: In
 \medskip
 Jetzt muss noch untersucht werden, wie groß der zusätzliche Aufwand beim Einfügen ist, um die AVL-Eigenschaft zu wahren. In jedem Fall wird der neue Knoten als Blatt eingefügt (nach demselben Algorithmus wie bei Suchbäumen). Dabei kann sich der Balancefaktor ändern. Allerdings kann man sich leicht klarmachen, dass das nur entlang des Suchpfades passieren kann. Die Aktualisierung von Balancefaktoren erfolgt von der Einfügestelle zur Wurzel. Hier der Algorithmus:
 
+\newpage
 \begin{alg} \label{avlinsert}
 	(Algorithmus zum Einfügen eines Elements x in einen AVL-Baum)
 	\begin{enumerate}
