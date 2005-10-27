@@ -1,88 +1,91 @@
 \newtheorem{alg}{Algorithmus}
 
-\chapter{Einleitung zu Datenstrukturen}
-Eine häufige Anwendung auf großen Datenmengen ist das Suchen: Das Wiederfinden eines bestimmten Elements oder bestimmter Informationen aus einer großen Menge früher abgelegter Daten. Um die Suche zu vereinfachen, werden den (möglicherweise sehr komplexen) großen Datensätzen eineindeutige Suchschlüssel (Keys) zugeordnet. Der Vergleich zweier solcher Schlüssel ist in der Regel viel schneller als der Vergleich zweier Datensätze. Wegen der Schlüsselzuordnung reicht es aus, alle vorkommenden Algorithmen nur auf den Schlüsseln zu betrachten; in Wirklichkeit verweisen erst die Schlüssel auf die Datensätze.\\
-Eine grundlegende Idee ist nun, die Daten in Form einer Liste oder eines Feldes abzulegen. Diese Datenstruktur ist höchst einfach. Jedoch ist der Aufwand für das Suchen relativ hoch, nämlich $O(n)$. Genauer gesagt benötigt man für eine erfolglose Suche $n$ Vergleiche (bei $n$ Elementen in der Datenstruktur), denn man muss jedes Element überprüfen, und für eine erfolgreiche Suche durchschnittlich $(n+1)/2$ Vergleiche durchführen, da nach jedem Element mit der gleichen Wahrscheinlichkeit gesucht wird.\\
-Eine Verbesserung dieses Verfahrens wäre, die Daten sortiert abzulegen, was zu einer binären Suche führt. Die Suche hat jetzt nur noch Komplexität $O(\log_2{n})$, da bei jedem Suchschritt das Feld halbiert wird. Der Nachteil ist, dass durch die Sortierung das Einfügen erschwert wird, da unter Umständen viele Datensätze bewegt werden müssen. Das Verfahren sollte also nur angewandt werden, wenn sehr wenige oder gar keine Einfügeoperationen ausgeführt werden müssen. Dann können die Daten anfangs mit einem schnellen Verfahren sortiert werden und müssen danach nicht mehr verändert werden.\\
-Eine weitere Datenstruktur, die der Suchbäume, wollen wir hier vorstellen.
+\chapter{\label{appendix_avl_A}Einleitung zu Datenstrukturen}
+{\bfseries Anmerkung:} Die Kapitel \ref{appendix_avl_A}, \ref{appendix_avl_B} und \ref{appendix_avl_C} dieses Anhangs wurden erstellt von:\\
+Jean Christoph Jung
 
-\chapter{\label{appendix_avl_A}Suchbäume}
-Suchbäume sind binäre Bäume (jeder Knoten hat höchstens 2 Kinder) mit der Eigenschaft:\\
-Für jeden Knoten gilt: alle Schlüssel im rechten Teilbaum sind größer als der eigene Schlüssel und alle Schlüssel im linken Teilbaum sind kleiner. Diese Eigenschaft wird hier immer Suchbaumeigenschaft genannt.
+Eine hï¿½ufige Anwendung auf groï¿½en Datenmengen ist das Suchen: Das Wiederfinden eines bestimmten Elements oder bestimmter Informationen aus einer groï¿½en Menge frï¿½her abgelegter Daten. Um die Suche zu vereinfachen, werden den (mï¿½glicherweise sehr komplexen) groï¿½en Datensï¿½tzen eineindeutige Suchschlï¿½ssel (Keys) zugeordnet. Der Vergleich zweier solcher Schlï¿½ssel ist in der Regel viel schneller als der Vergleich zweier Datensï¿½tze. Wegen der Schlï¿½sselzuordnung reicht es aus, alle vorkommenden Algorithmen nur auf den Schlï¿½sseln zu betrachten; in Wirklichkeit verweisen erst die Schlï¿½ssel auf die Datensï¿½tze.\\
+Eine grundlegende Idee ist nun, die Daten in Form einer Liste oder eines Feldes abzulegen. Diese Datenstruktur ist hï¿½chst einfach. Jedoch ist der Aufwand fï¿½r das Suchen relativ hoch, nï¿½mlich $O(n)$. Genauer gesagt benï¿½tigt man fï¿½r eine erfolglose Suche $n$ Vergleiche (bei $n$ Elementen in der Datenstruktur), denn man muss jedes Element ï¿½berprï¿½fen, und fï¿½r eine erfolgreiche Suche durchschnittlich $(n+1)/2$ Vergleiche durchfï¿½hren, da nach jedem Element mit der gleichen Wahrscheinlichkeit gesucht wird.\\
+Eine Verbesserung dieses Verfahrens wï¿½re, die Daten sortiert abzulegen, was zu einer binï¿½ren Suche fï¿½hrt. Die Suche hat jetzt nur noch Komplexitï¿½t $O(\log_2{n})$, da bei jedem Suchschritt das Feld halbiert wird. Der Nachteil ist, dass durch die Sortierung das Einfï¿½gen erschwert wird, da unter Umstï¿½nden viele Datensï¿½tze bewegt werden mï¿½ssen. Das Verfahren sollte also nur angewandt werden, wenn sehr wenige oder gar keine Einfï¿½geoperationen ausgefï¿½hrt werden mï¿½ssen. Dann kï¿½nnen die Daten anfangs mit einem schnellen Verfahren sortiert werden und mï¿½ssen danach nicht mehr verï¿½ndert werden.\\
+Eine weitere Datenstruktur, die der Suchbï¿½ume, wollen wir hier vorstellen.
 
-\centerpic{avl/bsp_suchbaum}{4.5}{Ein Beispiel für einen Suchbaum} 
+\chapter{\label{appendix_avl_B}Suchbï¿½ume}
+Suchbï¿½ume sind binï¿½re Bï¿½ume (jeder Knoten hat hï¿½chstens 2 Kinder) mit der Eigenschaft:\\
+Fï¿½r jeden Knoten gilt: alle Schlï¿½ssel im rechten Teilbaum sind grï¿½ï¿½er als der eigene Schlï¿½ssel und alle Schlï¿½ssel im linken Teilbaum sind kleiner. Diese Eigenschaft wird hier immer Suchbaumeigenschaft genannt.
 
-An dieser Stelle noch eine Bemerkung zu den Schlüsseln: Die Schlüssel können Elemente einer beliebigen Menge sein, unter der Bedingung, dass auf dieser Menge eine Ordnungsrelation definiert ist. Die Ordnungsrelation wird offensichtlich für die Suchbaumeigenschaft benötigt, da dort die Begriffe "`kleiner"' und "`größer"' vorkommen. Eine häufig verwendete Menge sind die natürlichen Zahlen mit ihrer normalen Ordnungsrelation $\leq$. Alle Operationen auf Suchbäumen kann man sich also anhand der natürlichen Zahlen vorstellen.\\
-Aus der Suchbaumeigenschaft kann man sich leicht rekursive Algorithmen für das Einfügen und Suchen in einem Suchbaum herleiten:
+\centerpic{avl/bsp_suchbaum}{4.5}{Ein Beispiel fï¿½r einen Suchbaum} 
+
+An dieser Stelle noch eine Bemerkung zu den Schlï¿½sseln: Die Schlï¿½ssel kï¿½nnen Elemente einer beliebigen Menge sein, unter der Bedingung, dass auf dieser Menge eine Ordnungsrelation definiert ist. Die Ordnungsrelation wird offensichtlich fï¿½r die Suchbaumeigenschaft benï¿½tigt, da dort die Begriffe "`kleiner"' und "`grï¿½ï¿½er"' vorkommen. Eine hï¿½ufig verwendete Menge sind die natï¿½rlichen Zahlen mit ihrer normalen Ordnungsrelation $\leq$. Alle Operationen auf Suchbï¿½umen kann man sich also anhand der natï¿½rlichen Zahlen vorstellen.\\
+Aus der Suchbaumeigenschaft kann man sich leicht rekursive Algorithmen fï¿½r das Einfï¿½gen und Suchen in einem Suchbaum herleiten:
 
 \begin{alg} \label{search}
-	(Suchen eines Schlüssels $s$ in einem Suchbaum)
+	(Suchen eines Schlï¿½ssels $s$ in einem Suchbaum)
 	\begin{enumerate}
-		\item Falls Teilbaum leer, dann Schlüssel nicht im Baum vorhanden
-		\item Falls $s$ gleich dem Schlüssel des aktuellen Knoten, dann Suche erfolgreich.
-		\item Falls $s$ größer als Schlüssel des aktuellen Knotens, dann suche (rekursiv) $s$ im rechten Teilbaum.
-		\item Falls $s$ kleiner als Schlüssel des aktuellen Knotens, dann suche (rekursiv) $s$ im linken Teilbaum.
+		\item Falls Teilbaum leer, dann Schlï¿½ssel nicht im Baum vorhanden
+		\item Falls $s$ gleich dem Schlï¿½ssel des aktuellen Knoten, dann Suche erfolgreich.
+		\item Falls $s$ grï¿½ï¿½er als Schlï¿½ssel des aktuellen Knotens, dann suche (rekursiv) $s$ im rechten Teilbaum.
+		\item Falls $s$ kleiner als Schlï¿½ssel des aktuellen Knotens, dann suche (rekursiv) $s$ im linken Teilbaum.
 	\end {enumerate}
 \end{alg}
 
 \newpage
 \begin{alg} \label{insert}
-	(Einfügen eines Schlüssels $s$ in einen Suchbaum)
+	(Einfï¿½gen eines Schlï¿½ssels $s$ in einen Suchbaum)
 	\begin {enumerate}
-		\item Falls Teilbaum leer, dann neuen Schlüssel hier einfügen.
-		\item Falls $s$ gleich dem Schlüssel des aktuellen Knotens, dann Schlüssel bereits vorhanden, Einfügen nicht nötig.
-		\item Falls $s$ größer als Schlüssel des aktuellen Knotens, dann füge (rekursiv) $s$ in den rechten Teilbaum ein.
-		\item Falls $s$ kleiner als Schlüssel des aktuellen Knotens, dann füge (rekursiv) $s$ in den linken Teilbaum ein.
+		\item Falls Teilbaum leer, dann neuen Schlï¿½ssel hier einfï¿½gen.
+		\item Falls $s$ gleich dem Schlï¿½ssel des aktuellen Knotens, dann Schlï¿½ssel bereits vorhanden, Einfï¿½gen nicht nï¿½tig.
+		\item Falls $s$ grï¿½ï¿½er als Schlï¿½ssel des aktuellen Knotens, dann fï¿½ge (rekursiv) $s$ in den rechten Teilbaum ein.
+		\item Falls $s$ kleiner als Schlï¿½ssel des aktuellen Knotens, dann fï¿½ge (rekursiv) $s$ in den linken Teilbaum ein.
 	\end {enumerate}
 \end{alg}
 
-Mit Algorithmus \ref{insert} ergibt sich folgende Eigenschaft der Struktur von Suchbäumen: im Gegensatz zur sortierten Liste hängt die Struktur eines Baumes davon ab, in welcher Reihenfolge die Elemente eingefügt werden. So erhält man verschieden Bäume, wenn man $1, 2, 3, 4$ in dieser Reihenfolge und in der Reihenfolge $3, 2, 4, 1$ einfügt.
+Mit Algorithmus \ref{insert} ergibt sich folgende Eigenschaft der Struktur von Suchbï¿½umen: im Gegensatz zur sortierten Liste hï¿½ngt die Struktur eines Baumes davon ab, in welcher Reihenfolge die Elemente eingefï¿½gt werden. So erhï¿½lt man verschiedene Bï¿½ume, wenn man $1, 2, 3, 4$ in dieser Reihenfolge und in der Reihenfolge $3, 2, 4, 1$ einfï¿½gt.
 
-\centerpic{avl/12345}{4}{Unterschiedliche Suchbäume bei unterschiedlicher Einfügereihenfolge} 
+\centerpic{avl/12345}{4}{Unterschiedliche Suchbï¿½ume bei unterschiedlicher Einfï¿½gereihenfolge} 
 
-Im ersten Fall erhält man einen Suchbaum, der zur linearen Liste entartet ist. Das ist nicht nur in dieser speziellen Reihenfolge so, es gibt viele Möglichkeiten einen entarteten Baum zu erzeugen. Der Algorithmus hat also zwei Nachteile: zum Einen kann der Suchaufwand linear zur Anzahl der Knoten im Baum sein, was keine Verbesserung zur linearen Liste darstellt; zum andern hängt die Güte des Verfahrens von der Eingabefolge ab. Der Vorteil von Suchbäumen wird klar, wenn man einen "`vollen"' Baum betrachtet, d.h. jeder Knoten hat entweder kein Kind (Blattknoten) oder zwei Kinder (innerer Knoten). Dann hat sowohl das Suchen (unabhängig davon, ob der Schlüssel im Baum vorhanden ist) als auch das Einfügen eine Komplexität von $O(\log{n})$.
+Im ersten Fall erhï¿½lt man einen Suchbaum, der zur linearen Liste entartet ist. Das ist nicht nur in dieser speziellen Reihenfolge so, es gibt viele Mï¿½glichkeiten einen entarteten Baum zu erzeugen. Der Algorithmus hat also zwei Nachteile: zum einen kann der Suchaufwand linear zur Anzahl der Knoten im Baum sein, was keine Verbesserung zur linearen Liste darstellt; zum anderen hï¿½ngt die Gï¿½te des Verfahrens von der Eingabefolge ab. Der Vorteil von Suchbï¿½umen wird klar, wenn man einen "`vollen"' Baum betrachtet, d.h. alle Pfade zu Blï¿½ttern haben dieselbe Lï¿½nge. Dann hat sowohl das Suchen (unabhï¿½ngig davon, ob der Schlï¿½ssel im Baum vorhanden ist) als auch das Einfï¿½gen eine Komplexitï¿½t von $O(\log{n})$.
 
-\centerpic{avl/vollerbaum}{5}{Ein Beispiel für einen vollen Baum}
+\centerpic{avl/vollerbaum}{5}{Ein Beispiel fï¿½r einen vollen Baum}
 \medskip
-Es gibt einige Algorithmen, wie man den Einfügealgorithmus modifizieren kann, um die entarteten Fälle zu vermeiden und immer einen nahezu vollen Baum hat. Einen davon, den Algorithmus nach Adelson-Velskij und Landis (AVL), werden wir später betrachten.
+Es gibt einige Algorithmen, bei denen der Einfï¿½gealgorithmus so modifiziert ist, dass die entarteten Fï¿½lle vermieden werden und immer nahezu volle Bï¿½ume entstehen. Einen davon, den Algorithmus nach Adelson-Velskij und Landis (AVL), werden wir spï¿½ter betrachten.
 
-Doch zunächst wollen wir noch eine weitere wichtige Operation auf Suchbäumen untersuchen: das Löschen. Leider ist es nicht ganz so einfach wie Suche und Einfügen.\\
-Zuerst muss der zu löschende Schlüssel gesucht werden. Ist der betreffende Knoten ein Blatt, kann er einfach entfernt werden. Hat der zu löschende Knoten nur ein Kind, kann er durch dieses ersetzt werden. Der schwierige Fall ist, wenn er zwei Kinder hat. Damit die Suchbaumeigenschaft erhalten bleibt, muss man ihn durch den nächst größeren Schlüssel ersetzen. Der nächst größere Schlüssel befindet sich offensichtlich im rechten Teilbaum.
+Doch zunï¿½chst wollen wir noch eine weitere wichtige Operation auf Suchbï¿½umen untersuchen: das Lï¿½schen. Leider ist es nicht ganz so einfach wie Suche und Einfï¿½gen.\\
+Zuerst muss der zu lï¿½schende Schlï¿½ssel gesucht werden. Ist der betreffende Knoten ein Blatt, kann er einfach entfernt werden. Hat der zu lï¿½schende Knoten nur ein Kind, kann er durch dieses ersetzt werden. Der schwierige Fall ist, wenn er zwei Kinder hat. Damit die Suchbaumeigenschaft erhalten bleibt, muss man ihn durch den nï¿½chst grï¿½ï¿½eren Schlï¿½ssel ersetzen. Der nï¿½chst grï¿½ï¿½ere Schlï¿½ssel befindet sich offensichtlich im rechten Teilbaum.
 
-\centerpic{avl/remove}{5}{Löschen eines Knoten im Suchbaum}
+\centerpic{avl/remove}{5}{Lï¿½schen eines Knoten im Suchbaum}
 \medskip
-Nach dem Ersetzen bleibt die Suchbaumeigenschaft erhalten, weil alle Schlüssel aus dem linken Teilbaum ohnehin kleiner sind als die aus dem rechten. Außerdem sind auch alle Schlüssel aus dem rechten Teilbaum größer, sonst wäre es nicht der nächst größere Schlüssel gewesen. Aus diesen Überlegungen erhält man folgende verbale Beschreibung des Löschen-Algorithmus:
+Nach dem Ersetzen bleibt die Suchbaumeigenschaft erhalten, weil alle Schlï¿½ssel aus dem linken Teilbaum ohnehin kleiner sind als die aus dem rechten. Auï¿½erdem sind auch alle Schlï¿½ssel aus dem rechten Teilbaum grï¿½ï¿½er, sonst wï¿½re es nicht der nï¿½chst grï¿½ï¿½ere Schlï¿½ssel gewesen. Aus diesen ï¿½berlegungen erhï¿½lt man folgende verbale Beschreibung des Lï¿½schen-Algorithmus:
 
 \newpage
 \begin{alg} \label{delete}
-	(Löschen eines Schlüssels $s$ aus einem Suchbaum)
+	(Lï¿½schen eines Schlï¿½ssels $s$ aus einem Suchbaum)
 	\begin{enumerate}
 		\item Suche s nach Algorithmus \ref{search}. Falls s nicht im Baum enthalten, terminiert der Algorithmus.
 		\item \begin{enumerate}
-			\item Ist der zu löschende Knoten ein Blatt, dann entferne ihn einfach aus dem Baum.
-			\item Hat der zu löschende Knoten nur ein Kind, dann ersetze ihn durch dieses.
-			\item Sonst suche den kleinsten Schlüssel im rechten Teilbaum: Gehe zum rechten Kind und dann immer zum linken Teilbaum, solange dieser nicht leer ist. Ersetze den zu löschenden Schlüssel durch den des so gefundenen Knotens. Ersetze den gefundenen Knoten durch sein rechtes Kind.
+			\item Ist der zu lï¿½schende Knoten ein Blatt, dann entferne ihn einfach aus dem Baum.
+			\item Hat der zu lï¿½schende Knoten nur ein Kind, dann ersetze ihn durch dieses.
+			\item Sonst suche den kleinsten Schlï¿½ssel im rechten Teilbaum: Gehe zum rechten Kind und dann immer zum linken Teilbaum, solange dieser nicht leer ist. Ersetze den zu lï¿½schenden Schlï¿½ssel durch den des so gefundenen Knotens. Ersetze den gefundenen Knoten durch sein rechtes Kind.
 			\end{enumerate}
 	\end{enumerate}
 \end{alg}
 
-Man kann anstelle des nächst größeren Schlüssels genausogut den nächstkleineren nehmen, der Algorithmus funktioniert trotzdem. Zur Komplexität ist zu sagen, dass der Algorithmus maximal $h$ Vergleiche macht, wobei $h$ die Höhe des Baumes ist. Auch hier ist also die Komplexität abhängig von der Struktur des Baumes.
+Man kann anstelle des nï¿½chst grï¿½ï¿½eren Schlï¿½ssels genausogut den nï¿½chstkleineren nehmen, der Algorithmus funktioniert trotzdem. Zur Komplexitï¿½t ist zu sagen, dass der Algorithmus maximal $h$ Vergleiche macht, wobei $h$ die Hï¿½he des Baumes ist. Auch hier ist also die Komplexitï¿½t abhï¿½ngig von der Struktur des Baumes.
 
-\chapter{AVL-Bäume}
-AVL-Bäume (benannt nach Adelson-Velskij und Landis) sind spezielle Suchbäume: In jedem Knoten unterscheiden sich die Höhen des linken Teilbaums und des rechten Teilbaums um höchstens 1. Um diese Eigenschaft (AVL-Eigenschaft) abzusichern, wird für jeden Knoten ein Balancefaktor eingeführt. Der Balancefaktor ist die Differenz der Höhen des rechten Teilbaums und des linken Teilbaums. Also gilt für jeden AVL-Baum, dass alle Balancefaktoren aus $\{-1,0,1\}$ sind. Bäume mit AVL-Eigenschaft sind niemals als lineare Liste entartet (, sofern sie denn mehr als 2 Knoten haben), sondern sind immer fast vollständig. Zwischen der Höhe $h$ eines Baumes und der Anzahl $n$ seiner Knoten besteht folgender Zusammenhang: $h\leq 2 \cdot \log_2{n}$. Das bedeutet, dass für das Suchen logarithmische Komplexität garantiert werden kann (das Suchen erfolgt gemäß Algorithmus \ref{search}).
+\chapter{\label{appendix_avl_C}AVL-Bï¿½ume}
+AVL-Bï¿½ume (benannt nach Adelson-Velskij und Landis) sind spezielle Suchbï¿½ume: In jedem Knoten unterscheiden sich die Hï¿½hen des linken Teilbaums und des rechten Teilbaums um hï¿½chstens 1. Um diese Eigenschaft (AVL-Eigenschaft) abzusichern, wird fï¿½r jeden Knoten ein Balancefaktor eingefï¿½hrt. Der Balancefaktor ist die Differenz der Hï¿½hen des rechten Teilbaums und des linken Teilbaums. Also gilt fï¿½r jeden AVL-Baum, dass alle Balancefaktoren aus $\{-1,0,1\}$ sind. Bï¿½ume mit AVL-Eigenschaft sind niemals als lineare Liste entartet (sofern sie denn mehr als 2 Knoten haben), sondern sind immer fast vollstï¿½ndig. Zwischen der Hï¿½he $h$ eines Baumes und der Anzahl $n$ seiner Knoten besteht folgender Zusammenhang: $h\leq 2 \cdot \log_2{n}$. Das bedeutet, dass fï¿½r das Suchen logarithmische Komplexitï¿½t garantiert werden kann (das Suchen erfolgt gemï¿½ï¿½ Algorithmus \ref{search}).
 
-\centerpic{avl/avlbsp}{5}{Ein Beispiel für einen AVL-Baum mit Balancen}
+\centerpic{avl/avlbsp}{5}{Ein Beispiel fï¿½r einen AVL-Baum mit Balancen}
 \medskip
-Jetzt muss noch untersucht werden, wie groß der zusätzliche Aufwand beim Einfügen ist, um die AVL-Eigenschaft zu wahren. In jedem Fall wird der neue Knoten als Blatt eingefügt (nach demselben Algorithmus wie bei Suchbäumen). Dabei kann sich der Balancefaktor ändern. Allerdings kann man sich leicht klarmachen, dass das nur entlang des Suchpfades passieren kann. Die Aktualisierung von Balancefaktoren erfolgt von der Einfügestelle zur Wurzel. Hier der Algorithmus:
+Jetzt muss noch untersucht werden, wie groï¿½ der zusï¿½tzliche Aufwand beim Einfï¿½gen ist, um die AVL-Eigenschaft zu wahren. In jedem Fall wird der neue Knoten als Blatt eingefï¿½gt (nach demselben Algorithmus wie bei Suchbï¿½umen). Dabei kann sich der Balancefaktor ï¿½ndern. Allerdings kann man sich leicht klarmachen, dass das nur entlang des Suchpfades passieren kann. Die Aktualisierung von Balancefaktoren erfolgt von der Einfï¿½gestelle zur Wurzel. Hier der Algorithmus:
 
 \newpage
 \begin{alg} \label{avlinsert}
-	(Algorithmus zum Einfügen eines Elements x in einen AVL-Baum)
+	(Algorithmus zum Einfï¿½gen eines Elements x in einen AVL-Baum)
 	\begin{enumerate}
-		\item Füge das neue Element x als direkten Nachfolger des Knotens n als Blatt ein, sodass die Suchbaumeigenschaft erfüllt bleibt. Aktualisiere n.balance.
-		\item Setze n auf den Vorgängerknoten von n.
+		\item Fï¿½ge das neue Element x als direkten Nachfolger des Knotens n als Blatt ein, sodass die Suchbaumeigenschaft erfï¿½llt bleibt. Aktualisiere n.balance.
+		\item Setze n auf den Vorgï¿½ngerknoten von n.
 			\begin{enumerate}
-				\item Falls x im linken Unterbaum von n eingefügt wurde
+				\item Falls x im linken Unterbaum von n eingefï¿½gt wurde
 					\begin{enumerate}
 						\item wenn n.balance==1 dann n.balance=0 und gehe nach 3.
 						\item wenn n.balance==0, dann n.balance=-1 und gehe nach 2.
@@ -93,7 +96,7 @@ Jetzt muss noch untersucht werden, wie groß der zusätzliche Aufwand beim Einfüge
 							\end{itemize}
 							Gehe zu 3.
 					\end{enumerate}
-				\item Falls x im rechten Unterbaum von n eingefügt wurde
+				\item Falls x im rechten Unterbaum von n eingefï¿½gt wurde
 					\begin{enumerate}
 						\item wenn n.balance==-1 dann n.balance=0 und gehe nach 3.
 						\item wenn n.balance==0, dann n.balance=1 und gehe nach 2.
@@ -105,23 +108,23 @@ Jetzt muss noch untersucht werden, wie groß der zusätzliche Aufwand beim Einfüge
 							Gehe zu 3.
 					\end{enumerate}
 			\end{enumerate}
-		\item Gehe zurück zur Wurzel.
+		\item Gehe zurï¿½ck zur Wurzel.
 	\end{enumerate}
 \end{alg}
 
-Zur Analyse dieses Algorithmus: Das reine Einfügen erfolgt gemäß Einfügen im Suchbaum (Algorithmus \ref{insert}), allerdings ist hier sichergestellt, dass sich die Höhe logarithmisch zur Anzahl der Knoten verhält, d.h. auch der Aufwand für das Einfügen ist garantiert logarithmisch. Wie gesagt können sich jedoch Balancefaktoren geändert haben, sodass die AVL-Eigenschaft nicht mehr erfüllt ist. Das wird durch sogenannte Rotationen behoben. Es gibt zwei Typen von Rotationen -- Linksrotation und Rechtsrotation, jeweils um einen Knoten n.
+Zur Analyse dieses Algorithmus: Das reine Einfï¿½gen erfolgt gemï¿½ï¿½ Einfï¿½gen im Suchbaum (Algorithmus \ref{insert}), allerdings ist hier sichergestellt, dass sich die Hï¿½he logarithmisch zur Anzahl der Knoten verhï¿½lt, d.h. auch der Aufwand fï¿½r das Einfï¿½gen ist garantiert logarithmisch. Wie gesagt kï¿½nnen sich jedoch Balancefaktoren geï¿½ndert haben, sodass die AVL-Eigenschaft nicht mehr erfï¿½llt ist. Das wird durch sogenannte Rotationen behoben. Es gibt zwei Typen von Rotationen -- Linksrotation und Rechtsrotation, jeweils um einen Knoten n.
 
 \centerpic{avl/rotateleft}{5}{Linksrotation um den Knoten 65}  \medskip
 \centerpic{avl/rotateright}{5}{Rechtsrotation um den Knoten 58}  \medskip
 
-Falls durch das Einfügen irgendwo ein Balancefaktor $2$($-2$) entsteht (größere Änderungen können beim Einfügen eines Knotens offensichtlich nicht auftreten), heißt das, dass sich im rechten (linken) Teilbaum die Höhe um 1 erhöht hat. Durch Rotation(en) wie im Algorithmus angegeben, wird aber genau diese Höhe wieder reduziert. Somit ist klar, dass man maximal zweimal rotieren muss, der Aufwand ist also noch erträglich, im Gegensatz zum Löschen, wie man gleich sehen wird.
+Falls durch das Einfï¿½gen irgendwo ein Balancefaktor $2$($-2$) entsteht (grï¿½ï¿½ere ï¿½nderungen kï¿½nnen beim Einfï¿½gen eines Knotens offensichtlich nicht auftreten), heiï¿½t das, dass sich im rechten (linken) Teilbaum die Hï¿½he um 1 erhï¿½ht hat. Durch Rotation(en) wie im Algorithmus angegeben, wird aber genau diese Hï¿½he wieder reduziert. Somit ist klar, dass man maximal zweimal rotieren muss, der Aufwand ist also noch ertrï¿½glich, im Gegensatz zum Lï¿½schen, wie man gleich sehen wird.
 
-Genauso wie Einfügen verändert auch Löschen eines Knotens aus einem AVL-Baum die Balancefaktoren, also müssen auch hier Rotationen ausgeführt werden. Hier der Algorithmus:
+Genauso wie Einfï¿½gen verï¿½ndert auch Lï¿½schen eines Knotens aus einem AVL-Baum die Balancefaktoren, also mï¿½ssen auch hier Rotationen ausgefï¿½hrt werden. Hier der Algorithmus:
 
 \begin{alg} \label{avldelete}
-	Löschen eines Knotens aus einem AVL-Baum)
+	Lï¿½schen eines Knotens aus einem AVL-Baum)
 	\begin{enumerate}
-		\item Lösche den Knoten analog zum Löschen im Suchbaum (Algorithmus \ref{delete}). Falls der Knoten ein Blatt war oder nur einen linken Nachbarn hatte, setze aktuellen Knoten auf den Vater. Sonst setze aktuellen Knoten auf den Vater des Knotens mit dem nächst größeren Schlüssel.
+		\item Lï¿½sche den Knoten analog zum Lï¿½schen im Suchbaum (Algorithmus \ref{delete}). Falls der Knoten ein Blatt war oder nur einen linken Nachbarn hatte, setze aktuellen Knoten auf den Vater. Sonst setze aktuellen Knoten auf den Vater des Knotens mit dem nï¿½chst grï¿½ï¿½eren Schlï¿½ssel.
 		\item Berechne den Balancefaktor des aktuellen Knotens neu. Falls
 			\begin{enumerate}
 				\item Balance 2 und rechte Balance -1, dann Rechts(n.right)-Links(n)-Rotation.
@@ -134,9 +137,9 @@ Genauso wie Einfügen verändert auch Löschen eines Knotens aus einem AVL-Baum die
 	\end{enumerate}
 \end{alg}
 
-Auch hier wollen wir den Aufwand des Algorithmus etwas genauer untersuchen. Schritt 1 entspricht dem Löschen aus dem Suchbaum, nur garantiert mit logarithmischen Aufwand. Die Frage ist nun, ob, wie beim Einfügen, der Algorithmus mit maximal zwei Rotationen auskommt. Leider ist das nicht der Fall. Das liegt an der erwähnten Eigenschaft der Rotationen, sie verringern die Höhe eines Teilbaums. Beim Einfügen war das gut, da durch das Anhängen eines Knotens gerade die Höhe vergrößert wurde. Hier jedoch ist das unvorteilhaft, es kann passieren, dass man mehrere Rotationen auf dem Weg zur Wurzel durchführen muss. Die Anzahl der Rotationen ist nur durch die Höhe des Baums beschränkt. Das ist in Anwendungsfällen nicht wünschenswert.
+Auch hier wollen wir den Aufwand des Algorithmus etwas genauer untersuchen. Schritt 1 entspricht dem Lï¿½schen aus dem Suchbaum, nur garantiert mit logarithmischen Aufwand. Die Frage ist nun, ob, wie beim Einfï¿½gen, der Algorithmus mit maximal zwei Rotationen auskommt. Leider ist das nicht der Fall. Das liegt an der erwï¿½hnten Eigenschaft der Rotationen, sie verringern die Hï¿½he eines Teilbaums. Beim Einfï¿½gen war das gut, da durch das Anhï¿½ngen eines Knotens gerade die Hï¿½he vergrï¿½ï¿½ert wurde. Hier jedoch ist das unvorteilhaft, es kann passieren, dass man mehrere Rotationen auf dem Weg zur Wurzel durchfï¿½hren muss. Die Anzahl der Rotationen ist nur durch die Hï¿½he des Baums beschrï¿½nkt. Das ist in Anwendungsfï¿½llen nicht wï¿½nschenswert.
 
-Bei zeitkritischen Anwendungen muss man also entweder auf einen anderen Algorithmus ausweichen, oder Varianten wie etwa Lazy-Delete implementieren, d.h. der Knoten wird nur als gelöscht markiert und wird später (wenn Zeit ist) aus dem Baum entfernt.
+Bei zeitkritischen Anwendungen muss man also entweder auf einen anderen Algorithmus ausweichen, oder Varianten wie etwa Lazy-Delete implementieren, d.h. der Knoten wird nur als gelï¿½scht markiert und wird spï¿½ter (wenn Zeit ist) aus dem Baum entfernt.
 
 \begin{thebibliography}{99}
     \bibitem {sedgewick} R. Sedgewick, "`Algorithmen in C++"', Addison-Wesley, 5. Auflage, 1999
