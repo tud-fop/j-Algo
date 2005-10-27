@@ -65,21 +65,23 @@ implements IModuleInfo {
      * @see org.jalgo.main.IModuleInfo#getVersion()
      */
     public String getVersion() {
-        return "0.1";
+        return "1.0";
     }
 
     /* (non-Javadoc)
      * @see org.jalgo.main.IModuleInfo#getAuthor()
      */
     public String getAuthor() {
-        return "swt05-p2";
+        return "Frank Staudinger, Julian Stecklina, Hannes Straß, Steven Voigt, Martin Winter";
     }
 
     /* (non-Javadoc)
      * @see org.jalgo.main.IModuleInfo#getDescription()
      */
     public String getDescription() {
-        return "Dijkstra Algorithmus";
+        return "Dieses Modul behandelt Dijkstra's Algorithmus zum Finden kürzester Wege in Graphen."+
+        	System.getProperty("line.separator")+
+        	"Es können Graphen modelliert werden, der Algorithmus wird intuitiv visualisiert.";
     }
 
     /* (non-Javadoc)
@@ -93,6 +95,6 @@ implements IModuleInfo {
      * @see org.jalgo.main.IModuleInfo#getLicense()
      */
     public String getLicense() {
-        return "GPL";
+        return "GNU General Public License";
     }
 }
