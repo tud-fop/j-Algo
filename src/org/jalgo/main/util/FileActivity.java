@@ -26,6 +26,7 @@
 package org.jalgo.main.util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -85,8 +86,11 @@ public class FileActivity {
 			return value;
 		}
 		catch (FileNotFoundException ex) {
-			System.out.println("file was not found!");
-			return false;
+			new File(System.getProperty("user.home")+
+				System.getProperty("file.separator")+
+				".jalgo").mkdir();
+			writeBooleanTo(file, true);
+			return true;
 		}
 		catch (IOException ex) {
 			System.out.println("file couldnot be read!");
