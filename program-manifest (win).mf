@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-Main-Class: org.jalgo.main.Jalgo
+Main-Class: org.jalgo.main.JalgoMain
 Class-Path: ../extlibs/jface.jar ../extlibs/osgi.jar ../extlibs/runtime.jar ../extlibs/draw2d.jar ../extlibs/win/swt.jar
 
