@@ -207,7 +207,7 @@ extends ApplicationWindow {
 	 */
 	protected Control createContents(Composite parent) {
 		updateTitle();
-		parent.getShell().setSize(800, 600);
+		parent.getShell().setSize(800, 650);
 
 		ct = new CTabFolder(parent, SWT.FLAT);
 		ct.addCTabFolder2Listener(new CTabFolder2Adapter() {
@@ -248,7 +248,7 @@ extends ApplicationWindow {
 		// no more need for the following lines when using the swt v 3.138
 		// -alexander
 		// main.pack();
-		// main.getShell().setSize(800, 600);
+		// main.getShell().setSize(800, 650);
 
 		return ct;
 	}
