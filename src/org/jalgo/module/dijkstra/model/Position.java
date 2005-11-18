@@ -225,7 +225,7 @@ public class Position implements Serializable {
 	 * Returns a string representation of this position, including its world coordinates.
 	 */
 	public String toString() {
-		return "Position (" + getWorldX() + ", " + getWorldY() + ")";
+		return "Position (" + getWorldX() + ", " + getWorldY() + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	/**

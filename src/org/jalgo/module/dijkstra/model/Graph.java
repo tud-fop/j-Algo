@@ -78,7 +78,7 @@ public class Graph implements Serializable, Cloneable {
 							.getIndex())))
 				return edge;
 		}
-		throw new RuntimeException("Graph structure is broken.");
+		throw new RuntimeException("Graph structure is broken."); //$NON-NLS-1$
 	}
 
 	/** Finds the node with the given index or returns null.
@@ -134,7 +134,7 @@ public class Graph implements Serializable, Cloneable {
 	}
 
 	public String toString() {
-		return "Graph: NodeList: " + getNodeListText() + "; EdgeList: " + getEdgeListText() + ".";
+		return "Graph: NodeList: " + getNodeListText() + "; EdgeList: " + getEdgeListText() + "."; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	/** Return next available index for a new node.
@@ -214,7 +214,7 @@ public class Graph implements Serializable, Cloneable {
 			returnValue.append(edgeList.get(0).getText());
 		}
 		for (int i = 1; i < edgeList.size(); i++) {
-			returnValue.append(", ").append(edgeList.get(i).getText());
+			returnValue.append(", ").append(edgeList.get(i).getText()); //$NON-NLS-1$
 		}
 
 		return returnValue.toString();
@@ -230,7 +230,7 @@ public class Graph implements Serializable, Cloneable {
 			returnValue.append(nodeList.get(0).getIndex());
 		}
 		for (int i = 1; i < nodeList.size(); i++) {
-			returnValue.append(", ").append(nodeList.get(i).getIndex());
+			returnValue.append(", ").append(nodeList.get(i).getIndex()); //$NON-NLS-1$
 		}
 
 		return returnValue.toString();

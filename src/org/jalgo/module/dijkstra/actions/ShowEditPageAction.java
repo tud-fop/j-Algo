@@ -42,7 +42,7 @@ public class ShowEditPageAction extends SetEditingModeAction {
 
 	public boolean doAction() throws ActionException {
 		super.doAction();
-		getController().setStatusbarText(new StatusbarText("", null));
+		getController().setStatusbarText(new StatusbarText("", null)); //$NON-NLS-1$
 		getController().showEditingPage();
 		return true;
 	}

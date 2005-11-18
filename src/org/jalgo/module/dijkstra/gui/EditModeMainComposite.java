@@ -1,23 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for
- * students and lecturers of computer sience. It is written in Java and
- * platform independant. j-Algo is developed with the help of Dresden
- * University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /*
@@ -33,6 +34,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.dijkstra.gui.EdgeListComposite;
 import org.jalgo.module.dijkstra.gui.EditModeToolsComposite;
 import org.jalgo.module.dijkstra.gui.GraphComposite;
@@ -41,12 +43,15 @@ import org.jalgo.module.dijkstra.gui.NodeListComposite;
 
 /**
  * @author Frank Staudinger
- *
+ * 
  * The EditModeMainComposite provides the GUI in edit mode
  */
-public class EditModeMainComposite extends ControllerComposite {
+public class EditModeMainComposite
+extends ControllerComposite {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jalgo.module.dijkstra.gui.ControllerComposite
 	 */
 	public EditModeMainComposite(Controller ctrl, Composite parent, int style) {
@@ -65,35 +70,39 @@ public class EditModeMainComposite extends ControllerComposite {
 
 		Group group = new Group(shell, SWT.NONE);
 		group.setLayout(new FillLayout());
-		group.setText("Werkzeuge");
+		group.setText(Messages.getString(
+			"dijkstra", "EditModeMainComposite.Tools")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL
-				| GridData.VERTICAL_ALIGN_BEGINNING);
+			| GridData.VERTICAL_ALIGN_BEGINNING);
 
 		group.setLayoutData(gridData);
-		Composite cmp = new EditModeToolsComposite(getController(),
-				group, SWT.NONE);
+		Composite cmp = new EditModeToolsComposite(getController(), group,
+			SWT.NONE);
 
 		group = new Group(shell, SWT.NONE);
 		group.setLayout(new FillLayout());
-		group.setText("Knotenliste");
+		group.setText(Messages.getString(
+			"dijkstra", "EditModeMainComposite.Node_list")); //$NON-NLS-1$ //$NON-NLS-2$
 		group.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
-				| GridData.VERTICAL_ALIGN_BEGINNING));
+			| GridData.VERTICAL_ALIGN_BEGINNING));
 		cmp = new NodeListComposite(getController(), group, SWT.NONE);
 
 		group = new Group(shell, SWT.NONE);
 		group.setLayout(new FillLayout());
-		group.setText("Graph");
+		group.setText(Messages.getString(
+			"dijkstra", "EditModeMainComposite.Graph")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		cmp = new GraphComposite(getController(), group, SWT.NONE,
-				Display.getCurrent(), true);
+			Display.getCurrent(), true);
 		gridData = new GridData(GridData.FILL_BOTH);
 		gridData.verticalSpan = 2;
 		group.setLayoutData(gridData);
 
 		group = new Group(shell, SWT.NONE);
 		group.setLayout(new FillLayout());
-		group.setText("Kantenliste");
+		group.setText(Messages.getString(
+			"dijkstra", "EditModeMainComposite.Edge_list")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		group.setLayoutData(new GridData(GridData.FILL_BOTH));
 		cmp = new EdgeListComposite(getController(), group, SWT.NONE);
@@ -109,17 +118,18 @@ public class EditModeMainComposite extends ControllerComposite {
 
 		group.setLayout(layout);
 		group.setLayout(new FillLayout());
-		group.setText("Distanzmatrix");
+		group.setText(Messages.getString(
+			"dijkstra", "EditModeMainComposite.Distance_matrix")); //$NON-NLS-1$ //$NON-NLS-2$
 		gridData = new GridData(GridData.FILL_BOTH);
 		group.setLayoutData(gridData);
 
 		cmp = new MatrixComposite(getController(), group, SWT.NONE);
 		gridData = new GridData(GridData.FILL_BOTH);
-		// FIXME: with the following commented out, swt 3.1.0 fucks up, find out why (Stephan)
-		//cmp.setLayoutData(gridData);
+		// FIXME: with the following commented out, swt 3.1.0 fucks up, find out
+		// why (Stephan)
+		// cmp.setLayoutData(gridData);
 
-		cmp = new StatusbarComposite(getController(), this, SWT.NONE,
-				true);
+		cmp = new StatusbarComposite(getController(), this, SWT.NONE, true);
 		gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan = 2;
 		gridData.heightHint = 75;

@@ -37,6 +37,6 @@ public class BeamerFontFactory
 {
     public static Font getFont()
     {
-        return new Font(Display.getCurrent(), "Verdana", 14, SWT.BOLD);
+        return new Font(Display.getCurrent(), "Verdana", 14, SWT.BOLD); //$NON-NLS-1$
     }
 }

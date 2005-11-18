@@ -89,7 +89,7 @@ implements MouseListener, MouseMotionListener {
 		outerAnchor = new EllipseAnchor(outerCircle);
 		
 		label = new Label(modelNode.getLabel());
-		Font labelFont = new Font(device, "Verdana", 16, SWT.BOLD);
+		Font labelFont = new Font(device, "Verdana", 16, SWT.BOLD); //$NON-NLS-1$
 		label.setFont(labelFont);
 		label.setBounds(innerCircle.getBounds().getTranslated(0, -1));
 		innerCircle.add(label);

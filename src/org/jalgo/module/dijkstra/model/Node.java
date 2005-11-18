@@ -95,7 +95,7 @@ public class Node extends GraphElement implements Serializable, Comparable<Node>
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return "(Node " + index + ", " + position + ");" + super.toString();
+		return "(Node " + index + ", " + position + ");" + super.toString(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	/**
@@ -147,9 +147,9 @@ public class Node extends GraphElement implements Serializable, Comparable<Node>
 			String strPath = getPredecessor().getShortestPath();
 			if (strPath.length() == 0)
 				return getPredecessor().getLabel();
-			return strPath + "," + getPredecessor().getLabel();
+			return strPath + "," + getPredecessor().getLabel(); //$NON-NLS-1$
 		}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	/**

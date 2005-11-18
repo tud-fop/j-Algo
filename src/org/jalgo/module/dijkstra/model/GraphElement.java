@@ -49,7 +49,7 @@ public abstract class GraphElement implements Cloneable
      */
     public String toString()
     {
-        return "Flags: "+new Integer(getFlags())+";"+super.toString();
+        return "Flags: "+new Integer(getFlags())+";"+super.toString(); //$NON-NLS-1$ //$NON-NLS-2$
     }
 	private boolean isChosen;
 	private boolean isConflict;
@@ -67,7 +67,7 @@ public abstract class GraphElement implements Cloneable
 		try {
 			return super.clone();
 		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException("Object "+this+" cannot be cloned.");
+			throw new RuntimeException("Object "+this+" cannot be cloned."); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 	

@@ -1,27 +1,31 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /**
  * @author Frank Staudinger
  * 
  * Created on 01.06.2005
- *
+ * 
  */
 package org.jalgo.module.dijkstra.gui;
 
@@ -35,6 +39,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.dijkstra.model.BorderState;
 import org.jalgo.module.dijkstra.model.Edge;
 import org.jalgo.module.dijkstra.model.Node;
@@ -42,34 +47,38 @@ import org.jalgo.module.dijkstra.model.State;
 
 /**
  * @author Frank Staudinger
- *
+ * 
  * This class represents the AlgorithmCalculationTable in the Algorithm-Mode
  */
-public class AlgorithmCalculationTableComposite extends ControllerComposite {
+public class AlgorithmCalculationTableComposite
+extends ControllerComposite {
 
-	protected class CalculationTableObserver implements Observer {
+	protected class CalculationTableObserver
+	implements Observer {
+
 		Table m_tbl;
 
 		CalculationTableObserver(Table tbl) {
 			m_tbl = tbl;
 		}
 
-		/* (non-Javadoc)
-		 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.util.Observer#update(java.util.Observable,
+		 *      java.lang.Object)
 		 */
 		public void update(Observable o, Object arg) {
-			Controller ctrl = (Controller) o;
-			if (ctrl.getEditingMode() != Controller.MODE_ALGORITHM)
-				return;
+			Controller ctrl = (Controller)o;
+			if (ctrl.getEditingMode() != Controller.MODE_ALGORITHM) return;
 			m_tbl.removeAll();
 			State dj = ctrl.getState(ctrl.getCurrentStep());
 			if (dj != null) {
-				if (dj.getBorderStates() == null)
-					return;
+				if (dj.getBorderStates() == null) return;
 
 				Iterator iter = dj.getBorderStates().iterator();
 				while (iter.hasNext()) {
-					BorderState bdstate = (BorderState) iter.next();
+					BorderState bdstate = (BorderState)iter.next();
 					TableItem item = new TableItem(m_tbl, SWT.NONE);
 
 					// Write chosen edge. As we are given a node, try to get the
@@ -79,18 +88,20 @@ public class AlgorithmCalculationTableComposite extends ControllerComposite {
 					Node pred = realChosen.getPredecessor();
 
 					if (pred != null) {
-						Edge chosenEdge = dj.getGraph().findEdge(realChosen, pred);
-						item.setText(0, "" + chosenEdge.getAlgoText(true, bdstate));
-					} else {
+						Edge chosenEdge = dj.getGraph().findEdge(realChosen,
+							pred);
+						item.setText(0,
+							"" + chosenEdge.getAlgoText(true, bdstate)); //$NON-NLS-1$
+					}
+					else {
 						int index = chosen.getIndex();
-						item.setText(0, "(" + index + ",0," + index + ")");
+						item.setText(0, "(" + index + ",0," + index + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					}
 					Iterator edgeIter = bdstate.getBorder().iterator();
-					String strText = "";
+					String strText = ""; //$NON-NLS-1$
 					while (edgeIter.hasNext()) {
-						Edge ed = (Edge) edgeIter.next();
-						if (strText.length() > 0)
-							strText += ", ";
+						Edge ed = (Edge)edgeIter.next();
+						if (strText.length() > 0) strText += ", "; //$NON-NLS-1$
 						strText += ed.getAlgoText(true, bdstate);
 					}
 					item.setText(1, strText);
@@ -102,23 +113,26 @@ public class AlgorithmCalculationTableComposite extends ControllerComposite {
 	/**
 	 * @param ctrl Controller for this Composite
 	 * @param cmpParent Parent Composite
-	 * @param nStyle Style for this composite 
+	 * @param nStyle Style for this composite
 	 */
-	public AlgorithmCalculationTableComposite(Controller ctrl, Composite cmpParent, int nStyle) {
+	public AlgorithmCalculationTableComposite(Controller ctrl,
+		Composite cmpParent, int nStyle) {
 		super(ctrl, cmpParent, nStyle);
 		setLayout(new FillLayout());
-		Table tbl = new Table(this, SWT.SINGLE | SWT.FULL_SELECTION | SWT.BORDER);
+		Table tbl = new Table(this, SWT.SINGLE | SWT.FULL_SELECTION
+			| SWT.BORDER);
 		tbl.setHeaderVisible(true);
 		TableColumn col = new TableColumn(tbl, SWT.LEFT);
-		col.setText("Gewählt");
-		//col.setWidth(50);
+		col.setText(Messages.getString(
+			"dijkstra", "AlgorithmCalculationTableComposite.Chosen")); //$NON-NLS-1$ //$NON-NLS-2$
+		// col.setWidth(50);
 		col.pack();
 		col = new TableColumn(tbl, SWT.LEFT);
-		col.setText("Randknoten");
-		//col.setWidth(250);	
+		col.setText(Messages.getString(
+			"dijkstra", "AlgorithmCalculationTableComposite.Fringe_node")); //$NON-NLS-1$ //$NON-NLS-2$
+		// col.setWidth(250);
 		col.pack();
 		getController().addObserver(new CalculationTableObserver(tbl));
-		//tbl.setFont(BeamerFontFactory.getFont());
+		// tbl.setFont(BeamerFontFactory.getFont());
 	}
-
 }

@@ -26,6 +26,7 @@ package org.jalgo.module.dijkstra;
 import java.net.URL;
 
 import org.jalgo.main.IModuleInfo;
+import org.jalgo.main.util.Messages;
 
 /**
  * @author Julian Stecklina
@@ -58,43 +59,43 @@ implements IModuleInfo {
      * @see org.jalgo.main.IModuleInfo#getName()
      */
     public String getName() {
-        return "Dijkstra";
+        return Messages.getString("dijkstra", "Module_name"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /* (non-Javadoc)
      * @see org.jalgo.main.IModuleInfo#getVersion()
      */
     public String getVersion() {
-        return "1.0";
+        return Messages.getString("dijkstra", "Module_version"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /* (non-Javadoc)
      * @see org.jalgo.main.IModuleInfo#getAuthor()
      */
     public String getAuthor() {
-        return "Frank Staudinger, Julian Stecklina, Hannes Straß, Steven Voigt, Martin Winter";
+        return Messages.getString("dijkstra", "Module_authors"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /* (non-Javadoc)
      * @see org.jalgo.main.IModuleInfo#getDescription()
      */
     public String getDescription() {
-        return "Dieses Modul behandelt Dijkstra's Algorithmus zum Finden kürzester Wege in Graphen."+
-        	System.getProperty("line.separator")+
-        	"Es können Graphen modelliert werden, der Algorithmus wird intuitiv visualisiert.";
+        return Messages.getString("dijkstra", "Module_description_1")+ //$NON-NLS-1$ //$NON-NLS-2$
+        	System.getProperty("line.separator")+ //$NON-NLS-1$
+        	Messages.getString("dijkstra", "Module_description_2"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /* (non-Javadoc)
      * @see org.jalgo.main.IModuleInfo#getLogo()
      */
     public URL getLogoURL() {
-    	return getClass().getResource("/dijkstra_pix/logo.gif");
+    	return Messages.getResourceURL("dijkstra", "Module_logo"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /* (non-Javadoc)
      * @see org.jalgo.main.IModuleInfo#getLicense()
      */
     public String getLicense() {
-        return "GNU General Public License";
+        return Messages.getString("dijkstra", "Module_license"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 }

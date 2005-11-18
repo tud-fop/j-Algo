@@ -120,7 +120,7 @@ public class State {
      * @see #State(Graph,String,boolean,ArrayList)
      */
     public State(Graph graph, boolean macro, ArrayList borderStates) {
-        this(graph,"",macro,borderStates);
+        this(graph,"",macro,borderStates); //$NON-NLS-1$
     }
     /**
      * @return Returns the isMacro.

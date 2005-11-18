@@ -54,7 +54,7 @@ public class StatusbarTextMouseTrackAdapter extends MouseTrackAdapter {
      */
     public void mouseExit(MouseEvent arg0)
     {
-        m_ctrl.setStatusbarText( new StatusbarText("",null) );
+        m_ctrl.setStatusbarText( new StatusbarText("",null) ); //$NON-NLS-1$
         super.mouseExit(arg0);
     }
 }

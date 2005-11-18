@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.jalgo.main.gui.JAlgoGUIConnector;
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.dijkstra.actions.ActionException;
 import org.jalgo.module.dijkstra.actions.ApplyEdgeListAction;
 import org.jalgo.module.dijkstra.model.Graph;
@@ -55,6 +56,7 @@ extends ControllerComposite {
 
 	protected class ApplyEdgeListSelectionAdapter
 	extends SelectionAdapter {
+
 		private Controller m_Ctrl;
 		private Text m_textEdgeList;
 
@@ -78,8 +80,9 @@ extends ControllerComposite {
 
 	protected class EdgeListObserver
 	implements Observer {
+
 		private Text m_textEdgeList;
-		
+
 		public EdgeListObserver(Text t) {
 			m_textEdgeList = t;
 		}
@@ -113,8 +116,8 @@ extends ControllerComposite {
 
 		m_t.setLayoutData(new GridData(GridData.FILL_BOTH));
 		m_t.addMouseTrackListener(new StatusbarTextMouseTrackAdapter(
-			getController(),
-			"Textfeld zur Eingabe der Kantenliste aus Tupeln (Knoten 1, Kantengewicht, Knoten 2). Beispiel: (1, 5, 2), (2, 4, 3), (3, 6, 1)"));
+			getController(), Messages.getString(
+				"dijkstra", "EdgeListComposite.Tooltip"))); //$NON-NLS-1$ //$NON-NLS-2$
 		m_t.addKeyListener(new KeyAdapter() {
 			private int oldKey1;
 			private int oldKey2;
@@ -122,22 +125,21 @@ extends ControllerComposite {
 			public void keyPressed(KeyEvent e) {
 				if ((e.keyCode == (115)) && (oldKey1 == SWT.ALT)
 					&& (oldKey2 == SWT.CTRL)
-					&& (m_t.getText().equals("showcredits")))
-					JAlgoGUIConnector.getInstance().showInfoMessage(
-						"jAlgo Dijkstra Module\n\nDeveloped by:\n\nFrank Staudinger\nJulian Stecklina\nMartin Winter\nHannes Straß\nSteven Voigt\n\n(C) 2005.");
-
+					&& (m_t.getText().equals("showcredits"))) //$NON-NLS-1$
+				JAlgoGUIConnector.getInstance().showInfoMessage(
+					"jAlgo Dijkstra Module\n\nDeveloped by:\n\nFrank Staudinger\nJulian Stecklina\nMartin Winter\nHannes Straß\nSteven Voigt\n\n(C) 2005."); //$NON-NLS-1$
 				oldKey2 = oldKey1;
 				oldKey1 = e.keyCode;
 			}
 		});
 
 		Button b = new Button(this, SWT.CENTER);
-		b.setText("Anwenden");
+		b.setText(Messages.getString("dijkstra", "EdgeListComposite.Apply")); //$NON-NLS-1$ //$NON-NLS-2$
 		b.addSelectionListener(new ApplyEdgeListSelectionAdapter(
 			this.getController(), m_t));
 		b.addMouseTrackListener(new StatusbarTextMouseTrackAdapter(
-			getController(),
-			"\u00C4nderungen an der Kantenliste \u00FCbernehmen und Graph neu darstellen."));
+			getController(), Messages.getString(
+				"dijkstra", "EdgeListComposite.Apply_description"))); //$NON-NLS-1$ //$NON-NLS-2$
 		b.setLayoutData(new GridData(GridData.END));
 		getController().addObserver(new EdgeListObserver(m_t));
 	}

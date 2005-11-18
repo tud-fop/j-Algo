@@ -109,7 +109,7 @@ implements MouseListener, MouseMotionListener {
 		circle.setLineWidth(0);
 
 		label = new Label(String.valueOf(getWeight()));
-		Font labelFont = new Font(device, "Verdana", 14, SWT.BOLD);
+		Font labelFont = new Font(device, "Verdana", 14, SWT.BOLD); //$NON-NLS-1$
 		label.setFont(labelFont);
 		label.setForegroundColor(parent.blackColor);
 
