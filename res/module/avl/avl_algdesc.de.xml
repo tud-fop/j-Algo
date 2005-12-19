@@ -165,11 +165,11 @@
          <Line endswith="nl" startswith="sp9">
                mit dem Vorgängerknoten von n. Falls dieser nicht existiert, gehe zu Algorithmus beendet</Line>
          <Line endswith="nl" startswith="sp6">
-               iii) wenn n-&gt;balance==1 und n-&gt;left-&gt;balance==1, </Line>
+               iii) wenn n-&gt;balance==1 und n-&gt;right-&gt;balance==1, </Line>
          <Line endswith="nl" startswith="sp9">
                dann führe eine Linksrotation um n durch. </Line>
          <Line endswith="nl" startswith="sp6">
-               iv) wenn n-&gt;balance==-1 und n-&gt;left-&gt;balance==1, </Line>
+               iv) wenn n-&gt;balance==1 und n-&gt;right-&gt;balance==-1, </Line>
          <Line startswith="sp9">
                dann führe Rechtsrotation um n-&gt;right und Linksrotation um n durch </Line>
          </Text>
