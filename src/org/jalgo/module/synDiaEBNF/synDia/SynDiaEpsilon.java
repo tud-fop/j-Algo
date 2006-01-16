@@ -38,21 +38,21 @@ public class SynDiaEpsilon extends SynDiaElement implements Serializable {
 
 	private static final long serialVersionUID = -3280271912124458544L;
 	
-	private EmptyFigure epsilon; // the graphical figure
+	private EmptyFigure gfx; // the graphical figure
 
 	public SynDiaEpsilon() {
-		epsilon = new EmptyFigure();
+		gfx = new EmptyFigure();
 	}
 
 	public SynDiaEpsilon(EmptyFigure epsilon) {
-		this.epsilon = epsilon;
+		this.gfx = epsilon;
 	}
-
+	
 	public void setGfx(EmptyFigure epsilon) {
-		this.epsilon = epsilon;
+		this.gfx = epsilon;
 	}
 	
 	public EmptyFigure getGfx() {
-		return epsilon;
+		return gfx;
 	}
 }

@@ -40,7 +40,6 @@ import org.jalgo.main.gui.TextCanvas;
 import org.jalgo.main.gui.widgets.StackCanvas;
 import org.jalgo.main.util.GfxUtil;
 import org.jalgo.main.util.Messages;
-import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaColors;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaAlternative;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaConcatenation;
@@ -137,26 +136,6 @@ implements IAlgorithm, SynDiaColors, Serializable {
 		
 		history = new BackTrackHistory();
 		wordInputDialog();
-	}
-
-	/**
-	 * Test if there is a valid previous element in the history, to go there.
-	 * 
-	 * @return true, if there is a previous element in the history, so you can
-	 *         go a step back; false if not
-	 */
-	public boolean hasPreviousHistStep() {
-		return (history.getPointer() > 0);
-	}
-
-	/**
-	 * Test if there is a valid next element in the history, to go there
-	 * 
-	 * @return true, if there is a next element, so you can go a step forward in
-	 *         history; false if not
-	 */
-	public boolean hasNextHistStep() {
-		return (history.getPointer() < history.getSize());
 	}
 
 	/**
@@ -295,6 +274,7 @@ implements IAlgorithm, SynDiaColors, Serializable {
 				else if (currentElement instanceof SynDiaConcatenation) {
 					doNextConcatenation((SynDiaConcatenation)currentElement);
 				}
+				performNextStep();
 			}
 		}
 		else { // if null on stack
@@ -308,15 +288,6 @@ implements IAlgorithm, SynDiaColors, Serializable {
 			// dialog that the Algorithmen is Empty
 			readyDialog();
 		}
-	}
-
-	private void colorTheDiagram(InitialFigure current) {
-		// reset all diagrams white
-		for (InitialFigure initialFigure : synDiaDef.getGfx().getSynDias())
-			initialFigure.setBackgroundColor(diagramNormal);
-		
-		// set the one
-		current.setBackgroundColor(diagramHighlight);
 	}
 
 	// ----------------------PerformNextStep()-----------------------------------
@@ -406,12 +377,10 @@ implements IAlgorithm, SynDiaColors, Serializable {
 				stack.push(currentElem.getRepeatedElem());
 			}
 		}
-		performNextStep();
 	}
 
 	private void doNextAlternative(SynDiaAlternative currentElem) {
 		stack.push(currentElem.getOption(alternativeDialog(currentElem)));
-		performNextStep();
 	}
 
 	private void doNextConcatenation(SynDiaConcatenation currentElem) {
@@ -419,7 +388,6 @@ implements IAlgorithm, SynDiaColors, Serializable {
 		for (int i = list.size() - 1; i >= 0; i--) {
 			stack.push(list.get(i));
 		}
-		performNextStep();
 	}
 
 	// ----------------------------redoNextTerm()--------------------------------
@@ -548,53 +516,5 @@ implements IAlgorithm, SynDiaColors, Serializable {
 			}
 		}
 		else missMatchDialog();
-	}
-
-	private int alternativeDialog(SynDiaAlternative alternative) {
-		List list = alternative.getOptions();
-		int way = list.size(); // int of posibile ways
-		// ask the user, which way to go on
-		// return the list index of the choosen way
-		int result = 0;
-
-		while (result == 0) {
-			InputDialog inDialog = new InputDialog(GfxUtil.getAppShell(),
-				Messages.getString("synDiaEBNF", "RecognizeWord.Alternative_Dialog_1_49"), //$NON-NLS-1$
-				Messages.getString("synDiaEBNF", "RecognizeWord.Alternative_Dialog_2_50") + //$NON-NLS-1$
-				way +
-				Messages.getString("synDiaEBNF", "RecognizeWord.Alternative_Dialog_3_51"), //$NON-NLS-1$
-				"", //$NON-NLS-1$
-				null);
-			if (inDialog.open() != Window.CANCEL) {
-				try {
-					result = (Integer.valueOf(inDialog.getValue())).intValue();
-				}
-				catch (NumberFormatException e) {
-					result = 0;
-				}
-			}
-			if ((result > 0) && (result <= way)) { return result - 1; }
-			JAlgoGUIConnector.getInstance().showWarningMessage(
-				Messages.getString("synDiaEBNF", 
-					"RecognizeWord.Please_use_a_value_between_1_and__54") + //$NON-NLS-1$
-					way + "."); //$NON-NLS-2$
-			result = 0;
-		}
-
-		return 0;
-	}
-
-	private boolean repetionDialog(SynDiaRepetition repetition) {
-		// ask the user, if the repetition should makes!
-		// return boolean if or not
-		return JAlgoGUIConnector.getInstance().showConfirmDialog(
-			Messages.getString("synDiaEBNF", "RecognizeWord.Repetition_Dialog__2_57"), //$NON-NLS-1$
-			DialogConstants.YES_NO_OPTION) == DialogConstants.YES_OPTION;
-	}
-
-	private void restoreStep(BackTrackStep step) {
-		generatedWord = step.getGeneratedWord();
-		stack = step.getStackConfig();
-		currentElement = step.getElem();
 	}
 }

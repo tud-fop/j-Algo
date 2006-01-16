@@ -35,7 +35,8 @@ import org.jalgo.module.synDiaEBNF.gfx.ConcatenationFigure;
 /**
  * @author Michael Pradel
  */
-public class SynDiaConcatenation extends SynDiaComposition implements Serializable {
+public class SynDiaConcatenation extends SynDiaComposition implements
+		Serializable {
 
 	private static final long serialVersionUID = 5490760021030232097L;
 
@@ -47,11 +48,12 @@ public class SynDiaConcatenation extends SynDiaComposition implements Serializab
 		elements = new LinkedList<SynDiaElement>();
 	}
 
-	public SynDiaConcatenation(ConcatenationFigure gfx, List<SynDiaElement> elements) {
+	public SynDiaConcatenation(ConcatenationFigure gfx,
+			List<SynDiaElement> elements) {
 		this.gfx = gfx;
 		this.elements = elements;
 	}
-
+	
 	public int getNumOfElements() {
 		return elements.size();
 	}
@@ -68,7 +70,8 @@ public class SynDiaConcatenation extends SynDiaComposition implements Serializab
 		if (this.getReadingOrder() == ReadingOrder.RIGHT_TO_LEFT) {
 			List elementsInverted = inverse(elements);
 			if (elementsInverted.get(num) instanceof SynDiaElement) {
-				return (SynDiaElement) elementsInverted.get(num);
+				return (SynDiaElement) elementsInverted
+						.get(num);
 			}
 		}
 		return elements.get(num);

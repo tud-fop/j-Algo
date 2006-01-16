@@ -42,30 +42,30 @@ public class SynDiaTerminal extends SynDiaElement
 			Serializable {
 
 	private static final long serialVersionUID = -6897310429617753293L;
-	private TerminalFigure ellipse;
+	private TerminalFigure gfx;
 	//ellipse in which the SynDiaTerminal is shown on the screen
 
 	public SynDiaTerminal(String label, Font font) {
-		this.ellipse = new TerminalFigure(label, font);
+		this.gfx = new TerminalFigure(label, font);
 	}
 
 	public SynDiaTerminal(TerminalFigure figure) {
-		this.ellipse = figure;
+		this.gfx = figure;
 	}
 
 	public String getLabel() {
-		return ellipse.getLabel();
+		return gfx.getLabel();
 	}
 	public void markLastConnection(boolean marked) {
-		ellipse.highlightIncomingConnection(marked);
+		gfx.highlightIncomingConnection(marked);
 	}
 
 	public void markNextConnection(boolean marked) {
-		ellipse.highlightExitingConnection(marked);
+		gfx.highlightExitingConnection(marked);
 	}
 
 	public void highlightObject(boolean marked) {
-		ellipse.highlight(marked);
+		gfx.highlight(marked);
 	}
 
 	/**
@@ -73,19 +73,19 @@ public class SynDiaTerminal extends SynDiaElement
 	 *
 	 */
 	public void markObject() {
-		ellipse.setBackgroundColor(currentFigure);
+		gfx.setBackgroundColor(currentFigure);
 	}
 
 	public void unmarkObject(boolean bool) {
-		ellipse.setBackgroundColor(null);
+		gfx.setBackgroundColor(null);
 		highlightObject(bool);
 	}
 
 	public TerminalFigure getGfx() {
-		return ellipse;
+		return gfx;
 	}
 
 	public void setGfx(TerminalFigure figure) {
-		ellipse = figure;
+		gfx = figure;
 	}
 }

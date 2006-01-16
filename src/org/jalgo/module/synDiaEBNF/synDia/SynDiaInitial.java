@@ -45,7 +45,7 @@ public class SynDiaInitial extends SynDiaElement {
 		this.gfx = gfx;
 		this.element = element;
 	}
-
+	
 	public SynDiaElement getInnerElem() {
 		return element;
 	}

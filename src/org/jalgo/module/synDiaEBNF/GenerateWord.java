@@ -31,16 +31,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.eclipse.draw2d.Figure;
-import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.window.Window;
 import org.jalgo.main.gfx.MarkStyle;
 import org.jalgo.main.gui.DialogConstants;
 import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.gui.TextCanvas;
 import org.jalgo.main.gui.widgets.StackCanvas;
-import org.jalgo.main.util.GfxUtil;
 import org.jalgo.main.util.Messages;
-import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaColors;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaAlternative;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaConcatenation;
@@ -67,7 +63,7 @@ import org.jalgo.module.synDiaEBNF.synDia.SynDiaVariableBack;
  */
 public class GenerateWord
 extends SynDiaBacktracking
-implements SynDiaColors, Serializable {
+implements IAlgorithm, SynDiaColors, Serializable {
 
 	private static final long serialVersionUID = -4764721879157297522L;
 
@@ -121,26 +117,6 @@ implements SynDiaColors, Serializable {
 
 		outputCanvas.setTextSegments(new String[] {Messages.getString(
 			"synDiaEBNF", "GenerateWord.The_word_which_was_generated_is__n_23")}); //$NON-NLS-1$
-	}
-
-	/**
-	 * Test if there is a valid previous element in the history, to go there.
-	 * 
-	 * @return true, if there is a previous element in the history, so you can
-	 *         go a step back; false if not
-	 */
-	public boolean hasPreviousHistStep() {
-		return (history.getPointer() > 0);
-	}
-
-	/**
-	 * Test if there is a valid next element in the history, to go there
-	 * 
-	 * @return true, if there is a next element, so you can go a step forward in
-	 *         history; false if not
-	 */
-	public boolean hasNextHistStep() {
-		return (history.getPointer() < history.getSize() - 1);
 	}
 
 	/**
@@ -262,7 +238,7 @@ implements SynDiaColors, Serializable {
 			else { // Composite
 				algoTxtCanvas.demarkAll();
 				algoTxtCanvas.mark(ALGO_DEF_FINDWAY);
-				if (currentElement instanceof SynDiaRepetition) { // repetition?
+				if (currentElement instanceof SynDiaRepetition) {
 					doNextRepetition((SynDiaRepetition)currentElement);
 				}
 				else if (currentElement instanceof SynDiaAlternative) {
@@ -284,15 +260,6 @@ implements SynDiaColors, Serializable {
 			// dialog that the Algorithmen is Empty
 			readyDialog();
 		}
-	}
-
-	private void colorTheDiagram(InitialFigure current) {
-		// reset all diagrams white
-		for (InitialFigure initialFigure : synDiaDef.getGfx().getSynDias())
-			initialFigure.setBackgroundColor(diagramNormal);
-
-		// set the one
-		current.setBackgroundColor(diagramHighlight);
 	}
 
 	// ----------------------PerformNextStep()-----------------------------------
@@ -444,57 +411,5 @@ implements SynDiaColors, Serializable {
 			finalTasks();
 			moduleController.algoFinished();
 		}
-	}
-
-	private int alternativeDialog(SynDiaAlternative alternative) {
-		List list = alternative.getOptions();
-		int way = list.size(); // int of possible ways
-		// ask the user, which way to go on
-		// return the list index of the choosen way
-		int result = 0;
-
-		while (result == 0) {
-			InputDialog inDialog = new InputDialog(
-				GfxUtil.getAppShell(),
-				Messages.getString("synDiaEBNF", "GenerateWord.Alternative_Dialog_33"), //$NON-NLS-1$
-				Messages.getString("synDiaEBNF", "GenerateWord.The_ways_are_numbered_form_top_to_bottom._There_are__34") //$NON-NLS-1$
-					+ way
-					+ Messages.getString("synDiaEBNF", "GenerateWord._ways_to_go_!_Which_one_do_you_want_to_go__35"), //$NON-NLS-1$
-				"", //$NON-NLS-1$
-				null);
-			if (inDialog.open() != Window.CANCEL) {
-				try {
-					result = (Integer.valueOf(inDialog.getValue())).intValue();
-				}
-				catch (NumberFormatException e) {
-					result = 0;
-				}
-			}
-			if ((result > 0) && (result <= way)) return result - 1;
-			JAlgoGUIConnector.getInstance().showWarningMessage(
-				Messages.getString("synDiaEBNF",
-					"GenerateWord.Please_use_a_value_between_1_and__38") + //$NON-NLS-1$
-					way + "."); //$NON-NLS-2$
-			result = 0;
-		}
-		return 0;
-	}
-
-	/**
-	 * ask the user, whether the repetition should repeated
-	 * @param repetition the repetition
-	 * @return the user answer
-	 */
-	private boolean repetionDialog(SynDiaRepetition repetition) {
-		return JAlgoGUIConnector.getInstance().showConfirmDialog(
-			Messages.getString("synDiaEBNF", 
-				"GenerateWord.Do_you_want_to_go_through_the_repetition__41"), //$NON-NLS-1$
-			DialogConstants.YES_NO_OPTION) == DialogConstants.YES_OPTION;
-	}
-
-	private void restoreStep(BackTrackStep step) {
-		generatedWord = step.getGeneratedWord();
-		stack = step.getStackConfig();
-		currentElement = step.getElem();
 	}
 }

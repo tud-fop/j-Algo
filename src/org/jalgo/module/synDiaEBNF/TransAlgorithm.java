@@ -229,6 +229,7 @@ implements IAlgorithm, Serializable {
 			tVarList.set(tVarList.indexOf(startVar), tVarList.getFirst());
 			tVarList.set(0, startVar);
 		}
+		
 		toTransVariables.addAll(tVarList);
 		// also put the variables onto the toTransCanvas apart from S
 		for (int i = toTransVariables.size() - 1; i >= 1; i--)

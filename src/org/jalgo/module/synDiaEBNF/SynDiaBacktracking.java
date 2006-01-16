@@ -28,11 +28,19 @@
 package org.jalgo.module.synDiaEBNF;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Stack;
 
 import org.eclipse.draw2d.Figure;
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.window.Window;
+import org.jalgo.main.gui.DialogConstants;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.gui.TextCanvas;
 import org.jalgo.main.gui.widgets.StackCanvas;
+import org.jalgo.main.util.GfxUtil;
+import org.jalgo.main.util.Messages;
+import org.jalgo.module.synDiaEBNF.gfx.InitialFigure;
 import org.jalgo.module.synDiaEBNF.gfx.SynDiaColors;
 import org.jalgo.module.synDiaEBNF.synDia.ReadingOrder;
 import org.jalgo.module.synDiaEBNF.synDia.SynDiaAlternative;
@@ -142,8 +150,8 @@ implements IAlgorithm, Serializable, IAlgoDefConstants, SynDiaColors {
 	 * 
 	 * @exception IndexOutOfBoundsException if there is now further step to go
 	 */
-	public void performNextStep()
-	throws IndexOutOfBoundsException {}
+	public abstract void performNextStep()
+	throws IndexOutOfBoundsException;
 
 	/**
 	 * This method is called if the forwardButton on the GUI is pushed and
@@ -151,8 +159,8 @@ implements IAlgorithm, Serializable, IAlgoDefConstants, SynDiaColors {
 	 * 
 	 * @exception IndexOutOfBoundsException if there is now previous step to go
 	 */
-	public void nextHistStep()
-	throws IndexOutOfBoundsException {}
+	public abstract void nextHistStep()
+	throws IndexOutOfBoundsException;
 
 	/**
 	 * this method is called if the backwardButton on the GUI is pushed and
@@ -160,8 +168,8 @@ implements IAlgorithm, Serializable, IAlgoDefConstants, SynDiaColors {
 	 * 
 	 * @exception IndexOutOfBoundsException if there is now previous step to go
 	 */
-	public void previousHistStep()
-	throws IndexOutOfBoundsException {}
+	public abstract void previousHistStep()
+	throws IndexOutOfBoundsException;
 
 	/**
 	 * Checks and corrects the reading order of all diagrams of the system
@@ -238,10 +246,9 @@ implements IAlgorithm, Serializable, IAlgoDefConstants, SynDiaColors {
 	public void finalTasks() {
 		hideBacktrackingLabels();
 
-		for (SynDiaInitial synDiaInitial : synDiaDef.getInitialDiagrams()) {
+		for (SynDiaInitial synDiaInitial : synDiaDef.getInitialDiagrams())
 			// reset background color to normal color
 			synDiaInitial.getGfx().setBackgroundColor(diagramNormal);
-		}
 	}
 
 	/**
@@ -250,8 +257,68 @@ implements IAlgorithm, Serializable, IAlgoDefConstants, SynDiaColors {
 	 */
 	public void hideBacktrackingLabels() {
 		// hide backtracking labels
-		for (SynDiaInitial synDiaInitial : synDiaDef.getInitialDiagrams()) {
+		for (SynDiaInitial synDiaInitial : synDiaDef.getInitialDiagrams())
 			backtrackingLabels(synDiaInitial, false);
+	}
+	
+	protected void restoreStep(BackTrackStep step) {
+		generatedWord = step.getGeneratedWord();
+		stack = step.getStackConfig();
+		currentElement = step.getElem();
+	}
+	
+	/**
+	 * ask the user, whether the repetition should repeated
+	 * @param repetition the repetition
+	 * @return the user answer
+	 */
+	protected boolean repetionDialog(SynDiaRepetition repetition) {
+		return JAlgoGUIConnector.getInstance().showConfirmDialog(
+			Messages.getString("synDiaEBNF", 
+				"GenerateWord.Do_you_want_to_go_through_the_repetition__41"), //$NON-NLS-1$
+			DialogConstants.YES_NO_OPTION) == DialogConstants.YES_OPTION;
+	}
+	
+	protected int alternativeDialog(SynDiaAlternative alternative) {
+		List list = alternative.getOptions();
+		int way = list.size(); // int of possible ways
+		// ask the user, which way to go on
+		// return the list index of the choosen way
+		int result = 0;
+
+		while (result == 0) {
+			InputDialog inDialog = new InputDialog(
+				GfxUtil.getAppShell(),
+				Messages.getString("synDiaEBNF", "GenerateWord.Alternative_Dialog_33"), //$NON-NLS-1$
+				Messages.getString("synDiaEBNF", "GenerateWord.The_ways_are_numbered_form_top_to_bottom._There_are__34") //$NON-NLS-1$
+					+ way
+					+ Messages.getString("synDiaEBNF", "GenerateWord._ways_to_go_!_Which_one_do_you_want_to_go__35"), //$NON-NLS-1$
+				"", //$NON-NLS-1$
+				null);
+			if (inDialog.open() != Window.CANCEL) {
+				try {
+					result = (Integer.valueOf(inDialog.getValue())).intValue();
+				}
+				catch (NumberFormatException e) {
+					result = 0;
+				}
+			}
+			if ((result > 0) && (result <= way)) return result - 1;
+			JAlgoGUIConnector.getInstance().showWarningMessage(
+				Messages.getString("synDiaEBNF",
+					"GenerateWord.Please_use_a_value_between_1_and__38") + //$NON-NLS-1$
+					way + "."); //$NON-NLS-2$
+			result = 0;
 		}
+		return 0;
+	}
+	
+	protected void colorTheDiagram(InitialFigure current) {
+		// reset all diagrams white
+		for (InitialFigure initialFigure : synDiaDef.getGfx().getSynDias())
+			initialFigure.setBackgroundColor(diagramNormal);
+
+		// set the one
+		current.setBackgroundColor(diagramHighlight);
 	}
 }

@@ -45,8 +45,8 @@ import org.jalgo.module.synDiaEBNF.gfx.VariableFigure;
  */
 public class SynDiaDoneAction extends Action {
 
-	Figure figure;
-	ModuleController mc;
+	private Figure figure;
+	private ModuleController mc;
 
 	public SynDiaDoneAction(IFigure figure, ModuleController mc) {
 		this.figure = (Figure) figure;
