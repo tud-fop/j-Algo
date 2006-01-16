@@ -34,8 +34,7 @@ import org.jalgo.main.util.Messages;
 public class AboutAction
 extends Action {
 
-	private JalgoWindow win;
-	private static final String lineSep = System.getProperty("line.separator"); 
+	private JalgoWindow win; 
 
 	public AboutAction(JalgoWindow win) {
 		this.win = win;
