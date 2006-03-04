@@ -19,6 +19,7 @@
 
 package org.jalgo.tests.avl.algorithm;
 
+import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.algorithm.Command;
 import org.jalgo.module.avl.algorithm.CommandFactory;
 import org.jalgo.module.avl.algorithm.MacroCommand;
@@ -55,6 +56,7 @@ public class RotateRightTestCase extends TestCase {
 	}
 
 	protected void setUp() throws Exception {
+		Messages.registerResourceBundle("avl", "org.jalgo.module.avl.de");
 		WorkNode wn = null;
 		tree = new SearchTree();
 		for (int i = 0; i<keys_order.length; i++) {
@@ -92,12 +94,10 @@ public class RotateRightTestCase extends TestCase {
 		assertTrue("worknode falsch", wn.getNextToMe()==tree.getRoot());
 		rotate.perform();
 		
-		assertTrue("falsch rückgängig gemacht", tree.equals(new SearchTree(n)));
+		assertTrue("falsch rï¿½ckgï¿½ngig gemacht", tree.equals(new SearchTree(n)));
 		assertTrue("worknode falsch", wn.getNextToMe()==tree.getRoot());
 		
 	}
 	
-	protected void tearDown() throws Exception {
-	}
 
 }

@@ -1,5 +1,7 @@
 package org.jalgo.main.gui;
 
+import javax.swing.JOptionPane;
+
 import org.jalgo.main.util.Messages;
 
 /**
@@ -10,20 +12,20 @@ import org.jalgo.main.util.Messages;
 public class DialogConstants {
 
 	/** Return value from class method if YES is chosen. */
-	public static final int YES_OPTION = 0;
+	public static final int YES_OPTION = JOptionPane.YES_OPTION;//SWT:0;
 	/** Return value from class method if NO is chosen. */
-	public static final int NO_OPTION = 1;
+	public static final int NO_OPTION = JOptionPane.NO_OPTION;//SWT:1;
 	/** Return value from class method if CANCEL is chosen. */
-	public static final int CANCEL_OPTION = 2;
+	public static final int CANCEL_OPTION = JOptionPane.CANCEL_OPTION;//SWT:2;
 	/** Return value from class method if OK is chosen. */
-	public static final int OK_OPTION = 0;
+	public static final int OK_OPTION = JOptionPane.OK_OPTION;//SWT:0;
 
 	/** Option type for confirm dialogs. */
-	public static final int YES_NO_OPTION = 1;
+	public static final int YES_NO_OPTION = JOptionPane.YES_NO_OPTION;//SWT:1;
 	/** Option type for confirm dialogs. */
-	public static final int YES_NO_CANCEL_OPTION = 2;
+	public static final int YES_NO_CANCEL_OPTION = JOptionPane.YES_NO_CANCEL_OPTION;//SWT:2;
 	/** Option type for confirm dialogs. */
-	public static final int OK_CANCEL_OPTION = 3;
+	public static final int OK_CANCEL_OPTION = JOptionPane.OK_CANCEL_OPTION;//SWT:3;
 	
 	/**
 	 * Retrieves an array of Strings containing the option strings for a dialog

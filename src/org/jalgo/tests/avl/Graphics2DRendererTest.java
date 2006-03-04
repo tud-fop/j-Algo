@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+ *
 
 package org.jalgo.tests.avl;
 
@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Shell;
  * technique is only recommended for static display contents.
  * 
  * @author Alexander Claus
- */
+ *
 public class Graphics2DRendererTest {
 
 	public static void main(String[] args) {
@@ -73,4 +73,4 @@ public class Graphics2DRendererTest {
 		g.setColor(Color.orange);
 		g.fillOval(x-10, y-10, 20, 20);
 	}
-}
+}*/

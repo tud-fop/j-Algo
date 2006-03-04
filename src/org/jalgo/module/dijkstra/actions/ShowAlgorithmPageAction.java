@@ -48,10 +48,11 @@ public class ShowAlgorithmPageAction extends SetEditingModeAction {
 		getController().showAlgorithmPage();
 		Graph gr = getController().getGraph();
 		Node node = gr.getStartNode();
-		if (node == null) {
+		if (node == null &&
+			gr.getNodeList().size() > 0) { //Alexander
 			gr.findNode(1).setStart(true);
 		}
-		gr.getStartNode().getIndex();
+//		gr.getStartNode().getIndex(); --Alexander
 		getController().setGraph(gr);
 		super.doAction();
 		State state = getController().getState(0);

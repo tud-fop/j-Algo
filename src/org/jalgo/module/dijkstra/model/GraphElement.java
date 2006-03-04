@@ -23,14 +23,19 @@
  */
 package org.jalgo.module.dijkstra.model;
 
+import java.io.Serializable;
+
+import org.jalgo.module.dijkstra.gfx.Visual;
+
 /**
  * @author Hannes Strass, Martin Winter
  * 
  * Abstract superclass of Node and Edge. Needed to define static flags.
  *
  */
-public abstract class GraphElement implements Cloneable
-{
+public abstract class GraphElement
+implements Serializable {
+
 	public static final int NONE = 0;
 	public static final int ACTIVE = 1;
 	public static final int BORDER = 2;
@@ -55,22 +60,11 @@ public abstract class GraphElement implements Cloneable
 	private boolean isConflict;
 	private boolean isHighlighted;
 	private boolean isStart;
-	
+
 	private int flags;
-	
-	/**
-	 * Create a copy of the given GraphElement.
-	 * 
-	 * @see java.lang.Object#clone()
-	 */
-	public Object clone() {
-		try {
-			return super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException("Object "+this+" cannot be cloned."); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-	}
-	
+
+	protected Visual visual;
+
 	/** Gets flags as integer.
 	 * @return flags
 	 */
@@ -105,14 +99,14 @@ public abstract class GraphElement implements Cloneable
 	
 	/** Checks whether the given element is "active".
 	 */
-	public boolean getActive()
+	public boolean isActive()
 	{
 		return isActive;
 	}
 	
 	/** Checks whether the element belongs to the border.
 	 */
-	public boolean getBorder()
+	public boolean isBorder()
 	{
 		return isBorder;
 	}
@@ -120,7 +114,7 @@ public abstract class GraphElement implements Cloneable
 	/** 
 	 * @return true if the element was recently changed.
 	 */
-	public boolean getChanged()
+	public boolean isChanged()
 	{
 		return isChanged;
 	}
@@ -128,7 +122,7 @@ public abstract class GraphElement implements Cloneable
 	/**
 	 * @return true if the element is a chosen one.
 	 */
-	public boolean getChosen()
+	public boolean isChosen()
 	{
 		return isChosen;
 	}
@@ -136,7 +130,7 @@ public abstract class GraphElement implements Cloneable
 	/**
 	 * @return true if the element is in conflict with something.
 	 */
-	public boolean getConflict()
+	public boolean isConflict()
 	{
 		return isConflict;
 	}
@@ -144,7 +138,7 @@ public abstract class GraphElement implements Cloneable
 	/**
 	 * @return true if the element shall be highlighted.
 	 */
-	public boolean getHighlighted()
+	public boolean isHighlighted()
 	{
 		return isHighlighted;
 	}
@@ -152,7 +146,7 @@ public abstract class GraphElement implements Cloneable
 	/**
 	 * @return true if the element is the start node.
 	 */
-	public boolean getStart()
+	public boolean isStart()
 	{
 		return isStart;
 	}
@@ -212,5 +206,14 @@ public abstract class GraphElement implements Cloneable
 	{
 		isStart = newStart;
 	}
-	
+
+	/**
+	 * Since all <code>GraphElement</code>s are going to be displayed, each of
+	 * them has a <code>Visual</code> component.
+	 * 
+	 * @return the <code>Visual</code> component for this <code>GraphElement</code>
+	 */
+	public Visual getVisual() {
+		return visual;
+	}
 }

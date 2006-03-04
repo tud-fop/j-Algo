@@ -23,7 +23,7 @@
 package org.jalgo.module.dijkstra.actions;
 
 import org.jalgo.module.dijkstra.gui.Controller;
-import org.jalgo.module.dijkstra.util.StatusbarText;
+//import org.jalgo.module.dijkstra.util.StatusbarText;
 
 /**
  * @author Frank
@@ -42,7 +42,7 @@ public class ShowEditPageAction extends SetEditingModeAction {
 
 	public boolean doAction() throws ActionException {
 		super.doAction();
-		getController().setStatusbarText(new StatusbarText("", null)); //$NON-NLS-1$
+//		getController().setStatusbarText(new StatusbarText("", null)); //$NON-NLS-1$
 		getController().showEditingPage();
 		return true;
 	}

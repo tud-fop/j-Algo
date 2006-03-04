@@ -43,7 +43,7 @@
  work, must include the above copyright notice and disclaimer of warranty.
 
  -----------------------------------------------------------------------------
-*/
+*
 
 package org.jalgo.tests.avl;
 
@@ -60,7 +60,7 @@ import org.eclipse.swt.widgets.Display;
  * Helper class allowing the use of Java2D on SWT or Draw2D graphical
  * context.
  * @author Yannick Saillet
- */
+ *
 public class Graphics2DRenderer
 {
   private static final PaletteData PALETTE_DATA = new PaletteData(0xFF0000, 0xFF00, 0xFF);
@@ -70,12 +70,12 @@ public class Graphics2DRenderer
   private ImageData swtImageData;
   private int[] awtPixels;
 
-  /** RGB value to use as transparent color */
+  /** RGB value to use as transparent color * /
   private static final int TRANSPARENT_COLOR = 0x123456;
 
   /**
    * Prepare to render on a SWT graphics context.
-   */
+   *
   public void prepareRendering(GC gc)
   {
     org.eclipse.swt.graphics.Rectangle clip = gc.getClipping();
@@ -84,7 +84,7 @@ public class Graphics2DRenderer
 
   /**
    * Prepare to render on a Draw2D graphics context.
-   */
+   *
   public void prepareRendering(org.eclipse.draw2d.Graphics graphics)
   {
     org.eclipse.draw2d.geometry.Rectangle clip =
@@ -95,7 +95,7 @@ public class Graphics2DRenderer
   /**
    * Prepare the AWT offscreen image for the rendering of the rectangular
    * region given as parameter.  
-   */
+   *
   private void prepareRendering(int clipX, int clipY, int clipW, int clipH)
   {
     // check that the offscreen images are initialized and large enough
@@ -108,7 +108,7 @@ public class Graphics2DRenderer
 
   /**
    * Returns the Graphics2D context to use.
-   */
+   *
   public Graphics2D getGraphics2D()
   {
     if (awtImage == null) return null;
@@ -118,7 +118,7 @@ public class Graphics2DRenderer
   /**
    * Complete the rendering by flushing the 2D renderer on a SWT graphical
    * context.
-   */
+   *
   public void render(GC gc)
   {
     if (awtImage == null) return;
@@ -131,7 +131,7 @@ public class Graphics2DRenderer
   /**
    * Complete the rendering by flushing the 2D renderer on a Draw2D 
    * graphical context.
-   */
+   *
   public void render(org.eclipse.draw2d.Graphics graphics)
   {
     if (awtImage == null) return;
@@ -143,7 +143,7 @@ public class Graphics2DRenderer
 
   /**
    * Transfer a rectangular region from the AWT image to the SWT image.
-   */
+   *
   private void transferPixels(int clipX, int clipY, int clipW, int clipH)
   {
     int step = swtImageData.depth / 8;
@@ -168,7 +168,7 @@ public class Graphics2DRenderer
 
   /**
    * Dispose the resources attached to this 2D renderer.
-   */
+   *
   public void dispose()
   {
     if (awtImage != null) awtImage.flush();
@@ -181,7 +181,7 @@ public class Graphics2DRenderer
   /**
    * Ensure that the offscreen images are initialized and are at least
    * as large as the size given as parameter.
-   */
+   *
   private void checkOffScreenImages(int width, int height)
   {
     int currentImageWidth = 0;
@@ -205,3 +205,4 @@ public class Graphics2DRenderer
     }
   }
 }
+*/

@@ -21,21 +21,23 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-/* Created on 06.06.2005 */
+/* Created on 06.06.2005 *
 package org.jalgo.module.avl.gui.event;
 
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.event.SwingPropertyChangeSupport;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+
+import org.jalgo.main.gui.components.JToolbarButton;
 
 /**
  * The class <code>SwingSWTAction</code> provides an adapter bridge between
@@ -43,7 +45,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * objects, which can be used in both frameworks.
  * 
  * @author Alexander Claus
- */
+ *
 public class SwingSWTAction
 extends org.eclipse.jface.action.Action
 implements javax.swing.Action {
@@ -53,7 +55,7 @@ implements javax.swing.Action {
 
 	/**
 	 * Creates a new <code>SwingSWTAction</code> object.
-	 */
+	 *
 	public SwingSWTAction() {
 		values = new HashMap<String, Object>();
 	}
@@ -64,11 +66,13 @@ implements javax.swing.Action {
 	 * 
 	 * @return a <code>JButton</code> instance whose <code>Action</code> is
 	 *         the current instance of <code>SwingSWTAction</code>
-	 */
+	 *
 	public JButton createToolbarButton() {
-		JButton button = new JButton(this);
-		button.setMargin(new Insets(0, 0, 0, 0));
-		button.setText(""); //$NON-NLS-1$
+		JToolbarButton button = new JToolbarButton(
+			(Icon)getValue(SMALL_ICON),
+			null, null);
+		button.setAction(this);
+		button.setText("");
 		return button;
 	}
 
@@ -88,7 +92,7 @@ implements javax.swing.Action {
 	 * Sets the icon image to this action to the image with the given URL.
 	 * 
 	 * @param iconURL the file URL of the icon image
-	 */
+	 *
 	public void setIconImage(URL iconURL) {
 		setImageDescriptor(ImageDescriptor.createFromURL(iconURL));
 		putValue(SMALL_ICON, new ImageIcon(iconURL));
@@ -98,7 +102,7 @@ implements javax.swing.Action {
 	 * (non-Javadoc)
 	 * 
 	 * @see javax.swing.Action#getValue(java.lang.String)
-	 */
+	 *
 	public Object getValue(String key) {
 		return values.get(key);
 	}
@@ -107,7 +111,7 @@ implements javax.swing.Action {
 	 * (non-Javadoc)
 	 * 
 	 * @see javax.swing.Action#putValue(java.lang.String, java.lang.Object)
-	 */
+	 *
 	public void putValue(String key, Object value) {
 		values.put(key, value);
 	}
@@ -116,7 +120,7 @@ implements javax.swing.Action {
 	 * (non-Javadoc)
 	 * 
 	 * @see javax.swing.Action#addPropertyChangeListener(java.beans.PropertyChangeListener)
-	 */
+	 *
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		if (changeSupport == null)
 			changeSupport = new SwingPropertyChangeSupport(this);
@@ -127,7 +131,7 @@ implements javax.swing.Action {
 	 * (non-Javadoc)
 	 * 
 	 * @see javax.swing.Action#removePropertyChangeListener(java.beans.PropertyChangeListener)
-	 */
+	 *
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		if (changeSupport == null) return;
 		changeSupport.removePropertyChangeListener(listener);
@@ -139,7 +143,7 @@ implements javax.swing.Action {
 	 * @param propertyName the name of the property
 	 * @param oldValue the old value of the property
 	 * @param newValue the new value of the property
-	 */
+	 *
 	@Override
 	protected void firePropertyChange(String propertyName, Object oldValue,
 		Object newValue) {
@@ -156,7 +160,7 @@ implements javax.swing.Action {
 	 * (non-Javadoc)
 	 * 
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
+	 *
 	public void actionPerformed(ActionEvent e) {
 		run();
 	}
@@ -174,4 +178,4 @@ implements javax.swing.Action {
 	public boolean isEnabled() {
 		return super.isEnabled();
 	}
-}
+}*/

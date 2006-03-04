@@ -24,13 +24,17 @@
 /* Created on 06.06.2005 */
 package org.jalgo.module.avl.gui.event;
 
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.resource.ImageDescriptor;
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+
 import org.jalgo.main.gui.DialogConstants;
-import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.datastructure.SearchTree;
 import org.jalgo.module.avl.gui.GUIController;
+
+import org.jalgo.main.gui.JAlgoGUIConnector;
 
 /**
  * The class <code>ClearTreeAction</code> defines an <code>Action</code>
@@ -41,7 +45,7 @@ import org.jalgo.module.avl.gui.GUIController;
  * @author Alexander Claus
  */
 public class ClearTreeAction
-extends Action {
+extends AbstractAction {
 
 	private final GUIController gui;
 	private final SearchTree tree;
@@ -57,16 +61,16 @@ extends Action {
 	public ClearTreeAction(GUIController gui, SearchTree tree) {
 		this.gui = gui;
 		this.tree = tree;
-		setText(Messages.getString("avl", "Clear_tree")); //$NON-NLS-1$ //$NON-NLS-2$
-		setToolTipText(Messages.getString("avl", "Clear_tree_tooltip")); //$NON-NLS-1$ //$NON-NLS-2$
-		setImageDescriptor(ImageDescriptor.createFromURL(
-			Messages.getResourceURL("avl", "Clear_tree"))); //$NON-NLS-1$ //$NON-NLS-2$
+		putValue(NAME, Messages.getString("avl", "Clear_tree")); //$NON-NLS-1$ //$NON-NLS-2$
+		putValue(SHORT_DESCRIPTION, Messages.getString("avl", "Clear_tree_tooltip")); //$NON-NLS-1$ //$NON-NLS-2$
+		putValue(SMALL_ICON, new ImageIcon(
+			Messages.getResourceURL("main", "Icon.Clear"))); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
 	 * Performs the action.
 	 */
-	public void run() {
+	public void actionPerformed(ActionEvent e) {
 		switch (JAlgoGUIConnector.getInstance().showConfirmDialog(
 			Messages.getString("avl", "Clear_tree_warning"), //$NON-NLS-1$ //$NON-NLS-2$
 			DialogConstants.OK_CANCEL_OPTION)) {

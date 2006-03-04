@@ -103,7 +103,7 @@ implements GUIConstants {
 		// messagePane contains the error message
 		JPanel messagePane = new JPanel(new BorderLayout(4, 4));
 		errorIcon = new JLabel(new ImageIcon(Messages.getResourceURL(
-			"avl", "Msg_error"))); //$NON-NLS-1$ //$NON-NLS-2$
+			"main", "Icon.Msg_error"))); //$NON-NLS-1$ //$NON-NLS-2$
 		errorMessage = new JLabel();
 		messagePane.add(errorIcon, BorderLayout.WEST);
 		messagePane.add(errorMessage, BorderLayout.CENTER);

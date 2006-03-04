@@ -33,6 +33,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.jalgo.main.util.Messages;
+import org.jalgo.main.util.Settings;
 import org.jalgo.module.avl.Controller;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -185,8 +186,9 @@ implements GUIConstants {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
 			XmlHandler xmlhandler = new XmlHandler();
-			saxParser.parse(getClass().getResourceAsStream(Messages.getString(
-				"avl_res", "Algorithm_text_base")), //$NON-NLS-1$ //$NON-NLS-2$
+			saxParser.parse(getClass().getResourceAsStream(
+				Messages.getString("avl_res", //$NON-NLS-1$
+					"Algorithm_text_base_"+Settings.getString("Language"))), //$NON-NLS-1$ //$NON-NLS-2$
 				 xmlhandler);
 			Map<String, String> mapOfElements = xmlhandler.getMapOfElements();
 

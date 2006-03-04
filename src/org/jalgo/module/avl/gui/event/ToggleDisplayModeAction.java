@@ -24,13 +24,16 @@
 /* Created on 12.06.2005 */
 package org.jalgo.module.avl.gui.event;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.resource.ImageDescriptor;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
+
 import org.jalgo.main.util.Messages;
+
 import org.jalgo.module.avl.gui.DisplayModeChangeable;
 import org.jalgo.module.avl.gui.GUIConstants;
 import org.jalgo.module.avl.gui.Settings;
@@ -47,7 +50,8 @@ import org.jalgo.module.avl.gui.Settings;
  * @author Alexander Claus
  */
 public class ToggleDisplayModeAction
-extends Action {
+extends JCheckBoxMenuItem
+implements ActionListener {
 
 	// the singleton instance
 	private static ToggleDisplayModeAction instance;
@@ -59,11 +63,11 @@ extends Action {
 	 * Constructs the singleton instance of <code>ToggleDisplayModeAction</code>.
 	 */
 	private ToggleDisplayModeAction() {
-		super(Messages.getString("avl", "Beamer_mode"), IAction.AS_CHECK_BOX); //$NON-NLS-1$ //$NON-NLS-2$
-		setImageDescriptor(ImageDescriptor.createFromURL(
-			Messages.getResourceURL("avl", "Beamer_mode"))); //$NON-NLS-1$ //$NON-NLS-2$
-		setChecked(Settings.getDisplayMode() == GUIConstants.BEAMER_MODE);
+		super(Messages.getString("avl", "Beamer_mode"), //$NON-NLS-1$ //$NON-NLS-2$ 
+			new ImageIcon(Messages.getResourceURL("main", "Icon.Beamer_mode")), //$NON-NLS-1$ //$NON-NLS-2$
+			Settings.getDisplayMode() == GUIConstants.BEAMER_MODE);
 		observers = new LinkedList<DisplayModeChangeable>();
+		addActionListener(this);
 	}
 
 	/**
@@ -92,8 +96,8 @@ extends Action {
 	 * Performs the action. The setting is changed globally and observers are
 	 * notified.
 	 */
-	public void run() {
-		Settings.setDisplayMode(isChecked() ? GUIConstants.BEAMER_MODE
+	public void actionPerformed(ActionEvent e) {
+		Settings.setDisplayMode(isSelected() ? GUIConstants.BEAMER_MODE
 			: GUIConstants.PC_MODE);
 		for (DisplayModeChangeable observer : observers) {
 			observer.displayModeChanged();

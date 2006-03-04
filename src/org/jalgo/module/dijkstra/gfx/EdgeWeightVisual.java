@@ -27,19 +27,14 @@
 
 package org.jalgo.module.dijkstra.gfx;
 
-import org.eclipse.draw2d.Connection;
-import org.eclipse.draw2d.Figure;
-import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.MidpointLocator;
-import org.eclipse.draw2d.MouseEvent;
-import org.eclipse.draw2d.MouseListener;
-import org.eclipse.draw2d.MouseMotionListener;
-import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Device;
-import org.eclipse.swt.graphics.Font;
-import org.jalgo.module.dijkstra.gui.Controller;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Point;
+
 import org.jalgo.module.dijkstra.model.Edge;
+import org.jalgo.module.dijkstra.model.GraphElement;
 
 /**
  * Visual representation of an edge weight, displayed at the center of an
@@ -47,84 +42,42 @@ import org.jalgo.module.dijkstra.model.Edge;
  * the mouse. <br>
  * <br>
  * <i>Note:</i> An edge weight visual has three actual drawing components: a
- * label, a {@link Circle} and a {@link Square}. The label is always visible,
- * but only one of the other two is displayed at any point in time. The circle
- * is used to "punch a hole" in the edge visual under it, so the label can be
- * easily read. The square is used when the edge weight visual is highlighted or
- * its weight is interactively changed.
+ * label, a circle and a square. The label is always visible, but only one of
+ * the other two is displayed at any point in time. The circle is used to
+ * "punch a hole" in the edge visual under it, so the label can be easily read.
+ * The square is used when the edge weight visual is highlighted or its weight
+ * is interactively changed.
  * 
  * @author Martin Winter
  */
 public class EdgeWeightVisual
-extends Visual
-implements MouseListener, MouseMotionListener {
+extends Visual {
 
+	private Edge modelEdge;
 	private int weight;
-	private Label label;
-	private Circle circle;
-	private Square box;
-	private EdgeVisual edgeVisual;
-	private Connection connection;
-	private MidpointLocator locator;
-
 	private Point initialLocation;
 	private int initialWeight;
-	private boolean mouseButtonPressed = false; // Set when mouse button
-	// pressed, reset when released.
-	private boolean inOperation = false; // Set when this edge weight visual
-	// is the subject of the current
-	// operation.
-	private boolean containsMouse = false; // Set when mouse enters, reset when
-	// mouse exits.
-	private boolean oldContainsMouse = false; // Needed to fix a bug with
+	private Point center;
 
-	// mouse events firing
-	// repeatedly.
+	private transient Color boxColor;
+	private transient Color labelColor;
+	private transient boolean boxVisible;
+
+	private static final int WEIGHT_DIAMETER = 30;
+	private static final int WEIGHT_RADIUS = WEIGHT_DIAMETER / 2;
+	private static final Font labelFont =
+		new Font("Verdana", java.awt.Font.BOLD, 19);
 
 	/**
 	 * Creates a new edge weight visual on an edge visual.
 	 * 
-	 * @param device the current device (needed for creating colors)
-	 * @param parent the graph parent that the edge visual should appear on
-	 * @param edgeVisual the edge visual to which this edge weight visual is
-	 *            attached
 	 * @param modelEdge the model edge this edge weight visual represents
 	 */
-	public EdgeWeightVisual(Device device, GraphParent parent,
-		EdgeVisual edgeVisual, Edge modelEdge) {
-		super(parent);
-
-		this.edgeVisual = edgeVisual;
-		this.connection = edgeVisual.getConnectionForEdgeWeightVisual();
-
+	public EdgeWeightVisual(Edge modelEdge) {
+		this.modelEdge = modelEdge;
 		this.weight = modelEdge.getWeight();
 
-		box = new Square(new Point(0, 0), 13);
-		box.setBackgroundColor(parent.blackColor);
-		box.setLineWidth(0);
-
-		circle = new Circle(new Point(0, 0), 13);
-		circle.setBackgroundColor(parent.whiteColor);
-		circle.setForegroundColor(parent.whiteColor);
-		circle.setLineWidth(0);
-
-		label = new Label(String.valueOf(getWeight()));
-		Font labelFont = new Font(device, "Verdana", 14, SWT.BOLD); //$NON-NLS-1$
-		label.setFont(labelFont);
-		label.setForegroundColor(parent.blackColor);
-
-		// Do not add box yet.
-		locator = new MidpointLocator(connection, 0);
-		connection.add(circle, locator);
-		connection.add(label, locator);
-
-		// Register for mouse events.
-		box.addMouseListener(this);
-		box.addMouseMotionListener(this);
-		circle.addMouseListener(this);
-		circle.addMouseMotionListener(this);
-		label.addMouseListener(this);
-		label.addMouseMotionListener(this);
+		update();
 	}
 
 	/**
@@ -135,13 +88,8 @@ implements MouseListener, MouseMotionListener {
 	 * @param weight the weight
 	 */
 	public void setWeight(int weight) {
-		if (weight < 0) {
-			weight = 0;
-		}
-		else if (weight > 99) {
-			weight = 99;
-		}
-		this.weight = weight;
+		this.weight = Math.min(weight, 99);
+		this.weight = Math.max(this.weight, 0);
 	}
 
 	/**
@@ -154,18 +102,16 @@ implements MouseListener, MouseMotionListener {
 		return weight;
 	}
 
-	/* Methods inherited from Visual. */
-
-	/**
-	 * Adds the actual drawing elements to the graph parent. Since the drawing
-	 * elements of an edge weight visual are automatically added to the graph
-	 * parent by the edge visual owning it, this method does nothing.
-	 * 
-	 * @param parent the graph parent that the drawing elements should appear on
-	 */
-	public void addToParent(GraphParent parent) {
-	// this method has no effect
+	public void beginDragging(Point startPoint) {
+		initialLocation = startPoint;
+		initialWeight = getWeight();
 	}
+
+	public void updateWeightToDragging(Point currPoint) {
+		setWeight(initialWeight - (currPoint.y-initialLocation.y)/5);
+	}
+
+	/* Methods inherited from Visual. */
 
 	/**
 	 * Update appearance according to flags. Call this method after modifying
@@ -174,337 +120,99 @@ implements MouseListener, MouseMotionListener {
 	public void update() {
 		if (isInEditingMode()) {
 			// Flag with highest priority comes first.
-			if (isActive()) {
-				box.setBackgroundColor(parent.redColor);
-				label.setForegroundColor(parent.whiteColor);
-				removeConnectionChildren();
-				connection.add(box, locator);
-				connection.add(label, locator);
+			if (modelEdge.isActive()) {
+				boxColor = Visual.RED;
+				boxVisible = true;
+				labelColor = Visual.WHITE;
 			}
-			else if (isHighlighted()) {
-				box.setBackgroundColor(parent.blackColor);
-				label.setForegroundColor(parent.whiteColor);
-				removeConnectionChildren();
-				connection.add(box, locator);
-				connection.add(label, locator);
+			else if (modelEdge.isHighlighted()) {
+				boxColor = Visual.BLACK;
+				boxVisible = true;
+				labelColor = Visual.WHITE;
 			}
-			else if (isChanged()) {
-				label.setForegroundColor(parent.redColor);
-				removeConnectionChildren();
-				connection.add(circle, locator);
-				connection.add(label, locator);
+			else if (modelEdge.isChanged()) {
+				boxVisible = false;
+				labelColor = Visual.RED;
 			}
 			else {
-				label.setForegroundColor(parent.blackColor);
-				removeConnectionChildren();
-				connection.add(circle, locator);
-				connection.add(label, locator);
+				boxVisible = false;
+				labelColor = Visual.BLACK;
 			}
 		}
 		else {
-			if (isChosen()) {
-				label.setForegroundColor(parent.greenColor);
-				removeConnectionChildren();
-				connection.add(circle, locator);
-				connection.add(label, locator);
+			if (modelEdge.isChosen()) {
+				boxVisible = false;
+				labelColor = Visual.GREEN;
 			}
-			else if (isBorder()) {
-				if (isActive()) {
-					if (isConflict()) {
-						label.setForegroundColor(parent.orangeColor);
-						removeConnectionChildren();
-						connection.add(circle, locator);
-						connection.add(label, locator);
+			else if (modelEdge.isBorder()) {
+				if (modelEdge.isActive()) {
+					if (modelEdge.isConflict()) {
+						boxVisible = false;
+						labelColor = Visual.ORANGE;
 					}
 					else {
-						label.setForegroundColor(parent.redColor);
-						removeConnectionChildren();
-						connection.add(circle, locator);
-						connection.add(label, locator);
+						boxVisible = false;
+						labelColor = Visual.RED;
 					}
 				}
 				else {
-					label.setForegroundColor(parent.orangeColor);
-					removeConnectionChildren();
-					connection.add(circle, locator);
-					connection.add(label, locator);
+					boxVisible = false;
+					labelColor = Visual.ORANGE;
 				}
 			}
 			else {
-				label.setForegroundColor(parent.grayColor);
-				removeConnectionChildren();
-				connection.add(circle, locator);
-				connection.add(label, locator);
-			}
-		}
-
-		// Explicitly perform drawing update.
-		performUpdate();
-	}
-
-	/**
-	 * Forces the update manager to immediately refresh the display.
-	 */
-	public void performUpdate() {
-		for (int i = 0; i < connection.getChildren().size(); i++) {
-			((Figure)connection.getChildren().get(i)).getUpdateManager()
-			.performUpdate();
-		}
-		label.setText(String.valueOf(getWeight()));
-	}
-
-	/**
-	 * Removes the box or the circle from the edge visual's connection,
-	 * depending on which is currently displayed (see class description above).
-	 * After calling this method, the other element (box or circle) can be
-	 * added.
-	 */
-	private void removeConnectionChildren() {
-		if (connection.getChildren().contains(box)) {
-			connection.remove(box);
-		}
-		if (connection.getChildren().contains(circle)) {
-			connection.remove(circle);
-		}
-	}
-
-	/* Methods inherited from MouseListener interface. */
-
-	public void mouseDoubleClicked(MouseEvent event) {
-	// this method has no effect
-	}
-
-	/**
-	 * Responds when the mouse button is pressed.
-	 * <ul>
-	 * <li>If in MODE_ADD_WEIGH_EDGE, initiates a weigh edge operation.</li>
-	 * <li>If in MODE_DELETE_EDGE, initiates a delete edge operation.</li>
-	 * </ul>
-	 */
-	public void mousePressed(MouseEvent event) {
-		mouseButtonPressed = true;
-
-		switch (getControllerMode()) {
-			case (Controller.MODE_NO_TOOL_ACTIVE): {
-				break;
-			}
-			case (Controller.MODE_ADD_MOVE_NODE): {
-				break;
-			}
-			case (Controller.MODE_DELETE_NODE): {
-				break;
-			}
-			case (Controller.MODE_ADD_WEIGH_EDGE): {
-				inOperation = true;
-				initialLocation = event.getLocation();
-				initialWeight = getWeight();
-				parent.setDraggingEdgeWeightVisual(this);
-				edgeVisual.setActive(true);
-				edgeVisual.update();
-				break;
-			}
-			case (Controller.MODE_DELETE_EDGE): {
-				inOperation = true;
-				edgeVisual.setActive(true);
-				edgeVisual.update();
-				break;
-			}
-			case (Controller.MODE_ALGORITHM): {
-				break;
+				boxVisible = false;
+				labelColor = Visual.GRAY;
 			}
 		}
 	}
 
-	/**
-	 * Responds when the mouse button is released.
-	 * <ul>
-	 * <li>If in MODE_ADD_WEIGH_EDGE, finishes a weigh edge operation.</li>
-	 * <li>If in MODE_DELETE_EDGE, finishes a delete edge operation. The edge
-	 * is only deleted if the mouse is over the edge visual and the mouse button
-	 * was pressed before. Otherwise, the user probably has changed his mind and
-	 * nothing is deleted.</li>
-	 * </ul>
-	 */
-	public void mouseReleased(MouseEvent event) {
-		mouseButtonPressed = false;
+	private void setCenter(Point screenPoint) {
+		center = screenPoint;
+	}
 
-		switch (getControllerMode()) {
-			case (Controller.MODE_NO_TOOL_ACTIVE): {
-				break;
-			}
-			case (Controller.MODE_ADD_MOVE_NODE): {
-				break;
-			}
-			case (Controller.MODE_DELETE_NODE): {
-				break;
-			}
-			case (Controller.MODE_ADD_WEIGH_EDGE): {
-				parent.setDraggingEdgeWeightVisual(null);
-				edgeVisual.setActive(false);
-				edgeVisual.update();
-				parent.weighEdgeForVisual(edgeVisual);
-				break;
-			}
-			case (Controller.MODE_DELETE_EDGE): {
-				if (containsMouse && inOperation) {
-					parent.deleteEdgeForVisual(edgeVisual);
-				}
-				else {
-					inOperation = false;
-					setActive(false);
-				}
-				break;
-			}
-			case (Controller.MODE_ALGORITHM): {
-				break;
-			}
+	private Point getCenter() {
+		return center;
+	}
+
+	public void updateLocation(Dimension screenSize) {
+		Point n1Point =
+			((NodeVisual)modelEdge.getStartNode().getVisual()).getCenter();
+		Point n2Point =
+			((NodeVisual)modelEdge.getEndNode().getVisual()).getCenter();
+		setCenter(new Point(
+			(n1Point.x+n2Point.x)/2,
+			(n1Point.y+n2Point.y)/2));
+	}
+
+	@Override
+	public void draw(Graphics2D g, Dimension screenSize) {
+		updateLocation(screenSize);
+		if (boxVisible) {
+			g.setColor(boxColor);
+			g.fillRect(center.x-WEIGHT_RADIUS, center.y-WEIGHT_RADIUS,
+				WEIGHT_DIAMETER, WEIGHT_DIAMETER);
 		}
-	}
-
-	/* Methods inherited from MouseMotionListener interface. */
-
-	/**
-	 * Responds when the mouse is dragged.
-	 * <ul>
-	 * <li>If in MODE_ADD_WEIGH_EDGE, changes the weight.</li>
-	 * </ul>
-	 */
-	public void mouseDragged(MouseEvent event) {
-		switch (getControllerMode()) {
-			case (Controller.MODE_NO_TOOL_ACTIVE): {
-				break;
-			}
-			case (Controller.MODE_ADD_MOVE_NODE): {
-				break;
-			}
-			case (Controller.MODE_DELETE_NODE): {
-				break;
-			}
-			case (Controller.MODE_ADD_WEIGH_EDGE): {
-				if (parent.isDragWeighEdge()) {
-					if (parent.getDraggingEdgeWeightVisual() != this) {
-						// When this edge weight visual is the top one of two
-						// overlapping edge weight visuals,
-						// pass events on to the visual that is registered with
-						// the parent for dragging.
-						parent.getDraggingEdgeWeightVisual().mouseDragged(event);
-					}
-					else {
-						// Change weight according to the change of the mouse
-						// position.
-						Point location = event.getLocation();
-						int delta = location.getDifference(initialLocation).height;
-						setWeight(initialWeight - (delta / 5));
-						performUpdate();
-					}
-					break;
-				}
-			}
-			case (Controller.MODE_DELETE_EDGE): {
-				break;
-			}
-			case (Controller.MODE_ALGORITHM): {
-				break;
-			}
+		else {
+			g.setColor(Visual.WHITE);
+			g.fillOval(center.x-WEIGHT_RADIUS, center.y-WEIGHT_RADIUS,
+				WEIGHT_DIAMETER, WEIGHT_DIAMETER);
 		}
+		g.setColor(labelColor);
+		g.setFont(labelFont);
+		if (getWeight()<10) g.drawString(""+getWeight(), center.x-7, center.y+8);
+		else g.drawString(""+getWeight(), center.x-14, center.y+8);
 	}
 
-	/**
-	 * Responds when the mouse has entered.
-	 * <ul>
-	 * <li>If in MODE_ADD_WEIGH_EDGE or MODE_DELETE_EDGE, highlights the edge.</li>
-	 * </ul>
-	 */
-	public void mouseEntered(MouseEvent event) {
-		containsMouse = true;
-
-		switch (getControllerMode()) {
-			case (Controller.MODE_NO_TOOL_ACTIVE): {
-				break;
-			}
-			case (Controller.MODE_ADD_MOVE_NODE): {
-				break;
-			}
-			case (Controller.MODE_DELETE_NODE): {
-				break;
-			}
-			case (Controller.MODE_ADD_WEIGH_EDGE): {
-				// Highlight only if there is no current dragging operation.
-				if (!parent.isDrag()) {
-					if (!oldContainsMouse) {
-						oldContainsMouse = true;
-						edgeVisual.setHighlighted(true);
-						edgeVisual.update();
-						parent.setCleanupEdgeWeightVisual(this); // Register
-						// for
-						// cleanup.
-					}
-				}
-				break;
-			}
-			case (Controller.MODE_DELETE_EDGE): {
-				// Become active again if mouse button is still pressed
-				// and edge weight visual was clicked on before.
-				if (!oldContainsMouse) {
-					oldContainsMouse = true;
-					if (mouseButtonPressed && inOperation) {
-						edgeVisual.setActive(true);
-					}
-					edgeVisual.setHighlighted(true);
-					edgeVisual.update();
-				}
-				break;
-			}
-			case (Controller.MODE_ALGORITHM): {
-				break;
-			}
-		}
+	@Override
+	public void updateModel(GraphElement modelElement) {
+		this.modelEdge = (Edge)modelElement;
+		weight = modelEdge.getWeight();
 	}
 
-	/**
-	 * Responds when the mouse has exited.
-	 * <ul>
-	 * <li>If in MODE_ADD_WEIGH_EDGE or MODE_DELETE_EDGE, unhighlights the
-	 * edge.</li>
-	 * </ul>
-	 */
-	public void mouseExited(MouseEvent event) {
-		containsMouse = false;
-
-		switch (getControllerMode()) {
-			case (Controller.MODE_NO_TOOL_ACTIVE): {
-				break;
-			}
-			case (Controller.MODE_ADD_MOVE_NODE): {
-				break;
-			}
-			case (Controller.MODE_DELETE_NODE): {
-				break;
-			}
-			case (Controller.MODE_ADD_WEIGH_EDGE): {
-				oldContainsMouse = false;
-				edgeVisual.setHighlighted(false);
-				edgeVisual.update();
-				break;
-			}
-			case (Controller.MODE_DELETE_EDGE): {
-				oldContainsMouse = false;
-				edgeVisual.setActive(false);
-				edgeVisual.setHighlighted(false);
-				edgeVisual.update();
-				break;
-			}
-			case (Controller.MODE_ALGORITHM): {
-				break;
-			}
-		}
-	}
-
-	public void mouseHover(MouseEvent event) {
-	// this method has no effect
-	}
-
-	public void mouseMoved(MouseEvent event) {
-	// this method has no effect
+	@Override
+	public boolean hit(Dimension screenSize, Point p) {
+		if (getCenter().distance(p) < 10) return true;
+		return false;
 	}
 }

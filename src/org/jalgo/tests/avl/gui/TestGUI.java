@@ -25,7 +25,7 @@ import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-import org.jalgo.main.JalgoMain;
+import org.jalgo.main.JAlgoMain;
 
 public class TestGUI {
 
@@ -106,6 +106,6 @@ public class TestGUI {
 
 	public static void main(String[] args) {
 		performTest();
-		JalgoMain.main(args);
+		JAlgoMain.main(args);
 	}
 }

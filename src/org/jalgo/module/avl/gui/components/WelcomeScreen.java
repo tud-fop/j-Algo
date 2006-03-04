@@ -26,6 +26,7 @@ package org.jalgo.module.avl.gui.components;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -33,9 +34,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import org.jalgo.main.util.Messages;
+import org.jalgo.main.util.Settings;
 import org.jalgo.module.avl.gui.GUIConstants;
 import org.jalgo.module.avl.gui.GUIController;
 import org.jalgo.module.avl.gui.event.WelcomeScreenActionHandler;
@@ -70,16 +71,17 @@ implements GUIConstants {
 	public WelcomeScreen(GUIController gui) {
 		action = new WelcomeScreenActionHandler(gui, this);
 
-		setBackground(WELCOME_SCREEN_BACKGROUND);
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
+		String lang = Settings.getString("Language"); //$NON-NLS-1$
+		if (!lang.equals("de")) lang = "en"; //$NON-NLS-1$ //$NON-NLS-2$
 		loadButton = new WelcomeButton(
 			new ImageIcon(
 				Messages.getResourceURL("avl", "Welcome_load")), //$NON-NLS-1$ //$NON-NLS-2$
 			new ImageIcon(
 				Messages.getResourceURL("avl", "Welcome_load_rollover")), //$NON-NLS-1$ //$NON-NLS-2$
 			new ImageIcon(
-				Messages.getResourceURL("avl", "Welcome_load_description")), //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.getResourceURL("avl", "Welcome_load_description_"+lang)), //$NON-NLS-1$ //$NON-NLS-2$
 			"load", action); //$NON-NLS-1$
 		manualButton = new WelcomeButton(
 			new ImageIcon(
@@ -87,7 +89,7 @@ implements GUIConstants {
 			new ImageIcon(
 				Messages.getResourceURL("avl", "Welcome_manual_rollover")), //$NON-NLS-1$ //$NON-NLS-2$
 			new ImageIcon(
-				Messages.getResourceURL("avl", "Welcome_manual_description")), //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.getResourceURL("avl", "Welcome_manual_description_"+lang)), //$NON-NLS-1$ //$NON-NLS-2$
 			"createManually", action); //$NON-NLS-1$
 		randomButton = new WelcomeButton(
 			new ImageIcon(
@@ -95,16 +97,11 @@ implements GUIConstants {
 			new ImageIcon(
 				Messages.getResourceURL("avl", "Welcome_random_rollover")), //$NON-NLS-1$ //$NON-NLS-2$
 			new ImageIcon(
-				Messages.getResourceURL("avl", "Welcome_random_description")), //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.getResourceURL("avl", "Welcome_random_description_"+lang)), //$NON-NLS-1$ //$NON-NLS-2$
 			"createRandomly", action); //$NON-NLS-1$
 
 		descriptionLabel = new JLabel();
-		descriptionLabel.setMaximumSize(new Dimension(800, 30));
 		descriptionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		descriptionLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		descriptionLabel.setBackground(WELCOME_SCREEN_BACKGROUND);
-		descriptionLabel.setFont(GUIConstants.WELCOME_SCREEN_FONT);
-		descriptionLabel.setForeground(WELCOME_SCREEN_FOREGROUND);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBackground(WELCOME_SCREEN_BACKGROUND);
@@ -144,5 +141,16 @@ implements GUIConstants {
 		manualButton.setEnabled(b);
 		randomButton.setEnabled(b);
 		if (!b) setDescription(null);
+	}
+
+	/**
+	 * Draws the background with a beautyful color ;o). Normally there would be
+	 * the background color set with <code>setBackground(..)</code>, but, under
+	 * linux (GTK) this has no effect. So this is a workaround...
+	 */
+	@Override
+	protected void paintComponent(Graphics g) {
+		g.setColor(WELCOME_SCREEN_BACKGROUND);
+		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 }

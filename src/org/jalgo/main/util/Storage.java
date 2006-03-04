@@ -36,15 +36,17 @@ import java.util.LinkedList;
 
 import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.IModuleInfo;
-import org.jalgo.main.JalgoMain;
+import org.jalgo.main.JAlgoMain;
 import org.jalgo.main.gui.JAlgoGUIConnector;
+
 
 /**
  * @author Hauke Menges, Michael Pradel
  */
 public class Storage {
 
-	public static boolean load(String filename, AbstractModuleConnector currentInstance) {
+	public static boolean load(String filename,
+		AbstractModuleConnector currentInstance) {
 		byte[] buf = null;
 
 		// Create InputStream
@@ -83,9 +85,11 @@ public class Storage {
 
 			// get modNumber of module corresponding to this file
 			int modNumber = -1;
-			LinkedList moduleInfos = JalgoMain.getInstance().getKnownModuleInfos();
+			LinkedList moduleInfos =
+				JAlgoMain.getInstance().getKnownModuleInfos();
 			for (int i = 0; i < moduleInfos.size(); i++) {
-				if (((IModuleInfo)moduleInfos.get(i)).getName().equals(name)) modNumber = i;
+				if (((IModuleInfo)moduleInfos.get(i)).getName().equals(name))
+					modNumber = i;
 			}
 			if (modNumber < 0) {
 				JAlgoGUIConnector.getInstance().showErrorMessage(
@@ -96,7 +100,7 @@ public class Storage {
 			}
 
 			if (currentInstance == null)
-				currentInstance = JalgoMain.getInstance().newInstance(modNumber); //$NON-NLS-1$
+				currentInstance = JAlgoMain.getInstance().newInstance(modNumber); //$NON-NLS-1$
 
 			// Read module data
 			buf = new byte[in.available()];
@@ -125,10 +129,10 @@ public class Storage {
 
 	public static boolean save(String filename) {
 		// Generate Headers
-		int nameLength =
-			JalgoMain.getInstance().getCurrentInstance().getModuleInfo().getName().getBytes().length;
-		int versionLength =
-			JalgoMain.getInstance().getCurrentInstance().getModuleInfo().getVersion().getBytes().length;
+		int nameLength = JAlgoMain.getInstance().getCurrentInstance().
+			getModuleInfo().getName().getBytes().length;
+		int versionLength = JAlgoMain.getInstance().getCurrentInstance().
+			getModuleInfo().getVersion().getBytes().length;
 
 		// Create OutputStream
 		FileOutputStream out = null;
@@ -137,9 +141,10 @@ public class Storage {
 		}
 		catch (FileNotFoundException e) {
 			JAlgoGUIConnector.getInstance().showErrorMessage(
-				Messages.getString("main", "Storage.Could_not_write_the_file._8") + //$NON-NLS-1$
-				System.getProperty("line.separator") +
-				Messages.getString("main", "Storage.Maybe_out_of_diskspace_9")); //$NON-NLS-1$
+				Messages.getString(
+					"main", "Storage.Could_not_write_the_file._8") + //$NON-NLS-1$
+					System.getProperty("line.separator") +
+					Messages.getString("main", "Storage.Maybe_out_of_diskspace_9")); //$NON-NLS-1$
 			e.printStackTrace();
 		}
 
@@ -148,13 +153,14 @@ public class Storage {
 			out.write("jalgo".getBytes()); //$NON-NLS-1$
 			out.write(nameLength);
 			out.write(versionLength);
-			out.write(
-				JalgoMain.getInstance().getCurrentInstance().getModuleInfo().getName().getBytes());
-			out.write(
-				JalgoMain.getInstance().getCurrentInstance().getModuleInfo().getVersion().getBytes());
+			out.write(JAlgoMain.getInstance().getCurrentInstance().
+				getModuleInfo().getName().getBytes());
+			out.write(JAlgoMain.getInstance().getCurrentInstance().
+				getModuleInfo().getVersion().getBytes());
 
 			// Write module data
-			out.write(JalgoMain.getInstance().getCurrentInstance().getDataForFile().toByteArray());
+			out.write(JAlgoMain.getInstance().getCurrentInstance().
+				getDataForFile().toByteArray());
 
 		}
 		catch (IOException e) {

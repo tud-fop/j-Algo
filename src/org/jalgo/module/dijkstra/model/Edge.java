@@ -29,6 +29,8 @@ package org.jalgo.module.dijkstra.model;
 
 import java.io.Serializable;
 
+import org.jalgo.module.dijkstra.gfx.EdgeVisual;
+
 /**
  * @author Hannes Strass
  * 
@@ -36,13 +38,28 @@ import java.io.Serializable;
  */
 public class Edge
 extends GraphElement
-implements Serializable, Comparable<Edge> {
+implements Serializable, Comparable<Edge>, Cloneable {
 
 	private static final long serialVersionUID = 18238242054685159L;
 
 	private Node startNode;
 	private Node endNode;
 	private int weight;
+
+	/**
+	 * Retrieves a copy of the current <code>Edge</code>.
+	 */
+	@Override
+	protected Edge clone() {
+		try {
+			Edge clone = (Edge)super.clone();
+			clone.visual = new EdgeVisual(clone);
+			return clone;
+		}
+		catch (CloneNotSupportedException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
 
 	/**
 	 * <code>reversed</code> specifies whether an edge needs to be drawn not
@@ -77,27 +94,7 @@ implements Serializable, Comparable<Edge> {
 	 * @param endNode the end Node
 	 */
 	public Edge(Node startNode, Node endNode) {
-		/**
-		 * if index of startNode is greater than index of endNode, swap Nodes
-		 */
-
-		if (startNode.getIndex() > endNode.getIndex()) {
-			this.startNode = endNode;
-			this.endNode = startNode;
-
-			// this.startNodeIndex = endNode.getIndex();
-			// this.endNodeIndex = startNode.getIndex();
-		}
-		else {
-			this.startNode = startNode;
-			this.endNode = endNode;
-
-			// this.startNodeIndex = startNode.getIndex();
-			// this.endNodeIndex = endNode.getIndex();
-		}
-		this.weight = 5;
-
-		this.setChanged(true);
+		this(startNode, endNode, 5);
 	}
 
 	/**
@@ -108,27 +105,19 @@ implements Serializable, Comparable<Edge> {
 	 * @param weight the weight
 	 */
 	public Edge(Node startNode, Node endNode, int weight) {
-		/**
-		 * if index of startNode is greater than index of endNode, swap Nodes
-		 */
-
+		// if index of startNode is greater than index of endNode, swap Nodes
 		if (startNode.getIndex() > endNode.getIndex()) {
 			this.startNode = endNode;
 			this.endNode = startNode;
-
-			// this.startNodeIndex = endNode.getIndex();
-			// this.endNodeIndex = startNode.getIndex();
 		}
 		else {
 			this.startNode = startNode;
 			this.endNode = endNode;
-
-			// this.startNodeIndex = startNode.getIndex();
-			// this.endNodeIndex = endNode.getIndex();
 		}
 		setWeight(weight);
-
 		this.setChanged(true);
+
+		visual = new EdgeVisual(this);
 	}
 
 	/**
@@ -137,10 +126,9 @@ implements Serializable, Comparable<Edge> {
 	 *         well
 	 */
 	public boolean equals(Edge anotherEdge) {
-		return (this.startNode.getIndex() == anotherEdge.getStartNode()
-		.getIndex() &&
-		// && this.weight == anotherEdge.getWeight()
-		this.endNode.getIndex() == anotherEdge.getEndNode().getIndex());
+		return (startNode.getIndex() == anotherEdge.getStartNode().getIndex() &&
+			// && this.weight == anotherEdge.getWeight()
+			endNode.getIndex() == anotherEdge.getEndNode().getIndex());
 	}
 
 	/*
@@ -249,6 +237,9 @@ implements Serializable, Comparable<Edge> {
 	}
 
 	/**
+	 * Sets the weight of this edge to the given weight. The value is clipped
+	 * automatically to the range 0..99.
+	 * 
 	 * @param newWeight the weight to set
 	 */
 	public void setWeight(int newWeight) {

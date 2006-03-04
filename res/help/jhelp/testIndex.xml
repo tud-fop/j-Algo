@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE index
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/index_1_0.dtd">
+
+<index version="1.0">
+	<!-- main -->
+    <indexitem text="Hauptprogramm">
+    	<indexitem text="Einleitung"		 	  target="main.intro"/>	
+    	<indexitem text="Systemvorraussetzung" 	  target="main.tech.require"/>
+    	<indexitem text="Installation"  		  target="main.tech.install"/>
+    	<indexitem text="Deinstallation" 		  target="main.tech.deinstall"/>
+    	<indexitem text="Neues Modul öffnen" 	  target="main.basic.open"/>
+    	<indexitem text="Sitzungsdaten laden" 	  target="main.basic.load"/>
+    	<indexitem text="Sitzungsdaten speichern" target="main.basic.save"/>
+    	<indexitem text="Modul schließen" 		  target="main.basic.close"/>
+    	<indexitem text="Hilfe" 				  target="main.basic.help"/>
+    </indexitem>
+    
+    <!-- AVL -->
+    <indexitem text="Modul AVL-Bäume" expand="false">
+    	<indexitem text="Einleitung"					 target="avl.intro"/>
+    	<indexitem text="Funktionsübersicht" 			 target="avl.overview"/>
+    	<indexitem text="Baum laden" 					 target="avl.start.load"/>
+    	<indexitem text="Baum manuell erstellen"		 target="avl.start.manually"/>
+    	<indexitem text="Zufallsbaum erstellen" 		 target="avl.start.rand"/>
+    	<indexitem text="Willkommensbildschirm anzeigen" target="avl.start.show"/>
+    	<indexitem text="Schlüsseleingabe" 				 target="avl.fkt.key"/>
+    	<indexitem text="Algorithmusfunktionen"			 target="avl.fkt.algo"/>
+    	<indexitem text="AVL-Modus"						 target="avl.fkt.avl_modus"/>
+    	<indexitem text="AVL-Eigenschaft testen"		 target="avl.fkt.avl_test"/>
+    	<indexitem text="Baum löschen"					 target="avl.fkt.del"/>
+    	<indexitem text="Schritt-Pfeile"				 target="avl.flow.steps"/>
+    	<indexitem text="Abbruch und Beenden"			 target="avl.flow.end"/>
+    	<indexitem text="Animationsgeschwindigkeit"		 target="avl.flow.anim"/>
+    	<indexitem text="Skript"						 target="avl.docu.script"/>
+    	<indexitem text="Logbuch" 						 target="avl.docu.log"/>
+    	<indexitem text="Infobereich"					 target="avl.docu.info"/>
+    	<indexitem text="Navigator"						 target="avl.addons.navigator"/>
+    	<indexitem text="Beamermodus"					 target="avl.addons.beamer"/>
+    </indexitem>
+    
+    
+    <!-- Dijkstra -->
+    <indexitem text="Modul Dijkstra" expand="false">
+    	<indexitem text="Einleitung" 			 target="dijkstra.intro"/>
+    	<indexitem text="Funktionsübersicht"	 target="dijkstra.overview"/>
+		<indexitem text="Modul starten"			 target="dijkstra.start"/>
+		<indexitem text="Symbolleiste"			 target="dijkstra.toolbar"/>
+		<indexitem text="Graph erstellen"		 target="dijkstra.edit"/>
+		<indexitem text="graphische Eingabe"	 target="dijkstra.edit.graph"/>
+		<indexitem text="Knotenliste"			 target="dijkstra.edit.nodelist"/>
+		<indexitem text="Kantenliste"			 target="dijkstra.edit.edgelist"/>
+		<indexitem text="Adjazenmatrix" 		 target="dijkstra.edit.matrix"/>
+		<indexitem text="Ablauf des Algorithmus" target="dijkstra.run"/>
+    </indexitem>
+</index>
+

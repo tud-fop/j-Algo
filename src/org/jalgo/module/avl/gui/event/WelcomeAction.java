@@ -23,13 +23,17 @@
 
 package org.jalgo.module.avl.gui.event;
 
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.resource.ImageDescriptor;
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+
 import org.jalgo.main.gui.DialogConstants;
-import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.datastructure.SearchTree;
 import org.jalgo.module.avl.gui.GUIController;
+
+import org.jalgo.main.gui.JAlgoGUIConnector;
 
 /**
  * The class <code>WelcomeAction</code> defines an <code>Action</code>
@@ -42,7 +46,7 @@ import org.jalgo.module.avl.gui.GUIController;
  * @author Alexander Claus
  */
 public class WelcomeAction
-extends Action {
+extends AbstractAction {
 
 	private GUIController gui;
 	private SearchTree tree;
@@ -57,17 +61,17 @@ extends Action {
 	public WelcomeAction(GUIController gui, SearchTree tree) {
 		this.gui = gui;
 		this.tree = tree;
-		setText(Messages.getString("avl", "Show_welcome_screen")); //$NON-NLS-1$ //$NON-NLS-2$
-		setToolTipText(Messages.getString(
+		putValue(NAME, Messages.getString("avl", "Show_welcome_screen")); //$NON-NLS-1$ //$NON-NLS-2$
+		putValue(SHORT_DESCRIPTION, Messages.getString(
 			"avl", "Show_welcome_screen_tooltip")); //$NON-NLS-1$ //$NON-NLS-2$
-		setImageDescriptor(ImageDescriptor.createFromURL(
+		putValue(SMALL_ICON, new ImageIcon(
 			Messages.getResourceURL("avl", "Module_logo"))); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
 	 * Performs the action.
 	 */
-	public void run() {
+	public void actionPerformed(ActionEvent e) {
 		switch (JAlgoGUIConnector.getInstance().showConfirmDialog(
 			Messages.getString("avl", "Wish_to_discard"), //$NON-NLS-1$ //$NON-NLS-2$
 			DialogConstants.YES_NO_CANCEL_OPTION)) {

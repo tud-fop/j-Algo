@@ -23,11 +23,11 @@
  */
 package org.jalgo.module.dijkstra.model;
 
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 import java.io.Serializable;
-import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.draw2d.geometry.PrecisionPoint;
-import org.eclipse.draw2d.geometry.Rectangle;
 
 /**
  * Defines a data structure which indicates the position of a {@link Node} in a virtual "world coordinate system".
@@ -39,18 +39,9 @@ public class Position implements Serializable {
 
 	private static final long serialVersionUID = 4599666519626602617L;
 
-	/**
-	 * Use preciseX and preciseY fields for double values.
-	 */
-	private PrecisionPoint worldCoordinates = new PrecisionPoint();
-
-	/**
-	 * Basic constructor. Creates a new position using world coordinates.
-	 * @param worldCoordinates range -1 ... +1 inclusive
-	 */
-	public Position(PrecisionPoint worldCoordinates) {
-		this.worldCoordinates = (PrecisionPoint) worldCoordinates.getCopy();
-	}
+	// here no Point2D is used because of the lack of serializability
+	private double worldX;
+	private double worldY;
 
 	/**
 	 * Creates a new position using world coordinates as individual doubles.
@@ -58,7 +49,8 @@ public class Position implements Serializable {
 	 * @param worldY vertical coordinate, range -1 ... +1 inclusive
 	 */
 	public Position(double worldX, double worldY) {
-		this(new PrecisionPoint(worldX, worldY));
+		this.worldX = worldX;
+		this.worldY = worldY;
 	}
 
 	/**
@@ -87,19 +79,19 @@ public class Position implements Serializable {
 	 */
 	public void setScreenCoordinates(Point screenCoordinates, Dimension screenSize) {
 		// Copy screen coordinates as base for calculations.
-		worldCoordinates.setLocation(screenCoordinates);
+		worldX = screenCoordinates.getX();
+		worldY = screenCoordinates.getY();
 
 		// Translate coordinates by the distance of the screen (area) center from the origin,
 		// so we get four quadrants with positive _and_ negative coordinates.
 		double horizontalOffset = screenSize.width / 2.0; // Must be double in case dimensions are odd.
 		double verticalOffset = screenSize.height / 2.0;
-		worldCoordinates.preciseX -= horizontalOffset; // Can't use performTranslate, which uses ints.
-		worldCoordinates.preciseY -= verticalOffset;
+		worldX -= horizontalOffset;
+		worldY -= verticalOffset;
 
 		// Scale screen coordinates to world coordinate system (range -1 ... +1 inclusive).
-		worldCoordinates.preciseX /= horizontalOffset; // Can't use performScale, which is uniform;
-		worldCoordinates.preciseY /= verticalOffset * (-1.0); // Flip vertical coordinates.
-
+		worldX /= horizontalOffset;
+		worldY /= verticalOffset * -1.0; // Flip vertical coordinates.
 	}
 
 	/**
@@ -121,23 +113,25 @@ public class Position implements Serializable {
 		// Copy world coordinates as base for calculations.
 		// Passing worldCoordinates to the constructor of screenCoordinates
 		// would copy only integer values, not preciseX and preciseY!
-		PrecisionPoint screenCoordinates = new PrecisionPoint();
-		screenCoordinates.setLocation(worldCoordinates);
+		Point2D screenCoordinates = new Point2D.Double();
+		screenCoordinates.setLocation(worldX, worldY);
 
 		// Scale world coordinates to screen coordinate system.
 		double horizontalOffset = screenSize.width / 2.0; // Must be doubles in case dimensions are odd.
 		double verticalOffset = screenSize.height / 2.0;
-		screenCoordinates.preciseX *= horizontalOffset; // Can't use performScale, which is uniform.
-		screenCoordinates.preciseY *= verticalOffset * (-1.0); // Flip vertical coordinates.
+		screenCoordinates.setLocation(
+			screenCoordinates.getX() * horizontalOffset,
+			screenCoordinates.getY() * verticalOffset * -1.0); // Flip vertical coordinates.
 
 		// Translate coordinates by the distance of the screen (area) center from the origin,
 		// so we get only positive coordinates.
-		screenCoordinates.preciseX += horizontalOffset; // Can't use performTranslate, which uses ints.
-		screenCoordinates.preciseY += verticalOffset;
+		screenCoordinates.setLocation(
+			screenCoordinates.getX() + horizontalOffset,
+			screenCoordinates.getY() + verticalOffset);
 
 		// Return integer coordinates.
-		screenCoordinates.updateInts();
-		Point integralScreenCoordinates = new Point(screenCoordinates.x, screenCoordinates.y);
+		Point integralScreenCoordinates = new Point(
+			(int)screenCoordinates.getX(), (int)screenCoordinates.getY());
 		return integralScreenCoordinates;
 	}
 
@@ -156,9 +150,9 @@ public class Position implements Serializable {
 	 * Automatically clipped to the range -1 ... +1 inclusive.
 	 * @param worldCoordinates world coordinates as a PrecisionPoint (double)
 	 */
-	public void setWorldCoordinates(PrecisionPoint worldCoordinates) {
-		setWorldX(worldCoordinates.preciseX);
-		setWorldY(worldCoordinates.preciseY);
+	public void setWorldCoordinates(Point2D worldCoordinates) {
+		setWorldX(worldCoordinates.getX());
+		setWorldY(worldCoordinates.getY());
 	}
 
 	/**
@@ -167,12 +161,7 @@ public class Position implements Serializable {
 	 * @param newWorldX world x coordinate as a double
 	 */
 	public void setWorldX(double newWorldX) {
-		if (newWorldX <= -1) {
-			newWorldX = -1;
-		} else if (newWorldX >= 1) {
-			newWorldX = 1;
-		}
-		worldCoordinates.preciseX = newWorldX;
+		worldX = Math.min(1, Math.max(-1, newWorldX));
 	}
 
 	/**
@@ -181,20 +170,7 @@ public class Position implements Serializable {
 	 * @param newWorldY world y coordinate as a double
 	 */
 	public void setWorldY(double newWorldY) {
-		if (newWorldY <= -1) {
-			newWorldY = -1;
-		} else if (newWorldY >= 1) {
-			newWorldY = 1;
-		}
-		worldCoordinates.preciseY = newWorldY;
-	}
-
-	/**
-	 * Returns world coordinates.
-	 * @return world coordinates as a PrecisionPoint (double)
-	 */
-	public PrecisionPoint getWorldCoordinates() {
-		return worldCoordinates;
+		worldY = Math.min(1, Math.max(-1, newWorldY));
 	}
 
 	/**
@@ -202,7 +178,7 @@ public class Position implements Serializable {
 	 * @return world x coordinate as a double
 	 */
 	public double getWorldX() {
-		return worldCoordinates.preciseX;
+		return worldX;
 	}
 
 	/**
@@ -210,7 +186,7 @@ public class Position implements Serializable {
 	 * @return world y coordinate as a double
 	 */
 	public double getWorldY() {
-		return worldCoordinates.preciseY;
+		return worldY;
 	}
 
 	/**

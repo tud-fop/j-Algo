@@ -96,9 +96,9 @@ implements GUIConstants {
 		messagePane.setLayout(new BoxLayout(messagePane, BoxLayout.LINE_AXIS));
 		messageLabel = new JLabel();
 		errorIcon = new ImageIcon(Messages.getResourceURL(
-			"avl", "Msg_error")); //$NON-NLS-1$ //$NON-NLS-2$
+			"main", "Icon.Msg_error")); //$NON-NLS-1$ //$NON-NLS-2$
 		infoIcon = new ImageIcon(Messages.getResourceURL(
-			"avl", "Msg_info")); //$NON-NLS-1$ //$NON-NLS-2$
+			"main", "Icon.Msg_info")); //$NON-NLS-1$ //$NON-NLS-2$
 		messagePane.add(Box.createRigidArea(new Dimension(5,
 			errorIcon.getIconHeight() + 4)));
 		messagePane.add(messageLabel);

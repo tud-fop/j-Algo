@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+	<mapID xml:lang="de"/>
+
+	<!-- main -->
+	<mapID target="main.intro" 		 url="../main/overview.htm"/>
+
+	<mapID target="main.tech" 		 url="../main/overview.htm#technicality"/>
+	<mapID target="main.tech.require" 	 url="../main/overview.htm#requirements"/>
+	<mapID target="main.tech.install"   url="../main/overview.htm#installation"/>
+	<mapID target="main.tech.deinstall" url="../main/overview.htm#deinstallation"/>
+
+	<mapID target="main.basic" 	   	 url="../main/basics.htm"/>
+	<mapID target="main.basic.open" 	 url="../main/basics.htm#open_module"/>
+	<mapID target="main.basic.load"  	 url="../main/basics.htm#load_data"/>
+	<mapID target="main.basic.save" 	 url="../main/basics.htm#save_data"/>
+	<mapID target="main.basic.close"	 url="../main/basics.htm#close_module"/>
+	<mapID target="main.basic.help" 	 url="../main/basics.htm#help"/>
+
+
+	<!-- AVL -->
+	<mapID target="avl" 	    		  url="../modules/avl/overview.htm"/>
+	<mapID target="avl.intro"    		  url="../modules/avl/overview.htm#introduction"/>
+	<mapID target="avl.overview" 		  url="../modules/avl/overview.htm#overview"/>
+
+	<mapID target="avl.start" 		  url="../modules/avl/start.htm"/>
+	<mapID target="avl.start.load" 	  url="../modules/avl/start.htm#load_tree"/>
+	<mapID target="avl.start.manually"   url="../modules/avl/start.htm#manually"/>
+	<mapID target="avl.start.rand" 	  url="../modules/avl/start.htm#randomly"/>
+	<mapID target="avl.start.show" 	  url="../modules/avl/start.htm#show_welcomescreen"/>
+
+	<mapID target="avl.screen" 		  url="../modules/avl/screen.htm"/>
+
+	<mapID target="avl.fkt" 		    	  url="../modules/avl/functions.htm"/>
+	<mapID target="avl.fkt.key" 	    	  url="../modules/avl/functions.htm#insert_key"/>
+	<mapID target="avl.fkt.algo" 	    	  url="../modules/avl/functions.htm#algorithm_functions"/>
+	<mapID target="avl.fkt.avl_modus" 	  url="../modules/avl/functions.htm#avl_modus"/>
+	<mapID target="avl.fkt.avl_test" 	  url="../modules/avl/functions.htm#avl_test"/>
+	<mapID target="avl.fkt.del" 	    	  url="../modules/avl/functions.htm#delete_tree"/>
+
+	<mapID target="avl.flow" 	 	  url="../modules/avl/flowcontrol.htm"/>
+	<mapID target="avl.flow.steps" 	  url="../modules/avl/flowcontrol.htm#step_arrows"/>
+	<mapID target="avl.flow.end" 	 	  url="../modules/avl/flowcontrol.htm#abort_finish"/>
+	<mapID target="avl.flow.anim"  	  url="../modules/avl/flowcontrol.htm#anim_speed"/>
+
+	<mapID target="avl.docu" 	  	  url="../modules/avl/documentation.htm"/>
+	<mapID target="avl.docu.script" 	  url="../modules/avl/documentation.htm#script"/>
+	<mapID target="avl.docu.log"    	  url="../modules/avl/documentation.htm#log"/>
+	<mapID target="avl.docu.info"   	  url="../modules/avl/documentation.htm#info"/>
+
+	<mapID target="avl.addons" 	    	  url="../modules/avl/additionals.htm"/>
+	<mapID target="avl.addons.navigator" url="../modules/avl/additionals.htm#navigator"/>
+	<mapID target="avl.addons.beamer" 	  url="../modules/avl/additionals.htm#beamer"/>
+
+
+	<!-- Dijkstra -->
+	<mapID target="dijkstra"    	    	    url="../modules/dijkstra/overview.htm"/>
+	<mapID target="dijkstra.intro"    	    url="../modules/dijkstra/overview.htm#introduction"/>
+	<mapID target="dijkstra.overview"      url="../modules/dijkstra/overview.htm#overview"/>
+	<mapID target="dijkstra.start"    	    url="../modules/dijkstra/overview.htm#start"/>
+	<mapID target="dijkstra.toolbar"  	    url="../modules/dijkstra/overview.htm#toolbar"/>
+
+	<mapID target="dijkstra.edit"	         url="../modules/dijkstra/edit.htm"/>
+	<mapID target="dijkstra.edit.graph"    url="../modules/dijkstra/edit.htm#graphical"/>
+	<mapID target="dijkstra.edit.nodelist" url="../modules/dijkstra/edit.htm#nodelist"/>
+	<mapID target="dijkstra.edit.edgelist" url="../modules/dijkstra/edit.htm#edgelist"/>
+	<mapID target="dijkstra.edit.matrix"   url="../modules/dijkstra/edit.htm#matrix"/>
+
+	<mapID target="dijkstra.run" 		    url="../modules/dijkstra/run.htm"/>
+
+
+	<!-- images -->
+	<mapID target="helpicon" url="../pics/main/icon_help.gif"/>
+	<mapID target="mainicon" url="../../pix/jalgo.gif"/>
+</map>

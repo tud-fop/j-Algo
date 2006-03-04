@@ -72,10 +72,10 @@ public class Graph implements Serializable, Cloneable {
 	public Edge findEdge(Node from, Node to) {
 		for (int i = 0; i < edgeList.size(); i++) {
 			Edge edge = edgeList.get(i);
-			if (((edge.getStartNode().getIndex() == from.getIndex()) && (edge.getEndNode().getIndex() == to
-					.getIndex()))
-					|| ((edge.getStartNode().getIndex() == to.getIndex()) && (edge.getEndNode().getIndex() == from
-							.getIndex())))
+			if (((edge.getStartNode().getIndex() == from.getIndex()) &&
+					(edge.getEndNode().getIndex() == to.getIndex())) ||
+				((edge.getStartNode().getIndex() == to.getIndex()) &&
+					(edge.getEndNode().getIndex() == from.getIndex())))
 				return edge;
 		}
 		throw new RuntimeException("Graph structure is broken."); //$NON-NLS-1$
@@ -99,6 +99,16 @@ public class Graph implements Serializable, Cloneable {
 
 	}
 
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Graph)) return false;
+		if (obj == null) return false;
+		Graph other = (Graph)obj;
+		return nodeList.equals(other.nodeList) && edgeList.equals(other.edgeList);
+	}
+
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#clone()
 	 * @author Julian Stecklina
@@ -107,7 +117,7 @@ public class Graph implements Serializable, Cloneable {
 		Graph newGraph = new Graph();
 
 		for (int i = 0; i < nodeList.size(); i++)
-			newGraph.addNode((Node) nodeList.get(i).clone());
+			newGraph.addNode(nodeList.get(i).clone());
 
 		for (int i = 0; i < nodeList.size(); i++) {
 			Node n = newGraph.nodeList.get(i);
@@ -119,7 +129,7 @@ public class Graph implements Serializable, Cloneable {
 		}
 
 		for (int i = 0; i < edgeList.size(); i++)
-			newGraph.addEdge((Edge) edgeList.get(i).clone());
+			newGraph.addEdge(edgeList.get(i).clone());
 		for (int i = 0; i < edgeList.size(); i++) {
 			Edge e = newGraph.edgeList.get(i);
 			Node from = e.getStartNode();
@@ -133,9 +143,11 @@ public class Graph implements Serializable, Cloneable {
 		return newGraph;
 	}
 
+
 	public String toString() {
 		return "Graph: NodeList: " + getNodeListText() + "; EdgeList: " + getEdgeListText() + "."; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
+
 
 	/** Return next available index for a new node.
 	 * 
@@ -145,6 +157,7 @@ public class Graph implements Serializable, Cloneable {
 		// Node indices are 1-based.
 		return nodeList.size() + 1;
 	}
+
 
 	/**
 	 * adds a Node to the NodeList if it doesn't exist yet
@@ -161,6 +174,7 @@ public class Graph implements Serializable, Cloneable {
 		Collections.sort(nodeList);
 		return returnValue;
 	}
+
 
 	/**
 	 * adds an Edge to the EdgeList if it doesn't exist yet
@@ -204,6 +218,7 @@ public class Graph implements Serializable, Cloneable {
 		return returnValue;
 	}
 
+
 	/**
 	 * @return the Edge list according to Prof. Vogler's script without leading and trailing braces
 	 */
@@ -219,6 +234,7 @@ public class Graph implements Serializable, Cloneable {
 
 		return returnValue.toString();
 	}
+
 
 	/**
 	 * @return the Node list according to Prof. Vogler's script  without leading and trailing braces
@@ -236,6 +252,7 @@ public class Graph implements Serializable, Cloneable {
 		return returnValue.toString();
 	}
 
+
 	/** Automaticly changes Node Positions and arranges Nodes in a circle with their indexes ascending clockwise.
 	 * 
 	 *  Call after replaceMissingNodes(). 
@@ -246,17 +263,19 @@ public class Graph implements Serializable, Cloneable {
 		/*
 		 * count nodes, calculate new positions, change positions
 		 */
-
 		double nodeAngle, newWorldX, newWorldY, addValue;
 		int numberOfNodes = nodeList.size();
 		Position newPosition;
 
-		addValue = ((numberOfNodes % 2) == 0) ? ((Math.PI / numberOfNodes) + (Math.PI / 2)) : (Math.PI / 2);
+		addValue = ((numberOfNodes % 2) == 0) ?
+			((Math.PI / numberOfNodes) + (Math.PI / 2)) :
+			(Math.PI / 2);
 
 		if (numberOfNodes == 1) {
 			// Put single node in the center.
 			nodeList.get(0).setPosition(new Position(0.0, 0.0));
-		} else {
+		}
+		else {
 			for (int i = 0; i < numberOfNodes; i++) {
 				// Arrange nodes clockwise, starting with node 1 top middle //left.
 				nodeAngle = i * ((-2) * Math.PI) / numberOfNodes + addValue;
@@ -269,6 +288,7 @@ public class Graph implements Serializable, Cloneable {
 
 		return this;
 	}
+
 
 	/**
 	 *   The current implementation of the distance matrix editing composite does not
@@ -326,6 +346,7 @@ public class Graph implements Serializable, Cloneable {
 		}
 	}
 
+
 	/**
 	 * resets the Graph -- Node list and Edge list are cleared
 	 */
@@ -334,17 +355,6 @@ public class Graph implements Serializable, Cloneable {
 		edgeList.clear();
 	}
 
-	public void serialize() {
-
-	}
-
-	public void deserialize() {
-
-	}
-
-	public void assertValid() {
-
-	}
 
 	/**
 	 * @return the Node list
@@ -353,6 +363,7 @@ public class Graph implements Serializable, Cloneable {
 		return nodeList;
 	}
 
+
 	/**
 	 * @return The start node of the graph or null
 	 */
@@ -360,11 +371,12 @@ public class Graph implements Serializable, Cloneable {
 		Iterator iter = getNodeList().iterator();
 		while (iter.hasNext()) {
 			Node node = (Node) iter.next();
-			if (node.getStart())
+			if (node.isStart())
 				return node;
 		}
 		return null;
 	}
+
 
 	/**
 	 * @return the Edge list
@@ -372,6 +384,7 @@ public class Graph implements Serializable, Cloneable {
 	public List<Edge> getEdgeList() {
 		return edgeList;
 	}
+
 
 	/**	removes a Node from the Node list and all adjacent Edges from the Edge list
 	 * @param nodeToDelete the Node to delete
@@ -413,6 +426,7 @@ public class Graph implements Serializable, Cloneable {
 		return false;
 	}
 
+
 	/**
 	 * deletes an Edge from the Edge list. Note: after removing an Edge there might be a Node that is not connected to the Graph any more
 	 * 
@@ -431,18 +445,21 @@ public class Graph implements Serializable, Cloneable {
 		return false;
 	}
 
+
 	/**
 	 * sets changed-flags of all Nodes and all Edges false. call this before adding new Nodes and Edges
 	 */
 	public void setAllChangedFlagsFalse() {
-		for (int i = 0; i < nodeList.size(); i++) {
-			nodeList.get(i).setChanged(false);
+		for (Node node : nodeList) {
+			node.setChanged(false);
+			node.getVisual().update();
 		}
-
-		for (int i = 0; i < edgeList.size(); i++) {
-			edgeList.get(i).setChanged(false);
+		for (Edge edge : edgeList) {
+			edge.setChanged(false);
+			edge.getVisual().update();
 		}
 	}
+
 
 	/**
 	 * Synchronizes this with anotherGraph -- ie. elements that are in anotherGraph
@@ -518,6 +535,5 @@ public class Graph implements Serializable, Cloneable {
 				this.deleteNode(nodesToDelete.get(i));
 			}
 		}
-
-	} // (1,1,3),(3,2,5),(5,3,2),(2,4,4),(4,5,1)
+	} // (1,1,3),(3,2,5),(5,3,2),(2,4,4),(4,5,1)}
 }

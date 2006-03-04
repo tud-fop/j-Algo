@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE AlgorithmDescription [ <!-- SYSTEM "structure.dtd" > !-->
+	<!ELEMENT AlgorithmDescription (Step)*>
+	<!ELEMENT Step (Key,Text)>
+	<!ELEMENT Key (#PCDATA)*>
+	<!ELEMENT Text (Line)*>
+	<!ELEMENT Line (#PCDATA)*>
+]>
+<AlgorithmDescription>
+
+<!-- search algorithm !-->
+<Step>
+         <Key>search1</Key>
+         <Text>
+         <Line> Key search in search tree: </Line>
+         <Line endswith="nl" startswith="nlsp3">
+               a) If the tree is empty, then "The key is not in the tree"</Line>
+		     <Line endswith="nl" startswith="sp3">
+               b) If the search key is equal to the current key, then "Key found"</Line>
+		     <Line endswith="nl" startswith="sp3">
+               c) If the search key is less than the current key,</Line>
+         <Line endswith="nl" startswith="sp9">
+               repeat this step in the left subtree</Line>
+		     <Line endswith="nl" startswith="sp3">
+               d) If the search key is greater than the current key,</Line>
+		     <Line startswith="sp9">
+               repeat this step in the right subtree</Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>search1newline</Key>
+		<Line endswith="nl"/>
+</Step>
+
+<!-- insert algorithm !-->
+<Step>
+         <Key>insert1</Key>
+         <Text>
+         <Line endswith="nl"> 1. Search position for inserting the key k: </Line>
+         <Line endswith="nl" startswith="sp3">
+               a) If the tree is empty, position for inserting found, continue with step 2</Line>
+		     <Line endswith="nl" startswith="sp3">
+               b) If the new key is equal to the current key,</Line>
+         <Line endswith="nl" startswith="sp9">
+               then the key already exists, abort inserting</Line>
+		     <Line endswith="nl" startswith="sp3">
+               c) If the new key is less than the current key,</Line>
+         <Line endswith="nl" startswith="sp9">
+               repeat this step in the left subtree</Line>
+		     <Line endswith="nl" startswith="sp3">
+               d) If the new key is greater than the current key,</Line>
+		     <Line startswith="sp9">
+               repeat this step in the right subtree</Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>insert1newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>insert2</Key>
+         <Text>
+         </Text>
+         <Line>2. Insert node with the new key at the found position</Line>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>insert2newline</Key>
+		<Line endswith="nl"/>
+</Step>
+
+<!-- avl insert !-->
+<Step>
+         <Key>avlinsert1</Key>
+         <Text>
+         <Line> 1. Search position for inserting the key k: </Line>
+         <Line endswith="nl" startswith="nlsp3">
+               a) If the tree is empty, position for inserting found, continue with step 2</Line>
+		     <Line endswith="nl" startswith="sp3">
+               b) If the new key is equal to the current key,</Line>
+         <Line endswith="nl" startswith="sp9">
+               then the key already exists, abort inserting</Line>
+		     <Line endswith="nl" startswith="sp3">
+               c) If the new key is less than the current key,</Line>
+         <Line endswith="nl" startswith="sp9">
+               repeat this step in the left subtree</Line>
+		     <Line endswith="nl" startswith="sp3">
+               d) If the new key is greater than the current key,</Line>
+		     <Line startswith="sp9">
+               repeat this step in the right subtree</Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>avlinsert1newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>avlinsert2</Key>
+         <Text>
+         <Line endswith="nl">
+               2. Insert node n at the found position.</Line>
+         <Line endswith="nl" startswith="sp3">
+               Update balance of n (set to 0).</Line>
+         <Line endswith="nl" startswith="sp3">
+               Set n to the parent of n, if it exists</Line>
+         <Line startswith="sp3">
+               Else "finished". </Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>avlinsert2newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>avlinsert3a</Key>
+         <Text>
+         <Line endswith="nl">
+               3. Update balances at the current node n</Line>
+         <Line endswith="nl" startswith="sp3">
+               a) If the new key was inserted in the left subtree of n: </Line>
+         <Line endswith="nl" startswith="sp6">
+               i) if n-&gt;balance==1, then n-&gt;balance=0, algorithm finished</Line>
+         <Line endswith="nl" startswith="sp6">
+               ii) if n-&gt;balance==0, then n-&gt;balance=-1, repeat this step</Line>
+         <Line endswith="nl" startswith="sp9">
+               with the parent of n. If this not exists, algorithm finished</Line>
+         <Line endswith="nl" startswith="sp6">
+               iii) if n-&gt;balance==-1 and n-&gt;left-&gt;balance==-1, </Line>
+         <Line endswith="nl" startswith="sp9">
+               then rotate right at n. </Line>
+         <Line endswith="nl" startswith="sp6">
+               iv) if n-&gt;balance==-1 and n-&gt;left-&gt;balance==1, </Line>
+         <Line startswith="sp9">
+               then rotate left at n-&gt;left and rotate right at n </Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>avlinsert3anewline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>avlinsert3b</Key>
+         <Text>
+         <Line endswith="nl" startswith="sp3">
+               b) If the new key was inserted in the right subtree of n: </Line>
+         <Line endswith="nl" startswith="sp6">
+               i) if n-&gt;balance==-1, then n-&gt;balance=0, algorithm finished</Line>
+         <Line endswith="nl" startswith="sp6">
+               ii) if n-&gt;balance==0, then n-&gt;balance=1, repeat this step</Line>
+         <Line endswith="nl" startswith="sp9">
+               with the parent of n. If this not exists, algorithm finished</Line>
+         <Line endswith="nl" startswith="sp6">
+               iii) if n-&gt;balance==1 and n-&gt;right-&gt;balance==1, </Line>
+         <Line endswith="nl" startswith="sp9">
+               then rotate left at n. </Line>
+         <Line endswith="nl" startswith="sp6">
+               iv) if n-&gt;balance==1 and n-&gt;right-&gt;balance==-1, </Line>
+         <Line startswith="sp9">
+               then rotate right at n-&gt;right and rotate left at n </Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>avlinsert3bnewline</Key>
+		<Line endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>remove1</Key>
+         <Text>
+         <Line endswith="nl"> 1. Search for the key: </Line>
+         <Line endswith="nl" startswith="sp3">
+               a) If the tree is empty, then algorithm finished (the key not exists)</Line>
+		     <Line endswith="nl" startswith="sp3">
+               b) If the new key is equal to the current key,</Line>
+         <Line endswith="nl" startswith="sp9">
+               then key found, continue with step 2</Line>
+		     <Line endswith="nl" startswith="sp3">
+               c) If the new key is less than the current key,</Line>
+         <Line endswith="nl" startswith="sp9">
+               repeat this step in the left subtree</Line>
+		     <Line endswith="nl" startswith="sp3">
+               d) If the new key is greater than the current key,</Line>
+		     <Line startswith="sp9">
+               repeat this step in the right subtree</Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>remove1newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>remove2</Key>
+         <Text>
+         <Line endswith="nl"> 2. Case differentiation </Line>
+         <Line endswith="nl" startswith="sp3">
+               a) If the node to be deleted is leaf node --&gt; finished </Line>
+         <Line endswith="nl" startswith="sp3">
+               b) If the node to be deleted has no right successor, </Line>
+         <Line endswith="nl" startswith="sp6">
+               then replace node with the left subtree</Line>
+         <Line startswith="sp3">
+               c) else search direct successor (go to step 3)</Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>remove2newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>remove3</Key>
+         <Text>
+         <Line endswith="nl"> 3. Search symmetric order successor </Line>
+         <Line endswith="nl" startswith="sp3">
+               Go once to the right, and then to the left, until </Line>
+         <Line startswith="sp3">
+               no left successor exists. </Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>remove3newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>remove4</Key>
+         <Text>
+         <Line endswith="nl"> 4. Replace the key </Line>
+         <Line endswith="nl" startswith="sp3">
+               Replace the key to be deleted with it's symmetric order successor. </Line>
+         <Line endswith="nl" startswith="sp3">
+               The subtree of this will be moved. </Line>
+         <Line startswith="sp3">
+               Algorithm finished</Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>remove4newline</Key>
+		<Line endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>avlremove1</Key>
+         <Text>
+         <Line endswith="nl"> 1. Search for the key: </Line>
+         <Line endswith="nl" startswith="sp3">
+               a) If the tree is empty, then algorithm finished (the key not exists)</Line>
+		     <Line endswith="nl" startswith="sp3">
+               b) If the new key is equal to the current key,</Line>
+         <Line endswith="nl" startswith="sp9">
+               then key found, continue with step 2</Line>
+		     <Line endswith="nl" startswith="sp3">
+               c) If the new key is less than the current key,</Line>
+         <Line endswith="nl" startswith="sp9">
+               repeat this step in the left subtree</Line>
+		     <Line endswith="nl" startswith="sp3">
+               d) If the new key is greater than the current key,</Line>
+		     <Line startswith="sp9">
+               repeat this step in the right subtree</Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>avlremove1newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>avlremove2</Key>
+         <Text>
+         <Line endswith="nl"> 2. Case differentiation </Line>
+         <Line endswith="nl" startswith="sp3">
+               a) If the node to be deleted is leaf node, go to step 5 with it's parent node. </Line>
+         <Line endswith="nl" startswith="sp3">
+               b) If the node to be deleted has no right successor, </Line>
+         <Line endswith="nl" startswith="sp6">
+               then replace node with the left subtree, go to step 5</Line>
+         <Line startswith="sp3">
+               c) else search direct successor (go to step 3)</Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>avlremove2newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>avlremove3</Key>
+         <Text>
+         <Line endswith="nl"> 3. Search symmetric order successor </Line>
+         <Line endswith="nl" startswith="sp3">
+               Go once to the right, and then to the left, until </Line>
+         <Line startswith="sp3">
+               no left successor exists. </Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>avlremove3newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>avlremove4</Key>
+         <Text>
+         <Line endswith="nl"> 4. Replace the key </Line>
+         <Line endswith="nl" startswith="sp3">
+               Replace the key to be deleted with it's symmetric order successor. </Line>
+         <Line endswith="nl" startswith="sp3">
+               The right subtree of this will be moved, if it exists. </Line>
+         <Line startswith="sp3">
+               Go to step 5 with the parent node of the symmetric order successor. </Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>avlremove4newline</Key>
+		<Line startswith="nl" endswith="nl"/>
+</Step>
+
+<Step>
+         <Key>avlremove5</Key>
+         <Text>
+         <Line endswith="nl"> 5. Balance the tree </Line>
+         <Line endswith="nl" startswith="sp3">
+               Calculate the balance of the current node. If, </Line>
+         <Line endswith="nl" startswith="sp3">
+               a) balance 2 and right balance -1, then right-left-rotation </Line>
+         <Line endswith="nl" startswith="sp3">
+               b) balance 2 and right balance not -1, then left-rotation </Line>
+         <Line endswith="nl" startswith="sp3">
+               c) balance -2 and left balance 1, then left-right-rotation </Line>
+         <Line endswith="nl" startswith="sp3">
+               d) balance -2 and left balance not 1, then right-rotation </Line>
+         <Line endswith="nl" startswith="sp3">
+               e) else no rotation. </Line>
+         <Line startswith="sp3">
+               Repeat this step with the parent of the current node, if it exists. Else algorithm finished </Line>
+         </Text>
+</Step>
+
+<!-- only for layout !-->
+<Step>
+		<Key>avlremove5newline</Key>
+		<Line endswith="nl"/>
+</Step>
+
+</AlgorithmDescription>

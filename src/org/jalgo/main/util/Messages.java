@@ -29,18 +29,23 @@ package org.jalgo.main.util;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+
+import org.jalgo.main.IModuleInfo;
+import org.jalgo.main.JAlgoMain;
 
 /**
  * @author Alexander Claus
  */
 public abstract class Messages {
 
-	private final static HashMap<String,ResourceBundle> RESOURCE_BUNDLES =
+	private final static Map<String,ResourceBundle> RESOURCE_BUNDLES =
 		new HashMap<String,ResourceBundle>();
+
 	static {
-		registerResourceBundle("main", "org.jalgo.main.de");
+		registerResourceBundle("main", "org.jalgo.main");
 	}
 
 	/**
@@ -57,9 +62,11 @@ public abstract class Messages {
 		if (RESOURCE_BUNDLES.containsKey(key) ||
 			RESOURCE_BUNDLES.containsKey(key+"_res"))
 			throw new IllegalArgumentException("Key already assigned: "+key);
-		RESOURCE_BUNDLES.put(key, ResourceBundle.getBundle(bundlePath));
-		RESOURCE_BUNDLES.put(key+"_res", ResourceBundle.getBundle(
-			bundlePath.substring(0, bundlePath.lastIndexOf("."))+".res"));
+
+		RESOURCE_BUNDLES.put(key, ResourceBundle.getBundle(
+			bundlePath + "." + Settings.getString("Language")));
+		RESOURCE_BUNDLES.put(key + "_res", ResourceBundle.getBundle(
+			bundlePath + ".res"));
 	}
 
 	/**
@@ -104,28 +111,61 @@ public abstract class Messages {
 	}
 	
 	/**
-	 * Retrieves an <code>String</code> object, which contains the informations 
-	 * about J-Algo with the right layout.
+	 * Retrieves a <code>String</code> object, which contains the informations 
+	 * about j-Algo with the right layout.
 	 */
-	public static String getJalgoInfo(){
-		final String lineSep = System.getProperty("line.separator");
-		StringBuffer info = new StringBuffer();
-		info.append(Messages.getString("main", "General.name")); //$NON-NLS-1$ //$NON-NLS-2$
-		info.append(" - "); //$NON-NLS-1$
-		info.append(Messages.getString("main", "General.version")); //$NON-NLS-1$ //$NON-NLS-2$
-		info.append(lineSep).append(lineSep);
-		info.append(Messages.getString("main", "About.Copyright")); //$NON-NLS-1$ //$NON-NLS-2$
-		info.append(lineSep);
-		info.append(Messages.getString("main", "About.URL")); //$NON-NLS-1$ //$NON-NLS-2$
-		info.append(lineSep).append(lineSep);
-		info.append(Messages.getString("main", "About.Authors")); //$NON-NLS-1$ //$NON-NLS-2$
-		info.append(lineSep);
-		info.append(Messages.getString("main", "About.Author_Names")); //$NON-N //$NON-NLS-2$LS-1$
-		info.append(lineSep).append(lineSep);
-		info.append(Messages.getString("main", "About.License")); //$NON-NLS-1$ //$NON-NLS-2$
-		info.append(lineSep);
-		info.append(Messages.getString("main", "About.GPL")); //$NON-NLS-1$ //$NON-NLS-2$
-		
-		return info.toString();
+	public static String getJAlgoInfoAsHTML(){
+		StringBuffer content = new StringBuffer();
+		content.append("<html><b>"); ////$NON-NLS-1$
+		content.append(Messages.getString("main", "General.name")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(" - "); //$NON-NLS-1$
+		content.append(Messages.getString("main", "General.version")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append("</b><p><p>"); //$NON-NLS-1$
+		content.append(Messages.getString("main", "About.Copyright")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append("<p>"); //$NON-NLS-1$
+		content.append(Messages.getString("main", "About.URL")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append("<p><p><b>"); //$NON-NLS-1$
+		content.append(Messages.getString("main", "About.Authors")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append("</b><p>"); //$NON-NLS-1$
+		content.append(Messages.getString("main", "About.Author_Names")); //$NON-N //$NON-NLS-2$LS-1$
+		content.append("<p><p><b>"); //$NON-NLS-1$
+		content.append(Messages.getString("main", "About.License")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append("</b><p>"); //$NON-NLS-1$
+		content.append(Messages.getString("main", "About.GPL")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append("</html>"); //$NON-NLS-1$
+		return content.toString();
+	}
+
+	/**
+	 * Retrieves a <code>String</code> object, which contains the informations
+	 * about the module with the specified index with the right layout.<br>
+	 * For informations about the currently opened module, the parameter has to
+	 * be <code>-1</code>.
+	 * 
+	 * @param index the index of the module or -1 for the current module
+	 */
+	public static String getModuleInfoAsHTML(int index) {
+		IModuleInfo module;
+		if (index < 0)
+			module = JAlgoMain.getInstance().getCurrentInstance().getModuleInfo();
+		else module = JAlgoMain.getInstance().getKnownModuleInfos().get(index);
+
+		StringBuffer content = new StringBuffer();
+		content.append("<html><b>"); //$NON-NLS-1$
+		content.append(module.getName());
+		content.append(Messages.getString("main", "AboutModule.Version")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(" ").append(module.getVersion());
+		content.append("</b><p>").append("<p>"); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(module.getDescription());
+		content.append("<p><p><b>"); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(Messages.getString("main", "About.Authors")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append("</b><p>"); //$NON-NLS-1$
+		content.append(module.getAuthor());
+		content.append("<p><p><b>"); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append(Messages.getString("main", "About.License")); //$NON-NLS-1$ //$NON-NLS-2$
+		content.append("</b><p>"); //$NON-NLS-1$
+		content.append(module.getLicense());
+		content.append("</html>"); //$NON-NLS-1$
+		return content.toString();
 	}
 }

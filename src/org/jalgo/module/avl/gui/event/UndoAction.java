@@ -24,6 +24,9 @@
 /* Created on 10.05.2005 */
 package org.jalgo.module.avl.gui.event;
 
+import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+
 import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
@@ -38,7 +41,7 @@ import org.jalgo.module.avl.gui.GUIController;
  * @author Alexander Claus
  */
 public class UndoAction
-extends SwingSWTAction {
+extends AbstractAction {
 
 	private GUIController gui;
 	private Controller controller;
@@ -53,15 +56,16 @@ extends SwingSWTAction {
 	public UndoAction(GUIController gui, Controller controller) {
 		this.gui = gui;
 		this.controller = controller;
-		setText(Messages.getString("avl", "Undo")); //$NON-NLS-1$ //$NON-NLS-2$
-		setToolTipText(Messages.getString("avl", "Undo_tooltip")); //$NON-NLS-1$ //$NON-NLS-2$
-		setIconImage(Messages.getResourceURL("avl", "Undo")); //$NON-NLS-1$ //$NON-NLS-2$
+		putValue(NAME, Messages.getString("avl", "Undo")); //$NON-NLS-1$ //$NON-NLS-2$
+		putValue(SHORT_DESCRIPTION, Messages.getString("avl", "Undo_tooltip")); //$NON-NLS-1$ //$NON-NLS-2$
+		putValue(SMALL_ICON,
+			new ImageIcon(Messages.getResourceURL("main", "Icon.Undo_step"))); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
 	 * Performs the action.
 	 */
-	public void run() {
+	public void actionPerformed(java.awt.event.ActionEvent e) {
 		// for explanation of the following step, see DocuPane.update()
 		gui.setStepDirection(false);
 		// first undo after completion of algorithm

@@ -31,7 +31,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import org.jalgo.main.AbstractModuleConnector;
+import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.module.dijkstra.gui.Controller;
+
 
 /**
  * @see AbstractModuleConnector
@@ -45,6 +47,7 @@ extends AbstractModuleConnector {
 
 	public void init() {
 		// initialization is taken here in run()
+		JAlgoGUIConnector.getInstance().getModuleMenu(this).setEnabled(false);
 	}
 
 	/*

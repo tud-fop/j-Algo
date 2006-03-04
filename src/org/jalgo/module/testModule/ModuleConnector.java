@@ -20,58 +20,68 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
-/*
- * Created on Aug 15, 2004
- */
 package org.jalgo.module.testModule;
 
+import java.awt.BorderLayout;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-import org.jalgo.main.AbstractModuleConnector;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 
-/**
- * @author Michael Pradel
- */
+import org.jalgo.main.AbstractModuleConnector;
+import org.jalgo.main.gui.JAlgoGUIConnector;
+import org.jalgo.main.gui.components.JToolbarButton;
+import org.jalgo.main.util.Messages;
+
+
 public class ModuleConnector
 extends AbstractModuleConnector {
 
+	@Override
 	public void init() {
-		// no GUI initialization here in test module
-	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.AbstractModuleConnector#run()
-	 */
-	public void run() {
-		System.err.println("testModule is running");
+		JComponent contentPane =
+			JAlgoGUIConnector.getInstance().getModuleComponent(this);
+		JLabel helloJAlgo = new JLabel(
+			"Hello j-Algo!",
+			new ImageIcon(Messages.getResourceURL("main", "ui.Logo")),
+			SwingConstants.CENTER);
+		contentPane.add(helloJAlgo, BorderLayout.CENTER);
+
+		JMenu menu = JAlgoGUIConnector.getInstance().getModuleMenu(this);
+		JMenuItem item = new JMenuItem("a menu item");
+		menu.add(item);
+
+		JToolBar toolbar =
+			JAlgoGUIConnector.getInstance().getModuleToolbar(this);
+		JToolbarButton button = new JToolbarButton(
+			new ImageIcon(Messages.getResourceURL("main", "ui.Logo_small")),
+			"a tooltip",
+			"");
+		toolbar.add(button);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.AbstractModuleConnector#setDataFromFile(java.io.ByteArrayInputStream)
-	 */
+	@Override
+	public void run() {
+		System.out.println("testModule is running");
+	}
+
+	@Override
 	public void setDataFromFile(ByteArrayInputStream data) {
 	// here is no action performed in test module
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.AbstractModuleConnector#getDataForFile()
-	 */
+	@Override
 	public ByteArrayOutputStream getDataForFile() {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jalgo.main.AbstractModuleConnector#print()
-	 */
+	@Override
 	public void print() {
 	// here is no action performed in test module
 	}

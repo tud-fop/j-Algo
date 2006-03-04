@@ -31,26 +31,25 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Panel;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.UIManager;
 
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.awt.SWT_AWT;
-import org.eclipse.swt.widgets.Composite;
 import org.jalgo.main.AbstractModuleConnector.SaveStatus;
 import org.jalgo.main.gui.JAlgoGUIConnector;
+import org.jalgo.main.gui.components.JToolbarButton;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
 import org.jalgo.module.avl.ModuleConnector;
@@ -68,7 +67,6 @@ import org.jalgo.module.avl.gui.event.ClearTreeAction;
 import org.jalgo.module.avl.gui.event.FinishAction;
 import org.jalgo.module.avl.gui.event.PerformAction;
 import org.jalgo.module.avl.gui.event.PerformBlockStepAction;
-import org.jalgo.module.avl.gui.event.SwingSWTAction;
 import org.jalgo.module.avl.gui.event.ToggleDisplayModeAction;
 import org.jalgo.module.avl.gui.event.UndoAction;
 import org.jalgo.module.avl.gui.event.UndoBlockStepAction;
@@ -95,12 +93,12 @@ implements GUIConstants {
 	// components (based on SWT)
 	private WelcomeAction welcomeAction;
 	private ClearTreeAction clearTreeAction;
-	private SwingSWTAction abortAction;
-	private SwingSWTAction undoBlockStepAction;
-	private SwingSWTAction undoAction;
-	private SwingSWTAction performAction;
-	private SwingSWTAction performBlockStepAction;
-	private SwingSWTAction finishAction;
+	private AbstractAction abortAction;
+	private AbstractAction undoBlockStepAction;
+	private AbstractAction undoAction;
+	private AbstractAction performAction;
+	private AbstractAction performBlockStepAction;
+	private AbstractAction finishAction;
 
 	// components (based on Swing)
 	private Frame swt_awt_bridge;
@@ -146,28 +144,12 @@ implements GUIConstants {
 		this.controller = controller;
 		this.tree = st;
 
-		// install the main panel on swing base
-		Composite locationComp = new Composite(
-			JAlgoGUIConnector.getInstance().getModuleComponent(connector),
-			SWT.EMBEDDED);
-		swt_awt_bridge = SWT_AWT.new_Frame(locationComp);
-
+		// install the main panel
+		JComponent rootPane =
+			JAlgoGUIConnector.getInstance().getModuleComponent(connector);
+		rootPane.setLayout(new BorderLayout());
 		contentPane = new JPanel();
-		// here an awt panel is added to the bridge, because of the following
-		// bug: if you add a lightweight component (such as JPanel) to the
-		// bridge, mouse events are not received. so the cursor doesn't change
-		// correctly
-		Panel root = new Panel(new BorderLayout());
-		root.add(contentPane, BorderLayout.CENTER);
-		swt_awt_bridge.add(root);
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}
-		catch (Exception ex) {
-			JAlgoGUIConnector.getInstance().showErrorMessage(
-				Messages.getString("avl", "GUIController.LAF_error") + //$NON-NLS-1$ //$NON-NLS-2$
-				lineSep + ex.getMessage());
-		}
+		rootPane.add(contentPane, BorderLayout.CENTER);
 
 		// initialization of the following components is called before
 		// installToolbar() because of needed references
@@ -235,49 +217,46 @@ implements GUIConstants {
 	 * Sets up the toolbar.
 	 */
 	private void installToolbar() {
-		SubToolBarManager toolBarManager =
+		JToolBar toolBar =
 			JAlgoGUIConnector.getInstance().getModuleToolbar(connector);
 		welcomeAction = new WelcomeAction(this, tree);
-		toolBarManager.add(welcomeAction);
+		toolBar.add(createToolbarButton(welcomeAction));
 		clearTreeAction = new ClearTreeAction(this, tree);
-		toolBarManager.add(clearTreeAction);
-		toolBarManager.add(new Separator());
+		toolBar.add(createToolbarButton(clearTreeAction));
+		toolBar.addSeparator();
 		abortAction = new AbortAction(this, controller);
-		toolBarManager.add(abortAction);
+		toolBar.add(createToolbarButton(abortAction));
 		undoBlockStepAction = new UndoBlockStepAction(this, controller);
-		toolBarManager.add(undoBlockStepAction);
+		toolBar.add(createToolbarButton(undoBlockStepAction));
 		undoAction = new UndoAction(this, controller);
-		toolBarManager.add(undoAction);
+		toolBar.add(createToolbarButton(undoAction));
 		performAction = new PerformAction(this, controller);
-		toolBarManager.add(performAction);
+		toolBar.add(createToolbarButton(performAction));
 		performBlockStepAction = new PerformBlockStepAction(this, controller);
-		toolBarManager.add(performBlockStepAction);
+		toolBar.add(createToolbarButton(performBlockStepAction));
 		finishAction = new FinishAction(this, controller);
-		toolBarManager.add(finishAction);
+		toolBar.add(createToolbarButton(finishAction));
 	}
 
 	/**
 	 * Sets up the menu.
 	 */
 	private void installMenu() {
-		MenuManager subMenu = new MenuManager(Messages.getString(
-			"avl", "Module_name")); //$NON-NLS-1$ //$NON-NLS-2$
-		subMenu.add(welcomeAction);
-		subMenu.add(clearTreeAction);
-		subMenu.add(new Separator());
-		subMenu.add(abortAction);
-		subMenu.add(undoBlockStepAction);
-		subMenu.add(undoAction);
-		subMenu.add(performAction);
-		subMenu.add(performBlockStepAction);
-		subMenu.add(finishAction);
-		subMenu.add(new Separator());
-		subMenu.add(ToggleDisplayModeAction.getInstance());
+		JMenu menu = JAlgoGUIConnector.getInstance().getModuleMenu(connector);
+		menu.add(welcomeAction);
+		menu.add(clearTreeAction);
+		menu.addSeparator();
+		menu.add(abortAction);
+		menu.add(undoBlockStepAction);
+		menu.add(undoAction);
+		menu.add(performAction);
+		menu.add(performBlockStepAction);
+		menu.add(finishAction);
+		menu.addSeparator();
+		menu.add(ToggleDisplayModeAction.getInstance());
 		ToggleDisplayModeAction.registerTarget(paintArea);
 		ToggleDisplayModeAction.registerTarget(logPane);
 		ToggleDisplayModeAction.registerTarget(docuPane);
-		JAlgoGUIConnector.getInstance().getModuleMenu(connector).insertBefore(
-			"help", subMenu); //$NON-NLS-1$
 	}
 
 	/**
@@ -682,13 +661,28 @@ implements GUIConstants {
 	 */
 	public JButton[] getFlowControlButtons() {
 		JButton[] buttons = new JButton[6];
-		buttons[0] = abortAction.createToolbarButton();
-		buttons[1] = undoBlockStepAction.createToolbarButton();
-		buttons[2] = undoAction.createToolbarButton();
-		buttons[3] = performAction.createToolbarButton();
-		buttons[4] = performBlockStepAction.createToolbarButton();
-		buttons[5] = finishAction.createToolbarButton();
+		buttons[0] = createToolbarButton(abortAction);
+		buttons[1] = createToolbarButton(undoBlockStepAction);
+		buttons[2] = createToolbarButton(undoAction);
+		buttons[3] = createToolbarButton(performAction);
+		buttons[4] = createToolbarButton(performBlockStepAction);
+		buttons[5] = createToolbarButton(finishAction);
 		return buttons;
+	}
+
+	/**
+	 * Creates a <code>JButton</code> object without border and text, which
+	 * can be used in <code>JToolBar</code>s
+	 * 
+	 * @return a <code>JButton</code> instance with the given <code>Action</code>
+	 */
+	public JButton createToolbarButton(Action a) {
+		JToolbarButton button = new JToolbarButton(
+			(Icon)a.getValue(Action.SMALL_ICON),
+			null, null);
+		button.setAction(a);
+		button.setText("");
+		return button;
 	}
 
 	/**

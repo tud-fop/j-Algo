@@ -24,6 +24,11 @@
 /* Created on 10.05.2005 */
 package org.jalgo.module.avl.gui.event;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+
 import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.avl.Controller;
@@ -38,7 +43,7 @@ import org.jalgo.module.avl.gui.GUIController;
  * @author Alexander Claus
  */
 public class FinishAction
-extends SwingSWTAction {
+extends AbstractAction {
 
 	private GUIController gui;
 	private Controller controller;
@@ -54,15 +59,16 @@ extends SwingSWTAction {
 	public FinishAction(GUIController gui, Controller controller) {
 		this.gui = gui;
 		this.controller = controller;
-		setText(Messages.getString("avl", "Finish_algorithm")); //$NON-NLS-1$ //$NON-NLS-2$
-		setToolTipText(Messages.getString("avl", "Finish_algorithm_tooltip")); //$NON-NLS-1$ //$NON-NLS-2$
-		setIconImage(Messages.getResourceURL("avl", "Finish")); //$NON-NLS-1$ //$NON-NLS-2$
+		putValue(NAME, Messages.getString("avl", "Finish_algorithm")); //$NON-NLS-1$ //$NON-NLS-2$
+		putValue(SHORT_DESCRIPTION, Messages.getString("avl", "Finish_algorithm_tooltip")); //$NON-NLS-1$ //$NON-NLS-2$
+		putValue(SMALL_ICON, new ImageIcon(Messages.getResourceURL(
+			"main", "Icon.Finish_algorithm"))); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
 	 * Performs the action.
 	 */
-	public void run() {
+	public void actionPerformed(ActionEvent e) {
 		try {
 			controller.finish();
 		}

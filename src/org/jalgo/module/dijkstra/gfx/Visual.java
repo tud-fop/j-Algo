@@ -1,20 +1,24 @@
-/* j-Algo - j-Algo is an algorithm visualization tool, especially useful for students and lecturers of computer sience. It is written in Java and platform independant. j-Algo is developed with the help of Dresden University of Technology.
- *
+/*
+ * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
+ * Technology.
+ * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 /*
@@ -23,309 +27,119 @@
 
 package org.jalgo.module.dijkstra.gfx;
 
-import org.jalgo.module.dijkstra.gfx.GraphParent;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.io.Serializable;
+
 import org.jalgo.module.dijkstra.gui.Controller;
+import org.jalgo.module.dijkstra.model.GraphElement;
 
 /**
- * Semi-abstract class that serves as a foundation for visual representation objects.
- * It mainly provides flags that indicate state. Visuals are wrapper objects which contain 
- * other actual drawing elements that are displayed on a {@link GraphParent}.
- * <br><br>The flags are interpreted by the update() method, which is implemented differently 
- * by each visual subclass and changes the appearance of the drawing elements.
- * Most flags are not exclusive but can be interpreted in a hierarchic manner.
- * For example, the ACTIVE flag overrides all other flags, CHANGED has second priority, 
- * and so on. In addition, some flags have different meanings depending on the mode
- * (editing or algorithm) or may have no meaning at all in one of the modes.
+ * Semi-abstract class that serves as a foundation for visual representation
+ * objects. Visuals are wrapper objects which contain other actual drawing
+ * elements that are displayed.<br>
+ * <br>
+ * The flags of the underlying model element are interpreted by the update()
+ * method, which is implemented differently by each visual subclass and changes
+ * the appearance of the drawing elements. Most flags are not exclusive but can
+ * be interpreted in a hierarchic manner. For example, the ACTIVE flag overrides
+ * all other flags, CHANGED has second priority, and so on. In addition, some
+ * flags have different meanings depending on the mode (editing or algorithm) or
+ * may have no meaning at all in one of the modes.
+ * 
  * @author Martin Winter
  */
+public abstract class Visual
+implements Serializable {
 
-public abstract class Visual {
+	/** A custom red color (#CC0000). */
+	public static Color RED = new Color(204, 0, 0);
 
-	protected GraphParent parent; // Needed for mouse dragging and for access to the controller.
+	/** A custom orange color (#CC9900). */
+	public static Color ORANGE = new Color(204, 153, 0);
 
-	/**
-	 * Default state.
-	 * Used in editing and algorithm mode.
-	 */
-	public static final int NONE = 0;
+	/** A custom green color (#009900). */
+	public static Color GREEN = new Color(0, 153, 0);
 
-	/**
-	 * The element has the immediate focus.
-	 * Used in editing and algorithm mode.
-	 */
-	public static final int ACTIVE = 1;
+	/** A custom blue color (#000099). */
+	public static Color BLUE = new Color(0, 0, 153);
 
-	/**
-	 * The element is in the border set.
-	 * Used in algorithm mode only.
-	 */
-	public static final int BORDER = 2;
+	/** A custom white color (#FFFFFF). */
+	public static Color WHITE = new Color(255, 255, 255);
 
-	/**
-	 * The element has just been changed.
-	 * Used in editing mode only.
-	 */
-	public static final int CHANGED = 4;
+	/** A custom gray color (#999999). */
+	public static Color GRAY = new Color(153, 153, 153);
+
+	/** A custom black color (#000000). */
+	public static Color BLACK = new Color(0, 0, 0);
+
+	private int controllerMode;
 
 	/**
-	 * The element is in the chosen set.
-	 * Used in algorithm mode only.
-	 */
-	public static final int CHOSEN = 8;
-
-	/**
-	 * The element is an edge in conflict with another edge.
-	 * Used in algorithm mode only.
-	 */
-	public static final int CONFLICT = 16;
-
-	/**
-	 * The element has been touched by the mouse cursor.
-	 * Used in editing mode only.
-	 */
-	public static final int HIGHLIGHTED = 32;
-
-	/**
-	 * The element is the start node.
-	 * Used in algorithm mode only.
-	 */
-	public static final int START = 64;
-
-	/**
-	 * Boolean flags corresponding to the integer flags above.
-	 */
-	private boolean isActive;
-
-	private boolean isBorder;
-
-	private boolean isChanged;
-
-	private boolean isChosen;
-
-	private boolean isConflict;
-
-	private boolean isHighlighted;
-
-	private boolean isStart;
-
-	/**
-	 * Creates a new visual and sets the graph parent.
-	 * @param parent the graph parent that the drawing elements should appear on
-	 */
-	public Visual(GraphParent parent) {
-		setParent(parent);
-	}
-
-	/**
-	 * Adds the actual drawing elements to the graph parent.
-	 * @param parent the graph parent that the drawing elements should appear on
-	 */
-	public abstract void addToParent(GraphParent parent);
-
-	/**
-	 * Sets the graph parent.
-	 * @param parent the graph parent that the drawing elements should appear on
-	 */
-	public void setParent(GraphParent parent) {
-		this.parent = parent;
-	}
-
-	/**
-	 * Returns the graph parent.
-	 * @return the graph parent that the drawing elements appear on
-	 */
-	public GraphParent getParent() {
-		return parent;
-	}
-
-	/**
-	 * Returns the controller of the graph parent.
-	 * @return the controller of the graph parent or <code>null</code> if parent is <code>null</code>
-	 */
-	public Controller getController() {
-		if (parent != null) {
-			return parent.getController();
-		}
-		return null;
-	}
-
-	/**
-	 * Returns the mode of the graph parent's controller.
-	 * @return the mode of the graph parent's controller or -1 if parent or controller are <code>null</code>
+	 * Returns the mode of the controller.
+	 * 
+	 * @return the mode of the controller or -1 controller is <code>null</code>
 	 */
 	public int getControllerMode() {
-		if ((parent != null) && (parent.getController() != null)) {
-			return parent.getController().getEditingMode();
-		}
-		return -1;
+		return controllerMode;
+	}
+
+	public void setControllerMode(int controllerMode) {
+		this.controllerMode = controllerMode;
 	}
 
 	/**
-	 * Returns <code>true</code> if the graph parent's controller is in editing mode.
-	 * @return <code>true</code> if the graph parent's controller is in editing mode or if parent is <code>null</code>
+	 * Returns <code>true</code> if the controller is in editing mode.
+	 * 
+	 * @return <code>true</code> if the controller is in editing mode
 	 */
 	public boolean isInEditingMode() {
-		if (parent != null) {
-			return (getControllerMode() != Controller.MODE_ALGORITHM);
-		}
-		return true;
-	}
-
-	/* Flag accessors. */
-
-	/**
-	 * Sets flags from a single integer value.
-	 * It sets the boolean flags by using logical AND on <code>flags</code>.
-	 */
-	public void setFlags(int flags) {
-		isActive = ((flags & ACTIVE) > 0);
-		isBorder = ((flags & BORDER) > 0);
-		isChanged = ((flags & CHANGED) > 0);
-		isChosen = ((flags & CHOSEN) > 0);
-		isConflict = ((flags & CONFLICT) > 0);
-		isHighlighted = ((flags & HIGHLIGHTED) > 0);
-		isStart = ((flags & START) > 0);
+		return (getControllerMode() != Controller.MODE_ALGORITHM);
 	}
 
 	/**
-	 * Gets flags as a single integer value.
-	 * It does so by combining the boolean flags with a logical OR.
-	 * @return flags as a single integer value
-	 */
-	public int getFlags() {
-		int flags = NONE;
-		if (isActive)
-			flags |= ACTIVE;
-		if (isBorder)
-			flags |= BORDER;
-		if (isChanged)
-			flags |= CHANGED;
-		if (isChosen)
-			flags |= CHOSEN;
-		if (isConflict)
-			flags |= CONFLICT;
-		if (isHighlighted)
-			flags |= HIGHLIGHTED;
-		if (isStart)
-			flags |= START;
-		return flags;
-	}
-
-	/**
-	 * Sets the active flag.
-	 * @param isActive the active flag as a boolean
-	 */
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	/**
-	 * Gets the active flag.
-	 * @return the active flag as a boolean
-	 */
-	public boolean isActive() {
-		return isActive;
-	}
-
-	/**
-	 * Sets the border flag.
-	 * @param isBorder
-	 */
-	public void setBorder(boolean isBorder) {
-		this.isBorder = isBorder;
-	}
-
-	/**
-	 * Gets the border flag.
-	 * @return the border flag as a boolean
-	 */
-	public boolean isBorder() {
-		return isBorder;
-	}
-
-	/**
-	 * Sets the changed flag.
-	 * @param isChanged
-	 */
-	public void setChanged(boolean isChanged) {
-		this.isChanged = isChanged;
-	}
-
-	/**
-	 * Gets the changed flag.
-	 * @return the changed flag as a boolean
-	 */
-	public boolean isChanged() {
-		return isChanged;
-	}
-
-	/**
-	 * Sets the chosen flag.
-	 * @param isChosen
-	 */
-	public void setChosen(boolean isChosen) {
-		this.isChosen = isChosen;
-	}
-
-	/**
-	 * Gets the chosen flag.
-	 * @return the chosen flag as a boolean
-	 */
-	public boolean isChosen() {
-		return isChosen;
-	}
-
-	/**
-	 * Sets the conflict flag.
-	 * @param isConflict
-	 */
-	public void setConflict(boolean isConflict) {
-		this.isConflict = isConflict;
-	}
-
-	/**
-	 * Gets the conflict flag.
-	 * @return the conflict flag as a boolean
-	 */
-	public boolean isConflict() {
-		return isConflict;
-	}
-
-	/**
-	 * Sets the highlighted flag.
-	 * @param isHighlighted
-	 */
-	public void setHighlighted(boolean isHighlighted) {
-		this.isHighlighted = isHighlighted;
-	}
-
-	/**
-	 * Gets the highlighted flag.
-	 * @return the highlighted flag as a boolean
-	 */
-	public boolean isHighlighted() {
-		return isHighlighted;
-	}
-
-	/**
-	 * Sets the start flag.
-	 * @param isStart
-	 */
-	public void setStart(boolean isStart) {
-		this.isStart = isStart;
-	}
-
-	/**
-	 * Gets the start flag.
-	 * @return the start flag as a boolean
-	 */
-	public boolean isStart() {
-		return isStart;
-	}
-
-	/**
-	 * Update appearance according to flags.
-	 * Call this method after modifying any flags.
+	 * Update appearance according to flags. Call this method after modifying
+	 * any flags.
 	 */
 	public abstract void update();
+
+	/**
+	 * Determines, if the given point on screen hits the current visual. For
+	 * additional information to determine the current scale, the screenSize is
+	 * given.
+	 * 
+	 * @param screenSize the current size of the display component
+	 * @param p the point to be tested
+	 * @return <code>true</code>, if <code>p</code> hits this visual,
+	 *         <code>false</code> otherwise
+	 */
+	public abstract boolean hit(Dimension screenSize, Point p);
+
+	/**
+	 * This method is called, when graph is repainted. Every visual component
+	 * has to implement this method to determine how to draw itself.
+	 * 
+	 * @param g the <code>Graphics2D</code> context to draw on it
+	 * @param screensize the size of the <code>GraphDisplay</code> component
+	 */
+	public abstract void draw(Graphics2D g, Dimension screensize);
+
+	/**
+	 * Updates the reference to the backing model element. Without use of this,
+	 * sometimes there occur strange things... (Reason: the graph is cloned all
+	 * the way.)
+	 * 
+	 * @param modelElement the model element to synchronize
+	 */
+	public abstract void updateModel(GraphElement modelElement);
+
+	/**
+	 * Updates the location of this visual component regarding to the given size
+	 * of the display component.
+	 * 
+	 * @param screenSize the size of the display component
+	 */
+	public abstract void updateLocation(Dimension screenSize);
 }

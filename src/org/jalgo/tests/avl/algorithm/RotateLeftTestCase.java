@@ -92,9 +92,7 @@ public class RotateLeftTestCase extends TestCase {
 		rotate.perform();
 		
 		assertTrue("worknode falsch", wn.getNextToMe()==tree.getRoot());
-		assertTrue("fehler beim rückgängig machen", tree.equals(new SearchTree(n)));
+		assertTrue("fehler beim rï¿½ckgï¿½ngig machen", tree.equals(new SearchTree(n)));
 	}	
-	protected void tearDown() throws Exception {
-	}
 
 }

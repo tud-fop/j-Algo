@@ -29,14 +29,11 @@ package org.jalgo.module.dijkstra.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.swt.graphics.Color;
 import org.jalgo.main.util.Messages;
-import org.jalgo.module.dijkstra.gui.ColorFactory;
 
 /**
  * @author Julian Stecklina
  */
-
 public class DijkstraAlgorithm {
 
 	/**
@@ -44,7 +41,6 @@ public class DijkstraAlgorithm {
 	 * care should be taken not to present this value to the user.
 	 */
 	private static final int INFINITY = -1;
-	private ColorFactory colorFactory;
 	private Graph graph;
 	private Node startNode;
 	private State currentState;
@@ -56,14 +52,9 @@ public class DijkstraAlgorithm {
 	 */
 	public static final int INVALID = -1;
 
-	private Color color(int r, int g, int b) {
-		return colorFactory.makeColor(r, g, b);
-	}
-
 	private void addNodeReference(State state, Node node) {
 		state.addStyledDescription(Messages.getString(
-			"dijkstra", "DijkstraAlgorithm.Node") + node.getIndex(), //$NON-NLS-1$ //$NON-NLS-2$
-			colorFactory.makeColor(200, 10, 10), null);
+			"dijkstra", "DijkstraAlgorithm.Node") + node.getIndex()); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private interface NodeClosure {
@@ -198,7 +189,7 @@ public class DijkstraAlgorithm {
 			}
 			else continue;
 
-			if (other.getChosen() == false) {
+			if (other.isChosen() == false) {
 				if (other.getDistance() == INFINITY) {
 					// do nothing
 				}
@@ -286,7 +277,7 @@ public class DijkstraAlgorithm {
 			borderEdges.add(edge);
 		}
 
-		borderStates.add(new BorderState((Node)chosen.clone(),
+		borderStates.add(new BorderState(chosen.clone(),
 			deepClone(borderEdges), (Graph)graph.clone()));
 	}
 
@@ -398,14 +389,11 @@ public class DijkstraAlgorithm {
 	 * the shortest paths in the given graph.
 	 * 
 	 * @param graph The graph we want our algorithm to operate on.
-	 * @param fact The Algorithm needs a ColorFactory in order to create Color
-	 *            objects without a device.
 	 */
-	public DijkstraAlgorithm(ColorFactory fact, Graph graph) {
+	public DijkstraAlgorithm(Graph graph) {
 		// Do we want to copy this graph?
 		this.graph = graph;
 		this.stateList = new ArrayList<State>();
-		this.colorFactory = fact;
 	}
 
 	/**

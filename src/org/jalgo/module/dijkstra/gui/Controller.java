@@ -29,6 +29,8 @@
  */
 package org.jalgo.module.dijkstra.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,39 +39,35 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.eclipse.jface.action.SubToolBarManager;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
+import javax.swing.Timer;
+
 import org.jalgo.main.InternalErrorException;
 import org.jalgo.main.AbstractModuleConnector.SaveStatus;
-import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.module.dijkstra.ModuleConnector;
 import org.jalgo.module.dijkstra.actions.Action;
 import org.jalgo.module.dijkstra.actions.ActionException;
 import org.jalgo.module.dijkstra.actions.ActionStack;
 import org.jalgo.module.dijkstra.actions.ShowAlgorithmPageAction;
 import org.jalgo.module.dijkstra.actions.ShowEditPageAction;
+import org.jalgo.module.dijkstra.gui.components.GraphDisplay;
 import org.jalgo.module.dijkstra.model.DijkstraAlgorithm;
 import org.jalgo.module.dijkstra.model.Edge;
 import org.jalgo.module.dijkstra.model.Graph;
 import org.jalgo.module.dijkstra.model.Node;
 import org.jalgo.module.dijkstra.model.State;
-import org.jalgo.module.dijkstra.util.StatusbarText;
 
 /**
- * @author Frank Staudinger, Julian Stecklina, Martin Winter, Hannes Strass,
- *         Steven Voigt
- * 
  * The Controller is the central point of the Dijkstra's MVC-architecture. It
  * controls all operations and notifys it's observers about changes in the
  * model.
+ * 
+ * @author Alexander Claus, Frank Staudinger, Julian Stecklina, Martin Winter,
+ *         Hannes Strass, Steven Voigt
  */
-
 public class Controller
 extends Observable {
 
@@ -100,42 +98,41 @@ extends Observable {
 	}
 
 	private class _AlgoAnimator
-	implements Runnable {
+	implements ActionListener {
 
 		private Controller m_ctrl;
+		private Timer timer;
 
 		public _AlgoAnimator(Controller ctrl) {
 			m_ctrl = ctrl;
+			timer = new Timer(ctrl.m_iAniMillis, this);
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.lang.Runnable#run()
-		 */
-		public void run() {
-			try {
-				if (m_ctrl.m_iAniMillis > 0) {
-					int nStep = m_ctrl.getCurrentStep();
-					if (m_ctrl.hasNextStep(nStep) == true) {
-						nStep = m_ctrl.getNextStepIndex();
-						State state = m_ctrl.getState(nStep);
-						if (state != null) {
-							m_ctrl.setStatusbarText(state.getDescriptionEx());
-							m_ctrl.setModifiedFlag();
-						}
-					}
-					else {
-						m_ctrl.stopAnimation();
+		public void start() {
+			timer.setDelay(m_ctrl.m_iAniMillis);
+			timer.start();
+		}
+
+		public void stop() {
+			timer.stop();
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			if (m_ctrl.m_iAniMillis > 0) {
+				int nStep = m_ctrl.getCurrentStep();
+				if (m_ctrl.hasNextStep(nStep) == true) {
+					nStep = m_ctrl.getNextStepIndex();
+					State state = m_ctrl.getState(nStep);
+					if (state != null) {
+						m_ctrl.setStatusbarText(state.getDescriptionEx());
 						m_ctrl.setModifiedFlag();
-						return;
 					}
 				}
-				m_ctrl.m_algorithmPage.getDisplay().timerExec(
-					m_ctrl.m_iAniMillis, this);
-			}
-			catch (SWTException e) {
-				e.printStackTrace();
+				else {
+					m_ctrl.stopAnimation();
+					m_ctrl.setModifiedFlag();
+					return;
+				}
 			}
 		}
 	}
@@ -143,10 +140,6 @@ extends Observable {
 	protected int m_iAniMillis = -1;
 	protected ActionStack m_actions;
 	protected Graph m_curGraph;
-	protected Composite m_composite;
-	protected PageFolder m_folder;
-	protected Page m_editingPage;
-	protected Page m_algorithmPage;
 
 	// When in editing mode but with no visual tool selected
 	public static final int MODE_NO_TOOL_ACTIVE = 0;
@@ -162,17 +155,14 @@ extends Observable {
 	protected int m_iEditingMode = MODE_NO_TOOL_ACTIVE;
 
 	protected _Observable m_StatusbarObservable;
-	protected StatusbarText m_strStatusbarText;
-	protected HashMap<Integer, ArrayList<State>> m_mapNodes2AlgoStatesArrayLists =
-		new HashMap<Integer, ArrayList<State>>();
+	protected HashMap<Integer, List<State>> m_mapNodes2AlgoStatesArrayLists =
+		new HashMap<Integer, List<State>>();
 
 	protected int m_nCurStep = 0;
 
 	private final ModuleConnector connector;
-	private SubToolBarManager m_toolBarManager;
-	private UndoToolBarAction m_undoToolBarAction;
-	private RedoToolBarAction m_redoToolBarAction;
 	private _AlgoAnimator m_animator;
+	private GUIController gui;
 
 	public Controller(ModuleConnector connector) {
 		super();
@@ -181,16 +171,15 @@ extends Observable {
 		m_curGraph = new Graph(new ArrayList<Node>(), new ArrayList<Edge>());
 		m_StatusbarObservable = new _Observable();
 
-		m_composite = JAlgoGUIConnector.getInstance().getModuleComponent(connector);
-
-		m_toolBarManager = JAlgoGUIConnector.getInstance().getModuleToolbar(connector);
 		// Create stuff here...
-		createGUI();
+		gui = new GUIController(connector, this);
+		gui.createGUI();
 		m_animator = new _AlgoAnimator(this);
 	}
 
 	/**
 	 * deserialize the data, given by the
+	 * 
 	 * @param data must be a bytearrayinputstream with int for mode
 	 * @author Steven Voigt
 	 */
@@ -254,6 +243,7 @@ extends Observable {
 
 	/**
 	 * Get the graph to cast it in a ByteArrayOutputStream
+	 * 
 	 * @return the graph as an ByteArrayOutputStream with int for the actual
 	 *         mode
 	 * @author Steven Voigt
@@ -277,6 +267,7 @@ extends Observable {
 
 	/**
 	 * Get the serialized data to store it in a file.
+	 * 
 	 * @return the serialiazed data
 	 * @author Steven Voigt
 	 */
@@ -285,8 +276,9 @@ extends Observable {
 	}
 
 	/**
-	 * Set data. that was loaded from file. This data will
-	 *         be deserialized to restore the saved state.
+	 * Set data. that was loaded from file. This data will be deserialized to
+	 * restore the saved state.
+	 * 
 	 * @param data earlier serialized data
 	 * @author Steven Voigt
 	 */
@@ -303,9 +295,8 @@ extends Observable {
 	 * @param mode The new mode (_MIN_MODE < mode < _MAX_MODE)
 	 */
 	public void setEditingMode(int mode) {
-
-		m_iEditingMode = (((mode > _MAX_MODE) || (mode < _MIN_MODE)) ? MODE_NO_TOOL_ACTIVE
-			: mode);
+		m_iEditingMode = (((mode > _MAX_MODE) || (mode < _MIN_MODE)) ?
+			MODE_NO_TOOL_ACTIVE : mode);
 		if (mode == MODE_ALGORITHM) {
 			computeAlgoStates();
 		}
@@ -326,12 +317,11 @@ extends Observable {
 	protected void computeAlgoStates() {
 		m_nCurStep = 0;
 		m_mapNodes2AlgoStatesArrayLists.clear();
-		DijkstraAlgorithm DijkstraAlgorithm = new DijkstraAlgorithm(
-			new ColorFactory(m_composite.getDisplay()), getGraph());
+		DijkstraAlgorithm DijkstraAlgorithm = new DijkstraAlgorithm(getGraph());
 		Graph graph = getGraph();
 		Node prevStartNode = graph.getStartNode();
 		for (Node node : graph.getNodeList()) {
-			boolean bStart = node.getStart();
+			boolean bStart = node.isStart();
 			DijkstraAlgorithm.generateStates(node);
 			ArrayList<State> arList = new ArrayList<State>();
 
@@ -358,8 +348,7 @@ extends Observable {
 	public State getState(int nStep) {
 		Node node = getGraph().getStartNode();
 		if (node == null) return null;
-		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
-		.get(new Integer(node.getIndex()));
+		List arList = m_mapNodes2AlgoStatesArrayLists.get(node.getIndex());
 		if (nStep >= arList.size()) nStep = arList.size() - 1;
 		else if (nStep < 0) nStep = 0;
 
@@ -389,8 +378,7 @@ extends Observable {
 	public int getStepCount() {
 		Node node = getGraph().getStartNode();
 		if (node == null) return 0;
-		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
-		.get(new Integer(node.getIndex()));
+		List arList = m_mapNodes2AlgoStatesArrayLists.get(node.getIndex());
 		return ((arList != null) ? (arList.size()) : 0);
 	}
 
@@ -401,8 +389,7 @@ extends Observable {
 	public boolean hasNextStep(int nStep) {
 		Node node = getGraph().getStartNode();
 		if (node == null) return false;
-		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
-		.get(new Integer(node.getIndex()));
+		List arList = m_mapNodes2AlgoStatesArrayLists.get(node.getIndex());
 		return ((arList != null) ? (nStep + 1) < arList.size() : false);
 	}
 
@@ -413,8 +400,7 @@ extends Observable {
 	public boolean hasPrevStep(int nStep) {
 		Node node = getGraph().getStartNode();
 		if (node == null) return false;
-		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
-		.get(new Integer(node.getIndex()));
+		List arList = m_mapNodes2AlgoStatesArrayLists.get(node.getIndex());
 		return ((arList != null) ? (nStep > 0) : false);
 	}
 
@@ -426,8 +412,7 @@ extends Observable {
 		if (hasNextStep(nStep) == false) return false;
 		Node node = getGraph().getStartNode();
 		if (node == null) return false;
-		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
-		.get(new Integer(node.getIndex()));
+		List arList = m_mapNodes2AlgoStatesArrayLists.get(node.getIndex());
 		Iterator iter = arList.iterator();
 		for (int i = 0; iter.hasNext(); i++) {
 			State state = (State)iter.next();
@@ -444,8 +429,7 @@ extends Observable {
 		if (hasPrevStep(nStep) == false) return false;
 		Node node = getGraph().getStartNode();
 		if (node == null) return false;
-		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
-		.get(new Integer(node.getIndex()));
+		List arList = m_mapNodes2AlgoStatesArrayLists.get(node.getIndex());
 		Iterator iter = arList.iterator();
 		for (int i = 0; iter.hasNext(); i++) {
 			State state = (State)iter.next();
@@ -474,8 +458,7 @@ extends Observable {
 	public int getPrevMacroStepIndex() {
 		Node node = getGraph().getStartNode();
 		if (node == null) return 0;
-		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
-		.get(new Integer(node.getIndex()));
+		List arList = m_mapNodes2AlgoStatesArrayLists.get(node.getIndex());
 
 		for (int i = getCurrentStep() - 1; i >= 0; i--) {
 			State state = (State)arList.get(i);
@@ -491,8 +474,7 @@ extends Observable {
 	public int getNextMacroStepIndex() {
 		Node node = getGraph().getStartNode();
 		if (node == null) return 0;
-		ArrayList arList = m_mapNodes2AlgoStatesArrayLists
-		.get(new Integer(node.getIndex()));
+		List arList = m_mapNodes2AlgoStatesArrayLists.get(node.getIndex());
 
 		for (int i = getCurrentStep() + 1; i < arList.size(); i++) {
 			State state = (State)arList.get(i);
@@ -506,8 +488,9 @@ extends Observable {
 	 * Show the part of the GUI where the user can manipulate Graphs.
 	 */
 	public void showEditingPage() {
-		m_folder.showPage(m_editingPage);
 		this.setEditingMode(MODE_NO_TOOL_ACTIVE);
+		resetGraphVisuals();
+		gui.showEditModePanel();
 		this.setModifiedFlag();
 	}
 
@@ -516,43 +499,8 @@ extends Observable {
 	 * Dijkstra's Algorithm.
 	 */
 	public void showAlgorithmPage() {
-		m_folder.showPage(m_algorithmPage);
+		gui.showAlgorithmModePanel();
 		this.setEditingMode(MODE_ALGORITHM);
-	}
-
-	/**
-	 * Creates the page folder and all the items on the pages.
-	 */
-	private void createGUI() {
-		m_folder = new PageFolder(m_composite);
-
-		m_editingPage = new Page(m_folder);
-		m_algorithmPage = new Page(m_folder);
-
-		m_editingPage.setLayout(new FillLayout());
-		m_algorithmPage.setLayout(new FillLayout());
-		m_folder.setLayout(new PageLayout());
-
-		Composite edit = new EditModeMainComposite(this, m_editingPage,
-			SWT.NONE);
-		Composite algo = new AlgorithmModeMainComposite(this, m_algorithmPage,
-			SWT.NONE);
-
-		m_folder.showPage(m_editingPage);
-
-		// This magic incantation is required so that the all Composites get
-		// the right size from the start.
-		m_folder.pack();
-		m_folder.setSize(m_composite.getSize());
-		
-		// HS -- create toolbar
-		m_undoToolBarAction = new UndoToolBarAction(this);
-		m_undoToolBarAction.setEnabled(false);
-		m_toolBarManager.add(m_undoToolBarAction);
-		m_redoToolBarAction = new RedoToolBarAction(this);
-		m_redoToolBarAction.setEnabled(false);
-		m_toolBarManager.add(m_redoToolBarAction);
-		m_toolBarManager.update(false);
 	}
 
 	/**
@@ -575,10 +523,42 @@ extends Observable {
 
 		Graph oldGraph = (Graph)m_curGraph.clone();
 		this.m_curGraph = graph;
+		// i don't know how this works in detail, but because of the permanent
+		// copying of the graph the mapping between some nodes and its visuals
+		// is crashed, here a workaround - Alexander
+		for (Node node : graph.getNodeList()) {
+			node.getVisual().updateModel(node);
+			node.getVisual().updateLocation(GraphDisplay.getScreenSize());
+			node.setActive(false);
+			node.setHighlighted(false);
+			node.getVisual().update();
+		}
+		for (Edge edge : graph.getEdgeList()) {
+			edge.getVisual().updateModel(edge);
+			edge.getVisual().updateLocation(GraphDisplay.getScreenSize());
+			edge.setActive(false);
+			edge.setHighlighted(false);
+			edge.getVisual().update();
+		}
+
 		if (this.m_iEditingMode == Controller.MODE_ALGORITHM) computeAlgoStates();
-		if (oldGraph.equals(graph) == false)
+		if (!oldGraph.equals(graph))
 			connector.setSaveStatus(SaveStatus.CHANGES_TO_SAVE);
 		return oldGraph;
+	}
+
+	/**
+	 * Updates the visual components of the graph elements.
+	 */
+	private void resetGraphVisuals() {
+		for (Node node : m_curGraph.getNodeList()) {
+			node.getVisual().setControllerMode(getEditingMode());
+			node.getVisual().update();
+		}
+		for (Edge edge : m_curGraph.getEdgeList()) {
+			edge.getVisual().setControllerMode(getEditingMode());
+			edge.getVisual().update();
+		}
 	}
 
 	/**
@@ -648,7 +628,7 @@ extends Observable {
 	 * Call this function to inform the Controller's observers about changes
 	 */
 	public void setModifiedFlag() {
-		this.updateToolBar();
+		gui.updateToolBar();
 		super.setChanged();
 		super.notifyObservers(this);
 		super.clearChanged();
@@ -658,40 +638,21 @@ extends Observable {
 		this.m_StatusbarObservable.addObserver(observer);
 	}
 
-	public StatusbarText getStatusbarText() {
-		return m_strStatusbarText;
-	}
-
-	public void setStatusbarText(StatusbarText strText) {
-		m_strStatusbarText = strText;
+	public void setStatusbarText(String strText) {
+		gui.setStatusbarText(strText);
 		this.m_StatusbarObservable.setChanged();
 		this.m_StatusbarObservable.notifyObservers(this);
 		this.m_StatusbarObservable.clearChanged();
 	}
 
-	private void updateToolBar() {
-		if (m_undoToolBarAction != null)
-			m_undoToolBarAction.setEnabled(hasUndoAction());
-		if (m_redoToolBarAction != null)
-			m_redoToolBarAction.setEnabled(hasRedoAction());
-	}
-
 	public void startAnimation(int iMilliseconds) {
 		this.m_iAniMillis = iMilliseconds;
-		m_animator.run();
+		m_animator.start();
 	}
 
 	public void stopAnimation() {
-		if (getAnimationMillis() > 0) {
-			try {
-				this.m_iAniMillis = -1;
-				m_algorithmPage.getDisplay().timerExec(this.m_iAniMillis,
-					m_animator);
-			}
-			catch (SWTException e) {
-				e.printStackTrace();
-			}
-		}
+		m_iAniMillis = -1;
+		m_animator.stop();
 	}
 
 	/**

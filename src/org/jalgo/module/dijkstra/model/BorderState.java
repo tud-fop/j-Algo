@@ -66,7 +66,7 @@ public class BorderState implements Cloneable {
 	        newBorder.add(it.next());
 	    }
 	    
-	    return new BorderState((Node)chosen.clone(), newBorder, graph);
+	    return new BorderState(chosen.clone(), newBorder, graph);
 	}
 
 	/**
