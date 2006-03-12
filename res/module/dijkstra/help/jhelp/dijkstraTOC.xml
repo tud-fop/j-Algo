@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de">
+
+	<!-- Dijkstra -->
+		<tocitem text="Dijkstra"	   		target="dijkstra" expand="false">
+			<tocitem text="Einleitung" 		   		target="dijkstra.intro"/>
+			<tocitem text="Funktionsübersicht" 		target="dijkstra.overview"/>
+			<tocitem text="Modul starten" 	   		target="dijkstra.start"/>
+			<tocitem text="Symbolleiste" 	   		target="dijkstra.toolbar"/>
+				<tocitem text="Graph erstellen"		   	target="dijkstra.edit">
+					<tocitem text="graphische Eingabe" 	target="dijkstra.edit.graph"/>
+					<tocitem text="Knotenliste" 	   	target="dijkstra.edit.nodelist"/>
+					<tocitem text="Kantenliste" 	   	target="dijkstra.edit.edgelist"/>
+					<tocitem text="Adjazenmatrix" 	   	target="dijkstra.edit.matrix"/>
+				</tocitem>
+			<tocitem text="Ablauf des Algorithmus" 	target="dijkstra.run"/>
+		</tocitem>
+</toc>

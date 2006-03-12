@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+	<mapID xml:lang="de"/>
+
+	<!-- Dijkstra -->
+	<mapID target="dijkstra"    	    	    url="../html/data/overview.htm"/>
+	<mapID target="dijkstra.intro"    	    url="../html/data/overview.htm#introduction"/>
+	<mapID target="dijkstra.overview"      url="../html/data/overview.htm#overview"/>
+	<mapID target="dijkstra.start"    	    url="../html/data/overview.htm#start"/>
+	<mapID target="dijkstra.toolbar"  	    url="../html/data/overview.htm#toolbar"/>
+
+	<mapID target="dijkstra.edit"	         url="../html/data/edit.htm"/>
+	<mapID target="dijkstra.edit.graph"    url="../html/data/edit.htm#graphical"/>
+	<mapID target="dijkstra.edit.nodelist" url="../html/data/edit.htm#nodelist"/>
+	<mapID target="dijkstra.edit.edgelist" url="../html/data/edit.htm#edgelist"/>
+	<mapID target="dijkstra.edit.matrix"   url="../html/data/edit.htm#matrix"/>
+
+	<mapID target="dijkstra.run" 		    url="../html/data/run.htm"/>
+
+
+	<!-- images -->
+	<mapID target="helpicon" url="../pics/main/icon_help.gif"/>
+	<mapID target="mainicon" url="../../pix/jalgo.gif"/>
+</map>

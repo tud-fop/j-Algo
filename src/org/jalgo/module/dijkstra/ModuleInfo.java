@@ -98,4 +98,8 @@ implements IModuleInfo {
     public String getLicense() {
         return Messages.getString("dijkstra", "Module_license"); //$NON-NLS-1$ //$NON-NLS-2$
     }
+    
+    public URL getHelpSetURL(){
+    	return Messages.getResourceURL("dijkstra","HelpSet_Name");
+    }
 }

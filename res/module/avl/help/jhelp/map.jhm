@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+	<mapID xml:lang="de"/>
+
+	<!-- AVL -->
+	<mapID target="avl" 	    		  url="../html/data/overview.htm"/>
+	<mapID target="avl.intro"    		  url="../html/data/overview.htm#introduction"/>
+	<mapID target="avl.overview" 		  url="../html/data/overview.htm#overview"/>
+
+	<mapID target="avl.start" 		 	  url="../html/data/start.htm"/>
+	<mapID target="avl.start.load" 		  url="../html/data/start.htm#load_tree"/>
+	<mapID target="avl.start.manually"    url="../html/data/start.htm#manually"/>
+	<mapID target="avl.start.rand" 		  url="../html/data/start.htm#randomly"/>
+	<mapID target="avl.start.show" 	  	  url="../html/data/start.htm#show_welcomescreen"/>
+
+	<mapID target="avl.screen" 		  	  url="../html/data/screen.htm"/>
+
+	<mapID target="avl.fkt" 		   	  url="../html/data/functions.htm"/>
+	<mapID target="avl.fkt.key" 	   	  url="../html/data/functions.htm#insert_key"/>
+	<mapID target="avl.fkt.algo" 	      url="../html/data/functions.htm#algorithm_functions"/>
+	<mapID target="avl.fkt.avl_modus" 	  url="../html/data/functions.htm#avl_modus"/>
+	<mapID target="avl.fkt.avl_test" 	  url="../html/data/functions.htm#avl_test"/>
+	<mapID target="avl.fkt.del" 	      url="../html/data/functions.htm#delete_tree"/>
+
+	<mapID target="avl.flow" 	 		  url="../html/data/flowcontrol.htm"/>
+	<mapID target="avl.flow.steps" 		  url="../html/data/flowcontrol.htm#step_arrows"/>
+	<mapID target="avl.flow.end" 	 	  url="../html/data/flowcontrol.htm#abort_finish"/>
+	<mapID target="avl.flow.anim"  		  url="../html/data/flowcontrol.htm#anim_speed"/>
+
+	<mapID target="avl.docu" 	  		  url="../html/data/documentation.htm"/>
+	<mapID target="avl.docu.script" 	  url="../html/data/documentation.htm#script"/>
+	<mapID target="avl.docu.log"    	  url="../html/data/documentation.htm#log"/>
+	<mapID target="avl.docu.info"   	  url="../html/data/documentation.htm#info"/>
+
+	<mapID target="avl.addons" 	    	  url="../html/data/additionals.htm"/>
+	<mapID target="avl.addons.navigator"  url="../html/data/additionals.htm#navigator"/>
+	<mapID target="avl.addons.beamer" 	  url="../html/data/additionals.htm#beamer"/>
+
+
+	<!-- images -->
+	<mapID target="helpicon" url="../pics/main/icon_help.gif"/>
+	<mapID target="mainicon" url="../../pix/jalgo.gif"/>
+</map>

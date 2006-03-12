@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de" version="1.0">
+
+		<!-- main -->
+		<tocitem text="Das J-Algo Hauptprogramm"        target="main.intro">
+			<tocitem text="Einleitung" 					target="main.intro"/>
+
+			<tocitem text="Technische Hinweise" 		target="main.tech">
+				<tocitem text="Systemvoraussetzung" 	target="main.tech.require"/>
+				<tocitem text="Installation" 			target="main.tech.install"/>
+				<tocitem text="Deinstallation" 			target="main.tech.deinstall"/>
+			</tocitem>
+
+			<tocitem text="Grundfunktionen" 			target="main.basic">
+				<tocitem text="Neues Modul öffnen" 		target="main.basic.open"/>
+				<tocitem text="Sitzungsdaten laden" 	target="main.basic.load"/>
+				<tocitem text="Sitzungsdaten speichern" target="main.basic.save"/>
+				<tocitem text="Modul schließen"			target="main.basic.close"/>
+				<tocitem text="Hilfe" 					target="main.basic.help"/>
+			</tocitem>
+		</tocitem>
+</toc>

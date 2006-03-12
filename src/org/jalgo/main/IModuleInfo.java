@@ -95,4 +95,13 @@ public interface IModuleInfo {
 	 * @return the license
 	 */
 	public String getLicense();
+	
+	/**
+	 * Retrieves an <code>URL</code> object pointing to the HelpSet file of the module.  
+	 * The HelpSet file is the major metafile of the JavaHelp system.
+	 * The URL must point to a *.hs-file.
+	 * 
+	 * @return the HelpSet filename
+	 */
+	public URL getHelpSetURL();
 }

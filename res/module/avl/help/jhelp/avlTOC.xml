@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de">
+
+	<!-- AVL -->
+			<tocitem text="AVL-Bäume"	            			    target="avl"  expand="false">
+				<tocitem text="Einleitung" 		   					target="avl.intro"/>
+				<tocitem text="Funktionsübersicht" 					target="avl.overview"/>
+
+				<tocitem text="Der Willkommensbildschirm" 		   	target="avl.start">
+					<tocitem text="Baum laden" 			   		   	target="avl.start.load"/>
+					<tocitem text="Baum manuell erstellen" 		   	target="avl.start.manually"/>
+					<tocitem text="Zufallsbaum erstellen" 		   	target="avl.start.rand"/>
+					<tocitem text="Willkommensbildschirm anzeigen" 	target="avl.start.show"/>
+				</tocitem>
+
+				<tocitem text="Die Arbeitsfläche" 				   	target="avl.screen"/>
+
+				<tocitem text="Modulfunktionen" 		   			target="avl.fkt">
+					<tocitem text="Schlüsseleingabe" 	   			target="avl.fkt.key"/>
+					<tocitem text="Algorithmusfunktionen"  			target="avl.fkt.algo"/>
+					<tocitem text="AVL-Modus" 			   			target="avl.fkt.avl_modus"/>
+					<tocitem text="AVL-Eigenschaft testen" 			target="avl.fkt.avl_test"/>
+					<tocitem text="Baum löschen" 		   			target="avl.fkt.del"/>
+				</tocitem>
+
+				<tocitem text="Algorithmussteuerung" 		 		target="avl.flow">
+					<tocitem text="Schritt-Pfeile" 			  		target="avl.flow.steps"/>
+					<tocitem text="Abbruch und Beenden" 	  		target="avl.flow.end"/>
+					<tocitem text="Animationsgeschwindigkeit" 		target="avl.flow.anim"/>
+				</tocitem>
+
+				<tocitem text="Dokumentation" 						target="avl.docu">
+					<tocitem text="Skript" 							target="avl.docu.script"/>
+					<tocitem text="Logbuch" 						target="avl.docu.log"/>
+					<tocitem text="Infobereich" 					target="avl.docu.info"/>
+				</tocitem>
+
+				<tocitem text="Zusatzfunktionen" 					target="avl.addons">
+					<tocitem text="Navigator" 	 					target="avl.addons.navigator"/>
+					<tocitem text="Beamermodus"  					target="avl.addons.beamer"/>
+				</tocitem>
+			</tocitem>
+</toc>

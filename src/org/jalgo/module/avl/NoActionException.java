@@ -31,7 +31,6 @@ package org.jalgo.module.avl;
  * 
  * The class <code>NoActionException</code> is thrown if something is wrong
  * with the connection between the GUI and the algorithm. <br>
- * It is the super class for some special Exceptions.
  */
 public class NoActionException
 extends Exception {

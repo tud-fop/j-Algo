@@ -113,4 +113,8 @@ implements IModuleInfo {
 	public String getLicense() {
 		return Messages.getString("avl", "Module_license"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
+	
+	public URL getHelpSetURL(){
+		return Messages.getResourceURL("avl","HelpSet_Name");
+	}
 }

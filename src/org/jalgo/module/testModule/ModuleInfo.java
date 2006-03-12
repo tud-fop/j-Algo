@@ -75,4 +75,8 @@ implements IModuleInfo {
 	public String getLicense() {
 		return "GPL";
 	}
+	
+	public URL getHelpSetURL(){
+		return null;
+	}
 }
