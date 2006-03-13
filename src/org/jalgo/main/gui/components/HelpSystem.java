@@ -26,13 +26,14 @@
  */
 package org.jalgo.main.gui.components;
 
-
 import java.awt.event.ActionListener;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.LinkedList;
 
-import javax.help.*;
+import javax.help.CSH;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 
 import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.JAlgoMain;
@@ -46,57 +47,48 @@ public class HelpSystem {
 	
 	private LinkedList<IModuleInfo> knownModuleInfos; 
 
-	
-	public HelpSystem(){
+	public HelpSystem() {
 		knownModuleInfos = JAlgoMain.getInstance().getKnownModuleInfos();
 	}
-	
 	
 	/**
 	 * Retrieves an JavaHelp specific ActionListener which launches the JavaHelpDialog.
 	 * @return an ActionListener 
 	 */
-	public ActionListener getJavaHelpActionListener(){
+	public ActionListener getJavaHelpActionListener() {
 		
 		//Initialise the HelpSet with the help data from JAlgoMain
-		HelpSet mainHS;		
-		mainHS = getHSByURL(Messages.getResourceURL("main","Main_HelpSet"));
+		HelpSet mainHS = getHSByURL(Messages.getResourceURL("main", "Main_HelpSet"));
 			
 		//Merge the Module HelpSets
-		IModuleInfo element;
 		URL path = null;
-		for (Iterator<IModuleInfo> it = knownModuleInfos.iterator(); it.hasNext();) {
-			element = it.next();
+		
+		for (IModuleInfo element : knownModuleInfos) {
 			path = element.getHelpSetURL();
 			if (path == null)
-				System.out.println("HelpSetURL from "+element.getName()+" is null!");
+				System.out.println("HelpSetURL from " + element.getName() + " is null!");
 			else mainHS.add(getHSByURL(path));	
 		}	
 		
 		//Create a HelpBroker object
 		HelpBroker hb = mainHS.createHelpBroker();
 		
-		return (ActionListener) new CSH.DisplayHelpFromSource(hb);
+		return new CSH.DisplayHelpFromSource(hb);
 	}	
 	
-	private HelpSet getHSByURL(URL path){
-		HelpSet hs;
+	private HelpSet getHSByURL(URL path) {
 		try {
-			hs = new HelpSet(null, path);	
-		} catch (Exception ee) {
+			return new HelpSet(null, path);	
+		} catch (HelpSetException ee) {
 			//Say what the exception really is
 			System.err.println("HelpSet " + ee.getMessage());
-			return null;
 		}
-		return hs;
+		return null;
 	}
-	
-	
+		
 	// TODO Mergen statisch:
 	//  d.h. HelpSystem testet, ob sich die Zusammensetzung der Module verändert hat.
 	//  	--> Wenn ja: Verändern der Datei, die die HelpSet Liste der Module hält und
 	//					 Aktualisieren der Modulliste (gespeichert in Properties)
 	// TODO den ModulChooseDialog entwerfen
 }
-
-
