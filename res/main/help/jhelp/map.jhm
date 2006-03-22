@@ -10,13 +10,20 @@
 	<mapID target="main.tech.require" 	 url="../html/data/overview.htm#requirements"/>
 	<mapID target="main.tech.install"    url="../html/data/overview.htm#installation"/>
 	<mapID target="main.tech.deinstall"  url="../html/data/overview.htm#deinstallation"/>
+	<mapID target="main.tech.module_ins"  url="../html/data/overview.htm#install_module"/>
+	<mapID target="main.tech.module_del"  url="../html/data/overview.htm#del_module"/>
 
 	<mapID target="main.basic" 	   	 	 url="../html/data/basics.htm"/>
 	<mapID target="main.basic.open" 	 url="../html/data/basics.htm#open_module"/>
 	<mapID target="main.basic.load"  	 url="../html/data/basics.htm#load_data"/>
 	<mapID target="main.basic.save" 	 url="../html/data/basics.htm#save_data"/>
 	<mapID target="main.basic.close"	 url="../html/data/basics.htm#close_module"/>
-	<mapID target="main.basic.help" 	 url="../html/data/basics.htm#help"/>
+	
+	<mapID target="main.dialog.prop" 	 url="../html/data/dialogs.htm#preferences"/>
+	<mapID target="main.dialog.mcd" 	 url="../html/data/dialogs.htm#mcd"/>+
+	<mapID target="main.dialog.help" 	 url="../html/data/dialogs.htm#help"/>
+	
+	<mapID target="main.impress" 		 	 url="../html/data/impressum.htm"/>
 
 
 	<!-- images -->

@@ -6,15 +6,22 @@
 <index version="1.0">
 	<!-- main -->
     <indexitem text="Hauptprogramm">
-    	<indexitem text="Einleitung"		 	  target="main.intro"/>
-    	<indexitem text="Systemvorraussetzung" 	  target="main.tech.require"/>
-    	<indexitem text="Installation"  		  target="main.tech.install"/>
     	<indexitem text="Deinstallation" 		  target="main.tech.deinstall"/>
+    	<indexitem text="Einleitung"		 	  target="main.intro"/>
+    	<indexitem text="Einstellungen"			  target="main.dialog.prop"/>
+    	<indexitem text="Hilfe" 				  target="main.basic.help"/>
+    	<indexitem text="Impressum" 			  target="main.impress"/>
+    	<indexitem text="Installation"  		  target="main.tech.install"/>
+    	<indexitem text="Modul deinstallieren" 	  target="main.tech.module_del"/>
+    	<indexitem text="Modul installieren" 	  target="main.tech.module_ins"/>
+    	<indexitem text="Modul schließen" 		  target="main.basic.close"/>
+		<indexitem text="Modulauswahldialog"	  target="main.dialog.mcd"/>
     	<indexitem text="Neues Modul öffnen" 	  target="main.basic.open"/>
     	<indexitem text="Sitzungsdaten laden" 	  target="main.basic.load"/>
     	<indexitem text="Sitzungsdaten speichern" target="main.basic.save"/>
-    	<indexitem text="Modul schließen" 		  target="main.basic.close"/>
-    	<indexitem text="Hilfe" 				  target="main.basic.help"/>
+    	<indexitem text="Systemvorraussetzung" 	  target="main.tech.require"/>
+    	
+    	
     </indexitem>
 </index>
 

@@ -6,25 +6,27 @@
 <index version="1.0">
     <!-- AVL -->
     <indexitem text="AVL-Bäume" expand="false">
+    	
+    	<indexitem text="Abbruch und Beenden"			 target="avl.flow.end"/>
+    	<indexitem text="Algorithmusfunktionen"			 target="avl.fkt.algo"/>
+    	<indexitem text="Animationsgeschwindigkeit"		 target="avl.flow.anim"/>
+    	<indexitem text="AVL-Eigenschaft testen"		 target="avl.fkt.avl_test"/>
+    	<indexitem text="AVL-Modus"						 target="avl.fkt.avl_modus"/>
+    	<indexitem text="Baum laden" 					 target="avl.start.load"/>
+    	<indexitem text="Baum löschen"					 target="avl.fkt.del"/>
+    	<indexitem text="Baum manuell erstellen"		 target="avl.start.manually"/>
+    	<indexitem text="Beamermodus"					 target="avl.addons.beamer"/>
     	<indexitem text="Einleitung"					 target="avl.intro"/>
     	<indexitem text="Funktionsübersicht" 			 target="avl.overview"/>
-    	<indexitem text="Baum laden" 					 target="avl.start.load"/>
-    	<indexitem text="Baum manuell erstellen"		 target="avl.start.manually"/>
-    	<indexitem text="Zufallsbaum erstellen" 		 target="avl.start.rand"/>
-    	<indexitem text="Willkommensbildschirm anzeigen" target="avl.start.show"/>
-    	<indexitem text="Schlüsseleingabe" 				 target="avl.fkt.key"/>
-    	<indexitem text="Algorithmusfunktionen"			 target="avl.fkt.algo"/>
-    	<indexitem text="AVL-Modus"						 target="avl.fkt.avl_modus"/>
-    	<indexitem text="AVL-Eigenschaft testen"		 target="avl.fkt.avl_test"/>
-    	<indexitem text="Baum löschen"					 target="avl.fkt.del"/>
-    	<indexitem text="Schritt-Pfeile"				 target="avl.flow.steps"/>
-    	<indexitem text="Abbruch und Beenden"			 target="avl.flow.end"/>
-    	<indexitem text="Animationsgeschwindigkeit"		 target="avl.flow.anim"/>
-    	<indexitem text="Skript"						 target="avl.docu.script"/>
-    	<indexitem text="Logbuch" 						 target="avl.docu.log"/>
     	<indexitem text="Infobereich"					 target="avl.docu.info"/>
+    	<indexitem text="Logbuch" 						 target="avl.docu.log"/>
     	<indexitem text="Navigator"						 target="avl.addons.navigator"/>
-    	<indexitem text="Beamermodus"					 target="avl.addons.beamer"/>
+    	<indexitem text="Schlüsseleingabe" 				 target="avl.fkt.key"/>
+    	<indexitem text="Schritt-Pfeile"				 target="avl.flow.steps"/>
+    	<indexitem text="Skript"						 target="avl.docu.script"/>
+    	<indexitem text="Willkommensbildschirm anzeigen" target="avl.start.show"/>
+    	<indexitem text="Zufallsbaum erstellen" 		 target="avl.start.rand"/>
+    	
     </indexitem>
 </index>
 

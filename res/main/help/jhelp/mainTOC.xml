@@ -10,6 +10,8 @@
 				<tocitem text="Systemvoraussetzung" 	target="main.tech.require"/>
 				<tocitem text="Installation" 			target="main.tech.install"/>
 				<tocitem text="Deinstallation" 			target="main.tech.deinstall"/>
+				<tocitem text="Modul installieren" 		target="main.tech.module_ins"/>
+				<tocitem text="Modul deinstallieren" 	target="main.tech.module_del"/>
 			</tocitem>
 
 			<tocitem text="Grundfunktionen" 			target="main.basic">
@@ -17,7 +19,11 @@
 				<tocitem text="Sitzungsdaten laden" 	target="main.basic.load"/>
 				<tocitem text="Sitzungsdaten speichern" target="main.basic.save"/>
 				<tocitem text="Modul schließen"			target="main.basic.close"/>
-				<tocitem text="Hilfe" 					target="main.basic.help"/>
+				<tocitem text="Einstellungen"			target="main.dialog.prop"/>
+				<tocitem text="Modulauswahldialog"		target="main.dialog.mcd"/>
+				<tocitem text="Hilfe" 					target="main.dialog.help"/>
 			</tocitem>
+			
+			<tocitem text="Impressum" 					target="main.impress"/>
 		</tocitem>
 </toc>

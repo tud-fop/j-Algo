@@ -6,16 +6,18 @@
 <index version="1.0">
 	<!-- Dijkstra -->
     <indexitem text="Dijkstra" expand="false">
-    	<indexitem text="Einleitung" 			 target="dijkstra.intro"/>
-    	<indexitem text="Funktionsübersicht"	 target="dijkstra.overview"/>
-		<indexitem text="Modul starten"			 target="dijkstra.start"/>
-		<indexitem text="Symbolleiste"			 target="dijkstra.toolbar"/>
-		<indexitem text="Graph erstellen"		 target="dijkstra.edit"/>
-		<indexitem text="graphische Eingabe"	 target="dijkstra.edit.graph"/>
-		<indexitem text="Knotenliste"			 target="dijkstra.edit.nodelist"/>
-		<indexitem text="Kantenliste"			 target="dijkstra.edit.edgelist"/>
+    
 		<indexitem text="Adjazenmatrix" 		 target="dijkstra.edit.matrix"/>
 		<indexitem text="Ablauf des Algorithmus" target="dijkstra.run"/>
+    	<indexitem text="Einleitung" 			 target="dijkstra.intro"/>
+    	<indexitem text="Funktionsübersicht"	 target="dijkstra.overview"/>
+		<indexitem text="Graph erstellen"		 target="dijkstra.edit"/>
+		<indexitem text="graphische Eingabe"	 target="dijkstra.edit.graph"/>
+		<indexitem text="Kantenliste"			 target="dijkstra.edit.edgelist"/>
+		<indexitem text="Knotenliste"			 target="dijkstra.edit.nodelist"/>
+		<indexitem text="Modul starten"			 target="dijkstra.start"/>
+		<indexitem text="Symbolleiste"			 target="dijkstra.toolbar"/>
+		
     </indexitem>
 </index>
 
