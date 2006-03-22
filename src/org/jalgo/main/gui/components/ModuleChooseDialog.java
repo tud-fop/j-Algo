@@ -60,6 +60,7 @@ extends JDialog {
 		westPane.setLayout(new BoxLayout(westPane, BoxLayout.Y_AXIS));
 		
 		JLabel listLabel = new JLabel(Messages.getString("main", "New.ModuleList"));
+		listLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);		
 		westPane.add(Box.createVerticalStrut(space));
 		westPane.add(listLabel);
 		
