@@ -12,7 +12,7 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp HelpSet Version 1.0//EN"
 
 	<!-- maps -->
 	<maps>
-		<homeID>top</homeID>
+		<homeID>dijkstra</homeID>
 		<mapref location="map.jhm"/>
 	</maps>
 

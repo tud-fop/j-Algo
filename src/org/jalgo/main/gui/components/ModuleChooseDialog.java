@@ -51,7 +51,6 @@ extends JDialog {
 		if (!(parent instanceof JAlgoWindow))
 			System.err.println("The ModuleChooseDialog needs to be opened by the JAlgoWindow.");
 		else appWin = (JAlgoWindow) parent;
-		setAlwaysOnTop(true);
 
 		
 		int space = 5;
