@@ -195,8 +195,8 @@ implements Serializable, Comparable<Edge>, Cloneable {
 	 *         (startNodeIndex, weight, endNodeIndex)
 	 */
 	public String getText() {
-		if (!reversed) return "(" + startNode.getIndex() + ", " + weight + ", " + endNode.getIndex() + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-		return "(" + endNode.getIndex() + ", " + weight + ", " + startNode.getIndex() + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		if (!reversed) return "(" + startNode.getIndex() + "," + weight + "," + endNode.getIndex() + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		return "(" + endNode.getIndex() + "," + weight + "," + startNode.getIndex() + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 	/**
