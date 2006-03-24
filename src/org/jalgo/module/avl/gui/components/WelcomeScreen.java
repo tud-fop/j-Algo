@@ -73,7 +73,7 @@ implements GUIConstants {
 
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-		String lang = Settings.getString("Language"); //$NON-NLS-1$
+		String lang = Settings.getString("main", "Language"); //$NON-NLS-1$
 		if (!lang.equals("de")) lang = "en"; //$NON-NLS-1$ //$NON-NLS-2$
 		loadButton = new WelcomeButton(
 			new ImageIcon(

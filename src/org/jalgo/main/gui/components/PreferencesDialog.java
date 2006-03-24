@@ -39,6 +39,11 @@ import org.jalgo.main.util.Messages;
 import org.jalgo.main.util.Settings;
 
 /**
+ * This class represents the preferences dialog of j-Algo. It holds some
+ * checkboxes and such stuff for relevant persistent settings.<br>
+ * For performance improvement, this class implements the singleton design
+ * pattern.
+ * 
  * @author Alexander Claus
  */
 public class PreferencesDialog
@@ -121,15 +126,15 @@ extends JDialog {
 		okButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("synthetic-access")
 			public void actionPerformed(ActionEvent e) {
-				Settings.setBoolean("ShowSplashOnStartup",
+				Settings.setBoolean("main", "ShowSplashOnStartup",
 					showSplash.isSelected());
-				Settings.setBoolean("ShowModuleChooserOnStartup",
+				Settings.setBoolean("main", "ShowModuleChooserOnStartup",
 					showModuleChooser.isSelected());
-				Settings.setString("Language", Messages.getString("main_res",
+				Settings.setString("main", "Language", Messages.getString("main_res",
 					"Available_languages.short").split(",")
 					[language.getSelectedIndex()]);
 				dispose();
-				Settings.setString("LookAndFeel",
+				Settings.setString("main", "LookAndFeel",
 					installedLAFs[lafList.getSelectedIndex()].getClassName());
 			}
 		});
@@ -149,23 +154,29 @@ extends JDialog {
 		setLocationRelativeTo(parent);
 	}
 
+	/**
+	 * Opens the preferences dialog and updates the control elements with the
+	 * saved settings.
+	 * 
+	 * @param parent the j-Algo main frame for constructing the dialog
+	 */
 	public static void open(JFrame parent) {
 		if (instance == null) instance = new PreferencesDialog(parent);
 		// update settings
 		instance.showSplash.setSelected(
-			Settings.getBoolean("ShowSplashOnStartup"));
+			Settings.getBoolean("main", "ShowSplashOnStartup"));
 		instance.showModuleChooser.setSelected(
-			Settings.getBoolean("ShowModuleChooserOnStartup"));
+			Settings.getBoolean("main", "ShowModuleChooserOnStartup"));
 		String[] shortLangNames = Messages.getString("main_res",
 			"Available_languages.short").split(",");
-		String selectedLanguage = Settings.getString("Language");
+		String selectedLanguage = Settings.getString("main", "Language");
 		for (int i=0; i<shortLangNames.length; i++) {
 			if (selectedLanguage.equals(shortLangNames[i])) {
 				instance.language.setSelectedIndex(i);
 				break;
 			}
 		}
-		String selectedLAF = Settings.getString("LookAndFeel");
+		String selectedLAF = Settings.getString("main", "LookAndFeel");
 		for (int i=0; i<installedLAFs.length; i++) {
 			if (selectedLAF.equals(installedLAFs[i].getClassName())) {
 				instance.lafList.setSelectedIndex(i);
@@ -222,7 +233,7 @@ extends JDialog {
 				}
 			};
 		}
-		JAlgoWindow.setLookAndFeel(Settings.getString("LookAndFeel"));
+		JAlgoWindow.setLookAndFeel(Settings.getString("main", "LookAndFeel"));
 		return previews;
 	}
 

@@ -42,14 +42,14 @@ implements GraphicsConstants, GUIConstants {
 	 * beamer. This integer can be one of the constants <code>PC_MODE</code>,
 	 * <code>BEAMER_MODE</code> defined in <code>GUIConstants</code>.
 	 */
-	private static int DISPLAY_MODE = PC_MODE;
-
 	public static int getDisplayMode() {
-		return DISPLAY_MODE;
-	}
+		return org.jalgo.main.util.Settings.getBoolean("avl", "BeamerMode")
+			? BEAMER_MODE : PC_MODE;
+		}
 
 	public static void setDisplayMode(int mode) {
-		DISPLAY_MODE = mode;
+		org.jalgo.main.util.Settings.setBoolean("avl", "BeamerMode",
+			(mode == BEAMER_MODE));
 	}
 
 	/** The delay time of steps in animation in milliseconds. */

@@ -37,6 +37,11 @@ import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.JAlgoMain;
 
 /**
+ * This class manages string externalization. The j-Algo main program and each
+ * module has its own resource bundles of externalized strings. The names of
+ * these resource bundle files have to follow the naming convention described in
+ * the developers manual of j-Algo.
+ * 
  * @author Alexander Claus
  */
 public abstract class Messages {
@@ -64,7 +69,7 @@ public abstract class Messages {
 			throw new IllegalArgumentException("Key already assigned: "+key);
 
 		RESOURCE_BUNDLES.put(key, ResourceBundle.getBundle(
-			bundlePath + "." + Settings.getString("Language")));
+			bundlePath + "." + Settings.getString("main", "Language")));
 		RESOURCE_BUNDLES.put(key + "_res", ResourceBundle.getBundle(
 			bundlePath + ".res"));
 	}

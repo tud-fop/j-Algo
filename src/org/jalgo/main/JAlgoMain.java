@@ -23,7 +23,6 @@
 /*
  * Created on 13.04.2004
  */
-
 package org.jalgo.main;
 
 import java.io.File;
@@ -36,8 +35,8 @@ import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.gui.JAlgoWindow;
 import org.jalgo.main.util.ErrorLog;
 import org.jalgo.main.util.Messages;
+import org.jalgo.main.util.Settings;
 import org.jalgo.main.util.Storage;
-
 
 /**
  * The class <code>JAlgoMain</code> is the entry point for the application. This
@@ -201,9 +200,10 @@ public class JAlgoMain {
 	/**
 	 * Searches the folder <i>runtime/modules</i> for jar files with modules.
 	 * Fills <code>knownModules</code> and <code>knownModuleInfos</code>
-	 * with the found modules.<br>
+	 * with the found modules and registers resource and settings bundles, if
+	 * they are supported by the modules.<br>
 	 * For detailled description of writing and registering a module, read the
-	 * "Module programmers guide" available as pdf.
+	 * developers manual available as pdf.
 	 */
 	@SuppressWarnings("unchecked")
 	private void addKnownModules() {
@@ -237,6 +237,8 @@ public class JAlgoMain {
 
 					Messages.registerResourceBundle(moduleName,
 						"org.jalgo.module."+moduleName);
+					Settings.registerSettingsBundle(moduleName,
+						"/"+moduleName+".prefs");
 				}
 				catch (ClassNotFoundException ex) {ex.printStackTrace();}
 				catch (IllegalAccessException ex) {ex.printStackTrace();}

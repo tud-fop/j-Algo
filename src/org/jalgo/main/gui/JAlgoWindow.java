@@ -54,7 +54,6 @@ import org.jalgo.main.gui.event.StatusLineUpdater;
 import org.jalgo.main.util.Messages;
 import org.jalgo.main.util.Settings;
 
-
 /**
  * The class <code>JAlgoWindow</code> represents the main frame of the j-Algo
  * main program.
@@ -107,16 +106,16 @@ extends JFrame {
 
 		setSize(800, 600);
 		setLocation(100, 100);
-		if (Settings.getBoolean("MaximizeWindowOnStartup"))
+		if (Settings.getBoolean("main", "MaximizeWindowOnStartup"))
 			setExtendedState(MAXIMIZED_BOTH);
 		addWindowStateListener(new WindowStateListener() {
 			public void windowStateChanged(WindowEvent e) {
 				switch (e.getNewState()) {
 					case NORMAL:
-						Settings.setBoolean("MaximizeWindowOnStartup", false);
+						Settings.setBoolean("main", "MaximizeWindowOnStartup", false);
 						break;
 					case MAXIMIZED_BOTH:
-						Settings.setBoolean("MaximizeWindowOnStartup", true);
+						Settings.setBoolean("main", "MaximizeWindowOnStartup", true);
 						break;
 				}
 			}
@@ -125,11 +124,11 @@ extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().createImage(
 			Messages.getResourceURL("main", "ui.Logo_small")));
 
-		String lafClassName = Settings.getString("LookAndFeel");
+		String lafClassName = Settings.getString("main", "LookAndFeel");
 		if (lafClassName == null) {
-			Settings.setString("LookAndFeel",
+			Settings.setString("main", "LookAndFeel",
 				UIManager.getSystemLookAndFeelClassName());
-			lafClassName = Settings.getString("LookAndFeel");
+			lafClassName = Settings.getString("main", "LookAndFeel");
 		}
 		setLookAndFeel(lafClassName);
 
@@ -155,7 +154,7 @@ extends JFrame {
 
 		hideSplash();
 
-		if (Settings.getBoolean("ShowModuleChooserOnStartup"))
+		if (Settings.getBoolean("main", "ShowModuleChooserOnStartup"))
 			EventQueue.invokeLater(new Runnable() {
 				@SuppressWarnings("synthetic-access")
 				public void run() {
@@ -325,7 +324,6 @@ extends JFrame {
 		return menu;
 	}
 
-	
 	private JMenuItem createMenuItem(String actionKey) {
 		JMenuItem item = new JMenuItem(
 			Messages.getString("main", actionKey),
@@ -361,7 +359,7 @@ extends JFrame {
 	 * Creates and shows a splash screen.
 	 */
 	public static void createSplashScreen() {
-		if (!Settings.getBoolean("ShowSplashOnStartup")) return;
+		if (!Settings.getBoolean("main", "ShowSplashOnStartup")) return;
 
 		final Image splashImg = Toolkit.getDefaultToolkit().getImage(
 			Messages.getResourceURL("main", "ui.Splash"));
@@ -483,6 +481,11 @@ extends JFrame {
 		return true;
 	}
 
+	/**
+	 * Implements the standard behaviour of the title text of the main program.
+	 * This means, that the save status and file name of the current work are
+	 * shown and the currently opened module is mentioned.
+	 */
 	public void updateTitle() {
 		AbstractModuleConnector currentInstance =
 			JAlgoMain.getInstance().getCurrentInstance();

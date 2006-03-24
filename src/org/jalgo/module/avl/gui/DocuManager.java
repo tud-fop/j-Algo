@@ -188,7 +188,7 @@ implements GUIConstants {
 			XmlHandler xmlhandler = new XmlHandler();
 			saxParser.parse(getClass().getResourceAsStream(
 				Messages.getString("avl_res", //$NON-NLS-1$
-					"Algorithm_text_base_"+Settings.getString("Language"))), //$NON-NLS-1$ //$NON-NLS-2$
+					"Algorithm_text_base_"+Settings.getString("main", "Language"))), //$NON-NLS-1$ //$NON-NLS-2$
 				 xmlhandler);
 			Map<String, String> mapOfElements = xmlhandler.getMapOfElements();
 
