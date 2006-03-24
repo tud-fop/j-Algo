@@ -7,7 +7,7 @@ import org.jalgo.main.util.Messages;
 /**
  * The class DialogConstants contains some constant values used in dialog boxes.
  * 
- * @author Alexander
+ * @author Alexander Claus
  */
 public class DialogConstants {
 

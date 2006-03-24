@@ -12,6 +12,12 @@ import org.jalgo.main.gui.components.AboutFrame;
 import org.jalgo.main.gui.components.ModuleChooseDialog;
 import org.jalgo.main.gui.components.PreferencesDialog;
 
+/**
+ * This class is responsible for handling action events of the j-Algo main
+ * program.
+ * 
+ * @author Alexander Claus
+ */
 public class JAlgoWindowActionHandler
 extends AbstractAction
 implements ActionListener {

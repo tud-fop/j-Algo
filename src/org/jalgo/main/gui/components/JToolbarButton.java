@@ -14,6 +14,14 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This class defines a <code>JButton</code>, which is specialized for
+ * <code>JToolbar</code>s. This means, that the standard <code>JButton</code>
+ * has a border, which is not appropriate for creating nice toolbars ;o)
+ * Furthermore the native look&feel doesn't support the rollover mechanism.
+ * 
+ * @author Alexander Claus
+ */
 public class JToolbarButton
 extends JButton {
 

@@ -7,7 +7,14 @@ import javax.swing.JComponent;
 
 import org.jalgo.main.gui.JAlgoGUIConnector;
 
-
+/**
+ * This class represents a simple mouse listener, whose only function is to
+ * update the text of the j-Algo status line. For this, a component, whose
+ * description text should be displayed in status line, has only to add the
+ * singleton instance of <code>StatusLineUpdater</code> as a mouse listener.
+ * 
+ * @author Alexander Claus
+ */
 public class StatusLineUpdater
 extends MouseAdapter {
 
