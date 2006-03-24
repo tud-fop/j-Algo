@@ -30,6 +30,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -54,7 +55,7 @@ extends JDialog {
 
 	private PreferencesDialog(JFrame parent) {
 		super(parent, Messages.getString("main", "ui.Prefs"), true);
-		setAlwaysOnTop(true);
+		setModal(true);
 
 		setLayout(new BorderLayout());
 		JPanel centerPane = new JPanel();
@@ -73,6 +74,7 @@ extends JDialog {
 
 		JPanel langPane = new JPanel();
 		langPane.setLayout(new BoxLayout(langPane, BoxLayout.LINE_AXIS));
+		langPane.setBorder(new EmptyBorder(4,4,2,4));
 		language = new JComboBox(getAvailableLanguages());
 		langPane.add(language);
 		langPane.add(Box.createHorizontalStrut(5));
@@ -84,11 +86,13 @@ extends JDialog {
 		centerPane.add(Box.createVerticalStrut(5));
 
 		JLabel lafLabel = new JLabel(Messages.getString("main", "Prefs.Skin"));
+		lafLabel.setBorder(new EmptyBorder(2,4,0,0));
 		lafLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		centerPane.add(lafLabel);
 		centerPane.add(Box.createVerticalStrut(5));
 		JPanel lafPane = new JPanel();
 		lafPane.setLayout(new BoxLayout(lafPane, BoxLayout.LINE_AXIS));
+		lafPane.setBorder(new EmptyBorder(0,4,0,2));
 		lafList = new JList(getAvailableLookAndFeelNames());
 		lafList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lafList.addListSelectionListener(new ListSelectionListener() {
