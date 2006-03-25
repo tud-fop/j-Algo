@@ -87,11 +87,11 @@ implements GUIConstants {
 		public void startElement(String uri, String localName, String qName,
 			Attributes attr)
 		throws SAXException {
-			if (qName == "AlgorithmDescription") flag = ALGDESC; //$NON-NLS-1$
-			else if (qName == "Step") flag = STEP; //$NON-NLS-1$
-			else if (qName == "Key") flag = KEY; //$NON-NLS-1$
-			else if (qName == "Text") flag = TEXT; //$NON-NLS-1$
-			else if (qName == "Line") flag = LINE; //$NON-NLS-1$
+			if (qName.equalsIgnoreCase("AlgorithmDescription")) flag = ALGDESC; //$NON-NLS-1$
+			else if (qName.equals("Step")) flag = STEP; //$NON-NLS-1$
+			else if (qName.equals("Key")) flag = KEY; //$NON-NLS-1$
+			else if (qName.equals("Text")) flag = TEXT; //$NON-NLS-1$
+			else if (qName.equals("Line")) flag = LINE; //$NON-NLS-1$
 
 			if (attr != null) {
 				for (int i = 0; i < attr.getLength(); i++) {
@@ -132,12 +132,12 @@ implements GUIConstants {
 		@Override
 		public void endElement(String uri, String localName, String qName)
 		throws SAXException {
-			if (qName == "Step") { //$NON-NLS-1$
+			if (qName.equals("Step")) { //$NON-NLS-1$
 				mapOfElements.put(key, value);
 				key = null;
 				value = ""; //$NON-NLS-1$
 			}
-			if (qName == "Line") { //$NON-NLS-1$
+			if (qName.equals("Line")) { //$NON-NLS-1$
 				value = value + startstring + line + endstring;
 				line = ""; //$NON-NLS-1$
 				startstring = ""; //$NON-NLS-1$
