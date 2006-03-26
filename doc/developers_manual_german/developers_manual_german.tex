@@ -1,0 +1,92 @@
+\documentclass{scrbook}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[ansinew]{inputenc}
+\usepackage{a4wide}
+
+%verwenden von grafiken
+\usepackage[dvipdf, final]{graphicx}
+
+%verwenden von hyperlinks, stil derselben
+\usepackage{color}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+
+\usepackage{hyperref}
+\hypersetup{
+%	draft,										%hyperlinks ausschalten				
+	colorlinks,									%hyperlinks farbig darstellen
+	linkcolor   = darkblue,
+	filecolor   = darkblue,
+	urlcolor    = darkblue,
+	citecolor   = darkblue,
+	pdftitle    = {Entwicklerhandbuch},		%titel
+	pdfsubject  = {j-Algo},			%thema
+	pdfauthor   = {Alexander Claus},
+	pdfkeywords = {Algorithmen, Visualisierung},
+	pdfcreator  = {Distiller},
+	pdfproducer = {LaTeX mit Hyperref-Package}}
+
+%spezielle kommandos
+%schreibweise des software-titels
+\newcommand{\jalgo}{\mbox{\bfseries {\color{red}j}-Algo} }
+%pfad zu den bildern
+\newcommand{\pfad}{pics/}
+%fügt ein bild an einer bestimmten stelle, relativ zur position des befehls, ein.
+%usage: \icon{dateiname}{y-offset}{x-offset}{bildvergrößerung}
+\newcommand{\icon}[4]{
+	\vspace{#2 ex}
+	\hspace{#3 ex}
+	\includegraphics[scale=#4]{\pfad #1}
+}
+%fügt ein bild mittig mit bildunterschrift ein.
+%usage: \centerpic{dateiname}{bildvergrößerung}{untertitel}
+\newcommand{\centerpic}[3]{
+	\begin{center}
+		\includegraphics[scale=#2]{\pfad #1}\\
+		{\small #3}
+	\end{center}
+}
+%fügt eine \subsection mit einem führenden icon ein
+%usage: \subsectionicon{text}{icon}
+\newcommand{\subsectionicon}[2]{
+	\subsection[#1]{\qquad #1}
+	\icon{#2}{-5}{7}{1}
+	\\
+}
+%fügt eine \subsection mit 2 führenden icons ein
+%usage: \subsectiondoubleicon{text}{icon1}{icon2}
+\newcommand{\subsectiondoubleicon}[3]{
+	\subsection[#1]{\qquad \quad #1}
+	\icon{#2}{-5}{7}{1}
+	\icon{#3}{0}{-2}{1}
+	\\
+}
+%fügt eine \subsubsection* mit 2 führenden icons ein
+%usage: \subsubsectiondoubleicon{text}{icon1}{icon2}
+\newcommand{\subsubsectiondoubleicon}[3]{
+	\subsubsection*{\qquad \qquad #1}
+	\icon{#2}{-4}{1}{1}
+	\icon{#3}{0}{-2}{1}
+	\\
+}
+
+\begin{document}
+
+\begin{titlepage}
+\centerpic{title}{1}{}
+\vfill
+\begin{flushright}
+{\Huge \textbf{Entwicklerhandbuch}}
+\end{flushright}
+\end{titlepage}
+
+\newpage
+
+\tableofcontents
+\newpage
+
+\input{overview}
+\input{getting_started}
+\input{module_development}
+
+\end{document}

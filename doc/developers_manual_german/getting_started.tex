@@ -1,0 +1,59 @@
+\section{CVS-Zugang}
+\jalgo ist als Projekt bei \href{https://sourceforge.net/projects/j-algo/}{SourceForge} registriert und gehostet. Es gibt 2 Arten, auf das CVS-Repository des Projektes zuzugreifen.
+\begin{enumerate}
+	\item Lesezugriff. Als Beobachter des Projektes kann jeder auf das Projekt lesend zugreifen. Die Zugangsdaten sind:\\
+		Verbindungsmethode: \verb|pserver|\\
+		Host: \verb|cvs.sourceforge.net|\\
+		Repository-Pfad: \verb|/cvsroot/j-algo|\\
+		Login: \verb|anonymous|
+	\item Vollzugriff. Als registrierter Entwickler bei SourceForge und als eingetragenes Projektmitglied bei \jalgo kann das CVS unter folgenden Zugangsdaten im Vollzugriff erreicht werden:\\
+		Verbindungsmethode: \verb|extssh|\\
+		Host: \verb|cvs.sourceforge.net|\\
+		Repository-Pfad: \verb|/cvsroot/j-algo|\\
+		Login: <\textsc{SourceForge-Login}>\\
+		Passwort: <\textsc{SourceForge-Passwort}>\\
+		Um als Projektmitglied eingetragen zu werden, wenden Sie sich bitte an den Projekt-Administrator. Dessen Kontaktdaten sind auf der SourceForge-Seite zugänglich.
+\end{enumerate}
+\textbf{Achtung:} Wird das Projekt im Rahmen des Software-Praktikums an der TUD weiterentwickelt, gelten andere Bedingungen für den CVS-Zugang. Diese sind beim zuständigen Betreuer des Praktikums zu erfragen.
+
+\newpage
+
+\section{Entwickeln unter Eclipse}
+Natürlich steht es jedem Entwickler frei, eine Programmierumgebung seiner Wahl zu benutzen. Da jedoch der Großteil der \jalgo-Entwickler unter \href{http://eclipse.org}{Eclipse} programmiert, und diese Plattform einige komfortable Features besitzt, sollen hier die wichtigsten Einstellungen für diese Umgebung erläutert werden. Für andere Programmierumgebungen gelten sie sinngemäß.\\
+Da \jalgo die Java-Version 1.5 verwendet, ist eine Eclipse-Version 3.1 oder höher erforderlich.\\
+
+Das Projekt kann in der CVS-Ansicht von Eclipse ausgecheckt werden. Ab jetzt sind zwar alle nötigen Daten (Quellcodes, etc.) auf dem Rechner. Allerdings müssen noch einige Einstellungen vorgenommen werden, damit das Projekt kompiliert und gestartet werden kann:
+\begin{itemize}
+	\item Unter den Projekteinstellungen->Info->Text file encoding muss UTF-8 eingestellt werden. Dies garantiert reibungslose Unterstützung von Umlauten auf verschiedenen Betriebssystemen.
+	\item Unter Projekteinstellungen->Java Build Path müssen jetzt einige Einstellungen für den ClassPath des Projektes vorgenommen werden:\\
+Unter Source darf nur der Ordner \textsc{<Projektordner>}\verb|/src| stehen. Andere Ordner sind zu entfernen.
+	\item Als "`Default Output Folder"' ist \textsc{<Projektordner>}\verb|/bin| anzugeben.
+	\item Unter "`Libraries"'->"`Add JARs..."' ist \textsc{<Projektordner>}\verb|/extlibs/jh.jar| hinzuzufügen. Dies ist die nötige Bibliothek für das Hilfe-System.
+	\item Unter "`Libraries"'->"`Add Class Folder..."' sind folgende Ordner hinzuzufügen:\\
+		\textsc{<Projektordner>}\verb|/runtime| (für die Erkennung der installierten Module)\\
+		\textsc{<Projektordner>}\verb|/res/main| (für die Ressourcen zum Hauptprogramm)\\
+		sowie alle verfügbaren Modulordner unter
+		\textsc{<Projektordner>}\verb|/res/modules/|, also z.B.
+		\textsc{<Projektordner>}\verb|/res/modules/testModule| (für die Ressourcen der einzelnen Module)
+	\item Als nächstes werden die jUnit-Bibliotheken benötigt. Weil Eclipse diese bereits eingebaut hat, ist die einfachste Variante, diese hinzuzufügen, folgendermaßen:\\
+Projekteinstellungen schliessen, Workspace neu kompilieren lassen, und dann im View "`Problems"' einen der vielen Fehler auswählen, die im Zusammenhang mit jUnit gebracht werden. Beim Öffnen des gewählten Source-Files zeigt Eclipse im Editor bei den entsprechenden Imports Fehler an. Drücken Sie genau dort auf das rote Kreuz, und Ihnen wird die Option angeboten "`Add jUnit libraries"'. Wählen Sie diese aus, schließen das Source-File, und fertig.\\
+Jetzt sollte im View "`Problems"' kein Fehler mehr angezeigt werden.
+	\item Nun muss noch eine Startkonfiguration erstellt werden, und dann sind wir fertig:\\
+Unter dem Menüpunkt Run->Run... erstellen Sie eine neue Konfiguration vom Typ "`Java Application"', vergeben einen sinnvollen Namen und wählen vom \jalgo-Projekt als "`Main-Class"' \verb|org.jalgo.main.JAlgoMain| aus.
+\end{itemize}
+
+Jetzt ist das Projekt kompilierbar und das Programm kann gestartet werden.
+
+\section{Projektstruktur}
+Es folgt ein kurzer Überblick über die bestehende Struktur des Projektes, so dass der Entwickler weiß, welche Teile er verändern darf, und welche er besser unangetastet lassen sollte \dots
+
+Das Projekt fasst mehrere Ordner und einige "`lose"' Dateien. Der Reihe nach:\\
+Der Ordner \verb|bin| fasst die kompilierten Klassen. Sein Inhalt kann gelöscht werden, er wird bei jedem kompilieren neu erstellt. (Hinweis: Dieser Ordner gehört nicht unter die Versionskontrolle!)\\
+Der Ordner \verb|doc| fasst die Projektdokumentation. Dies sind die Dateien zum Entwicklerhandbuch, zum Benutzerhandbuch, sowie einige Dateien, die gewisse aufgetretene Probleme und evtl. Abhilfen schildern.\\
+Im Ordner \verb|examples| sind Beispieldateien für jedes Modul enthalten. Der komplette Ordner wird später in der Distribution enthalten sein.\\
+Im Ordner \verb|extlibs| liegen Bibliotheken, die Fremdcode enthalten. Dies ist derzeit nur die Laufzeitbibliothek des Hilfesystems. Der komplette Ordner wird später in der Distribution enthalten sein.\\
+Der Ordner \verb|relicts| fasst Codeteile und Ressourcendateien, welche derzeit nicht mehr verwendet werden. Sie wurden trotzdem aufgehoben, weil sie teilweise Funktionalität enthalten, die zu implementieren mal begonnen wurde, die jedoch nie ausgereift waren und daher derzeit nicht verwendet werden. Vielleicht bringen Sie einen Nutzen, wenn der Entwickler Ideen sucht.\\
+Im Ordner \verb|res| liegen alle Ressourcendateien geordnet nach Programmteilen.\\
+Der Ordner \verb|runtime| enthält leere, aber notwendige Dateien für die Laufzeit. Sie sind Teil der Pluginstruktur, und ermöglichen das Erkennen der installierten Module.\\
+Im Ordner \verb|src| schließlich ist der Quellcode enthalten. Die Paketstruktur ist in Abbildung X ersichtlich.\\
+TODO: Abbildung Paketstruktur.
