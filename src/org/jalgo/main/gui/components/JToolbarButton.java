@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 public class JToolbarButton
 extends JButton {
 
+	private static final long serialVersionUID = 1764614541666747667L;
 	static Border oneLineRaisedBevelBorder =
 		BorderFactory.createBevelBorder(
 			BevelBorder.RAISED, Color.white, SystemColor.control,

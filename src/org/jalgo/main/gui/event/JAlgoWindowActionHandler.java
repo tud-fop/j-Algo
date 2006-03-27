@@ -22,6 +22,7 @@ public class JAlgoWindowActionHandler
 extends AbstractAction
 implements ActionListener {
 
+	private static final long serialVersionUID = -4399928482802216570L;
 	private final JAlgoWindow appWin;
 
 	public JAlgoWindowActionHandler(JAlgoWindow appWin) {

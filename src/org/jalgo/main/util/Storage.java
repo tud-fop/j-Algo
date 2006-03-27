@@ -32,7 +32,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.List;
 
 import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.IModuleInfo;
@@ -85,7 +85,7 @@ public class Storage {
 
 			// get modNumber of module corresponding to this file
 			int modNumber = -1;
-			LinkedList moduleInfos =
+			List moduleInfos =
 				JAlgoMain.getInstance().getKnownModuleInfos();
 			for (int i = 0; i < moduleInfos.size(); i++) {
 				if (((IModuleInfo)moduleInfos.get(i)).getName().equals(name))

@@ -36,14 +36,13 @@ import org.jalgo.main.util.Messages;
 public class ModuleChooseDialog
 extends JDialog {
 
-	JAlgoWindow appWin;
+	private static final long serialVersionUID = -4607723819515165988L;
+	private JAlgoWindow appWin;
 	private static ModuleChooseDialog instance;
 	
 	private JLabel contentLabel;
 	private JList moduleList;
 	private JButton okButton;
-	
-	//---------
 	
 	private ModuleChooseDialog(JFrame parent) {
 		super(parent, Messages.getString("main", "New.Title"), true);
@@ -52,7 +51,6 @@ extends JDialog {
 			System.err.println("The ModuleChooseDialog needs to be opened by the JAlgoWindow.");
 		else appWin = (JAlgoWindow) parent;
 
-		
 		int space = 5;
 		
 		setLayout(new BorderLayout());
@@ -93,7 +91,7 @@ extends JDialog {
 		okButton.setEnabled(false);
 		okButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		//open-button
-		JButton openButton = new JButton(Messages.getString("main","ui.Open_file"));
+		JButton openButton = new JButton(Messages.getString("main", "ui.Open_file"));
 		openButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("synthetic-access")
 			public void actionPerformed(ActionEvent e) {
@@ -122,11 +120,10 @@ extends JDialog {
 		
 		add(westPane,BorderLayout.WEST);
 		
-		
 		contentLabel = new JLabel("", SwingConstants.CENTER);
 		// the following is for optimizing layout under linux, otherwise
 		// some of the text does not fit into dialog
-		contentLabel.setFont(new Font(contentLabel.getFont().getName(),contentLabel.getFont().getStyle(),11));
+		contentLabel.setFont(new Font(contentLabel.getFont().getName(),contentLabel.getFont().getStyle(), 11));
 		contentLabel.setBorder(BorderFactory.createCompoundBorder(
 			BorderFactory.createCompoundBorder(
 				new EmptyBorder(5, 5, 5, 5),
@@ -134,35 +131,32 @@ extends JDialog {
 			new EmptyBorder(5, 5, 5, 5)));
 		contentLabel.setText(Messages.getJAlgoInfoAsHTML());
 
-
-		add(contentLabel,BorderLayout.CENTER);
+		add(contentLabel, BorderLayout.CENTER);
 		
-
 		pack();
 		setLocationRelativeTo(parent);
 	}
 	
-	
-	public static void open(JFrame parent) {
+	public synchronized static void open(JFrame parent) {
 		if (instance == null) instance = new ModuleChooseDialog(parent);
 		instance.setSize(430, 300);
 		instance.setLocationRelativeTo(parent);
 		instance.setVisible(true);
 	}
 	
-	private static String[] getModuleList(){
+	private static String[] getModuleList() {
 		String[] back = new String[JAlgoMain.getInstance().getKnownModuleInfos().size()];
 		int index = 0;
 		Iterator<IModuleInfo> it = JAlgoMain.getInstance().getKnownModuleInfos().iterator();
 		
-		while(it.hasNext()){
+		while(it.hasNext()) {
 			back[index] = it.next().getName();
 			index++;
 		}
 		return back;
 	}
 	
-	private static void updateInfo(int index){		
+	private static void updateInfo(int index) {		
 		instance.contentLabel.removeAll();
 		instance.contentLabel.setText(Messages.getModuleInfoAsHTML(index));
 		//contentLabel.updateUI();

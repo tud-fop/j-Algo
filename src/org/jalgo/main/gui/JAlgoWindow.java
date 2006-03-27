@@ -63,6 +63,8 @@ import org.jalgo.main.util.Settings;
 public class JAlgoWindow
 extends JFrame {
 
+	private static final long serialVersionUID = -5392277576384049416L;
+
 	/** The singleton instance of <code>JalgoWindow</code> */
 	private static JAlgoWindow instance;
 
@@ -364,6 +366,8 @@ extends JFrame {
 		final Image splashImg = Toolkit.getDefaultToolkit().getImage(
 			Messages.getResourceURL("main", "ui.Splash"));
 		splash = new Window(new Frame()) {
+			private static final long serialVersionUID = -8639948348008098638L;
+
 			@SuppressWarnings("synthetic-access")
 			public void paint(Graphics g) {
 				g.drawImage(splashImg, 0, 0, splash);

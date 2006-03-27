@@ -28,6 +28,7 @@ package org.jalgo.main;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.MissingResourceException;
 
 import org.jalgo.main.AbstractModuleConnector.SaveStatus;
@@ -52,8 +53,8 @@ public class JAlgoMain {
 	/** The singleton instance of <code>JAlgoWindow</code> */ 
 	private JAlgoWindow appWin;
 
-	private LinkedList<Class<AbstractModuleConnector>> knownModules;
-	private LinkedList<IModuleInfo> knownModuleInfos;
+	private List<Class<AbstractModuleConnector>> knownModules;
+	private List<IModuleInfo> knownModuleInfos;
 	private AbstractModuleConnector currentInstance;
 
 	/**
@@ -139,7 +140,7 @@ public class JAlgoMain {
 	 *  
 	 * @return a list of all registered <code>IModuleInfo</code>s
 	 */
-	public LinkedList<IModuleInfo> getKnownModuleInfos() {
+	public List<IModuleInfo> getKnownModuleInfos() {
 		return knownModuleInfos;
 	}
 

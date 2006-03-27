@@ -32,6 +32,7 @@ import org.jalgo.main.util.Messages;
 public class AboutFrame
 extends JDialog {
 
+	private static final long serialVersionUID = -4496899775387570794L;
 	private static AboutFrame instance;
 	private JLabel contentLabel;
 
@@ -76,15 +77,10 @@ extends JDialog {
 	 * @param parent the <code>JAlgoWindow</code> instance
 	 */
 	public static void openAboutModuleFrame(JFrame parent) {
-		if (instance == null) instance = new AboutFrame(parent);
-		instance.setSize(558, 320);
-		instance.setLocationRelativeTo(parent);
-		instance.setTitle(Messages.getString("main", "ui.About_module")+ //$NON-NLS-1$ //$NON-NLS-2$
-			" \""+ //$NON-NLS-1$
-			JAlgoMain.getInstance().getCurrentInstance().getModuleInfo().getName()+
-			"\""); //$NON-NLS-1$
-		instance.contentLabel.setText(Messages.getModuleInfoAsHTML(-1));
-	    instance.setVisible(true);
+		openAboutFrame(parent, Messages.getString("main", "ui.About_module") + //$NON-NLS-1$ //$NON-NLS-2$
+			" \"" + //$NON-NLS-1$
+			JAlgoMain.getInstance().getCurrentInstance().getModuleInfo().getName() +
+			"\"", Messages.getModuleInfoAsHTML(-1));
 	}
 
 	/**
@@ -93,11 +89,17 @@ extends JDialog {
 	 * @param parent the <code>JAlgoWindow</code> instance
 	 */
 	public static void openAboutJAlgoFrame(JFrame parent) {
+		openAboutFrame(parent, Messages.getString("main", "ui.About"), //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.getJAlgoInfoAsHTML());
+	}
+	
+	private synchronized static void openAboutFrame(JFrame parent,
+			String title, String contentLabelText) {
 		if (instance == null) instance = new AboutFrame(parent);
 		instance.setSize(558, 320);
 		instance.setLocationRelativeTo(parent);
-		instance.setTitle(Messages.getString("main", "ui.About")); //$NON-NLS-1$ //$NON-NLS-2$
-		instance.contentLabel.setText(Messages.getJAlgoInfoAsHTML());
-	    instance.setVisible(true);
+		instance.setTitle(title);
+		instance.contentLabel.setText(contentLabelText);
+		instance.setVisible(true);
 	}
 }

@@ -28,7 +28,7 @@ package org.jalgo.main.gui.components;
 
 import java.awt.event.ActionListener;
 import java.net.URL;
-import java.util.LinkedList;
+import java.util.List;
 
 import javax.help.CSH;
 import javax.help.HelpBroker;
@@ -45,7 +45,7 @@ import org.jalgo.main.util.Messages;
  */
 public class HelpSystem {
 	
-	private LinkedList<IModuleInfo> knownModuleInfos; 
+	private List<IModuleInfo> knownModuleInfos; 
 
 	public HelpSystem() {
 		knownModuleInfos = JAlgoMain.getInstance().getKnownModuleInfos();

@@ -49,6 +49,7 @@ import org.jalgo.main.util.Settings;
 public class PreferencesDialog
 extends JDialog {
 
+	private static final long serialVersionUID = -6396848149904196575L;
 	private static PreferencesDialog instance;
 	private JCheckBox showSplash;
 	private JCheckBox showModuleChooser;
@@ -222,6 +223,7 @@ extends JDialog {
 			prevFrame.dispose();
 			testFrame.dispose();
 			previews[i] = new JComponent() {
+				private static final long serialVersionUID = 4503234117267490037L;
 				@Override
 				protected void paintComponent(Graphics g) {
 					super.paintComponent(g);
