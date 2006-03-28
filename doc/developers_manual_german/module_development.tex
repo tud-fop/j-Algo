@@ -66,6 +66,7 @@ Während der Laufzeit wird zum Start des Hauptprogramms der Ordner \verb|runtime/
 Sind diese korrekt implementiert, wird das Modul in die Liste der installierten Module aufgenommen und kann vom Benutzer ausgewählt werden.
 
 Der Entwickler hat also nun noch eine leere Datei mit dem Namen \textsc{<Modulkürzel>}\verb|.jar| im Ordner \verb|runtime/modules| zu erstellen. Wird \jalgo aus der Entwicklungsumgebung ge\-startet, kann das Modul nun aufgerufen werden.
+\newpage
 
 \subsection{Organisation der Ressourcen}
 Sicher soll das Modul irgendwelche Ressourcendateien halten, wie zum Beispiel Icons oder ausgelagerte Algorithmentexte.
@@ -80,10 +81,28 @@ Um Namenskonflikten unter den Ressourcendateien vorzubeugen (letzlich liegen all
 
 \jalgo ist ein Programm, welches mehrere Sprachen unterstützt. Zum aktuellen Zeitpunkt sind sämtliche Programmteile in Deutsch und Englisch verfügbar. Dem Entwickler wird nahegelegt, auch das neue Modul in diesen Sprachen zu veröffentlichen. Dazu ist es notwendig, alle Zeichenketten, die dem Benutzer dargeboten werden sollen, in externen Textdateien zu speichern. Auch für den einfachen Zugriff auf diese Zeichenketten bietet die Klasse \verb|org.jalgo.main.util.Messages| eine Methode an:\\
 \verb|getString(String bundleKey, String messageKey)|\\
-Die Verwendung dieser Methode erfolgt analog zu der oben erwähnten Methode für die Ressourcen.\\[0.25cm]
+Die Verwendung dieser Methode erfolgt analog zu der oben erwähnten Methode für die Ressourcen.\newpage
 \textbf{Achtung!} Die Textdatei mit den ausgelagerten Zeichenketten muss einer Namenskonvention folgen: Auch sie hat die Endung \verb|.properties| zu tragen. Der Name der Datei ist einfach das Kürzel der Sprache, für welche sie Zeichenketten enthält. Für deutsch also \verb|de.properties|, für englisch \verb|en.properties|. Auch diese Textdateien haben im Hauptpaket des Moduls zu liegen.\\[0.25cm]
 Liegen die Textdateien korrekt vor, so wird vom Hauptprogramm automatisch auf die eingestellte Sprache umgestellt. Der Modulentwickler muss hierzu nichts mehr beachten.\\
-Auch hier wieder sei als Beispiel auf die existierenden Dateien von Hauptprogramm und Modulen verwiesen.
+Auch hier wieder sei als Beispiel auf die existierenden Dateien von Hauptprogramm und Modulen verwiesen.\vspace{0.5cm}
+
+Letzlich sei noch erwähnt, dass jedes Modul die Möglichkeit hat, persistente Benutzereinstellungen anzubieten. Will der Modulentwickler solche Einstellungen einbauen, so muss eine Textdatei mit Zuordnungen zwischen Schlüsseln und Werten angelegt werden. Es sind hier alle Einstellmöglichkeiten als Schlüssel zu erwähnen; die zugeordneten Werte sind jeweils die Default-Werte für die entsprechenden Einstellungen.\\[0.25cm]
+\textbf{Achtung!} Die Textdatei mit den Default-Einstellungen muss einer Namenskonvention folgen: Sie muss den Namen \textsc{<Modulkürzel>}\verb|.prefs| tragen und im Ressourcenverzeichnis des Moduls (\verb|res/|\textsc{<Modulkürzel>}\verb|/|) liegen. Außerdem muss ein Schlüssel namens "`Version"' in der Datei stehen, dessen Wert die Version der Einstellungsdatei angibt. Wird in einer späteren Version etwas am Bestand der Schlüssel geändert, gewährleistet der geänderte Wert von "`Version"', dass beim Benutzer die Einstellungsdatei neu erstellt wird und an die neuen Einstellungen anpasst wird.\\[0.25cm]
+Es wird als Beispiel auf die Dateien \verb|main.prefs| des Hauptprogramms und \verb|avl.prefs| des Moduls AVL-Bäume verwiesen.\\
+Zugegriffen wird auf die persistenten Einstellungen über die Klasse\\ \verb|org.jalgo.main.util.Settings|\\
+Für Details ist die API-Dokumentation von \jalgo zu konsultieren. Nachfolgend ist der relevante Teil von \verb|Settings| abgebildet:
+\begin{verbatim}
+public class Settings {
+
+    public static boolean getBoolean(String resourceKey, String settingKey);
+    public static void setBoolean(String resourceKey, String key,
+        boolean value);
+    public static String getString(String resourceKey, String key);
+    public static void setString(String resourceKey, String key,
+        String value);
+}
+\end{verbatim}
+Wie schon beim Zugriff auf Ressourcenpfade und ausgelagerte Zeichenketten gibt der erste Parameter jeder Methode hier an, in welcher Einstellungsdatei die Einstellmöglichkeit gesucht werden soll. Dies ist für modulspezifische Einstellungen wieder das Modulkürzel. Es ist aber auch möglich, an die Einstellungen des Hauptprogramms zu gelangen mittels des \verb|resourceKey|s \verb|main|.
 \newpage
 
 \subsection{Organisation der Hilfe-Dateien}
