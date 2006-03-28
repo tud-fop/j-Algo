@@ -1,22 +1,29 @@
 package org.jalgo.main.gui.components;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
@@ -29,6 +36,7 @@ import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.JAlgoMain;
 import org.jalgo.main.gui.JAlgoWindow;
 import org.jalgo.main.util.Messages;
+import org.jalgo.main.util.Settings;
 
 /**
  * @author Matthias Schmidt
@@ -43,6 +51,7 @@ extends JDialog {
 	private JLabel contentLabel;
 	private JList moduleList;
 	private JButton okButton;
+	private JCheckBox mcdOnStartup;
 	
 	private ModuleChooseDialog(JFrame parent) {
 		super(parent, Messages.getString("main", "New.Title"), true);
@@ -54,6 +63,10 @@ extends JDialog {
 		int space = 5;
 		
 		setLayout(new BorderLayout());
+		
+		JPanel overlayPane = new JPanel();
+		overlayPane.setLayout(new BorderLayout());
+		
 		JPanel westPane = new JPanel();
 		westPane.setLayout(new BoxLayout(westPane, BoxLayout.Y_AXIS));
 		
@@ -63,6 +76,7 @@ extends JDialog {
 		westPane.add(listLabel);
 		
 		moduleList = new JList(getModuleList());
+		moduleList.setCellRenderer(new MyCellRenderer());
 		moduleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		moduleList.addListSelectionListener(new ListSelectionListener() {
 			@SuppressWarnings("synthetic-access")
@@ -71,6 +85,7 @@ extends JDialog {
 				okButton.setEnabled(true);
 			}
 		});
+		
 		JScrollPane listScrollPane = new JScrollPane(moduleList,
 			ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 			ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -78,7 +93,7 @@ extends JDialog {
 		westPane.add(Box.createVerticalStrut(space));		
 
 		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.Y_AXIS));
+		buttonPane.setLayout(new GridLayout(3,1));
 		//ok-button
 		okButton = new JButton(Messages.getString("main", "DialogConstants.Ok"));
 		okButton.addActionListener(new ActionListener() {
@@ -89,7 +104,7 @@ extends JDialog {
 			}
 		});
 		okButton.setEnabled(false);
-		okButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		okButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 		//open-button
 		JButton openButton = new JButton(Messages.getString("main", "ui.Open_file"));
 		openButton.addActionListener(new ActionListener() {
@@ -99,7 +114,7 @@ extends JDialog {
 				appWin.showOpenDialog(true, false);
 			}
 		});
-		openButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		openButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 		//cancel-button
 		JButton cancelButton = new JButton(Messages.getString("main", "DialogConstants.Cancel"));
 		cancelButton.addActionListener(new ActionListener() {
@@ -108,17 +123,14 @@ extends JDialog {
 				dispose();
 			}
 		});
-		cancelButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		cancelButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+		cancelButton.setFocusCycleRoot(true);
 		
 		buttonPane.add(okButton);
-		buttonPane.add(Box.createVerticalStrut(space));
 		buttonPane.add(openButton);
-		buttonPane.add(Box.createVerticalStrut(space));
 		buttonPane.add(cancelButton);
-		buttonPane.add(Box.createVerticalStrut(space));
 		westPane.add(buttonPane);
-		
-		add(westPane,BorderLayout.WEST);
+		overlayPane.add(westPane,BorderLayout.WEST);
 		
 		contentLabel = new JLabel("", SwingConstants.CENTER);
 		// the following is for optimizing layout under linux, otherwise
@@ -126,13 +138,29 @@ extends JDialog {
 		contentLabel.setFont(new Font(contentLabel.getFont().getName(),contentLabel.getFont().getStyle(), 11));
 		contentLabel.setBorder(BorderFactory.createCompoundBorder(
 			BorderFactory.createCompoundBorder(
-				new EmptyBorder(5, 5, 5, 5),
+				new EmptyBorder(5, 5, 0, 5),
 				new EtchedBorder()),
 			new EmptyBorder(5, 5, 5, 5)));
 		contentLabel.setText(Messages.getJAlgoInfoAsHTML());
 
-		add(contentLabel, BorderLayout.CENTER);
+		overlayPane.add(contentLabel, BorderLayout.CENTER);
 		
+		mcdOnStartup = new JCheckBox(
+				Messages.getString("main", "Prefs.ShowModuleChooserOnStartup"));
+		mcdOnStartup.setAlignmentX(Component.LEFT_ALIGNMENT);
+		
+		mcdOnStartup.addActionListener(new ActionListener(){
+			@SuppressWarnings("synthetic-access")
+			public void actionPerformed(ActionEvent e) {
+				Settings.setBoolean("main", "ShowModuleChooserOnStartup",
+						mcdOnStartup.isSelected());		
+			}
+		});
+		overlayPane.add(mcdOnStartup, BorderLayout.SOUTH);
+		
+		overlayPane.setBorder(new EmptyBorder(0,5,0,0));
+		
+		add(overlayPane, BorderLayout.CENTER);
 		pack();
 		setLocationRelativeTo(parent);
 	}
@@ -141,6 +169,7 @@ extends JDialog {
 		if (instance == null) instance = new ModuleChooseDialog(parent);
 		instance.setSize(430, 300);
 		instance.setLocationRelativeTo(parent);
+		instance.mcdOnStartup.setSelected(Settings.getBoolean("main", "ShowModuleChooserOnStartup"));
 		instance.setVisible(true);
 	}
 	
@@ -161,4 +190,41 @@ extends JDialog {
 		instance.contentLabel.setText(Messages.getModuleInfoAsHTML(index));
 		//contentLabel.updateUI();
 	}
+	
+	
+	/**
+	 * A special ListCellRenderer to add images in the moduleList.
+	 * @author Matthias Schmidt
+	 */
+	 class MyCellRenderer extends JLabel implements ListCellRenderer {
+		 private List<IModuleInfo> knownModules;
+		 
+	     public MyCellRenderer() {
+	         setOpaque(true);
+	         knownModules = JAlgoMain.getInstance().getKnownModuleInfos();
+	     }
+	     public Component getListCellRendererComponent(
+	         JList list,
+	         Object value,
+	         int index,
+	         boolean isSelected,
+	         boolean cellHasFocus)
+	     {
+	         setText(value.toString());
+	         setBackground(isSelected ? Color.blue : Color.white);
+	         setForeground(isSelected ? Color.white : Color.black);
+	         setIcon(getIconForValue(value));
+	         setBorder(new EmptyBorder(2,2,2,0));
+	         return this;
+	     }
+	     
+	     // Retrieves to module specific Icon for the JList entry.
+	     private Icon getIconForValue(Object value){	    	 
+	    	 for (IModuleInfo element : knownModules) {
+				if (element.getName().equals(value))
+					return new ImageIcon(element.getLogoURL());
+			}
+	    	return null;
+	     }
+	 } 
 }
