@@ -1,276 +1,117 @@
-%In Entwicklerhandbuch einzufügen
-
-\documentclass[12pt]{article}
-\usepackage{a4wide, listings, url}
-\usepackage[latin1]{inputenc}
- 
-\title{J-Algo\\Module Programmers Manual}
-\author{Stephan Creutz \and Michael Pradel \and Alexander Claus}
-\date{\today}
-
 \newcommand{\code}[1]{\lstinline$#1$}
 
-\begin{document}
-\maketitle
-\lstset{basicstyle=\small,language=Java,showstringspaces=false}
-\section{Introduction to jAlgo}
-J-Algo was developed to provide multiple module support. Each module should cover one topic (e.g. tree algorithms or EBNF). For this reason we created a simple interface. This interface is described in the sections below.\\
-The software is using the following toolkits: SWT, JFace and Draw2d (see section \ref{seealso}), thus you have to use it too. But it might be possible to write an adapter which makes it possible to use e.g. Swing or something else.
+\section{Implementieren eines neuen Moduls}
+Hier sollen nur die technischen Schritte angegeben sein, die nötig sind, ein neues Modul für \jalgo korrekt und vollständig aufzusetzen und in das Hauptprogramm zu integrieren. Es wird vorausgesetzt, dass der Entwickler selbst ein Konzept seines Moduls entwickelt, insbesondere, was Details der Visualisierung betrifft.
 
-\section{Implementing a module}
+Es folgen fünf Abschnitte. Im ersten wird der Teil erklärt, der für das Implementieren eines neuen Moduls minimal notwendig ist. Der zweite Abschnitt enthält Erklärungen zur Funktionsweise der Pluginstruktur von \jalgo, und was der Entwickler für korrekte Erkennung des Moduls zu beachten hat. Der dritte Abschnitt zeigt, wie die Ressourcen des zu implementierenden Moduls organisiert sein sollten. Der vierte Abschnitt erklärt, wie die Dateien der Online-Hilfe für das Modul zu organisieren sind und der fünfte Abschnitt schließlich zeigt die hauptprogrammseitige Schnittstelle zwischen Modul und Hauptprogramm. Im folgenden wird abkürzend für "`Das zu implementierende Modul"' nur "`Das Modul"' geschrieben.
 
-To implement a new J-Algo module, create a directory with your modules name in\\ /source/org/jalgo/module. This directory has to contain at least two classes:\\ ModuleConnector.java implementing the interface IModuleConnector and ModuleInfo.java implementing the interface IModuleInfo.\\
-In order to help you to write a new module, there is an minimalistic module called\\
-testModule. It is a correctly implemented J-Algo module, but does nothing. You can use it as a skeleton for any new module.
+\subsection{Grundimplementierung}
+Der Code für das Modul wird im Paket \verb|org.jalgo.module.|\textsc{<Modulkürzel>} abgelegt. Das Modulkürzel sollte aussagekräftig, jedoch relativ kurz gehalten sein. Es wird später im Code oft benötigt, wenn es um Ressourcen-Zugriffe geht.\\
+Eine schlechte Wahl wären also zum Beispiel \verb|dijkstrasShortestPathAlgorithm| oder vielleicht \verb|syntaxDiagramsAndEBNF|.
 
-\subsection{IModuleConnector}
-This interface establishes a connection to the main program.
-You have to implement the methods listed below:
+Es gibt zwei Schnittstellen, um das Hauptprogramm mit einem Modul zu vernetzen. Die erste, modulseitige, Schnittstelle besteht aus zwei Klassen. Jedes Modul muss eine Verbindungseinheit und eine Informationseinheit anbieten. Die Verbindungseinheit muss abgeleitet sein von \verb|org.jalgo.main.AbstractModuleConnector|. Hier sind Methoden zu implementieren, die die Interaktion des Moduls mit dem Hauptprogramm spezifizieren. Für Details dazu sollte die API-Dokumentation von \jalgo konsultiert werden. Nachfolgend ist die Schnittstelle von \verb|AbstractModuleConnector| abgebildet.\\[0.25cm]
+\textbf{Achtung!} Die Verbindungseinheit muss sich an eine Namenskonvention halten: Paket und Name der Klasse muss \verb|org.jalgo.module.|\textsc{<Modulkürzel>}\verb|.ModuleConnector| lauten. Dies ist ein notwendiger Teil der Pluginstruktur von \jalgo. Für Details dazu lesen Sie bitte den nächsten Abschnitt.
 \newpage
+\begin{verbatim}
+public abstract class AbstractModuleConnector {
+    public abstract void init();
+    public abstract void run();
+    public abstract void setDataFromFile(ByteArrayInputStream data);
+    public abstract ByteArrayOutputStream getDataForFile();
+    public abstract void print();
 
-\begin{lstlisting}[frame=single,caption={IModuleConnector}]
-public interface IModuleConnector {
+    public boolean close();
 
-	/**
-	 * This method is invoked, after the user loaded a saved file
-	 * for the module.
-	 *
-	 * @param data the loaded file consisting of the module
-	 *             header, which was added by the main program
-	 *             before saving (e.g. including with which
-	 *             module the file is associated) and the data
-	 *             for the module; put the data in here
-	 */
-	public void setDataFromFile(ByteArrayInputStream data);
-
-	/**
-	 * This method is invoked, when the user wants to save the
-	 * state of the module.
-	 *
-	 * @return a stream with the data from the module, that has
-	 *         to be stored in a file after the main program
-	 *         added the module header (e.g. including with
-	 *         which module the file is associated) to it
-	 */
-	public ByteArrayOutputStream getDataForFile();
-
-	/**
-	 * This method will be invoked, if the user clicked the
-	 * print-button (or chose to print in any other way)
-	 * The module will call a print dialog and manage the
-	 * printing.
-	 *
-	 * NOTE! Printing is currently not supported by the J-Algo
-	 * main program.
-	 */
-	public void print();
-
-	/**
-	 * Get the Menu from the module
-	 */
-	public SubMenuManager getMenuManager();
-
-
-
-
-	/**
-	 * Get the ToolBar from the module
-	 */
-	public SubToolBarManager getToolBarManager();
-
-	/**
-	 * Get the StatusLine from the module
-	 */
-	public SubStatusLineManager getStatusLineManager();
-	
-	/**
-	 * Get a class with all module information (name,
-	 * description, version, ...)
-	 */
-	public IModuleInfo getModuleInfo();
-
-	/**
-	 * This method is invoked, when module or program are
-	 * intended to be closed.
-	 * Here the user can be asked for saving his work.
-	 * If this method returns false, the closing of module/
-	 * program is ignored.
-	 * 
-	 * @return true, if module is ready to be closed,
-	 *         false otherwise
-	 */
-	public boolean close();
+    public final IModuleInfo getModuleInfo();
+    public enum SaveStatus {
+        NOTHING_TO_SAVE,
+        NO_CHANGES,
+        CHANGES_TO_SAVE
+    }
+    public final SaveStatus getSaveStatus();
+    public final void setSaveStatus(SaveStatus status);
+    public final void setSavingBlocked(boolean blocked);
+    public final boolean isSavingBlocked();
+    public final String getOpenFileName();
+    public final void setOpenFileName(String filename);
 }
-\end{lstlisting}
+\end{verbatim}
 
-\subsection{ModuleConnector from testModule}
-Here is a concrete example for a class implementing the \code{IModuleConnector} interface.
-
-% TODO: wie wird print() umgesetzt, momentan wird dies am interface vorbei gemacht
-\begin{lstlisting}[frame=single,caption={IModuleInfo interface}]
-public class ModuleConnector implements IModuleConnector {
-
-    private ModuleInfo moduleInfo;
-
-    private ApplicationWindow appWin;
-    private Composite comp;
-    private SubMenuManager menuManager;
-    private SubToolBarManager toolBarManager;
-    private SubStatusLineManager statusLineManager;
-    
-
-    public ModuleConnector(
-		ApplicationWindow appWin,
-		Composite comp,
-		SubMenuManager menu,
-		SubToolBarManager tb,
-		SubStatusLineManager sl) {
-	    
-		moduleInfo = new ModuleInfo();
-	    
-		this.appWin = appWin;
-		this.comp = comp;
-		this.menuManager = menu;
-		this.toolBarManager = tb;
-		this.statusLineManager = sl;
-    }
-    
-    public void run() {
-        System.err.println("testModule is running");
-    }
-
-    public void setDataFromFile(ByteArrayInputStream data) {
-    }
-
-    public ByteArrayOutputStream getDataForFile() {
-        return null;
-    }
-
-    public void print() {}
-
-    public SubMenuManager getMenuManager() {
-        return menuManager;
-    }
-
-    public SubToolBarManager getToolBarManager() {
-        return toolBarManager;
-    }
-
-    public SubStatusLineManager getStatusLineManager() {
-        return statusLineManager;
-    }
-
-    public IModuleInfo getModuleInfo() {
-        return moduleInfo;
-    }
-
-    public boolean close() {
-        return true;
-    }
-}
-\end{lstlisting}
-
-\subsection{IModuleInfo}
-The class which implements this interface provides some basic information about the module. The class yields the name, version, author(s), license, description and a logo. Furthermore it holds the information about open files.
-
-\begin{lstlisting}[frame=single,caption={IModuleInfo interface}]
-import org.eclipse.jface.resource.ImageDescriptor
-
+Die Informationseinheit ist dazu da, Informationen über das Modul bereitzustellen, die dem Benutzer entsprechend aufbereitet dargeboten werden, wenn er ein Modul zur Benutzung auswählen will. Sie muss das Interface \verb|org.jalgo.main.IModuleInfo| implementieren. Für Details dazu sei hier wieder auf die API-Dokumentation von \jalgo verwiesen. Nachfolgend ist die Schnittstelle von \verb|IModuleInfo| abgebildet.
+\begin{verbatim}
 public interface IModuleInfo {
-	public String getName();
-	public String getVersion();
-	public String getAuthor();
-	public String getDescription();
-	public ImageDescriptor getLogo();
-	public String getLicense();
-	
-	/**
-	 * Get the filename of the currently opened file.
-	 * @return filename
-	 */
-	public String getOpenFileName();
-	/**
-	 * Set the filename of the currently opened file.
-	 * @param string filename
-	 */
-	public void setOpenFileName(String string);
+    public String getName();
+    public String getVersion();
+    public String getAuthor();
+    public String getDescription();
+    public URL getLogoURL();
+    public String getLicense();
+    public URL getHelpSetURL();
 }
-\end{lstlisting}
+\end{verbatim}
+\textbf{Achtung!} Die Informationseinheit muss sich an eine Namenskonvention halten: Name und Paket der Klasse muss \verb|org.jalgo.module.|\textsc{<Modulkürzel>}\verb|.ModuleInfo| lauten. Dies ist notwendiger Teil der Pluginstruktur von \jalgo.\\
+Weiterhin hat die Informationseinheit das \textbf{Singleton}-Entwurfsmuster zu implementieren mit der Zugriffsmethode
+\verb|public static IModuleInfo getInstance();|\\
+Als Klassenmethode kann diese nicht in das Interface \verb|IModuleInfo| aufgenommen werden. Es sei jedoch ausdrücklich darauf hingewiesen, dass das Fehlen dieser Methode dazu führt, dass das Modul nicht korrekt erkannt wird und dass Laufzeitfehler beim Starten des Programmes auftreten.
 
-\subsection{ModuleInfo from testModule}
-Here is a concrete example for a class implementing the \code{IModuleInfo} interface.
+Als Beispielcode ist ein minimalistisches Modul implementiert namens \verb|testModule|. Es ist ein korrekt implementiertes Modul, jedoch hat es keinerlei Funktionalität. Der Entwickler kann den Code bei Bedarf als Skelett zum Aufsetzen eines neuen Moduls nehmen. Zum aktuellen Zeitpunkt existieren für \jalgo 2 Module: \textbf{AVL-Bäume} und \textbf{Dijkstra}. Es sei dem Entwickler freigestellt, diese als Anleihe zu nehmen.\\[0.5cm]
+Mit diesen beiden Klassen ist die modulseitige Schnittstelle fertiggestellt. Damit das Modul als solches auch vom Hauptprogramm erkannt wird, ist noch ein Schritt notwendig.
 
-\begin{lstlisting}[frame=single,caption={Sample ModuleInfo Code}]
-public class ModuleInfo implements IModuleInfo {
+\subsection{Pluginstruktur von \jalgo}
+An dieser Stelle scheint es angebracht, kurz die Pluginstruktur von \jalgo zu erläutern. In der Distribution wird das Hauptprogramm in ein JAR-Archiv verpackt. Es muss unabhängig von den Modulen sein. Daher wird auch jedes Modul in ein eigenes JAR-Archiv verpackt mit allem, was zu diesem Modul gehört: Code und Ressourcendateien. Dies garantiert, dass bei Erscheinen eines neuen Modules nur das entsprechende JAR-Archiv vom Benutzer heruntergeladen werden muss.\\[0.25cm]
+\textbf{Achtung!} Die JAR-Archive für die Module müssen als Namen das Modulkürzel tragen und im Ordner \verb|runtime/modules| liegen. Nur so kann das Modul vom Hauptprogramm erkannt werden.\\[0.25cm]
+Während der Laufzeit wird zum Start des Hauptprogramms der Ordner \verb|runtime/modules| nach JAR-Archiven durchsucht. Dabei wird der Name des Archives als Paketname angenommen, und es wird in jedem Archiv nach den beiden Verbindungsklassen (siehe oben) gesucht:\\
+\verb|org.jalgo.module.|\textsc{<Archivname>}\verb|.ModuleConnector| und\\
+\verb|org.jalgo.module.|\textsc{<Archivname>}\verb|.ModuleInfo|\\
+Sind diese korrekt implementiert, wird das Modul in die Liste der installierten Module aufgenommen und kann vom Benutzer ausgewählt werden.
 
-    public String getName() {
-        return "testModule";
-    }
+Der Entwickler hat also nun noch eine leere Datei mit dem Namen \textsc{<Modulkürzel>}\verb|.jar| im Ordner \verb|runtime/modules| zu erstellen. Wird \jalgo aus der Entwicklungsumgebung ge\-startet, kann das Modul nun aufgerufen werden.
 
-    public String getVersion() {
-        return "0.1";
-    }
+\subsection{Organisation der Ressourcen}
+Sicher soll das Modul irgendwelche Ressourcendateien halten, wie zum Beispiel Icons oder ausgelagerte Algorithmentexte.
 
-    public String getAuthor() {
-        return "Your Name";
-    }
+Da, wie erwähnt, zur Laufzeit das Modul in einem JAR-Archiv vorliegt, kann auf die Ressourcen nur über den Klassenlader zugegriffen werden, indem die Methoden\\ \verb|getClass().getResource(String)| (liefert eine URL) oder\\ \verb|getClass().getResourceAsStream(String)| (liefert einen InputStream)\\
+verwendet werden. Es erweist sich als vorteilhaft, wenn die Pfade zu den Ressourcendateien nicht direkt im Code verankert werden, sondern in einer externen Textdatei abgelegt werden. Um einen einfachen Ressourcenzugriff zu ermöglichen, bietet das Hauptprogramm mit der Klasse \verb|org.jalgo.main.util.Messages| die Methode\\
+\verb|getResourceURL(String bundleKey, String key)|\\
+an, welche direkt die URL einer Ressource zurückgibt. Der erste Parameter ist der Schlüssel, mit welchem das Ressourcenpaket ausgewählt wird, aus dem der Pfad zu entnehmen ist. Dies ist wieder das Modulkürzel, also der Hauptpaketname, wenn moduleigene Ressourcen geladen werden sollen, und \verb|main|, wenn Ressourcen des Hauptprogramms, z.B. Standard-Icons verwendet werden sollen. Der zweite Parameter ist der Schlüssel der Ressource. Dafür ist im Hauptpaket des Moduls eine Textdatei zu erstellen, in welcher Ressourcenpfade zu Schlüsseln zugeordnet werden. Es sei als Beispiel auf die existierenden Dateien von Hauptprogramm und den bestehenden Modulen verwiesen.\\[0.25cm]
+\textbf{Achtung!} Die Textdatei mit den Ressourcenpfaden muss einer Namenskonvention folgen: Sie hat den Titel \verb|res.properties| zu tragen und muss im Hauptpaket des Moduls liegen. Anderenfalls wird sie von der Klasse \verb|Messages| nicht gefunden.\\[0.25cm]
+Die Ressourcendateien selbst werden im Ordner \verb|res/module/|\textsc{Modulkürzel} abgelegt. Wird unter Eclipse programmiert, ist dieser Ordner unter "`Projekteinstellungen"'->"`Libraries"'->"`Add Class Folder..."' hinzuzufügen, damit die Ressourcen in der Entwicklungsumgebung freigegeben sind.\\
+Um Namenskonflikten unter den Ressourcendateien vorzubeugen (letzlich liegen alle Ressourcenpfade hinter \verb|res/main/| und \verb|res/module/|\textsc{<Modulkürzel>}\verb|/| auf dem Klassenpfad), empfiehlt es sich, im angelegten Ressourcenordner eine angemessene Struktur zu entwickeln, so zum Beispiel einen Unterordner \textsc{<Modulkürzel>}\verb|_pix| für Bilddateien. Jetzt kann auch ein Dateiname wie \verb|icon.gif| ohne Probleme verwendet werden.\vspace{0.5cm}
 
-    public String getDescription() {
-        return "a module for testing purposes";
-    }
-
-    public ImageDescriptor getLogo() {
-        return ImageDescriptor.createFromFile(null, "pix/new.gif");
-    }
-
-    public String getLicense() {
-        return "GPL";
-    }
-
-    public String getOpenFileName() {
-        return null;
-    }
-
-    public void setOpenFileName(String string) {
-    }
-}
-\end{lstlisting}
-
-If this is too easy for you, just have a look at the existing modules, namely "AVL-trees", "Dijkstra-algorithm", "Syntax diagrams and EBNF".
+\jalgo ist ein Programm, welches mehrere Sprachen unterstützt. Zum aktuellen Zeitpunkt sind sämtliche Programmteile in Deutsch und Englisch verfügbar. Dem Entwickler wird nahegelegt, auch das neue Modul in diesen Sprachen zu veröffentlichen. Dazu ist es notwendig, alle Zeichenketten, die dem Benutzer dargeboten werden sollen, in externen Textdateien zu speichern. Auch für den einfachen Zugriff auf diese Zeichenketten bietet die Klasse \verb|org.jalgo.main.util.Messages| eine Methode an:\\
+\verb|getString(String bundleKey, String messageKey)|\\
+Die Verwendung dieser Methode erfolgt analog zu der oben erwähnten Methode für die Ressourcen.\\[0.25cm]
+\textbf{Achtung!} Die Textdatei mit den ausgelagerten Zeichenketten muss einer Namenskonvention folgen: Auch sie hat die Endung \verb|.properties| zu tragen. Der Name der Datei ist einfach das Kürzel der Sprache, für welche sie Zeichenketten enthält. Für deutsch also \verb|de.properties|, für englisch \verb|en.properties|. Auch diese Textdateien haben im Hauptpaket des Moduls zu liegen.\\[0.25cm]
+Liegen die Textdateien korrekt vor, so wird vom Hauptprogramm automatisch auf die eingestellte Sprache umgestellt. Der Modulentwickler muss hierzu nichts mehr beachten.\\
+Auch hier wieder sei als Beispiel auf die existierenden Dateien von Hauptprogramm und Modulen verwiesen.
 \newpage
 
-\section{Bind the module to the main program}
-Binding a new module to the main program is really easy: You only have to add two lines into the class /src/org/jalgo/main/JalgoMain.java.\\
-You should find the method addKnownModules:
-\begin{lstlisting}[frame=single,caption={JalgoMain.addKnownModules()}]
-public void addKnownModules() {
-    try {
-    	knownModules.add(ModuleConnector.class);
-    	knownModules.add(
-        	org.jalgo.module.testModule.ModuleConnector.class);
-    	//Add a new ModuleConnector here!!
-    } catch (Exception e) {
-    	e.printStackTrace();
-    }
-    knownModuleInfos.add(new ModuleInfo());
-    knownModuleInfos.add(
-    	new org.jalgo.module.testModule.ModuleInfo());
-    //Add a new ModuleInfo here!!
+\subsection{Organisation der Hilfe-Dateien}
+Dem Entwickler angeraten, ebenfalls eine Online-Hilfe zu seinem Modul zu erstellen. Die Online-Hilfe von \jalgo nutzt die Technologie von \textbf{JavaHelp}. Es folgt eine kurze Einführung in dieses System.\\
+\dots\\
+TODO: Matthias, du bist dran, denk auch daran, dass Du mir noch die Änderungen für das Gewährleisten der Kontextsensitivität schilderst.
+
+\subsection{Schnittstelle zum Hauptprogramm}
+Die zweite erwähnte Schnittstelle ist die auf Seiten des Hauptprogramms, namentlich die Klasse \verb|org.jalgo.main.gui.JAlgoGUIConnector|. Der Entwickler hat hier nichts zu implementieren, jedoch hat er Kenntnis von dieser Schnittstelle zu haben. Hierüber laufen alle Anfragen, die das Modul an die graphische Oberfläche des Hauptprogramms richtet. Für Details dazu sei auf die API-Dokumentation von \jalgo verwiesen. Nachfolgend ist die Schnittstelle von \verb|JAlgoGUIConnector| abgebildet.
+\begin{verbatim}
+public class JAlgoGUIConnector {
+
+    public static JAlgoGUIConnector getInstance();
+
+    public void saveStatusChanged(AbstractModuleConnector moduleInstance);
+    public void showErrorMessage(String msg);
+    public void showWarningMessage(String msg);
+    public void showInfoMessage(String msg);
+    public int showConfirmDialog(String question, int optionType);
+    public void setStatusMessage(String msg);
+    public String showOpenDialog(boolean openAsJAlgoFile,
+                                 boolean useCurrentModuleInstance);
+    public AbstractModuleConnector newModuleInstanceByName(String moduleName);
+
+    public JComponent getModuleComponent(AbstractModuleConnector module);
+    public JMenu getModuleMenu(AbstractModuleConnector module);
+    public JToolBar getModuleToolbar(AbstractModuleConnector module);
 }
-\end{lstlisting}
-
-Please use the complete path to your classes!
-
-\section{Known bugs}
-\begin{itemize}
-\item The method \code{public void print()} is unused and senseless in the moment.
-\end{itemize}
-
-\section{Reporting bugs}
-If you find a bug please be so kind to drop us an email (\url{j-algo-development@lists.sourceforge.net}).
-
-\section{See also}\label{seealso}
-To program a module you need information about SWT, JFace and Draw2d. This can be found at \url{http://www.eclipse.org}.\\
-More detailed information can be found in the source code.
-
-\end{document}
+\end{verbatim}
+Diese Klasse implementiert das \textbf{Singleton}-Entwurfsmuster. Somit kommt man über die Zugriffsmethode \verb|getInstance()| an die Instanz.
+\newpage

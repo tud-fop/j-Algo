@@ -45,15 +45,18 @@ Unter dem Menüpunkt Run->Run... erstellen Sie eine neue Konfiguration vom Typ "`
 Jetzt ist das Projekt kompilierbar und das Programm kann gestartet werden.
 
 \section{Projektstruktur}
-Es folgt ein kurzer Überblick über die bestehende Struktur des Projektes, so dass der Entwickler weiß, welche Teile er verändern darf, und welche er besser unangetastet lassen sollte \dots
-
-Das Projekt fasst mehrere Ordner und einige "`lose"' Dateien. Der Reihe nach:\\
-Der Ordner \verb|bin| fasst die kompilierten Klassen. Sein Inhalt kann gelöscht werden, er wird bei jedem kompilieren neu erstellt. (Hinweis: Dieser Ordner gehört nicht unter die Versionskontrolle!)\\
-Der Ordner \verb|doc| fasst die Projektdokumentation. Dies sind die Dateien zum Entwicklerhandbuch, zum Benutzerhandbuch, sowie einige Dateien, die gewisse aufgetretene Probleme und evtl. Abhilfen schildern.\\
-Im Ordner \verb|examples| sind Beispieldateien für jedes Modul enthalten. Der komplette Ordner wird später in der Distribution enthalten sein.\\
-Im Ordner \verb|extlibs| liegen Bibliotheken, die Fremdcode enthalten. Dies ist derzeit nur die Laufzeitbibliothek des Hilfesystems. Der komplette Ordner wird später in der Distribution enthalten sein.\\
-Der Ordner \verb|relicts| fasst Codeteile und Ressourcendateien, welche derzeit nicht mehr verwendet werden. Sie wurden trotzdem aufgehoben, weil sie teilweise Funktionalität enthalten, die zu implementieren mal begonnen wurde, die jedoch nie ausgereift waren und daher derzeit nicht verwendet werden. Vielleicht bringen Sie einen Nutzen, wenn der Entwickler Ideen sucht.\\
-Im Ordner \verb|res| liegen alle Ressourcendateien geordnet nach Programmteilen.\\
-Der Ordner \verb|runtime| enthält leere, aber notwendige Dateien für die Laufzeit. Sie sind Teil der Pluginstruktur, und ermöglichen das Erkennen der installierten Module.\\
-Im Ordner \verb|src| schließlich ist der Quellcode enthalten. Die Paketstruktur ist in Abbildung X ersichtlich.\\
+Es folgt ein kurzer Überblick über die bestehende Struktur des Projektes, so dass der Entwickler weiß, welche Teile er verändern darf, und welche besser unangetastet bleiben sollten\dots\\
+Das Projekt fasst mehrere Ordner und einige "`lose"' Dateien. Der Reihe nach:
+\begin{itemize}
+	\item Der Ordner \verb|bin| fasst die kompilierten Klassen. Sein Inhalt kann gelöscht werden, er wird bei jedem kompilieren neu erstellt. (Hinweis: Dieser Ordner gehört nicht unter die Versionskontrolle!)
+	\item Der Ordner \verb|doc| fasst die Projektdokumentation. Dies sind die Dateien zum Entwicklerhandbuch, zum Benutzerhandbuch, sowie einige Dateien, die gewisse aufgetretene Probleme und evtl. Abhilfen schildern.
+	\item Im Ordner \verb|examples| sind Beispieldateien für jedes Modul enthalten. Der komplette Ordner wird später in der Distribution enthalten sein.
+	\item Im Ordner \verb|extlibs| liegen Bibliotheken, die Fremdcode enthalten. Dies ist derzeit nur die Laufzeitbibliothek des Hilfesystems. Der komplette Ordner wird später in der Distribution enthalten sein.
+	\item Der Ordner \verb|relicts| fasst Codeteile und Ressourcendateien, welche derzeit nicht mehr verwendet werden. Sie wurden trotzdem aufgehoben, weil sie teilweise Funktionalität enthalten, die zu implementieren mal begonnen wurde, die jedoch nie ausgereift waren und daher derzeit nicht verwendet werden. Vielleicht bringen Sie einen Nutzen, wenn der Entwickler Ideen sucht.
+	\item Im Ordner \verb|res| liegen alle Ressourcendateien geordnet nach Programmteilen.
+	\item Der Ordner \verb|runtime| enthält leere, aber notwendige Dateien für die Laufzeit. Sie sind Teil der Pluginstruktur, und ermöglichen das Erkennen der installierten Module.
+	\item Im Ordner \verb|src| schließlich ist der Quellcode enthalten. Die Paketstruktur ist in Abbildung X ersichtlich.
+	\item Die "`losen"' Dateien sind diverse Build-Skripte, Manifest- und Start-Dateien für verschiedene Betriebssysteme sowie einige projektspezifische Dateien.
+\end{itemize}
 TODO: Abbildung Paketstruktur.
+\newpage
