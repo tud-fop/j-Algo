@@ -111,7 +111,7 @@ Dem Entwickler angeraten, ebenfalls eine Online-Hilfe zu seinem Modul zu erstell
 TODO: Matthias, du bist dran, denk auch daran, dass Du mir noch die Änderungen für das Gewährleisten der Kontextsensitivität schilderst.
 
 \subsection{Schnittstelle zum Hauptprogramm}
-Die zweite erwähnte Schnittstelle ist die auf Seiten des Hauptprogramms, namentlich die Klasse \verb|org.jalgo.main.gui.JAlgoGUIConnector|. Der Entwickler hat hier nichts zu implementieren, jedoch hat er Kenntnis von dieser Schnittstelle zu haben. Hierüber laufen alle Anfragen, die das Modul an die graphische Oberfläche des Hauptprogramms richtet. Für Details dazu sei auf die API-Dokumentation von \jalgo verwiesen. Nachfolgend ist die Schnittstelle von \verb|JAlgoGUIConnector| abgebildet.
+Die zweite erwähnte Schnittstelle ist die auf Seiten des Hauptprogramms, namentlich die Klasse \verb|org.jalgo.main.gui.JAlgoGUIConnector|. Der Entwickler hat hier nichts zu implementieren, jedoch hat er Kenntnis von dieser Schnittstelle zu haben. Hierüber laufen alle Anfragen, die das Modul an die graphische Oberfläche des Hauptprogramms richtet. Für Details dazu sei auf die API-Dokumentation von \jalgo verwiesen. Nachfolgend ist die Schnittstelle von \verb|JAlgoGUIConnector| abgebildet. Gerade die letzten 3 Methoden sind interessant, um an die moduleigenen GUI-Komponenten zu gelangen.
 \begin{verbatim}
 public class JAlgoGUIConnector {
 
