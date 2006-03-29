@@ -138,6 +138,8 @@ public class Settings {
 	 */
 	private static void store(String resourceKey) {
 		try {
+			File folder = new File(prefsPath); 
+			if (!folder.exists()) folder.mkdir();
 			FileOutputStream out =
 				new FileOutputStream(prefsPath+resourceKey+".prefs");
 			String comment;
