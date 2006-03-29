@@ -85,10 +85,4 @@ public class HelpSystem {
 		}
 		return null;
 	}
-		
-	// TODO Mergen statisch:
-	//  d.h. HelpSystem testet, ob sich die Zusammensetzung der Module verändert hat.
-	//  	--> Wenn ja: Verändern der Datei, die die HelpSet Liste der Module hält und
-	//					 Aktualisieren der Modulliste (gespeichert in Properties)
-	// TODO den ModulChooseDialog entwerfen
 }

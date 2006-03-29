@@ -77,6 +77,6 @@ implements IModuleInfo {
 	}
 	
 	public URL getHelpSetURL(){
-		return null;
+		return Messages.getResourceURL("testModule","HelpSet_Name");
 	}
 }
