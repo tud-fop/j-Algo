@@ -113,6 +113,9 @@ public abstract class Messages {
 		catch (MissingResourceException ex) {
 			return null;
 		}
+		catch (NullPointerException ex) {
+			return null;
+		}
 	}
 	
 	/**
