@@ -88,6 +88,11 @@ public abstract class Messages {
 			return RESOURCE_BUNDLES.get(bundleKey).getString(messageKey);
 		}
 		catch (MissingResourceException e) {
+			// if the messageKey could not found in resource bundle
+			return '!' + messageKey + '!';
+		}
+		catch (NullPointerException ex) {
+			// if the resource bundle not exists
 			return '!' + messageKey + '!';
 		}
 	}
@@ -111,9 +116,11 @@ public abstract class Messages {
 				RESOURCE_BUNDLES.get(bundleKey+"_res").getString(key));
 		}
 		catch (MissingResourceException ex) {
+			// if the messageKey could not found in resource bundle
 			return null;
 		}
 		catch (NullPointerException ex) {
+			// if the resource bundle not exists
 			return null;
 		}
 	}
