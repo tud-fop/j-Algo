@@ -21,7 +21,7 @@
 	citecolor   = darkblue,
 	pdftitle    = {Entwicklerhandbuch},		%titel
 	pdfsubject  = {j-Algo},			%thema
-	pdfauthor   = {Alexander Claus},
+	pdfauthor   = {Alexander Claus, Matthias Schmidt},
 	pdfkeywords = {Algorithmen, Visualisierung},
 	pdfcreator  = {Distiller},
 	pdfproducer = {LaTeX mit Hyperref-Package}}
@@ -34,29 +34,29 @@
 \newcommand{\jalgo}{\mbox{\bfseries {\color{red}j}-Algo} }
 %pfad zu den bildern
 \newcommand{\pfad}{pics/}
-%fügt ein bild an einer bestimmten stelle, relativ zur position des befehls, ein.
-%usage: \icon{dateiname}{y-offset}{x-offset}{bildvergrößerung}
+%fï¿½gt ein bild an einer bestimmten stelle, relativ zur position des befehls, ein.
+%usage: \icon{dateiname}{y-offset}{x-offset}{bildvergrï¿½ï¿½erung}
 \newcommand{\icon}[4]{
 	\vspace{#2 ex}
 	\hspace{#3 ex}
 	\includegraphics[scale=#4]{\pfad #1}
 }
-%fügt ein bild mittig mit bildunterschrift ein.
-%usage: \centerpic{dateiname}{bildvergrößerung}{untertitel}
+%fï¿½gt ein bild mittig mit bildunterschrift ein.
+%usage: \centerpic{dateiname}{bildvergrï¿½ï¿½erung}{untertitel}
 \newcommand{\centerpic}[3]{
 	\begin{center}
 		\includegraphics[scale=#2]{\pfad #1}\\
 		{\small #3}
 	\end{center}
 }
-%fügt eine \subsection mit einem führenden icon ein
+%fï¿½gt eine \subsection mit einem fï¿½hrenden icon ein
 %usage: \subsectionicon{text}{icon}
 \newcommand{\subsectionicon}[2]{
 	\subsection[#1]{\qquad #1}
 	\icon{#2}{-5}{7}{1}
 	\\
 }
-%fügt eine \subsection mit 2 führenden icons ein
+%fï¿½gt eine \subsection mit 2 fï¿½hrenden icons ein
 %usage: \subsectiondoubleicon{text}{icon1}{icon2}
 \newcommand{\subsectiondoubleicon}[3]{
 	\subsection[#1]{\qquad \quad #1}
@@ -64,7 +64,7 @@
 	\icon{#3}{0}{-2}{1}
 	\\
 }
-%fügt eine \subsubsection* mit 2 führenden icons ein
+%fï¿½gt eine \subsubsection* mit 2 fï¿½hrenden icons ein
 %usage: \subsubsectiondoubleicon{text}{icon1}{icon2}
 \newcommand{\subsubsectiondoubleicon}[3]{
 	\subsubsection*{\qquad \qquad #1}

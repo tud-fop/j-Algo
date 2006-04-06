@@ -87,7 +87,7 @@ Liegen die Textdateien korrekt vor, so wird vom Hauptprogramm automatisch auf di
 Auch hier wieder sei als Beispiel auf die existierenden Dateien von Hauptprogramm und Modulen verwiesen.\vspace{0.5cm}
 
 Letzlich sei noch erwähnt, dass jedes Modul die Möglichkeit hat, persistente Benutzereinstellungen anzubieten. Will der Modulentwickler solche Einstellungen einbauen, so muss eine Textdatei mit Zuordnungen zwischen Schlüsseln und Werten angelegt werden. Es sind hier alle Einstellmöglichkeiten als Schlüssel zu erwähnen; die zugeordneten Werte sind jeweils die Default-Werte für die entsprechenden Einstellungen.\\[0.25cm]
-\textbf{Achtung!} Die Textdatei mit den Default-Einstellungen muss einer Namenskonvention folgen: Sie muss den Namen \textsc{<Modulkürzel>}\verb|.prefs| tragen und im Ressourcenverzeichnis des Moduls (\verb|res/|\textsc{<Modulkürzel>}\verb|/|) liegen. Außerdem muss ein Schlüssel namens "`Version"' in der Datei stehen, dessen Wert die Version der Einstellungsdatei angibt. Wird in einer späteren Version etwas am Bestand der Schlüssel geändert, gewährleistet der geänderte Wert von "`Version"', dass beim Benutzer die Einstellungsdatei neu erstellt wird und an die neuen Einstellungen anpasst wird.\\[0.25cm]
+\textbf{Achtung!} Die Textdatei mit den Default-Einstellungen muss einer Namenskonvention folgen: Sie muss den Namen \textsc{<Modulkürzel>}\verb|.prefs| tragen und im Ressourcenverzeichnis des Moduls (\verb|res/|\textsc{<Modulkürzel>}\verb|/|) liegen. Außerdem muss ein Schlüssel namens "`Version"' in der Datei stehen, dessen Wert die Version der Einstellungsdatei angibt. Wird in einer späteren Version etwas am Bestand der Schlüssel geändert, gewährleistet der geänderte Wert von "`Version"', dass beim Benutzer die Einstellungsdatei neu erstellt wird und an die neuen Einstellungen angepasst wird.\\[0.25cm]
 Es wird als Beispiel auf die Dateien \verb|main.prefs| des Hauptprogramms und \verb|avl.prefs| des Moduls AVL-Bäume verwiesen.\\
 Zugegriffen wird auf die persistenten Einstellungen über die Klasse\\ \verb|org.jalgo.main.util.Settings|\\
 Für Details ist die API-Dokumentation von \jalgo zu konsultieren. Nachfolgend ist der relevante Teil von \verb|Settings| abgebildet:
@@ -106,10 +106,41 @@ Wie schon beim Zugriff auf Ressourcenpfade und ausgelagerte Zeichenketten gibt d
 \newpage
 
 \subsection{Organisation der Hilfe-Dateien}
-Dem Entwickler angeraten, ebenfalls eine Online-Hilfe zu seinem Modul zu erstellen. Die Online-Hilfe von \jalgo nutzt die Technologie von \textbf{JavaHelp}. Es folgt eine kurze Einführung in dieses System.\\
-\dots\\
-TODO: Matthias, du bist dran, denk auch daran, dass Du mir noch die Änderungen für das Gewährleisten der Kontextsensitivität schilderst.
+Dem Entwickler wird angeraten, ebenfalls eine Online-Hilfe zu seinem Modul zu erstellen. Die Online-Hilfe von j-Algo nutzt die Technologie von JavaHelp 2.0. An dieser Stelle kann jediglich ein kleiner Einblick in den Umfang dieses System ermöglicht werden und es wird vorallem auf die \href{http://java.sun.com/products/javahelp/}{Support-Seiten von Sun} und \href{http://www.knopf.com/resources/help/javahelp.html}{Tutorials} verwiesen. \\
+Es folgen 5 Abschnitte. Der erste gibt einen groben Überblick über die für JavaHelp notwendigen Resourcen. Die Teile 2 bis 4 befassen sich dagegen mit einzelnen Ansichten, mit denen der Zugriff auf die Hilfetexte angenehmer gestalltet werden kann. Zum Schluss wird im letzten Abschnitt noch auf die Einbettung der Hilfe in \jalgo eingegangen. \\
 
+\subsubsection{Überblick}
+Bei JavaHelp handelt es sich um eine betriebssystem unabhängige Technologie, die in einem Java-basiertem Browser HTML-Dateien anzeigen kann. Es bietet die Möglichkeit über Ansichten wie Inhaltsverzeichnis, Indexübersicht, Favoriten und Volltextsuche den Zugriff auf die Hilfe zu beschleunigen. Grundlegen für eine mit JavaHelp konstruierte Hilfe sind zwei Dateien.
+\begin{itemize}
+	\item Die erste ist das sogannente \textbf{HelpSet}. Diese Datei vereinigt alle für die Hilfe wichtigen Daten und dient der Applikation als eine Art Kontaktdatei. Hier wird unteranderem festgelegt welche Ansichten die Hilfe unterstützen soll und welche Dateien dafür benutzt werden. Außerdem wird hier die Map-Datei festgelegt.
+	\item Die \textbf{Map-Datei} ist ein Liste von Schlüssel-URL-Zuordungen. Alle von der Hilfe benötigten Resourcendateien, wie HTML- oder Bilddateien, werden hier aufgelistet und einem Schlüssel zugeordnet. In den Dateien für die einzelnen Ansichten werden anschließend nur noch Schlüssel als Verweis auf bestimmte Resourcen verwendet.
+\end{itemize}
+Neben diesen beiden wichtigen Metadateien besitzt jede Ansicht eine oder mehrere beschreibende Dateien. Dazu jetzt mehr.
+
+\subsubsection{Inhaltsverzeichnis}
+Das Inhaltsverzeichnis (Table Of Content) ermöglicht einen schnellen inhaltsbezogenen Zugriff auf spezielle Hilfethemen und ist zu dem ungemein praktisch. Aus diesem Grund ist es für eine Hilfe unersetzlich. Die Struktur des Verzeichnisbaumes wird in einer XML-Datei beschrieben, die traditionell den Name \textsc{<Modulkürzel>}\verb|TOC.xml| trägt. Die genaue Struktur einer solchen Datei lässt sich am besten am Beispiel der bestehenden Modul ergründen und wird hier nicht weiter beleuchtet.
+
+\subsubsection{Indexübersicht}
+Die Indexübersicht gewährt ähnlich des Inhaltsverzeichnisses einen Überblick über die verschiedenen Hilfethemen. Doch ist sie im allgemeinen alphabetisch geordnet. Auch die Indexübersicht wird durch eine XML-Datei beschrieben die traditionell mit \textsc{<Modulkürzel>}\verb|Index.xml| betitelt ist. Auch hier sei bezüglich der Struktur dieser Datei ein Blick in die bestehenden Dateien der Module ans Herz gelegt.
+
+\subsubsection{Volltextsuche}
+Die Volltextsuche ist ein sehr hilfreiches Feature welches es erlaubt den gesamten Text der Hilfe nach bestimmten Wörten zu durchsuchen. Das Erstellen einer solchen Suchoption gestalltet sich nicht so einfach wie bisher und es werden mehrere Dateien dafür verwendet, die im allgemeinen in einem Ordner namens \verb|JavaHelpSearch| des JavaHelp-Ordners abgelegt werden. Im HelpSet wird zu dem auch nur auf diesen Ordner verwiesen und nicht auf eine bestimmte Datei. \\
+JavaHelp bietet für die Erzeugung einer Suchengine einen Konsolenbefehl, der alle notwendigen Dateien erzeugt. Der sogenannte \textbf{jhindexer}-Befehl wird im Ordner ausgeführt, in dem das HelpSet zu finden ist. Er durchläuft die HTML-Dateien und vergibt für jedes Wort einen Index. Später wird mit Hilfe dieser das Wort wieder gefunden. Nun ist es ratsam bestimmte Wörter, wie "`eine"', "`keine"', "`mit"' oder "`oder"', aus der Indexierung auszuklammern. Diese sogenannten \textbf{Stopwords} werden in einem config-File aufgelistet und \textbf{jhindexer} übergeben. \\
+\\
+Der Befehl hat dann die folgende Form:\\
+\verb|jhindexer -c|\textsc{ <config-Datei> <Pfad der HTML-Dateien>} \\
+\\
+ein Beispiel: \\
+\verb|jhindexer -c|\textsc{ /JavaHelpSearch/config.ini ../html/data} \\
+\\
+\textbf{Hinweis!} Der jhindexer-Befehl ist weit aus umfangreicher und es wird empfohlen alles weitere im JavaHelpUserGuide (jhug.pdf) nachzuschlagen.
+
+\subsubsection{Einbettung von JavaHelp in \jalgo }
+Nachdem nun ein wesentlicher Überblick über die Dateien und Ressourcen von JavaHelp entstanden sein sollte wird im kommenden Abschnitt auf die Einbettung dieser in die Umgebung von \jalgo eingegangen. \\
+Grundlegend besteht keine Namenskonvention die unbedingt eingehalten sein möchte. Nur empfiehlt es sich ausdrucksstarke Namen sowohl für die Datei des HelpSets als auch für Map- und Ansichtsdateien zu verwenden. Das HelpSet sammelt alle wichtigen Dateinnamen und es ist nur ausschlaggebend wie Sie diese Datei benennen. Die bestehenden Module und das Hauptprogramm folgen hier der folgenden Nameskonvention: \textsc{<Modulkürzel>}\verb|_help.hs| \\
+Um die Hilfe schlussendlich in \jalgo zu integrieren wird die Klasse\linebreak \verb|org.jalgo.module.|\textsc{<Modulkürzel>}\verb|.ModuleInfo| genutzt. Die Methode \verb|getHelpSetURL()| liefert den Pfad der HelpSet-Datei. Da es sich bei dem HelpSet um eine Ressource von \jalgo handelt wird empfohlen die Methode \verb|getResourceURL(String bundleKey, String key)| der Klasse \verb|org.jalgo.main.util.Messages| wie beschrieben zu nutzen.
+
+\newpage
 \subsection{Schnittstelle zum Hauptprogramm}
 Die zweite erwähnte Schnittstelle ist die auf Seiten des Hauptprogramms, namentlich die Klasse \verb|org.jalgo.main.gui.JAlgoGUIConnector|. Der Entwickler hat hier nichts zu implementieren, jedoch hat er Kenntnis von dieser Schnittstelle zu haben. Hierüber laufen alle Anfragen, die das Modul an die graphische Oberfläche des Hauptprogramms richtet. Für Details dazu sei auf die API-Dokumentation von \jalgo verwiesen. Nachfolgend ist die Schnittstelle von \verb|JAlgoGUIConnector| abgebildet. Gerade die letzten 3 Methoden sind interessant, um an die moduleigenen GUI-Komponenten zu gelangen.
 \begin{verbatim}
