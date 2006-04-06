@@ -29,9 +29,11 @@ package org.jalgo.main.util;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.JAlgoMain;
@@ -182,5 +184,18 @@ public abstract class Messages {
 		content.append(module.getLicense());
 		content.append("</html>"); //$NON-NLS-1$
 		return content.toString();
+	}
+	
+	/**
+	 * Nur eine Testmethode um zu zeigen, welche Schlüssel RESOURCE_BUNDLES enthält.
+	 * Im Moment fehlen nämlich noch die Schlüssel des TestModules!
+	 * --> Woran liegt das Alex? ^^
+	 */
+	public static void printKeys(){
+		Set s = RESOURCE_BUNDLES.keySet();
+		for (Iterator it = s.iterator(); it.hasNext();) {
+			String element = (String) it.next();
+			System.out.println(element);
+		}
 	}
 }
