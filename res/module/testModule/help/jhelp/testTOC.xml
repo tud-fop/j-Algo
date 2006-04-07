@@ -4,6 +4,6 @@
 
 	<!-- Test -->
 			<tocitem text="Test-Modul"					target="test"  expand="false">
-				</tocitem text="eine Unterpunkt"		target="anchor">
+				<tocitem text="ein Unterpunkt"		target="anchor"/>
 			</tocitem>
 </toc>

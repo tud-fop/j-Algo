@@ -42,14 +42,14 @@ PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp HelpSet Version 1.0//EN"
 		<name>TOC</name>
 		<label>Inhaltsverzeichnis</label>
 		<type>javax.help.TOCView</type>
-		<data>avlTOC.xml</data>
+		<data>testTOC.xml</data>
 	</view>
 
 	<view mergetype="javax.help.SortMerge">
     	<name>Index</name>
     	<label>Index</label>
     	<type>javax.help.IndexView</type>
-    	<data>avlIndex.xml</data>
+    	<data>testIndex.xml</data>
   	</view>
 
 	<view xml:lang="de">
