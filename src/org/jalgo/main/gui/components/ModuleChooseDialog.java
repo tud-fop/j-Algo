@@ -7,6 +7,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.List;
 
@@ -85,6 +89,18 @@ extends JDialog {
 				okButton.setEnabled(true);
 			}
 		});
+		moduleList.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("synthetic-access")
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) moduleSelected();
+			}
+		});
+		moduleList.addKeyListener(new KeyAdapter() {
+			@SuppressWarnings("synthetic-access")
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyChar() == KeyEvent.VK_ENTER) moduleSelected();
+			}
+		});
 		
 		JScrollPane listScrollPane = new JScrollPane(moduleList,
 			ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -99,8 +115,7 @@ extends JDialog {
 		okButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("synthetic-access")
 			public void actionPerformed(ActionEvent e) {
-					dispose();
-					JAlgoMain.getInstance().newInstance(moduleList.getSelectedIndex());
+				moduleSelected();
 			}
 		});
 		okButton.setEnabled(false);
@@ -164,7 +179,12 @@ extends JDialog {
 		pack();
 		setLocationRelativeTo(parent);
 	}
-	
+
+	private void moduleSelected() {
+		dispose();
+		JAlgoMain.getInstance().newInstance(moduleList.getSelectedIndex());
+	}
+
 	public synchronized static void open(JFrame parent) {
 		if (instance == null) instance = new ModuleChooseDialog(parent);
 		instance.setSize(430, 300);

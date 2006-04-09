@@ -1,9 +1,7 @@
-Sachen, die man noch machen könnte
+Sachen, die man noch machen kï¿½nnte
 -----------------------------------
 
 
--- halb transparente Folie über gesamtem Programm, die es ermöglicht mit einem (roten) Stift auf laufende Algorithmen zu zeichnen. Für Erklärungen in der Vorlesung besonders nützlich.
+-- halb transparente Folie ï¿½ber gesamtem Programm, die es ermï¿½glicht mit einem (roten) Stift auf laufende Algorithmen zu zeichnen. Fï¿½r Erklï¿½rungen in der Vorlesung besonders nï¿½tzlich.
 
--- statisches Mergen der Modulhilfen. Persistieren der Modulliste, abfragen dieser und Test ob sie sich geändert hat. Wenn ja: Neuschreiben des main-HelpSets
-
--- kleine Verbesserungen am ModuleChooseDialog
+-- statisches Mergen der Modulhilfen. Persistieren der Modulliste, abfragen dieser und Test ob sie sich geï¿½ndert hat. Wenn ja: Neuschreiben des main-HelpSets
