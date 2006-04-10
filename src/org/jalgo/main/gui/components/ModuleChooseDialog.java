@@ -43,6 +43,7 @@ import org.jalgo.main.util.Messages;
 import org.jalgo.main.util.Settings;
 
 /**
+ * The dialog to open a new module. 
  * @author Matthias Schmidt
  */
 public class ModuleChooseDialog
@@ -101,6 +102,7 @@ extends JDialog {
 				if (e.getKeyChar() == KeyEvent.VK_ENTER) moduleSelected();
 			}
 		});
+		
 		
 		JScrollPane listScrollPane = new JScrollPane(moduleList,
 			ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -180,9 +182,14 @@ extends JDialog {
 		setLocationRelativeTo(parent);
 	}
 
+	/**
+	 * Starts a new module out of the <code>moduleList</code>.
+	 */
 	private void moduleSelected() {
-		dispose();
-		JAlgoMain.getInstance().newInstance(moduleList.getSelectedIndex());
+		if (! moduleList.isSelectionEmpty()){
+			dispose();
+			JAlgoMain.getInstance().newInstance(moduleList.getSelectedIndex());
+		}
 	}
 
 	public synchronized static void open(JFrame parent) {
@@ -193,6 +200,10 @@ extends JDialog {
 		instance.setVisible(true);
 	}
 	
+	/**
+	 * Retrieves a <code>String</code> array filled with the installed modules.
+	 * @return module list
+	 */
 	private static String[] getModuleList() {
 		String[] back = new String[JAlgoMain.getInstance().getKnownModuleInfos().size()];
 		int index = 0;
@@ -205,6 +216,10 @@ extends JDialog {
 		return back;
 	}
 	
+	/**
+	 * Updates the InfoPane when a new module is choosen.
+	 * @param index of the choosen module
+	 */
 	private static void updateInfo(int index) {		
 		instance.contentLabel.removeAll();
 		instance.contentLabel.setText(Messages.getModuleInfoAsHTML(index));
