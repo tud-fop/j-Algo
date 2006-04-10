@@ -5,3 +5,4 @@ Sachen, die man noch machen k�nnte
 -- halb transparente Folie �ber gesamtem Programm, die es erm�glicht mit einem (roten) Stift auf laufende Algorithmen zu zeichnen. F�r Erkl�rungen in der Vorlesung besonders n�tzlich.
 
 -- statisches Mergen der Modulhilfen. Persistieren der Modulliste, abfragen dieser und Test ob sie sich ge�ndert hat. Wenn ja: Neuschreiben des main-HelpSets
+-- Modul-kontextspezifische Hilfe
