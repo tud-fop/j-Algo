@@ -1,0 +1,4 @@
+Manifest-Version: 1.2
+Main-Class: org.jalgo.main.JAlgoMain
+Class-Path: ../extlibs/jh.jar
+
