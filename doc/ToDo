@@ -2,7 +2,14 @@ Sachen, die man noch machen k�nnte
 -----------------------------------
 
 
--- halb transparente Folie �ber gesamtem Programm, die es erm�glicht mit einem (roten) Stift auf laufende Algorithmen zu zeichnen. F�r Erkl�rungen in der Vorlesung besonders n�tzlich.
+-- halb transparente Folie �ueber gesamtem Programm, die es erm�oeglicht mit einem (roten) 
+   Stift auf laufende Algorithmen zu zeichnen. Fue�r Erklae�rungen in der Vorlesung besonders n�uetzlich.
+-- Nachrichtenfenster für nicht installierte Module ueberarbeiten.
+-- ModuleChooseDialog für leere Moduleliste überarbeiten
+-- Dateiarbeit einbauen, die andere (modulspezif.) Dateiendungen als ".jalgo" zulaesst.
 
--- statisches Mergen der Modulhilfen. Persistieren der Modulliste, abfragen dieser und Test ob sie sich ge�ndert hat. Wenn ja: Neuschreiben des main-HelpSets
+-- statisches Mergen der Modulhilfen. Persistieren der Modulliste, abfragen dieser 
+   und Test ob sie sich geae�ndert hat. Wenn ja: Neuschreiben des main-HelpSets
 -- Modul-kontextspezifische Hilfe
+
+-- Erweiterung des Entwicklerhandbuches um einen Abschnitt mit dem Thema: "Erzeugung des Modul-.jar-File".
