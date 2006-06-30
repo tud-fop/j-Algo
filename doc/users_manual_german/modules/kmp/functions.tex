@@ -1,0 +1,91 @@
+\section{Modulfunktionen}
+\label{sec:Modulfunktionen}
+
+\subsection{Eingabe von Pattern und Text}
+\label{sec:EingabeVonPatternUndText}
+
+\subsubsection{Pattern eingeben}
+\label{sec:PatternEingeben}
+
+
+\centerpic{kmp/pattern1}{0.5}{Pattern manuell eingeben}
+\bigskip
+Das Pattern kann manuell eingegeben werden, hierbei ist die maximale Länge von 10 Zeichen zu beachten. Das Alphabet kann aus beliebigen Zeichen bestehen. Die Eingabe erfolgt im Steuerungsbereich in die Eingabezeile 'Pattern'. Um das Pattern zu übernehmen klicken Sie auf 'Setzen'.
+
+\subsubsection{Suchtext eingeben}
+
+
+Der Text unterliegt keinen Beschränkungen und kann manuell eingegeben oder aus einer vorhandenen *.txt-Datei importiert werden.
+Die Eingabe erfolgt im Steuerungsbereich, klicken Sie hierfür auf 'Eingeben'.
+
+\centerpic{kmp/text1}{0.5}{Text manuell eingeben}
+\bigskip
+Es öffnet sich ein Fenster, in dem Sie den Text manuell eingeben (oder auch per Copy und Paste einfügen) oder eine *.txt-Datei laden können. Um den Text zu übernehmen klicken Sie auf 'Anwenden'.
+
+\centerpic{kmp/text1}{0.5}{Text laden oder eingeben}
+\bigskip
+\subsection{Generieren von Pattern und passenden Texten}
+\label{sec:GenerierenVonPatternUndPassendenTexten}
+
+\subsubsection{Pattern eingeben}
+
+\centerpic{kmp/pattern2}{0.5}{Pattern generieren lassen}
+\bigskip
+Neben der manuellen Eingabe des Patterns gibt es die Möglichkeit, ein Pattern generieren zu lassen. Klicken Sie dafür auf den Knopf 'Zufall' (im Steuerungsbereich neben der Eingabezeile 'Pattern') und wählen Sie im folgenden Fenster die Kardinalität des zu nutzenden Alphabets und die gewünschte Länge des Patterns aus. Das Pattern wird mit Klick auf 'Anwenden' geniert und Sie kehren zum Arbeitsbereich zurück.
+
+\centerpic{kmp/pattern3}{0.5}{Pattern generieren lassen}
+\bigskip
+\subsubsection{Suchtext eingeben}
+
+\centerpic{kmp/text3}{0.5}{Suchtext generieren lassen}
+\bigskip
+Um einen zum Pattern passenden Text generieren zu lassen, klicken Sie auf 'Generieren' (im Steuerungsbereich neben 'Text'). Dadurch wird eine Text erstellt, der das Pattern enthält und nur aus den im Pattern genutzten Zeichen besteht. Dieser Text wird sofort übernommen, Sie haben aber die Möglichkeit, ihn zu bearbeiten, indem Sie auf 'Eingeben' klicken.
+
+
+\subsection{Generierung der Verschiebetabelle}
+\label{sec:GenerierungDerVerschiebetabelle}
+
+
+Wenn ein Pattern gesetzt wurde, kann die Verschiebetabelle erstellt werden. Um den Algorithmus zu starten und zu steuern, benutzen Sie die Pfeile im Steuerungsbereich.
+
+\centerpic{kmp/control}{0.5}{Algorithmussteuerung}
+\bigskip
+Das Pattern kann nun noch erweitert werden ohne den aktuellen Algorithmus zu unterbrechen, geben Sie hierfür das gewünschte Zeichen in das Eingabefeld "Erweiterung" im Steuerungsbereich ein. Sollte das Pattern bereits die maximale Länge haben, ist eine Erweiterung nicht möglich.
+
+\centerpic{kmp/expand}{0.5}{Pattern erweitern}
+\bigskip
+Nachdem die Verschiebetabelle erstellt wurde, können Pattern und Verschiebetabelle für eine Suche im Text genutzt werden. Klicken Sie hierfür auf das Feld 'Weiter zu Phase 2', welches erst am Ende des Algorithmus im Steuerungsbereich erscheint.
+
+\centerpic{kmp/go_p2}{0.5}{Von Phase 1 in Phase 2 wechseln}
+\bigskip
+\subsection{Suchen im Suchtext}
+Erst wenn Pattern und Text gesetzt sind, kann das Anwenden der Verschiebetabelle an einem Text durchgeführt werden. Um Pattern und Text zu setzen, haben Sie verschiedene Möglichkeiten, siehe: Eingabe von Pattern und Text , Generieren von Pattern und passenden Texten.
+Um den Algorithmus zu starten und zu steuern, benutzen Sie die Pfeile im Steuerungsbereich.
+
+\centerpic{kmp/control}{0.5}{Algorithmussteuerung}
+\bigskip
+Sollten Sie während der Durchführung des Algorithmus das Pattern und/oder den Text ändern, wird die aktuelle Durchführung des Algorithmus unterbrochen.
+\bigskip
+Der Suchvorgang wird beendet, wenn das Pattern gefunden wurde oder das Textende erreicht wurde, es erscheint eine Meldung dazu im Steuerungsbereich.
+
+\centerpic{kmp/endnegativ}{0.5}{Nachricht, dass Pattern nicht gefunden wurde}
+\bigskip
+\centerpic{kmp/endpositiv}{0.5}{Nachricht, dass Pattern gefunden wurde}
+\bigskip
+\subsection{Öffnen einer KMP-Sitzung}
+\label{sec:ÖffnenEinerKMPSitzung}
+
+
+Mit Klick auf das Ordner-Symbol öffnet sich ein Dialogfenster, in dem Ihnen die Möglichkeit gegeben wird, eine '*.jalgo' - Datei auszuwählen, in welcher eine KMP-Sitzung gespeichert wurde.
+
+\centerpic{kmp/load}{0.5}{Dialogfenster zum Laden einer Sitzung}
+\bigskip
+
+\subsection{Präsentation von Lernbeispielen}
+Es stehen Ihnen zehn Beispiele zur Auswahl, die jeweils eine besondere Eigenschaft des KMP-Algorithmus repräsentieren. Wenn Sie mit dem Mauszeiger über die Beispiele fahren, werden diese Eigenschaften kurz beschrieben. Wählen Sie das gewünschte Lernbeispiel aus und klicken Sie auf 'Laden' um das Beispiel zu starten.\newline
+Die Beispiele bestehen aus Pattern- und passendem Text.
+
+\centerpic{kmp/learning}{0.5}{Präsentation von Lernbeispielen}
+\bigskip
+Die Steuerung der Lernbeispiele erfolgt durch die Pfeile im Steuerungsbereich.
+

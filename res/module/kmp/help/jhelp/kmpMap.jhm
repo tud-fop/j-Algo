@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+	<mapID xml:lang="de"/>
+
+	<!-- KMP: Schluessel URL -->
+	<mapID target="kmp" 	    		  url="../html/data/overview.htm"/>
+	<mapID target="kmp.intro"    		  url="../html/data/overview.htm#intro"/>
+	<mapID target="kmp.over" 		  		url="../html/data/overview.htm#over"/>
+
+	<mapID target="kmp.start" 		 	 	 url="../html/data/start.htm"/>
+	<mapID target="kmp.start.buttons" 		  url="../html/data/start.htm#buttons"/>
+
+	<mapID target="kmp.screen" 		  	 	  url="../html/data/screen.htm"/>
+	<mapID target="kmp.screen.options" 		  	  url="../html/data/screen.htm#options"/>
+	<mapID target="kmp.screen.scale" 		  	  url="../html/data/screen.htm#scale"/>
+	<mapID target="kmp.screen.bar" 		  	 	  url="../html/data/screen.htm#bar"/>
+	<mapID target="kmp.screen.beamer" 		  	  url="../html/data/screen.htm#beamer"/>
+	<mapID target="kmp.screen.cycle" 		  	  url="../html/data/screen.htm#cycle"/>
+	<mapID target="kmp.screen.key" 		  		  url="../html/data/screen.htm#key"/>
+	<mapID target="kmp.screen.keyp1" 		  	  url="../html/data/screen.htm#keyp1"/>
+	<mapID target="kmp.screen.keyp2" 		  	  url="../html/data/screen.htm#keyp2"/>
+	<mapID target="kmp.screen.keylog" 		  	  url="../html/data/screen.htm#keylog"/>
+
+
+	<mapID target="kmp.functions" 		   	 	  url="../html/data/functions.htm"/>
+	<mapID target="kmp.functions.entermanuell" 	   	  url="../html/data/functions.htm#entermanuell"/>
+	<mapID target="kmp.functions.entergenerate" 	   	  url="../html/data/functions.htm#entergenerate"/>
+	<mapID target="kmp.functions.phase1" 	   	  	  url="../html/data/functions.htm#phase1"/>
+	<mapID target="kmp.functions.phase2" 	   	          url="../html/data/functions.htm#phase2"/>
+	<mapID target="kmp.functions.load" 	      	          url="../html/data/functions.htm#load"/>
+	<mapID target="kmp.functions.learning" 	      	          url="../html/data/functions.htm#learning"/>
+
+	<mapID target="kmp.flowcontrol" 	 		  url="../html/data/flowcontrol.htm"/>
+
+	<mapID target="kmp.info" 	  		          url="../html/data/info.htm"/>
+
+</map>

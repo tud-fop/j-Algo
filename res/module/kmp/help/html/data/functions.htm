@@ -1,0 +1,104 @@
+<html>
+	<head>
+		<title>Modulfunktionen</title>
+	</head>
+	<body topmargin="30" leftmargin="30">
+
+<h1>Modulfunktionen</h1>
+
+<h2><a name="entermanuell">Eingabe von Pattern und Text</a></h2>
+
+<h3>Pattern eingeben</h3>
+
+<p><img src="../../pics/pattern1.png" alt="Phase2Screen Exampel" height="144" width="395"></p>
+
+Das Pattern kann manuell eingegeben werden, hierbei ist die maximale Länge von 10 Zeichen zu beachten. Das Alphabet kann aus beliebigen Zeichen bestehen.
+Die Eingabe erfolgt im Steuerungsbereich in die Eingabezeile "Pattern". Um das Pattern zu übernehmen klicken Sie auf "Setzen".
+
+<h3>Suchtext eingeben</h3>
+<p>
+Der Text unterliegt keinen Beschränkungen und kann manuell eingegeben oder aus einer vorhandenen *.txt-Datei importiert werden.<br>
+Die Eingabe erfolgt im Steuerungsbereich, klicken Sie hierfür auf "Eingeben".
+<p><img src="../../pics/text1.png" alt="Phase2Screen Exampel" height="149" width="287"></p>
+Es öffnet sich ein Fenster, in dem Sie den Text manuell eingeben (oder auch per Copy&Paste einfügen) oder eine *.txt-Datei laden können. Um den Text zu übernehmen klicken Sie auf "Anwenden".
+
+<p><img src="../../pics/text2.png" alt="Phase2Screen Exampel" height="190" width="240"></p>
+
+
+
+
+</p>
+
+
+<h2><a name="entergenerate">Generieren von Pattern und passenden Texten</a></h2>
+
+<h3>Pattern eingeben</h3>
+
+<p><img src="../../pics/pattern2.png" alt="Phase2Screen Exampel" height="144" width="395"></p>
+Neben der manuellen Eingabe des Patterns gibt es die Möglichkeit, ein Pattern generieren zu lassen. Klicken Sie dafür auf den Knopf "Zufall" (im Steuerungsbereich neben der Eingabezeile "Pattern") und wählen Sie im folgenden Fenster die Kardinalität des zu nutzenden Alphabets und die gewünschte Länge des Patterns aus. Das Pattern wird mit Klick auf "Anwenden" geniert und Sie kehren zum Arbeitsbereich zurück.
+<p><img src="../../pics/pattern3.png" alt="Phase2Screen Exampel" height="120" width="220"></p>
+
+
+<h3>Suchtext eingeben</h3>
+
+<p><img src="../../pics/text3.png" alt="Phase2Screen Exampel" height="149" width="287"></p>
+<p>
+Um einen zum Pattern passenden Text generieren zu lassen, klicken Sie auf "Generieren" (im Steuerungsbereich neben "Text"). Dadurch wird eine Text erstellt, der das Pattern enthält und nur aus den im Pattern genutzten Zeichen besteht. Dieser Text wird sofort übernommen, Sie haben aber die Möglichkeit, ihn zu bearbeiten, indem Sie auf "Eingeben" klicken.
+</p>
+
+
+<h2><a name="phase1">Generierung der Verschiebetabelle</a></h2>
+
+Wenn ein Pattern gesetzt wurde, kann die Verschiebetabelle erstellt werden. Um den Algorithmus zu starten und zu steuern, benutzen Sie die Pfeile im Steuerungsbereich.
+<p><img src="../../pics/control.png" alt="Pfeile" height="26" width="162"></p>
+<p>
+Das Pattern kann nun noch erweitert werden ohne den aktuellen Algorithmus zu unterbrechen, geben Sie hierfür das gewünschte Zeichen in das Eingabefeld "Erweiterung" im Steuerungsbereich ein. Sollte das Pattern bereits die maximale Länge haben, ist eine Erweiterung nicht möglich.
+<p><img src="../../pics/expand.png" alt="Erweiterung" height="158" width="210"></p>
+
+</p><p>
+Nachdem die Verschiebetabelle erstellt wurde, können Pattern und Verschiebetabelle für eine Suche im Text genutzt werden. Klicken Sie hierfür auf das Feld "Weiter zu Phase 2", welches erst am Ende des Algorithmus im Steuerungsbereich erscheint.
+
+<p><img src="../../pics/go_p2.png" alt="Weiter zu Phase 2" height="75" width="400"></p>
+
+</p>
+
+<h2><a name="phase2">Suchen im Suchtext</a></h2>
+
+Erst wenn Pattern und Text gesetzt sind, kann das Anwenden der Verschiebetabelle an einem Text durchgeführt werden.
+Um Pattern und Text zu setzen, haben Sie verschiedene Möglichkeiten, siehe:
+	<a href="#entermanuell">Eingabe von Pattern und Text </a>,
+	<a href="#entergenerate">Generieren von Pattern und passenden Texten</a>.<br>
+Um den Algorithmus zu starten und zu steuern, benutzen Sie die Pfeile im Steuerungsbereich.
+<p><img src="../../pics/control.png" alt="Pfeile" height="26" width="162"></p>
+
+<p>
+Sollten Sie während der Durchführung des Algorithmus das Pattern und/oder den Text ändern, wird die aktuelle Durchführung des Algorithmus unterbrochen. <br>
+</p><p>
+Der Suchvorgang wird beendet, wenn das Pattern gefunden wurde oder das Textende erreicht wurde, es erscheint eine Meldung dazu im Steuerungsbereich.
+<p><img src="../../pics/endnegativ.png" alt="Pattern gefunden" height="75" width="400"></p>
+<p><img src="../../pics/endpositiv.png" alt="Pattern nicht gefunden" height="75" width="400"></p>
+</p>
+
+<h2><a name="load">Öffnen einer KMP-Sitzung</a></h2>
+<p>
+Mit Klick auf das Ordner-Symbol öffnet sich ein Dialogfenster, in dem Ihnen die Möglichkeit gegeben wird, eine "*.jalgo" - Datei auszuwählen, in welcher eine KMP-Sitzung gespeichert wurde.
+<p><img src="../../pics/load.png" alt="Pattern nicht gefunden" height="202" width="303"></p>
+</p>
+
+
+<h2><a name="learning">Präsentation von Lernbeispielen</a></h2>
+
+Es stehen Ihnen zehn Beispiele zur Auswahl, die jeweils eine besondere Eigenschaft des KMP-Algorithmus repräsentieren. Wenn Sie mit dem Mauszeiger über die Beispiele fahren, werden diese Eigenschaften kurz beschrieben. Wählen Sie das gewünschte Lernbeispiel aus und klicken Sie auf "Laden" um das Beispiel zu starten.<br>
+Die Beispiele bestehen aus Pattern- und passendem Text.
+
+<p><img src="../../pics/learning.png" alt="Präsentation von Lernbeispielen" height="250" width="250"></p>
+</p>
+
+<p>
+Die Steuerung der Lernbeispiele erfolgt durch die Pfeile im Steuerungsbereich.
+<p><img src="../../pics/control.png" alt="Pfeile" height="26" width="162"></p>
+</p>
+
+
+	</body>
+</html>

@@ -1,0 +1,115 @@
+<html>
+	<head>
+		<title>Die Arbeitsfläche</title>	</head>
+	<body topmargin="30" leftmargin="30">
+
+<h1>Der Arbeitsbereich</h1>
+
+
+
+Der Arbeitsbereich ist untergliedert in drei Bereiche, die Ihnen Zugriff auf alle wesentlichen Funktionen in den Algorithmus-Phasen ermöglicht:
+<p><img src="../../pics/phase1screen.png" alt="Phase1Screen" height="300" width="400"></p>
+<ol>
+<li><h4>Steuerung</h4>
+
+Hier wird der Algorithmus gestartet und gesteuert.<br>
+Mehr Informationen hierzu: <a href="flowcontrol.htm">Algorithmussteuerung</a>
+</li><li><h4>Visualisierung</h4>
+Hier werden die Verschiebetabelle bzw. der Text dargestellt.<br>
+Mehr Informationen hierzu: <a href="#options">Anzeigeoptionen</a>, <a href="#key">Legende</a>
+</li><li><h4>Dokumentation</h4>
+Hier gibt es verschiedene Perspektiven, die miteinander kombiniert werden können: Quellcode, Text, Protokoll.<br>
+Mehr Informationen hierzu: <a href="info.htm#log">Dokumentation</a>, <a href="#key">Legende</a>
+</li>
+</ol>
+
+<a name="options"><h2>Anzeigeoptionen</h2></a>
+
+<a name="scale"><h3>Skalierung</a></h3>
+Die Größe der Elemente des Visualisierungs- und Dokumentationsbereichs kann eingestellt werden, klicken Sie dafür auf den Schieberegler im Visualisierungsbereich und ziehen Sie ihn nach oben bzw. unten.<p><img src="../../pics/slide.png" alt="Skalierung des Arbeitsbereichs" height="300" width="400"></p>
+
+
+
+
+<h3><a name="bar">Aufteilung der Bereiche</a></h3>
+Die Aufteilung zwischen dem Visualisierungs- und dem Dokumentationsbereich kann mit einem Schiebebalken verändert werden. Per Klick auf die Kante können Sie die Grenze verschieben.
+<p><img src="../../pics/move.png" alt="Aufteilung zwischen dem Visualisierungs- und dem Dokumentationsbereich" height="300" width="400"></p>
+
+
+<a name="beamer"><h3>Beamer - Modus</a></h3>
+Der Beamer-Modus ermöglicht das schnelle Einstellen von Anzeigeoptionen, die die Präsentation in Vorlesungen oder ähnlichen Veranstaltungen begünstigen. Dieser Modus ist zu finden unter "Knuth Morris Pratt" => "Beamermodus".<br>
+Die Anzeige ist für die Auflösung 1024x768 optimiert und vergrößert die Elemente um den Faktor 1,5. Im Dokumentationsbereich wird die Perspektive "Code" angezeigt.<br>
+Ist der Modus aktiv, so erscheint vor diesem Menüeintrag ein Häkchen. Um den Modus wieder auszuschalten, entfernen Sie einfach den Haken per Klick.
+<p><img src="../../pics/beamermod.png" alt="Skalierung des Arbeitsbereichs" height="295" width="338"></p>
+
+
+<h3><a name="cycle">Zyklus - Anzeige</a></h3>
+Im Visualisierungsbereich der Phase 1 "Generierung der Verschiebetabelle" können optional die Zyklen angezeigt werden, setzen Sie dazu das Häkchen "Zyklen" im Steuerungsbereich. Es werden maximal drei Zyklen gleichzeitig angezeigt.
+<p><img src="../../pics/cycle.png" alt="Zyklus-Anzeige" height="295" width="338"></p>
+
+
+<h1><a name="key">Legende</a></h1>
+
+<h2><a name="keyp1">Elemente in der Phase "Generierung der Verschiebetabelle"</a></h2>
+
+<p><img src="../../pics/phase1screen_ex1.png" alt="Phase1Screen Exampel" height="300" width="400"></p>
+
+<p>
+<i>Visualisierungsbereich</i><br>
+<b>Pfeil schwarz mit weißem "P"</b> - Zeiger auf die Variable "patpos", die Patternposition<br>
+<b>Pfeil weiß mit schwarzem "V"</b> - Zeiger auf die Variable "VglInd", der Vergleichsindex<br>
+<b>schwarzer Pfeil über der Tabelle</b> - die verglichenen Zeichen<br>
+<b>gelber Hintergrund von Zellen</b> - Zellenkopf<br>
+<b>schwarzer Rahmen um Zelle in der Zeile "Index"</b> - aktuell kopierte Verschiebeinformation<br>
+<b>roter Rahmen um Zellen</b> - negative boolesche Bedingung<br>
+<b>lila Strich</b> - Zyklen, die im Pattern auftreten
+</p>
+<p>
+<i>Schriftfarben</i><br>
+<b>blau</b> - aktuell geschriebene Verschiebeinformation (entspricht Zuweisungsstatement im Code)
+<br><b>rot</b> - die verglichenen Zeichen stimmen nicht überein (entspricht booleschem Statement im Code)
+<br><b>grün</b> - die verglichenen Zeichen stimmen überein (entspricht booleschem Statement im Code)
+</p>
+
+<p><a href="#keylog">Legende des Dokumentationsbereichs</a></p>
+
+<h2><a name="keyp2">Elemente in der Phase "Suchen im Suchtext"</a></h2>
+
+<p><img src="../../pics/phase2screen_ex1.png" alt="Phase2Screen Exampel" height="300" width="400"></p>
+
+<p>
+<i>Visualisierungsbereich</i><br>
+<b>lila Rahmen</b> - das Sichtfenster, welches die aktuell betrachteten Zeichen des Textes und des Patterns justiert
+</p>
+
+<p>
+<i>Schriftfarben</i><br>
+<b>blau</b> - aktuell geschriebene Verschiebeinformation (entspricht Zuweisungsstatement im Code)
+</p>
+<p><a href="#keylog">Legende des Dokumentationsbereichs</a></p>
+
+<h2><a name="keylog">Im Dokumentationsbereich</a></h2>
+
+
+<p><img src="../../pics/phase2screen_ex2.png" alt="Phase2Screen Exampel" height="300" width="400"></p>
+
+<p>
+<i>Perspektive "Code"</i><br>
+<b>roter Hintergrund</b> - negative boolesche Bedingung
+<br><b>grüner Hintergrund</b> - positive boolesche Bedingung
+<br><b>blauer Hintergrund</b> - sonstige Statements
+</p>
+
+<p>
+<i>Perspektive "Protokoll"</i><br>
+<b>blaue Schrift</b> - zuletzt vollzogener Schritt
+<br><b>schwarze Schrift</b> - für den aktuellen Stand irrelevante vorausgegangene Schritte
+</p>
+
+<p>
+<i>Perspektive "Suchtext"</i><br>
+<b>gelber Hintergrund</b> - der Textausschnitt, an dem das Pattern momentan anliegt
+</p>
+
+	</body>
+</html>

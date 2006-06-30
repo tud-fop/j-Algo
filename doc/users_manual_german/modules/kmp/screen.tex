@@ -1,0 +1,104 @@
+\section{Der Arbeitsbereich}
+\label{sec:DerArbeitsbereich}
+
+Der Arbeitsbereich ist untergliedert in drei Bereiche, die Ihnen Zugriff auf alle wesentlichen Funktionen in den Algorithmus-Phasen ermöglicht:
+
+\bigskip
+\centerpic{kmp/phase1screen}{0.5}{Phase 1 Bildschirm}
+\bigskip
+
+   
+\begin{enumerate}
+	\item  \textbf{Steuerung}\newline
+      Hier wird der Algorithmus gestartet und gesteuert.
+   \item \textbf{Visualisierung}\newline
+      Hier werden die Verschiebetabelle bzw. der Text dargestellt.
+   \item \textbf{Dokumentation}\newline
+      Hier gibt es verschiedene Perspektiven, die miteinander kombiniert werden können: 			Quellcode, Text, Protokoll.
+\end{enumerate}
+
+\section{Anzeigeoptionen}
+\label{sec:Anzeigeoptionen}
+
+\subsection{Skalierung}
+\label{sec:Skalierung}
+
+Die Größe der Elemente des Visualisierungs- und Dokumentationsbereichs kann eingestellt werden, klicken Sie dafür auf den Schieberegler im Visualisierungsbereich und ziehen Sie ihn nach oben bzw. unten.
+
+\centerpic{kmp/slide}{0.5}{Auswirkung des Schiebereglers zur Skalierung}
+\bigskip
+\subsection{Aufteilung der Bereiche}
+\label{sec:Aufteilung der Bereiche}
+
+Die Aufteilung zwischen dem Visualisierungs- und dem Dokumentationsbereich kann mit einem Schiebebalken verändert werden. Per Klick auf die Kante können Sie die Grenze verschieben.
+
+\centerpic{kmp/move}{0.5}{Auswirkung des Schiebereglers}
+\bigskip
+
+\subsection{Beamer - Modus}
+\label{sec:BeamerModus}
+
+Der Beamer-Modus ermöglicht das schnelle Einstellen von Anzeigeoptionen, die die Präsentation in Vorlesungen oder ähnlichen Veranstaltungen begünstigen. Dieser Modus ist zu finden unter 'Knuth Morris Pratt' => 'Beamermodus'.
+Die Anzeige ist für die Auflösung 1024x768 optimiert und vergrößert die Elemente um den Faktor 1,5. Im Dokumentationsbereich wird die Perspektive 'Code' angezeigt.
+Ist der Modus aktiv, so erscheint vor diesem Menüeintrag ein Häkchen. Um den Modus wieder auszuschalten, entfernen Sie einfach den Haken per Klick.
+
+\centerpic{kmp/beamermod}{0.5}{Der Beamermodus}
+\bigskip
+\subsection{Zyklus - Anzeige}
+\label{sec:ZyklusAnzeige}
+
+Im Visualisierungsbereich der Phase 1 'Generierung der Verschiebetabelle' können optional die Zyklen angezeigt werden, setzen Sie dazu das Häkchen 'Zyklen' im Steuerungsbereich. Es werden maximal drei Zyklen gleichzeitig angezeigt.
+
+\centerpic{kmp/cycle}{0.5}{Beispiel für Zyklen}
+\bigskip
+\section{Legende}
+\label{sec:Legende}
+
+\subsection{Elemente in der Phase 'Generierung der Verschiebetabelle'}
+\label{sec:ElementeInDerPhaseGenerierungDerVerschiebetabelle}
+
+\bigskip
+\centerpic{kmp/phase1screen_ex1}{0.5}{Beispiel für Phase 1}
+\bigskip
+\textit{Visualisierungsbereich}\newline
+\textbf{Pfeil schwarz mit weißem 'P' }- Zeiger auf die Variable 'patpos', die Patternposition\newline
+\textbf{Pfeil weiß mit schwarzem 'V' }- Zeiger auf die Variable 'VglInd', der Vergleichsindex\newline
+\textbf{schwarzer Pfeil über der Tabelle }- die verglichenen Zeichen\newline
+\textbf{gelber Hintergrund von Zellen} - Zellenkopf\newline
+\textbf{schwarzer Rahmen um Zelle in der Zeile 'Index' }- aktuell kopierte Verschiebeinformation\newline
+\textbf{roter Rahmen um Zellen }- negative boolesche Bedingung\newline
+\textbf{lila Strich }- Zyklen, die im Pattern auftreten
+\newline\newline
+\textit{Schriftfarben}\newline
+\textbf{blau} - aktuell geschriebene Verschiebeinformation (entspricht Zuweisungsstatement im Code)\newline
+\textbf{rot} - die verglichenen Zeichen stimmen nicht überein (entspricht booleschem Statement im Code)\newline
+\textbf{grün} - die verglichenen Zeichen stimmen überein (entspricht booleschem Statement im Code)
+
+\subsection{Elemente in der Phase 'Suchen im Suchtext'}
+\label{sec:ElementeInDerPhaseSuchenImSuchtext}
+ \bigskip
+\centerpic{kmp/phase2screen_ex1}{0.5}{Beispiel für diese Phase}
+ \bigskip
+\textit{Visualisierungsbereich}\newline
+\textbf{lila Rahmen }- das Sichtfenster, welches die aktuell betrachteten Zeichen des Textes und des Patterns justiert
+\newline\newline
+\textit{Schriftfarben}\newline
+\textbf{blau} - aktuell geschriebene Verschiebeinformation (entspricht Zuweisungsstatement im Code)
+
+\subsection{Im Dokumentationsbereich}
+\label{sec:ImDokumentationsbereich}
+
+\bigskip
+\centerpic{kmp/phase2screen_ex2}{0.5}{Beispiel für diese Phase}
+\bigskip
+\textit{Perspektive 'Code'}\newline
+\textbf{roter Hintergrund }- negative boolesche Bedingung\newline
+\textbf{grüner Hintergrund} - positive boolesche Bedingung\newline
+\textbf{blauer Hintergrund }- sonstige Statements
+\newline\newline
+\textit{Perspektive 'Protokoll'}\newline
+\textbf{blaue Schrift} - zuletzt vollzogener Schritt\newline
+\textbf{schwarze Schrift} - für den aktuellen Stand irrelevante vorausgegangene Schritte
+\newline\newline
+\textit{Perspektive 'Suchtext'}\newline
+\textbf{gelber Hintergrund} - der Textausschnitt, an dem das Pattern momentan anliegt

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de">
+
+	<!-- KMP -->
+	<tocitem text="KMP"	            				target="kmp"  expand="false">
+		<tocitem text="Einleitung" 		   		target="kmp.intro"/>
+		<tocitem text="Funktionsübersicht" 			target="kmp.over"/>
+
+		<tocitem text="Der Willkommensbildschirm" 			target="kmp.start">
+			<tocitem text="Buttons" 	target="kmp.start.buttons"/>
+		</tocitem>
+
+		<tocitem text="Der Arbeitsbereich" 					target="kmp.screen"  expand="false">
+			<tocitem text="Anzeigeoptionen" 				target="kmp.screen.options">
+				<tocitem text="Skalierung"  	target="kmp.screen.scale"/>
+				<tocitem text="Aufteilung der Bereiche"  		target="kmp.screen.bar"/>
+				<tocitem text="Beamer-Modus"  				target="kmp.screen.beamer"/>
+				<tocitem text="Zyklus-Anzeige"  			target="kmp.screen.cycle"/>
+			</tocitem>
+			<tocitem text="Legende"  					target="kmp.screen.key">
+				<tocitem text="Generierung der Verschiebetabelle"  	target="kmp.screen.keyp1"/>
+				<tocitem text="Suchen im Suchtext"  	target="kmp.screen.keyp2"/>
+				<tocitem text="Dokumentationsbereich"  			target="kmp.screen.keylog"/>
+			</tocitem>
+		</tocitem>
+
+		<tocitem text="Modulfunktionen" 		   			target="kmp.functions">
+			<tocitem text="Eingabe von Pattern und Text"  			target="kmp.functions.entermanuell"/>
+			<tocitem text="Generieren von Pattern und passenden Texten"  	target="kmp.functions.entergenerate"/>
+			<tocitem text="Generierung der Verschiebetabelle"  		target="kmp.functions.phase1"/>
+			<tocitem text="Suchen im Suchtext" 			target="kmp.functions.phase2"/>
+			<tocitem text="Öffnen einer KMP-Sitzung" 			target="kmp.functions.load"/>
+			<tocitem text="Präsentation von Lernbeispielen"  		target="kmp.functions.learning"/>
+		</tocitem>
+
+		<tocitem text="Algorithmussteuerung" 		 			target="kmp.flowcontrol"/>
+
+		<tocitem text="Dokumentationsbereich" 					target="kmp.info"/>
+
+	</tocitem>
+</toc>

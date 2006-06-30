@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE index
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/index_1_0.dtd">
+
+<index version="1.0">
+    <!-- KMP -->
+    <indexitem text="KMP" expand="false">
+
+    	<indexitem text="Willkommensbildschirm"			 target="kmp.start"/>
+    	<indexitem text="Algorithmussteuerung"			 target="kmp.flowcontrol"/>
+    	<indexitem text="Modulfunktionen"			 target="kmp.functions"/>
+    	<indexitem text="Dokumentationsbereich"			 target="kmp.info"/>
+    	<indexitem text="Allgemein"				 target="kmp.overview"/>
+    	<indexitem text="Arbeitsbereich"			 target="kmp.screen"/>
+
+    </indexitem>
+</index>
+
