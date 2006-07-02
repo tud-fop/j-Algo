@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="extlibs/jh.jar"/>
+	<classpathentry kind="lib" path="runtime"/>
+	<classpathentry kind="lib" path="res/main"/>
+	<classpathentry kind="lib" path="res/module/avl"/>
+	<classpathentry kind="lib" path="res/module/dijkstra"/>
+	<classpathentry kind="lib" path="res/module/kmp"/>
+	<classpathentry kind="lib" path="res/module/testModule"/>
+	<classpathentry sourcepath="ECLIPSE_HOME/plugins/org.eclipse.jdt.source_3.1.1/src/org.junit_3.8.1/junitsrc.zip" kind="var" path="JUNIT_HOME/junit.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
