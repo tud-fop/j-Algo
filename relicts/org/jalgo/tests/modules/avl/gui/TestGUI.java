@@ -18,7 +18,7 @@
  */
 
 /* Created on 01.05.2005 */
-package src.org.jalgo.tests.avl.gui;
+package org.jalgo.tests.avl.gui;
 
 import java.awt.AWTException;
 import java.awt.Robot;
