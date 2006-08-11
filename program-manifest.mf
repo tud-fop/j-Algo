@@ -1,4 +1,3 @@
-Manifest-Version: 1.2
+Manifest-Version: 1.21
 Main-Class: org.jalgo.main.JAlgoMain
-Class-Path: ../extlibs/jh.jar
-
+Class-Path: ../extlibs/jh.jar ../extlibs/swing-layout-1.0.jar
