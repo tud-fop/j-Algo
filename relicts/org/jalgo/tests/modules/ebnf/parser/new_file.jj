@@ -1,0 +1,226 @@
+/**
+ * JavaCC file
+ */
+ 
+ 
+ 
+ options{  JDK_VERSION = "1.5";
+  STATIC = false;}PARSER_BEGIN(EbnfParser)
+package org.jalgo.tests.ebnf.parser;
+
+import org.jalgo.module.ebnf.model.ebnf.*;
+import org.jalgo.module.ebnf.controller.ebnf.EbnfController;
+
+/** This is the parser for EBNF terms. It is automatically created by JavaCC
+ * 
+ */
+public class EbnfParser{  	
+  	private EbnfController ebnfController;
+
+	public EbnfParser(EbnfController ebnfController, String term) {
+                this.ebnfController = ebnfController;
+                java.io.StringReader sr = new java.io.StringReader( term );
+                java.io.Reader r = new java.io.BufferedReader( sr );
+                jj_input_stream = new SimpleCharStream(r, 1, 1);
+                token_source = new EbnfParserTokenManager(jj_input_stream);
+                token = new Token();
+                jj_ntk = -1;
+                jj_gen = 0;
+                for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+                for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
+    }
+
+  	
+  	/**
+     * 
+     * @param symbols a String with parsed symbols
+     * @return a concatenation (or a simple term) of all terminal symbols and variables that are valid for this ebnf definition.
+     */
+    private Term parseSymbols(String symbols) throws ParseException {
+        java.util.List<Term> termList = new java.util.ArrayList<Term>();
+        boolean changed = true;
+        while (!symbols.equals("") && changed==true) {
+            changed = false;
+            for (EVariable var : ebnfController.getDefinition().getVariables()) {
+                    if (symbols.startsWith(var.getName())) {
+                            termList.add(var);
+                            symbols = symbols.substring(var.getName().length());
+                            changed = true;
+                    }
+            }
+            for (ETerminalSymbol terminal : ebnfController.getDefinition().getTerminals()) {
+                    if (symbols.startsWith(terminal.getName())) {
+                            termList.add(terminal);
+                            symbols = symbols.substring(terminal.getName().length());
+                            changed = true;
+                    }
+            }
+	        if (!symbols.equals("") && changed==false) {
+	               changed = ebnfController.getGuiController().showUnknownSymbolDialog(symbols);
+	               
+	        }
+        }
+        Term t = null;
+        try {
+                if (termList.size() == 1) {
+                        t = termList.get(0);
+                } else {
+                        t = new EConcatenation(termList);
+                }
+        } catch (DefinitionFormatException e) {
+                throw new ParseException();
+        }
+        return t;
+    }
+}PARSER_END(EbnfParser)
+
+SKIP:{  " "  | "\t"
+  | "\r"
+  | "\n"}
+
+TOKEN:/* Brackets */{    <L_REPETITION: "\u300F">
+  | <R_REPETITION: "\u3010">
+  | <L_PARENTHESES: "\u3011">
+  | <R_PARENTHESES: "\u3012">  | <L_OPTION: "\u300C">  | <R_OPTION: "\u300D">
+  | <BRANCH: "\u300E">}
+
+TOKEN:{
+	<TERM: (~["\u300F", "\u3010", "\u3011", "\u3012", "\u300C", "\u300D", "\u300E"])+>
+}
+
+Term parse():
+{ Term term; }
+{
+	term = term() <EOF>
+	{
+		return term;
+	}
+}
+Term term():
+{ Token t; Term term; Term term2 = null; }
+{
+	
+	LOOKAHEAD (2) term = repetition() (term2 = term())? 
+	{
+		if (term2!=null) {
+			try {
+				term = new EConcatenation(term, term2);
+			} catch (Exception e) {
+				throw new ParseException();
+			}
+		}
+		return term;
+	}
+	| LOOKAHEAD (2) term = parentheses() (term2 = term())?
+	{
+		if (term2!=null) {
+			try {
+				term = new EConcatenation(term, term2);
+			} catch (Exception e) {
+				throw new ParseException();
+			}
+		}
+		return term;
+	}
+	| LOOKAHEAD (2) term = option() (term2 = term())?
+	{ 
+		if (term2!=null) {
+			try {
+				term = new EConcatenation(term, term2);
+			} catch (Exception e) {
+				throw new ParseException();
+			}
+		}
+		return term;
+	}
+	| t = <TERM>
+	{
+		term = parseSymbols(t.image);
+	}
+	(term2 = term())?
+	{
+		if (term2!=null) {
+			try {
+				term = new EConcatenation(term, term2);
+			} catch (Exception e){
+				throw new ParseException();
+			}
+		}
+		return term;
+	}
+}
+
+java.util.List<Term> specialTerm():
+{
+	Term term;
+	java.util.List<Term> terms = new java.util.ArrayList<Term>();
+	java.util.List<Term> subTerms = new java.util.ArrayList<Term>();
+}
+{
+	term = term()
+	{
+		terms.add(term);
+	}
+	(<BRANCH>  subTerms = specialTerm())? 
+	{
+		terms.addAll(subTerms);
+		return terms;
+	}
+	{
+		return terms;
+	}
+}
+
+Term repetition():
+{ Term term; }
+{
+	<L_REPETITION> (term = term()) <R_REPETITION>
+	{
+		ERepetition rep = null;
+		try {
+			rep = new ERepetition(term);
+		} catch (Exception e) {
+			throw new ParseException();
+		}
+		return rep;
+	}
+}
+
+Term parentheses():
+{ java.util.List<Term> subTerms; }
+{
+	<L_PARENTHESES> subTerms = specialTerm() <R_PARENTHESES>
+	{ if (subTerms.size() == 1){
+		ECompoundTerm ct = null;
+		try {
+			ct = new ECompoundTerm(subTerms.get(0));
+		} catch (Exception e) {
+			throw new ParseException();
+		}
+		return ct;
+	} else {
+		EAlternative alt = null;
+		try { 
+			alt = new EAlternative(subTerms);
+		} catch (Exception e) {
+			throw new ParseException();
+		}
+		return alt;
+		}
+	}
+}
+
+Term option():
+{ Term term; }
+{
+	<L_OPTION> (term = term()) <R_OPTION>
+	{
+		EOption opt = null;
+		try {
+			opt = new EOption(term);
+		} catch (Exception e) {
+			throw new ParseException();
+		}
+		return opt;
+	} 
+}
