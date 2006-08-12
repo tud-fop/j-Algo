@@ -1,0 +1,132 @@
+\section{Syntaxdiagramme}
+
+\subsection{Der Syntaxdiagramm-Editor}
+
+\subsubsection{Die Arbeitsfläche}
+
+Die Arbeitsfläche des Syntaxdiagramm-Editors ist zweigeteilt: Im oberen Abschnitt befindet sich der Kontrollbereich, über den alle Aktionen, die für das Erstellen und Editieren von Syntaxdiagrammen nötig sind, anwählbar sind. Darunter befindet sich die Anzeige für Syntaxdiagramme - die Arbeitsfläche, auf der an den Diagrammen gearbeitet wird.
+
+\bigskip
+\centerpic{ebnf/syndia_aufteilung.png}{.4}{}
+\bigskip
+
+\subsubsection{Hinzufügen von Elementen}
+
+Um einem Syntaxdiagrammsystem Elemente hinzufügen zu können, muss man sich in einem entsprechenden Modus befinden. Einzig das Hinzufügen neuer Syntaxdiagramme geschieht ohne Moduswechsel.
+
+\begin{itemize}
+	\item Syntaxdiagramme \\
+				Um ein neues Syntaxdiagramm einzufügen genügt ein einfacher Klick auf das Symbol 
+				\icon{ebnf/syndia_Leiste_NeuesDiagramm.png}{0}{0}{.4} im Kontrollbereich. In der Syntaxdiagramm-Anzeige erscheint ein 
+				Popupfenster, in dem sich u.a. ein Texteingabefeld befindet. In diesem bereits 
+				fokusierten Eingabefeld können Sie nun den gewünschten Namen ihres neuen 
+				Syntaxdiagramms angeben. Ihre Eingabe beenden Sie entweder mit dem OK-Button \icon{ebnf/syndia_Button_OK.png}{0}{0}{.4}
+				rechts des Eingabefeldes oder über \textsc{Enter}. \\
+
+				Falls der von Ihnen gewählte Name schon für ein anderes Diagramm vergeben ist, 
+				werden Sie im Rahmentext des Popupfensters darauf hingewiesen. Sie müssen einen 
+				anderen Namen wählen. \\
+
+				Unterhalb des Eingabefeldes befindet sich eine weitere Zeile: 
+				
+\centerpic{ebnf/syndia_startdiagramm.png}{.8}{}
+
+	
+				Indem Sie die 
+				Checkbox auswählen, können Sie ihr neues Diagramm als Startdiagramm einfügen. Es 
+				ist immer nur ein Startdiagramm zulässig, d.h. das alte Startdiagramm verliert 
+				dieses "`Privileg"' an das neue Syntaxdiagramm. \\
+
+				Sie können die Eingabe jederzeit mit \textsc{ESC} abbrechen. Die Eingabe eines leeren 
+				Diagrammnamens bewirkt ebenfalls einen Abbruch. Es wird kein Syntaxdiagramm 
+				hinzugefügt.
+
+  \item Über die Einfüge-Modi \\
+				Um Elemente einfügen zu können, müssen Sie in den Modus "`<Element> einfügen"' 
+				wechseln. Dieses Beispiel demonstriert dies für Terminalsymbole. Den Moduswechsel 
+				erreichen Sie auf zwei verschiedenen Wegen: entweder wählen Sie im Kontrollbereich 
+				den Button \icon{ebnf/syndia_Leiste_Terminal.png}{0}{0}{.4} aus oder Sie bewegen Ihre Maus in die Syntaxdiagramm-Anzeige. 
+				Dort können Sie jederzeit mit einem Rechtsklick ein Kontextmenü öffnen, in dem Sie 
+				ebenfalls den Modus "`Terminalsymbole einfügen"' anwählen können. \icon{ebnf/syndia_Popup_Terminal.png}{0}{0}{.4} \\
+
+				Ist dieser Modus gewählt, wird der zugehörige Button im Kontrollbereich ausgegraut. 
+				Auch ändert sich der Mauszeiger, wenn Sie über den Arbeitsbereich fahren. \\	
+				
+				Somit wissen Sie immer, in welchem Modus Sie sich gerade befinden.
+
+  \item Über die Rhomben \\
+				Im Editiermodus bekommen die Syntaxdiagramme neue Elemente - die Rhomben. Sie sind 
+				Pseudoelemente, die das Einfügen von Elementen erleichtern bzw. erst ermöglichen. 
+				In ihrem Grundzustand sind die Rhomben grau. Befindet man sich in einem 
+				Einfügemodus, so leuchten sie grün auf, falls an dieser Stelle ein Hinzufügen 
+				möglich ist. Leuchten sie dagegen rot auf, kann das Element an dieser 
+				Stelle nicht eingefügt werden. \\
+
+				Hat man etwas eingefügt, erscheinen vor und hinter diesem Element neue Rhomben, an 
+				denen erneut hinzugefügt werden kann. In Wiederholungen und Verzweigungen 
+				erscheinen zudem in den Elementen neue Rhomben - schließlich soll man auch hier 
+				Einfügen können.
+
+  \item Terminalsymbole und Variablen \\
+				Wechseln Sie als erstes in den Modus \textsc{Terminalsymbole einfügen} oder \textsc{Variablen einfügen}. \icon{ebnf/syndia_Leiste_Terminal.png}{0}{0}{.4}\icon{ebnf/syndia_Leiste_Variable.png}{0}{0}{.4} In der Arbeitsfläche können Sie nun mit der Maus über 
+				jeden beliebigen Rhombus fahren - er leuchtet grün auf. Mit einem Linksklick fügen 
+				Sie das Terminalsymbol / die Variable an dem aktuell grün leuchtenden Rhobus ein. \\
+
+				Es erscheint ein Textfeld, in dem Sie einen Namen für das Element eingeben müssen. 
+				Als Standard erscheint ausgewählt "`a"' / "`A"'. \\
+
+				Zum Bestätigen einer Eingabe drücken Sie entweder auf den OK-Button \icon{ebnf/syndia_Button_OK.png}{0}{0}{.4} oder 
+				ENTER. Falls Sie das Erstellen abbrechen möchten, drücken Sie ESC oder geben 
+				einen leeren Namen ein.
+
+  \item Verzweigungen und Wiederholungen \newline
+  			Wechseln Sie als erstes in den Modus "`Verzweigungen einfügen"' / "`Wiederholungen 
+  			einfügen"' \icon{ebnf/syndia_Leiste_Verzweigung.png}{0}{0}{.4}\icon{ebnf/syndia_Leiste_Wiederholung.png}{0}{0}{.4}. In der Arbeitsfläche können Sie nun mit der Maus über 
+  			jeden beliebigen Rhombus fahren - er leuchtet grün auf. Mit einem Linksklick fügen 
+  			Sie den Anfang der Verzweigung / Wiederholung ein. Daraufhin erscheint grau 
+  			gepunktet eine neue Verzweigung / Wiederholung. Diese zeigt, von wo bis wo 
+  			eingefügt werden kann. Anfangs ist sie auf den angeklickten Rhombus beschränkt. \\
+
+				Sie können diese "`unfertige"' Verzweigung / Wiederholung nun sowohl nach links als 
+				auch nach rechts in die Breite ziehen. Fahren Sie dazu mit der Maus über andere 
+				Rhomben. Leuchtet ein Rhombus grün auf, so kann bis zu dieser Stelle eingefügt 
+				werden. Dies wird durch die veränderte grau gepunktete Verzweigunng / Wiederholung 
+				angezeigt. Dabei können auch schon vorhandene Elemente eingeschlossen werden. \\
+
+				Leuchtet ein Rhombus dagegen rot auf, so darf an dieser Stelle nicht eingefügt 
+				werden. Dies ist der Fall, wenn das Ende nicht auf der gleichen Linie liegt wie der 
+				Startpunkt. Auch dürfen sich Linien nicht kreuzen, so dass das Einfügen eines Endes 
+				in das Innere einer anderen Verzweigung / Wiederholung ebenfalls nicht erlaubt ist. 				\\
+
+				Haben Sie den Mauszeiger über ein grün leuchtendes Ende gefahren, so können Sie nun 
+				mit einem weiteren Linksklick Einfügen. Die grau gepunktete Verzweigung / 
+				Wiederholung verschwindet und ein vollständig neues Element erscheint.
+\end{itemize}
+
+\subsubsection{Bearbeiten und Löschen von Elementen}
+
+\begin{itemize}
+	\item Editieren \\
+				Im Editiermodus ist es möglich, Terminalsymbol-, Variablen- und Syntaxdiagrammnamen 
+				zu ändern. \\
+
+				Wechseln Sie dazu zuerst in diesen Modus. \icon{ebnf/syndia_Leiste_Edit.png}{0}{0}{.5} \\
+
+Fahren Sie nun mit der Maus über Terminalsymbole oder Variablen, so leuchten diese blau auf. Mit einem Linksklick auf diese Elemente erscheint ein Textfeld mit dessen Name. Sie können den Namen nun beliebig ändern. Mit dem OK-Button oder \textsc{Enter} schließen Sie die Änderung ab. Mit \textsc{Escape} oder der Eingabe eines leeren Namens brechen Sie den Editiervorgang ab. \\
+
+Fahren Sie mit der Maus über den Namen eines Syntaxdiagramms, so erscheint dieser fett. Mit einem Linksklick können Sie nun den Namen des Diagramms ändern. Dazu erscheint der Dialog, der auch zum Einfügen neuer Elemente angezeigt wird. Einziger Unterschied ist, dass, falls Sie das Startdiagramm editieren, Sie diesem Diagramm diesen Status nicht nehmen können - die entsprechende Checkbox ist ausgegraut.
+
+	\item Löschen \\
+
+Im Löschmodus ist es möglich, sowohl alle Syntaxdiagrammelemente als auch leere Diagramme zu löschen.
+
+Wechseln Sie dazu zuerst in diesen Modus. \icon{ebnf/syndia_Leiste_Radiergummi.png}{0}{0}{.5} \\
+
+Fahren Sie nun mit der Maus über Terminalsymbole oder Variablen, so leuchten diese rot auf. Mit einem Linksklick werden diese gelöscht. Nachfolgende Elemente rücken nach links.
+
+Verzweigungen und Wiederholungen können ebenfalls gelöscht werden. Bewegen Sie dazu den Mauszeiger auf die obere oder untere Linie eines dieser Elemente. Die Linie und alle darauf liegenden Elemente leuchten rot auf. Mit einem Linksklick bestätigen Sie den Löschvorgang.
+War die untere Linie markiert, so werden Elemente der oberen Linie beibehalten. Löschen Sie die obere Linie einer Verzweigung, so werden die Elemente der unteren Linie - sofern vorhanden - auf die obere Linie eingefügt. Die untere Linie verschwindet. Dies geschieht auch beim Löschen des unteren Teils einer Wiederholung; nur werden hier die Elemente in umgekehrter Reihenfolge oben eingefügt (d.h. ihre "`Leserichtung"' bleibt erhalten). \\
+
+Befinden Sie sich mit dem Mauszeiger über einem leeren Syntaxdiagramm (d.h. nur ein Rhombus befindet sich in diesem Diagramm), so erscheint um dieses ein roter Rahmen. Bestätigen Sie mit einem Linksklick, wird das Diagramm gelöscht. Handelt es sich dabei um das Startdiagramm, so erscheint ein Hinweis, dass das Löschen des Startdiagramms nicht möglich ist.
+
+\end{itemize}

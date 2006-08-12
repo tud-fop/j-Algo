@@ -1,0 +1,34 @@
+\subsection{Anzeige von EBNF-Defintionen}
+
+Die EBNF-Anzeige kann nur erreicht werden, wenn die Definition korrekt und vollständig ist. Eine Überprüfung dessen findet durch die vorausgegangene Nutzung des \textsc{Eingabe beenden}-Buttons bzw. Beim Laden einer Datei statt. \\
+
+Hintergrund der EBNF-Anzeige ist die übersichtliche Anzeige einer EBNF-Definition, ohne die Eingabemaske. Außerdem besteht hier die Möglichkeit, zum trans()-Algorithmus zu wechseln, um die EBNF-Definition in ein Syntaxdiagramm umzuwandeln. 
+
+\subsubsection{Definition binär klammern}
+
+Um in den trans()-Algorithmus wechseln zu können, muss die Definition binär geklammert sein. Nach strenger Auslegung der Definition existieren nur binäre Alternativen in der EBNF: 
+\begin{itemize}
+	\item nicht binär geklammert: (a|b|c)
+	\item korrekt geklammert: (a|(b|c))
+\end{itemize}
+
+
+\bigskip
+
+Der Lesbarkeit halber ermöglicht das Programm eine Eingabe von nicht binär geklammerten Alternativen. Ob die Definition noch nicht korrekt geklammerte Terme enthält, wird durch eine entsprechende Meldung angezeigt:\\
+
+\centerpic{ebnf/ebnfdisplay_makebinary.png}{.6}{Definition binär klammern}
+
+Um eine Definition binär zu klammern, muss der \textsc{Definition binär klammern}-Button genutzt werden. Dadurch werden die noch fehlenden Klammern hinzugefügt und rot hervorgehoben. Damit ist der Wechsel zum trans()-Algorithmus ermöglicht. 
+
+\subsubsection{Wechsel zum trans()-Algorithmus}
+
+Wenn die Definition binär geklammert ist, kann man in den trans()-Algorithmus durch Anklicken des \textsc{trans()-Algorithmus anwenden}-Buttons wechseln.
+
+\subsubsection{Beibehalten der binären Klammerung}
+
+Falls in der EBNF-Anzeige nachträglich eine binäre Klammerung vorgenommen wurde, so wird beim Wechsel zur EBNF-Eingabe (mittels \textsc{Definition überarbeiten}-Button) und beim Speichern aus der EBNF-Anzeige heraus nachgefragt, ob diese in der Definition beibehalten werden soll.
+
+\bigskip
+\centerpic{ebnf/ebnfdisplay_keepbinary.png}{.8}{Beibehalten der Klammerung}
+\bigskip

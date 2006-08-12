@@ -1,0 +1,199 @@
+\section{EBNF-Definitionen}
+
+\subsection{Der EBNF-Editor}
+
+\subsubsection{Die Arbeitsfläche}
+
+Die Arbeitsfläche der EBNF-Eingabe teilt sich in eine obere und eine untere Hälfte. Die obere Hälfte dient der Eingabe der Definition, die untere der Ansicht. \\
+
+Ein nachträgliches Bearbeiten der Definition wird durch die Interaktivität der Definition im unteren Bereich ermöglicht.
+
+\centerpic{ebnf/ebnfinput_full.png}{.7}{Die Arbeitsfläche des Moduls \ebnf}
+\bigskip
+
+\subsubsection{Eingabe einer Definition}
+
+Die Definition wird im oberen Bilschirmbereich eingegeben. Es stehen Steuerelemente für die Eingabe von Variablen, Terminalsymbolen sowie Regeln zur Verfügung.
+
+\begin{itemize}
+	\item Eingabe von Variablen und Terminalsymbolen
+
+	\begin{itemize}
+		\item Zugelassene Symbole \\
+					Grundsätzlich sind alle Symbole zugelassen, die die folgenden Bedingungen 	
+					erfüllen:
+
+		\begin{itemize}
+			\item Ein Symbol darf nicht der Anfang eines anderen Terminalsymbols oder 
+					  einer anderen Variable sein
+      \item Ein Symbol darf nicht mit Leerzeichen beginnen oder enden
+      \item Ein Symbol darf nicht leer sein
+      \item Ein Symbol darf keine Metasymbole enthalten 
+		\end{itemize}
+		
+    \item Hinzufügen von Terminalsymbolen und Variablen zur EBNF-Definition \\
+    			Das hinzuzufügende Symbol muss in das entsprechende Textfeld geschrieben werden
+    			und kann dann mit der Eingabetaste oder Klick auf Hinzufügen zur Definition
+    			hinzugefügt werden. Falls das Symbol nicht hinzugefügt werden kann, wird eine
+    			entsprechende Fehlermeldung angezeigt.
+    			
+    			\begin{center}
+						\includegraphics[scale=0.5]{\pfad ebnf/ebnfinput_addterminal.png} \hfill
+						\includegraphics[scale=0.5]{\pfad ebnf/ebnfinput_addvariable.png} \\
+						Eingabemaske für Terminalsymbole \hfill ...und für Variablen
+					\end{center}
+    			
+	\end{itemize}
+
+  \item Eingabe von Regeln \\
+
+	Mit einer EBNF-Regel wird einer Variablen ein EBNF-Term zugeordnet. Die Variable kann
+	aus der Drop-Down-Liste ausgewählt werden. Da es zu jeder Variablen nur eine Regel
+	geben darf, werden nur diejenigen Variablen angezeigt, zu denen es noch keine Regel gibt.
+	
+	\begin{itemize}
+    \item Für einen korrekten EBNF-Term gelten folgende Regeln:
+    
+    \begin{itemize}
+    	\item Ein EBNF-Term besteht aus Variablen, Terminalsymbolen und Metasymbolen
+      \item Die Metasymbole müssen korrekt geklammert sein
+      \item Der EBNF-Term darf nicht leer sein (genauso darf der in einer Klammerung
+      			enthaltene Sub-Term nicht leer sein) 
+    \end{itemize}
+    
+    \item Eine neue Regel kann mit der Eingabetaste oder Klick auf Hinzufügen zur
+    			Definition hinzugefügt werden. Falls die Regel nicht hinzugefügt werden kann,
+    			wird eine entsprechende Fehlermeldung angezeigt.
+    			
+    			\centerpic{ebnf/ebnfinput_addrule.png}{.5}{Eingabemaske für Regeln}
+    			
+    \item Kommt in der Regel ein unbekanntes Symbol vor, so wird ein Dialogfenster
+    		  angezeigt, welches die Möglichkeit bietet, das neue Symbol der Menge der 
+    		  Variablen oder Terminalsymbole hinzuzufügen. Man kann auch Teile des nicht 
+    		  erkannten Textes als Symbol hinzufügen, indem man den Text im Dialog 
+    		  bearbeitet. In diesem Fall ist es möglich, dass weitere unbekannte Symbole 
+    		  gefunden werden. Wählt man in diesem Dialog “Abbrechen”, so schlägt das 
+    		  Hinzufügen der Regel fehl. 
+    		  
+    		  \centerpic{ebnf/ebnfinput_unknownsymbol.png}{.5}{Dialog für unbekannte Symbole}
+    		  
+  \end{itemize}
+  
+  \item Setzen der Startvariable
+
+  \begin{itemize}
+  
+  	\item Eine Definition besitzt genau dann eine Startvariable, wenn sie mindestens eine 
+  				Variable enthält. Beim Hinzufügen der ersten Variablen wird diese automatisch zur 
+  				Startvariable.
+  				
+  				\centerpic{ebnf/ebnfinput_setstartvar.png}{.8}{Setzen der Startvariable}
+  				
+  				
+    \item Die Startvariable kann geändert werden, indem man eine Variable aus der 
+    			entsprechenden Drop-Down-Liste auswählt. Außerdem kann man eine Variable über ihr 
+    			Kontextmenü in der Anzeige der Variablenmenge als Startvariable setzen. 
+    			
+    			\centerpic{ebnf/ebnfinput_popup_startvar.png}{.8}{Setzen der Startvariable in der Ansicht}
+	\end{itemize}
+
+\end{itemize}
+
+\subsubsection{Bearbeiten einer Definition}
+
+Möchte man an einer bereits eingegebenen Definition Änderungen vornehmen, zum Beispiel eine Regel löschen oder ein Terminalsymbol umbenennen, so kann dies über das Kontextmenü in der Ansicht geschehen.
+
+\begin{itemize} 
+
+	\item Löschen
+
+	\begin{itemize} 
+	
+		\item Löschen von Variablen und Terminalsymbolen
+	
+  	\begin{itemize} 
+  		\item Ein Symbol kann nur dann gelöscht werden, wenn es in keiner Regel mehr 
+  					vorkommt.
+    	\item Wenn dies der Fall ist, kann man im Kontextmenü des Symbols in der Variablen- 
+    				oder Terminalsymbolmenge die Funktion "`Löschen"' auswählen. 
+    				
+    				\centerpic{ebnf/ebnfinput_delvariable.png}{.8}{Löschen einer Variable}
+    				
+    				
+    \end{itemize}
+    
+    \item Löschen von Regeln \\
+    			Regeln können über das Kontextmenü in der Regel-Ansicht gelöscht werden. 
+    			
+    			\centerpic{ebnf/ebnfinput_delrule.png}{.8}{Löschen einer Regel}
+  \end{itemize}
+
+  \item Bearbeiten
+  
+  \begin{itemize} 
+		\item Bearbeiten von Variablen und Terminalsymbolen.
+		
+    \begin{itemize} 
+  		\item Symbole können über ihr Kontextmenü umbenannt werden. Dabei gelten für die 
+  					Namensänderung die gleichen Regeln wie für die Eingabe.
+      \item Wählt man im Kontextmenü eines Symbols “Bearbeiten” aus, so erscheint in der 
+      			entsprechenden Eingabemaske das Symbol, der Hinzufügen-Button ändert sich in 
+      			einen “Ändern”-Button und es erscheint zusätzlich ein “Abbrechen”-Button. Im 
+      			Textfeld kann man den Symbolnamen ändern und anschließend durch die Auswahl 
+      			von “Ändern” übernehmen. Möchte man die Änderung abbrechen, so kann man dies 
+      			über den entsprechenden Button vornehmen.
+      \item Grundsätzlich kann man immer nur eine Variable und ein Terminalsymbol 
+      			gleichzeitig bearbeiten; im Moment bearbeitete Symbole werden in der Ansicht 
+      			gelb hervorgehoben. 
+      			
+      			\bigskip
+      			
+      			\centerpic{ebnf/ebnfinput_editvar.png}{.6}{Umbenennen einer Variable}
+      			
+      			\bigskip
+      			
+      			\centerpic{ebnf/ebnfinput_editterminal.png}{.6}{Umbenennnen eines Terminalsymbols}
+      			
+    \end{itemize}  			
+    \bigskip  			
+    \item Bearbeiten von Regeln
+    
+    \begin{itemize} 
+			\item Regeln können über ihr Kontextmenü bearbeitet werden.
+      \item Wählt man im Kontextmenü einer Regel “Bearbeiten” aus, so erscheint in der 
+      			Regel-Eingabemaske die Regel, der Hinzufügen-Button ändert sich in einen 
+      			“Ändern”-Button und es erscheint zusätzlich ein “Abbrechen”-Button. Im 
+      			Textfeld kann man den Term bearbeiten und anschließend durch die Auswahl von 
+      			“Ändern” übernehmen. Das Ändern der Variablen der Regel ist nicht möglich. 
+      			Möchte man die Änderung abbrechen, so kann man dies über den entsprechenden 
+      			Button vornehmen.
+      			
+      			\bigskip
+      			
+      			\centerpic{ebnf/ebnfinput_editrule.png}{.6}{Bearbeiten einer Regel}
+      			
+      			\bigskip
+      			
+      \item Grundsätzlich kann man immer nur eine Regel bearbeiten; die im Moment 
+      			bearbeitete Regel wird in der Ansicht gelb hervorgehoben. 
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\bigskip
+
+\subsubsection{Überprüfen einer Definition und Beenden der Eingabe}
+
+Um eine Definition zu überprüfen kann der Button “Definition überprüfen” genutzt werden. Die Definition wird dann auf folgende Fehler und mögliche Probleme überprüft:
+
+\begin{itemize}
+	\item Das Vorhandensein einer Startvariable (--> Fehlermeldung)
+	\item Das Vorhandensein einer Regel für jede Variable (--> Fehlermeldung)
+	\item Die Nutzung aller Variablen der Variablenmenge (--> Warnung)
+	\item Die Nutzung aller Terminalsymbole der Terminalsymbolmenge (--> Warnung)
+	\item Die Erreichbarkeit aller Regeln von der Startvariablen aus (--> Warnung) 
+\end{itemize}
+
+Wird mind. ein Fehler gefunden, so werden Warnungen ignoriert und nicht angezeigt, um die Übersicht zu wahren. \\
+
+Durch das Aktivieren des \textsc{Eingabe beenden}-Buttons wird die Definition überprüft. Wird dabei mind. ein Fehler gefunden, so kann der Wechsel zur EBNF-Anzeige nicht stattfinden. Wenn kein Fehler auftritt (Warnungen können vorkommen, werden aber nicht angezeigt) geschieht ein Wechsel zur EBNF-Anzeige, in welcher die Eingabemaske nicht mehr zu sehen ist.

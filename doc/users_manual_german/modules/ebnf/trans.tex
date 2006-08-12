@@ -1,0 +1,84 @@
+\section{Der trans()-Algorithmus}
+
+\subsection{\label{transArbeitsFlaeche}Die Arbeitsfläche}
+
+
+\bigskip
+\centerpic{ebnf/trans_gui.png}{.4}{Die Arbeitsfläche des trans()-Algorithmus}
+\bigskip
+
+\begin{itemize}
+	\item Anzeigebereich \\
+				Hier werden die Syntaxdiagramme visualisiert, vollständig, sowie auch während des 
+				Algorithmus. Neben den Syntaxdiagrammelementen existieren hier zusätzlich noch die 
+				hinterlegten trans()-Elemente. Fährt man mit der Maus darüber, werden die zu 
+				trennenden Elemente farblich hervorgehoben und im Erklärungsbereich wird der 
+				dazugehörige Schritt angezeigt. Bei Klick, wird dieser Schritt ausgeführt.
+
+  \item Kontrollbereich \\
+  			Im Kontrollbereich hat man die Möglichkeit, die Syntaxdiagramme grafisch zu 
+  			verändern. Die Möglichkeiten beschränken sich auf das Skalieren der Diagramme, das 
+  			automatische Anpassen der Größe an das Fenster, sowie die Entfernung von 
+  			Treppenstrukturen. Auf der rechten Seite befinden sich zudem noch 
+  			Navigationsbuttons.
+
+
+	\begin{itemize}
+		\item \icon{ebnf/trans_resize.png}{0}{0}{.6} Hier haben Sie die Möglichkeit, das Diagramm selbst zu 
+					vergrößern und zu verkleinern
+
+		\item \icon{ebnf/trans_fit.png}{0}{0}{.6} Hier kann man einstellen, ob sich die Größe der Diagramme 
+					automatisch dem Fensterrahmen anpassen soll oder nicht.
+
+		\item \icon{ebnf/trans_stairs.png}{0}{0}{.6} Bei Aktivierung dieses Knopfes, werden Treppenstrukturen in 
+					den Diagrammen entfernt.
+
+		\item Wechsel zur SyntaxDiagramm-Anzeige \\
+					ACHTUNG! Ein Wechsel in die Syntaxdiagramm-Anzeige ist nur nach Beendigen des 
+					Algorithmus möglich und man kommt zudem nicht wieder zurück! Wechselt man in die 
+					Ebnf-Ansicht und lässt die Ebnf-Definition unverändert, fährt man bei Rückkehr in 
+					den trans()-Algorithmus fort, ändert man die Ebnf-Defintion, wird der Algorithmus 
+					neu gestartet.
+
+	\end{itemize}
+	
+  \item Steuerbereich \\
+				Hier kann man neben dem direkten Arbeiten in der Anzeige noch über Buttons den 		
+				Algorithmus steuern.
+
+	\begin{itemize}
+		\item \icon{ebnf/trans_reset.png}{0}{0}{.6} Macht alle bisher ausgeführten Schritte rückgängig
+
+		\item \icon{ebnf/trans_last.png}{0}{0}{.6} Macht den letzten ausgeführten Schritt rückgängig
+
+		\item \icon{ebnf/trans_info.png}{0}{0}{.6} Bei Aktivierung dieses Buttons wird permanent der nächste Schritt 
+					hervorgehoben
+
+		\item \icon{ebnf/trans_next.png}{0}{0}{.6} Führt den nächsten automatisch gewählten Schritt aus
+
+		\item \icon{ebnf/trans_finish.png}{0}{0}{.6} Führt den Algorithmus bis zum Ende aus
+
+	\end{itemize}
+	
+  \item Erklärungsbereich \\
+				Hier werden die Erklärungen zu den einzelnen Schritten angezeigt oder es werden dem 
+				Nutzer Hinweise angezeigt
+\end{itemize}	
+	
+\subsection{Steuerung des Algorithmus}
+
+Es existieren zwei Möglichkeiten, den Algorithmus zu steuern. Zum einen
+
+\begin{itemize}
+	\item Im Anzeigebereich \\
+				Hier kann man direkt mit den farblich hinterlegten trans()-Elementen arbeiten. 			
+				Befindet sich die Maus darüber, werden die zu trennenden Teilstücke hervorgehoben 
+				sowie der zugehörige Algorithmusschritt im Erklärungsbereich angezeigt. Klickt man 
+				darauf, wird dieser Schritt ausgeführt und das Element umgeformt.
+
+	\item Über die Steuerbuttons \\
+				Die Erklärung zu den Steuerbuttons befindet sich im Abschnitt 
+				\ref{transArbeitsFlaeche} in der Erklärung zur Arbeitsfläche.
+\end{itemize}
+
+\newpage
