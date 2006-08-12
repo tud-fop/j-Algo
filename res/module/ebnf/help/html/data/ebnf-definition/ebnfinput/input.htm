@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<title>Einleitung</title>
+		<link rel="stylesheet" type="text/css" href="../../../../style.css" title="Style">
+		<base target="_self">
+	</head>
+	<body topmargin="30" leftmargin="30">
+
+<h2>Eingabe der Definition</h2>
+<p align="left">Die Definition wird im oberen Bilschirmbereich eingegeben. Es stehen Steuerelemente für die Eingabe von Variablen, Terminalsymbolen sowie Regeln zur Verfügung.
+</p>
+<p align="left"><h3>Eingabe von Variablen und Terminalsymbolen</h3>
+<p>&nbsp;</p>
+<h4>Zugelassene Symbole</h4></p>Grundsätzlich sind alle Symbole zugelassen, die die folgenden Bedingungen erfüllen:
+<ul><li>Ein Symbol darf nicht der Anfang eines anderen Terminalsymbols oder einer anderen Variable sein
+</li><li>Ein Symbol darf nicht mit Leerzeichen beginnen oder enden
+</li><li>Ein Symbol darf nicht leer sein
+</li><li>Ein Symbol darf keine Metasymbole enthalten
+</li></ul><h4>Hinzufügen von Terminalsymbolen und Variablen zur EBNF-Definition</h4>
+<p>Das hinzuzufügende Symbol muss in das entsprechende Textfeld geschrieben werden und kann dann mit der Eingabetaste oder Klick auf Hinzufügen zur Definition hinzugefügt werden. Falls das Symbol nicht hinzugefügt werden kann, wird eine entsprechende Fehlermeldung angezeigt.
+</p>
+<p align="center"><br><img src="../../../../pics/ebnfinput_addvariable.png" width="334" height="105"></p>
+<p align="center">bzw.</p>
+<p align="center"><br><img src="../../../../pics/ebnfinput_addterminal.png"></p>
+<p align="left"><h3>Eingabe von Regeln</h3></p>
+<p align="left">Mit einer EBNF-Regel wird einer Variablen ein EBNF-Term zugeordnet. Die Variable kann aus der Drop-Down-Liste ausgewählt werden. Da es zu jeder Variablen nur eine Regel geben darf, werden nur diejenigen Variablen angezeigt, zu denen es noch keine Regel gibt.<br>
+Für einen korrekten EBNF-Term gelten folgende Regeln:</p>
+<ul><li>Ein EBNF-Term besteht aus Variablen, Terminalsymbolen und Metasymbolen
+</li><li>Die Metasymbole müssen korrekt geklammert sein
+</li><li>Der EBNF-Term darf nicht leer sein
+</li></ul>
+<p align="left">Eine neue Regel kann mit der Eingabetaste oder Klick auf Hinzufügen zur Definition hinzugefügt werden. Falls die Regel nicht hinzugefügt werden kann, wird eine entsprechende Fehlermeldung angezeigt.</p>
+<p align="center"><br><img src="../../../../pics/ebnfinput_addrule.png"></p>
+<p align="left"><br>
+  Kommt in der Regel ein unbekanntes Symbol vor, so wird ein Dialogfenster angezeigt, welches die Möglichkeit bietet, das neue Symbol der Menge der Variablen oder Terminalsymbole hinzuzufügen. Man kann auch Teile des nicht erkannten Textes als Symbol hinzufügen, indem man den Text im Dialog bearbeitet. In diesem Fall ist es möglich, dass weitere unbekannte Symbole gefunden werden. Wählt man in diesem Dialog “Abbrechen”, so schlägt das Hinzufügen der Regel fehl.</p>
+<p align="center"><br><img src="../../../../pics/ebnfinput_unknownsymbol.png"></p>
+	</body>
+</html>

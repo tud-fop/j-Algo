@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE index
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/index_1_0.dtd">
+
+<index version="1.0">
+    <!-- EBNF / Syntaxdiagramme -->
+    <indexitem text="EBNF / Syntaxdiagramme" expand="false">
+				<indexitem text="Bearbeiten einer Definition"			target="ebnf.ebnfinput.editdef"/>
+				<indexitem text="Bearbeiten und Löschen von Elementen"  target="ebnf.syndia.edit"/>
+				<indexitem text="Beenden der Eingabe"		 			target="ebnf.ebnfinput.finishinput"/>
+				<indexitem text="Beibehalten der binären Klammerung" 	target="ebnf.ebnfdisplay.keepbinarydef"/>
+				<indexitem text="Definition binär klammern" 			target="ebnf.ebnfdisplay.binarydef"/>
+				<indexitem text="EBNF-Arbeitsfläche"		 			target="ebnf.ebnfinput.canvas"/>
+				<indexitem text="EBNF-Definition manuell erstellen" 	target="ebnf.start.ebnf"/>
+				<indexitem text="EBNF/Syntaxdiagramm laden" 			target="ebnf.start.load"/>
+				<indexitem text="Eingabe einer Definition" 				target="ebnf.ebnfinput.input"/>
+				<indexitem text="Einleitung"    						target="ebnf.intro"/>
+				<indexitem text="Funktionsübersicht" 					target="ebnf.overview"/>
+				<indexitem text="Hinzufügen von Elementen" 	  			target="ebnf.syndia.add"/>
+				<indexitem text="Laden/Speichern von Syntaxdiagrammen" 	target="ebnf.syndia.load"/>
+				<indexitem text="Rücksprungalgorithmus-Arbeitsfläche" 	target="ebnf.rs.canvas"/>
+				<indexitem text="Setzen der Startvariable" 				target="ebnf.ebnfinput.setstartvar"/>
+				<indexitem text="Speichern von EBNF-Definitionen" 		target="ebnf.saveebnf"/>
+				<indexitem text="Steuerung des Rücksprung-Algorithmus"  target="ebnf.rs.control"/>
+				<indexitem text="Steuerung des trans()-Algorithmus"  	target="ebnf.trans.control"/>
+				<indexitem text="Syntaxdiagramm manuell erstellen" 		target="ebnf.start.syndia"/>
+				<indexitem text="Willkommensbildschirm anzeigen" 		target="ebnf.start.show"/>
+				<indexitem text="Syntaxdiagramm-Anzeige" 			  	target="ebnf.syndia.display"/>
+				<indexitem text="Syntaxdiagramm-Arbeitsfläche" 			target="ebnf.syndia.canvas"/>
+				<indexitem text="trans()-Arbeitsfläche" 	 			target="ebnf.trans.canvas"/>
+				<indexitem text="Zum trans()-Algorithmus wechseln" 		target="ebnf.ebnfdisplay.switchtotrans"/>
+				<indexitem text="Überprüfen einer Definition"			target="ebnf.ebnfinput.checkdef"/>		
+    </indexitem>
+</index>

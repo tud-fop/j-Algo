@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<title>Setzen der Startvariable</title>
+		<link rel="stylesheet" type="text/css" href="../../../style.css" title="Style">
+		<base target="_self">
+	</head>
+	<body topmargin="30" leftmargin="30">
+
+<h2>Seuerung des Algorithmus</h2>
+<p align="left">Aufgabe des Bereichs ‚Rücksprungalgorithmus’ ist es, den Algorithmus der Worterzeugung zu visualisieren. Er repräsentiert den Ablauf eines Weges durch ein Syntaxdiagramm-System und erzeugt während des Ablaufes ein Wort, das sich aus den passierten Terminalsymbolen zusammensetzt. Das Modul ist dabei nicht in der Lage, Entscheidungen über die Wegewahl bezüglich der Erzeugung eines Wortes selbst zu treffen. Vielmehr soll er dem Nutzer helfen, eigene Durchläufe und Sprünge zwischen den einzelnen Diagrammen zu überprüfen.<br><br>
+Im Folgenden wird die Steuerung des Algorithmus’ erläutert:</p>
+<h3>Eingabe eines Wortes</h3>
+<p align="left">Bevor der Algorithmus gestartet wird, besteht die Möglichkeit, im Kontrollbereich ein Wort einzugeben, welches während des Algorithmus erzeugt werden soll. Dieses kann einfach in das Textfeld eingegeben werden, welches mit ‚Zu erzeugendes Wort’ bezeichnet ist. Die Eingabe eines Wortes, welches erzeugt werden soll, ist optional. Es ist genauso möglich, kein Wort einzugeben und die Generierung von Wörtern so zu testen, oder den Button 'Wort erzeugen' im Kontrollbereich zu klicken, der automatisch ein Wort - welches auch mit dem Algorithmus erzeugt werden kann - generiert (Dabei kann es sich aber auch um das leere Wort handeln, falls das Syntax-Diagramm-System dieses ermöglicht).</p>
+<h3>Start des Algorithmus</h3>
+<p align="left">Nach der (optionalen) Eingabe eines Wortes kann der Algorithmus gestartet werden. Dies ist über einen Klick auf den Button ‚Algorithmus starten’ im Kontrollbereich, oder über das Menü Rücksprung-Algorithmus-> Algorithmus starten möglich.<br><br>
+Anmerkung: Besteht das zuvor eingegebene Wort nicht ausschließlich aus in den Syntax-Diagrammen vorhandenen Terminalsymbolen, so ist die Erzeugung eines solchen Wortes prinzipiell nicht möglich. Der Algorithmus wird ein solches Wort zurückweisen und den Algorithmus nicht starten.<br>
+<br>
+  Ist der Algorithmus gestartet, so wird die aktuelle Position in einem der gegebenen Programme durch einen roten Punkt gekennzeichnet. </p>
+<p align="center"><br><img src="../../../pics/rs_dot.png"><br><br></p>
+<p align="left">Zu Beginn des Algorithmus wird dieser Punkt am Anfang des Startdiagrammes stehen.</p>
+<h3>Wählen eines Weges durch ein Syntax-Diagramm</h3>
+<p align="left">Um einen Weg durch ein Syntax-Diagramm zu wählen, können einzelne Elemente des Diagrammes in der Syntax-Diagramm-Anzeige direkt angeklickt werden. Folgende Elemente können angeklickt werden: Erreichbare Terminalsymbole, erreichbare Variablen. Erreichbare, leere Verzweigungen, erreichbare Ausgänge von Syntax-Diagrammen.</p>
+<h3>Passieren eines Terminalsymboles</h3>
+<p align="left">Um ein Terminalsymbol zu passieren, kann dieses einfach angeklickt werden. Dies ist nur möglich, wenn das entsprechende Terminalsymbol von der aktuellen Position im Syntax-Diagramm zu erreichen ist. Ist ein Terminalsymbol zu erreichen, so wird es blau hervorgehoben, sobald man mit der Maus über das Symbol fährt.</p>
+<p align="center"><br><img src="../../../pics/rs_terminal.png"><br><br></p>
+<p align="left">Passierte Terminalsymbole werden an das Ende des erzeugten Wortes im Kontrollbereich angehängt.</p>
+<h3>Passieren einer Variable</h3>
+<p align="left">Um eine Variable zu passieren, kann diese einfach angeklickt werden. Dies ist nur möglich, wenn die entsprechende Variable von der aktuellen Position im Syntax-Diagramm zu erreichen ist. Ist eine Variable zu erreichen, so wird sie blau hervorgehoben, sobald man mit der Maus über die Variable fährt.</p>
+<p align="center"><br><img src="../../../pics/rs_variable.png"><br><br></p>
+<p align="left">Wird eine Variable passiert, so wird ihre Rücksprungadresse auf den Keller gelegt. Dem Passieren einer Variable folgt stets ein Sprung in ein Syntax-Diagramm.</p>
+<h3>Sprung in ein Syntax-Diagramm</h3>
+<p align="left">Dem Sprung in ein Syntax-Diagramm geht stets das Passieren einer Variable voraus. Um in ein Syntax-Diagramm zu springen, muss einfach mit der Maus über das entsprechende Syntax-Diagramm in der Syntaxdiagramm-Ansicht gefahren werden, dieses wird dann mit einem blauen Rahmen umrandet.</p>
+<p align="center"><br><img src="../../../pics/rs_frame.png"><br><br></p>
+<p align="left"> Durch den Klick auf das Diagramm wird der Sprung ins Diagramm durchgeführt. Ein Sprung ist nur möglich, wenn der Name des Diagrammes, mit dem Inhalt der zuvor passierten Variable übereinstimmt. Andernfalls wird der Algorithmus den Sprung zurückweisen.</p>
+<h3>Passieren einer leeren Verzweigung</h3>
+<p align="left">Um eine leere Verzweigung zu passieren, kann diese einfach angeklickt werden. Dies ist nur möglich, wenn die entsprechende Verzweigung von der aktuellen Position im Syntax-Diagramm zu erreichen ist. Ist eine leere Verzweigung zu erreichen, so wird sie blau hervorgehoben, sobald man mit der Maus über die Variable fährt.</p>
+<p align="center"><br><img src="../../../pics/rs_mouseoverline.png"><br><br></p>
+<p align="left"> Beim Klick auf eine leere Verzweigung wird das erzeugte Wort nicht verändert. Es ändert sich lediglich die Position im Syntax-Diagramm.</p>
+<h3>Verlassen eines Syntax-Diagrammes</h3>
+<p align="left">Ist nach dem passieren eines Terminalsymboles, einer Variable, oder leeren Verzweigung, sowie dem Rücksprung in ein Syntax-Diagramm nur noch der Ausgang des Diagrammes zu erreichen, so wird der Algorithmus das Diagramm automatisch verlassen. Doch nicht immer ist der Weg zum Ausgang die einzige Möglichkeit. In solchen Situationen muss man selbst entscheiden, ob das Diagramm verlassen werden soll.<br><br>Um das Diagramm zu verlassen, muss einfach in der Syntaxdiagramm-Anzeige auf den Ausgang des Diagrammes geklickt werden. Das Verlassen des Diagrammes wird nur durchgeführt, wenn der Ausgang des Diagrammes von der aktuellen Position im Diagramm erreicht werden kann. Der Ausgang des Diagrammes wird dann beim Fahren mit der Maus über den Ausgang blau hervorgehoben.</p>
+<p align="center"><br><img src="../../../pics/rs_mouseoverexit.png"><br><br></p>
+<p align="left">
+  Dem Verlassen des Diagrammes folgt entweder der Rücksprung in ein Diagramm, oder das Ende des Algorithmus.</p>
+<h3>Rücksprung in ein Syntax-Diagramm</h3>
+<p align="left">Wurde ein Syntax-Diagramm verlassen, so kann ein Rücksprung in ein Diagramm folgen. Der Rücksprung folgt immer dann, wenn noch Rücksprungadressen auf dem Keller liegen.</p>
+<p align="center"><br><img src="../../../pics/rs_keller.png"><br><br></p>
+<p align="left"> Um einen Rücksprung durchzuführen muss einfach in der Syntaxdiagramm-Anzeige die Rücksprungmarke einer Variable in einem Diagramm angeklickt werden. Diese werden, falls ein Rücksprung möglich ist, beim Fahren mit der Maus über die Marke blau hervorgehoben.</p>
+<p align="center"><br><img src="../../../pics/rs_variable_keller.png"><br><br></p>
+<p align="left"> Ein Rücksprung wird nur durchgeführt, wenn die Nummer der angeklickten Rücksprungmarke mit der obersten Adresse auf dem Keller übereinstimmt. Die oberste Adresse wird dann vom Keller gelöscht, der Weg kann hinter der Variable fortgesetzt werden, zu der zurückgesprungen wurde. Stimmen Rücksprungmarke und oberste Adresse auf dem Keller nicht überein, so wird der Rücksprung vom Algorithmus zurückgewiesen.</p>
+<h3>Ende des Rücksprungalgorithmus</h3>
+<p align="left">Wird ein Syntax-Diagramm verlassen und es befindet sich keine Rücksprung-Adresse mehr auf dem Keller, so endet der Algorithmus. Er endet jedoch nur dann erfolgreich, wenn das Ende des Startdiagrammes erreicht wurde, und das vor Beginn des Algorithmus eingegebene Wort erzeugt wurde. Andernfalls wird der Algorithmus mit einer Fehlermeldung enden.</p>
+<h3>Fehler während des Algorithmusdurchlaufes</h3>
+<p align="left">Nicht immer werdeb Fehler während des Laufens durch ein Syntax-Diagramm sofort erkannt und vom Algorithmus zurückgewiesen. So kann es z.B. passieren, dass das eingegebene Wort komplett erzeugt, der Ausgang des Startdiagrammes aber noch nicht erreicht wurde. Genauso kann ein anderes Wort als die Eingabe erzeugt worden sein. In einem solchen Fall wird der Algorithmus die Weiterarbeit verweigern. Es bestehen die Möglichkeiten, einzelne, falsche Schritte rückgängig zu machen, oder den Algorithmus komplett zurück zu setzen.</p>
+<h3>Schritte rückgängig machen</h3>
+<p align="left">Um einen Schritt im Algorithmus rückgängig zu machen, gibt es zwei Möglichkeiten. Zum einen den Klick auf das entsprechende Symbol in der Toolbar am oberen Fensterrand, <img src="../../../pics/undo.png" width="21" height="21"> oder die Auswahl über das Menü Rücksprung-Algorithms -> Schritt rückgängig.</p>
+<h3>Schritte wiederherstellen</h3>
+<p align="left">Um einen Schritt im Algorithmus wiederherzustellen, gibt es zwei Möglichkeiten. Zum einen den Klick auf das entsprechende Symbol in der Toolbar am oberen Fensterrand, <img src="../../../pics/redo.png" width="21" height="21"> oder die Auswahl über das Menü Rücksprung-Algorithms -> Schritt wiederherstellen.</p>
+<h3>Den Rücksprungalgorithmus zurücksetzen</h3>
+<p align="left">Der Klick auf den Button ‚Algorithmus zurücksetzen’ im Kontrollbereich ermöglicht das Zurücksetzen des Algorithmus in die Ausgangsposition. Einzelne Schritte können von hier aus wieder hergestellt werden. Es kann aber auch ein neues Wort eingegeben und der Algorithmus neu gestartet werden.</p>
+<h3>Verlassen der Rücksprungalgorithmus-Bereiches.</h3>
+<p align="left">Der Rücksprungalgorithmus-Bereich kann über den Button ‚Zur Syntaxdiagrammanzeige wechseln’ im Kontrollbereich verlassen werden. Das Programm kehrt dann in die Syntaxdiagramm-Anzeige zurück. Die gleiche Funktionalität bietet die Auswahl im Menü Rücksprung-Algorithmus -> Algorithmus verlassen.</p>
+</body>
+</html>

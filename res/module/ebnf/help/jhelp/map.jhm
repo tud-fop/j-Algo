@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+	<mapID xml:lang="de"/>
+	
+	<!-- INTRO -->
+	<mapID target="ebnf.intro"						url="../html/data/intro.htm"/>
+	<mapID target="ebnf.overview"					url="../html/data/overview.htm"/>
+	
+	<!-- STARTSCREEN -->
+	<mapID target="ebnf.start.load"					url="../html/data/start/load.htm"/>
+	<mapID target="ebnf.start.ebnf"					url="../html/data/start/ebnf.htm"/>
+	<mapID target="ebnf.start.syndia"				url="../html/data/start/syndia.htm"/>
+	<mapID target="ebnf.start.show"					url="../html/data/start/show.htm"/>
+
+	<!-- EBNF-INPUT -->
+	<mapID target="ebnf.ebnfinput.canvas" 	    	url="../html/data/ebnf-definition/ebnfinput/canvas.htm"/>
+	<mapID target="ebnf.ebnfinput.input" 	    	url="../html/data/ebnf-definition/ebnfinput/input.htm"/>
+	<mapID target="ebnf.ebnfinput.setstartvar"		url="../html/data/ebnf-definition/ebnfinput/setstartvar.htm"/>
+	<mapID target="ebnf.ebnfinput.editdef"			url="../html/data/ebnf-definition/ebnfinput/editdef.htm"/>
+	<mapID target="ebnf.ebnfinput.checkdef"			url="../html/data/ebnf-definition/ebnfinput/checkdef.htm"/>
+	<mapID target="ebnf.ebnfinput.finishinput"		url="../html/data/ebnf-definition/ebnfinput/finishinput.htm"/>	
+	<mapID target="ebnf.ebnfdisplay.ebnfdisplay"	url="../html/data/ebnf-definition/ebnfdisplay/ebndisplay.htm"/>
+	<mapID target="ebnf.ebnfdisplay.binarydef"		url="../html/data/ebnf-definition/ebnfdisplay/binarydef.htm"/>
+	<mapID target="ebnf.ebnfdisplay.switchtotrans"	url="../html/data/ebnf-definition/ebnfdisplay/switchtotrans.htm"/>
+	<mapID target="ebnf.ebnfdisplay.keepbinarydef"	url="../html/data/ebnf-definition/ebnfdisplay/keepbinarydef.htm"/>
+	<mapID target="ebnf.saveebnf"					url="../html/data/ebnf-definition/saveebnf.htm"/>
+	
+	<!-- TRANS() -->
+	<mapID target="ebnf.trans.canvas"				url="../html/data/trans/canvas.htm"/>
+	<mapID target="ebnf.trans.control"				url="../html/data/trans/control.htm"/>
+	
+	<!-- SYNDIA -->
+	<mapID target="ebnf.syndia.canvas"				url="../html/data/syndia/canvas.htm"/>
+	<mapID target="ebnf.syndia.add"					url="../html/data/syndia/add.htm"/>
+	<mapID target="ebnf.syndia.display"				url="../html/data/syndia/display.htm"/>
+	<mapID target="ebnf.syndia.edit"				url="../html/data/syndia/edit.htm"/>
+	<mapID target="ebnf.syndia.load"				url="../html/data/syndia/load.htm"/>
+	
+	<!-- WORD -->
+	<mapID target="ebnf.rs.canvas"					url="../html/data/rs/canvas.htm"/>
+	<mapID target="ebnf.rs.control"					url="../html/data/rs/control.htm"/>
+</map>

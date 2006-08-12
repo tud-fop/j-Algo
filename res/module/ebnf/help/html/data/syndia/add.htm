@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<title>Setzen der Startvariable</title>
+		<link rel="stylesheet" type="text/css" href="../../../style.css" title="Style">
+		<base target="_self">
+	</head>
+	<body topmargin="30" leftmargin="30">
+
+<h2>Hinzuf&uuml;gen von Elementen</h2>
+
+<p align="left">Um einem Syntaxdiagrammsystem Elemente hinzuf&uuml;gen zu k&ouml;nnen, muss man sich in einem entsprechenden Modus befinden. Einzig das Hinzuf&uuml;gen neuer Syntaxdiagramme geschieht ohne Moduswechsel.</p>
+<br>
+<h3>Syntaxdiagramme</h3>
+<p align="left">Um ein neues Syntaxdiagramm einzufügen genügt ein einfacher Klick auf das Symbol <img src="../../../pics/syndia_Leiste_NeuesDiagramm.png" width="33" height="30"> im Kontrollbereich. In der Syntaxdiagramm-Anzeige erscheint ein Popupfenster, in dem sich u.a. ein Texteingabefeld befindet. In diesem bereits fokusiertem Eingabefeld können Sie nun den gewünschten Namen ihres neuen Syntaxdiagramms angeben. Ihre Eingabe beenden Sie entweder mit OK-Button <img src="../../../pics/syndia_Button_OK.png" width="29" height="22"> rechts des Eingabefeldes oder über ENTER.<br>
+    <br>Falls der von Ihnen gewählte Name schon für ein anderes Diagramm vergeben ist, werden Sie im Rahmentext des Popupfensters darauf hingewiesen. Sie müssen einen anderen Namen wählen.<br><br>
+    Unterhalb des Eingabefeldes befindet sich eine weitere Zeile: </p>
+<p align="center"><img src="../../../pics/syndia_startdiagramm.png" width="133" height="25"></p>
+<p align="left">Indem Sie die Checkbox auswählen, können Sie ihr neues Diagramm als Startdiagramm einfügen. Es ist immer nur ein Startdiagramm zulässig, d.h. das alte Startdiagramm verliert dieses "Privileg" an das neue Syntaxdiagramm.<br>
+  <br>
+  Sie können die Eingabe jederzeit mit ESCAPE abbrechen. Die Eingabe eines leeren Diagrammnamens bewirkt ebenfalls einen Abbruch. Es wird kein Syntaxdiagramm hinzugefügt.</p>
+<h3>Über die Einfüge-Modi</h3>
+<p align="left">Um Elemente einfügen zu können, müssen Sie in den Modus "<Element> einfügen" wechseln. Dieses Beispiel demonstriert dies für Terminalsymbole. Den Moduswechsel erreichen Sie auf zwei verschiedenen Wegen: entweder wählen Sie im Kontrollbereich den Button </p>
+<p align="center"><img src="../../../pics/syndia_Leiste_Terminal.png" width="33" height="30"></p>
+<p align="left"> aus oder Sie bewegen Ihre Maus in die Syntaxdiagramm-Anzeige. Dort können Sie jederzeit mit einem Rechtsklick ein Kontextmenü öffnen, in dem Sie ebenfalls den Modus "Terminalsymbole einfügen" anwählen können.</p>
+<p align="center"><img src="../../../pics/syndia_Popup_Terminal.png"></p>
+<p align="left"><br>
+  Ist dieser Modus gewählt, wird der zugehörige Button im Kontrollbereich ausgraut. Auch ändert sich der Mauszeiger, wenn Sie über den Arbeitsbereich fahren.  Somit wissen Sie immer, in welchem Modus Sie sich gerade befinden.</p>
+<h3>Über die Rhomben</h3>
+<p align="left">Im Editiermodus bekommen die Syntaxdiagramme neue Elemente - die Rhomben. Sie sind Pseudoelemente, die das Einfügen von Elementen erleichtern bzw. erst ermöglichen. In ihrem Grundzustand sind die Rhomben grau. Befindet man sich in einem Einfügemodus, so leuchten sie grün auf, falls an dieser Stelle ein Hinzufügen möglich ist. Leuchten sie dagegen rot auf (dies geschieht beim Einsetzen des Endes von Verzweigungen und Wiederholungen [siehe dort]), kann das Element an dieser Stelle nicht eingefügt werden.<br><br>Hat man etwas eingefügt, erscheinen vor und hinter diesem Element neue Rhomben, an denen erneut hinzugefügt werden kann. In Wiederholungen und Verzweigungen erscheinen zudem in den Elementen neue Rhomben - schließlich soll man auch hier Einfügen können.</p>
+<h3>Terminalsymbole und Variablen</h3>
+<p align="left">Wechseln Sie als erstes in den Modus "Terminalsymbole einfügen" oder "Variablen einfügen". </p>
+<p align="center"><img src="../../../pics/syndia_Leiste_Terminal.png"> oder <img src="../../../pics/syndia_Leiste_Variable.png" width="33" height="30"><br>
+bzw.<br>
+  <img src="../../../pics/syndia_Popup_Terminal.png" width="64" height="23">oder <img src="../../../pics/syndia_Popup_Variable.png" width="64" height="23"></p>
+<p align="left"> In der Arbeitsfläche können Sie nun mit der Maus über jeden beliebigen Rhombus fahren - er leuchtet grün auf. Mit einem Linksklick fügen Sie das Terminalsymbol / die Variable an dem aktuell grün leuchtenden Rhobus ein.<br>
+  <br>
+  Es erscheint ein Textfeld, in dem Sie einen Namen für das Element eingeben müssen. Als Standard erscheint ausgewählt "a" / "A".<br>
+  <br>
+  Zum Bestätigen einer Eingabe drücken Sie entweder auf den OK-Button <img src="../../../pics/syndia_Button_OK.png" width="29" height="22"> oder ENTER. Falls Sie das Erstellen abbrechen möchten, drücken Sie ESACAPE oder geben einen leeren Namen ein.</p>
+<h3>Verzweigungen und Wiederholungen</h3>
+<p align="left">Wechseln Sie als erstes in den Modus "Verzweigungen einfügen" / "Wiederholungen einfügen".</p>
+<p align="center"><img src="../../../pics/syndia_Leiste_Verzweigung.png"> oder <img src="../../../pics/syndia_Leiste_Wiederholung.png" width="33" height="30"><br>
+bzw.<br>
+  <img src="../../../pics/syndia_Popup_Verzweigung.png" width="64" height="23"> oder <img src="../../../pics/syndia_Popup_Wiederholung.png" width="64" height="23"></p>
+<p align="left">In der Arbeitsfläche können Sie nun mit der Maus über jeden beliebigen Rhombus fahren - er leuchtet grün auf. Mit einem Linksklick fügen Sie den Anfang der Verzweigung / Wiederholung ein. Daraufhin erscheint grau gepunktet eine neue Verzweigung / Wiederholung. Diese zeigt, von von wo bis wo eingefügt werden kann. Anfangs ist sie auf den angeklickten Rhombus beschränkt.<br>  
+  <br>
+  Sie können diese "unfertige" Verzweigung / Wiederholung nun sowohl nach links als auch nach rechts in die Breite ziehen. Fahren Sie dazu mit der Maus über andere Rhomben. Leuchtet ein Rhombus grün auf, so kann bis zu dieser Stelle eingefügt werden. Dies wird durch die veränderte grau gepunktete Verzweigunng / Wiederholung angezeigt. Dabei können auch schon vorhandene Elemente eingeschlossen werden.<br>
+  <br>
+  Leuchtet ein Rhombus dagegen rot auf, so darf an dieser Stelle nicht eingefügt werden. Dies ist der Fall, wenn das Ende nicht auf der gleichen Linie liegt wie der Startpunkt. Auch dürfen sich Linien nicht kreuzen, so dass das Einfügen eines Endes in das Innere einer anderen Verzweigung / Wiederholung ebenfalls nicht erlaubt ist.<br>
+  <br>
+  Haben Sie den Mauszeiger über ein grün leuchtendes Ende gefahren, so können Sie nun mit einem weiteren Linksklick Einfügen. Die grau gepunktete Verzweigung / Wiederholung verschwindet und ein vollständig neues Element erscheint. </p>
+	</body>
+</html>

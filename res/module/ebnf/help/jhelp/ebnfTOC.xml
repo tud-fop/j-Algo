@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de">
+
+	<!-- EBNF -->
+			<tocitem text="Ebnf / Syntaxdiagramme"	            			target="ebnf"  expand="false">
+				<tocitem text="Einleitung" 		   							target="ebnf.intro"/>
+				<tocitem text="Funktionsübersicht" 							target="ebnf.overview"/>
+
+				<tocitem text="Der Willkommensbildschirm" 		   			target="ebnf.start">
+					<tocitem text="EBNF / Syntaxdiagramm laden" 			target="ebnf.start.load"/>
+					<tocitem text="EBNF-Definition manuell erstellen" 		target="ebnf.start.ebnf"/>
+					<tocitem text="Syntaxdiagramm manuell erstellen" 		target="ebnf.start.syndia"/>
+					<tocitem text="Willkommensbildschirm anzeigen" 			target="ebnf.start.show"/>
+				</tocitem>
+
+				<tocitem text="EBNF-Definitionen" 		   					target="ebnf.ebnfinput">
+					<tocitem text="Der EBNF-Editor" 		   				target="ebnf.ebnfinput.editor">
+						<tocitem text="Die Arbeitsfläche"		 			target="ebnf.ebnfinput.canvas"/>
+						<tocitem text="Eingabe einer Definition" 			target="ebnf.ebnfinput.input"/>
+						<tocitem text="Setzen der Startvariable" 			target="ebnf.ebnfinput.setstartvar"/>
+						<tocitem text="Bearbeiten einer Definition"			target="ebnf.ebnfinput.editdef"/>
+						<tocitem text="Überprüfen einer Definition"			target="ebnf.ebnfinput.checkdef"/>
+						<tocitem text="Beenden der Eingabe"		 			target="ebnf.ebnfinput.finishinput"/>
+					</tocitem>
+					<tocitem text="Die EBNF-Anzeige" 		   				target="ebnf.ebnfdisplay.ebnfdisplay">
+						<tocitem text="Definition binär klammern" 			target="ebnf.ebnfdisplay.binarydef"/>
+						<tocitem text="zum trans()-Algorithmus wechseln" 	target="ebnf.ebnfdisplay.switchtotrans"/>
+						<tocitem text="Beibehalten der binären Klammerung" 	target="ebnf.ebnfdisplay.keepbinarydef"/>
+					</tocitem>
+					<tocitem text="Speichern von EBNF-Definitionen" 		target="ebnf.saveebnf"/>
+				</tocitem>
+				
+				<tocitem text="Der trans()-Algorithmus" 					target="ebnf.trans">
+					<tocitem text="Die Arbeitsfläche" 	 					target="ebnf.trans.canvas"/>
+					<tocitem text="Steuerung des Algorithmus"  				target="ebnf.trans.control"/>
+				</tocitem>
+
+				<tocitem text="Syntaxdiagramme" 		 					target="ebnf.syndia">
+					<tocitem text="Der Syntaxdiagramm-Editor" 		   		target="ebnf.syndia.editor">
+						<tocitem text="Die Arbeitsfläche" 			  		target="ebnf.syndia.canvas"/>
+						<tocitem text="Hinzufügen von Elementen" 	  		target="ebnf.syndia.add"/>
+						<tocitem text="Bearbeiten und Löschen von Elementen" target="ebnf.syndia.edit"/>
+					</tocitem>
+					<tocitem text="Die Syntaxdiagramm-Anzeige" 			  	target="ebnf.syndia.display"/>
+					<tocitem text="Laden/Speichern von Syntaxdiagrammen" 	target="ebnf.syndia.load"/>
+				</tocitem>
+				
+				<tocitem text="Der Rücksprungalgorithmus" 					target="ebnf.rs">
+					<tocitem text="Die Arbeitsfläche" 	 					target="ebnf.rs.canvas"/>
+					<tocitem text="Steuerung des Algorithmus"  				target="ebnf.rs.control"/>
+				</tocitem>
+
+			</tocitem>
+</toc>
