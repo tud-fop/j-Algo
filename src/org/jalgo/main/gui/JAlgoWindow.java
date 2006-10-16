@@ -127,7 +127,9 @@ extends JFrame {
 			Messages.getResourceURL("main", "ui.Logo_small")));
 
 		String lafClassName = Settings.getString("main", "LookAndFeel");
-		if (lafClassName == null) {
+		if (lafClassName == null || 
+		((lafClassName.equals("com.sun.java.swing.plaf.windows.WindowsLookAndFeel")) && 
+				(! System.getProperty("os.name").startsWith("Windows")))) {
 			Settings.setString("main", "LookAndFeel",
 				UIManager.getSystemLookAndFeelClassName());
 			lafClassName = Settings.getString("main", "LookAndFeel");

@@ -194,7 +194,7 @@ extends JDialog {
 
 	public synchronized static void open(JFrame parent) {
 		if (instance == null) instance = new ModuleChooseDialog(parent);
-		instance.setSize(430, 300);
+		instance.setSize(430, 330);
 		instance.setLocationRelativeTo(parent);
 		instance.mcdOnStartup.setSelected(Settings.getBoolean("main", "ShowModuleChooserOnStartup"));
 		instance.setVisible(true);
