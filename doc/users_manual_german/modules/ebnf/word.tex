@@ -6,7 +6,7 @@ Die Arbeitsfläche des Rücksprungalgorithmus ist in vier Bereiche aufgeteilt.
 
 
 \bigskip
-\centerpic{ebnf/ebnfdisplay_keepbinary.png}{.8}{Beibehalten der Klammerung}
+\centerpic{ebnf/rs_full.png}{.8}{Der Rücksprungalgorithmus}
 \bigskip
 
 \begin{itemize}
@@ -38,15 +38,15 @@ Im Folgenden wird die Steuerung des Algorithmus’ erläutert:
 
 \subsubsection{Eingabe eines Wortes}
 
-Bevor der Algorithmus gestartet wird, besteht die Möglichkeit, im Kontrollbereich ein Wort einzugeben, welches während des Algorithmus erzeugt werden soll. Dieses kann einfach in das Textfeld eingegeben werden, welches mit ‚Zu erzeugendes Wort’ bezeichnet ist. Die Eingabe eines Wortes, welches erzeugt werden soll, ist optional. Es ist genauso möglich, kein Wort einzugeben und die Generierung von Wörtern so zu testen, oder den Button 'Wort erzeugen' im Kontrollbereich zu klicken, der automatisch ein Wort - welches auch mit dem Algorithmus erzeugt werden kann - generiert (Dabei kann es sich aber auch um das leere Wort handeln, falls das Syntaxdiagramm-System dieses ermöglicht).
+Bevor der Algorithmus gestartet wird, besteht die Möglichkeit, im Kontrollbereich ein Wort einzugeben, welches während des Algorithmus erzeugt werden soll. Dieses kann einfach in das Textfeld eingegeben werden, welches mit ‚Zu erzeugendes Wort’ bezeichnet ist. Die Eingabe eines Wortes, welches erzeugt werden soll, ist optional. Es ist genauso möglich, kein Wort einzugeben und die Generierung von Wörtern so zu testen, oder den Button 'Wort erzeugen' im Kontrollbereich zu klicken, der automatisch ein Wort - welches auch mit dem Algorithmus erzeugt werden kann - generiert (Dabei kann es sich aber auch um das leere Wort handeln, falls das Syntax-Diagramm-System dieses ermöglicht).
 
 \subsubsection{Start des Algorithmus}
 
 Nach der (optionalen) Eingabe eines Wortes kann der Algorithmus gestartet werden. Dies ist über einen Klick auf den Button ‚Algorithmus starten’ im Kontrollbereich, oder über das Menü Rücksprung-Algorithmus-> Algorithmus starten möglich.
 
-Anmerkung: Besteht das im Schritt 1 eingegebene Wort nicht ausschließlich aus in den Syntaxdiagrammen vorhandenen Terminalsymbolen, so ist die Erzeugung eines solchen Wortes prinzipiell nicht möglich. Das Programm wird ein solches Wort zurückweisen und den Algorithmus nicht starten.
+Anmerkung: Besteht das im Schritt 1 eingegebene Wort nicht ausschließlich aus in den Syntax-Diagrammen vorhandenen Terminalsymbolen, so ist die Erzeugung eines solchen Wortes prinzipiell nicht möglich. Das Programm wird ein solches Wort zurückweisen und den Algorithmus nicht starten.
 
-Ist der Algorithmus gestartet, so wird die aktuelle Position in einem der gegebenen Diagramme durch einen roten Punkt gekennzeichnet. 
+Ist der Algorithmus gestartet, so wird die aktuelle Position in einem der gegebenen Programme durch einen roten Punkt gekennzeichnet. 
 
 
 \bigskip
@@ -55,13 +55,13 @@ Ist der Algorithmus gestartet, so wird die aktuelle Position in einem der gegebe
 
 Zu Beginn des Algorithmus wird dieser Punkt am Anfang des Startdiagrammes stehen.
 
-\subsubsection{Wählen eines Weges durch ein Syntaxdiagramm}
+\subsubsection{Wählen eines Weges durch ein Syntax-Diagramm}
 
-Um einen Weg durch ein Syntaxdiagramm zu wählen, können einzelne Elemente des Diagrammes in der Syntaxdiagramm-Anzeige direkt angeklickt werden. Folgende Elemente können angeklickt werden: Terminalsymbole, Variablen, leere Verzweigungen und Ausgänge von Syntaxdiagrammen. All diese Elemente müssen von der aktuellen Position aus erreichbar sein.
+Um einen Weg durch ein Syntax-Diagramm zu wählen, können einzelne Elemente des Diagrammes in der Syntax-Diagramm-Anzeige direkt angeklickt werden. Folgende Elemente können angeklickt werden: Erreichbare Terminalsymbole und Variable, erreichbare und leere Verzweigungen sowie erreichbare Ausgänge von Syntax-Diagrammen.
 
 \subsubsection{Passieren eines Terminalsymboles}
 
-Um ein Terminalsymbol zu passieren, kann dieses einfach angeklickt werden. Dies ist nur möglich, wenn das entsprechende Terminalsymbol von der aktuellen Position im Syntaxdiagramm zu erreichen ist. Ist ein Terminalsymbol zu erreichen, so wird es blau hervorgehoben, sobald man mit der Maus über das Symbol fährt. (BILD) Passierte Terminalsymbole werden an das Ende des erzeugten Wortes im Kontrollbereich angehängt.
+Um ein Terminalsymbol zu passieren, kann dieses einfach angeklickt werden. Dies ist nur möglich, wenn das entsprechende Terminalsymbol von der aktuellen Position im Syntax-Diagramm zu erreichen ist. Ist ein Terminalsymbol zu erreichen, so wird es blau hervorgehoben, sobald man mit der Maus über das Symbol fährt. Passierte Terminalsymbole werden an das Ende des erzeugten Wortes im Kontrollbereich angehängt.
 
 \bigskip
 \centerpic{ebnf/rs_terminal.png}{.8}{}
@@ -69,15 +69,15 @@ Um ein Terminalsymbol zu passieren, kann dieses einfach angeklickt werden. Dies 
 
 \subsubsection{Passieren einer Variable}
 
-Um eine Variable zu passieren, kann diese einfach angeklickt werden. Dies ist nur möglich, wenn die entsprechende Variable von der aktuellen Position im Syntax-Diagramm zu erreichen ist. Ist eine Variable zu erreichen, so wird sie blau hervorgehoben, sobald man mit der Maus über die Variable fährt. (BILD) Wird eine Variable passiert, so wird ihre Rücksprungadresse auf den Keller gelegt. Dem Passieren einer Variable folgt stets ein Sprung in ein Syntaxdiagramm.
+Um eine Variable zu passieren, kann diese einfach angeklickt werden. Dies ist nur möglich, wenn die entsprechende Variable von der aktuellen Position im Syntax-Diagramm zu erreichen ist. Ist eine Variable zu erreichen, so wird sie blau hervorgehoben, sobald man mit der Maus über die Variable fährt. Wird eine Variable passiert, so wird ihre Rücksprungadresse auf den Keller gelegt. Dem Passieren einer Variable folgt stets ein Sprung in ein Syntax-Diagramm.
 
 \bigskip
 \centerpic{ebnf/rs_variable.png}{.8}{}
 \bigskip
 
-\subsubsection{Sprung in ein Syntaxdiagramm}
+\subsubsection{Sprung in ein Syntax-Diagramm}
 
-Dem Sprung in ein Syntaxdiagramm geht stets das Passieren einer Variable voraus. Um in ein Syntaxdiagramm zu springen, muss einfach mit der Maus über das entsprechende Syntaxdiagramm in der Syntaxdiagramm-Ansicht gefahren werden, dieses wird dann mit einem blauen Rahmen umrandet. (BILD) Durch den Klick auf das Diagramm wird der Sprung ins Diagramm durchgeführt. Ein Sprung ist nur möglich, wenn der Name des Diagrammes, mit dem Inhalt der zuvor passierten Variable übereinstimmt. Andernfalls wird der Algorithmus den Sprung zurückweisen.
+Dem Sprung in ein Syntax-Diagramm geht stets das Passieren einer Variable voraus. Um in ein Syntax-Diagramm zu springen, muss einfach mit der Maus über das entsprechende Syntax-Diagramm in der Syntaxdiagramm-Ansicht gefahren werden, dieses wird dann mit einem blauen Rahmen umrandet. Durch den Klick auf das Diagramm wird der Sprung ins Diagramm durchgeführt. Ein Sprung ist nur möglich, wenn der Name des Diagrammes, mit dem Inhalt der zuvor passierten Variable übereinstimmt. Andernfalls wird der Algorithmus den Sprung zurückweisen.
 
 \bigskip
 \centerpic{ebnf/rs_frame.png}{.8}{}
@@ -85,15 +85,15 @@ Dem Sprung in ein Syntaxdiagramm geht stets das Passieren einer Variable voraus.
 
 \subsubsection{Passieren einer leeren Verzweigung}
 
-Um eine leere Verzweigung zu passieren, kann diese einfach angeklickt werden. Dies ist nur möglich, wenn die entsprechende Verzweigung von der aktuellen Position im Syntaxsdiagramm zu erreichen ist. Ist eine leere Verzweigung zu erreichen, so wird sie blau hervorgehoben, sobald man mit der Maus über die Variable fährt. (BILD) Beim Klick auf eine leere Verzweigung wird das erzeugte Wort nicht verändert. Es ändert sich lediglich die Position im Syntaxdiagramm.
+Um eine leere Verzweigung zu passieren, kann diese einfach angeklickt werden. Dies ist nur möglich, wenn die entsprechende Verzweigung von der aktuellen Position im Syntax-Diagramm zu erreichen ist. Ist eine leere Verzweigung zu erreichen, so wird sie blau hervorgehoben, sobald man mit der Maus über die Variable fährt. Beim Klick auf eine leere Verzweigung wird das erzeugte Wort nicht verändert. Es ändert sich lediglich die Position im Syntax-Diagramm.
 
 \bigskip
 \centerpic{ebnf/rs_mouseoverline.png}{.8}{}
 \bigskip
 
-\subsubsection{Verlassen eines Syntaxdiagrammes}
+\subsubsection{Verlassen eines Syntax-Diagrammes}
 
-Ist nach dem Passieren eines Terminalsymboles, einer Variable oder leeren Verzweigung, sowie dem Rücksprung in ein Syntaxdiagramm nur noch der Ausgang des Diagrammes zu erreichen, so wird der Algorithmus das Diagramm automatisch verlassen. Doch nicht immer ist der Weg zum Ausgang die einzige Möglichkeit. In solchen Situationen muss man selbst entscheiden, ob das Diagramm verlassen werden soll. \\
+Ist nach dem Passieren eines Terminalsymboles, einer Variable oder leeren Verzweigung, sowie dem Rücksprung in ein Syntax-Diagramm nur noch der Ausgang des Diagrammes zu erreichen, so wird der Algorithmus das Diagramm automatisch verlassen. Doch nicht immer ist der Weg zum Ausgang die einzige Möglichkeit. In solchen Situationen muss man selbst entscheiden, ob das Diagramm verlassen werden soll. \\
 
 Um das Diagramm zu verlassen, muss einfach in der Syntaxdiagramm-Anzeige auf den Ausgang des Diagrammes geklickt werden. Das Verlassen des Diagrammes wird nur durchgeführt, wenn der Ausgang des Diagrammes von der aktuellen Position im Diagramm erreicht werden kann. Der Ausgang des Diagrammes wird dann beim Fahren mit der Maus über den Ausgang blau hervorgehoben. \\
 
@@ -103,9 +103,9 @@ Um das Diagramm zu verlassen, muss einfach in der Syntaxdiagramm-Anzeige auf den
 
 Dem Verlassen des Diagrammes folgt entweder der Rücksprung in ein Diagramm, oder das Ende des Algorithmus. \\
 
-\subsubsection{Rücksprung in ein Syntaxdiagramm}
+\subsubsection{Rücksprung in ein Syntax-Diagramm}
 
-Wurde ein Syntaxdiagramm verlassen, so kann ein Rücksprung in ein Diagramm folgen. Der Rücksprung folgt immer dann, wenn noch Rücksprungadressen auf dem Keller liegen. (BILD Keller) Um einen Rücksprung durchzuführen, muss einfach in der Syntaxdiagramm-Anzeige die Rücksprungmarke einer Variable in einem Diagramm angeklickt werden. Diese werden, falls ein Rücksprung möglich ist, beim Fahren mit der Maus über die Marke blau hervorgehoben.
+Wurde ein Syntax-Diagramm verlassen, so kann ein Rücksprung in ein Diagramm folgen. Der Rücksprung folgt immer dann, wenn noch Rücksprungadressen auf dem Keller liegen. Um einen Rücksprung durchzuführen, muss einfach in der Syntaxdiagramm-Anzeige die Rücksprungmarke einer Variable in einem Diagramm angeklickt werden. Diese werden, falls ein Rücksprung möglich ist, beim Fahren mit der Maus über die Marke blau hervorgehoben.
 
 \bigskip
 \centerpic{ebnf/rs_keller.png}{.8}{}
@@ -119,11 +119,11 @@ Ein Rücksprung wird nur durchgeführt, wenn die Nummer der angeklickten Rücksprun
 
 \subsubsection{Ende des Rücksprungalgorithmus}
 
-Wird ein Syntaxdiagramm verlassen und es befindet sich keine Rücksprung-Adresse mehr auf dem Keller, so endet der Algorithmus. Er endet jedoch nur dann erfolgreich, wenn das Ende des Startdiagrammes erreicht wurde, und das vor Beginn des Algorithmus eingegebene Wort erzeugt wurde. Andernfalls wird der Algorithmus mit einer Fehlermeldung enden.
+Wird ein Syntax-Diagramm verlassen und es befindet sich keine Rücksprung-Adresse mehr auf dem Keller, so endet der Algorithmus. Er endet jedoch nur dann erfolgreich, wenn das Ende des Startdiagrammes erreicht wurde, und das vor Beginn des Algorithmus eingegebene Wort erzeugt wurde. Andernfalls wird der Algorithmus mit einer Fehlermeldung enden.
 
 \subsubsection{Fehler während des Algorithmusdurchlaufes}
 
-Nicht immer werden Fehler während des Laufens durch ein Syntaxdiagramm sofort erkannt und vom Algorithmus zurückgewiesen. So kann es z.B. passieren, dass das eingegebene Wort komplett erzeugt, der Ausgang des Startdiagrammes aber noch nicht erreicht wurde. Genauso kann ein anderes Wort als die Eingabe erzeugt worden sein. In einem solchen Fall wird der Algorithmus die Weiterarbeit verweigern. Es bestehen die Möglichkeiten, einzelne, falsche Schritte rückgängig zu machen, oder den Algorithmus komplett zurück zu setzen.
+Nicht immer werden Fehler während des Laufens durch ein Syntax-Diagramm sofort erkannt und vom Algorithmus zurückgewiesen. So kann es z.B. passieren, dass das eingegebene Wort komplett erzeugt, der Ausgang des Startdiagrammes aber noch nicht erreicht wurde. Genauso kann ein anderes Wort als die Eingabe erzeugt worden sein. In einem solchen Fall wird der Algorithmus die Weiterarbeit verweigern. Es bestehen die Möglichkeiten, einzelne, falsche Schritte rückgängig zu machen, oder den Algorithmus komplett zurück zu setzen.
 
 \subsubsection{Schritte rückgängig machen}
 
