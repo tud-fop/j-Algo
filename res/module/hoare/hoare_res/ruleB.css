@@ -1,0 +1,28 @@
+
+.rule {
+  text-decoration: none;
+  color: black;
+}
+
+.activeRule {
+  text-decoration: none;
+  color: black;
+  background-color: yellow;
+}
+
+.rules {
+  font-size: 16pt;
+}
+
+.title {
+  text-align: left;
+}
+
+.content {
+ text-align: center;
+ font-size: 18pt;
+}
+
+.codeseg {
+ font-size: large;
+}

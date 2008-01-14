@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de">
+
+	<!-- Hoare -->
+			<tocitem text="Hoare"					target="hoare"  expand="false">
+			
+			   <tocitem text="Intro"		                       target="hoare.intro">
+			       <tocitem text="Funktionsübersicht"		       target="hoare.overview"/>
+			   </tocitem>
+			   <tocitem text="Der Wilkommensbildschirm"        target="hoare.start">
+			       <tocitem text="Buttons"                     target="hoare.buttons"/>
+			   </tocitem>
+			   <tocitem text="Der Arbeitsbereich"              target="hoare.screen">
+			       <tocitem text="Toolbar"                     target="hoare.toolbar"/>
+			       <tocitem text="Beweisbaum"                  target="hoare.tree"/>
+			       <tocitem text="Quellcode"                   target="hoare.source"/>
+			       <tocitem text="Event-Log"                   target="hoare.log"/>
+			       <tocitem text="Regelanzeige"                target="hoare.rules"/>
+			       <tocitem text="Eingabemaske"                target="hoare.input"/>
+			 </tocitem>
+			   <tocitem text="Modulfunktionen"                 target="hoare.functions">
+			       <tocitem text="C0-Programm einlesen"        target="hoare.parseC0"/>
+			       <tocitem text="C0-Programm aus Datei laden" target="hoare.openC0"/>
+			       <tocitem text="C0-Programm manuell eingeben"target="hoare.newC0"/>
+			       <tocitem text="Den Beweisbaum aufbauen"     target="hoare.buildTree"/>
+			       <tocitem text="Regel anwenden"              target="hoare.applyrule"/>
+			       <tocitem text="Vor/Nachbedingungen eingeben"target="hoare.conds"/>
+			       <tocitem text="Regel verifizieren"          target="hoare.verify"/>
+			       <tocitem text="Programm fertig verifiziert" target="hoare.finished"/>
+			  </tocitem>
+			
+			   <tocitem text="Algorithmussteuerung"         target="hoare.flowcontrol"/>
+			
+			</tocitem>
+</toc>

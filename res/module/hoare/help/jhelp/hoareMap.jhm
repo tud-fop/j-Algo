@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+	<mapID xml:lang="de"/>
+
+	<!-- Hoare			 -->
+	<mapID target="hoare" 	    		 			 	url="../html/data/overview.htm"/>
+
+	<mapID target="hoare.intro" 	    		  url="../html/data/overview.htm#info"/>
+	<mapID target="hoare.overview" 	    		url="../html/data/overview.htm#overview"/>
+	
+	<mapID target="hoare.start" 	    		  url="../html/data/start.htm"/>
+	<mapID target="hoare.buttons" 	    		  url="../html/data/start.htm#buttons"/>
+
+	<mapID target="hoare.screen" 	    		  url="../html/data/screen.htm"/>
+	<mapID target="hoare.toolbar" 	    	  url="../html/data/screen.htm#toolbar"/>
+	<mapID target="hoare.tree" 	    	      url="../html/data/screen.htm#tree"/>
+	<mapID target="hoare.div" 	    	      url="../html/data/screen.htm#bar"/>
+	<mapID target="hoare.beamer" 	    	    url="../html/data/screen.htm#beamer"/>
+
+	<mapID target="hoare.source" 	    	    url="../html/data/screen.htm#source"/>
+	<mapID target="hoare.log" 	    	      url="../html/data/screen.htm#log"/>
+	<mapID target="hoare.rules" 	    	    url="../html/data/screen.htm#rules"/>
+	<mapID target="hoare.input" 	    	    url="../html/data/screen.htm#input"/>
+
+	<mapID target="hoare.functions" 	    	url="../html/data/functions.htm"/>
+	<mapID target="hoare.parseC0" 	    	  url="../html/data/functions.htm#parseC0"/>
+	<mapID target="hoare.openC0" 	    	    url="../html/data/functions.htm#openC0"/>
+	<mapID target="hoare.newC0" 	    	    url="../html/data/functions.htm#newC0"/>
+	<mapID target="hoare.buildTree" 	 	    url="../html/data/functions.htm#buildTree"/>
+	<mapID target="hoare.applyrule" 	 	    url="../html/data/functions.htm#applyrule"/>
+	<mapID target="hoare.conds" 	 	        url="../html/data/functions.htm#conds"/>
+	<mapID target="hoare.verify" 	 	        url="../html/data/functions.htm#verify"/>
+	<mapID target="hoare.finished" 	 	      url="../html/data/functions.htm#finished"/>
+	
+	<mapID target="hoare.flowcontrol" 	 	  url="../html/data/flowcontrol.htm"/>
+
+</map>

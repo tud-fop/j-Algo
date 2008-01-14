@@ -1,0 +1,128 @@
+<html>
+	<head>
+		<title>Die Arbeitsfläche</title>	</head>
+	<body topmargin="30" leftmargin="30">
+
+<h1>Der Arbeitsbereich</h1>
+
+
+
+Der Arbeitsbereich ist untergliedert in sechs Bereiche, die Ihnen Zugriff auf 
+alle wesentlichen Funktionen anbieten, sowie aktuelle und relevante Informationen 
+darstellen:
+<p><img src="../../pics/workscreen.png" alt="Phase1Screen" height="242" width="400"></p>
+<ol>
+
+<li>
+    <h4>Toolbar</h4>
+    Hier können die wichtigsten Einstellungen vorgenommen werden.<br>
+    Mehr Informationen hierzu: <a href="#toolbar">Anzeigeoptionen</a>
+    &nbsp;
+
+</li>
+
+<li>
+    <h4>Beweisbaum</h4>
+    Hier wird der Beweisbaum dargestellt.<br>
+    Mehr Informationen hierzu: <a href="#tree">Der Beweisbaum</a>
+</li>
+
+<li>
+    <h4>Quellcode</h4>
+    Hier wird der Quellcode des C0-Programmes angezeigt. Dieser kann jederzeit verändert 
+    und neu geparst werden.<br>
+    Mehr Informationen hierzu: <a href="#source">Der Quellcode</a>
+</li>
+
+<li>
+    <h4>Event-Log</h4>
+    Hier werden Sie über aktuelle Ereignisse bzw Fehler beim Aufbau des Beweisbaumes informiert.<br>
+    Mehr Informationen hierzu: <a href="#log">Der Event-Log</a>
+</li>
+
+<li>
+    <h4>Verifikationsregeln</h4>
+    Hier wird die Liste der für das Hoare-Kalkül definierten Verifikationsregeln angezeigt.<br>
+    Mehr Informationen hierzu: <a href="#rules">Die Regelanzeige</a>
+</li>
+
+<li>
+    <h4>Eingabemaske für Vor-/Nachbedingungen</h4>
+    Hier können Sie die zu den Knoten im Beweisbaum gehörenden Vor- bzw Nachbedingungen 
+    eingeben und verifizieren lassen.<br>
+    Mehr Informationen hierzu: <a href="#input">Die Bedingungs-Eingabe</a>
+</li>
+
+</ol>
+
+<a name="toolbar"><h2>Anzeigeoptionen in der Toolbar</h2></a>
+<p><img src="../../pics/toolbar.png" alt="Die Toolbar" height="18" width="400"></p>
+
+<p>
+    Mittels des Buttons "Details im Baum ein/ausblenden"  können Sie für den markierten Knoten
+    den Quellcode direkt im Baum anzeigen lassen.
+</p>
+    
+<p><img src="../../pics/zoom.png" alt="Details ein/ausblenden" height="55" width="397"></p>
+
+
+<h3><a name="bar">Aufteilung der Bereiche</a></h3>
+Die Aufteilung zwischen den einzelnen Bereichen 
+kann mit einem Schiebebalken verändert werden. 
+Per Klick auf die Kante können Sie die Grenze verschieben.
+
+
+<a name="beamer"><h3>Beamer - Modus</a></h3>
+Der Beamer-Modus ermöglicht das schnelle Einstellen von Anzeigeoptionen, die die Präsentation 
+in Vorlesungen oder ähnlichen Veranstaltungen begünstigen. Dieser Modus ist zu finden unter "Hoare" => "Beamermodus".<br>
+Ist der Modus aktiv, so erscheint vor diesem Menüeintrag ein Häkchen. Um den Modus wieder auszuschalten, 
+entfernen Sie einfach den Haken per Klick.
+<p><img src="../../pics/beamer.png" alt="Beamermode" height="255" width="284"></p>
+
+<a name="tree"><h2>Der Beweisbaum</h2></a>
+<p>
+Der Beweisbaum wird vom Nutzer Stück für Stück aufgebaut um das gewünschte C0-Programm 
+zu verifizieren. Der gewählte Knoten wir dabei hervorgehoben.
+</p>
+<p><img src="../../pics/tree.png" alt="Der Beweisbaum" height="94" width="400"></p>
+
+
+<a name="source"><h2>Der Quellcode</h2></a>
+<p>
+In dieser Anzeige wird der Quellcode dargestellt. Dieser kann jederzeit geändert und 
+neu eingelesen werden.<br>
+Bei Auswahl eines Knotens im Beweisbaum, wird das dazugehörige Quellcode-Stück
+hervorgehoben.
+</p>
+<p><img src="../../pics/source.png" alt="Der Beweisbaum" height="395" width="258"></p>
+
+<a name="log"><h2>Der Event-Log</h2></a>
+<p>
+Hier werden relevante Ereignise und Fehlermeldungen ausgegeben, unter Anderem:
+<ul>
+    <li>Fehler beim Parsen des C0-Programms</li>
+    <li>Syntaktische Fehler bei der Eingabe der Vor/Nachbedingungen</li>
+    <li>Fehler bei falscher Regelanwendung</li>
+    <li>Evaluationsfehler bzw -Erfolg</li>
+</ul>
+</p>
+<p><img src="../../pics/log.png" alt="Der Event-Log" height="163" width="260"></p>
+
+<a name="rules"><h2>Die Regelanzeige</h2></a>
+<p>
+Hier werden die für das Hoare-Kalkül definierten Verifikationsregeln angezeigt, welche 
+beim Klicken darauf auch auf den vorher gewählten Knoten angewendet werden können.
+</p>
+<p><img src="../../pics/rules.png" alt="Die Regelanzeige" height="79" width="400"></p>
+
+
+<a name="input"><h2>Die Bedingungs-Eingabe</h2></a>
+<p>
+Hier werden die Vor/Nachbedingung eines Knotens eingegeben. An Knoten, bei denen diese sich 
+automatisch ergeben wird dies vom Programm übernommen.
+</p>
+<p><img src="../../pics/input.png" alt="Die Bedingungs-Eingabe" height="120" width="400"></p>
+
+
+	</body>
+</html>
