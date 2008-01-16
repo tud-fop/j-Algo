@@ -1,0 +1,3 @@
+Manifest-Version: 1.2
+Class-Path: ../j-Algo.jar ../../extlibs/parser.jar ../../extlibs/antlr-3.0b6.jar
+

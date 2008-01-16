@@ -1,0 +1,102 @@
+<html>
+	<head>
+		<title>Die Arbeitsfl&auml;che</title>
+		<link rel="stylesheet" type="text/css" href="../../style.css" title="Style">
+		<base target="_self">
+	</head>
+	<body>
+		<h2>Die Arbeitsfl&auml;che</h2>
+		<br>
+		<img src="../../pics/module.jpg" />
+		<br>
+		<p>
+		Die Arbeitsfl&auml;che des Moduls kann zwei Zust&auml;nde einnehmen. Der Nutzer kann sich entweder im Editiermodus
+		oder im Speicherbetrachtungsmodus befinden. In den Betrachtungsmodus gelangt man nur indem man einen gültigen
+		C0-Quellcode eingibt, der geparst und interpretiert werden kann. Konnte der C0-Quellcode nicht validiert werden, so
+		müssen zuerst alle syntaktischen Fehler bereinigen werden.
+		</p>
+		<h3><a>Die Menüleiste</a></h3>
+		<br>
+		<img src="../../pics/menubar.jpg" />
+		<br>
+		<h4><a>C0 Datei importieren</a></h4>
+		<p>
+		Mit Hilfe dieser Option kann eine beliebige Textdatei in den Editor geladen werden. Ist der geladene
+		Text ein gültiger C0 Quellcode, so wird dieser auch gleich formatiert. Beim Wechsel in den Betrachtungsmodus werden
+		außerdem alle Labels im Quellcode als Haltepunkte markiert.
+		</p>
+		<h4><a>C0 Datei exportieren</a></h4>
+		<p>
+		Mit Hilfe dieser Option kann die aktuelle Eingabe im Editorfenster in eine externe Datei gespeichert werden.
+		</p>
+		<h4><a>Interpretation und Ausführung</a></h4>
+		<p>
+		Mit Hilfe dieser Option wird der im Editor eingegebene Quellcode auf seine Gültigkeit überprüft. Sind alle
+		syntaktischen Voraussetzungen erfüllt wird der Code interpretiert und ausgeführt. Hierbei bittet das Programm
+		den Nutzer falls n&ouml;tig um diverse Eingaben und erzeugt eine interne Speichertabelle. Auch w&auml;hrend der
+		Ausführung des Programmes k&ouml;nnen noch Fehler auftreten. Die interne Speichertabelle kann sehr groß werden
+		und <b>so kann es bereits bei kleinen Programmen mit genügend Rekursionen bzw. Iterationen zu einem Speicherüberlauf
+		kommen.</b> Versuchen Sie in diesem Fall die Anzahl der Rekursionen und Iterationen zu senken und suchen Sie
+		in ihrem Programm nach Endlosschleifen.
+		Wenn das Programm erfolgreich ausgeführt werden konnte gelangt der Nutzer in den Speicherbetrachtungsmodus.<br>
+		<i>Diese Option steht nur im Editiermodus zur Verfügung.</i>
+		</p>
+		<h4><a>Rückkehr in den Editiermodus</a></h4>
+		<p>
+		Mit dieser Option gelangt der Nutzer zurück in den Editiermodus. Bei Änderungen am Quelltext, gehen bereits
+		gesetzte Haltepunkte verloren, da der Text eventuell neu formatiert werden muss. <br>
+		<i>Diese Option steht erst im Speicherbetrachtungsmodus zur Verfügung.</i>
+		</p>
+		<h4><a>Zurück zum ersten Haltepunkt</a></h4>
+		<p>
+		Mit dieser Option wird die komplette Tabelle in der Speicherabbildfl&auml;che geleert und der Programmzustand
+		am ersten Haltepunkt wird dargestellt.<br>
+		<i>Diese Option steht erst im Speicherbetrachtungsmodus zur Verfügung.</i>
+		</p>
+		<h4><a>Zurück zum vorherigen Haltepunkt</a></h4>
+		<p>
+		Mit dieser Option geht der Nutzer im Programmablauf zur Position des vorherigen Haltepunktes.<br>
+		<i>Diese Option steht erst im Speicherbetrachtungsmodus zur Verfügung.</i>
+		</p>
+		<h4><a>Zum n&auml;chsten Haltepunkt</a></h4>
+		<p>
+		Mit dieser Option gelangt der Nutzer im Programmablauf zur Position des n&auml;chsten gesetzten Haltepunktes.<br>
+		<i>Diese Option steht erst im Speicherbetrachtungsmodus zur Verfügung.</i>
+		</p>
+		<h4><a>Zum letzten Haltepunkt</a></h4>
+		<p>
+		Mit dieser Option gelangt der Nutzer zur Position des letzten Haltepunktes im Programmablauf.<br>
+		<i>Diese Option steht erst im Speicherbetrachtungsmodus zur Verfügung.</i>
+		</p>
+
+		<h3><a>Die Editorfl&auml;che</a></h3>
+		<br>
+		<img src="../../pics/editor.jpg" />
+		<br>
+		<p>
+		In dieser Fl&auml;che befindet sich die Textbox mit dem aktuellen Quellcode. Wenn sich das Programm im
+		Editiermodus befindet ist es m&ouml;glich diesen Quellcode direkt zu bearbeiten. Außerhalb des Editiermodus
+		ist eine Ver&auml;nderung des Quellcodes nicht m&ouml;glich.
+		In der kleinen Fl&auml;che zwischen der Zeilenangabe und der Textbox k&ouml;nnen die Haltepunkte durch
+		einen einfachen Mausklick gesetzt bzw. wieder entfernt werden. Haltepunkte k&ouml;nnen immer gesetzt
+		oder entfernt werden, selbst wenn das Programm bereits ausgef&uuml;hrt wurde.
+		</p>
+		<h3><a>Die Speicherabbildfl&auml;che</a></h3>
+		<img src="../../pics/memoryview.jpg" />
+		<p>
+		Diese Fl&auml;che bildet das Herz des Moduls. In der Tabelle wird der komplette Programmzustand an den
+		gesetzten Haltepunkten dargestellt. Die erste Spalte identifiziert den jeweiligen Haltepunkt anhand seiner
+		Zeile im Quellcode. Befindet sich in der selben Zeile auch ein Label, so wird zus&auml;tzlich
+		dessen Name angezeigt.<br>
+		Die zweite Spalte stellt den jeweiligen R&uuml;cksprungmarkenkeller dar. Die darin enthaltenen R&uuml;cksprungmarken
+		wurden beim Interpretieren automatisch generiert und sind ebenfalls im Quellcode zu finden.<br>
+		Alle weiteren Spalten stellen den Zustand der Speicherzellen dar. Der Spaltenname steht hier gleichzeitig f&uuml;r den
+		Index der Speicherzelle. Die ersten Speicherzellen mit einem schwarzen Tabellenkopf sind die globalen Variablen.
+		Alle weiteren Speicherzellen sind lokale Variablen einer Funktion. Wird eine Funktion verlassen
+		so wird der Speicher dieser Zelle wieder freigegeben und kann sp&auml;ter von einer anderen lokalen Variablen
+		in einer anderen Funktion wiederverwendet werden.<br>
+		Der Eintrag in einer solchen Tabellenzelle zeigt den Namen der Variable an dem Speicherplatz und deren aktuellen
+		Wert. Zeiger werden kursiv dargestellt und ihr Wert steht fu&uml;r die Speicherzelle, auf die sie zeigen.
+		</p>
+	</body>
+</html>
