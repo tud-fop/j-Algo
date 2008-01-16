@@ -35,7 +35,7 @@ public abstract class AST {
 			C00Lexer lexer = new C00Lexer(charStream);
 			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 			ParseTreeBuilder builder = new ParseTreeBuilder(startSymbol);
-			C00Parser parser = new C00Parser(tokenStream, builder, err);
+			C00Parser parser = new C00Parser(tokenStream, builder, err, true);
 
 			return parse(parser, startSymbol);
 		}
@@ -61,16 +61,20 @@ public abstract class AST {
 	* @return            the abstract syntax tree of the input program
 	* @see	 ASTTree
 	*/
-	public static ASTTree parseString(String input, String startSymbol, StringBuffer err) throws RecognitionException {
+	public static ASTTree parseString(String input, String startSymbol, StringBuffer err, boolean ignoreExceptions) throws RecognitionException {
 		CharStream charStream = new ANTLRStringStream(input);
 		C00Lexer lexer = new C00Lexer(charStream);
 		CommonTokenStream tokenStream = new CommonTokenStream(lexer);
 		ParseTreeBuilder builder = new ParseTreeBuilder(startSymbol);
-		C00Parser parser = new C00Parser(tokenStream, builder, err);
+		C00Parser parser = new C00Parser(tokenStream, builder, err, ignoreExceptions);
 		
 		return parse(parser, startSymbol);
 	}
 
+	public static ASTTree parseString(String input, String startSymbol, StringBuffer err) throws RecognitionException {
+		return parseString(input, startSymbol, err, true);
+	}
+	
 	public static ASTTree parseString(String input, String startSymbol) throws RecognitionException {
 		return parseString(input, startSymbol, null);
 	}

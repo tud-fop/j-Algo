@@ -27,6 +27,9 @@ public class C00Parser extends DebugParser {
     public static final int DIGIT=10;
     public static final int Number=5;
     public static final int WHITESPACE=7;
+    
+    private final boolean ignoreExceptions;
+    
     private StringBuffer err;
     public static final String[] ruleNames = new String[] {
         "invalidRule", "program", "globalDeclarations", "declarations", 
@@ -41,18 +44,23 @@ public class C00Parser extends DebugParser {
     };
 
     public int ruleLevel = 0;
-    public C00Parser(TokenStream input, StringBuffer err) {
+    public C00Parser(TokenStream input, StringBuffer err, boolean ignoreExceptions) {
             super(input);
             this.err = err;
-
+            this.ignoreExceptions = ignoreExceptions;
     }
-    public C00Parser(TokenStream input, DebugEventListener dbg, StringBuffer err) {
+    
+    public C00Parser(TokenStream input, DebugEventListener dbg, StringBuffer err, boolean ignoreExceptions) {
         super(input, dbg);
         this.err = err;
+        this.ignoreExceptions = ignoreExceptions;
     }
 
     @Override
     public void emitErrorMessage(String arg0) {
+    	if (!ignoreExceptions) 
+			throw new ParseException(arg0);
+    	
     	if (err != null)
     		err.append(arg0.toString());
     	else
@@ -7261,7 +7269,7 @@ public class C00Parser extends DebugParser {
         try {
             synpred2_fragment(); // can never throw exception
         } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
+        	throwException(re, "impossible: "+re);
         }
         boolean success = !failed;
         input.rewind(start);
@@ -7277,7 +7285,7 @@ public class C00Parser extends DebugParser {
         try {
             synpred39_fragment(); // can never throw exception
         } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
+        	throwException(re, "impossible: "+re);
         }
         boolean success = !failed;
         input.rewind(start);
@@ -7293,7 +7301,7 @@ public class C00Parser extends DebugParser {
         try {
             synpred56_fragment(); // can never throw exception
         } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
+        	throwException(re, "impossible: "+re);
         }
         boolean success = !failed;
         input.rewind(start);
@@ -7309,7 +7317,7 @@ public class C00Parser extends DebugParser {
         try {
             synpred58_fragment(); // can never throw exception
         } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
+            throwException(re, "impossible: "+re);
         }
         boolean success = !failed;
         input.rewind(start);
@@ -7325,7 +7333,7 @@ public class C00Parser extends DebugParser {
         try {
             synpred59_fragment(); // can never throw exception
         } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
+            throwException(re, "impossible: "+re);
         }
         boolean success = !failed;
         input.rewind(start);
@@ -7341,7 +7349,7 @@ public class C00Parser extends DebugParser {
         try {
             synpred34_fragment(); // can never throw exception
         } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
+            throwException(re, "impossible: "+re);
         }
         boolean success = !failed;
         input.rewind(start);
@@ -7357,7 +7365,7 @@ public class C00Parser extends DebugParser {
         try {
             synpred36_fragment(); // can never throw exception
         } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
+            throwException(re, "impossible: "+re);
         }
         boolean success = !failed;
         input.rewind(start);
@@ -7373,7 +7381,7 @@ public class C00Parser extends DebugParser {
         try {
             synpred57_fragment(); // can never throw exception
         } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
+            throwException(re, "impossible: "+re);
         }
         boolean success = !failed;
         input.rewind(start);
@@ -7389,7 +7397,7 @@ public class C00Parser extends DebugParser {
         try {
             synpred55_fragment(); // can never throw exception
         } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
+            throwException(re, "impossible: "+re);
         }
         boolean success = !failed;
         input.rewind(start);
@@ -12637,4 +12645,12 @@ public class C00Parser extends DebugParser {
     public static final BitSet FOLLOW_51_in_synpred592113 = new BitSet(new long[]{0x0000181000208030L});
     public static final BitSet FOLLOW_expression_in_synpred592117 = new BitSet(new long[]{0x0000000000000002L});
 
+    private void throwException(Exception e, String pre) {
+		if (ignoreExceptions) {
+			 System.err.print(pre);
+			 return;
+		}
+		
+		throw new ParseException(e.toString());
+	}
 }
