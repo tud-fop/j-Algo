@@ -17,6 +17,6 @@
 	<classpathentry kind="lib" path="extlibs/jep-2.4.1.b.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3.8.1"/>
+	<classpathentry kind="lib" path="res/module/pulsemem"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
-
