@@ -114,9 +114,9 @@ public class GuiController implements ControllerListener, ModelListener {
 	}
 	
 	private interface GState {
-		public void updateButtons();
-		public void modelChanged();
-		public void dispose();
+		void updateButtons();
+		void modelChanged();
+		void dispose();
 	}
 	
 	private class InputState implements GState {
@@ -432,8 +432,6 @@ public class GuiController implements ControllerListener, ModelListener {
 	
 	private class UpdateThread implements Runnable {
 		
-		boolean done = false;
-
 		public void run() {
 			System.out.println("Commencing thread");
 			Thread me = Thread.currentThread();
