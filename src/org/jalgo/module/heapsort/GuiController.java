@@ -203,8 +203,9 @@ public class GuiController implements ControllerListener, ModelListener {
 			c.gridy = 2;
 			inputPane.add(startButton, c);
 			
-			hints = new JTextArea(20, 10);
+			hints = new JTextArea(17, 10);
 			hints.setBackground(inputPane.getBackground());
+			hints.setFont(label.getFont());
 			hints.setEditable(false);
 			hints.setLineWrap(true);
 			hints.setWrapStyleWord(true);
