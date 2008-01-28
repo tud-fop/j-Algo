@@ -9,6 +9,7 @@
 	<classpathentry kind="lib" path="res/module/avl"/>
 	<classpathentry kind="lib" path="res/module/dijkstra"/>
 	<classpathentry kind="lib" path="res/module/ebnf"/>
+	<classpathentry kind="lib" path="res/module/heapsort"/>
 	<classpathentry kind="lib" path="res/module/kmp"/>
 	<classpathentry kind="lib" path="res/module/testModule"/>
 	<classpathentry kind="lib" path="extlibs/antlr-3.0b6.jar"/>
