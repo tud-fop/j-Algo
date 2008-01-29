@@ -493,12 +493,26 @@ public class Controller extends Subject<ControllerListener> {
 		return currentState.isSuspendPossible();
 	}
 	
+	public boolean isResetPossible() {
+		return canModelChange();
+	}
+	
 	public boolean canModelChange() {
 		return currentState.canModelChange();
 	}
 	
 	public Model getModel() {
 		return model;
+	}
+	
+	/**
+	 * Public method corresponding to reset button
+	 * ("go right to the beginning")
+	 *
+	 */
+	public void reset() {
+		// This is one way of doing it.
+		currentState.modelChanged();
 	}
 
 	/**

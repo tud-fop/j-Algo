@@ -519,7 +519,7 @@ public final class Heapsort implements Visualisation {
 			under = null;
 			addLevel();
 			addUnder();
-			add(new ExtendAnim(first), 1);
+			add(new ExtendAnim(first), 1.5);
 			if (first > 0)
 				add(new ExtendAnim2(first), 0.5);
 			if (under == null)

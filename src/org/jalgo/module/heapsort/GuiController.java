@@ -251,6 +251,7 @@ public class GuiController implements ControllerListener, ModelListener {
 	
 	private class DerivationState implements GState, SequencerListener {
 		
+		JToolbarButton reset;
 		JToolbarButton macroback;
 		JToolbarButton back;
 		JToolbarButton suspend;
@@ -262,6 +263,17 @@ public class GuiController implements ControllerListener, ModelListener {
 		DefaultListModel logger;
 		
 		public DerivationState() {
+			reset = new JToolbarButton(
+					new ImageIcon(Util.getMainResourceURL("Icon.Undo_all")),
+					Util.getString("Gui.reset"), "");
+			reset.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					synchronized(root) {
+						ctrl.reset();
+					}
+				}
+			});			
+			
 			macroback = new JToolbarButton(
 					new ImageIcon(Util.getMainResourceURL("Icon.Undo_blockstep")),
 					Util.getString("Gui.macroback"), "");
@@ -351,6 +363,7 @@ public class GuiController implements ControllerListener, ModelListener {
 			logPane.add(sp, BorderLayout.CENTER);
 			logPane.setVisible(!ctrl.isLecture());
 			
+			toolbar.add(reset);
 			toolbar.add(macroback);
 			toolbar.add(back);
 			toolbar.add(suspend);
@@ -366,6 +379,7 @@ public class GuiController implements ControllerListener, ModelListener {
 
 		public void dispose() {
 			ctrl.removeListener(this);
+			toolbar.remove(reset);
 			toolbar.remove(macroback);
 			toolbar.remove(back);
 			toolbar.remove(suspend);
@@ -379,6 +393,7 @@ public class GuiController implements ControllerListener, ModelListener {
 
 		public void updateButtons() {
 			ctrl.derive();
+			reset.setEnabled(ctrl.isResetPossible());
 			macroback.setEnabled(ctrl.isBackPossible());
 			back.setEnabled(ctrl.isBackPossible());
 			suspend.setEnabled(ctrl.isSuspendPossible());
