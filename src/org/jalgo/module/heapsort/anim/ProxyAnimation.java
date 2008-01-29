@@ -26,7 +26,6 @@ package org.jalgo.module.heapsort.anim;
  * Subclass this if you want to decorate an existing animation.
  * 
  * @author mbue
- *
  */
 public class ProxyAnimation implements Animation {
 	

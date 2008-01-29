@@ -27,7 +27,6 @@ package org.jalgo.module.heapsort.anim;
  * Don't forget the super calls!
  * 
  * @author mbue
- *
  */
 public class SequentialAnimation implements Animation {
 	

@@ -32,13 +32,14 @@ import java.util.TreeSet;
 /**
  * <p>The CanvasEntity class represents an object on the virtual canvas. Each such object has
  * an affine transformation, which describes the relationship between the ("relative", or local)
- * coordinates wrt. to the entity and the ("absolute") coordinates wrt. to its parent.
- * Obviously, in a successive setting, preconcatenation has to be used.</p>
- * TODO improve/clarify last sentence
+ * coordinates wrt. to the entity and the ("absolute") coordinates which are local to its parent.
+ * </p>
  * 
  * <p>A canvas entity keeps a log of where the image has to be redrawn, the so-called dirty region.
  * The dirty region is a rectangle expressed in absolute coordinates (which is needed in case
  * the affine transform is changed, and in particular, when the new transform has no inverse).
+ * (Imagine how you would express some non-empty box in local coordinates when the transform
+ * maps everything to one particular point.)
  * </p>
  * 
  * <p>Furthermore, canvas entities have a bounding box (expressed in local coordinates) and an

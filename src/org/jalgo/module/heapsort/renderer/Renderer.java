@@ -25,41 +25,47 @@ package org.jalgo.module.heapsort.renderer;
 import java.awt.Container;
 import java.awt.Rectangle;
 
-
 /**
- * <p> This interface corresponds to a primary (=output) surface
- * of a renderer. Canvas entities are created wrt. to this surface
- * (because they could be requiring the same hardware as the
- * primary surface). Standard operations are there, as well:
- * Clearing the primary surface, rendering canvas entities,
- * and rendering canvas entities which lie in a certain area.</p>
+ * <p>This interface corresponds to a primary (=output) surface
+ * of a renderer. Actually, the renderer may and should use
+ * a backbuffer if applicable. From my current point of view,
+ * a Java2D renderer should use a backbuffer while a JOGL renderer
+ * need not, but I am not sure about this.</p>
  * 
- * <p>This interface is preliminary and subject to change!</p>
- *  
+ * <p>Canvas entities are created wrt. to this because they could
+ * be requiring hardware resources.</p>
+ * 
  * @author mbue
  *
  */
 public interface Renderer {
-	
 	/**
-	 * initialize renderer
+	 * Initialize renderer. Creates a component which will be used to display
+	 * everything.
 	 * 
-	 * @param cc
+	 * @param cc A container into which the output component will be placed.
 	 */
 	void init(Container cc);
 	
 	/**
-	 * finalise renderer
-	 *
+	 * Finalise renderer.
 	 */
 	void dispose();
 	
 	// -- factory stuff
+	
+	/**
+	 * Returns a canvas entity factory for use with this renderer.
+	 * 
+	 * @return
+	 */
 	CanvasEntityFactory createFactory();
 	
 	// -- rendering stuff
 	/**
-	 * Returns the rectangle describing the visible area.
+	 * Returns the rectangle describing the visible area, which can be
+	 * used for intersection with some dirty region when calling
+	 * <code>renderVisible</code>.
 	 * 
 	 * @return
 	 */
@@ -67,7 +73,8 @@ public interface Renderer {
 	
 	/**
 	 * Returns whether the image was lost since the
-	 * last time it was rendered.
+	 * last time it was rendered. This MUST be called
+	 * before <code>renderVisible</code> on every frame!
 	 * 
 	 * @return
 	 */
@@ -76,8 +83,7 @@ public interface Renderer {
 	/**
 	 * <p>Render those canvas entities from the tree given by
 	 * <code>root</code> which lie in the rectangle <code>r</code>.
-	 * The tree is treated as being immutable. The user is responsible
-	 * for clearing dirty regions.</p>
+	 * Dirty regions are left unchanged.</p>
 	 * 
 	 * <p>Implementors might find CanvasEntity.foldVisible useful.</p>
 	 * 
@@ -87,10 +93,12 @@ public interface Renderer {
 	void renderVisible(CanvasEntity root, Rectangle r);
 
 	/**
-	 * Update part of the image on screen
-	 * specified by the rectangle <code>r</code>.
-	 * If the argument is <code>null</code>,
-	 * update everything.
+	 * <p>Update the part of the image on screen specified by the rectangle
+	 * <code>r</code>. If the argument is <code>null</code>,
+	 * update everything.</p>
+	 * 
+	 * <p>This method is necessary for renderers using a back buffer and
+	 * must be called after the rendering.</p>
 	 * 
 	 * @param r
 	 * @return <code>true</code>

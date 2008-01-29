@@ -23,8 +23,9 @@
 package org.jalgo.module.heapsort.model;
 
 /**
+ * Listener interface for classes implementing <code>Model</code>.
+ *  
  * @author mbue
- *
  */
 public interface ModelListener {
 	void modelChanged();

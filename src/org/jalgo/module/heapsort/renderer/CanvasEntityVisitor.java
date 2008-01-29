@@ -25,9 +25,17 @@ package org.jalgo.module.heapsort.renderer;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 
-
-//we will often call our visitor objects arnie, because Arnie is the one
-//who visits people most effectively
+/**
+ * <p>Interface used to implement the visitor pattern for canvas entities.
+ * (A pattern not explicitly found in languages more capable than Java,
+ * like... Python or every other language.)</p>
+ * 
+ * <p>Note: We will often call our visitor objects arnie, because Arnie is the
+ * one who visits people most effectively.</p>
+ *  
+ * @author mbue
+ *
+ */
 public interface CanvasEntityVisitor {
 	/**
 	 * This method is called in the visiting process. The canvas entity

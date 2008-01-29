@@ -25,14 +25,10 @@ package org.jalgo.module.heapsort.renderer;
 import java.awt.Point;
 
 /**
- * <p>A node as used in Heapsort; this means: a circle with a
- * two-digit number in it.</p>
- * 
- * <p>The node can be drawn in several fashions, which are at the moment:
- * normal and highlighted.</p> 
+ * A canvas entity representing a node as used in Heapsort; this means:
+ * a circle with a two-digit number in it.
  * 
  * @author mbue
- *
  */
 public class Node extends CanvasEntity {
 	private float highlight = 0.0f;

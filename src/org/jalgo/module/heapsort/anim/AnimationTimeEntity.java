@@ -24,25 +24,23 @@ package org.jalgo.module.heapsort.anim;
 
 
 /**
- * <p>
- * This time entity controls an animation. The animation is being run
- * for local times in the real interval [0..1]. You have to see to it
- * that the transformation of this entity yields the correct absolute
- * time values, i.e. <code>offset</code> is the start time and <code>
- * scale</code> is the duration.</p>
+ * <p>This time entity controls an animation. The animation is being run
+ * for local times in the real interval [0..1]. The time transformation
+ * is set up in the constructor according to the absolute <code>start</code>
+ * time desired for the animation as well as the duration it reports.</p>
  * 
- * <p>
- * This class does only support at most one listener for two reasons:
+ * <p>This class does only support at most one listener for two reasons:
  * a) this should suffice in most cases, and otherwise, the listener
  * could act as subject to other listeners; b) it's the easiest way of
  * getting around the multiple inheritance problem.</p>
- *  
+ * 
  * @author mbue
  */
 public final class AnimationTimeEntity extends TimeEntity implements Animation {
 	private Animation anim;
 	private AnimationListener listener;
 	private State state = new State1();
+	// XXX maybe we should create all states at once because they will be created anyway
 	
 	public AnimationTimeEntity(Animation anim, double start) {
 		super();

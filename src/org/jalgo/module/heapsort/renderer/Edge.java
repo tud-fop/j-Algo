@@ -25,8 +25,12 @@ package org.jalgo.module.heapsort.renderer;
 import java.awt.Point;
 
 /**
+ * A canvas entity representing an edge in a tree. The following
+ * restriction applies: The <code>to</code> point must be below
+ * the <code>from</code> point in the sense that its <code>y</code>
+ * component must be larger.
+ * 
  * @author mbue
- *
  */
 public class Edge extends CanvasEntity {
 	protected Point from;

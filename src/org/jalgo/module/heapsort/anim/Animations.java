@@ -38,7 +38,6 @@ import org.jalgo.module.heapsort.renderer.Text;
  * <code>CompositeAnimation</code>, which allows for arbitrary composition.
  * 
  * @author mbue
- *
  */
 public final class Animations {
 	

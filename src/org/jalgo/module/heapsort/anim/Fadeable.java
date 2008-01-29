@@ -22,6 +22,9 @@
  */
 package org.jalgo.module.heapsort.anim;
 
+/**
+ * @author mbue
+ */
 public interface Fadeable {
 	void setState(float state);
 }

@@ -22,8 +22,38 @@
  */
 package org.jalgo.module.heapsort.model;
 
+/**
+ * Listener interface for the <code>Sequencer</code> class.
+ * 
+ * @author mbue
+ */
 public interface SequencerListener {
+	/**
+	 * This method will be called when it turns out that
+	 * a derivation step can be made that was previously
+	 * unaccounted for. You can use this to recheck whether
+	 * a step can be made. In the current implementation,
+	 * this is not really meaningful because states will
+	 * immediately be derived when becoming current, and
+	 * this will only be done once.
+	 */
 	void stepAvail();
+	
+	/**
+	 * Notification that the sequencer has made a step.
+	 * 
+	 * @param q Previous state.
+	 * @param a Action taken.
+	 * @param q1 Next (now current) state.
+	 */
 	void step(State q, Action a, State q1);
+	
+	/**
+	 * Notification that the sequencer has made a step back.
+	 * 
+	 * @param q Previously current state.
+	 * @param a Action taken (read: undone).
+	 * @param q1 Now current state.
+	 */
 	void back(State q, Action a, State q1);
 }

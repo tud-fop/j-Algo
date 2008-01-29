@@ -27,7 +27,8 @@ import java.awt.Point;
 /**
  * <p>This interface defines the canvas entity classes supported
  * by the system, which makes it sort of a reference. If you add
- * a new canvas entity class, this has to be reflected here.</p>
+ * a new canvas entity class, this has to be reflected here,
+ * forcing all renderers to implement this class.</p>
  * 
  * @author mbue
  */

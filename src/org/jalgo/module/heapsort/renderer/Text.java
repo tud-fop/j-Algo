@@ -25,7 +25,11 @@ package org.jalgo.module.heapsort.renderer;
 import java.awt.Point;
 
 /**
- * A canvas entity which displays text.
+ * A canvas entity which displays text. It serves many purposes to some degree
+ * and no purpose fully. E. g., the "regular" property is a real mess, it's only
+ * there for displaying the sequence indices and it relies on the undocumented
+ * feature that the renderer uses another font. Well, now it is documented,
+ * but that doesn't really help it. 
  * 
  * @author mbue
  */

@@ -24,8 +24,11 @@ package org.jalgo.module.heapsort.anim;
 
 
 /**
+ * A time entity which saves the time supplied to it on update and returns
+ * it on a call to <code>now</code>. Use this class for your root nodes
+ * to make the <code>now</code> method work for the whole tree.
+ * 
  * @author mbue
- *
  */
 public class TimeRoot extends TimeEntity {
 	private double now_;

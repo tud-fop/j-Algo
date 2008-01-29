@@ -46,9 +46,29 @@ import org.jalgo.module.heapsort.renderer.SequenceElement;
 import org.jalgo.module.heapsort.renderer.Text;
 
 /**
- * Heapsort visualisation. Don't look at the code.
+ * <p>This implements the actual Heapsort visualisation.</p>
+ * 
+ * <p>The concept is as follows: When setting up a state on the
+ * root canvas, a so-called "state dictionary" is built which
+ * tells us which semantic object is represented by which
+ * canvas entity.</p>
+ * 
+ * <p>Animations can use that dictionary to find the objects
+ * they have to modify, and they can add and remove objects
+ * from the dictionary as necessary for the state transition.</p>
+ * 
+ * <p>This concept replaces the former one where the visualisation
+ * had no access to the root entity and the dictionary was modeled
+ * explicity by means of a canvas database (merely a hierarchical
+ * map String-&gt;CanvasEntity), which would be used to create the
+ * actual canvas entities for display. This was not to the point
+ * and overly complicated.</p>
+ * 
+ * <p>P.S.: Don't look at the code that thoroughly.
  * In contrast to the infrastructure code, this is rather messy.
- * This is due to the fact that it just has to work.
+ * This is due to the fact that it just has to work, which it does.
+ * You know, the beauty lies outside (in the animations to be seen
+ * on screen).</p>
  * 
  * @author mbue
  *
@@ -60,7 +80,7 @@ public final class Heapsort implements Visualisation {
 	private HeapsortState next = null;
 	private CanvasEntity root;
 	private CanvasEntityFactory f;
-	// static information
+	// static appearance information
 	private static final int MAX_NODES = 31; // five levels
 	private static Point[] nodepos;
 	private static Point[] seqpos;

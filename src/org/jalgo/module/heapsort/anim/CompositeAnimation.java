@@ -22,7 +22,6 @@
  */
 package org.jalgo.module.heapsort.anim;
 
-
 /**
  * <p>This class can be used to compose a new animation out of existing ones.
  * Stakeholder: Animation designer...</p>

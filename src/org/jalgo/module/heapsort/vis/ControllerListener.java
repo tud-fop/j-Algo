@@ -22,6 +22,11 @@
  */
 package org.jalgo.module.heapsort.vis;
 
+/**
+ * Listener interface for the controller.
+ * 
+ * @author mbue
+ */
 public interface ControllerListener {
 	/**
 	 * Called when the state of the controller changed.

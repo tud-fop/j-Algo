@@ -27,9 +27,13 @@ import org.jalgo.module.heapsort.model.Action;
 import org.jalgo.module.heapsort.model.State;
 
 /**
- * Implementing classes will be provided with a
- * root canvas entity and a canvas entity factory
- * used to display everything.
+ * <p>This interface is used to implement the visual appearance of an
+ * algorithm run.</p>
+ * 
+ * <p>Implementing classes will be provided with a root canvas entity
+ * and a canvas entity factory used to display everything. (At the moment,
+ * this is not made explicit using a factory because that would be overkill.)
+ * </p>
  * 
  * @author mbue
  */

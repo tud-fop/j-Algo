@@ -22,7 +22,6 @@
  */
 package org.jalgo.module.heapsort.anim;
 
-
 /**
  * <p>This interface models animations on a canvas.
  * Required canvas entities can be set up on <code>init</code>,
@@ -35,14 +34,19 @@ package org.jalgo.module.heapsort.anim;
  * domain. The animation is garuanteed to be called with these exact
  * values by the AnimationTimeEntity.</p>
  * 
- * <p>It is assumed that the implementing class is able
- * to gain access to the necessary canvas entities. This has
- * several reasons: a) a root canvas entity (as an argument
- * to the methods declared here) might not suffice
- * because the animation could rely on a naming service;
- * b) animations are rather short-lived objects, so storing
- * the extra pointer should not be harmful.</p>
+ * <p>The recommended policy for implementors is as follows:
+ * canvas entities needed temporarily in this animation can be created
+ * in the constructor, others be passed to it. All "new" entities can
+ * and should be added to the parent node on <code>init</code>, but by
+ * no means before. In addition, you may assume that the animation won't
+ * be used any longer after a call to <code>done</code>.</p>
  * 
+ * <p>Nothing is determined as to how the canvas entities are to be
+ * created. Implementors could use some kind of context (surrounding
+ * class), which would hold a reference to a canvas entity factory.
+ * In most cases, temporary canvas entities are not needed and thus
+ * this is no issue anyway.</p>
+ *  
  * @author mbue
  *
  */

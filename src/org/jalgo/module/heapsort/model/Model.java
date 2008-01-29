@@ -26,6 +26,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * <p>This interface is used for modelling algorithms and their runs.
+ * We adopt some kind of reduction semantics, meaning that we
+ * start in some initial state and iteratively derive successor
+ * states until we reach a final state. Implementing classes
+ * should offer the possibility to set the input data considered
+ * in the run starting with the state returned as initial.</p>
+ * 
+ * <p>Implementing classes should be derived from
+ * <code>Subject&lt;ModelListener&gt;</code> and notify listeners
+ * of changes in the input data.</p>
+ *  
+ * @author mbue
+ */
 public interface Model {
 	void deserialize(InputStream is) throws IOException;
 	State getInitialState();

@@ -26,8 +26,10 @@ import java.awt.Color;
 import java.awt.Point;
 
 /**
+ * A solid rectangular canvas entity which can be used to highlight
+ * canvas entities above it.
+ * 
  * @author mbue
- *
  */
 public class MarkingRect extends CanvasEntity {
 	private Color color = Color.GRAY;

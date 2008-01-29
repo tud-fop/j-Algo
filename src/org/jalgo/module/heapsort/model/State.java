@@ -31,12 +31,12 @@ import java.util.Map;
  * guessing natural numbers.
  * 
  * @author mbue
- *
  */
 public interface State {
 	/**
-	 * Returns the detail level of the state. The program will allow the user to automatically
-	 * derive up to the next state which has at most a certain detail level.
+	 * Returns the detail level of the state. The system might allow the user to
+	 * automatically derive up to the next state which has at most a certain detail
+	 * level (that is, not stopping when a state has a greater detail level).
 	 * @return
 	 */
 	int getDetailLevel();

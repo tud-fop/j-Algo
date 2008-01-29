@@ -25,8 +25,9 @@ package org.jalgo.module.heapsort.renderer;
 import java.awt.Point;
 
 /**
+ * A canvas entity representing a sequence element as needed for Heapsort.
+ * 
  * @author mbue
- *
  */
 public class SequenceElement extends CanvasEntity {
 	private String label;

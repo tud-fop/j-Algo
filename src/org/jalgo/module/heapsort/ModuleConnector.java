@@ -39,6 +39,11 @@ import org.jalgo.module.heapsort.renderer.Renderer;
 import org.jalgo.module.heapsort.vis.Controller;
 import org.jalgo.module.heapsort.vis.Visualisation;
 
+/* MODULE TO-DO LIST (de todo un poco...)
+ * 
+ * TODO study mode animations
+ */
+
 /**
  * As demanded by j-Algo specification.
  * 

@@ -40,6 +40,16 @@ import java.awt.image.VolatileImage;
 
 import javax.swing.JPanel;
 
+/**
+ * <p>Java2D renderer. There are some restrictions, mainly: Transparency is faked by
+ * fading the color towards the background color. This is totally sufficient for
+ * our purposes and much more efficient.</p>
+ * 
+ * <p>Currently, it uses a lightweight component for the output meaning that your nice
+ * little popup menus may also be lightweight.</p>
+ * 
+ * @author mbue
+ */
 public class RenderJava2D implements Renderer, CanvasEntityFactory, ComponentListener {
 	
 	// definition of RenderCanvas to be found at the end of this class

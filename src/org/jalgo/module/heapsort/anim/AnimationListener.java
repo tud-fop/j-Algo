@@ -22,7 +22,6 @@
  */
 package org.jalgo.module.heapsort.anim;
 
-
 /**
  * Listener interface for the <code>AnimationTimeEntity</code> class.
  * 
@@ -30,5 +29,4 @@ package org.jalgo.module.heapsort.anim;
  */
 public interface AnimationListener {
 	void animationComplete(Animation a);
-
 }

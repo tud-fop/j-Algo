@@ -38,28 +38,36 @@ import java.util.Map.Entry;
 import org.jalgo.module.heapsort.Subject;
 
 /**
- * This class models the Heapsort algorithm.
+ * <p>This class models the Heapsort algorithm.</p>
  * 
- * The states are:
- *    Phase0: Building the tree
- *    Phase1a: Before Sinkenlassen
- *    Phase1b: After Sinkenlassen
- *    Phase2a: Before swapping
- *    Phase2b: After swapping/before Sinkenlassen
- *    Phase12sla: Sinkenlassen before comparison
- *    Phase12slb: Sinkenlassen after comparison/before swapping
- *    Done
+ * <p>The states are:</p>
+ * <ul>
+ *    <li>InitialState</li>
+ *    <li>Phase0: Building the tree</li>
+ *    <li>Phase1a: Before Sinkenlassen</li>
+ *    <li>Phase1b: After Sinkenlassen</li>
+ *    <li>Phase2a: Before swapping</li>
+ *    <li>Phase2b: After swapping/before Sinkenlassen</li>
+ *    <li>Phase12sla: Sinkenlassen before comparison</li>
+ *    <li>Phase12slb: Sinkenlassen after comparison/before swapping</li>
+ *    <li>Done</li>
+ *  </ul>
  *  
- *  The actions are:
- *    Extend: used in Phase0 when level is increased
- *    Startphase1: used in Phase0 when Phase1a is launched
- *    Startphase2: used in Phase0 when Phase2s is launched (happens if sequence has length 1)
- *    Returnphase1: used in Phase12sl* when returning to Phase1b
- *    Returnphase2: used in Phase12sl* when returning to Phase2a
- *    Compare: used in Phase12sla when going to Phase12slb
- *    Swap: used in Phase12slb when going to Phase12sla (swapping nodes)
- *    Decli: used in Phase1b when going to Phase1a (decrementing pointer "Li")
- *    SwapDecre: used in Phase2a when going to Phase2b
+ *  <p>The actions are:</p>
+ *  <ul>
+ *    <li>Startphase0: used in InitialState when Phase0 is launched</li>
+ *    <li>Startphase1: used in Phase0 when Phase1a is launched</li>
+ *    <li>Startphase2: used in Phase0 when Phase2s is launched (happens if sequence has length 1)</li>
+ *    <li>Startsl: used in Phase1a and Phase2b when Phase12sla is launched</li>
+ *    <li>Returnphase1: used in Phase12sl* when returning to Phase1b</li>
+ *    <li>Returnphase2: used in Phase12sl* when returning to Phase2a</li>
+ *    <li>Extend: used in Phase0 when level is increased</li>
+ *    <li>Compare: used in Phase12sla when going to Phase12slb</li>
+ *    <li>Swap: used in Phase12slb when going to Phase12sla (swapping nodes)</li>
+ *    <li>Decli: used in Phase1b when going to Phase1a (decrementing pointer "Li")</li>
+ *    <li>SwapDecre: used in Phase2a when going to Phase2b</li>
+ *    <li>Finish: used in Phase12sl* and others when going to Done</li>
+ * </ul>
  * 
  * @author mbue
  *

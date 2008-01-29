@@ -34,10 +34,6 @@ import org.jalgo.module.heapsort.model.Sequencer;
 import org.jalgo.module.heapsort.model.SequencerListener;
 import org.jalgo.module.heapsort.model.State;
 
-/* de todo un poco
- * TODO study mode animations
- */
-
 /**
  * <p>This class coordinates the derivation of the algorithm run
  * and its animation. Thus, it links several parts of the module:
@@ -72,22 +68,186 @@ import org.jalgo.module.heapsort.model.State;
  * than variables indicating where to return to (effectively creating a
  * playing-normal and a playing-macro state).</p>
  * 
- * <p>The controller is linked to the model via the SequencerListener
+ * <p>The controller is linked to the model via the <code>SequencerListener</code>
  * interface (so to speak in a "push" manner), and it is linked to the
  * renderer by the root canvas entity, the canvas entity factory, and
  * the root time entity. Completion of animations can be recognized
- * thanks to the AnimationListener.</p>
+ * thanks to the <code>AnimationListener</code>.</p>
  * 
  * <p>Important technical note: The controller can not be seen as some
  * kind of <code>SequencerListener</code> because the controller must own
  * the sequencer in order to prevent anyone from using it while the
- * animation is running. Therefore, the controller has to relay the
- * services of the sequencer.</p>
+ * animation is running. Therefore, the controller has in fact to act
+ * as a proxy to for sequencer (even though they don't implement a common
+ * interface).</p>
  * 
  * @author mbue
- *
  */
 public class Controller extends Subject<ControllerListener> {
+	
+	// please find all those numerous inner classes at the end of
+	// the class definition
+	
+	private Model model;
+	private Visualisation vis;
+	private TimeEntity timeroot;
+	
+	private Sequencer seq;
+	
+	private Listener listener;
+	private CState currentState = null;
+	private boolean lecture;
+	
+	public Controller(Model model, Visualisation vis, TimeEntity timeroot) {
+		// the model is used to create the initial state
+		this.model = model;
+		// the vis is used to create state rep and action anim
+		this.vis = vis;
+		// use timeroot to schedule animations
+		this.timeroot = timeroot;
+		
+		// the listener captures events from underlying layers
+		listener = new Listener();
+		
+		pushState(new Initial());
+	}
+	
+	public boolean isLecture() {
+		return lecture;
+	}
+	
+	public void setLecture(boolean lecture) {
+		this.lecture = lecture;
+		notifyAll(StateChangedNotifier.getInstance());
+	}
+
+	public State getCurrentState() {
+		return seq.getCurrentState();
+	}
+
+	public void derive() {
+		seq.derive();
+	}
+	
+	public boolean isBackPossible() {
+		return currentState.isBackPossible();
+	}
+	
+	public boolean isStepPossible() {
+		return currentState.isStepPossible();
+	}
+	
+	public boolean isMacroStepPossible() {
+		return currentState.isMacroStepPossible();
+	}
+	
+	public boolean isSuspendPossible() {
+		return currentState.isSuspendPossible();
+	}
+	
+	public boolean isResetPossible() {
+		return canModelChange();
+	}
+	
+	public boolean canModelChange() {
+		return currentState.canModelChange();
+	}
+	
+	public Model getModel() {
+		return model;
+	}
+	
+	/**
+	 * Public method corresponding to reset button
+	 * ("go right to the beginning")
+	 *
+	 */
+	public void reset() {
+		// This is one way of doing it.
+		currentState.modelChanged();
+	}
+
+	/**
+	 * Public method corresponding to button "&lt;"
+	 *
+	 */
+	public void back() {
+		currentState.back();
+	}
+	
+	/**
+	 * Public method corresponding to button "&gt;"
+	 *
+	 */
+	public void cont() {
+		currentState.cont();
+	}
+	
+	/**
+	 * Public method corresponding to button "&lt;&lt;"
+	 * (<code>detailLevel</code> would be an application constant)
+	 * 
+	 * @param detailLevel
+	 */
+	public void macroBack(int detailLevel) {
+		currentState.macroBack(detailLevel);
+	}
+	
+	/**
+	 * Public method corresponding to button "&gt;&gt;"
+	 * (<code>detailLevel</code> would be an application constant)
+	 * 
+	 * @param detailLevel
+	 */
+	public void macroStep(int detailLevel) {
+		currentState.macroStep(detailLevel);
+	}
+	
+	public void suspend() {
+		currentState.suspend();
+	}
+	
+	public void addListener(SequencerListener l) {
+		seq.addListener(l);
+	}
+	
+	public void removeListener(SequencerListener l) {
+		seq.removeListener(l);
+	}
+	
+	private int inpushpopstate = 0;
+	
+	private synchronized void pushState(CState s) {
+		inpushpopstate++;
+		try {
+			s.prev = currentState;
+			currentState = s;
+			currentState.init();
+		}
+		finally {
+			inpushpopstate--;
+		}
+		if (inpushpopstate == 0)
+			notifyAll(StateChangedNotifier.getInstance());
+	}
+	
+	private synchronized void popState() {
+		inpushpopstate++;
+		try {
+			CState s = currentState;
+			currentState = s.prev;
+			s.done();
+			currentState.ret();
+		}
+		finally {
+			inpushpopstate--;
+		}
+		if (inpushpopstate == 0)
+			notifyAll(StateChangedNotifier.getInstance());
+	}
+	
+	/// the rest (inner classes)
+
 	/**
 	 * Convenience interface to allow uniform handling of
 	 * both directions: forward and backwards. This is used
@@ -95,7 +255,6 @@ public class Controller extends Subject<ControllerListener> {
 	 * the derivation, not the animation.
 	 * 
 	 * @author mbue
-	 *
 	 */
 	public interface Direction {
 		void go();
@@ -454,165 +613,7 @@ public class Controller extends Subject<ControllerListener> {
 			return true;
 		}
 	}
-	
-	private Model model;
-	private Visualisation vis;
-	private TimeEntity timeroot;
-	
-	private Sequencer seq;
-	
-	private Listener listener;
-	private CState currentState = null;
-	private boolean lecture;
-	
-	public Controller(Model model, Visualisation vis, TimeEntity timeroot) {
-		// the model is used to create the initial state
-		this.model = model;
-		// the vis is used to create state rep and action anim
-		this.vis = vis;
-		// use timeroot to schedule animations
-		this.timeroot = timeroot;
-		
-		// the listener captures events from underlying layers
-		listener = new Listener();
-		
-		pushState(new Initial());
-	}
-	
-	public boolean isLecture() {
-		return lecture;
-	}
-	
-	public void setLecture(boolean lecture) {
-		this.lecture = lecture;
-		notifyAll(StateChangedNotifier.getInstance());
-	}
 
-	public State getCurrentState() {
-		return seq.getCurrentState();
-	}
-
-	public void derive() {
-		seq.derive();
-	}
-	
-	public boolean isBackPossible() {
-		return currentState.isBackPossible();
-	}
-	
-	public boolean isStepPossible() {
-		return currentState.isStepPossible();
-	}
-	
-	public boolean isMacroStepPossible() {
-		return currentState.isMacroStepPossible();
-	}
-	
-	public boolean isSuspendPossible() {
-		return currentState.isSuspendPossible();
-	}
-	
-	public boolean isResetPossible() {
-		return canModelChange();
-	}
-	
-	public boolean canModelChange() {
-		return currentState.canModelChange();
-	}
-	
-	public Model getModel() {
-		return model;
-	}
-	
-	/**
-	 * Public method corresponding to reset button
-	 * ("go right to the beginning")
-	 *
-	 */
-	public void reset() {
-		// This is one way of doing it.
-		currentState.modelChanged();
-	}
-
-	/**
-	 * Public method corresponding to button "&lt;"
-	 *
-	 */
-	public void back() {
-		currentState.back();
-	}
-	
-	/**
-	 * Public method corresponding to button "&gt;"
-	 *
-	 */
-	public void cont() {
-		currentState.cont();
-	}
-	
-	/**
-	 * Public method corresponding to button "&lt;&lt;"
-	 * (<code>detailLevel</code> would be an application constant)
-	 * 
-	 * @param detailLevel
-	 */
-	public void macroBack(int detailLevel) {
-		currentState.macroBack(detailLevel);
-	}
-	
-	/**
-	 * Public method corresponding to button "&gt;&gt;"
-	 * (<code>detailLevel</code> would be an application constant)
-	 * 
-	 * @param detailLevel
-	 */
-	public void macroStep(int detailLevel) {
-		currentState.macroStep(detailLevel);
-	}
-	
-	public void suspend() {
-		currentState.suspend();
-	}
-	
-	public void addListener(SequencerListener l) {
-		seq.addListener(l);
-	}
-	
-	public void removeListener(SequencerListener l) {
-		seq.removeListener(l);
-	}
-	
-	private int inpushpopstate = 0;
-	
-	private synchronized void pushState(CState s) {
-		inpushpopstate++;
-		try {
-			s.prev = currentState;
-			currentState = s;
-			currentState.init();
-		}
-		finally {
-			inpushpopstate--;
-		}
-		if (inpushpopstate == 0)
-			notifyAll(StateChangedNotifier.getInstance());
-	}
-	
-	private synchronized void popState() {
-		inpushpopstate++;
-		try {
-			CState s = currentState;
-			currentState = s.prev;
-			s.done();
-			currentState.ret();
-		}
-		finally {
-			inpushpopstate--;
-		}
-		if (inpushpopstate == 0)
-			notifyAll(StateChangedNotifier.getInstance());
-	}
-	
 	private class Listener implements SequencerListener, ModelListener {
 
 		public void back(State q, Action a, State q1) {

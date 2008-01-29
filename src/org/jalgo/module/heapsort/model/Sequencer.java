@@ -34,10 +34,8 @@ import org.jalgo.module.heapsort.Subject;
  * derives successor states and stores them. Following some derivation strategy,
  * it will select the successor which will become the current state.</p>
  * 
- * <p>In addition, the sequencer can be persisted.</p>
- * 
- * <p>Note: ATM, no strategy is implemented. Only deterministic algorithms
- * are supported!</p>
+ * <p>Note: ATM, no elaborate strategy is implemented nor conceived.
+ * Thus, only deterministic algorithms are supported!</p>
  * 
  * @author mbue
  */

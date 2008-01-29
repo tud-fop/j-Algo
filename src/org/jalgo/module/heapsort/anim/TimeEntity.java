@@ -61,8 +61,9 @@ public class TimeEntity {
 	}
 
 	/**
-	 * returns current local time, provided that parent does this correctly
-	 * (need a special now implementation at the root)
+	 * Returns current local time, provided that the parent node does so correctly.
+	 * Use a <code>TimeRoot</code> instance as root node to make this work.
+	 * 
 	 * @return
 	 */
 	public double now() {
