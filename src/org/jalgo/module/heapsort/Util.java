@@ -27,10 +27,11 @@ import java.net.URL;
 import org.jalgo.main.util.Messages;
 
 /**
+ * Utility class for resources and localisation.
+ * 
  * @author mbue
- *
  */
-public class Util {
+public final class Util {
 
 	private static final String main = "main";
 	private static final String module = "heapsort";
