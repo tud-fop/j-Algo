@@ -1,6 +1,6 @@
 /*
  * j-Algo - a visualization tool for algorithm runs, especially useful for
- * students and lecturers of computer sience. j-Algo is written in Java and
+ * students and lecturers of computer science. j-Algo is written in Java and
  * thus platform independent. Development is supported by Technische Universität
  * Dresden.
  *
