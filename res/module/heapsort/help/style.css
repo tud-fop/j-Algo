@@ -1,0 +1,41 @@
+body {
+    font-size:12pt;
+    /*font-family:arial,sans-serif;*/
+    margin-left:5;
+    margin-right:5;
+    color:black;
+}
+
+p {
+    font-size:small;
+    font-weight:normal;
+    margin-top:10;
+    margin-bottom:10;
+}
+
+h1 {
+    font-size:x-large;
+    /*font-family:times new roman, serif*/
+    font-family:arial,sans-serif;
+    font-weight:bold;
+    margin-top:20;
+    margin-bottom:15;
+}
+
+h2 {
+    font-size:large;
+    font-family:arial,sans-serif;
+    font-weight:bold;
+    margin-top:20;
+    margin-bottom:15;
+}
+
+
+h3 {
+    font-size:medium;
+    font-family:arial,sans-serif;
+    font-weight:bold;
+    margin-top:15;
+    margin-bottom:10;
+}
+

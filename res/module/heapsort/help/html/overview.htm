@@ -1,0 +1,60 @@
+<html>
+	<head>
+		<title>Hilfe zum Modul Heapsort</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+		<link rel="stylesheet" type="text/css" href="../style.css" title="Style">
+		<base target="_self">
+	</head>
+	<body topmargin="30" leftmargin="30">
+
+<h1>j-Algo-Modul Heapsort</h1>
+
+<h2><a name="intro">Einführung</a></h2>
+
+<p>Dieses Modul verbildlicht den Ablauf des Sortieralgorithmus <em>Heapsort</em>, wie er in der Vorlesung <em>Algorithmen und Datenstrukturen</em> von Prof. Heiko Vogler an der TU Dresden vorgestellt wird. Dafür können bis zu 31 paarweise verschiedene natürliche Zahlen von 1 bis 99 eingegeben werden, die die zu sortierende Eingabefolge bilden. Danach ist es möglich, den Algorithmus schrittweise ablaufen zu lassen, wobei unterschieden wird zwischen dem Vorlesungsmodus und dem Selbststudium.</p>
+
+<p>Im Folgenden wird zunächst kurz der Algorithmus mit seiner Darstellung in diesem Modul vorgestellt, bevor die Bedienung des Moduls im Einzelnen erläutert wird.</p>
+
+
+<h2><a name="algo">Algorithmus</a></h2>
+
+<p>Hinweis: Diese Erklärungen sind kurz gehalten. Im Zweifelsfall ist grundsätzlich das Vorlesungsskript heranzuziehen.</p>
+
+<h3>Vorbereitungsphase</h3>
+
+<p>Für die Beschreibung von Heapsort ist es vorteilhaft, sich die Eingabefolge als Binärbaum vorzustellen. Beginnend mit der Wurzel wird jede Ebene des Binärbaums von links nach rechts mit den verbleibenden Gliedern der Folge aufgefüllt. Dieser Prozeß wird von diesem Modul schrittweise animiert.</p>
+
+<p>Bild 1: Der Binärbaum zur Eingabefolge<br>
+<img src="../pics/pic01.png"></p>
+
+<h3>Phase 1</h3>
+
+<p>In der ersten Phase wird in dem Binärbaum die Heapeigenschaft hergestellt, die besagt, daß die Beschriftung eines Knotens nicht kleiner sein darf als die Beschriftung an den direkten Nachfolgern. Dies wird in der ersten Phase geprüft und gegebenenfalls korrigiert, indem Knotenbeschriftungen vertauscht werden.</p>
+
+<p>Man beginnt diesen Prozeß an der größten Position "li", die noch Nachfolger hat, und setzt ihn in Richtung Wurzel fort, bis man jene ebenfalls bearbeitet hat. Wenn die Heapeigenschaft an einem Knoten verletzt ist, wird die Knotenbeschriftung so lange sinkengelassen, bis alle Nachfolger (so vorhanden) mit einer kleineren Zahl beschriftet sind.</p>
+
+<p>In diesem Modul wird die aktuelle Position des Zeigers "li" durch einen horizontalen Pfeil dargestellt. Die aktuell betrachteten Knoten beim Sinkenlassen sind gelb hervorgehoben.</p>
+
+<p>Bild 2: Phase 1. Zu erkennen sind der Zeiger "li" und die hervorgehobenen Knoten.<br>
+<img src="../pics/pic02.png"></p>
+
+<h3>Phase 2</h3>
+
+<p>In der zweiten Phase gibt Heapsort die sortierte Folge aus. Dabei wird die Folge in einen unsortierten und einen sortierten Bereich geteilt, wobei am Anfang die gesamte Folge als unsortiert angesehen wird. Aufgrund der Heapeigenschaft befindet sich an der Wurzel des Baumes die größte Zahl. Diese wird mit der letzten Zahl im unsortierten Bereich vertauscht, wodurch die nun letzte Zahl vom unsortierten an den sortierten Bereich übergeht.</p>
+
+<p>Durch das Vertauschen wird in der Regel die Heapeigenschaft verletzt, so daß auf dem neuen Wurzelknoten die Funktion sinkenlassen aufgerufen wird. Dabei wird allerdings nur der unsortierte Bereich der Folge betrachtet. Diese Vorgehensweise wird wiederholt, bis nur noch der Wurzelknoten zum unsortierten Bereich gehört.</p>
+
+<p>Die beiden Bereiche werden durch den Zeiger "re" abgegrenzt, welcher die letzte Position im unsortierten Bereich angibt; die folgenden Positionen sind sortiert. Der sortierte Bereich wird in diesem Modul grau unterlegt dargestellt.</p>
+
+<p>Bild 3: Phase 2. Zu erkennen: Der grau unterlegte sortierte Bereich.<br>
+<img src="../pics/pic03.png"></p>
+
+<h2><a name="instr">Vorgehensweise</a></h2>
+
+<p>Nach dem Öffnen des Moduls befindet sich am rechten Rand des Fensters das Eingabefeld. Geben Sie die Zahlen der Eingabefolge eine nach der anderen ein und bestätigen Sie jeweils mit Enter. Wenn Sie fertig sind, können Sie durch Drücken von Enter im leeren Eingabefeld oder durch Betätigen des entsprechenden Knopfes den Algorithmus starten.</p>
+
+<p>Nun erscheinen in der Toolbar Buttons, die die Steuerung des Algorithmus ermöglichen. Dabei haben Sie die Wahl, einen Schritt vorwärts oder rückwärts zu gehen, einen Makroschritt vorwärts oder rückwärts zu gehen, ganz an den Anfang zurück zu kehren oder den gesamten Ablauf des Algorithmus animieren zu lassen. Makroschritte fassen Schritte zu logisch zusammenhängenden Einheiten zusammen.</p>
+
+<p>Wenn der Vorlesungsmodus deaktiviert ist, befindet sich am rechten Bildschirmrand eine Leiste, welche die Schritte des Sinkenlassens protokolliert.</p>
+</body>
+</html>

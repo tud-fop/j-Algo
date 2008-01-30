@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE index
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/index_1_0.dtd">
+
+<index version="1.0">
+    <indexitem text="Heapsort" expand="false">
+				<indexitem text="Eingabe"		    target="heapsort.instr"/>
+				<indexitem text="Einzelschritt"		target="heapsort.instr"/>
+				<indexitem text="Heapeigenschaft"	target="heapsort.algo"/>
+				<indexitem text="Makroschritt"		target="heapsort.instr"/>
+				<indexitem text="Phase 1"			target="heapsort.algo"/>
+				<indexitem text="Phase 2"			target="heapsort.algo"/>
+				<indexitem text="Schritt"		    target="heapsort.instr"/>
+				<indexitem text="Sinkenlassen"		target="heapsort.algo"/>
+				<indexitem text="Zeiger li"			target="heapsort.algo"/>
+				<indexitem text="Zeiger re"			target="heapsort.algo"/>
+    </indexitem>
+</index>

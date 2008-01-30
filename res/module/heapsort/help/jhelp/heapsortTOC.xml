@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de">
+
+			<tocitem text="Heapsort"	            			            target="heapsort" expand="false">
+				<tocitem text="Einleitung" 		   							target="heapsort.intro"/>
+				<tocitem text="Algorithmus und Darstellung" 				target="heapsort.algo"/>
+				<tocitem text="Vorgehensweise und Bedienung" 				target="heapsort.instr"/>
+			</tocitem>
+</toc>
