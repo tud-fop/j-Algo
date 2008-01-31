@@ -86,6 +86,8 @@ public class RenderJava2D implements Renderer, CanvasEntityFactory, ComponentLis
 	}
 	
 	public boolean validate() {
+		if (backbuffer == null)
+			backbuffer = c.createVolatileImage(c.getWidth(), c.getHeight());
 		if (c.getWidth() != backbuffer.getWidth() || c.getHeight() != backbuffer.getHeight()) {
 			backbuffer.flush();
 			backbuffer = null;
