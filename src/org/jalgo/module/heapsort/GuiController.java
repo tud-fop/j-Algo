@@ -362,7 +362,7 @@ public class GuiController implements ControllerListener, ModelListener {
 				public void actionPerformed(ActionEvent e) {
 					synchronized(root) {
 						System.gc(); // XXX let's see whether this helps
-						timeroot.setScale(0.4);
+						timeroot.setScale(0.7);
 						ctrl.macroStep(-1);
 					}
 				}
