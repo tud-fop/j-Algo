@@ -289,6 +289,7 @@ public class GuiController implements ControllerListener, ModelListener {
 				public void actionPerformed(ActionEvent e) {
 					synchronized(root) {
 						ctrl.reset();
+						logger.clear(); // FIXME should be done in some (not yet existing) listener
 					}
 				}
 			});			

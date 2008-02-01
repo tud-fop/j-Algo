@@ -29,6 +29,10 @@ package org.jalgo.module.heapsort.anim;
  * @author mbue
  */
 public class SequentialAnimation implements Animation {
+	// Actually, I hate this implementation...
+	// I wanted it to be more efficient than using CompositeAnimation with lots of
+	// AnimationTimeEntities, so I had to pass on the idea of using too many inner
+	// classes, even if we have quite some state involved
 	
 	private static class AnimItem {
 		Animation a;
@@ -88,10 +92,15 @@ public class SequentialAnimation implements Animation {
 	}
 
 	public void update(double time) {
-		if (cur != null) {
+		// ok folks, we are going to use the BREAK statement here, so fasten seatbelts
+		// (the loop is necessary because we are not garuanteed to be called often enough
+		// to bring every animation to 1.0, which is required.)
+		while (cur != null) {
 			double tloc = (time*duration-cur.start)/cur.dur;
-			if (tloc < 1.0)
+			if (tloc < 1.0) {
 				cur.a.update(tloc);
+				break; // <--- HERE IT IS
+			}
 			else {
 				cur.a.update(1.0);
 				cur.a.done();

@@ -201,6 +201,10 @@ public final class Animations {
 		}
 
 		public void done() {
+			/**XX bug fix: if the animation is done, set the state
+			// (necessary if update does not get called, which can happen
+			f1.setState(0.0f);
+			f2.setState(1.0f);*/
 			// we don't want to hold the fadeables longer than necessary
 			// (note that this method will be called automatically,
 			// which can not be said about deleting the reference to us)
@@ -255,6 +259,13 @@ public final class Animations {
 			super(f1, f2);
 			this.periods = periods;
 		}
+		
+		/*public void done() {
+			f1.setState(1.0f);
+			f2.setState(0.0f);
+			f1 = null;
+			f2 = null;
+		}*/
 
 		public void update(double time) {
 			float f = (float)(0.5*Math.cos(2*periods*Math.PI*time));
@@ -285,7 +296,8 @@ public final class Animations {
 		}
 
 		public void done() {
-			
+			s1 = null;
+			s2 = null;
 		}
 
 		public double getDuration() {

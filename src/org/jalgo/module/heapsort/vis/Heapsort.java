@@ -99,6 +99,8 @@ public final class Heapsort implements Visualisation {
 	private List<MarkingRect> re;
 	private MarkingRect re2;
 	private Text cmpres;
+	private int first; // number of visible nodes
+	private int last; // number of visible nodes in next step
 	
 	public Heapsort(CanvasEntity root, CanvasEntityFactory f) {
 		this.root = root;
@@ -166,27 +168,11 @@ public final class Heapsort implements Visualisation {
 		setup();
 	}
 	
-	// the folling methods fill the dictionary
-	// but they don't add anything to the canvas
-	// this allows us to use them in animations
-	// especially in composite ones
-	
-	private void addLevel() {
-		int ind = nodes.size();
-		int last = Math.min(2*ind+1, current.sequence.size());
-		
-		while (ind < last) {
-			Node nd = f.createNode(nodepos[ind], current.sequence.get(ind).toString());
-			nd.setZorder(102+ind); // 102 instead of 100 to be on top of seq (extend anim)
-			nodes.add(nd);
-			if (ind > 0) {
-				Edge e = f.createEdge(edgefrom[ind], edgeto[ind]);
-				e.setZorder(1);
-				edges.add(e);
-			}
-			ind++;
-		}
-	}
+	/* the following methods fill the dictionary
+	 * but they don't add anything to the canvas
+	 * this allows us to use them in animations
+	 * especially in composite ones
+	 */
 	
 	private void addLiPointer(int li) {
 		Text t = f.createText("\u2190", 20, 20);
@@ -249,10 +235,10 @@ public final class Heapsort implements Visualisation {
 			return -1;
 	}
 	
-	private void addUnder() {
-		if (nodes.size() < current.sequence.size()) {
-			Point p = seqpos[nodes.size()];
-			Point p1 = seqpos[Math.min(2*nodes.size(), current.sequence.size()-1)];
+	private void addUnder(int first, int last) {
+		if (first < last) {
+			Point p = seqpos[first];
+			Point p1 = seqpos[last-1];
 			under = f.createMarkingRect();
 			under.setColor(undercol);
 			under.setPosition(new Point(p.x-15, p.y+18));
@@ -264,7 +250,7 @@ public final class Heapsort implements Visualisation {
 	private void setup() {
 		// first: fill dictionary
 		
-		// sequence 
+		// sequence elements, their indices, nodes, edges 
 		for (int ind = 0; ind < current.sequence.size(); ind++) {
 			SequenceElement se = f.createSequenceElement(
 					seqpos[ind],
@@ -276,19 +262,36 @@ public final class Heapsort implements Visualisation {
 			sei.setOpacity(0.5f);
 			sei.setRegular(true);
 			seqind.add(sei);
+			// XXX create node at seqpos...
+			Node nd = f.createNode(seqpos[ind], current.sequence.get(ind).toString());
+			nd.setZorder(102+ind); // 102 instead of 100 to be on top of seq (extend anim)
+			nodes.add(nd);
+			if (ind > 0) {
+				Edge e = f.createEdge(edgefrom[ind], edgeto[ind]);
+				e.setZorder(1);
+				edges.add(e);
+			}
 		}
-		// nodes
-		int level = org.jalgo.module.heapsort.model.Heapsort.getLevels(current.sequence.size());
-		if (current instanceof Phase0)
-			level = ((Phase0)current).level;
+		
+		// compute which nodes have to be shown
 		if (current instanceof InitialState)
-			level = 0;
-		while (level > 0) {
-			addLevel();
-			level--;
+			first = 0;
+		else if (current instanceof Phase0) {
+			int level = ((Phase0)current).level;
+			first = 0;
+			while (level > 0) {
+				first = 2*first+1;
+				level--;
+			}
+			if (first > current.sequence.size())
+				first = current.sequence.size();
 		}
+		else
+			first = current.sequence.size();
+		last = Math.min(2*first+1, current.sequence.size());
+		
 		if (current instanceof Phase0)
-			addUnder();
+			addUnder(first, last);
 		// li pointer and re marker
 		if (current instanceof Phase12) {
 			int li = ((Phase12)current).li;
@@ -322,10 +325,12 @@ public final class Heapsort implements Visualisation {
 		}
 		
 		// second: put on screen
-		for (Node n: nodes)
-			root.addChild(n);
-		for (Edge e: edges)
-			root.addChild(e);
+		for (int ind = 0; ind < first; ind++) {
+			nodes.get(ind).setPosition(nodepos[ind]);
+			root.addChild(nodes.get(ind));
+		}
+		for (int ind = 1; ind < first; ind++)
+			root.addChild(edges.get(ind-1));
 		for (SequenceElement s: seq)
 			root.addChild(s);
 		for (Text s: seqind)
@@ -350,6 +355,7 @@ public final class Heapsort implements Visualisation {
 			for (Node n: nodes)
 				root.removeChild(n);
 			nodes.clear();
+			first = 0;
 			for (Edge e: edges)
 				root.removeChild(e);
 			edges.clear();
@@ -403,34 +409,42 @@ public final class Heapsort implements Visualisation {
 	 */
 	public Animation setupAnimationLecture(State q, Action a, State q1) {
 		// this call won't harm because state should not have changed
-		// FIXME in fact, state could have changed because animations don't update current!
 		setupState(q);
 		next = (HeapsortState)q1;
+		Animation result = null;
 		// don't tell me that this looks ugly...
 		// it works, that's enough -- don't want any more "invoke"
 		if (Actions.isExtend(a))
-			return new TheExtendAnim();
+			result = new ExtendAnim();
 		if (Actions.isStartphase0(a))
-			return new Startphase0Anim();
+			result = new Startphase0Anim();
 		if (Actions.isStartphase1(a))
-			return new Startphase1Anim();
+			result = new Startphase1Anim();
 		if (Actions.isDecli(a))
-			return new DecliAnim();
+			result = new DecliAnim();
 		if (Actions.isReturnphase1(a) || Actions.isReturnphase2(a))
-			return new ReturnAnim();
+			result = new ReturnAnim();
 		if (Actions.isStartphase2(a))
-			return new Startphase2Anim();
+			result = new Startphase2Anim();
 		if (Actions.isSwapDecre(a))
-			return new SwapDecreAnim();
+			result = new SwapDecreAnim();
 		if (Actions.isFinish(a))
-			return new FinishAnim();
+			result = new FinishAnim();
 		if (Actions.isStartsl(a))
-			return new StartslAnim();
+			result = new StartslAnim();
 		if (Actions.isCompare(a))
-			return new CompareAnim();
+			result = new CompareAnim();
 		if (Actions.isSwap(a))
-			return new TheSwapAnim();
-		return null;
+			result = new TheSwapAnim();
+		assert(result != null);
+		result = new ProxyAnimation(result) {
+			public void done() {
+				super.done();
+				current = next;
+				next = null;
+			}
+		};
+		return result;
 	}
 
 	// ignore macro, this is the same as lecture!
@@ -470,7 +484,7 @@ public final class Heapsort implements Visualisation {
 	private class Startphase0Anim extends ProxyAnimation {
 		
 		public Startphase0Anim() {
-			addUnder();
+			addUnder(first, last);
 			delegate = Animations.createInFader(Animations.SMOOTH_FADER, under);
 		}
 		
@@ -478,7 +492,7 @@ public final class Heapsort implements Visualisation {
 			root.addChild(under);
 			super.init();
 		}
-
+		
 		public double getDuration() {
 			return 0.4;
 		}
@@ -486,81 +500,49 @@ public final class Heapsort implements Visualisation {
 	}
 	
 	// extend: --> "copy" sequence elements as nodes
-	private class ExtendAnim implements Animation {
-		private int first;
-		
-		public ExtendAnim(int first) {
-			this.first = first;
-		}
-		
-		public void done() {
-			
-		}
-
-		public double getDuration() {
-			return 1.0;
-		}
-
-		public void init() {
-			for (int ind = first; ind < nodes.size(); ind++)
-				root.addChild(nodes.get(ind));
-		}
-
-		public void update(double time) {
-			// smooth animation
-			double t1, t2;
-			if (time == 1.0) {
-				t1 = 0.0;
-				t2 = 1.0;
-			}
-			else {
-				double f = 0.5*(Math.cos(Math.PI*time));
-				t1 = 0.5+f;
-				t2 = 0.5-f;
-			}
-			// do it
-			for (int ind = first; ind < nodes.size(); ind++) {
-				Point p1 = seqpos[ind];
-				Point p2 = nodepos[ind];
-				nodes.get(ind).setPosition(t1*p1.x+t2*p2.x, t1*(p1.y-15)+t2*p2.y);
-			}
-		}
-	}
-	
-	private class ExtendAnim2 extends ProxyAnimation {
-		private int first;
-		
-		public ExtendAnim2(int first_) {
-			this.first = first_;
-			delegate = Animations.createInFader(Animations.SMOOTH_FADER, new Fadeable() {
-
-				public void setState(float state) {
-					for (int ind = first; ind < nodes.size(); ind++)
-						edges.get(ind-1).setOpacity(state);
-				}
-				
-			});
-		}
-		
-		public void init() {
-			for (int ind = first-1; ind < edges.size(); ind++)
-				root.addChild(edges.get(ind));
-		}
-		
-	}
-	
-	private class TheExtendAnim extends SequentialAnimation {
+	private class ExtendAnim extends SequentialAnimation {
 		MarkingRect oldunder;
+		int newlast = Math.min(2*last+1, current.sequence.size());
 		
-		public TheExtendAnim() {
-			int first = nodes.size();
+		public ExtendAnim() {
 			oldunder = under;
 			under = null;
-			addLevel();
-			addUnder();
-			add(new ExtendAnim(first), 1.5);
+			addUnder(last, newlast);
+			// move in nodes
+			add(new ProxyAnimation(Animations.createOutFader(
+					Animations.SMOOTH_FADER, new Fadeable() {
+						public void setState(float state) {
+							float f1 = state;
+							float f2 = 1.0f - state;
+							for (int ind = first; ind < last; ind++) {
+								Point p1 = seqpos[ind];
+								Point p2 = nodepos[ind];
+								nodes.get(ind).setPosition(
+										f1 * p1.x + f2 * p2.x,
+										f1 * (p1.y - 15) + f2 * p2.y);
+							}
+						}
+					})) {
+				public void init() {
+					for (int ind = first; ind < last; ind++)
+						root.addChild(nodes.get(ind));
+				}
+			}, 1.5);
+			// fade in edges
 			if (first > 0)
-				add(new ExtendAnim2(first), 0.5);
+				add(new ProxyAnimation(Animations.createInFader(
+						Animations.SMOOTH_FADER, new Fadeable() {
+							public void setState(float state) {
+								for (int ind = first; ind < last; ind++)
+									edges.get(ind - 1).setOpacity(state);
+							}
+						})) {
+					public void init() {
+						for (int ind = first; ind < last; ind++)
+							root.addChild(edges.get(ind - 1));
+					}
+				}, 0.5);
+			// show underbars
 			if (under == null)
 				add(Animations.createOutFader(Animations.SMOOTH_FADER, oldunder), 0.5);
 			else {
@@ -582,6 +564,8 @@ public final class Heapsort implements Visualisation {
 		public void done() {
 			super.done();
 			root.removeChild(oldunder);
+			first = last;
+			last = newlast;
 		}
 		
 	}
@@ -643,7 +627,9 @@ public final class Heapsort implements Visualisation {
 		public ReturnAnim(int i) {
 			super(1.0);
 			add(Animations.createOutFader(Animations.SMOOTH_FADER, nodes.get(i)));
-			add(Animations.createOutFader(Animations.SMOOTH_FADER, seq.get(i)));			
+			add(Animations.createOutFader(Animations.SMOOTH_FADER, seq.get(i)));
+			if ((next instanceof Phase2) && (li != null))
+				add(new Startphase2Anim());
 		}
 	}
 
@@ -835,41 +821,35 @@ public final class Heapsort implements Visualisation {
 		}
 	}
 
-	// fade out cmp_result
-	private class UncompareAnim extends ProxyAnimation {
-		private Text cmpres_;
-		
-		public UncompareAnim() {
-			cmpres_ = cmpres;
-			delegate = Animations.createOutFader(Animations.SMOOTH_FADER, cmpres_);
-			cmpres = null;
-		}
-
-		public void done() {
-			root.removeChild(cmpres_);
-			super.done();
-		}
-
-		public double getDuration() {
-			return 1;
-		}
-	}
-	
 	// swap --> swap, take care of highlight
 	private class TheSwapAnim extends CompositeAnimation {
 		
 		public TheSwapAnim() {
-			add(new SwapAnim(((Phase12sl)current).i, ((Phase12sl)next).i), 0, 1);
+			int i = ((Phase12sl)current).i;
+			int j = ((Phase12sl)next).i;
+			add(new SwapAnim(i, j), 0, 1);
 			// use next.i because of swapping
-			add(new ReturnAnim(((Phase12sl)next).i), 1, 0.5);
+			add(Animations.createOutFader(Animations.SMOOTH_FADER, nodes.get(j)), 1, 0.5);
+			add(Animations.createOutFader(Animations.SMOOTH_FADER, seq.get(j)), 1, 0.5);			
 			if (cmpres != null)
-				add(new UncompareAnim(), 1, 0.5);			
+				add(new ProxyAnimation() {
+						private Text cmpres_ = cmpres;
+						
+						{
+							cmpres = null;
+							delegate = Animations.createOutFader(Animations.SMOOTH_FADER, cmpres_);
+						}
+						
+						public void done() {
+							root.removeChild(cmpres_);
+							super.done();
+						}
+					}, 1, 0.5);			
 		}
 
 		public double getDuration() {
 			return 1.5;
 		}
-		
 	}
 	
 }

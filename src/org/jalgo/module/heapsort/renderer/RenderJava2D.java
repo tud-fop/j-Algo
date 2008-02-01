@@ -67,12 +67,14 @@ public class RenderJava2D implements Renderer, CanvasEntityFactory, ComponentLis
 		c.addComponentListener(this);
 		cc.add(c);
 		backbuffer = null;
-		backbuffer = c.createVolatileImage(c.getWidth(), c.getHeight());
+		//backbuffer = c.createVolatileImage(c.getWidth(), c.getHeight());
 	}
 	
 	public void dispose() {
-		backbuffer.flush();
-		backbuffer = null;
+		if (backbuffer != null) {
+			backbuffer.flush();
+			backbuffer = null;
+		}
 		c.getParent().remove(c);
 		c = null;
 	}
@@ -86,28 +88,41 @@ public class RenderJava2D implements Renderer, CanvasEntityFactory, ComponentLis
 	}
 	
 	public boolean validate() {
-		if (backbuffer == null)
-			backbuffer = c.createVolatileImage(c.getWidth(), c.getHeight());
-		if (c.getWidth() != backbuffer.getWidth() || c.getHeight() != backbuffer.getHeight()) {
-			backbuffer.flush();
-			backbuffer = null;
-			backbuffer = c.createVolatileImage(c.getWidth(), c.getHeight());
-			backbuffer.validate(c.getGraphicsConfiguration());
+		if (backbuffer == null) {
+			// component was not displayable last time we tried
+			// try again
+			try {
+				backbuffer = c.createVolatileImage(c.getWidth(), c.getHeight());
+			}
+			catch (IllegalArgumentException e) {
+				; // XXX do nothing
+			}
 			return true;
 		}
 		else {
-			int rc = backbuffer.validate(c.getGraphicsConfiguration());
-			if (rc == VolatileImage.IMAGE_INCOMPATIBLE) {
+			if (c.getWidth() != backbuffer.getWidth() || c.getHeight() != backbuffer.getHeight()) {
 				backbuffer.flush();
 				backbuffer = null;
 				backbuffer = c.createVolatileImage(c.getWidth(), c.getHeight());
+				backbuffer.validate(c.getGraphicsConfiguration());
 				return true;
 			}
-			return rc != VolatileImage.IMAGE_OK;
+			else {
+				int rc = backbuffer.validate(c.getGraphicsConfiguration());
+				if (rc == VolatileImage.IMAGE_INCOMPATIBLE) {
+					backbuffer.flush();
+					backbuffer = null;
+					backbuffer = c.createVolatileImage(c.getWidth(), c.getHeight());
+					return true;
+				}
+				return rc != VolatileImage.IMAGE_OK;
+			}
 		}
 	}
 	
 	public void renderVisible(CanvasEntity root, Rectangle r) {
+		if (backbuffer == null)
+			return; // BAIL OUT
 		Graphics2D g = (Graphics2D)backbuffer.getGraphics();
 		try {
 			AffineTransform t = g.getTransform();
@@ -199,6 +214,7 @@ public class RenderJava2D implements Renderer, CanvasEntityFactory, ComponentLis
 			Rectangle r = bounds;
 			g.setColor(Color.WHITE);
 			//int c = (int)((System.nanoTime()>>23)&0xff);
+			//int c = children.size()*3;
 			//g.setColor(new Color(c|c<<8|c<<16));
 			g.fillRect(r.x, r.y, r.width, r.height);
 		}

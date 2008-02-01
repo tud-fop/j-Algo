@@ -22,6 +22,9 @@
  */
 package org.jalgo.module.heapsort.vis;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.jalgo.module.heapsort.Subject;
 import org.jalgo.module.heapsort.anim.Animation;
 import org.jalgo.module.heapsort.anim.AnimationListener;
@@ -95,6 +98,7 @@ public class Controller extends Subject<ControllerListener> {
 	private Sequencer seq;
 	
 	private Listener listener;
+	private LogListener loglistener;
 	private CState currentState = null;
 	private boolean lecture;
 	
@@ -106,8 +110,9 @@ public class Controller extends Subject<ControllerListener> {
 		// use timeroot to schedule animations
 		this.timeroot = timeroot;
 		
-		// the listener captures events from underlying layers
+		// the listeners capture events from underlying layers
 		listener = new Listener();
+		loglistener = new LogListener();
 		
 		pushState(new Initial());
 	}
@@ -208,11 +213,11 @@ public class Controller extends Subject<ControllerListener> {
 	}
 	
 	public void addListener(SequencerListener l) {
-		seq.addListener(l);
+		loglistener.addListener(l);
 	}
 	
 	public void removeListener(SequencerListener l) {
-		seq.removeListener(l);
+		loglistener.removeListener(l);
 	}
 	
 	private int inpushpopstate = 0;
@@ -397,6 +402,7 @@ public class Controller extends Subject<ControllerListener> {
 			// XXX think about this call
 			seq.derive();
 			seq.addListener(listener);
+			seq.addListener(loglistener);
 			pushState(new Ready());
 		}
 		
@@ -555,7 +561,7 @@ public class Controller extends Subject<ControllerListener> {
 			current = 0;
 		}
 		
-		@Override
+		//@Override // unlike 1.6, Java 1.5 does not like this
 		public void animationComplete(Animation a) {
 			/*
 			 * this will most likely be executed in a different thread
@@ -635,6 +641,41 @@ public class Controller extends Subject<ControllerListener> {
 
 		public void modelChanged() {
 			currentState.modelChanged();
+		}
+		
+	}
+	
+	private class LogListener implements SequencerListener {
+
+		private List<SequencerListener> loggers;
+
+		public void addListener(SequencerListener l) {
+			if (loggers == null)
+				loggers = new LinkedList<SequencerListener>();
+			loggers.add(l);
+		}
+		
+		public void removeListener(SequencerListener l) {
+			if (loggers != null)
+				loggers.remove(l);
+		}
+		
+		public void back(State q, Action a, State q1) {
+			if (loggers != null)
+				for (SequencerListener l: loggers)
+					l.back(q, a, q1);
+		}
+
+		public void step(State q, Action a, State q1) {
+			if (loggers != null)
+				for (SequencerListener l: loggers)
+					l.step(q, a, q1);
+		}
+
+		public void stepAvail() {
+			if (loggers != null)
+				for (SequencerListener l: loggers)
+					l.stepAvail();
 		}
 		
 	}

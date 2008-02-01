@@ -34,6 +34,10 @@ public class ProxyAnimation implements Animation {
 	protected ProxyAnimation() {
 	}
 	
+	public ProxyAnimation(Animation delegate) {
+		this.delegate = delegate;
+	}
+	
 	public void done() {
 		delegate.done();
 	}

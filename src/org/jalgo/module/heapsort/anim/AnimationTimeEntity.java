@@ -68,7 +68,21 @@ public final class AnimationTimeEntity extends TimeEntity implements Animation {
 	 */
 	private class State1 implements State {
 		public void doUpdate(double tloc) {
-			if (tloc >= 0.0) {
+			// BUGFIX: handle tloc > 1.0
+			// if this ate is used in a composite animation,
+			// it might get called with -5 and then with 5
+			// because of some time trouble, the outer animation is
+			// only called with 0.0 and 1.0
+			if (tloc >= 1.0) {
+				state = new State3();
+				anim.update(1.0);
+				// changed to ease composition
+				//done() is called outside
+				//anim.done();
+				if (listener != null)
+					listener.animationComplete(anim);				
+			}
+			else if (tloc >= 0.0) {
 				state = new State2();
 				// changed to ease composition:
 				//init() is called outside
