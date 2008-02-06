@@ -103,5 +103,5 @@ public interface Renderer {
 	 * @param r
 	 * @return <code>true</code>
 	 */
-	public boolean show(Rectangle r);
+	boolean show(Rectangle r);
 }

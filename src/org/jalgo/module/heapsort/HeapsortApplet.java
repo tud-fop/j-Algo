@@ -29,10 +29,7 @@ import org.jalgo.module.heapsort.vis.Visualisation;
  */
 public final class HeapsortApplet extends JApplet {
 
-	private Model model;
-	private Visualisation vis;
 	private Renderer renderer;
-	private CanvasEntityFactory f;
 	private CanvasEntity root;
 	private TimeEntity timeroot;
 	private Controller ctrl;
@@ -47,6 +44,10 @@ public final class HeapsortApplet extends JApplet {
 
 	@Override
 	public void init() {
+		Model model;
+		Visualisation vis;
+		CanvasEntityFactory f;
+		
 		// connect everything...
 		model = new org.jalgo.module.heapsort.model.Heapsort();
 		for (int i: sequence)

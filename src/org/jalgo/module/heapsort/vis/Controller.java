@@ -86,7 +86,7 @@ import org.jalgo.module.heapsort.model.State;
  * 
  * @author mbue
  */
-public class Controller extends Subject<ControllerListener> {
+public final class Controller extends Subject<ControllerListener> {
 	
 	// please find all those numerous inner classes at the end of
 	// the class definition
@@ -261,7 +261,7 @@ public class Controller extends Subject<ControllerListener> {
 	 * 
 	 * @author mbue
 	 */
-	public interface Direction {
+	private interface Direction {
 		void go();
 		boolean canGo();
 	}
@@ -301,7 +301,7 @@ public class Controller extends Subject<ControllerListener> {
 	 * @author mbue
 	 */
 	private class CState {
-		CState prev;
+		public CState prev;
 		
 		// we provide empty bodies here because this
 		// saves us many keystrokes
@@ -309,23 +309,23 @@ public class Controller extends Subject<ControllerListener> {
 		 * initialize state -- called after pushing on stack
 		 * (do it afterwards so pushStack can be called in here)
 		 */
-		void init() {
+		public void init() {
 			
 		}
 		/**
 		 * tidy up -- called after popping from stack
 		 */
-		void done() {
+		public void done() {
 			
 		}
 		/**
 		 * notification that state becomes active again
 		 */
-		void ret() {
+		public void ret() {
 			
 		}
 		
-		Animation[] createAnim(State q, Action a, State q1) {
+		public Animation[] createAnim(State q, Action a, State q1) {
 			// this time: don't factor everything out to use
 			// polymorphism instead of if-clauses... destroys locality
 			if (isLecture())
@@ -334,45 +334,45 @@ public class Controller extends Subject<ControllerListener> {
 				return vis.setupAnimation(q, a, q1);
 		}
 		
-		boolean isBackPossible() {
+		public boolean isBackPossible() {
 			return false;
 		}
 		
-		boolean isStepPossible() {
+		public boolean isStepPossible() {
 			return false;
 		}
 		
-		boolean isMacroStepPossible() {
+		public boolean isMacroStepPossible() {
 			return false;
 		}
 		
-		boolean isSuspendPossible() {
+		public boolean isSuspendPossible() {
 			// go up in the stack (must be overridden by Ready)
 			return prev.isSuspendPossible();
 		}
 		
-		void back() {
+		public void back() {
 			
 		}
 		
-		void cont() {
+		public void cont() {
 			
 		}
 		
-		void macroStep(int detailLevel) {
+		public void macroStep(int detailLevel) {
 			
 		}
 		
-		void macroBack(int detailLevel) {
+		public void macroBack(int detailLevel) {
 			
 		}
 		
-		void suspend() {
+		public void suspend() {
 			// go up in the stack (must be overridden by Ready)
 			prev.suspend();
 		}
 		
-		void modelChanged() {
+		public void modelChanged() {
 			
 		}
 		
@@ -383,12 +383,12 @@ public class Controller extends Subject<ControllerListener> {
 		 * 
 		 * @return
 		 */
-		boolean canModelChange() {
+		public boolean canModelChange() {
 			return false;
 		}
 	}
 	
-	private class Initial extends CState {
+	private final class Initial extends CState {
 		
 		@Override
 		public void init() {
@@ -397,7 +397,7 @@ public class Controller extends Subject<ControllerListener> {
 		}
 		
 		@Override
-		void modelChanged() {
+		public void modelChanged() {
 			seq = new Sequencer(model.getInitialState());
 			// XXX think about this call
 			seq.derive();
@@ -407,7 +407,7 @@ public class Controller extends Subject<ControllerListener> {
 		}
 		
 		@Override
-		boolean canModelChange() {
+		public boolean canModelChange() {
 			return true;
 		}
 		
@@ -422,7 +422,7 @@ public class Controller extends Subject<ControllerListener> {
 	 * 
 	 * @author mbue
 	 */
-	private class Ready extends CState {
+	private final class Ready extends CState {
 		
 		@Override
 		public void init() {
@@ -492,7 +492,7 @@ public class Controller extends Subject<ControllerListener> {
 		}
 		
 		@Override
-		boolean canModelChange() {
+		public boolean canModelChange() {
 			return true;
 		}
 		
@@ -503,7 +503,7 @@ public class Controller extends Subject<ControllerListener> {
 	 * 
 	 * @author mbue
 	 */
-	private class MacroState extends CState {
+	private final class MacroState extends CState {
 		private int detailLevel;
 		private Direction direction;
 		private boolean suspended = false;
@@ -513,7 +513,7 @@ public class Controller extends Subject<ControllerListener> {
 			this.direction = direction;
 		}
 		
-		Animation[] createAnim(State q, Action a, State q1) {
+		public Animation[] createAnim(State q, Action a, State q1) {
 			return new Animation[] { vis.setupAnimationMacro(q, a, q1)};
 		}
 		
@@ -551,10 +551,10 @@ public class Controller extends Subject<ControllerListener> {
 	 * 
 	 * @author mbue
 	 */
-	private class PlayAnimState extends CState implements AnimationListener {
-		Animation[] anim;
-		int current;
-		AnimationTimeEntity cate; // current animation time entity
+	private final class PlayAnimState extends CState implements AnimationListener {
+		private Animation[] anim;
+		private int current;
+		private AnimationTimeEntity cate; // current animation time entity
 		
 		public PlayAnimState(Animation[] anim) {
 			this.anim = anim;
@@ -608,7 +608,7 @@ public class Controller extends Subject<ControllerListener> {
 	 * 
 	 * @author mbue
 	 */
-	private class AckWaitState extends CState {
+	private final class AckWaitState extends CState {
 		@Override
 		public void cont() {
 			popState();
@@ -620,7 +620,7 @@ public class Controller extends Subject<ControllerListener> {
 		}
 	}
 
-	private class Listener implements SequencerListener, ModelListener {
+	private final class Listener implements SequencerListener, ModelListener {
 
 		public void back(State q, Action a, State q1) {
 			Animation aa = vis.setupAnimationBack(q, a, q1);
@@ -629,7 +629,7 @@ public class Controller extends Subject<ControllerListener> {
 
 		public void step(State q, Action a, State q1) {
 			Animation[] aa = currentState.createAnim(q, a, q1);
-			System.out.println(a.toString());
+			//System.out.println(a.toString());
 			pushState(new PlayAnimState(aa));
 		}
 
@@ -645,7 +645,7 @@ public class Controller extends Subject<ControllerListener> {
 		
 	}
 	
-	private class LogListener implements SequencerListener {
+	private static final class LogListener implements SequencerListener {
 
 		private List<SequencerListener> loggers;
 
@@ -680,7 +680,7 @@ public class Controller extends Subject<ControllerListener> {
 		
 	}
 	
-	private static class StateChangedNotifier implements Notifier<ControllerListener> {
+	private static final class StateChangedNotifier implements Notifier<ControllerListener> {
 		private static StateChangedNotifier arnie = new StateChangedNotifier();
 		
 		public static StateChangedNotifier getInstance() {

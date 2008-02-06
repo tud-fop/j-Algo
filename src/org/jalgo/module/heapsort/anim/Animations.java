@@ -191,11 +191,11 @@ public final class Animations {
 		}
 	}
 	
-	private static abstract class Crossfader implements Animation {
+	private static abstract class AbstractCrossfader implements Animation {
 		protected Fadeable f1;
 		protected Fadeable f2;
 	
-		protected Crossfader(Fadeable f1, Fadeable f2) {
+		protected AbstractCrossfader(Fadeable f1, Fadeable f2) {
 			this.f1 = f1;
 			this.f2 = f2;
 		}
@@ -221,7 +221,7 @@ public final class Animations {
 
 	}
 	
-	private static final class LinearCrossfader extends Crossfader implements Animation {
+	private static final class LinearCrossfader extends AbstractCrossfader implements Animation {
 		
 		public LinearCrossfader(Fadeable f1, Fadeable f2) {
 			super(f1, f2);
@@ -237,7 +237,7 @@ public final class Animations {
 		
 	}
 	
-	private static final class SmoothCrossfader extends Crossfader implements Animation {
+	private static final class SmoothCrossfader extends AbstractCrossfader implements Animation {
 		
 		public SmoothCrossfader(Fadeable f1, Fadeable f2) {
 			super(f1, f2);
@@ -252,8 +252,8 @@ public final class Animations {
 		}	
 	}
 	
-	private static final class SmoothBlinker extends Crossfader implements Animation {
-		double periods;
+	private static final class SmoothBlinker extends AbstractCrossfader implements Animation {
+		private double periods;
 		
 		public SmoothBlinker(Fadeable f1, Fadeable f2, double periods) {
 			super(f1, f2);
@@ -277,8 +277,8 @@ public final class Animations {
 	}
 	
 	private static final class Zoomer implements Animation {
-		protected Scalable s1;
-		protected Scalable s2;
+		private Scalable s1;
+		private Scalable s2;
 		private double factor;
 		
 		public Zoomer(Scalable s1, Scalable s2, double factor) {
@@ -309,13 +309,13 @@ public final class Animations {
 		}	
 	}
 	
-	private static abstract class Crossmover implements Animation {
-		Moveable m1;
-		Moveable m2;
-		Point2D p1;
-		Point2D p2;
+	private static abstract class AbstractCrossmover implements Animation {
+		protected Moveable m1;
+		protected Moveable m2;
+		protected Point2D p1;
+		protected Point2D p2;
 		
-		public Crossmover(Moveable m1, Moveable m2, Point2D p1, Point2D p2) {
+		public AbstractCrossmover(Moveable m1, Moveable m2, Point2D p1, Point2D p2) {
 			this.m1 = m1;
 			this.m2 = m2;
 			this.p1 = p1;
@@ -337,7 +337,7 @@ public final class Animations {
 
 	}
 	
-	private static final class LinearCrossmover extends Crossmover implements Animation {
+	private static final class LinearCrossmover extends AbstractCrossmover implements Animation {
 		
 		public LinearCrossmover(Moveable m1, Moveable m2, Point2D p1, Point2D p2) {
 			super(m1, m2, p1, p2);
@@ -354,7 +354,7 @@ public final class Animations {
 		
 	}
 	
-	private static final class SmoothCrossmover extends Crossmover implements Animation {
+	private static final class SmoothCrossmover extends AbstractCrossmover implements Animation {
 		
 		public SmoothCrossmover(Moveable m1, Moveable m2, Point2D p1, Point2D p2) {
 			super(m1, m2, p1, p2);
@@ -380,7 +380,7 @@ public final class Animations {
 	// more adapter classes anyway
 	
 	private static class TextAdapter implements Fadeable, Moveable {
-		Text text;
+		private final Text text;
 		
 		public TextAdapter(Text text) {
 			this.text = text;
@@ -396,7 +396,7 @@ public final class Animations {
 	}
 	
 	private static class NodeAdapter implements Fadeable, Moveable, Scalable {
-		Node node;
+		private final Node node;
 		
 		public NodeAdapter(Node node) {
 			this.node = node;
@@ -416,7 +416,7 @@ public final class Animations {
 	}
 	
 	private static class SequenceElementAdapter implements Fadeable, Moveable, Scalable {
-		SequenceElement se;
+		private final SequenceElement se;
 		
 		public SequenceElementAdapter(SequenceElement se) {
 			this.se = se;
@@ -436,7 +436,7 @@ public final class Animations {
 	}
 	
 	private static class MarkingRectAdapter implements Fadeable {
-		MarkingRect mr;
+		private final MarkingRect mr;
 		
 		public MarkingRectAdapter(MarkingRect mr) {
 			this.mr = mr;

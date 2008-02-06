@@ -35,10 +35,10 @@ public class SequentialAnimation implements Animation {
 	// classes, even if we have quite some state involved
 	
 	private static class AnimItem {
-		Animation a;
-		double start;
-		double dur;
-		AnimItem next;
+		public Animation a;
+		public double start;
+		public double dur;
+		public AnimItem next;
 	}
 	
 	private AnimItem anim;

@@ -51,19 +51,19 @@ public final class Sequencer extends Subject<SequencerListener> {
 		/**
 		 * The successor which was chosen by the strategy to be reduced further.
 		 */
-		int current;
+		public int current;
 		/**
 		 * The data for the current successor.
 		 */
-		Level next;
+		public Level next;
 		/**
 		 * Parent.
 		 */
-		Level prev;
+		public Level prev;
 		/**
 		 * The list of successors.
 		 */
-		List<Entry<State,Action>> successors;
+		public List<Entry<State,Action>> successors;
 	}
 	
 	/**
@@ -77,8 +77,8 @@ public final class Sequencer extends Subject<SequencerListener> {
 	 */
 	private static class MyEntry<K,V> implements Entry {
 		
-		K key;
-		V value;
+		private K key;
+		private V value;
 		
 		public MyEntry(K key, V value) {
 			this.key = key;

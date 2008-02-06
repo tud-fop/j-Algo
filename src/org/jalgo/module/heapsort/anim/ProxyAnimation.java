@@ -32,6 +32,7 @@ public class ProxyAnimation implements Animation {
 	protected Animation delegate;
 	
 	protected ProxyAnimation() {
+		// have a hidden empty constructor to allow easy subclassing 
 	}
 	
 	public ProxyAnimation(Animation delegate) {

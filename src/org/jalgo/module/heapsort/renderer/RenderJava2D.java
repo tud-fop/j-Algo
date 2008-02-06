@@ -50,15 +50,12 @@ import javax.swing.JPanel;
  * 
  * @author mbue
  */
-public class RenderJava2D implements Renderer, CanvasEntityFactory, ComponentListener {
+public final class RenderJava2D implements Renderer, CanvasEntityFactory, ComponentListener {
 	
 	// definition of RenderCanvas to be found at the end of this class
-	RenderCanvas c;
-	VolatileImage backbuffer;
-	RootJava2D root;
-	
-	public RenderJava2D() {
-	}
+	private RenderCanvas c;
+	private VolatileImage backbuffer;
+	private RootJava2D root;
 	
 	// Renderer methods
 	
@@ -174,7 +171,7 @@ public class RenderJava2D implements Renderer, CanvasEntityFactory, ComponentLis
 	// Last Action Renderer
 	
 	private class RenderVisitor implements CanvasEntityVisitor {
-		Graphics2D g = null;
+		private Graphics2D g = null;
 		
 		public RenderVisitor(Graphics2D graphics) {
 			g = graphics;
@@ -206,10 +203,6 @@ public class RenderJava2D implements Renderer, CanvasEntityFactory, ComponentLis
 	
 	private static class RootJava2D extends CanvasEntity implements Renderable {
 		
-		public RootJava2D() {
-			super();
-		}
-
 		public void render(Graphics2D g) {
 			Rectangle r = bounds;
 			g.setColor(Color.WHITE);
@@ -268,10 +261,7 @@ public class RenderJava2D implements Renderer, CanvasEntityFactory, ComponentLis
 	}
 	
 	private static class MarkingRectJava2D extends MarkingRect implements Renderable {
-		public MarkingRectJava2D() {
-			super();
-		}
-		
+
 		public void render(Graphics2D g) {
 			Color c1 = getColor();
 			float f1 = getOpacity();

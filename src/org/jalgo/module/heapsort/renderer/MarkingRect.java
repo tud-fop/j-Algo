@@ -49,11 +49,11 @@ public class MarkingRect extends CanvasEntity {
 	protected void update() {
 	}	
 	
-	public Point getPosition() {
+	public final Point getPosition() {
 		return position;
 	}
 
-	public void setPosition(Point position) {
+	public final void setPosition(Point position) {
 		if (!this.position.equals(position)) {
 			this.position.setLocation(position);
 			invalidate();
@@ -62,11 +62,11 @@ public class MarkingRect extends CanvasEntity {
 		}		
 	}
 
-	public int getHeight() {
+	public final int getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
+	public final void setHeight(int height) {
 		if (height != this.height) {
 			this.height = height;
 			invalidate();
@@ -76,11 +76,11 @@ public class MarkingRect extends CanvasEntity {
 		
 	}
 
-	public int getWidth() {
+	public final int getWidth() {
 		return width;
 	}
 
-	public void setWidth(int width) {
+	public final void setWidth(int width) {
 		if (width != this.width) {
 			this.width = width;
 			invalidate();
@@ -89,21 +89,21 @@ public class MarkingRect extends CanvasEntity {
 		}
 	}
 
-	public float getOpacity() {
+	public final float getOpacity() {
 		return opacity;
 	}
 
-	public void setOpacity(float opacity) {
+	public final void setOpacity(float opacity) {
 		this.opacity = opacity;
 		invalidate();
 		update();
 	}
 
-	public Color getColor() {
+	public final Color getColor() {
 		return color;
 	}
 
-	public void setColor(Color color) {
+	public final void setColor(Color color) {
 		this.color = color;
 		update();
 	}

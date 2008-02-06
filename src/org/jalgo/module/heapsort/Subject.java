@@ -45,8 +45,8 @@ import java.util.List;
  *
  */
 public class Subject<Listener> {
-	List<Listener> listeners;
-	int update = 0; // only notify if <= 0
+	protected List<Listener> listeners;
+	private int update = 0; // only notify if <= 0
 	
 	public void addListener(Listener l) {
 		if (listeners == null)
@@ -74,7 +74,7 @@ public class Subject<Listener> {
 		update--;
 	}
 	
-	protected static interface Notifier<Listener> {
+	protected interface Notifier<Listener> {
 		void invoke(Listener l);
 	}
 }

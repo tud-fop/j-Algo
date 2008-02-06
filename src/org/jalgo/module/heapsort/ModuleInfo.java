@@ -32,15 +32,15 @@ import org.jalgo.main.IModuleInfo;
  * @author mbue
  *
  */
-public class ModuleInfo implements IModuleInfo {
+public final class ModuleInfo implements IModuleInfo {
 	
-	static IModuleInfo instance = null;
+	private static IModuleInfo instance = null;
 	
 	private ModuleInfo() {
 		super();
 	}
 	
-	public static IModuleInfo getInstance() {
+	public static synchronized IModuleInfo getInstance() {
 		if (instance == null)
 			instance = new ModuleInfo();
 		return instance;

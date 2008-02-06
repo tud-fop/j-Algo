@@ -131,7 +131,7 @@ public class CanvasEntity {
 		fold(v, new AffineTransform());
 	}
 	
-	void fold(CanvasEntityVisitor v, AffineTransform t) {
+	protected void fold(CanvasEntityVisitor v, AffineTransform t) {
 		// t1 = t . trans
 		AffineTransform t1 = new AffineTransform(t);
 		t1.concatenate(trans);
@@ -156,7 +156,7 @@ public class CanvasEntity {
 		foldVisible(v, r, new AffineTransform());
 	}
 	
-	void foldVisible(CanvasEntityVisitor v, Rectangle r, AffineTransform t) {
+	protected void foldVisible(CanvasEntityVisitor v, Rectangle r, AffineTransform t) {
 		// t1 = t . trans
 		AffineTransform t1 = new AffineTransform(t);
 		t1.concatenate(trans);
@@ -246,7 +246,7 @@ public class CanvasEntity {
      * @param t
      * @return
      */
-    static Rectangle transformBounds(Rectangle b, AffineTransform t) {
+    public static Rectangle transformBounds(Rectangle b, AffineTransform t) {
     	if (b.width < 0 || b.height < 0)
         	return b;
     	
@@ -287,7 +287,7 @@ public class CanvasEntity {
     // auxiliary class used in computeDirtyRegion()
     // this demonstrates the wordiness of Java
     private static class ComputeDirtyVisitor implements CanvasEntityVisitor {
-        Rectangle dirty = null;
+        public Rectangle dirty = null;
         
         public ComputeDirtyVisitor() {
         	this(new Rectangle(0,0,-1,-1));
@@ -311,7 +311,7 @@ public class CanvasEntity {
     // auxiliary class used in clearDirtyRegion()
     private static class ClearDirtyVisitor implements CanvasEntityVisitor {
     	// technical stuff: this visitor has no state and can therefore be allocated statically
-    	static ClearDirtyVisitor arnie = new ClearDirtyVisitor();
+    	private static ClearDirtyVisitor arnie = new ClearDirtyVisitor();
     	
         public void invoke(CanvasEntity e, AffineTransform t, Rectangle clip) {
         	// clip is ignored here as well
@@ -344,7 +344,7 @@ public class CanvasEntity {
      * @author mbue
      */
     private static class CanvasEntityComparator implements Comparator<CanvasEntity> {
-    	static CanvasEntityComparator comp = new CanvasEntityComparator();
+    	private static CanvasEntityComparator comp = new CanvasEntityComparator();
     	
     	public static Comparator<CanvasEntity> getInstance() {
     		return comp;

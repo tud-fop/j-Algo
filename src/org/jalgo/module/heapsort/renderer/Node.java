@@ -61,11 +61,11 @@ public class Node extends CanvasEntity {
 		// "nothing is being done..." (Jeff Beck)
 	}
 	
-	public float getHighlight() {
+	public final float getHighlight() {
 		return highlight;
 	}
 	
-	public void setHighlight(float value) {
+	public final void setHighlight(float value) {
 		if (value != highlight) {
 			highlight = value;
 			invalidate();
@@ -73,11 +73,11 @@ public class Node extends CanvasEntity {
 		}
 	}
 	
-	public String getLabel() {
+	public final String getLabel() {
 		return label;
 	}
 	
-	public void setLabel(String label) {
+	public final void setLabel(String label) {
 		if (!this.label.equals(label)) {
 			this.label = label;
 			invalidate();
@@ -85,12 +85,12 @@ public class Node extends CanvasEntity {
 		}
 	}
 	
-	public Point getPosition() {
+	public final Point getPosition() {
 		return position;
 	}
 
 	// newly added method just for allowing efficient animations
-	public void setPosition(double x, double y) {
+	public final void setPosition(double x, double y) {
 		invalidate();
 		this.position.setLocation(x, y);
 		trans.setToTranslation(position.x, position.y);
@@ -99,7 +99,7 @@ public class Node extends CanvasEntity {
 		//update(); -- nothing is changed concerning the appearance
 	}
 	
-	public void setPosition(Point position) {
+	public final void setPosition(Point position) {
 		if (!this.position.equals(position)) {
 			this.position.setLocation(position);
 			if (label != null)
@@ -111,11 +111,11 @@ public class Node extends CanvasEntity {
 		}
 	}
 	
-	public double getScale() {
+	public final double getScale() {
 		return scale;
 	}
 	
-	public void setScale(double scale) {
+	public final void setScale(double scale) {
 		if (this.scale != scale) {
 			this.scale = scale;
 			invalidate();
@@ -124,9 +124,5 @@ public class Node extends CanvasEntity {
 			invalidate();
 			update();
 		}
-	}
-	
-	public String toString() {
-		return label;
 	}
 }

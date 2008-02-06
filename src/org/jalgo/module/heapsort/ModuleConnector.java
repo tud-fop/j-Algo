@@ -51,14 +51,8 @@ import org.jalgo.module.heapsort.vis.Visualisation;
  */
 public class ModuleConnector extends AbstractModuleConnector {
 	
-	Model model;
-	Visualisation vis;
-	Renderer renderer;
-	CanvasEntityFactory f;
-	CanvasEntity root;
-	TimeEntity timeroot;
-	Controller ctrl;
-	GuiController gui;
+	private Model model;
+	private GuiController gui;
 
 	/* (non-Javadoc)
 	 * @see org.jalgo.main.AbstractModuleConnector#getDataForFile()
@@ -80,6 +74,13 @@ public class ModuleConnector extends AbstractModuleConnector {
 	 */
 	@Override
 	public void init() {
+		Visualisation vis;
+		Renderer renderer;
+		CanvasEntityFactory f;
+		CanvasEntity root;
+		TimeEntity timeroot;
+		Controller ctrl;
+		
 		// connect everything...
 		model = new org.jalgo.module.heapsort.model.Heapsort();
 		renderer = new org.jalgo.module.heapsort.renderer.RenderJava2D();
@@ -95,7 +96,6 @@ public class ModuleConnector extends AbstractModuleConnector {
 				ctrl, renderer, root, timeroot);
 		((Subject<ModelListener>)model).addListener(new ModelListener() {
 			public void modelChanged() {
-				System.out.println("Marking document as dirty");
 				setSaveStatus(SaveStatus.CHANGES_TO_SAVE);
 			}
 		});

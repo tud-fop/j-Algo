@@ -67,7 +67,6 @@ public class GuiController implements ControllerListener, ModelListener {
 
 	private JComponent rootPane;
 	private JToolBar toolbar;
-	private JMenu menu;
 	private JCheckBoxMenuItem lecture;
 	private GState state;
 	private Controller ctrl;
@@ -81,7 +80,6 @@ public class GuiController implements ControllerListener, ModelListener {
 			TimeEntity timeroot) {
 		this.rootPane = rootPane;
 		this.toolbar = toolbar;
-		this.menu = menu;
 		this.ctrl = controller;
 		this.renderer = renderer;
 		this.root = root;
@@ -96,7 +94,7 @@ public class GuiController implements ControllerListener, ModelListener {
 				ctrl.setLecture(!ctrl.isLecture());
 			}
 		});
-		this.menu.add(lecture);
+		menu.add(lecture);
 		state = new InputState();
 		// add listeners
 		this.ctrl.addListener(this);
@@ -140,13 +138,13 @@ public class GuiController implements ControllerListener, ModelListener {
 	
 	private class InputState implements GState {
 		
-		JPanel inputPane;
-		JLabel label;
-		JTextField edit;
-		JButton addButton;
-		JButton startButton;
-		JTextArea hints;
-		boolean waserror = false;
+		private JPanel inputPane;
+		private JLabel label;
+		private JTextField edit;
+		private JButton addButton;
+		private JButton startButton;
+		private JTextArea hints;
+		private boolean waserror = false;
 		
 		public InputState() {
 			inputPane = new JPanel(new GridBagLayout());
@@ -193,6 +191,7 @@ public class GuiController implements ControllerListener, ModelListener {
 							}
 						}
 						catch (NumberFormatException e1) {
+							; // just ignore non-numeric input
 						}
 						catch (IllegalArgumentException e1) {
 							hints.setText(Util.getString("Gui.Hint_double"));
@@ -270,16 +269,16 @@ public class GuiController implements ControllerListener, ModelListener {
 	
 	private class DerivationState implements GState, SequencerListener {
 		
-		JToolbarButton reset;
-		JToolbarButton macroback;
-		JToolbarButton back;
-		JToolbarButton suspend;
-		JToolbarButton cont;
-		JToolbarButton macrostep;
-		JToolbarButton finish;
-		JPanel logPane;
-		JList logList;
-		DefaultListModel logger;
+		private JToolbarButton reset;
+		private JToolbarButton macroback;
+		private JToolbarButton back;
+		private JToolbarButton suspend;
+		private JToolbarButton cont;
+		private JToolbarButton macrostep;
+		private JToolbarButton finish;
+		private JPanel logPane;
+		private JList logList;
+		private DefaultListModel logger;
 		
 		public DerivationState() {
 			reset = new JToolbarButton(
@@ -452,24 +451,23 @@ public class GuiController implements ControllerListener, ModelListener {
 		public void stepAvail() {
 		}
 		
-		// this describes a sinkenlassen step
-		private class ListItem {
-			State q;
-			int i;
-			int j;
-			
-			@Override
-			public String toString() {
-				return String.format("%d/%d", i, j);
-			}
-		}
+	}
+	
+	// this describes a sinkenlassen step
+	private static class ListItem {
+		public State q;
+		public int i;
+		public int j;
 		
+		@Override
+		public String toString() {
+			return String.format("%d/%d", i, j);
+		}
 	}
 	
 	private class UpdateThread implements Runnable {
 		
 		public void run() {
-			System.out.println("Commencing thread");
 			Thread me = Thread.currentThread();
 			while (thread == me) {
 				synchronized(root) {
@@ -482,8 +480,6 @@ public class GuiController implements ControllerListener, ModelListener {
 						r = renderer.getVisible();
 						if (!renderer.validate())
 							r = r.intersection(root.computeDirtyRegion());
-						else
-							System.out.println("ignoring dirty region");
 						renderer.renderVisible(root, r);
 					} while (!renderer.show(r));
 					root.clearDirtyRegion();

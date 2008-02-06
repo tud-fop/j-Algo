@@ -40,10 +40,10 @@ public class Edge extends CanvasEntity {
 	protected Edge(Point from, Point to) {
 		this.from = from;
 		this.to = to;
-		updateBounds();
+		updateBounds(); // FIXME this will call update, which is not good in the half-constructed state
 	}
 	
-	private void updateBounds() {
+	private final void updateBounds() {
 		invalidate();
 		if (to.x < from.x)
 			bounds.setBounds(to.x, from.y, from.x-to.x, to.y-from.y);
@@ -58,11 +58,11 @@ public class Edge extends CanvasEntity {
 	protected void update() {
 	}
 	
-	public float getOpacity() {
+	public final float getOpacity() {
 		return opacity;
 	}
 
-	public void setOpacity(float opacity) {
+	public final void setOpacity(float opacity) {
 		this.opacity = opacity;
 		invalidate();
 		update();

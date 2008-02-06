@@ -184,7 +184,6 @@ public final class Heapsort implements Visualisation {
 	}
 
 	private void addReMarking(int re, int n) {
-		int i = 0; // line (level) number, counted from the bottom
 		// go backwards through the nodes 
 		re++; // --> point at the first entry to be marked
 		n--;  // --> point at the last entry to be marked
@@ -206,7 +205,6 @@ public final class Heapsort implements Visualisation {
 			mr.setWidth(p1.x-p2.x+60);
 			mr.setHeight(p1.y-p2.y+60);
 			this.re.add(mr);
-			i++;
 		}
 	}
 	
@@ -501,8 +499,8 @@ public final class Heapsort implements Visualisation {
 	
 	// extend: --> "copy" sequence elements as nodes
 	private class ExtendAnim extends SequentialAnimation {
-		MarkingRect oldunder;
-		int newlast = Math.min(2*last+1, current.sequence.size());
+		private MarkingRect oldunder;
+		private int newlast = Math.min(2*last+1, current.sequence.size());
 		
 		public ExtendAnim() {
 			oldunder = under;
@@ -650,8 +648,8 @@ public final class Heapsort implements Visualisation {
 	
 	// finish --> fade out marking
 	private class FinishAnim extends ParallelAnimation {
-		List<MarkingRect> re_;
-		MarkingRect re2_;
+		private List<MarkingRect> re_;
+		private MarkingRect re2_;
 		
 		public FinishAnim() {
 			super(1.0);

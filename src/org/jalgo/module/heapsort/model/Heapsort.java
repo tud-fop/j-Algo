@@ -74,7 +74,7 @@ import org.jalgo.module.heapsort.Subject;
  */
 public class Heapsort extends Subject<ModelListener> implements Model {
 	
-	List<Integer> sequence;
+	private List<Integer> sequence;
 	
 	public Heapsort() {
 		sequence = new ArrayList<Integer>();
@@ -85,7 +85,7 @@ public class Heapsort extends Subject<ModelListener> implements Model {
 		for (Integer i: sequence)
 			if (i.intValue() == n)
 				throw new IllegalArgumentException();
-		sequence.add(new Integer(n));
+		sequence.add(Integer.valueOf(n));
 		notifyAll(ModelChangedNotifier.getInstance());
 	}
 	
@@ -388,7 +388,7 @@ public class Heapsort extends Subject<ModelListener> implements Model {
 		}
 		
 		public String toString() {
-			return String.format("Phase 0: level %d, sequence %s", new Object[] {new Integer(level), sequence.toString()});
+			return String.format("Phase 0: level %d, sequence %s", level, sequence.toString());
 		}
 	}
 	
@@ -422,7 +422,10 @@ public class Heapsort extends Subject<ModelListener> implements Model {
 		}
 		
 		public String toString() {
-			return String.format("%s: li %d, re %d, sequence %s", new Object[] { getClass().getName().substring("org.jalgo.module.heapsort.model.Heapsort$".length()), new Integer(li), new Integer(re), sequence.toString()});
+			return String.format("%s: li %d, re %d, sequence %s", getClass()
+					.getName().substring(
+							"org.jalgo.module.heapsort.model.Heapsort$"
+									.length()), li, re, sequence.toString());
 		}
 	}
 	
