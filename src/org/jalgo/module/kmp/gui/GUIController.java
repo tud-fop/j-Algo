@@ -730,9 +730,9 @@ public class GUIController implements GUIConstants {
 	 * @param value the value
 	 */
 	public void setBackControlButton(boolean value) {
-		btabort.setEnabled(value);
-		btfastback.setEnabled(value);
-		btback.setEnabled(value);
+		abortAction.setEnabled(value);
+		fastBackwardAction.setEnabled(value);
+		backwardAction.setEnabled(value);
 	}
 	
 	/**
@@ -741,9 +741,9 @@ public class GUIController implements GUIConstants {
 	 * @param value the value
 	 */
 	public void setForwardControlButton(boolean value) {
-		btforward.setEnabled(value);
-		btfastforward.setEnabled(value);
-		btfinish.setEnabled(value);
+		forwardAction.setEnabled(value);
+		fastForwardAction.setEnabled(value);
+		finishAction.setEnabled(value);
 	}
 	
 	/**
