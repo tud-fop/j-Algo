@@ -311,9 +311,14 @@ extends JFrame {
 		tabbedPane.addChangeListener(new ChangeListener() {
 			@SuppressWarnings("synthetic-access")
 			public void stateChanged(ChangeEvent e) {
-				//tabbedpane is valid means really tab selection changed
-				if (((JTabbedPane)e.getSource()).isValid()) tabSelected();
-				///*else*/ tabbedpane is invalid means new tab was added
+				/* Warning! since ChangeEvents are also fired at creation and
+				 * destruction of module instances, at these circumstances the
+				 * programmer has to disable this ChangeListener temporarily
+				 * (remove first registered ChangeListener, manipulate tabs,
+				 * finally add the removed ChangeListener again,
+				 * see #tabClosed() or #createNewModuleGUIComponents() for
+				 * example) - AC */ 
+				tabSelected();
 			}
 		});
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
@@ -443,6 +448,7 @@ extends JFrame {
 
 	private void tabSelected() {
 		int tabIndex = tabbedPane.getSelectedIndex();
+
 		if (tabIndex < 0) {System.out.println("JAlgoWindow.tabSelected(): tabIndex="+tabIndex); return;}
 		setCurrentInstanceVisible(false);
 		JAlgoMain.getInstance().setCurrentInstance(
@@ -462,7 +468,7 @@ extends JFrame {
 		ChangeListener tabbedPaneListener = tabbedPane.getChangeListeners()[0]; 
 		tabbedPane.removeChangeListener(tabbedPaneListener);
 		tabbedPane.removeTabAt(openModuleInstances.indexOf(currentInstance));
-		tabbedPane.addChangeListener(tabbedPaneListener);
+
 		moduleComponents.remove(currentInstance);
 		moduleMenus.remove(currentInstance);
 		moduleToolbars.remove(currentInstance);
@@ -479,11 +485,13 @@ extends JFrame {
 		else {
 			tabbedPane.setSelectedIndex(Math.max(0, tabIndex-1));
 			//JTabbedPane.setSelectedIndex() doesn't fire a change event!
+			// since ChangeListener is temporarily deactivated - AC
 			JAlgoMain.getInstance().setCurrentInstance(
 				openModuleInstances.get(tabbedPane.getSelectedIndex()));
 			setCurrentInstanceVisible(true);
 			updateTitle();
 		}
+		tabbedPane.addChangeListener(tabbedPaneListener);
 		return true;
 	}
 
@@ -688,6 +696,7 @@ extends JFrame {
 	public void setCurrentInstanceVisible(boolean visible) {
 		AbstractModuleConnector currentInstance =
 			JAlgoMain.getInstance().getCurrentInstance();
+
 		if (getModuleMenu(currentInstance).isEnabled())
 			getModuleMenu(currentInstance).setVisible(visible);
 		if (getModuleToolbar(currentInstance).isEnabled())
@@ -724,10 +733,14 @@ extends JFrame {
 		toolbarPane.add(moduleToolbar, 1);
 
 		moduleComponents.put(module, new JPanel(new BorderLayout()));
+
+		ChangeListener tabbedPaneListener = tabbedPane.getChangeListeners()[0]; 
+		tabbedPane.removeChangeListener(tabbedPaneListener);
 		tabbedPane.addTab(
 			module.getModuleInfo().getName(),
 			new ImageIcon(module.getModuleInfo().getLogoURL()),
 			moduleComponents.get(module));
+		tabbedPane.addChangeListener(tabbedPaneListener);
 
 		openModuleInstances.add(module);
 	}
