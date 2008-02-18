@@ -1,236 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="binary-all" name="J-Algo">
+<project name="j-Algo" default="dist" basedir=".">
 
-	<property name="version"			value="0.49-RC3"/>
-	<property name="title"				value="J-Algo"/>
-	<property name="packages"		value="org.jalgo."/>
-	<property name="tmpdist"		location="dist/tmp"/>
-	<property name="dist"				location="dist"/>
-	<property name="extlibs"			location="extlibs"/>
-	<property name="examples"  	location="examples"/>
-	<property name="pix"				location="pix"/>
-	<property name="res"				location="res"/>	
-	<property name="src"				location="src"/>
-	<property name="excl-cvs"		location="**/CVS" />
-	<property name="start.linux"		value="start.sh" />
-	<property name="classpath"		value="extlibs/boot.jar extlibs/draw2d.jar extlibs/jface.jar extlibs/osgi.jar extlibs/runtime.jar" />
-	
-	<property name="build" location="runtime"/>
-	<property name="modules_dest" location="${build}/modules"/>
+	<property name="VERSION_ID" value="20080218" />
 
-	<path id="class.path.all">
-		<pathelement location="extlibs/boot.jar"/>
-		<pathelement location="extlibs/draw2d.jar"/>
-		<pathelement location="extlibs/jface.jar"/>
-		<pathelement location="extlibs/osgi.jar"/>
-		<pathelement location="extlibs/runtime.jar"/>
-		<pathelement location="bin/"/>
-	</path>
-	
-	<path id="class.path.linux">
-		<pathelement location="extlibs/linux/swt.jar"/>
-		<pathelement location="extlibs/linux/swt-pi.jar"/>
-		<pathelement location="extlibs/linux/swt-mozilla.jar"/>
-	</path>
-	
-	<path id="class.path.win">
-		<pathelement location="extlibs/win/swt.jar"/>
-		<pathelement location="extlibs/win/swt-awt-win32-3064.dll"/>
-		<pathelement location="extlibs/win/swt-win32-3064.dll"/>
-	</path>
-	
-	<path id="class.path.freebsd">
-		<pathelement location="extlibs/freebsd/swt.jar"/>
-		<pathelement location="extlibs/freebsd/swt-pi.jar"/>
-	</path>
-	
-	<path id="class.path.macosx">
-		<pathelement location="extlibs/macosx/swt.jar"/>
-		<pathelement location="extlibs/macosx/swt-pi.jar"/>
-	</path>	
-	
-	<target name="binary-base" description="All platform independant task for the binary target">
-		<delete dir="${tmpdist}" />
-		<mkdir 	dir="${tmpdist}" />
-	
-		<copy todir="${tmpdist}/examples">
-			<fileset dir="${examples}" 		excludes="${excl-cvs}"/>
-		</copy>
-		
-		<copy file="${extlibs}/boot.jar"  todir="${tmpdist}/extlibs"/>
-		<copy file="${extlibs}/draw2d.jar"  todir="${tmpdist}/extlibs"/>
-		<copy file="${extlibs}/jface.jar"  todir="${tmpdist}/extlibs"/>
-		<copy file="${extlibs}/osgi.jar"  todir="${tmpdist}/extlibs"/>
-		<copy file="${extlibs}/runtime.jar"  todir="${tmpdist}/extlibs"/>
-				
-		<copy todir="${tmpdist}/pix">
-			<fileset dir="${pix}" 			excludes="${excl-cvs}"/>
-		</copy>
-		
-		<copy todir="${tmpdist}/res">
-			<fileset dir="${res}" 			excludes="${excl-cvs}"/>			
-		</copy>
-		
-		<mkdir dir="${tmpdist}/jar" />
-		
-		<copy todir="${tmpdist}/jar/org/jalgo/main" file="${src}/org/jalgo/main/de.properties" />
+	<property name="classpath" value=" ../extlibs/jh.jar ../extlibs/swing-layout-1.0.jar ../runtime/modules/avl.jar ../runtime/modules/dijkstra.jar ../runtime/modules/ebnf.jar ../runtime/modules/heapsort.jar ../runtime/modules/hoare.jar ../runtime/modules/kmp.jar  ../runtime/modules/pulsemem.jar" />
+	<property name="module_classpath" value="../j-Algo.jar" />
 
+	<property name="dist" location="dist" />
+
+	<property name="bin" location="bin" />
+	<property name="res" location="res" />
+
+	<target name="dist" depends="dist_base,linux,macosx,windows">
+		<delete dir="${dist}/tmp" />
 	</target>
 
-	<target name="binary-all" depends="src" description="Build binaries for all platforms">
-		<!-- Linux -->
-		<path id="class.path.platform">
-			<pathelement location="extlibs/linux/swt.jar"/>
-			<pathelement location="extlibs/linux/swt-pi.jar"/>
-			<pathelement location="extlibs/linux/swt-mozilla.jar"/>
-		</path>
-		<antcall target="binary-platform">
-			<param name="platform" value="linux"/>
-			<param name="classpath.platform" value="${classpath} extlibs/swt.jar extlibs/swt-pi.jar extlibs/swt-mozilla.jar" />
-			<param name="start.platform" value="start.sh"/>		
+	<target name="init">
+		<mkdir dir="${dist}/tmp" />
+	</target>
+
+	<target name="dist_base" depends="main, parser">
+		<antcall target="module">
+			<param name="modulename" value="avl" />
+			<param name="classpath" value="${module_classpath}" />
 		</antcall>
-		<antcall target="binary-tar.gz">
-			<param name="platform" value="linux"/>		
+		<antcall target="module">
+			<param name="modulename" value="dijkstra" />
+			<param name="classpath" value="${module_classpath}" />
+		</antcall>
+		<antcall target="module">
+			<param name="modulename" value="ebnf" />
+			<param name="classpath" value="${module_classpath}" />
+		</antcall>
+		<antcall target="module">
+			<param name="modulename" value="heapsort" />
+			<param name="classpath" value="${module_classpath}" />
+		</antcall>
+		<antcall target="module">
+			<param name="modulename" value="hoare" />
+			<param name="classpath" value="${module_classpath} ../../extlibs/antlr-3.0b6.jar ../../extlibs/ext-1.1.1.b.jar ../../extlibs/jep-2.4.1.b.jar ../../extlibs/parser.jar" />
+		</antcall>
+		<antcall target="module">
+			<param name="modulename" value="kmp" />
+			<param name="classpath" value="${module_classpath}" />
+		</antcall>
+		<antcall target="module">
+			<param name="modulename" value="pulsemem" />
+			<param name="classpath" value="${module_classpath} ../../extlibs/parser.jar ../../extlibs/antlr-3.0b6.jar" />
 		</antcall>
 
-		<!-- Windows -->
-		<path id="class.path.platform">
-			<pathelement location="extlibs/win/swt.jar"/>
-		</path>
-		<antcall target="binary-platform">
-			<param name="platform" value="win"/>
-			<param name="classpath.platform" value="${classpath} extlibs/swt.jar extlibs/swt-awt-win32-3064.dll extlibs/swt-win32-3064.dll" />
-			<param name="start.platform" value="start.bat"/>		
-		</antcall>
-		<antcall target="binary-zip">
-			<param name="platform" value="windows"/>
-		</antcall>
-		
-		<!-- Mac OS X -->
-		<path id="class.path.platform">
-			<pathelement location="extlibs/macosx/swt.jar"/>
-			<pathelement location="extlibs/macosx/swt-pi.jar"/>	
-		</path>
-		<antcall target="binary-platform">
-			<param name="platform" value="macosx"/>
-			<param name="classpath.platform" value="${classpath} extlibs/swt.jar extlibs/swt-pi.jar extlibs/libswt-carbon-3064.jnilib extlibs/libswt-pi-carbon-3064.jnilib extlibs/libswt-webkit-carbon-3064.jnilib" />
-			<param name="start.platform" value="start.sh"/>		
-		</antcall>
-		<antcall target="binary-tar.gz">
-			<param name="platform" value="macosx"/>
-		</antcall>
-		
-		<!-- FreeBSD -->
-		<path id="class.path.platform">
-			<pathelement location="extlibs/freebsd/swt.jar"/>
-			<pathelement location="extlibs/freebsd/swt-pi.jar"/>	
-		</path>
-		<antcall target="binary-platform">
-			<param name="platform" value="freebsd"/>
-			<param name="classpath.platform" value="${classpath} extlibs/swt.jar extlibs/swt-pi.jar" />
-			<param name="start.platform" value="start.sh"/>
-		</antcall>
-		<antcall target="binary-tar.gz">
-			<param name="platform" value="freebsd"/>
-		</antcall>		
-		
-	</target>
-	
-	<target name="binary-platform" depends="binary-base" description="Build binary for a specific platform">
-		<copy todir="${tmpdist}/extlibs">
-			<fileset dir="${extlibs}/${platform}" excludes="${excl-cvs}"/>
+		<copy todir="${dist}/tmp">
+			<fileset dir="." includes="examples/**" excludes="**/SVN" />
 		</copy>
 
-		<javac destdir="${tmpdist}/jar" srcdir="${src}" excludes="**/tests/**/*.java" >
-			<classpath>
-				<path refid="class.path.all"/>
-				<path refid="class.path.platform"/>
-			</classpath>
-		</javac>
+		<copy todir="${dist}/tmp">
+			<fileset dir="." includes="extlibs/**" excludes="**/SVN" />
+		</copy>
+	</target>
 
-		<jar destfile="${tmpdist}/jalgo.jar" basedir="${tmpdist}/jar" > 
+	<target name="linux">
+		<antcall target="platform_base">
+			<param name="platform" value="linux" />
+		</antcall>
+
+		<copy todir="${dist}/linux/j-Algo" file="j-Algo.sh" />
+		<copy todir="${dist}/linux/j-Algo" file="j-Algo.ico" />
+
+		<tar tarfile="${dist}/j-Algo-linux-complete-${VERSION_ID}.tar" basedir="${dist}/linux/" />
+		<gzip zipfile="${dist}/j-Algo-linux-complete-${VERSION_ID}.tar.gz" src="${dist}/j-Algo-linux-complete-${VERSION_ID}.tar" />
+		<delete file="${dist}/j-Algo-linux-complete-${VERSION_ID}.tar" />
+	</target>
+
+	<target name="macosx">
+		<antcall target="platform_base">
+			<param name="platform" value="macosx" />
+		</antcall>
+	</target>
+
+	<target name="windows">
+		<antcall target="platform_base">
+			<param name="platform" value="windows" />
+		</antcall>
+
+		<copy todir="${dist}/windows/j-Algo/" file="j-Algo.bat" />
+		<copy todir="${dist}/windows/j-Algo/" file="j-Algo.ico" />
+
+		<zip destfile="${dist}/j-Algo-windows-complete-${VERSION_ID}.zip" basedir="${dist}/windows/" />
+	</target>
+
+	<target name="main" depends="init">
+		<mkdir dir="${dist}/tmp/runtime/" />
+		<jar destfile="${dist}/tmp/runtime/j-Algo.jar">
+			<fileset dir="${bin}" includes="org/jalgo/main/**">
+			</fileset>
+			<fileset dir="${res}/main">
+			</fileset>
 			<manifest>
-				<attribute name="Main-Class" value="org.jalgo.main.Jalgo"/>
-				<attribute name="Class-Path" value="${classpath.platform}" />
-			</manifest>
-		</jar>
-
-		<delete dir="${tmpdist}/jar" />
-		
-		<copy todir="${tmpdist}" file="${start.platform}" />
-
-		<move todir="${tmpdist}/jalgo-${platform}-${version}" >
-			<fileset dir="${tmpdist}"/>
-		</move>
-	</target>
-	
-	<target name="binary-tar.gz" depends="">
-		<tar tarfile="${dist}/j-algo-${platform}-${version}.tar" basedir="${tmpdist}/" />
-		<gzip zipfile="${dist}/j-algo-${platform}-${version}.tar.gz" src="${dist}/j-algo-${platform}-${version}.tar" />
-		<delete dir="${tmpdist}" />
-		<delete file="${dist}/j-algo-${platform}-${version}.tar" />
-	</target>
-	
-	<target name="binary-zip" depends="">
-		<zip destfile="${dist}/j-algo-${platform}-${version}.zip" basedir="${tmpdist}/" />
-		<delete dir="${tmpdist}" />
-	</target>
-	
-	<target name="src">
-		<copy todir="${tmpdist}/jalgo-src-${version}">
-			<fileset dir="${src}" excludes="${excl-cvs}"/>
-		</copy>
-		<tar tarfile="${dist}/j-algo-src-${version}.tar" basedir="${tmpdist}/" />
-		<gzip zipfile="${dist}/j-algo-src-${version}.tar.gz" src="${dist}/j-algo-src-${version}.tar" />
-		<delete dir="${tmpdist}" />
-		<delete file="${dist}/j-algo-src-${version}.tar" />
-	</target>
-	
-	<target name="module_avl" description="build avl module jar">
-		<jar destfile="${modules_dest}/avl.jar">
-			<fileset dir="${build}/classes" includes="org/jalgo/module/avl/**/*.class"/>
-			<fileset dir="res/module/avl"/>
-			<manifest>
-				<attribute name="Specification-Version" value="${version}"/>
-				<attribute name="Class-Path" value="../jalgo.jar"/>
+				<attribute name="Class-Path" value="${classpath}" />
+				<attribute name="Main-Class" value="org.jalgo.main.JAlgoMain" />
 			</manifest>
 		</jar>
 	</target>
 
-	<target name="module_dijkstra" description="build dijkstra module jar">
-		<jar destfile="${modules_dest}/dijkstra.jar">
-			<fileset dir="${build}/classes" includes="org/jalgo/module/dijkstra/**/*.class"/>
-			<fileset dir="res/module/dijkstra"/>
+	<target name="module" depends="init">
+		<mkdir dir="${dist}/tmp/runtime/modules" />
+		<jar destfile="${dist}/tmp/runtime/modules/${modulename}.jar">
+			<fileset dir="${bin}" includes="org/jalgo/module/${modulename}/**">
+			</fileset>
+			<fileset dir="${res}/module/${modulename}">
+			</fileset>
 			<manifest>
-				<attribute name="Specification-Version" value="${version}"/>
-				<attribute name="Class-Path" value="../jalgo.jar"/>
+				<attribute name="Class-Path" value="${classpath}" />
 			</manifest>
 		</jar>
 	</target>
-	
-	<target name="module_synDiaEBNF" description="build synDiaEBNF module jar">
-		<jar destfile="${modules_dest}/synDiaEBNF.jar">
-			<fileset dir="${build}/classes" includes="org/jalgo/module/synDiaEBNF/**/*.class"/>
-			<fileset dir="res/module/ebnf"/>
-			<manifest>
-				<attribute name="Specification-Version" value="${version}"/>
-				<attribute name="Class-Path" value="../jalgo.jar"/>
-			</manifest>
+
+	<target name="parser" depends="init">
+		<mkdir dir="${dist}/tmp/extlibs" />
+		<jar destfile="${dist}/tmp/extlibs/parser.jar">
+			<fileset dir="${bin}" includes="c00/**">
+			</fileset>
 		</jar>
 	</target>
-	
-	<target name="module_testModule" description="build testModule jar">
-		<jar destfile="${modules_dest}/testModule.jar">
-			<fileset dir="${build}/classes" includes="org/jalgo/module/testModule/**/*.class"/>
-			<fileset dir="res/module/testModule"/>
-			<manifest>
-				<attribute name="Specification-Version" value="${version}"/>
-				<attribute name="Class-Path" value="../jalgo.jar"/>
-			</manifest>
-		</jar>
+
+	<target name="platform_base">
+		<copy todir="${dist}/${platform}/j-Algo">
+			<fileset dir="${dist}/tmp" includes="**" />
+		</copy>
 	</target>
-	
-	<target name="module_jars"
-		depends="module_avl,module_dijkstra,module_synDiaEBNF,module_testModule"
-		description="build all module jars"/>
+
 </project>
