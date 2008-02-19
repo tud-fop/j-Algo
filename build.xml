@@ -20,33 +20,78 @@
 	</target>
 
 	<target name="dist_base" depends="main, parser">
-		<antcall target="module">
+		<antcall target="module_jar">
 			<param name="modulename" value="avl" />
 			<param name="classpath" value="${module_classpath}" />
 		</antcall>
-		<antcall target="module">
+		<antcall target="module_pkg">
+			<param name="modulename" value="avl" />
+		</antcall>
+
+		<antcall target="module_jar">
 			<param name="modulename" value="dijkstra" />
 			<param name="classpath" value="${module_classpath}" />
 		</antcall>
-		<antcall target="module">
+		<antcall target="module_pkg">
+			<param name="modulename" value="dijkstra" />
+		</antcall>
+
+		<antcall target="module_jar">
 			<param name="modulename" value="ebnf" />
 			<param name="classpath" value="${module_classpath}" />
 		</antcall>
-		<antcall target="module">
+		<antcall target="module_pkg">
+			<param name="modulename" value="ebnf" />
+		</antcall>
+
+		<antcall target="module_jar">
 			<param name="modulename" value="heapsort" />
 			<param name="classpath" value="${module_classpath}" />
 		</antcall>
-		<antcall target="module">
+		<antcall target="module_pkg">
+			<param name="modulename" value="heapsort" />
+		</antcall>
+
+		<antcall target="module_jar">
 			<param name="modulename" value="hoare" />
 			<param name="classpath" value="${module_classpath} ../../extlibs/antlr-3.0b6.jar ../../extlibs/ext-1.1.1.b.jar ../../extlibs/jep-2.4.1.b.jar ../../extlibs/parser.jar" />
 		</antcall>
-		<antcall target="module">
+		<copy todir="${dist}/hoare_${VERSION_ID}/extlibs">
+			<fileset dir="extlibs">
+				<include name="antlr-3.0b6.jar" />
+				<include name="ext-1.1.1.b.jar" />
+				<include name="jep-2.4.1.b.jar" />
+			</fileset>
+			<fileset dir="${dist}/tmp/extlibs/">
+				<include name="parser.jar" />
+			</fileset>
+		</copy>
+		<antcall target="module_pkg">
+			<param name="modulename" value="hoare" />
+		</antcall>
+
+		<antcall target="module_jar">
 			<param name="modulename" value="kmp" />
 			<param name="classpath" value="${module_classpath}" />
 		</antcall>
-		<antcall target="module">
+		<antcall target="module_pkg">
+			<param name="modulename" value="kmp" />
+		</antcall>
+
+		<antcall target="module_jar">
 			<param name="modulename" value="pulsemem" />
 			<param name="classpath" value="${module_classpath} ../../extlibs/parser.jar ../../extlibs/antlr-3.0b6.jar" />
+		</antcall>
+		<copy todir="${dist}/pulsemem_${VERSION_ID}/extlibs">
+			<fileset dir="extlibs">
+				<include name="antlr-3.0b6.jar" />
+			</fileset>
+			<fileset dir="${dist}/tmp/extlibs/">
+				<include name="parser.jar" />
+			</fileset>
+		</copy>
+		<antcall target="module_pkg">
+			<param name="modulename" value="pulsemem" />
 		</antcall>
 
 		<copy todir="${dist}/tmp">
@@ -102,7 +147,7 @@
 		</jar>
 	</target>
 
-	<target name="module" depends="init">
+	<target name="module_jar" depends="init">
 		<mkdir dir="${dist}/tmp/runtime/modules" />
 		<jar destfile="${dist}/tmp/runtime/modules/${modulename}.jar">
 			<fileset dir="${bin}" includes="org/jalgo/module/${modulename}/**">
@@ -113,6 +158,23 @@
 				<attribute name="Class-Path" value="${classpath}" />
 			</manifest>
 		</jar>
+	</target>
+
+	<target name="module_pkg">
+		<copy todir="${dist}/${modulename}_${VERSION_ID}">
+			<fileset dir="." excludes="**/SVN">
+				<include name="examples/${modulename}/**" />
+			</fileset>
+			<fileset dir="${dist}/tmp/">
+				<include name="runtime/modules/${modulename}.jar" />
+			</fileset>
+		</copy>
+
+		<tar tarfile="${dist}/${modulename}_${VERSION_ID}.tar" basedir="${dist}/${modulename}_${VERSION_ID}" />
+		<gzip zipfile="${dist}/${modulename}_${VERSION_ID}.tar.gz" src="${dist}/${modulename}_${VERSION_ID}.tar" />
+		<delete file="${dist}/${modulename}_${VERSION_ID}.tar" />
+
+		<delete dir="${dist}/${modulename}_${VERSION_ID}" />
 	</target>
 
 	<target name="parser" depends="init">
