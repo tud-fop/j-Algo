@@ -4,35 +4,32 @@
 	<mapID xml:lang="de"/>
 
 	<!-- Hoare			 -->
-	<mapID target="hoare" 	    		 			 	url="../html/data/overview.htm"/>
+	<mapID target="hoare" 	    		 	url="../html/data/overview.htm"/>
 
-	<mapID target="hoare.intro" 	    		  url="../html/data/overview.htm#info"/>
-	<mapID target="hoare.overview" 	    		url="../html/data/overview.htm#overview"/>
+	<mapID target="hoare.overview" 	    	url="../html/data/overview.htm"/>
+	<mapID target="hoare.overview.einleitung"  	url="../html/data/overview.htm#einleitung"/>
+	<mapID target="hoare.overview.funktionen" 	url="../html/data/overview.htm#funktionen"/>
 	
-	<mapID target="hoare.start" 	    		  url="../html/data/start.htm"/>
-	<mapID target="hoare.buttons" 	    		  url="../html/data/start.htm#buttons"/>
-
-	<mapID target="hoare.screen" 	    		  url="../html/data/screen.htm"/>
-	<mapID target="hoare.toolbar" 	    	  url="../html/data/screen.htm#toolbar"/>
-	<mapID target="hoare.tree" 	    	      url="../html/data/screen.htm#tree"/>
-	<mapID target="hoare.div" 	    	      url="../html/data/screen.htm#bar"/>
-	<mapID target="hoare.beamer" 	    	    url="../html/data/screen.htm#beamer"/>
-
-	<mapID target="hoare.source" 	    	    url="../html/data/screen.htm#source"/>
-	<mapID target="hoare.log" 	    	      url="../html/data/screen.htm#log"/>
-	<mapID target="hoare.rules" 	    	    url="../html/data/screen.htm#rules"/>
-	<mapID target="hoare.input" 	    	    url="../html/data/screen.htm#input"/>
-
-	<mapID target="hoare.functions" 	    	url="../html/data/functions.htm"/>
-	<mapID target="hoare.parseC0" 	    	  url="../html/data/functions.htm#parseC0"/>
-	<mapID target="hoare.openC0" 	    	    url="../html/data/functions.htm#openC0"/>
-	<mapID target="hoare.newC0" 	    	    url="../html/data/functions.htm#newC0"/>
-	<mapID target="hoare.buildTree" 	 	    url="../html/data/functions.htm#buildTree"/>
-	<mapID target="hoare.applyrule" 	 	    url="../html/data/functions.htm#applyrule"/>
-	<mapID target="hoare.conds" 	 	        url="../html/data/functions.htm#conds"/>
-	<mapID target="hoare.verify" 	 	        url="../html/data/functions.htm#verify"/>
-	<mapID target="hoare.finished" 	 	      url="../html/data/functions.htm#finished"/>
+	<mapID target="hoare.screen"			url="../html/data/screen.htm"/>
+	<mapID target="hoare.screen.welcome"	url="../html/data/screen.htm#welcome"/>
+	<mapID target="hoare.screen.toolbar"	url="../html/data/screen.htm#toolbar"/>
+	<mapID target="hoare.screen.menu"		url="../html/data/screen.htm#menu"/>
+	<mapID target="hoare.screen.tasten"		url="../html/data/screen.htm#tasten"/>
 	
-	<mapID target="hoare.flowcontrol" 	 	  url="../html/data/flowcontrol.htm"/>
+	<mapID target="hoare.editors.source"		url="../html/data/sourcecode_editor.htm"/>
+	<mapID target="hoare.editors.formula"	url="../html/data/formula_editor.htm"/>
+	
+	<mapID target="hoare.aufbau"			url="../html/data/aufbau.htm"/>
+	<mapID target="hoare.aufbau.knotenkanten"	url="../html/data/aufbau.htm#knotenkanten"/>
+	<mapID target="hoare.aufbau.impl"		url="../html/data/aufbau.htm#impl"/>
+	<mapID target="hoare.aufbau.colour"		url="../html/data/aufbau.htm#colour"/>
+	
+	<mapID target="hoare.usage"				url="../html/data/usage.htm"/>
+	<mapID target="hoare.usage.laden"		url="../html/data/usage.htm#laden"/>
+	<mapID target="hoare.usage.regel"		url="../html/data/usage.htm#regel"/>
+	<mapID target="hoare.usage.edit"		url="../html/data/usage.htm#edit"/>
+	<mapID target="hoare.usage.bsp"			url="../html/data/usage.htm#bsp"/>
+	
+	<mapID target="hoare.hoare"				url="../html/data/hoare.htm"/>
 
 </map>

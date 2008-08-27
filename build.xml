@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="j-Algo" default="dist" basedir=".">
 
-	<property name="VERSION_ID" value="20080221" />
+	<property name="VERSION_ID" value="20080827" />
 
 	<property name="classpath" value=" ../extlibs/jh.jar ../extlibs/swing-layout-1.0.jar ../runtime/modules/avl.jar ../runtime/modules/dijkstra.jar ../runtime/modules/ebnf.jar ../runtime/modules/heapsort.jar ../runtime/modules/hoare.jar ../runtime/modules/kmp.jar  ../runtime/modules/pulsemem.jar" />
 	<property name="module_classpath" value="../j-Algo.jar" />
@@ -54,13 +54,14 @@
 
 		<antcall target="module_jar">
 			<param name="modulename" value="hoare" />
-			<param name="classpath" value="${module_classpath} ../../extlibs/antlr-3.0b6.jar ../../extlibs/ext-1.1.1.b.jar ../../extlibs/jep-2.4.1.b.jar ../../extlibs/parser.jar" />
+			<param name="classpath" value="${module_classpath} ../../extlibs/antlr-3.0b6.jar ../../extlibs/neu-ext-1.1.1.b.jar ../../extlibs/jep-2.4.1.b.jar ../../extlibs/parser.jar ../../extlibs/jgraph.jar"/>
 		</antcall>
 		<copy todir="${dist}/hoare_${VERSION_ID}/extlibs">
 			<fileset dir="extlibs">
 				<include name="antlr-3.0b6.jar" />
-				<include name="ext-1.1.1.b.jar" />
+				<include name="neu-ext-1.1.1.b.jar" />
 				<include name="jep-2.4.1.b.jar" />
+				<include name="jgraph.jar" />
 			</fileset>
 			<fileset dir="${dist}/tmp/extlibs/">
 				<include name="parser.jar" />

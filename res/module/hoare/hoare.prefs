@@ -1,0 +1,11 @@
+#j-Algo Default-Settings for Hoare-Module
+Version=2.0.0
+isBeamerMode=false
+formulaEditor.maximized=false
+formulaEditor.top=100
+formulaEditor.left=100
+formulaEditor.width=600
+formulaEditor.height=250
+workScreen.mainSplitterRelation=0.6
+workScreen.rightUpndownSplitterLocation=240
+workScreen.rightLeftRightSplitterLocation=195

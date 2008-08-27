@@ -1,84 +1,60 @@
 package org.jalgo.module.hoare.model;
 
 /**
- * Class of an AndAssertion
+ * Represents an And in the assertiontree. It must have two children assertion as operands.
  * 
- * @author Gerald
- * 
- */
-public class AndAssertion extends Assertion {
-
-	private static final long serialVersionUID = -5921376751437067348L;
+ * @author Thomas, Uwe
+ **/
+class AndAssertion extends AbstractAssertion {
 
 	/**
-	 * the left Operand "x&&...
+	 * the serial Id of this Object
 	 */
-	private Assertion leftOperand;
-
+	private static final long serialVersionUID = -7327027897881901603L;
 	/**
-	 * the right Operand "...&x"
+	 * the left side of the assertion tree under the and
 	 */
-	private Assertion rightOperand;
-
-	public AndAssertion(Assertion left, Assertion right) {
-
-		leftOperand = left;
-		rightOperand = right;
-	}
-
-	public Assertion getLeftOperand() {
-		return leftOperand;
-	}
-
-	public void setLeftOperand(Assertion leftOperand) {
-		this.leftOperand = leftOperand;
-	}
-
-	public Assertion getRightOperand() {
-		return rightOperand;
-	}
-
-	public void setRightOperand(Assertion rightOperand) {
-		this.rightOperand = rightOperand;
-	}
-
+	private AbstractAssertion left;
 	/**
-	 * @return a HTML representation form
+	 * the right side of the assertion tree under the and
 	 */
-	public String getHTMLString() {
-		return "(" + leftOperand.getHTMLString() + "&#8743;"
-				+ rightOperand.getHTMLString() + ")";
+	private AbstractAssertion right;
+	
+	/**
+	 * creates an AndAssertion with an left and right assertion tree 
+	 *  
+	 * @param left
+	 *     the left child assertion compared with And
+	 * @param left
+	 *     the right child assertion compared with And
+	 **/	
+	public AndAssertion(AbstractAssertion left,AbstractAssertion right)	{
+		this.left=left;
+		this.right=right;
+	}
+	
+	/**
+	 * @see org.jalgo.module.hoare.model.AbstractAssertion#verifiable()
+	 */
+	@Override
+	public boolean verifiable() {
+		return left.verifiable() && right.verifiable();
 	}
 
 	/**
-	 * @return a string in the intern form
+	 * @see org.jalgo.module.hoare.model.AbstractAssertion#toString()
 	 */
+	@Override
 	public String toString() {
-		return "(" + leftOperand.toString() + "&&" + rightOperand.toString()
-				+ ")";
+		return "("+left.toString()+" && "+right.toString()+")";
 	}
 
+	/**
+	 * @see org.jalgo.module.hoare.model.AbstractAssertion#toText(boolean)
+	 */
 	@Override
-	public Assertion copy() {
-		return new AndAssertion(leftOperand.copy(), rightOperand.copy());
+	public String toText(boolean full) {
+		return "("+left.toText(full) + " \u2227 " + right.toText(full) + ")";
 	}
 
-	@Override
-	public void replaceTarget(Assertion o, Assertion n) {
-
-		leftOperand.replaceTarget(o, n);
-		rightOperand.replaceTarget(o, n);
-
-		if (leftOperand == o)
-			leftOperand = n;
-		if (rightOperand == o)
-			rightOperand = n;
-
-	}
-
-	@Override
-	public boolean containsDummyAssertion() {
-		return leftOperand.containsDummyAssertion()
-				|| rightOperand.containsDummyAssertion();
-	}
 }

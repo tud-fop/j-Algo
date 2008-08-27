@@ -5,44 +5,34 @@
 		<base target="_self">
 	</head>
 	<body>
-		<h1><img src="../../pics/logo.gif"> Dies ist die Hilfe des Modules Hoare-Kalkül</h1>
+		<h1>Das Modul Hoare-Kalk&uuml;l</h1>
 		
-		<h2><a name="intro">Intro</a></h2>
-		<p align="left">
-        Dieses Modul behandelt die Verifizierung von C0-Programmen mit Hilfe des <strong>Hoare-Kalküls</strong>,
-        wie es in der Vorlesung Programmierung behandelt wird.
-    </p>
-    
-    <H2><a name="over">Funktionsübersicht</a></H2>
-					<P align="left">Das Modul <STRONG>Hoare</STRONG> realisiert folgende
-						Funktionen:
-					</P>
-					<UL>
-					<li>Öffnen von gespeicherten Dateien
-					</li>
-          <li>Einlesen von C0 Programmen und die Darstellung deren Quelltexte
-					</li>
-          <li>Auswahl von Verifikationsformeln und deren Anwendung nach den Vorgaben des Scripts
-              der Vorlesung „Programmierung“
-					</li>
-          <li>Eingabe von Schleifeninvarianten sowie Vor- und Nachbedingungen der
-             Verifikationsformeln
-					</li>
-          <li>Darstellung des Beweisbaums (gesamte Verifikationsformel)
-					</li>
-          <li>Überprüfung der Eingaben zu Konsequensregeln durch beschränktes Testen
-					</li>
-          <li>Protokollierung der einzelnen Schritte
-					</li>
-					<li>Löschen einzelner Knoten/Teilbäume
-					</li>
-					<li>Schrittweises rückgängig machen des Ablaufes
-					</li>
-					<li>Abspeichern des Beweisbaums
-					</li>
-					<li>Hervorheben des aktuellen Bereiches im Quelltext
-					</li>
-					</UL>
-					
+		<h2><a name="einleitung">Einleitung</a></h2>
+		
+		<p> Dieses Modul verbildlicht den Ablauf des Hoare-Kalk&uuml;ls von
+			C. A. R. Hoare, mit dem es m&ouml;glich ist, Eigenschaften imperativer
+			Computerprogramme mittels logischer Regeln zu beweisen.<br>
+			Der Kalk&uuml;l orientiert sich dabei an der Vorlesung
+			<i>Programmierung</i>, die von Prof. Heiko Vogler
+		 	an der TU Dresden gehalten wird. &Uuml;berdies sind im Internet
+		 	zahlreiche Beschreibungen des Kalk&uuml;ls zu finden, so auch in der freien
+		 	Enzyklop&auml;die <a href=http://de.wikipedia.org/wiki/Hoare-Kalk%C3%BCl>Wikipedia</a>.</p>
+		 	
+		
+		<h2><a name="funktionen">Funktions&uuml;bersicht</a></h2>
+		
+		<p> Das Modul Hoare-Kalk&uuml;l realisiert folgende Funktionen:
+			<li> Parsen eines C0-Quelltextes </li>
+			<li> Auswahl von Knoten und Anwendung erlaubter Regeln darauf </li>
+			<li> variable Zusicherungen, die auch nach Regelanwendung noch ver&auml;ndert werden d&uuml;rfen </li>
+			<li> automatisches &Uuml;berpr&uuml;fen der eingegebenen Implikationen durch beschr&auml;nktes Testen</li>
+			<li> L&ouml;schen von Teilb&auml;umen (auch einzelner Knoten) </li>
+			<li> R&uuml;ckg&auml;ngig machen/Wiederherstellen von Bearbeitungsschritten</li>
+			<li> grafische Darstellung des Beweisbaumes </li>
+			<li> Zoomen im Beweisbaum </li>
+			<li> Hervorhebung des aktuellen Bereiches im Quelltext und der Zusicherungen des aktuellen Knotens </li>
+			<li> Speichern und Laden von Beweisb&auml;umen </li>
+		</p>
+							
 	</body>
 </html>

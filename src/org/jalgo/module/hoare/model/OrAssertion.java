@@ -1,68 +1,60 @@
 package org.jalgo.module.hoare.model;
 
-public class OrAssertion extends Assertion {
+/**
+ * Represents an Or in the assertiontree. It must have two children assertion as operands.
+ *  
+ * @author Thomas
+ **/
+class OrAssertion extends AbstractAssertion {
 
 	/**
-	 * 
+	 * the serial Id of this Object
 	 */
-	private static final long serialVersionUID = -7279471091681226066L;
-
-	private Assertion leftOperand; // TODO: ins EKLDia einf?gen
-
-	private Assertion rightOperand; // TODO: ins EKLDia einf?gen
-
-	// TODO: Konstruktor ins EKLDia einf?gen
-	public OrAssertion(Assertion left, Assertion right) {
-
-		leftOperand = left;
-		rightOperand = right;
+	private static final long serialVersionUID = -4867430960518614L;
+	/**
+	 * the left side of the assertion tree under the or
+	 */
+	private AbstractAssertion left;
+	/**
+	 * the right side of the assertion tree under the or
+	 */
+	private AbstractAssertion right;
+	
+	/**
+	 * creates an OrAssertion with an left and right Assertion tree
+	 *  
+	 * @param left
+	 *     the left child assertion compared with Or
+	 * @param left
+	 *     the right child assertion compared with Or
+	 **/	
+	public OrAssertion(AbstractAssertion left,AbstractAssertion right)	{
+		this.left=left;
+		this.right=right;
+	}
+	
+	/**
+	 * @see org.jalgo.module.hoare.model.AbstractAssertion#verifiable()
+	 */
+	@Override
+	public boolean verifiable() {
+		return left.verifiable() && right.verifiable();
 	}
 
-	public Assertion getLeftOperand() {
-		return leftOperand;
-	}
-
-	public void setLeftOperand(Assertion leftOperand) {
-		this.leftOperand = leftOperand;
-	}
-
-	public Assertion getRightOperand() {
-		return rightOperand;
-	}
-
-	public void setRightOperand(Assertion rightOperand) {
-		this.rightOperand = rightOperand;
-	}
-
-	public String getHTMLString() {
-		return "(" + leftOperand.getHTMLString() + "&#8744;"
-				+ rightOperand.getHTMLString() + ")";
-	}
-
+	/**
+	 * @see org.jalgo.module.hoare.model.AbstractAssertion#toString()
+	 */
+	@Override
 	public String toString() {
-		return "(" + leftOperand.toString() + "||" + rightOperand.toString()
-				+ ")";
+		return "("+left.toString()+" || "+right.toString()+")";
 	}
 
+	/**
+	 * @see org.jalgo.module.hoare.model.AbstractAssertion#toText(boolean)
+	 */
 	@Override
-	public Assertion copy() {
-		return new OrAssertion(leftOperand.copy(), rightOperand.copy());
+	public String toText(boolean full) {
+		return "("+left.toText(full) + " \u2228 " + right.toText(full)+")";
 	}
-
-	public void replaceTarget(Assertion o, Assertion n) {
-		leftOperand.replaceTarget(o, n);
-		rightOperand.replaceTarget(o, n);
-
-		if (leftOperand == o)
-			leftOperand = n;
-		if (rightOperand == o)
-			rightOperand = n;
-
-	}
-
-	@Override
-	public boolean containsDummyAssertion() {
-		return leftOperand.containsDummyAssertion()
-				|| rightOperand.containsDummyAssertion();
-	}
+	
 }

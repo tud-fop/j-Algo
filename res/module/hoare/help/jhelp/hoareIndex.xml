@@ -7,12 +7,11 @@
     <!-- Hoare -->
     <indexitem text="Hoare-Modul" expand="false">
 
-    	<indexitem text="Intro"                        target="hoare.intro"/>
-    	<indexitem text="Der Wilkommensbildschirm"     target="hoare.start"/>
-    	<indexitem text="Der Arbeitsbereich"           target="hoare.screen"/>
-    	<indexitem text="Modulfunktionen"              target="hoare.functions"/>
-    	<indexitem text="Algorithmussteuerung"         target="hoare.flowcontrol"/>
+    	<indexitem text="&Uuml;berblick"           			target="hoare.overview.einleitung"/>
+    	<indexitem text="Aufbau des Beweisbaums"       	target="hoare.aufbau"/>
+    	<indexitem text="Quelltexteditor"				target="hoare.editors.source"/>
+    	<indexitem text="Formeleditor"					target="hoare.editors.formula"/>
+    	<indexitem text="Referenzen"					target="hoare.screen"/>
     	
-
     </indexitem>
 </index>

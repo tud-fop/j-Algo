@@ -4,33 +4,32 @@
 
 	<!-- Hoare -->
 			<tocitem text="Hoare"					target="hoare"  expand="false">
-			
-			   <tocitem text="Intro"		                       target="hoare.intro">
-			       <tocitem text="Funktionsübersicht"		       target="hoare.overview"/>
-			   </tocitem>
-			   <tocitem text="Der Wilkommensbildschirm"        target="hoare.start">
-			       <tocitem text="Buttons"                     target="hoare.buttons"/>
-			   </tocitem>
-			   <tocitem text="Der Arbeitsbereich"              target="hoare.screen">
-			       <tocitem text="Toolbar"                     target="hoare.toolbar"/>
-			       <tocitem text="Beweisbaum"                  target="hoare.tree"/>
-			       <tocitem text="Quellcode"                   target="hoare.source"/>
-			       <tocitem text="Event-Log"                   target="hoare.log"/>
-			       <tocitem text="Regelanzeige"                target="hoare.rules"/>
-			       <tocitem text="Eingabemaske"                target="hoare.input"/>
-			 </tocitem>
-			   <tocitem text="Modulfunktionen"                 target="hoare.functions">
-			       <tocitem text="C0-Programm einlesen"        target="hoare.parseC0"/>
-			       <tocitem text="C0-Programm aus Datei laden" target="hoare.openC0"/>
-			       <tocitem text="C0-Programm manuell eingeben"target="hoare.newC0"/>
-			       <tocitem text="Den Beweisbaum aufbauen"     target="hoare.buildTree"/>
-			       <tocitem text="Regel anwenden"              target="hoare.applyrule"/>
-			       <tocitem text="Vor/Nachbedingungen eingeben"target="hoare.conds"/>
-			       <tocitem text="Regel verifizieren"          target="hoare.verify"/>
-			       <tocitem text="Programm fertig verifiziert" target="hoare.finished"/>
-			  </tocitem>
-			
-			   <tocitem text="Algorithmussteuerung"         target="hoare.flowcontrol"/>
+			   	
+				<tocitem text="&Uuml;berblick"			target="hoare.overview.einleitung"/>
+								
+				<tocitem text="Erstellen eines Beweisbaums"	target="hoare.usage">
+					<tocitem text="Quelltext laden/eingeben und parsen" target="hoare.usage.laden"/>
+					<tocitem text="Regel anwenden"				target="hoare.usage.regel"/>
+					<tocitem text="Vor- und Nachbedingungen editieren" target="hoare.usage.edit"/>
+					<tocitem text="Beispielbeweisbaum"			target="hoare.usage.bsp"/>
+				</tocitem>
+				
+				<tocitem text="Aufbau des Beweisbaums"		target="hoare.aufbau">
+					<tocitem text="Kanten und normale Knoten"	target="hoare.aufbau.knotenkanten"/>
+					<tocitem text="Implikationsknoten"			target="hoare.aufbau.impl"/>
+					<tocitem text="Farbgebung"					target="hoare.aufbau.colour"/>
+				</tocitem>
+				
+				<tocitem text="Quelltexteditor"				target="hoare.editors.source"/>
+				
+				<tocitem text="Formeleditor"				target="hoare.editors.formula"/>
+			   	
+				<tocitem text="Referenzen"              	target="hoare.screen">
+			   	   	<tocitem text="Startbildschirm"				target="hoare.screen.welcome"/>
+			   	   	<tocitem text="Die Toolbar"					target="hoare.screen.toolbar"/>
+			   	   	<tocitem text="Das Menü"					target="hoare.screen.menu"/>
+			   	   	<tocitem text="Tastenkombinationen"			target="hoare.screen.tasten"/>
+				</tocitem>
 			
 			</tocitem>
 </toc>

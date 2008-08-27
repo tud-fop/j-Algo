@@ -1,7 +1,7 @@
 /*
  * j-Algo - j-Algo is an algorithm visualization tool, especially useful for
- * students and lecturers of computer science. It is written in Java and platform
- * independent. j-Algo is developed with the help of Dresden University of
+ * students and lecturers of computer sience. It is written in Java and platform
+ * independant. j-Algo is developed with the help of Dresden University of
  * Technology.
  * 
  * Copyright (C) 2004-2005 j-Algo-Team, j-algo-development@lists.sourceforge.net
@@ -22,12 +22,21 @@
  */
 package org.jalgo.module.hoare;
 
+/**
+*
+* @author Tomas
+* 
+* Manipulated testModule.ModuleInfo
+* 
+*/
+
 import java.net.URL;
 
 import org.jalgo.main.IModuleInfo;
 import org.jalgo.main.util.Messages;
 
-public class ModuleInfo implements IModuleInfo {
+public class ModuleInfo
+implements IModuleInfo {
 
 	/** The singleton instance */
 	private static IModuleInfo instance;
@@ -37,7 +46,7 @@ public class ModuleInfo implements IModuleInfo {
 	 * the singleton design pattern.
 	 */
 	private ModuleInfo() {
-		// unusable from outside
+	// unusable from outside
 	}
 
 	/**
@@ -46,8 +55,8 @@ public class ModuleInfo implements IModuleInfo {
 	 * @return the singleton instance
 	 */
 	public static IModuleInfo getInstance() {
-		if (instance == null)
-			instance = new ModuleInfo();
+	
+		if (instance == null) instance = new ModuleInfo();
 		return instance;
 	}
 
@@ -64,21 +73,18 @@ public class ModuleInfo implements IModuleInfo {
 	}
 
 	public String getDescription() {
-		return Messages.getString("hoare", "Module_description_1")
-				+ System.getProperty("line.separator")
-				+ Messages.getString("hoare", "Module_description_2");
+		return Messages.getString("hoare", "Module_description_1");
 	}
 
 	public URL getLogoURL() {
 		return Messages.getResourceURL("hoare", "Module_logo");
-		// return Messages.getResourceURL("main", "ui.Logo_small");
 	}
 
 	public String getLicense() {
 		return Messages.getString("hoare", "Module_license");
 	}
-
-	public URL getHelpSetURL() {
-		return Messages.getResourceURL("hoare", "HelpSet_Name");
+	
+	public URL getHelpSetURL(){
+		return Messages.getResourceURL("hoare","HelpSet_Name");
 	}
 }

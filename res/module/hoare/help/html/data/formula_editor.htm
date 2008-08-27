@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title>Editoren</title>
+	</head>
+	
+
+<body topmargin="30" leftmargin="30">
+
+<h1>Formeleditor</h1>
+<p>
+Im Formeleditor kann der Wert einer Variable ge&auml;ndert werden.
+</p>
+<p><img src="../../pics/Formeleditor mit Inhalt.png" alt="Formeleditor"/></p>
+<p>
+Die Formel wird im Textfeld in der Mitte bearbeitet, wobei Sonderzeichen und
+speziellen Funktionen durch festgelegte <a href="#Kodierungen">Kodierungen</a> eingegeben werden.
+Durch einen Klick auf die entsprechende Schaltfl&auml;che in der oberen Leiste wird die Kodierung
+automatisch eingef&uuml;gt.<br>
+Mit Klick auf die Schaltfl&auml;che "OK" rechts unten wird die eingegebene Formel als neuer Wert
+f&uuml;r die Variable &uuml;bernommen.<br>
+<b>Achtung:</b> Schlie&szlig;t man den Formeleditor ohne Klick auf den "OK"-Button, so werden die &Auml;nderungen
+an der Variable verworfen.</p>
+<p>
+Unter dem Textfeld ist eine Vorschau, die angezeigt, wie die Formel sp&auml;ter in der Variablenliste und im
+Baum aussehen wird.<br>
+Ist der im Textfeld eingegebene Text keine zul&auml;ssige Formel, wird der Hintergrund der
+Vorschau rot und der "OK"-Button kann nicht geklickt werden, das hei&szlig;t der neue Wert kann
+nicht &uuml;bernommen werden.</p>
+
+<p><b>Bemerkung zur Klammernsetzung:</b> In der Vorschau werden manchmal eingegebene Klammern, die &uuml;berfl&uuml;ssig sind, nicht
+angezeigt. Die Klammerung ist dann implizit durch die Priorit&auml;t der Operatoren bzw. Funktionen
+gegeben.</p>
+
+<a name="Kodierungen"><h3>Kodierungen der Sonderzeichen</h3></a>
+<p>Kursiver Text steht f&uuml;r Argumente, die an dieser Stelle eingetragen werden.</p>
+<table border="1" cellpadding="2" cellspacing="0">
+<tr><td align="center"><b>Sonderzeichen</b></td><td align="center"><b>Kodierung</b></td></tr>
+<tr><td align="center">&and; (logisches und)</td><td align="center">&&</td></tr>
+<tr><td align="center">&or; (logisches oder)</td><td align="center">||</td></tr>
+<tr><td align="center">&not; (logisches nicht)</td><td align="center">!</td></tr>
+<tr><td align="center">&le; (kleiner gleich)</td><td align="center">&lt;=</td></tr>
+<tr><td align="center">&ge; (gr&ouml;&szlig;er gleich)</td><td align="center">&gt;=</td></tr>
+<tr><td align="center">&ne; (ungleich)</td><td align="center">!=</td></tr>
+<tr><td align="center">&Sigma; (Summe)</td><td align="center">Sum(<i>expr</i>, <i>var</i>, <i>start</i>, <i>end</i>)</td></tr>
+<tr><td align="center">&Pi; (Produkt)</td><td align="center">Product(<i>expr</i>, <i>var</i>, <i>start</i>, <i>end</i>)</td></tr>
+<tr><td align="center">exp (Exponentialfunktion)</td><td align="center">exp(<i>x</i>)</td></tr>
+<tr><td align="center">ln (nat&uuml;rlicher Logarithmus)</td><td align="center">ln(<i>x</i>)</td></tr>
+<tr><td align="center">&radic; (Quadratwurzel)</td><td align="center">sqrt(<i>x</i>)</td></tr>
+</table>
+
+	</body>
+</html>

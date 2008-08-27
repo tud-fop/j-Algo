@@ -1,61 +1,78 @@
 package org.jalgo.module.hoare.model;
 
 /**
- * Class of a single Assertion
+ * Represents a concrete term as the leaf of the assertion tree.
+ * Assertion strings my not contain any Not And or Or symbols.
  * 
- * @author Gerald
- * 
+ * @author Thomas
+ *
  */
-public class ConcreteAssertion extends Assertion {
+class ConcreteAssertion extends AbstractAssertion {
 
 	/**
-	 * 
+	 * the serial Id of this Object
 	 */
-	private static final long serialVersionUID = 2737552367891898201L;
-
-	private String assertion;
-
-	public ConcreteAssertion(String assertion) {
-		this.assertion = assertion;
+	private static final long serialVersionUID = -6773213821777206709L;
+	/**
+	 * holds the concrete assertion as a string in c0
+	 */
+	private String term;
+	/**
+	 * holds the converted string with included Unicode symbols
+	 */
+	private String text;
+	/**
+	 * holds the index of the PI 
+	 */
+	private int index;
+	
+	/**
+	 * creates an ConcreteAssertion with an C0 Assertion string.
+	 * Every ConcreteAssertion gets his own Pi-identifier.
+	 * 
+	 * @param assertion
+	 *        the concrete assertion string
+	 * @param index
+	 *        the Number behind the Pi
+	 */
+	public ConcreteAssertion(String assertion,int index){		
+		this.index=index;
+		this.term=assertion;
+		this.text=new String(assertion);
+	
+		// some symbols will be replaced by Unicode symbols
+        text = text.replaceAll("==", "=");
+        text = text.replaceAll("<=", "\u2264");
+        text = text.replaceAll(">=", "\u2265");
+        text = text.replaceAll("<", "\u003C");
+        text = text.replaceAll(">", "\u003E");
+        text = text.replaceAll("sqrt", "\221A");
+        text = text.replaceAll("Sum", "\u2211");
+        text = text.replaceAll("Product", "\220F");
+	}
+	
+	/**
+	 * @see org.jalgo.module.hoare.model.AbstractAssertion#includesVariable()
+	 */
+	@Override
+	public boolean verifiable() {
+		return true;
 	}
 
-	public String getAssertion() {
-		return assertion;
-	}
-
-	public void setAssertion(String assertion) {
-		this.assertion = assertion;
-	}
-
-	public String getHTMLString() {
-		String html = toString();
-		html = html.replaceAll("<=", "&#8804;");
-		html = html.replaceAll(">=", "&#8805;");
-		html = html.replaceAll("<", "&lt;");
-		html = html.replaceAll(">", "&gt;");
-		html = html.replaceAll("sqrt", "&#8730;");
-		html = html.replaceAll("Sum", "&#8721;");
-		html = html.replaceAll("Product", "&#8719;");
-		return html;
-	}
-
+	/**
+	 * @see org.jalgo.module.hoare.model.AbstractAssertion#toString()
+	 */
+	@Override
 	public String toString() {
-
-		return "(" + assertion + ")";
+		return "("+term+")";
 	}
 
+	/**
+	 * @see org.jalgo.module.hoare.model.AbstractAssertion#toText(boolean)
+	 */
 	@Override
-	public Assertion copy() {
-		return new ConcreteAssertion(new String(assertion));
+	public String toText(boolean full) {
+		return (full ? text : "\u03C0" + index);
 	}
-
-	@Override
-	public void replaceTarget(Assertion o, Assertion n) {
-
-	}
-
-	@Override
-	public boolean containsDummyAssertion() {
-		return false;
-	};
+	
 }

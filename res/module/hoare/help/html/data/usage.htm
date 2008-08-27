@@ -1,0 +1,135 @@
+<html>
+	<head>
+		<title>Algorithmussteuerung</title>
+	</head>
+	<body topmargin="30" leftmargin="30">
+
+<h1>Erstellen eines Beweisbaums</h1>
+
+<p>Anhand des folgenden Beispiels soll betrachtet werden, wie mit dem Modul ein Beweisbaum f&uuml;r ein
+C0-Programm erstellt werden kann:</p>
+
+<p align="center" style="font-family:Courier">
+while (x&gt;0) x=x-1;
+</p>
+
+<p>Dieses Programm z&auml;hlt einfach nur x auf 0 herunter, falls vor der Ausf&uuml;hrung x&gt;0.</p>
+
+<p>Der fertige Beweisbaum f&uuml;r dieses Beispiel ist auch unter dem Ordner examples vorhanden.</p>
+
+<a name="laden"><h3>Quelltext laden/eingeben und parsen</h3></a>
+<p>Um den Quelltext eines Programms aus einer Datei zu laden, hat man die M&ouml;glichkeit
+ &uuml;ber die <a href="screen.htm#toolbar">Toolbar</a>, &uuml;ber das <a href="screen.htm#menu">Men&uuml;</a>
+ oder &uuml;ber den <a href="screen.htm#welcome">Startbildschirm</a> zu gehen. Es erscheint jeweils ein
+ Dateiauswahldialog, in dem man die zu ladende Datei, die den Quelltext enth&auml;lt, ausw&auml;hlen kann.<br>
+Der Quelltext wird dann auch gleich geparst.</p>
+<p>Weiterhin hat man die M&ouml;glichkeit &uuml;ber den <a href="sourcecode_editor.htm">Quelltexteditor</a> einen
+ Quelltext einzugeben und mit dem Druck auf den Button "Parsen", diesen auszuwerten und den Wurzelknoten
+ des Beweisbaums anzuzeigen.</p>
+
+<p>&nbsp;&nbsp; <img src="../../pics/Quelltexteingabe mit Maus.png" alt="C0-Programm im Quelltexteditor eingeben und auf Parsen klicken" title="C0-Programm im Quelltexteditor eingeben und auf Parsen klicken" />
+&nbsp;&nbsp;
+<img src="../../pics/Quelltexteingabe2.png" alt="geparsetes C0-Programm" title="geparsetes C0-Programm" /></p>
+ 
+<a name="regel"><h3>Regel anwenden</h3></a>
+<p>Der Beweisbaum besteht besteht nach dem Parsen zun&auml;chst nur aus einem Knoten.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/Startknoten.png" alt="Wurzelknoten" title="Wurzelknoten" /></p>
+<p>Um eine Regel auf einen Knoten anzuwenden, muss man ihn zun&auml;chst durch
+einen Klick ausw&auml;hlen. Der Knoten bekommt dann einen farbigen Rahmen.
+</p>
+<p>&nbsp;&nbsp; <img src="../../pics/ausgewaehlter Startknoten.png" alt="ausgew&auml;hlter Wurzelknoten" title="ausgew&auml;hlter Wurzelknoten" /></p>
+<p>
+Danach klickt man auf der Liste rechts neben dem Graphen auf die gew&uuml;nschte
+Regel.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/Regelbuttons (SN) mit Maus.png" alt="Iteration anklicken" title="Iteration anklicken" /></p>
+<p>
+Bei erfolgreicher Anwendung werden dann im Baum f&uuml;r den ausgew&auml;hlten Knoten je nach Regel
+ein oder zwei neue Knoten erstellt. Bei manchen Regeln wird au&szlig;erdem eine
+zus&auml;tzliche Variable erstellt, siehe auch <a href="#edit">Vor- und Nachbedingungen
+eingeben</a>.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/erste Regelanwendung (SN).png" alt="Schw&auml;chere Nachbedingung angewendet" title="Schw&auml;chere Nachbedingung angewendet" /></p>
+<p>
+Kommt es zu einem Fehler, z.B. weil schon eine Regel angewendet wurde, oder die
+Regel nicht anwendbar ist, dann passiert nichts und es erscheint eine entsprechende
+Fehlermeldung in dem Feld rechts oben.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/Fehler bei Regelanwendung.png" alt="Beispiel f&uuml;r Fehlermeldung" title="Beispiel f&uuml;r Fehlermeldung" /></p>
+<p>
+Eine Vorschau f&uuml;r die Regeln wird automatisch angezeigt, wenn man mit der Maus
+&uuml;ber der jeweiligen Schaltfl&auml;che ist. F&uuml;r die Iterationsregel, die auf eine while-Schleife
+angewendet werden muss, sieht sie z. B. so aus:</p>
+</p>
+<p>&nbsp;&nbsp; <img src="../../pics/Iterationsregel-Vorschau mit Regeln mit Maus.png" alt="Vorschau der Iterationsregel" title="Vorschau der Iterationsregel" /></p>
+<p>Weitere Informationen: <a href="aufbau.htm">Aufbau eines Beweisbaums</a></p>
+<a name="edit"><h3>Vor- und Nachbedingungen eingeben</h3></a>
+<p>Zu jedem Knoten geh&ouml;rt eine Vor- und eine Nachbedingung.<br>
+Diese besteht entweder nur aus einer Variablen (bezeichnet mit P, z.B. P1) oder aus der Konjunktion einer Variablen
+mit einer oder mehreren Konstanten (bezeichnet mit &Pi;, z.B. &Pi;1).<br>
+Die Konstanten ergeben sich direkt aus vorherigen
+Regelanwendungen und k&ouml;nnen im Gegensatz zu Variablen nicht ge&auml;ndert werden.<br>
+Siehe auch <a href="aufbau.htm">Aufbau eines Beweisbaumes</a>.</p>
+</p>
+
+<p>Das Bearbeiten der Variable geschieht mit dem <a href="formula_editor.htm">Formeleditor</a>.<br>
+Es gibt verschiedene M&ouml;glichkeiten den Formeleditor f&uuml;r eine Variable zu &ouml;ffnen:
+<ul>
+<li>Klick auf die Variable in der Variablenliste rechts
+<p>&nbsp;&nbsp; <img src="../../pics/Variablenliste leer mit Maus.png" alt="Klick auf P1 in der Variablenliste" title="Klick auf P1 in der Variablenliste" /></p>
+</li>
+<li>Klick auf die Variable bei den "Variablen Vor- und Nachbedingung" unter der Variablenliste,
+falls der entsprechende Knoten ausgew&auml;hlt wurde <a href="#Variablen Vor- und Nachbedingung">(*)</a>
+<p>&nbsp;&nbsp; <img src="../../pics/Variablen Vor- und Nachbedingung leer mit Maus.png" alt="Klick auf P1 bei den Variablen der Vor- und Nachbedingung" title="Klick auf P1 bei den Variablen der Vor- und Nachbedingung" /></p>
+</li>
+<li>Zweifachen Klick auf einen Knoten, so dass er vergr&ouml;&szlig;ert dargestellt wird und dann Klick
+auf die Variable
+<p>&nbsp;&nbsp; <img src="../../pics/Startknoten gross mit Maus.png" alt="Klick auf P1 im vergr&ouml;&szlig;erten Knoten" title="Klick auf P1 im vergr&ouml;&szlig;erten Knoten" /></p>
+</li>
+<li>Rechtsklick auf einen Knoten und dann Auswahl der Variable im Popupmen&uuml;
+<p>&nbsp;&nbsp; <img src="../../pics/Popupmenu mit Maus.png" alt="Klick auf P1 im Popupmen&uuml;" title="Klick auf P1 im Popupmen&uuml;" /></p>
+</li>
+</ul>
+</p>
+
+<a name="Variablen Vor- und Nachbedingung"><p>* Ist ein Knoten durch einen Klick ausgew&auml;hlt worden, so werden die beiden Variablen, die in
+der Vor- bzw. Nachbedingung vorkommen unter der Variablenliste angezeigt und au&szlig;erdem farblich
+hervorgehoben.</p></a>
+
+<a name="bsp"><h3>Beispielbeweisbaum</h3></a>
+
+<p>Das Parsen des C0-Programms liefert uns den Wurzelknoten.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/Startknoten.png" alt="Wurzelknoten" title="Wurzelknoten" /></p>
+<p>Wir wollen beweisen, dass wenn vorher x&ge;0, dann ist nach dem Ausf&uuml;hrung x=0.
+Das hei&szlig;t wir tragen mit dem <a href="formula_editor.htm">Formeleditor</a> f&uuml;r die Vorbedingung
+P1 den Wert x&ge;0 und f&uuml;r die Nachbedingung P2 den Wert x=0 ein.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/Startknoten mit Vor- und Nachbedingung gross.png" alt="Wurzelknoten" title="Wurzelknoten" /></p>
+<p>Da der Quelltext im Knoten die Form while (&Pi;) {...}, m&uuml;ssen wir f&uuml;r den Beweis die Iterationsregel
+anwenden. Die Vorschau sagt uns, dass daf&uuml;r die Nachbedingung von der Form P&and;&not;&Pi; sein
+muss, wobei P die Vorbedingung und gleichzeitig die Schleifeninvariante ist.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/Iterationsregel-Vorschau.png" alt="Vorschau der Iterationsregel" title="Vorschau der Iterationsregel" /></p>
+<p>F&uuml;r unseren Fall hei&szlig;t das, die Nachbedingung muss den Wert x&ge;0&and;&not;x&lt;0 haben.
+Das erreichen wir mit Hilfe der Regel Schw&auml;chere Nachbedingung, die f&uuml;r die Nachbedingung eine neue Variable P3 einf&uuml;hrt.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/erste Regelanwendung (SN) grosser Knoten.png" alt="Anwendung der Regel Schw&auml;chere Nachbedingung" title="Anwendung der Regel Schw&auml;chere Nachbedingung" /></p>
+<p>Der Wurzelknoten f&auml;rbt sich jetzt grau, da an ihm nichts mehr getan werden muss.</p>
+<p>Den Wert f&uuml;r P3 setzen wir jetzt auf den Wert x&ge;0&and;&not;x&lt;0, den wir uns vorher &uuml;berlegt haben.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/erste Regelanwendung (SN) grosser Knoten Nachbedingung eingetragen.png" alt="Eingeben der neuen Nachbedingung" title="Eingeben der neuen Nachbedingung" /></p>
+<p>Da die Implikation P3=>P2, die bei der Regel Schw&auml;chere Nachbedingung &uuml;berpr&uuml;ft werden muss wahr ist (aus x&ge;0&and;&not;x&lt;0 folgt x=0),
+f&auml;rbt sich der Implikationsknoten gr&uuml;n. W&auml;re die Implikation nicht wahr, w&uuml;rde er sich rot f&auml;rben
+und P2 oder P3 m&uuml;ssten ge&auml;ndert werden, damit sie stimmt.</p>
+<p>Vor- und Nachbedingung haben jetzt die richtige Form, so dass wir die Iterationsregel anwenden k&ouml;nnen.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/zweite Regelanwendung (Iter) Knoten gross.png" alt="Anwendung der Iterationsregel" title="Anwendung der Iterationsregel" /></p>
+<p>Nun m&uuml;ssen wir den Teilbaum f&uuml;r den Schleifenrumpf erstellen. In unserem Fall besteht er nur
+aus einer einfachen Zuweisung. Das hei&szlig;t wir m&uuml;ssen das Zuweisungsaxiom anwenden. Wie die Vorschau zeigt,
+muss daf&uuml;r die Vorbedingung gleich der Nachbedingung sein, wobei jedes Vorkommen von x durch x-1
+erstetzt wird.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/Zuweisungsaxiom-Vorschau.png" alt="Vorschau des Zuweisungsaxioms" title="Vorschau des Zuweisungsaxioms" /></p>
+<p>In unserem Beispiel muss also die Vorbedingung den Wert x-1&ge;0 haben. Das erreichen wir durch
+die Anwendung der Regel St&auml;rkere Vorbedingung, die es uns erlaubt die Vorbedingung zu &auml;ndern.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/dritte Regelanwendung (SV) grosser Knoten.png" alt="Anwendung der Regel St&auml;rkere Vorbedingung" title="Anwendung der Regel St&auml;rkere Vorbedingung" /></p>
+<p>F&uuml;r die neue Vorbedingung P4 geben wir x-1&ge;0 ein.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/dritte Regelanwendung (SV) grosser Knoten Vorbedingung eingetragen.png" alt="Eingeben der neuen Vorbedingung" title="Eingeben der neuen Vorbedingung" /></p>
+<p>Der Implikationsknoten f&auml;rbt sich wieder gr&uuml;n, denn aus x&gt;0 folgt x-1&ge;0.</p>
+<p>Wir k&ouml;nnen jetzt das Zuweisungsaxiom anwenden.</p>
+<p>&nbsp;&nbsp; <img src="../../pics/Zuweisungsaxiom angewendet Baum gr&uuml;n.png" alt="Anwendung des Zuweisungsaxiom" title="Anwendung des Zuweisungsaxiom" /></p>
+<p>Der Beweis ist vollst&auml;ndig und korrekt und der komplette Baum f&auml;rbt sich gr&uuml;n.</p>
+
+	</body>
+</html>

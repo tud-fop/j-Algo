@@ -1,128 +1,70 @@
 <html>
 	<head>
-		<title>Die Arbeitsfläche</title>	</head>
+		<title>Die Arbeitsfl&auml;che</title>	</head>
 	<body topmargin="30" leftmargin="30">
 
 <h1>Der Arbeitsbereich</h1>
 
-
-
-Der Arbeitsbereich ist untergliedert in sechs Bereiche, die Ihnen Zugriff auf 
-alle wesentlichen Funktionen anbieten, sowie aktuelle und relevante Informationen 
-darstellen:
-<p><img src="../../pics/workscreen.png" alt="Phase1Screen" height="242" width="400"></p>
-<ol>
-
-<li>
-    <h4>Toolbar</h4>
-    Hier können die wichtigsten Einstellungen vorgenommen werden.<br>
-    Mehr Informationen hierzu: <a href="#toolbar">Anzeigeoptionen</a>
-    &nbsp;
-
-</li>
-
-<li>
-    <h4>Beweisbaum</h4>
-    Hier wird der Beweisbaum dargestellt.<br>
-    Mehr Informationen hierzu: <a href="#tree">Der Beweisbaum</a>
-</li>
-
-<li>
-    <h4>Quellcode</h4>
-    Hier wird der Quellcode des C0-Programmes angezeigt. Dieser kann jederzeit verändert 
-    und neu geparst werden.<br>
-    Mehr Informationen hierzu: <a href="#source">Der Quellcode</a>
-</li>
-
-<li>
-    <h4>Event-Log</h4>
-    Hier werden Sie über aktuelle Ereignisse bzw Fehler beim Aufbau des Beweisbaumes informiert.<br>
-    Mehr Informationen hierzu: <a href="#log">Der Event-Log</a>
-</li>
-
-<li>
-    <h4>Verifikationsregeln</h4>
-    Hier wird die Liste der für das Hoare-Kalkül definierten Verifikationsregeln angezeigt.<br>
-    Mehr Informationen hierzu: <a href="#rules">Die Regelanzeige</a>
-</li>
-
-<li>
-    <h4>Eingabemaske für Vor-/Nachbedingungen</h4>
-    Hier können Sie die zu den Knoten im Beweisbaum gehörenden Vor- bzw Nachbedingungen 
-    eingeben und verifizieren lassen.<br>
-    Mehr Informationen hierzu: <a href="#input">Die Bedingungs-Eingabe</a>
-</li>
-
-</ol>
-
-<a name="toolbar"><h2>Anzeigeoptionen in der Toolbar</h2></a>
-<p><img src="../../pics/toolbar.png" alt="Die Toolbar" height="18" width="400"></p>
-
-<p>
-    Mittels des Buttons "Details im Baum ein/ausblenden"  können Sie für den markierten Knoten
-    den Quellcode direkt im Baum anzeigen lassen.
-</p>
-    
-<p><img src="../../pics/zoom.png" alt="Details ein/ausblenden" height="55" width="397"></p>
-
-
-<h3><a name="bar">Aufteilung der Bereiche</a></h3>
-Die Aufteilung zwischen den einzelnen Bereichen 
-kann mit einem Schiebebalken verändert werden. 
-Per Klick auf die Kante können Sie die Grenze verschieben.
-
-
-<a name="beamer"><h3>Beamer - Modus</a></h3>
-Der Beamer-Modus ermöglicht das schnelle Einstellen von Anzeigeoptionen, die die Präsentation 
-in Vorlesungen oder ähnlichen Veranstaltungen begünstigen. Dieser Modus ist zu finden unter "Hoare" => "Beamermodus".<br>
-Ist der Modus aktiv, so erscheint vor diesem Menüeintrag ein Häkchen. Um den Modus wieder auszuschalten, 
-entfernen Sie einfach den Haken per Klick.
-<p><img src="../../pics/beamer.png" alt="Beamermode" height="255" width="284"></p>
-
-<a name="tree"><h2>Der Beweisbaum</h2></a>
-<p>
-Der Beweisbaum wird vom Nutzer Stück für Stück aufgebaut um das gewünschte C0-Programm 
-zu verifizieren. Der gewählte Knoten wir dabei hervorgehoben.
-</p>
-<p><img src="../../pics/tree.png" alt="Der Beweisbaum" height="94" width="400"></p>
-
-
-<a name="source"><h2>Der Quellcode</h2></a>
-<p>
-In dieser Anzeige wird der Quellcode dargestellt. Dieser kann jederzeit geändert und 
-neu eingelesen werden.<br>
-Bei Auswahl eines Knotens im Beweisbaum, wird das dazugehörige Quellcode-Stück
-hervorgehoben.
-</p>
-<p><img src="../../pics/source.png" alt="Der Beweisbaum" height="395" width="258"></p>
-
-<a name="log"><h2>Der Event-Log</h2></a>
-<p>
-Hier werden relevante Ereignise und Fehlermeldungen ausgegeben, unter Anderem:
+<a name="welcome"><h2>Der Startbildschrim</h2></a>
+<ul> <img src="../../pics/welcome.gif" alt="der Startbildschrim">
+<br><br>
 <ul>
-    <li>Fehler beim Parsen des C0-Programms</li>
-    <li>Syntaktische Fehler bei der Eingabe der Vor/Nachbedingungen</li>
-    <li>Fehler bei falscher Regelanwendung</li>
-    <li>Evaluationsfehler bzw -Erfolg</li>
+<table>
+<tr><td><img src="../../pics/openc0_welcome_0.gif" alt="open c0"></td><td width="10"></td><td>Hiermit &ouml;ffnet man ein neues c0 Programm, welches direkt mit dem ersten Knoten initialisiert wird.</td></tr>
+<tr><td><img src="../../pics/new_welcome_0.gif" alt="new c0"></td><td width="10"></td><td>Hiermit &ouml;ffnet man den Arbeitsbildschirm und kann dort ein neues c0 Programm eingeben.</td></td></tr>
+<tr><td><img src="../../pics/open_welcome_0.gif" alt="open"></td><td width="10"></td><td>Hiermit &ouml;ffnet man eine .jalgo Datei, welche initialisiert wird.</td></tr>
+</table>
 </ul>
-</p>
-<p><img src="../../pics/log.png" alt="Der Event-Log" height="163" width="260"></p>
-
-<a name="rules"><h2>Die Regelanzeige</h2></a>
-<p>
-Hier werden die für das Hoare-Kalkül definierten Verifikationsregeln angezeigt, welche 
-beim Klicken darauf auch auf den vorher gewählten Knoten angewendet werden können.
-</p>
-<p><img src="../../pics/rules.png" alt="Die Regelanzeige" height="79" width="400"></p>
-
-
-<a name="input"><h2>Die Bedingungs-Eingabe</h2></a>
-<p>
-Hier werden die Vor/Nachbedingung eines Knotens eingegeben. An Knoten, bei denen diese sich 
-automatisch ergeben wird dies vom Programm übernommen.
-</p>
-<p><img src="../../pics/input.png" alt="Die Bedingungs-Eingabe" height="120" width="400"></p>
-
-
+</ul>
+<br>
+<a name="toolbar"><h2>Anzeigeoptionen in der Toolbar</h2></a>
+<ul> <img src="../../pics/tool.gif" alt="der Startbildschrim">
+<br><br>
+<ul>
+<table>
+<tr><td><img src="../../pics/new.gif" alt="neu"> </td><td width="10"></td><td> neues Modul &ouml;ffnen</td></tr>
+<tr><td><img src="../../pics/open.gif" alt="&ouml;ffnen"> </td><td width="10"></td><td> jalgo Datei laden</td></tr>
+<tr><td><img src="../../pics/save.gif" alt="speichern"> </td><td width="10"></td><td> jalgo Datei speichern</td></tr>
+<tr><td><img src="../../pics/save_as.gif" alt="speichern als"> </td><td width="10"></td><td> jalgo Datei speichern als</td></tr>
+<tr><td><img src="../../pics/undo.gif" alt="r&uuml;ckg&auml;ngig"> </td><td width="10"></td><td> Letzten Vorgang r&uuml;ckg&auml;ngig machen</td></tr>
+<tr><td><img src="../../pics/redo.gif" alt="wiederholen"> </td><td width="10"></td><td> r&uuml;ckg&auml;ngig gemachte Vorg&auml;nge wiederholen</td></tr>
+<tr><td><img src="../../pics/reinit.gif" alt="neu initialisieren"> </td><td width="10"></td><td> Hoare Modul neu initialisieren</td></tr>
+<tr><td><img src="../../pics/CNull.gif" alt="c0 laden"> </td><td width="10"></td><td> c0 Programm laden</td></tr>
+<tr><td><img src="../../pics/delnode.gif" alt="teilbaum l&ouml;schen"> </td><td width="10"></td><td> Teilbaum l&ouml;schen</td></tr>
+<tr><td><img src="../../pics/resetZoom.gif" alt="zoom zur&uuml;cksetzen"> </td><td width="10"></td><td> Zoomwert auf Standart Wert zur&uuml;cksetzen</td></tr>
+<tr><td><img src="../../pics/zoomIn.gif" alt="vergr&ouml;&szlig;ern"> </td><td width="10"></td><td> Graph Ansicht vergr&ouml;&szlig;ern (mit Punktwahl)</td></tr>
+<tr><td><img src="../../pics/zoomOut.gif" alt="verkleinern"> </td><td width="10"></td><td> Graph Ansicht verkleinern (mit Punktwahl)</td></tr>
+<tr><td><img src="../../pics/normalMouse.gif" alt="zoom Modus verlassen"> </td><td width="10"></td><td> Zoom Modus nach Vergr&ouml;&szlig;ern/Verkleinern wieder verlassen</td></tr>
+<tr><td><img src="../../pics/toggleSplitter.gif" alt="seitenleiste wegklappen"> </td><td width="10"></td><td> den Graph alleine zeigen, bzw. Seitenmen&uuml;s wieder einblenden</td></tr>
+</table>
+</ul>
+</ul>
+<br>
+<a name="menu"><h2>Anzeigeoptionen in des Men&uuml;s</h2></a>
+<ul> <img src="../../pics/menu.gif" alt="der Startbildschrim">
+<br><br>
+<ul>
+<table>
+<tr><td><img src="../../pics/reinit.gif" alt="neu initialisieren"> </td><td width="10"></td><td> Hoare Modul neu initialisieren</td></tr>
+<tr><td><img src="../../pics/CNull.gif" alt="c0 laden"> </td><td width="10"></td><td> c0 Programm laden</td></tr>
+<tr><td><img src="../../pics/undo.gif" alt="r&uuml;ckg&auml;ngig"> </td><td width="10"></td><td> Letzten Vorgang r&uuml;ckg&auml;ngig machen</td></tr>
+<tr><td><img src="../../pics/redo.gif" alt="wiederholen"> </td><td width="10"></td><td> r&uuml;ckg&auml;ngig gemachte Vorg&auml;nge wiederholen</td></tr>
+<tr><td><img src="../../pics/beamer.gif" alt="wiederholen"> </td><td width="10"></td><td> In den Beamer Modus schalten (Schrift und Ansichtselemente werden gr&ouml;&szlig;er, um das Programm auf einem Beamer zu verwenden)</td></tr>
+</table>
+</ul>
+</ul>
+<br>
+<a name="tasten"><h2>Tastenkombinationen</h2></a>
+<ul>
+<ul>
+<table>
+<tr><td>Entfernen (ENTF)</td><td width="10"></td><td>bei selektierter Zelle, Teilbaum l&ouml;schen</td></tr>
+<tr><td>Backspace (&#8249--)</td><td width="10"></td><td>bei selektierter Zelle, Teilbaum l&ouml;schen</td></tr>
+<tr><td>Alt + Mausrad</td><td width="10"></td><td>schneller Zoom des Graphes in beide Richtungen</td></tr>
+<tr><td>Steuerung(Strg/Ctrl) + Enter</td><td width="10"></td><td>OK Button im Formeleditor</td></tr>
+<tr><td>rechter Mausklick im Zoom Modus</td><td width="10"></td><td>Zoom Modus nach Vergr&ouml;&szlig;ern/Verkleinern wieder verlassen</td></tr>
+</table>
+</ul>
+</ul>
 	</body>
 </html>

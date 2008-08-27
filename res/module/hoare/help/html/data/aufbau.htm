@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<title>Aufbau</title>
+	</head>
+	<body topmargin="30" leftmargin="30">
+
+	<H1>Aufbau des Beweisbaums</H1>
+	<a name="knotenkanten"><h2>Kanten und normale Knoten</h2></a>
+	<h3>Knoten</h3>
+	<img src="../../pics/Startknoten.png" alt="Knoten" align="right">
+	<p>Ein normaler Knoten zeigt einen Ausschnitt des Quelltexts, der zu diesem Knoten geh&ouml;rt und davor den Variablennamen der Vor- und dahinter den der Nachbedingung.</p>
+	<h3>aufgeklappter Knoten</h3>
+	<img src="../../pics/Startknoten mit Vor- und Nachbedingung gross.png" alt="aufgeklappter Knoten" align="right">
+	<p>Aufgeklappt zeigt ein Knoten den vollen zum Knoten geh&ouml;renden Quelltext und den Inhalt der Vor- und Nachbedingungsvariablen oder nur den Variablennamen, wenn die Variable noch nicht gef&uuml;llt ist. Die Vorbedingung ist <span style="color:green">gr&uuml;n</span> und oberhalb des Quelltexts dargestellt, w&auml;hrend die Nachbedingung unterhalb des Quelltexts und <span style="color:red">rot</span> ist.</p>
+	<h3>Kanten</h3>
+	<img src="../../pics/erste Regelanwendung (SN) grosser Knoten.png" alt="Knoten mit Kanten" align="right">
+	<p>An den Kanten steht eine Abk&uuml;rzung der Regel, die angewendet wurde. Au&szlig;erdem sieht man durch sie, welcher Knoten sich aus welchen anderen Knoten ergibt.</p>
+	<a name="impl"><h2>Implikationsknoten</h2></a>
+	<img src="../../pics/Implication.jpg" alt="Implikationsknoten" align="right">
+	<p>Wie man schon daran sieht, dass sie eckig sind, sind Implikationsknoten etwas besonderes.<br>
+	Besonders an ihnen ist, dass die darin dargestellte Implikation bei &Auml;nderung der Vor- oder Nachbedingung evaluiert, d.h. auf G&uuml;ltigkeit gepr&uuml;ft wird.
+	W&auml;hrend der &Uuml;berpr&uuml;fung wird der Knoten gelb gef&auml;rbt, was bei komplexen Berechnungen und vielen Variablen etwas l&auml;nger dauern kann.
+	</p>
+	
+	<a name="colour"><h2>Farbgebung</h2></a>
+	<p>
+	Die Knoten im Baum k&ouml;nnen vier Farben annehmen:
+	<table border="1px" cellpadding="2" cellspacing="0">
+		<tr><th>Farbe</th><th>Bedeutung</th></tr>
+		<tr><td><span style="color:red">rot</span></td><td>Der Knoten muss noch bearbeitet werden. Es fehlt entweder noch Vor- oder Nachbedingung oder es muss noch eine Regel angewendet werden<br>Zus&auml;tzlich werden <a href="#impl">Implikationsknoten</a> und Zuweisungsknoten rot, wenn die Implikation falsch ist/die Zuweisung nicht stimmt. Als weiterer Spezialfall wird ein Iterationsknoten rot, wenn die Nachbedingung nicht von der Form P&and;&not;&Pi; ist.</td></tr>
+		<tr><td><span style="color:grey">grau</span></td><td>Der Knoten muss nicht mehr bearbeitet werden, aber weiter oben im Baum sind noch rote Knoten.</td></tr>
+		<tr><td><span style="color:green">gr&uuml;n</span></td><td>Der Knoten und alle im Baum dar&uuml;berliegenden m&uuml;ssen nicht mehr bearbeitet werden.</td></tr>
+		<tr><td><span style="color:yellow">gelb</span></td><td>Der Knoten wird gerade evaluiert. Nur bei <a href="#impl">Implikationsknoten</a> vorhanden.</td></tr>
+	</table>
+	</p>
+	
+	</body>
+</html>

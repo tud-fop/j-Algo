@@ -1,155 +1,124 @@
 package org.jalgo.module.hoare.control;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.RejectedExecutionException;
-import org.jalgo.module.hoare.model.Assertion;
+import java.util.HashMap;
 
+import org.jalgo.module.hoare.constants.TextStyle;
+import org.jalgo.module.hoare.model.VerificationFormula;
+
+/**
+ * implementation of the interface Evaluation for djep.
+ * manages all <code>EvaluationThread</code>s and forwards the messages send by them to the <code>Controller</code>
+ *
+ * @author Johannes
+ */
 public class JepEvaluator implements Evaluation {
-
-	private int max_eval_time = Integer.MAX_VALUE;
-
-	private ProgramControl programControl = null;
-
-	private Map<Integer, EvaluationThread> threadTable = new HashMap<Integer, EvaluationThread>();
+	
 	private int base = 50;
+	private int maxEvalTime = 15;
+	private Controller controller;
+	private Map<Integer, EvaluationThread> threadTable = new HashMap<Integer, EvaluationThread>();
 
 	/**
-	 * Constructor
-	 * 
-	 * @param time -
-	 *            Time for evaluation
-	 * @param base -
-	 *            Range of numbers for testcases
-	 * @param control -
-	 *            ProgramControl to forward results and errors to
+	 * creates a new instance of JepEvaluator
+	 *
+	 * @param base
+	 *		number of ciphers to test
+	 * @param maxEvalTime
+	 *		maximum time an evaluation may last in seconds
+	 * @param controller
+	 *		the <code>Controller</code>, that results and errors will be send to
 	 */
-	public JepEvaluator(int time, int base, ProgramControl control) {
-		this.max_eval_time = time;
+	public JepEvaluator(int base, int maxEvalTime, Controller controller){
 		this.base = base;
-		this.programControl = control;
+		this.maxEvalTime = maxEvalTime;
+		this.controller = controller;
 	}
 
 	/**
-	 * Constructor
-	 * 
-	 * @param time -
-	 *            Time for evaluation
-	 * @param base -
-	 *            Range of numbers for testcases
+	 * will send results and errors to the <code>Controller</code>
+	 *
+	 * @param id
+	 *		index of the node/<code>VerificationFormula</code> that was evaluated
+	 * @param result
+	 * 		<code>false</code> for errors or evaluation failed
+	 * @param message
+	 *		the message for the error or result
 	 */
-	public JepEvaluator(int time, int base) {
-		this.max_eval_time = time;
-		this.base = base;
-	}
+	public void report(int id, boolean result, String message){
+		// just to be sure it's one of our threads ...
+		if( threadTable.containsKey(id) ){
+			// forward message and result to controller
+			controller.report( id, result, message );
 
-	public int getEvaluations() {
-		return this.threadTable.size();
-	}
-
-	/**
-	 * Starts a new thread with a given ID which evaluates an implication of two
-	 * assertions. The thread will report its outcome by calling putResult(int,
-	 * boolean).
-	 * 
-	 * @see EvaluationThread
-	 * @see putResult(int, boolean)
-	 * @param id -
-	 *            the id for the new thread
-	 * @param assertion_source -
-	 *            left side of implication
-	 * @param assertion_target -
-	 *            right side of implication
-	 * @throws RejectedExecutionException,
-	 *             NullPointerException
-	 */
-	public void evaluate(int id, Assertion assertion_source,
-			Assertion assertion_target) throws RejectedExecutionException,
-			NullPointerException {
-		if (max_eval_time == 0)
-			return; // If evaluationtime is set to zero do nothing
-		
-		// If the threadTable already contains the id
-		// the user called the avaluation twice on the same node (id)
-		// -> canel the first evaluation
-		if(threadTable.containsKey(id)) killThread(id);
-			
-		EvaluationThread my_thread = new EvaluationThread(assertion_source,
-				assertion_target, this, id, max_eval_time, base);
-		threadTable.put(id, my_thread); // Save ID and Thread for later killing
-		my_thread.start();
+			// thread should finish after this -> remove from threadTable
+			threadTable.remove(id);
+		}
 	}
 
 	/**
-	 * Tries to nicely stop the thread of the given id
-	 * @param id	-	Thread ID
+	 * will stop an evaluation with the given id.
+	 * this will call end() of the thread and remove it from the threadTable
+	 *
+	 * @param id
+	 *		this evaluation should be stopped
 	 */
 	public void killThread(int id){
-		if(threadTable.containsKey(id)){
+		if( threadTable.containsKey(id) ){
 			try {
-				// if killThread is called after the thread has finished this could cause a NullPointerException
 				threadTable.get(id).end();
-			} catch (Exception e) {
-				// Who gives a shit?
-				System.out.println(e.getStackTrace());
+			} catch( NullPointerException e ) {
+				// do nothing
 			}
 			threadTable.remove(id);
 		}
 	}
+
+	/**
+	 * will start an evaluaton of the given VerificationFormula
+	 *
+	 * @param vf
+	 *		the VerificationFormula to evaluate
+	 */
+	public void evaluate(VerificationFormula vf){
+		if( vf == null )
+			return;
 		
-	public void setController(ProgramControl control) {
-		this.programControl = control;
+		// check if this vf already gets evaluated -> kill this evaluation
+		if( threadTable.containsKey( vf.getId() ) ){
+			killThread( vf.getId() );
+		}
+		
+		//TODO: Pr�fen ob es korrekt ist ? sieht zu einfach aus
+		if (vf.isImplication()){
+			//System.out.println(vf.getPreAssertion(TextStyle.SOURCE)+"=>"+vf.getPostAssertion(TextStyle.SOURCE));
+
+			EvaluationThread thread = new EvaluationThread(vf.getId(),maxEvalTime, 
+		 		                                            base,this,
+		 		                                            vf.getPreAssertion(TextStyle.SOURCE),
+		 		                                            vf.getPostAssertion(TextStyle.SOURCE));  
+			threadTable.put(vf.getId(),thread);
+
+			thread.start();
+		}
+		
+		
+/*		// create new thread
+		EvaluationThread thread;
+		if( vf.getParent().getAppliedRule() == Rule.STRONGPRE ){
+			thread = new EvaluationThread( vf.getId(), maxEvalTime, base, this, vf.getParent().getPreAssertion(TextStyle.SOURCE), vf.getPreAssertion(TextStyle.SOURCE) );
+		}
+		else if( vf.getParent().getAppliedRule() == Rule.WEAKPOST ){
+			thread = new EvaluationThread( vf.getId(), maxEvalTime, base, this, vf.getPostAssertion(TextStyle.SOURCE), vf.getParent().getPostAssertion(TextStyle.SOURCE) );
+		}
+		else {
+				return;
+		}
+
+		// save id => thread for later killing
+		threadTable.put( vf.getId(), thread );
+
+		thread.start();*/
 	}
-
-	/**
-	 * Set the time limt for evaluation in seconds.
-	 * 
-	 * @param max_eval_time -
-	 *            e.g. 5
-	 */
-	public void setMax_eval_time(int max_eval_time) {
-		this.max_eval_time = max_eval_time;
-	}
-
-	/**
-	 * Adds a result to the result map consisting of thread-ID and result. Is
-	 * called by the evaluation-thread.
-	 * 
-	 * @param id
-	 * @param result
-	 */
-	public void putResult(int id, boolean result, Set<String> currentVars) {
-		if(threadTable.containsKey(id))
-			threadTable.remove(id);
-		if (programControl != null)
-			programControl.reportResult(id, result, currentVars.toString());
-	}
-
-	/**
-	 * An evaluationThread will report a caught Exception. The Exception will be
-	 * forwarded to ProgramControl.
-	 * 
-	 * @see setController(ProgramControl)
-	 * @param id -
-	 *            Thread id
-	 * @param message -
-	 *            Exception
-	 */
-	public void reportError(int id, String message) {
-		if(threadTable.containsKey(id))
-			threadTable.remove(id);
-		if (programControl != null)
-			programControl.reportError(id, message);
-	}
-
-	/**
-	 * Set the range for evaluation e.g. 50
-	 * Variables will be set to values from -base/2 to base/2
-	 */
-	public void setBase(int base) {
-		this.base = base;
-
-	};
 
 }

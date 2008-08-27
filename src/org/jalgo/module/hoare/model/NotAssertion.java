@@ -1,52 +1,49 @@
 package org.jalgo.module.hoare.model;
 
-public class NotAssertion extends Assertion {
+/**
+ * Represents an Not in the assertiontree. It could only have one child assertion as operand.
+ * 
+ * @author Thomas
+ *
+ */
+
+class NotAssertion extends AbstractAssertion {
+
+	private static final long serialVersionUID = -4594430915140006774L;
+	private AbstractAssertion operand;
+	
+	/**
+	 * creates an NotAssertion with one Assertion tree
+	 *  
+	 * @param operand
+	 *     the child assertion to be negated
+	 */
+	public NotAssertion(AbstractAssertion operand) {
+		this.operand = operand;
+	}
 
 	/**
-	 * 
+	 * @see org.jalgo.module.hoare.model.AbstractAssertion#includesVariable()
 	 */
-	private static final long serialVersionUID = 4542358001110709809L;
-
-	private Assertion operand; // TODO: ins EKLDia einf?gen
-
-	// TODO: Konstruktor ins EKLDia einf?gen
-	public NotAssertion(Assertion operand) {
-
-		this.operand = operand;
+	@Override
+	public boolean verifiable() {
+		return operand.verifiable();
 	}
 
-	public Assertion getOperand() {
-		return operand;
-	}
-
-	public void setOperand(Assertion operand) {
-		this.operand = operand;
-	}
-
-	public String getHTMLString() {
-		return "&#0172" + operand.getHTMLString();
-	}
-
+	/**
+	 * @see org.jalgo.module.hoare.model.AbstractAssertion#toString()
+	 */
+	@Override
 	public String toString() {
-		return "!" + operand.toString(); // ASCII: 170
+		return "!"+operand.toString();
 	}
 
+	/**
+	 * @see org.jalgo.module.hoare.model.AbstractAssertion#toText(boolean)
+	 */
 	@Override
-	public Assertion copy() {
-		return new NotAssertion(operand.copy());
+	public String toText(boolean full) {
+		return "\u00ac(" + operand.toText(full)+")";
 	}
 
-	@Override
-	public void replaceTarget(Assertion o, Assertion n) {
-		operand.replaceTarget(o, n);
-
-		if (operand == o)
-			operand = n;
-
-	}
-
-	@Override
-	public boolean containsDummyAssertion() {
-		return operand.containsDummyAssertion();
-	}
 }
