@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de">
+
+	<!--APP-->
+		<tocitem text="Algebraisches Pfadproblem"	   	target="app" expand="false">
+			<tocitem text="Das APP-Modul"				target="app">
+				<tocitem text="Einleitung" 		   		target="app.introduction"/>
+				<tocitem text="Funktionsübersicht" 		target="app.overview"/>
+				<tocitem text="Modulstart" 				target="app.start"/>
+			</tocitem>
+			<tocitem text="Semiring auswählen" 					target="app.semiring"/>
+			<tocitem text="Graph erstellen" 			target="app.edit">
+				<tocitem text="Zeichenfläche" 			target="app.edit.drawarea"/>
+				<tocitem text="Kantenliste" 			target="app.edit.edgelist"/>
+				<tocitem text="Algorithmus starten" 	target="app.edit.start"/>
+			</tocitem>
+			<tocitem text="Ablauf des Algorithmus"		target="app.run">
+				<tocitem text="Ablaufsteuerung" 		target="app.run.runcontrol"/>
+				<tocitem text="Bedeutung der Farben"	target="app.run.colour"/>
+			</tocitem>
+			<tocitem text="Beispiel"					target="app.example">
+				<tocitem text="Semiring"		 		target="app.example.semiring"/>
+				<tocitem text="Graph erstellen"			target="app.example.edit"/>
+				<tocitem text="Algorithmusablauf" 		target="app.example.run"/>
+				<tocitem text="Berechnung"				target="app.example.calc"/>
+			</tocitem>
+		</tocitem>
+</toc>

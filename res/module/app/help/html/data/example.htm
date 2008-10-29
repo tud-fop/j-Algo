@@ -1,0 +1,81 @@
+<html>
+         <head>
+                 <title>Einleitung</title>
+                 <link rel="stylesheet" type="text/css" href="../../../style.css" title="Style">
+                 <base target="_self">
+         </head>
+
+<body topmargin="30" leftmargin="30">
+
+<H2><a name="example">Beispiel</a></H2>
+<p align="left">
+ Dieser Abschnitt f&uuml;hrt Schritt f&uuml;r Schritt in die Verwendung des APP-Moduls ein.
+ Daf&uuml;r wird beispielhaft ein k&uuml;rzestes Wege-Problem erstellt und die Berechnung durchgef&uuml;hrt.
+</p>
+
+<H3><a name="semiring">Das k&uuml;rzeste Wege-Problem</a></H3>
+
+<P align="left">
+ W&auml;hlen Sie als Semiring "K&uuml;rzestes Wege Problem" aus und klicken Sie auf die Schaltfl&auml;che "OK".
+ Die Programmoberfl&auml;che zum Eingeben des Graphen wird aktiviert.
+</p>
+<br>
+
+<div align="center">
+<img src="../../pics/semiring.png" alt="Semiringauswahl" border="0">
+</div>
+<br>
+
+<H3><a name="edit">Graph erstellen</a></H3>
+<P align="left">
+ Klicken Sie auf die Zeichenfl&auml;che um neue Knoten zu erstellen.
+ Nach Auswahl des Kanten-Editier-Modus werden die Kanten vom Startknoten zum Endknoten gezogen.
+ Mit einem Doppelklick auf die Beschriftung kann diese ge&auml;ndert werden.
+</P>
+<br>
+
+<div align="center">
+<img src="../../pics/exampleedit.png" alt="Knoten und Kanten erstellen" border="0">
+</div>
+<br>
+
+<H3><a name="run">Algorithmus durchf&uuml;hren</a></H3>
+<P align="left">
+ Ist der Graph erstellt, wechseln Sie mit der "Durchf&uuml;hren"-Schaltfl&auml;che zum Algorithmus-Ablauf-Modus.
+</P>
+<br>
+
+<div align="center">
+<img src="../../pics/togglebutton.png" alt="Umschalter f&uuml;r Bearbeiten- und Ablaufmodus" border="0">
+</div>
+
+<P align="left">
+ Mit den Vor- und Zur&uuml;ck-Schaltfl&auml;chen k&ouml;nnen Sie nun durch die einzelnen Schritte des Algorithmus navigieren.
+ Der Aho-Algorithmus w&auml;hlt einen Zwischenknoten, der rot markiert wird. Dann wird eine neue Matrix berechnet,
+ indem je ein Knoten als Anfangs- bzw. Endknoten gew&auml;hlt wird.
+ <br>
+ <div align="center">
+ <img src="../../pics/examplerun1.png" alt="Graph und Matrix mit F&auml;rbung" border="0">
+ </div>
+ <br>
+</P>
+
+<H3><a name="calc">Die Berechnung</a></H3>
+<P align="left">
+ Die durch die Formel gezeigte Berechnung ermitteln nun,
+ ob es einen k&uuml;rzeren Weg &uuml;ber den gew&auml;hlten Zwischenknoten vom Anfangs- zum Endknoten gibt.
+ <br>
+ <div align="center">
+ <img src="../../pics/exampleformular.png" alt="Formel" border="0">
+ </div>
+ <br>
+ Ist das der Fall, wird die rechte Matrix mit dem neuen Wert an der Schwarz markierten Position aktualisiert.
+ Andernfalls wird der urspr&uuml;ngliche Wert, der anfangs grau dargestellt wird, &uuml;bernommen.
+ <br>
+ <br>
+ Eine Matrix stellt die Ergebnisse der Berechnungen f&uuml;r alle m&ouml;glichen Kombinationen von Anfangs- und Endknoten f&uuml;r einen bestimmten Zwischenknoten dar.
+ Mit den Gro&szlig;en Schritten springt die Berechnung zum Anfang der n&auml;chsten oder der vorhergehenden bzw. aktuellen Matrix.
+</P>
+
+</body>
+</html>

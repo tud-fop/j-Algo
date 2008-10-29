@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+	<mapID xml:lang="de"/>
+
+	<!-- APP -->
+	<mapID target="app"    	    	    	url="../html/data/overview.htm"/>
+	<mapID target="app.introduction"    	url="../html/data/overview.htm#introduction"/>
+	<mapID target="app.overview"			url="../html/data/overview.htm#overview"/>
+	<mapID target="app.start"				url="../html/data/overview.htm#start"/>
+	<mapID target="app.semiring"			url="../html/data/semiring.htm"/>
+	<mapID target="app.edit"				url="../html/data/graphedit.htm"/>
+	<mapID target="app.edit.drawarea"		url="../html/data/graphedit.htm#drawarea"/>
+	<mapID target="app.edit.edgelist"		url="../html/data/graphedit.htm#edgelist"/>
+	<mapID target="app.edit.start"			url="../html/data/graphedit.htm#start"/>
+	<mapID target="app.run"					url="../html/data/run.htm"/>	
+	<mapID target="app.run.runcontrol"		url="../html/data/run.htm#runcontrol"/>
+	<mapID target="app.run.colour"			url="../html/data/run.htm#colour"/>
+	<mapID target="app.example"				url="../html/data/example.htm"/>
+	<mapID target="app.example.semiring"	url="../html/data/example.htm#semiring"/>
+	<mapID target="app.example.edit"		url="../html/data/example.htm#edit"/>
+	<mapID target="app.example.run"			url="../html/data/example.htm#run"/>
+	<mapID target="app.example.calc"		url="../html/data/example.htm#calc"/>
+
+	<!-- images -->
+	<mapID target="icon" url="../../images/logo.gif"/>
+</map>

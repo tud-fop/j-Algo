@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE index
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/index_1_0.dtd">
+
+<index version="1.0">
+	<!--APP-->
+    <indexitem text="Algebraisches Pfadproblem" expand="false">
+		<indexitem text="Ablauf des Algorithmus"	target="app.run"/>
+		<indexitem text="Ablaufsteuerung" 			target="app.run.runcontrol"/>
+		<indexitem text="Algorithmusablauf" 		target="app.example.run"/>
+		<indexitem text="Algorithmus starten" 		target="app.edit.start"/>
+		<indexitem text="Beispiel"					target="app.example"/>
+		<indexitem text="Beispielgraph erstellen"	target="app.example.edit"/>
+		<indexitem text="Beispielsemiring"			target="app.example.semiring"/>
+		<indexitem text="Berechnung"				target="app.example.calc"/>
+    	<indexitem text="Das APP-Modul"				target="app"/>
+		<indexitem text="Bedeutung der Farben"		target="app.run.colour"/>
+		<indexitem text="Einleitung" 				target="app"/>
+		<indexitem text="Funktionsübersicht" 		target="app.overview"/>
+		<indexitem text="Graph erstellen" 			target="app.edit"/>
+		<indexitem text="Kantenliste" 				target="app.edit.edgelist"/>
+		<indexitem text="Modulstart" 				target="app.start"/>
+		<indexitem text="Semiring auswählen"		target="app.semiring"/>
+		<indexitem text="Zeichenfläche" 			target="app.edit.drawarea"/>
+    </indexitem>
+</index>
+
