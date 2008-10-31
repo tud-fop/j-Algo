@@ -47,7 +47,7 @@ public class Conjunction extends Operation {
 	public DataType getNeutralElement() {
 		return new BooleanType(true);
 	}
-
+	
 	/**
 	 * @see Operation#getAbsorbingElement()
 	 */

@@ -279,16 +279,17 @@ public class WordAlgoRenderer extends SynDiaRenderer{
 		renderElem.setRenderValues(rv);
 
 		// Shadow for TerminalSymbol and Variable
-		if (renderElem.getClass() == TerminalSymbol.class
-				|| renderElem.getClass() == Variable.class) {
-
-			renderElem.setSize(width + 3, height + 3);
-			renderElem.setLocation(x - 1, y - 1);
-		} else {
+// The if-branch will never be executed... (michael p, 31/10/08)
+//		if (renderElem.getClass() == TerminalSymbol.class
+//				|| renderElem.getClass() == Variable.class) {
+//
+//			renderElem.setSize(width + 3, height + 3);
+//			renderElem.setLocation(x - 1, y - 1);
+//		} else {
 
 			renderElem.setSize(width, height);
 			renderElem.setLocation(x, y);
-		}
+//		}
 		// new position for the element
 		renderElem.update();
 

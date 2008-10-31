@@ -61,6 +61,16 @@ public abstract class Operation implements Serializable {
 	public abstract DataType getNeutralElement();
 
 	/**
+	 * Returns a descriptive string of the neutral element of the operation or <code>null</code> if no
+	 * such element exists.
+	 * 
+	 * @return the description of neutral element
+	 */
+	public String getNeutralElementDescription() {
+		return getNeutralElement().toString();
+	}	
+	
+	/**
 	 * Returns the absorbing element of the operation or <code>null</code> if
 	 * no such element exists.
 	 * 

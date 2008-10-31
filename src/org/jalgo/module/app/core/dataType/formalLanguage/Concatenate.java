@@ -29,6 +29,13 @@ public class Concatenate extends Operation {
 	public DataType getNeutralElement() {
 		return new FormalLanguage("\u03b5");
 	}
+	
+	/**
+	 * @see Operation#getNeutralElementDescription()
+	 */
+	public String getNeutralElementDescription() {
+		return "{"+getNeutralElement().toString()+"}";
+	}		
 
 	public DataType getAbsorbingElement() {
 		return new FormalLanguage();
