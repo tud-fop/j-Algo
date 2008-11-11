@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="j-Algo" default="dist" basedir=".">
 
-	<property name="VERSION_ID" value="20080827" />
+	<property name="VERSION_ID" value="20081105" />
 
   <property name="classpath" value=" ../extlibs/jh.jar ../extlibs/swing-layout-1.0.jar ../runtime/modules/avl.jar ../runtime/modules/dijkstra.jar ../runtime/modules/ebnf.jar ../runtime/modules/heapsort.jar ../runtime/modules/hoare.jar ../runtime/modules/kmp.jar  ../runtime/modules/pulsemem.jar ../runtime/modules/app.jar" />
 	<property name="module_classpath" value="../j-Algo.jar" />
