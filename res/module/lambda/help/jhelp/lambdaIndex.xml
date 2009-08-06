@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE index
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/index_1_0.dtd">
+
+<index version="1.0">
+    <!-- Test -->
+    <indexitem text="Lambda-Modul" expand="false">
+	
+		<indexitem text="Abkürzung erstellen"	target="example_shortcut"/>
+		<indexitem text="Abkürzungen"			target="work_shortcut"/>
+		<indexitem text="Arbeitsbildschirm" 	target="work"/>
+		<indexitem text="Arbeitsfeld"		target="work_render"/>
+		<indexitem text="Ausgabefeld"		target="work_output"/>		
+		<indexitem text="Beispielabläufe" 	target="example"/>
+		<indexitem text="Eingabefeld"		target="work_input"/>
+		<indexitem text="Funktionsumfang"		target="funcs"/>
+		<indexitem text="Statuszeile"			target="work_status"/>
+		<indexitem text="Term bearbeiten"		target="example_term"/>
+		<indexitem text="Term eingeben"			target="welcome_enter"/>
+		<indexitem text="Term laden"			target="welcome_load"/>
+		<indexitem text="Toolbar"				target="work_toolbar"/>
+		<indexitem text="Willkommensbildschirm" target="welcome"/>
+		<indexitem text="Überblick"				target="work_top"/>
+		<indexitem text="Überblick Modul"		target="top"/>		
+
+    </indexitem>
+</index>

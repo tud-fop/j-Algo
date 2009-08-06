@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<title>Arbeitsbildschirm</title>
+		<link rel="stylesheet" type="text/css" href="../../style.css" title="Style">
+		<base target="_self">
+	</head>
+		<h2>Der Arbeitsbildschirm</h2>
+		
+		<h3><a name="work_top_anchor">Überblick</a></h3>
+		<p>Der Arbeitsbildschirm gliedert sich in sechs Teile.</p>
+		<img src="../../pics/work_screen.jpg">
+		
+		<h3><a name="work_toolbar_anchor">1) Die Toolbar</a></h3>
+		<img src="../../pics/work_screen_toolbar.jpg"><br>
+		<p>Die Toolbar bietet folgende Funktionen:</p>
+		<ul>
+			<li><img src="../../pics/undoAll.gif"> Nimmt alle bisherigen Schritte zurück</li>
+			<li><img src="../../pics/undoStep.gif"> Nimmt einen Schritte zurück</li>
+			<li><img src="../../pics/performStep.gif"> Geht einen Schritt vorwärts</li>
+			<li><img src="../../pics/performAll.gif"> Geht alle bisherigen Schritte vorwärts</li>
+			<li><img src="../../pics/autoStep.jpg"> Führt einen automatischen Schritt aus</li>
+			<li><img src="../../pics/shortcutStep.png"> Führt einen Schritt auf Abkürzungen aus</li>
+			<li><img src="../../pics/finishAlg.gif"> Führt die Berechenung bis zum Ende aus</li>
+			<li><img src="../../pics/alpha.jpg"> Wendet eine Alpha-Konversion auf den selektierten (Teil-)Term an</li>
+			<li><img src="../../pics/beta.jpg"> Führt eine Beta-Reduktion auf dem selektierten (Teil-)Term aus</li>
+			<li><img src="../../pics/freeVar.jpg"> Zeigt alle freien Variablen des selektierten (Teil-)Terms an</li>
+			<li><img src="../../pics/boundVar.jpg"> Zeigt alle gebundenen Variablen des selektierten (Teil-)Terms an</li>
+			<li><img src="../../pics/brackets.jpg"> Macht alle Klammern grau</li>
+			<li><img src="../../pics/sc_brackets_x.jpg"> Löst eine Abkürzung auf</li>
+			<li><img src="../../pics/sc_brackets.jpg"> Versucht den selektierten (Teil-)Term durch eine definierte Abkürzung zu ersetzen</li>
+		</ul>
+		
+		<h3><a name="work_input_anchor">2) Das Eingabefeld</a></h3>
+		<img src="../../pics/work_screen_input.jpg"><br>
+		<p>Hier wird der Lambdaterm zu Beginn der Arbeit mit dem Modul eingegeben. Das Eingabefeld ersetz 
+		automatisch '\' durch Lambdas bei der Eingabe. Auf die Klammerung der Applikation kann hierbei 
+		verzichtet werden, sie wird gemäß Definition linksassoziativ eingefügt (Bsp.: '(\x.xxx)' zu '(\x.((xx)x))' ).
+		Mit dem <img src="../../pics/work_screen_input_ok.jpg" height=""> Button wird die Eingabe bestätigt. Der <img src="../../pics/work_screen_input_clear.jpg" height=""> Button löscht
+		das Eingabefeld, sowie Anzeige- und Ausgabefeld.</p>
+		
+		<h3><a name="work_output_anchor">3) Das Ausgabefeld</a></h3>
+		<img src="../../pics/work_screen_output.jpg"><br>
+		<p>Im Ausgabefeld werden alle durchgeführten Berechnungs- und Umformungsschritte aufgelistet. Bei erreichen der 
+		Normalform (welche noch Abkürzungen enthalten kann) wird der Term aus dem Anzeigefeld als letzter Schritt
+		mit in die Auflistung übernommen.</p>
+		
+		<h3><a name="work_shortcutlist_anchor">4) Die Abkürzungsliste</a></h3>
+		<img src="../../pics/work_screen_shortcut.jpg"><br>
+		<p>In der Abkürzungsliste werden alle definierten Abkürzungen aufgelistet. Nur diese und alle Zahlen (Bsp.: '<13>') 
+		können bei der Arbeit verwendet werden. Neben einer Reihe vordefinierter Abkürzungen ist es für den Nutzer möglich
+		eigene Abkürzungen zu definieren. Hier sei auf das Beispiel 'Abkürzungen erstellen' der Hilfe verwiesen.</p>
+		
+		<h3><a name="work_render_anchor">5) Das Arbeitsfeld</a></h3>
+		<img src="../../pics/work_screen_render.jpg"><br>
+		<p>Im Arbeitsfeld wird der aktuelle Term angezeigt. Hier können mit Hilfe der Maus Teilterme ausgewählt 
+		werden, die bearbeitet werden sollen. Ist kein Teilterm ausgewählt so wird auf dem gesamten Term gearbeitet.</p>
+		
+		<h3><a name="work_status_anchor">6) Die Statuszeile</a></h3>
+		<img src="../../pics/work_screen_statusbar.jpg"><br>
+		<p>In der Statuszeile werden Fehlermeldungen und Hinweise ausgegeben, welche beispielsweise auf eine ungültige Eingabe
+		hinweisen.</p>
+	</body>
+</html>

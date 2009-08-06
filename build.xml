@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+WARNING: This does not (yet) build the Lambda Calculus module. Before building a complete distribution, adapt the script accordingly.
+-->
+
 <project name="j-Algo" default="dist" basedir=".">
 
 	<property name="VERSION_ID" value="20081105" />

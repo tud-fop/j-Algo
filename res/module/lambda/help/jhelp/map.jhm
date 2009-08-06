@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+	<mapID xml:lang="de"/>
+
+	<!-- Lambda -->
+	<mapID target="overview" 	    	url="../html/data/overview.htm"/>
+	<mapID target="top" 	    		url="../html/data/overview.htm#top_anchor"/>
+	<mapID target="funcs"				url="../html/data/overview.htm#funcs_anchor"/>
+	
+	<mapID target="welcome" 	    	url="../html/data/welcomeScreen.htm"/>
+	<mapID target="welcome_enter" 	    url="../html/data/welcomeScreen.htm#welcome_enter_anchor"/>
+	<mapID target="welcome_load" 	    url="../html/data/welcomeScreen.htm#welcome_load_anchor"/>
+	
+	<mapID target="work" 	    		url="../html/data/workScreen.htm"/>
+	<mapID target="work_top" 	    	url="../html/data/workScreen.htm#work_top_anchor"/>
+	<mapID target="work_toolbar"   		url="../html/data/workScreen.htm#work_toolbar_anchor"/>
+	<mapID target="work_input" 	    	url="../html/data/workScreen.htm#work_input_anchor"/>
+	<mapID target="work_output" 	    url="../html/data/workScreen.htm#work_output_anchor"/>
+	<mapID target="work_shortcut" 	    url="../html/data/workScreen.htm#work_shortcutlist_anchor"/>
+	<mapID target="work_render" 	    url="../html/data/workScreen.htm#work_render_anchor"/>
+	<mapID target="work_status" 	    url="../html/data/workScreen.htm#work_status_anchor"/>
+	
+	<mapID target="example" 	    	url="../html/data/examples.htm"/>
+	<mapID target="example_term" 	    url="../html/data/examples.htm#example_term_anchor"/>
+	<mapID target="example_shortcut" 	url="../html/data/examples.htm#example_shortcut_anchor"/>
+	
+</map>

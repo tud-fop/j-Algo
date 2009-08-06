@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="res/module/pulsemem"/>
 	<classpathentry kind="lib" path="extlibs/jgraph.jar"/>
 	<classpathentry kind="lib" path="extlibs/neu-ext-1.1.1.b.jar"/>
+	<classpathentry kind="lib" path="extlibs/antlr-runtime-313-custom.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

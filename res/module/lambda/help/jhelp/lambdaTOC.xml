@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de">
+
+	<!-- Lambda -->
+			<tocitem text="Lambda-Modul"			target="overview"  expand="false">
+				<tocitem text="Überblick"			target="top"/>
+				<tocitem text="Funktionsumfang"		target="funcs"/>
+				<tocitem text="Willkommensbildschirm" target="welcome">
+					<tocitem text="Term eingeben"			target="welcome_enter"/>
+					<tocitem text="Term laden"				target="welcome_load"/>
+				</tocitem>
+				<tocitem text="Arbeitsbildschirm" 	target="work">
+					<tocitem text="Überblick"		target="work_top"/>
+					<tocitem text="Toolbar"			target="work_toolbar"/>
+					<tocitem text="Eingabefeld"		target="work_input"/>
+					<tocitem text="Ausgabefeld"		target="work_output"/>
+					<tocitem text="Abkürzungen"		target="work_shortcut"/>
+					<tocitem text="Arbeitsfeld"		target="work_render"/>
+					<tocitem text="Statuszeile"		target="work_status"/>
+				</tocitem>
+				<tocitem text="Beispielabläufe" target="example">
+					<tocitem text="Term bearbeiten"			target="example_term"/>
+					<tocitem text="Abkürzung erstellen"		target="example_shortcut"/>
+				</tocitem>
+			</tocitem>
+</toc>
