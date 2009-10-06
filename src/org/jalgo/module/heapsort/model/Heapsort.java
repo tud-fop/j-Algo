@@ -112,6 +112,7 @@ public class Heapsort extends Subject<ModelListener> implements Model {
 		oos.writeObject(sequence);
 		oos.flush();
 		oos = null;
+		oos.close();
 	}
 	
 	public static void main(String[] args) {

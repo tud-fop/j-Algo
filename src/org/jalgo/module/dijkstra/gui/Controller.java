@@ -256,7 +256,7 @@ extends Observable {
 
 			serializedObjects.writeInt(getEditingMode());
 			serializedObjects.writeObject(getGraph());
-
+			serializedObjects.close();
 		}
 		catch (IOException IOExc) {
 			java.lang.System.err.println(IOExc);
