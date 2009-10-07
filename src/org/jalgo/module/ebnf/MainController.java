@@ -357,8 +357,9 @@ public class MainController implements GUIConstants {
 	 * @see org.jalgo.main.AbstractModuleConnector#setDataFromFile(java.io.ByteArrayInputStream)
 	 */
 	public void setDataFromFile(ByteArrayInputStream data) {
+		ObjectInputStream in = null;
 		try {
-			ObjectInputStream in = new ObjectInputStream(data);
+			in = new ObjectInputStream(data);
 			try {
 				boolean isEbnf = (Boolean) in.readBoolean();
 
@@ -398,6 +399,12 @@ public class MainController implements GUIConstants {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) { } // ignore
+			}
 		}
 
 	}
