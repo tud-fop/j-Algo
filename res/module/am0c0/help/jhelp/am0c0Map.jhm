@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+	<mapID xml:lang="de"/>
+
+	<!-- Hoare			 -->
+	<mapID target="am0c0" 	    		 		url="../html/data/overview.htm"/>
+
+	<mapID target="am0c0.overview" 	    			url="../html/data/overview.htm"/>
+	<mapID target="am0c0.overview.einleitung"  		url="../html/data/overview.htm#einleitung"/>
+	<mapID target="am0c0.overview.funktionen" 		url="../html/data/overview.htm#funktionen"/>
+	
+	<mapID target="am0c0.editor"				url="../html/data/editor.htm"/>
+	<mapID target="am0c0.editor.uebersicht"			url="../html/data/editor.htm#uebersicht"/>
+	<mapID target="am0c0.editor.laden_speichern"		url="../html/data/editor.htm#laden_speichern"/>
+	<mapID target="am0c0.editor.codevalidierung"		url="../html/data/editor.htm#codevalidierung"/>
+	<mapID target="am0c0.editor.start"			url="../html/data/editor.htm#start"/>
+	
+	<mapID target="am0c0.transformator"			url="../html/data/transformator.htm"/>
+	<mapID target="am0c0.transformator.uebersicht"		url="../html/data/transformator.htm#uebersicht"/>
+	<mapID target="am0c0.transformator.schritt_ausfuehren"	url="../html/data/transformator.htm#schritt_ausfuehren"/>
+	<mapID target="am0c0.transformator.nach_transformation"	url="../html/data/transformator.htm#nach_transformation"/>
+	
+	<mapID target="am0c0.simulator"				url="../html/data/simulator.htm"/>
+	<mapID target="am0c0.simulator.uebersicht"		url="../html/data/simulator.htm#uebersicht"/>
+	<mapID target="am0c0.simulator.initiale_konfiguration"	url="../html/data/simulator.htm#initiale_konfiguration"/>
+	<mapID target="am0c0.simulator.schritt_ausfuehren"	url="../html/data/simulator.htm#schritt_ausfuehren"/>
+	
+	<mapID target="am0c0.presentation_mode"			url="../html/data/presentation_mode.htm"/>
+
+</map>

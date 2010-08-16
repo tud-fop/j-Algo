@@ -1,0 +1,17 @@
+/* ggT - Klausuraufgabe */
+#include <stdio.h>
+
+int main() {
+	int a, b, h;
+	scanf("%i", &a);
+	scanf("%i", &b);
+	if (b > 0) {
+		while (b > 0) {
+			h = a % b;
+			a = b;
+			b = h;			
+		}
+		printf("%d", a);
+	}
+	return 0;
+}

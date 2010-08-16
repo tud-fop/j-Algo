@@ -1,0 +1,15 @@
+/* prog - Klausuraufgabe */
+#include <stdio.h>
+
+int main() {
+	int x, y, z;
+	z = 1;
+	scanf("%i", &x);
+	scanf("%i", &y);
+	while (x > y) {
+		z = y * z;
+		x = x - 1;			
+	}
+	printf("%d", z);	
+	return 0;
+}

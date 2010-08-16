@@ -1,0 +1,9 @@
+READ 1;
+READ 2;
+LOAD 1;
+LOAD 2;
+LIT 0;
+SUB;
+JMC 9;
+JMP 5;
+WRITE 2;

@@ -1,0 +1,14 @@
+/* Div2 */
+#include <stdio.h>
+
+int main() {
+	int x, y;
+	scanf("%i", &x);
+	y = 0;
+	while (x > 0) {
+		if (x / 2 * 2 == x) y = y + 1;
+		x = x - 1;
+	}
+	printf("%d", y);
+	return 0;
+}
