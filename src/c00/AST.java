@@ -5,9 +5,9 @@ package c00;
 
 import java.io.IOException;
 
-import org.antlr.runtime.*;
-import org.antlr.runtime.debug.ParseTreeBuilder;
-import org.antlr.runtime.tree.ParseTree;
+import o3b.antlr.runtime.*;
+import o3b.antlr.runtime.debug.ParseTreeBuilder;
+import o3b.antlr.runtime.tree.ParseTree;
 
 import c00.parser.*;
 
@@ -40,7 +40,7 @@ public abstract class AST {
 			return parse(parser, startSymbol);
 		}
 		catch (IOException e) {
-			err.append("IOError");
+			if(err!=null) err.append("IOError");
 		}
 
 		return null;

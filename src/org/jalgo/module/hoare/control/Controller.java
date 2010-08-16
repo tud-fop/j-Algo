@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-import org.antlr.runtime.RecognitionException;
+import o3b.antlr.runtime.RecognitionException;
 import org.jalgo.main.util.Messages;
 import org.jalgo.main.AbstractModuleConnector.SaveStatus;
 import org.jalgo.module.hoare.ModuleConnector;

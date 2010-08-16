@@ -25,7 +25,7 @@ package org.jalgo.module.pulsemem;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.antlr.runtime.RecognitionException;
+import o3b.antlr.runtime.RecognitionException;
 import org.jalgo.module.pulsemem.core.CodeGenerator;
 import org.jalgo.module.pulsemem.core.PulsMemLine;
 import org.jalgo.module.pulsemem.core.myInterpreter;

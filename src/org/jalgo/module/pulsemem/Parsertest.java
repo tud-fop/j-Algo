@@ -1,7 +1,7 @@
 package org.jalgo.module.pulsemem;
 
 
-import org.antlr.runtime.RecognitionException;
+import o3b.antlr.runtime.RecognitionException;
 import org.jalgo.module.pulsemem.core.CodeGenerator;
 import org.jalgo.module.pulsemem.core.PulsMemLine;
 import org.jalgo.module.pulsemem.core.bufferedIOSimulation;
