@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-WARNING: This does not (yet) build the Lambda Calculus module. Before building a complete distribution, adapt the script accordingly.
--->
-
 <project name="j-Algo" default="dist" basedir=".">
+	<tstamp>
+		<format property="VERSION_ID" pattern="yyyyMMddHHmm" />
+	</tstamp>
 
-	<property name="VERSION_ID" value="20081105" />
-
-  <property name="classpath" value=" ../extlibs/jh.jar ../extlibs/swing-layout-1.0.jar ../runtime/modules/avl.jar ../runtime/modules/dijkstra.jar ../runtime/modules/ebnf.jar ../runtime/modules/heapsort.jar ../runtime/modules/hoare.jar ../runtime/modules/kmp.jar  ../runtime/modules/pulsemem.jar ../runtime/modules/app.jar" />
+	<property name="classpath" value=" ../extlibs/jh.jar ../extlibs/swing-layout-1.0.jar ../runtime/modules/avl.jar ../runtime/modules/dijkstra.jar ../runtime/modules/ebnf.jar ../runtime/modules/heapsort.jar ../runtime/modules/hoare.jar ../runtime/modules/kmp.jar  ../runtime/modules/pulsemem.jar ../runtime/modules/app.jar ../runtime/modules/am0c0.jar ../runtime/modules/unifikation.jar ../runtime/modules/lambda.jar ../runtime/modules/bfsdfs.jar" />
 	<property name="module_classpath" value="../j-Algo.jar" />
 
 	<property name="dist" location="dist" />
@@ -16,6 +13,10 @@ WARNING: This does not (yet) build the Lambda Calculus module. Before building a
 	<property name="bin" location="bin" />
 	<property name="res" location="res" />
 
+	<target name="clean">
+		<delete dir="${dist}" />
+	</target>
+	
 	<target name="dist" depends="dist_base,linux,macosx,windows">
 		<delete dir="${dist}/tmp" />
 	</target>
@@ -59,7 +60,7 @@ WARNING: This does not (yet) build the Lambda Calculus module. Before building a
 
 		<antcall target="module_jar">
 			<param name="modulename" value="hoare" />
-			<param name="classpath" value="${module_classpath} ../../extlibs/antlr-3.0b6.jar ../../extlibs/neu-ext-1.1.1.b.jar ../../extlibs/jep-2.4.1.b.jar ../../extlibs/parser.jar ../../extlibs/jgraph.jar"/>
+			<param name="classpath" value="${module_classpath} ../../extlibs/antlr-3.0b6.jar ../../extlibs/neu-ext-1.1.1.b.jar ../../extlibs/jep-2.4.1.b.jar ../../extlibs/parser.jar ../../extlibs/jgraph.jar" />
 		</antcall>
 		<copy todir="${dist}/hoare_${VERSION_ID}/extlibs">
 			<fileset dir="extlibs">
@@ -75,6 +76,60 @@ WARNING: This does not (yet) build the Lambda Calculus module. Before building a
 		<antcall target="module_pkg">
 			<param name="modulename" value="hoare" />
 		</antcall>
+
+		<antcall target="module_jar">
+			<param name="modulename" value="lambda" />
+			<param name="classpath" value="${module_classpath} ../../extlibs/antlr-runtime-313-custom.jar" />
+		</antcall>
+		<copy todir="${dist}/lambda_${VERSION_ID}/extlibs">
+			<fileset dir="extlibs">
+				<include name="antlr-runtime-313-custom.jar" />
+			</fileset>
+		</copy>
+		<antcall target="module_pkg">
+			<param name="modulename" value="lambda" />
+		</antcall>
+
+		<!-- ### BEGIN BUILD am0c0 -->
+		<antcall target="module_jar">
+			<param name="modulename" value="am0c0" />
+			<param name="classpath" value="${module_classpath} ../../extlibs/beaver-rt.jar ../../extlibs/commons-lang-2.5.jar" />
+		</antcall>
+		<copy todir="${dist}/am0c0_${VERSION_ID}/extlibs">
+			<fileset dir="extlibs">
+				<include name="beaver-rt.jar" />
+				<include name="commons-lang-2.5.jar" />
+			</fileset>
+		</copy>
+		<antcall target="module_pkg">
+			<param name="modulename" value="am0c0" />
+		</antcall>
+		<!-- ### END BUILD -->
+
+		<!-- ### BEGIN BUILD unifikation -->
+		<antcall target="module_jar">
+			<param name="modulename" value="unifikation" />
+			<param name="classpath" value="${module_classpath} ../../extlibs/antlr-runtime-3.2.jar" />
+		</antcall>
+		<copy todir="${dist}/unifikation_${VERSION_ID}/extlibs">
+			<fileset dir="extlibs">
+				<include name="antlr-runtime-3.2.jar" />
+			</fileset>
+		</copy>
+		<antcall target="module_pkg">
+			<param name="modulename" value="unifikation" />
+		</antcall>
+		<!-- ### END BUILD -->
+
+		<!-- ### BEGIN BUILD bfsdfs -->
+		<antcall target="module_jar">
+			<param name="modulename" value="bfsdfs" />
+			<param name="classpath" value="${module_classpath}" />
+		</antcall>
+		<antcall target="module_pkg">
+			<param name="modulename" value="bfsdfs" />
+		</antcall>
+		<!-- ### END BUILD -->
 
 		<antcall target="module_jar">
 			<param name="modulename" value="kmp" />
@@ -102,7 +157,7 @@ WARNING: This does not (yet) build the Lambda Calculus module. Before building a
 
 		<antcall target="module_jar">
 			<param name="modulename" value="app" />
-			<param name="classpath" value="${module_classpath}"/>
+			<param name="classpath" value="${module_classpath}" />
 		</antcall>
 		<antcall target="module_pkg">
 			<param name="modulename" value="app" />
@@ -124,6 +179,8 @@ WARNING: This does not (yet) build the Lambda Calculus module. Before building a
 
 		<copy todir="${dist}/linux/j-Algo" file="j-Algo.sh" />
 		<copy todir="${dist}/linux/j-Algo" file="j-Algo.ico" />
+		
+		<chmod file="${dist}/linux/j-Algo/j-Algo.sh" perm="+x" />
 
 		<tar tarfile="${dist}/j-Algo-linux-complete-${VERSION_ID}.tar" basedir="${dist}/linux/" />
 		<gzip zipfile="${dist}/j-Algo-linux-complete-${VERSION_ID}.tar.gz" src="${dist}/j-Algo-linux-complete-${VERSION_ID}.tar" />
