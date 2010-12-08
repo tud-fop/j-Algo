@@ -30,5 +30,6 @@
 	<classpathentry kind="lib" path="extlibs/beaver-rt.jar"/>
 	<classpathentry kind="lib" path="extlibs/commons-lang-2.5.jar"/>
 	<classpathentry kind="lib" path="extlibs/jflex.jar"/>
+	<classpathentry kind="lib" path="res/module/unifikation"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
