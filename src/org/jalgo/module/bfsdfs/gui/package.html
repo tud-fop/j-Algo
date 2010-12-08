@@ -1,0 +1,24 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains the <b>GUIController</b> which represents an interface between the GUI and the rest of
+the program. It controls user actions and observes the graph and the algorithm. Furthermore there are a few
+utility classes:
+<ul>
+<li><b>AddNodeAnimation</b> and <b>RemoveNodeAnimation</b> are used in the <b>NodeStackView</b> to fade the
+recently added / removed nodes in / out. They use a separate thread.</li>
+<li><b>PlayAnimation</b> is similar to the two above, but is used to play the algorithm.</li>
+<li><b>GraphAnimations</b> is used to calculate values that are needed to animate the <b>GraphView</b></li>
+<li><b>ComponentUtlility</b>, <b>GraphCalculation</b> and <b>GraphDrawing</b> contain methods that are used
+by classes from various gui packages.</li>
+<li><b>GUIConstants</b> contains all constant values, e.g. constant sizes and fonts.</li>
+<li><b>StatusMouseAdapter</b> is an extended MouseAdapter that is used to easily add a mouseover effect to
+various components that updates the status bar of J-Algo</li>
+<li><b>GUITest</b> is used to test the classes. One can write values to the error log or popup a new window
+etc.</li>
+</ul>
+</p>
+</body>
+</html>

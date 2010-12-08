@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE index
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/index_1_0.dtd">
+
+<index version="1.0">
+	<indexitem text="BFS/DFS" expand="false" target="bfsdfs">
+		<indexitem text="Algorithmensteuerung"  target="bfsdfs.algorithmcontrol"/>
+		<indexitem text="Algorithmus zurücksetzten"  target="bfsdfs.algorithmcontrol.undoAll"/>
+		<indexitem text="Animation abbrechen"  target="bfsdfs.algorithmcontrol.abortalgorithm"/>
+		<indexitem text="Animation an-/abschalten"  target="bfsdfs.other.animation"/>
+		<indexitem text="Animation starten"  target="bfsdfs.algorithmcontrol.performAll"/>
+		<indexitem text="Beamerbutton"  target="bfsdfs.other.beamerbutton"/>
+		<indexitem text="BFS-Tab"  target="bfsdfs.bfstab"/>
+		<indexitem text="Design-Tab"  target="bfsdfs.designtab"/>
+		<indexitem text="DFS-Tab"  target="bfsdfs.dfstab" />
+    	<indexitem text="Einleitung"  target="bfsdfs.overview.introduction"/>
+    	<indexitem text="Element löschen"  target="bfsdfs.designtab.delete"/>
+    	<indexitem text="Funktionsübersicht"  target="bfsdfs.overview.overview_functions"/>
+    	<indexitem text="Gerichtete Kante hinzufügen"  target="bfsdfs.designtab.edit_edge"/>
+    	<indexitem text="Graphen laden"  target="bfsdfs.ws.loadgraph"/>
+    	<indexitem text="Instanzenverwaltung"  target="bfsdfs.overview.overview_instance"/>
+    	<indexitem text="Knoten hinzufügen / verschieben"  target="bfsdfs.designtab.edit_node"/>
+    	<indexitem text="Nachfolger wählen"  target="bfsdfs.algorithmcontrol.permutation"/>
+    	<indexitem text="Neuen Graphen erstellen"  target="bfsdfs.ws.newgraph"/>
+    	<indexitem text="Rückgängig / Wiederholen"  target="bfsdfs.designtab.undo_redo"/>
+    	<indexitem text="Schritt vor"  target="bfsdfs.algorithmcontrol.performStep"/>
+    	<indexitem text="Schritt zurück"  target="bfsdfs.algorithmcontrol.undoStep"/>
+    	<indexitem text="Startknoten wählen"  target="bfsdfs.algorithmcontrol.startnodechooser"/>
+    	<indexitem text="Ungerichtete Kante hinzufügen"  target="bfsdfs.designtab.edit_edge"/>
+    	<indexitem text="Übersicht über die Modulfenster"  target="bfsdfs.overview.overview_modulewindow"/>
+    	<indexitem text="Willkommensbildschirm"  target="bfsdfs.ws"/>
+    	<indexitem text="Zufall"  target="bfsdfs.algorithmcontrol.chance"/>
+    	<indexitem text="Zuletzt geladenen Graphen laden"  target="bfsdfs.ws.loadlastgraph"/>			
+    </indexitem>
+</index>

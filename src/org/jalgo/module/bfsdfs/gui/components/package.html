@@ -1,0 +1,30 @@
+<html>
+<head>
+</head>
+<body>
+<p>
+This package contains every component that is visible in the module except the <b>GraphViews</b>. There
+are:
+<ul>
+<li>The <b>WelcomeScreen</b> with its three <b>WelcomeButtons</b>. Here you can create a new
+graph, load an existing graph from file or load the last opened graph.</li>
+<li>The <b>TabContainer</b> which represents a simple container class with a card layout that switches
+its content by pressing the according button. It handles the three windows <b>DesignTab</b>,
+<b>BFSTab</b> and <b>DFSTab</b>. Also, there is a beamer mode button that switches the sizes and
+fonts of the components.</li>
+<li>The <b>DesignTab</b> which is used to work with the graph. It is possible to add / move nodes,
+add edges and erase structures and also undo / redo these steps.</li>
+<li>The <b>AlgoTab</b> which is the super class of the other two windows <b>BFSTab</b> and
+<b>DFSTab</b>. Here it is possible to control the according algorithm meaning the commands reset, step
+back, step forward, play and cancel. Furthermore one can choose the start node, the order of the possible
+successors and toggle the non-determinism.<br>
+They also contain the <b>NodeStackView</b> that visualizes the stack / queue used by the algorithm.</li>
+<li>The <b>SuccessorChooser</b> from where the user can change the order of the current successors
+per Drag & Drop. It is associated with its two <b>ScrollArea</b>s which are necessary to scroll it.</li>
+<li>Some utility classes, such as <b>FormUtility</b> to create a nice <code>GridBagLayout</code> and the
+<b>NodeListRenderer</b> that renders the nodes in the start node chooser, so that it contains icons
+instead of numbers.</li>
+</ul>
+</p>
+</body>
+</html>

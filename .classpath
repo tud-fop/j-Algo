@@ -18,6 +18,7 @@
 	<classpathentry kind="lib" path="res/module/unifikation"/>
 	<classpathentry kind="lib" path="res/module/hoare"/>
 	<classpathentry kind="lib" path="res/module/pulsemem"/>
+	<classpathentry kind="lib" path="res/module/bfsdfs"/>
 	<classpathentry kind="lib" path="res/module/testModule"/>
 	<classpathentry kind="lib" path="extlibs/antlr-3.0b6.jar"/>
 	<classpathentry kind="lib" path="extlibs/jep-2.4.1.b.jar"/>

@@ -1,0 +1,11 @@
+<html>
+<head>
+</head>
+<body>
+<p>This package contains the <b>GraphView</b>, which is a component to show a graph or a tree. <b>InteractiveGraphView</b> and <b>TreeView</b> are child classes from this component, used to create interactivity for creating a graph and to show the result tree of an algorithm.</p>
+<p>To draw the elements of a graph or tree, the abstract class <b>VisualGraphElement</b> is used. There are different child classes like <b>VisualEdge</b> and <b>VisualNode</b> to draw edges and nodes. The child classes <b>DeletedEdge</b> and <b>DeletedNode</b> are used for the remove animation of this elements only. The classes <b>VisualTempNode</b> and <b>VisualTempEdge</b> are used for drawing a temporary graph element that is not created yet.</p>
+<p>This classes use the Strategy design pattern to enable different drawing styles. The abstract classes for this strategies are <b>EdgeDrawingStrategy</b> and <b>NodeDrawingStrategy</b>. The implementations are <b>GraphEdgeStrategy</b> and <b>GraphNodeStrategy</b> for drawing the graph elements and <b>AlgoEdgeStrategy</b>, <b>AlgoNodeStrategy</b> and <b>AlgoFinishedNodeStrategy</b> for drawing the different tree elements.</p>
+<p>For the edit modes of <b>InteractiveGraphView</b> and the animation types for graph or tree elements, there also are two enumerations, called <b>EditMode</b> and <b>AnimationType</b>.</p>
+<p>Finally, the class <b>Repainter</b> is used for the creation of timers, that repaint specified rectangles of different components after a short while. This is used for animations.</p> 
+</body>
+</html>

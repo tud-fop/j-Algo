@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de">
+    <tocitem text="BFS/DFS" expand="false" target="bfsdfs">
+
+    	<tocitem text="Einleitung"  target="bfsdfs.overview.introduction"/>
+    	<tocitem text="Funktionsübersicht"  target="bfsdfs.overview.overview_functions"/>
+    	<tocitem text="Übersicht über die Modulfenster"  target="bfsdfs.overview.overview_modulewindow"/>
+		<tocitem text="Instanzenverwaltung"  target="bfsdfs.overview.overview_instance"/>
+
+		<tocitem text="Willkommensbildschirm"  target="bfsdfs.ws">
+			<tocitem text="Neuen Graphen erstellen"  target="bfsdfs.ws.newgraph"/>
+			<tocitem text="Graphen laden"  target="bfsdfs.ws.loadgraph"/>
+			<tocitem text="Zuletzt geladenen Graphen laden"  target="bfsdfs.ws.loadlastgraph"/>
+		</tocitem>
+		
+		<tocitem text="Design-Tab"  target="bfsdfs.designtab">
+			<tocitem text="Rückgängig / Wiederholen"  target="bfsdfs.designtab.undo_redo"/>
+			<tocitem text="Knoten hinzufügen / verschieben"  target="bfsdfs.designtab.edit_node"/>
+			<tocitem text="Gerichtete Kante hinzufügen"  target="bfsdfs.designtab.edit_edge"/>
+			<tocitem text="Ungerichtete Kante hinzufügen"  target="bfsdfs.designtab.edit_edge"/>
+			<tocitem text="Element löschen"  target="bfsdfs.designtab.delete"/>
+		</tocitem>
+		
+		<tocitem text="BFS-Tab"  target="bfsdfs.bfstab" />
+		
+		<tocitem text="DFS-Tab"  target="bfsdfs.dfstab" />
+		
+		<tocitem text="Algorithmensteuerung"  target="bfsdfs.algorithmcontrol">
+			<tocitem text="Startknoten wählen"  target="bfsdfs.algorithmcontrol.startnodechooser"/>
+			<tocitem text="Zufall"  target="bfsdfs.algorithmcontrol.chance"/>
+			<tocitem text="Nachfolger wählen"  target="bfsdfs.algorithmcontrol.permutation"/>
+			<tocitem text="Algorithmus zurücksetzten"  target="bfsdfs.algorithmcontrol.undoAll"/>
+			<tocitem text="Schritt zurück"  target="bfsdfs.algorithmcontrol.undoStep"/>
+			<tocitem text="Schritt vor"  target="bfsdfs.algorithmcontrol.performStep"/>
+			<tocitem text="Animation starten"  target="bfsdfs.algorithmcontrol.performAll"/>
+			<tocitem text="Animation abbrechen"  target="bfsdfs.algorithmcontrol.abortalgorithm"/>
+		</tocitem>
+		
+		<tocitem text="Weitere Funktionalität"  target="bfsdfs.other">
+				<tocitem text="Beamerbutton"  target="bfsdfs.other.beamerbutton"/>
+				<tocitem text="Animation an-/abschalten"  target="bfsdfs.other.animation"/>
+		</tocitem>
+    </tocitem>
+</toc>

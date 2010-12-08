@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+	<mapID xml:lang="de"/>
+
+	<!-- BFS DFS -->
+	<mapID target="bfsdfs" 	  								url="../html/data/overview.htm"/>
+	<mapID target="bfsdfs.overview.introduction" 			url="../html/data/overview.htm#introduction"/>
+	<mapID target="bfsdfs.overview.overview_functions" 	  	url="../html/data/overview.htm#overview_functions"/>
+	<mapID target="bfsdfs.overview.overview_modulewindow" 	url="../html/data/overview.htm#overview_modulewindow"/>
+	<mapID target="bfsdfs.overview.overview_instance" 	url="../html/data/overview.htm#overview_instance"/>
+	
+	<mapID target="bfsdfs.ws" 								url="../html/data/welcomescreen.htm"/>
+	<mapID target="bfsdfs.ws.newgraph" 						url="../html/data/welcomescreen.htm#create_new_graph"/>
+	<mapID target="bfsdfs.ws.loadgraph" 					url="../html/data/welcomescreen.htm#load_graph"/>
+	<mapID target="bfsdfs.ws.loadlastgraph" 				url="../html/data/welcomescreen.htm#load_last_graph"/>
+	
+	<mapID target="bfsdfs.designtab" 						url="../html/data/designtab.htm"/>
+	<mapID target="bfsdfs.designtab.undo_redo" 				url="../html/data/designtab.htm#undo_redo"/>
+	<mapID target="bfsdfs.designtab.edit_node" 				url="../html/data/designtab.htm#edit_node"/>
+	<mapID target="bfsdfs.designtab.edit_edge" 				url="../html/data/designtab.htm#edit_edge"/>
+	<mapID target="bfsdfs.designtab.edit_edge" 				url="../html/data/designtab.htm#edit_double_edge"/>
+	<mapID target="bfsdfs.designtab.delete" 				url="../html/data/designtab.htm#delete_element"/>
+	
+	<mapID target="bfsdfs.bfstab" 							url="../html/data/bfstab.htm"/>
+	
+	<mapID target="bfsdfs.dfstab" 							url="../html/data/dfstab.htm"/>
+	
+	<mapID target="bfsdfs.algorithmcontrol" 					url="../html/data/algorithmcontrol.htm"/>
+	<mapID target="bfsdfs.algorithmcontrol.startnodechooser" 	url="../html/data/algorithmcontrol.htm#startnodechooser"/>
+	<mapID target="bfsdfs.algorithmcontrol.chance" 				url="../html/data/algorithmcontrol.htm#chance"/>
+	<mapID target="bfsdfs.algorithmcontrol.undoAll" 			url="../html/data/algorithmcontrol.htm#undoAll"/>
+	<mapID target="bfsdfs.algorithmcontrol.undoStep" 			url="../html/data/algorithmcontrol.htm#undoStep"/>
+	<mapID target="bfsdfs.algorithmcontrol.performStep" 		url="../html/data/algorithmcontrol.htm#performStep"/>
+	<mapID target="bfsdfs.algorithmcontrol.performAll" 			url="../html/data/algorithmcontrol.htm#performAll"/>
+	<mapID target="bfsdfs.algorithmcontrol.abortalgorithm" 		url="../html/data/algorithmcontrol.htm#abortalgorithm"/>
+	<mapID target="bfsdfs.algorithmcontrol.permutation" 		url="../html/data/algorithmcontrol.htm#permutation"/>
+	
+	<mapID target="bfsdfs.other" 							url="../html/data/otherfunction.htm"/>
+	<mapID target="bfsdfs.other.beamerbutton" 				url="../html/data/otherfunction.htm#beamerbutton"/>
+	<mapID target="bfsdfs.other.animation" 					url="../html/data/otherfunction.htm#animation"/>
+</map>
