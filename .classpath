@@ -12,10 +12,8 @@
 	<classpathentry kind="lib" path="res/module/heapsort"/>
 	<classpathentry kind="lib" path="res/module/kmp"/>
 	<classpathentry kind="lib" path="res/module/am0c0"/>
-	<classpathentry kind="lib" path="res/module/unifikation"/>
 	<classpathentry kind="lib" path="res/module/app"/>
 	<classpathentry kind="lib" path="res/module/lambda"/>
-	<classpathentry kind="lib" path="res/module/unifikation"/>
 	<classpathentry kind="lib" path="res/module/hoare"/>
 	<classpathentry kind="lib" path="res/module/pulsemem"/>
 	<classpathentry kind="lib" path="res/module/bfsdfs"/>
