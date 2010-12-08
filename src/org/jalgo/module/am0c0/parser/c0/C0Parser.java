@@ -68,6 +68,7 @@ public class C0Parser implements Parser {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String getErrorText() {
 		return errorText;
 	}
@@ -75,6 +76,7 @@ public class C0Parser implements Parser {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean parse(final String text) {
 		if (null == text) {
 			throw new NullPointerException("text must not be null");

@@ -22,7 +22,6 @@ import org.jalgo.module.am0c0.gui.jeditor.jedit.tokenmarker.Token;
  * This class is used by <code>CTokenMarker</code> to map keywords to ids.
  *
  * @author Slava Pestov, Mike Dillon
- * @version $Id: KeywordMap.java,v 1.1 2010/08/16 12:05:48 bjofrei Exp $
  */
 public class KeywordMap
 {

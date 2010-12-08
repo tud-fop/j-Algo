@@ -167,6 +167,7 @@ public class TransformationView extends View {
 
 		codeEditor = new JEditor(new Observer() {
 
+			@Override
 			public void update(Observable arg0, Object arg1) {
 				// modified flag can be ignored here
 			}
@@ -191,19 +192,24 @@ public class TransformationView extends View {
 	private void setCodeEditorListeners() {
 		codeEditor.getPainter().addMouseListener(new MouseListener() {
 
+			@Override
 			public void mouseReleased(MouseEvent arg0) {
 
 			}
 
+			@Override
 			public void mousePressed(MouseEvent arg0) {
 			}
 
+			@Override
 			public void mouseExited(MouseEvent arg0) {
 			}
 
+			@Override
 			public void mouseEntered(MouseEvent arg0) {
 			}
 
+			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				int line = codeEditor.yToLine(arg0.getY());
 
@@ -436,9 +442,11 @@ public class TransformationView extends View {
 			}
 		}
 
+		@Override
 		public void mouseClicked(MouseEvent arg0) {
 		}
 
+		@Override
 		public void mouseEntered(MouseEvent arg0) {
 			if (arg0.getSource() == backToEditorButton) {
 				transController.getController().writeOnStatusbar(Messages.getString("am0c0", "TransformationView.40")); //$NON-NLS-1$
@@ -459,13 +467,16 @@ public class TransformationView extends View {
 			}
 		}
 
+		@Override
 		public void mouseExited(MouseEvent arg0) {
 			transController.getController().writeOnStatusbar(""); //$NON-NLS-1$
 		}
 
+		@Override
 		public void mousePressed(MouseEvent arg0) {
 		}
 
+		@Override
 		public void mouseReleased(MouseEvent arg0) {
 		}
 	}

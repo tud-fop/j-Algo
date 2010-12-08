@@ -50,6 +50,7 @@ public class AM0History<T> implements Iterator<T> {
 	 * 
 	 * @see java.util.Iterator#hasNext()
 	 */
+	@Override
 	public boolean hasNext() {
 		return currentIndex < history.size();
 	}
@@ -69,6 +70,7 @@ public class AM0History<T> implements Iterator<T> {
 	 * 
 	 * @see java.util.Iterator#next()
 	 */
+	@Override
 	public T next() {
 		if (hasNext()) {
 			currentIndex++;
@@ -90,6 +92,7 @@ public class AM0History<T> implements Iterator<T> {
 		return null;
 	}
 
+	@Override
 	public void remove() {
 		throw new AbstractMethodError(
 				"Calling this method is not allowed for this class.");

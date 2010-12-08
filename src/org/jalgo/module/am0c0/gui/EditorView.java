@@ -157,6 +157,7 @@ public class EditorView extends View {
 		codeField.setCaretVisible(false);
 
 		codeField.addCaretListener(new CaretListener() {
+			@Override
 			public void caretUpdate(CaretEvent arg0) {
 				int cPos = codeField.getCaretPosition();
 				int lineNumber = codeField.getLineOfOffset(cPos);
@@ -268,6 +269,7 @@ public class EditorView extends View {
 
 	private class ButtonHandler implements ActionListener, MouseListener {
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == loadButton) {
 				String s = editorController.loadCode();
@@ -360,9 +362,11 @@ public class EditorView extends View {
 			}
 		}
 
+		@Override
 		public void mouseClicked(MouseEvent e) {
 		}
 
+		@Override
 		public void mouseEntered(MouseEvent e) {
 			if (e.getSource() == loadButton) {
 				editorController.getController().writeOnStatusbar(
@@ -391,13 +395,16 @@ public class EditorView extends View {
 			}
 		}
 
+		@Override
 		public void mouseExited(MouseEvent e) {
 			editorController.getController().writeOnStatusbar(""); //$NON-NLS-1$
 		}
 
+		@Override
 		public void mousePressed(MouseEvent e) {
 		}
 
+		@Override
 		public void mouseReleased(MouseEvent e) {
 		}
 	}

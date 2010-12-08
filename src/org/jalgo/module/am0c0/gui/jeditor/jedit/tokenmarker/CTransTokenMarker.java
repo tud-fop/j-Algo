@@ -17,7 +17,6 @@ import org.jalgo.module.am0c0.gui.jeditor.jedit.KeywordMap;
  * C token marker.
  * 
  * @author Slava Pestov
- * @version $Id: CTransTokenMarker.java,v 1.1 2010/08/16 12:05:48 bjofrei Exp $
  */
 public class CTransTokenMarker extends TokenMarker {
 	public CTransTokenMarker() {

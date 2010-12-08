@@ -79,10 +79,12 @@ public class CParserTest {
 	@Test
 	public void testEmptyArgument() {
 		testFixture(new CTestFixture() {
+			@Override
 			public boolean isValid() {
 				return false;
 			}
 
+			@Override
 			public String getSource() {
 				return "";
 			}
@@ -92,6 +94,7 @@ public class CParserTest {
 	@Test
 	public void testSummation() {
 		testFixture(new CTestFixture() {
+			@Override
 			public String getSource() {
 				return "/* Summation */" + "#include <stdio.h>" + "int main()"
 						+ "{" + "int i, n, s;" + "scanf(\"%i\", &n);"
@@ -100,6 +103,7 @@ public class CParserTest {
 						+ "printf(\"%d\", s);" + "return 0;" + "}" + "";
 			}
 
+			@Override
 			public boolean isValid() {
 				return true;
 			}

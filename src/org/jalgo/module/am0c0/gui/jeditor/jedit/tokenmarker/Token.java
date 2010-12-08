@@ -17,7 +17,6 @@ package org.jalgo.module.am0c0.gui.jeditor.jedit.tokenmarker;
  * token in the text, and a pointer to the next token in the list.
  *
  * @author Slava Pestov
- * @version $Id: Token.java,v 1.1 2010/08/16 12:05:48 bjofrei Exp $
  */
 
 public class Token

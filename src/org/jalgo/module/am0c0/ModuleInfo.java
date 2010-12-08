@@ -65,8 +65,7 @@ public class ModuleInfo implements IModuleInfo {
 	}
 
 	public String getDescription() {
-		return Messages.getString("am0c0", "ModuleInfo.4") //$NON-NLS-1$
-				+ Messages.getString("am0c0", "ModuleInfo.5"); //$NON-NLS-1$
+		return Messages.getString("am0c0", "ModuleInfo.5"); //$NON-NLS-1$
 	}
 
 	public URL getLogoURL() {

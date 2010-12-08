@@ -22,7 +22,6 @@ import javax.swing.text.Segment;
  * cached.
  *
  * @author Slava Pestov
- * @version $Id: TokenMarker.java,v 1.1 2010/08/16 12:05:48 bjofrei Exp $
  *
  * @see jedit.tokenmarker.syntax.jedit.Token
  */

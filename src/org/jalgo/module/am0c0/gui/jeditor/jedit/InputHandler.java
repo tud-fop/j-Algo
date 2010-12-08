@@ -24,7 +24,6 @@ import java.util.*;
  * to the implementations of this class to do so.
  * 
  * @author Slava Pestov
- * @version $Id: InputHandler.java,v 1.1 2010/08/16 12:05:48 bjofrei Exp $
  * @see org.jalgo.module.testModule.editor.jedit.DefaultInputHandler
  * 
  * 08/12/2002	Clipboard actions	(Oliver Henning)

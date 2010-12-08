@@ -128,6 +128,7 @@ public class ILoveCandy extends JPanel implements ActionListener {
 		end = new JButton("Stop");
 		end.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				timer.stop();
 				ingame = false;
@@ -625,6 +626,7 @@ public class ILoveCandy extends JPanel implements ActionListener {
 		}
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		repaint();
 	}

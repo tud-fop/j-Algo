@@ -130,15 +130,15 @@ public class AM0InputDialog extends JComponent implements ActionListener {
 		pcInput.setText("  1  "); //$NON-NLS-1$
 		pcInput.setCaretPosition(3);
 		stackInput = new JTextField();
-		stackInput.setText("Æ�"); //$NON-NLS-1$
+		stackInput.setText("Ɛ"); //$NON-NLS-1$
 		ramInput = new JLabel();
 		ramInput.setBackground(Color.white);
 		char o = '\u00D8';
 		ramInput.setText("<html>h<sub>" + o + "</sub>= [ ]"); //$NON-NLS-1$ //$NON-NLS-2$
 		inInput = new JTextField();
-		inInput.setText("Æ�"); //$NON-NLS-1$
+		inInput.setText("Ɛ"); //$NON-NLS-1$
 		outInput = new JTextField();
-		outInput.setText("Æ�"); //$NON-NLS-1$
+		outInput.setText("Ɛ"); //$NON-NLS-1$
 
 		ramAdInput = new JTextField("1");
 		ramValueInput = new JTextField();
@@ -207,6 +207,7 @@ public class AM0InputDialog extends JComponent implements ActionListener {
 		steps.setPaintLabels(true);
 
 		steps.addChangeListener(new ChangeListener() {
+			@Override
 			public void stateChanged(ChangeEvent e) {
 				simController.getController().writeOnStatusbar(
 						Messages.getString("am0c0", "SimulationView.23") //$NON-NLS-1$
@@ -217,17 +218,21 @@ public class AM0InputDialog extends JComponent implements ActionListener {
 		});
 		steps.addMouseListener(new MouseListener() {
 
+			@Override
 			public void mouseReleased(MouseEvent e) {
 
 			}
 
+			@Override
 			public void mousePressed(MouseEvent e) {
 			}
 
+			@Override
 			public void mouseExited(MouseEvent e) {
 				simController.getController().writeOnStatusbar(""); //$NON-NLS-1$
 			}
 
+			@Override
 			public void mouseEntered(MouseEvent e) {
 				simController.getController().writeOnStatusbar(
 						Messages.getString("am0c0", "SimulationView.26") //$NON-NLS-1$
@@ -236,6 +241,7 @@ public class AM0InputDialog extends JComponent implements ActionListener {
 										"am0c0", "SimulationView.27")); //$NON-NLS-1$
 			}
 
+			@Override
 			public void mouseClicked(MouseEvent e) {
 			}
 		});
@@ -371,13 +377,13 @@ public class AM0InputDialog extends JComponent implements ActionListener {
 		if (pc.trim().replaceAll(" ", "").matches("[0-9]+")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			if (stack.trim().isEmpty()
 					|| stack.trim().replaceAll(" ", "").matches( //$NON-NLS-1$ //$NON-NLS-2$
-							"Æ�|(-?[0-9]+:{1})*-?[0-9]+")) { //$NON-NLS-1$
+							"Ɛ|(-?[0-9]+:{1})*-?[0-9]+")) { //$NON-NLS-1$
 				if (in.trim().isEmpty()
 						|| in.trim().replaceAll(" ", "").matches( //$NON-NLS-1$ //$NON-NLS-2$
-								"Æ�|(-?[0-9]+,{1})*-?[0-9]+")) { //$NON-NLS-1$
+								"Ɛ|(-?[0-9]+,{1})*-?[0-9]+")) { //$NON-NLS-1$
 					if (out.trim().isEmpty()
 							|| out.trim().replaceAll(" ", "").matches( //$NON-NLS-1$ //$NON-NLS-2$
-									"Æ�|(-?[0-9]+,{1})*-?[0-9]+")) { //$NON-NLS-1$
+									"Ɛ|(-?[0-9]+,{1})*-?[0-9]+")) { //$NON-NLS-1$
 						return true;
 					} else {
 						showError(Messages.getString(
@@ -414,6 +420,7 @@ public class AM0InputDialog extends JComponent implements ActionListener {
 	 * 
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
+	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == ok) {
 			if (checkInput(pcInput.getText(), stackInput.getText(),
@@ -432,7 +439,7 @@ public class AM0InputDialog extends JComponent implements ActionListener {
 					String delims = "[:]"; //$NON-NLS-1$
 					String[] tokens;
 
-					if (!stackInput.getText().equals("Æ�")) { //$NON-NLS-1$
+					if (!stackInput.getText().equals("Ɛ")) { //$NON-NLS-1$
 						stack = new LinkedList<Integer>();
 						tokens = stackInput.getText().replaceAll(" ", "") //$NON-NLS-1$ //$NON-NLS-2$
 								.split(delims);
@@ -443,7 +450,7 @@ public class AM0InputDialog extends JComponent implements ActionListener {
 					}
 
 					delims = "[,]"; //$NON-NLS-1$
-					if (!inInput.getText().equals("Æ�")) { //$NON-NLS-1$
+					if (!inInput.getText().equals("Ɛ")) { //$NON-NLS-1$
 						in = new LinkedList<Integer>();
 						tokens = inInput.getText().replaceAll(" ", "").split( //$NON-NLS-1$ //$NON-NLS-2$
 								delims);
@@ -453,7 +460,7 @@ public class AM0InputDialog extends JComponent implements ActionListener {
 						}
 					}
 
-					if (!outInput.getText().equals("Æ�")) { //$NON-NLS-1$
+					if (!outInput.getText().equals("Ɛ")) { //$NON-NLS-1$
 						out = new LinkedList<Integer>();
 						tokens = outInput.getText().replaceAll(" ", "").split( //$NON-NLS-1$ //$NON-NLS-2$
 								delims);

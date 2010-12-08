@@ -66,6 +66,7 @@ public class AM0Parser implements Parser {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String getErrorText() {
 		return errorText;
 	}
@@ -73,6 +74,7 @@ public class AM0Parser implements Parser {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean parse(final String text) {
 		boolean errorFlag = false;
 

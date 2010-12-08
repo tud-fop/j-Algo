@@ -52,6 +52,7 @@ public class PresentationAction extends JCheckBoxMenuItem implements
 	 * 
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		controller.setPresentationMode(isSelected());
 	}

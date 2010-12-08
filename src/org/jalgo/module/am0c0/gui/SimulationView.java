@@ -202,6 +202,7 @@ public class SimulationView extends View {
 	protected void initComponents() {
 		bh = new ButtonHandler();
 		am0code = new JEditor(new Observer() {
+			@Override
 			public void update(Observable arg0, Object arg1) {
 				// Modified flag could be ignored here.
 			}
@@ -343,19 +344,24 @@ public class SimulationView extends View {
 				}
 			}
 
+			@Override
 			public void mouseReleased(MouseEvent e) {
 				setDescription(e.getY());
 			}
 
+			@Override
 			public void mousePressed(MouseEvent e) {
 			}
 
+			@Override
 			public void mouseExited(MouseEvent e) {
 			}
 
+			@Override
 			public void mouseEntered(MouseEvent e) {
 			}
 
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				setDescription(e.getY());
 			}
@@ -363,6 +369,7 @@ public class SimulationView extends View {
 	}
 
 	private class ButtonHandler implements ActionListener, MouseListener {
+		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == back) {
 				simController.getController().showEditor();
@@ -467,9 +474,11 @@ public class SimulationView extends View {
 			}
 		}
 
+		@Override
 		public void mouseClicked(MouseEvent e) {
 		}
 
+		@Override
 		public void mouseEntered(MouseEvent e) {
 			if (e.getSource() == jumpUp) {
 				simController.getController().writeOnStatusbar(
@@ -506,13 +515,16 @@ public class SimulationView extends View {
 			}
 		}
 
+		@Override
 		public void mouseExited(MouseEvent e) {
 			simController.getController().writeOnStatusbar(""); //$NON-NLS-1$
 		}
 
+		@Override
 		public void mousePressed(MouseEvent e) {
 		}
 
+		@Override
 		public void mouseReleased(MouseEvent e) {
 		}
 	}

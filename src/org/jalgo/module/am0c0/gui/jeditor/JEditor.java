@@ -126,7 +126,7 @@ public class JEditor extends JEditTextArea {
 		if (observer == null)
 			throw new IllegalArgumentException("The observer should not be null"); //$NON-NLS-1$
 
-		fileChooser = new JFileChooser();
+		fileChooser = new JFileChooser(System.getProperty("user.dir"));
 		
 		fileChooser.addChoosableFileFilter(new FileFilter() {
 
@@ -169,16 +169,19 @@ public class JEditor extends JEditTextArea {
 	private void setMouseListener() {
 		enhancedPainter.addMouseMotionListener(new MouseMotionListener() {
 
+			@Override
 			public void mouseMoved(MouseEvent arg0) {
 				int line = yToLine(arg0.getPoint().y);
 				updateCodeHighlight(line);
 			}
 
+			@Override
 			public void mouseDragged(MouseEvent arg0) {
 			}
 		});
 	}
 
+	@Override
 	protected void documentChanged(DocumentEvent evt) {
 		super.documentChanged(evt);
 		setModified(true);

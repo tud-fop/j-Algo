@@ -65,6 +65,7 @@ public class IndexedMemoryCell extends MemoryCell implements
 				&& ((IndexedMemoryCell) o).get() == get();
 	}
 
+	@Override
 	public int compareTo(IndexedMemoryCell o) {
 		return this.getIndex() - o.getIndex();
 	}

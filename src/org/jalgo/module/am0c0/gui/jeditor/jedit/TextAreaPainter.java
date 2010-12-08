@@ -26,7 +26,6 @@ import java.awt.*;
  * of text.
  * 
  * @author Slava Pestov
- * @version $Id: TextAreaPainter.java,v 1.1 2010/08/16 12:05:48 bjofrei Exp $
  */
 public class TextAreaPainter extends JComponent implements TabExpander {
 	/**
