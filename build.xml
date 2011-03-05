@@ -5,7 +5,7 @@
 		<format property="VERSION_ID" pattern="yyyyMMdd" />
 	</tstamp>
 
-	<property name="classpath" value=" ../extlibs/jh.jar ../extlibs/swing-layout-1.0.jar ../runtime/modules/avl.jar ../runtime/modules/dijkstra.jar ../runtime/modules/ebnf.jar ../runtime/modules/heapsort.jar ../runtime/modules/hoare.jar ../runtime/modules/kmp.jar  ../runtime/modules/pulsemem.jar ../runtime/modules/app.jar ../runtime/modules/am0c0.jar ../runtime/modules/unifikation.jar ../runtime/modules/lambda.jar ../runtime/modules/bfsdfs.jar" />
+	<property name="classpath" value=" ../extlibs/jh.jar ../extlibs/swing-layout-1.0.jar ../runtime/modules/avl.jar ../runtime/modules/dijkstra.jar ../runtime/modules/ebnf.jar ../runtime/modules/heapsort.jar ../runtime/modules/hoare.jar ../runtime/modules/kmp.jar  ../runtime/modules/pulsemem.jar ../runtime/modules/app.jar ../runtime/modules/am0c0.jar ../runtime/modules/unifikation.jar ../runtime/modules/lambda.jar ../runtime/modules/bfsdfs.jar ../runtime/modules/c0h0.jar" />
 	<property name="module_classpath" value="../j-Algo.jar" />
 
 	<property name="dist" location="dist" />
@@ -16,7 +16,7 @@
 	<target name="clean">
 		<delete dir="${dist}" />
 	</target>
-	
+
 	<target name="dist" depends="dist_base,linux,macosx,windows">
 		<delete dir="${dist}/tmp" />
 	</target>
@@ -131,6 +131,23 @@
 		</antcall>
 		<!-- ### END BUILD -->
 
+		<!-- ### BEGIN BUILD c0h0 -->
+		<antcall target="module_jar">
+			<param name="modulename" value="c0h0" />
+			<param name="classpath" value="${module_classpath} ../../extlibs/beaver-rt.jar ../../extlibs/jgraphx.jar ../../extlibs/jsyntaxpane-0.9.5-b29.jar" />
+		</antcall>
+		<copy todir="${dist}/c0h0_${VERSION_ID}/extlibs">
+			<fileset dir="extlibs">
+				<include name="beaver-rt.jar" />
+				<include name="jgraphx.jar" />
+				<include name="jsyntaxpane-0.9.5-b29.jar" />
+			</fileset>
+		</copy>
+		<antcall target="module_pkg">
+			<param name="modulename" value="c0h0" />
+		</antcall>
+		<!-- ### END BUILD -->
+
 		<antcall target="module_jar">
 			<param name="modulename" value="kmp" />
 			<param name="classpath" value="${module_classpath}" />
@@ -179,7 +196,7 @@
 
 		<copy todir="${dist}/linux/j-Algo" file="j-Algo.sh" />
 		<copy todir="${dist}/linux/j-Algo" file="j-Algo.ico" />
-		
+
 		<chmod file="${dist}/linux/j-Algo/j-Algo.sh" perm="+x" />
 
 		<tar tarfile="${dist}/j-Algo-linux-complete-${VERSION_ID}.tar" basedir="${dist}/linux/" />

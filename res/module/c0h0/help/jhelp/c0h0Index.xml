@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE index
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/index_1_0.dtd">
+
+<index version="1.0">
+    <!-- Test -->
+    <indexitem text="C=/HO-Modul" expand="false">
+
+    	<indexitem text="Einleitung"  target="c0h0.overview.overview"/>
+    	<indexitem text="Funktionsübersicht"  target="c0h0.overview.introduction"/>
+    	<indexitem text="Der Willkommensbildschirm"  target="c0h0.1_start"/>
+    	<indexitem text="Die Werkzeugleiste"  		 target="c0h0.2_toolbar"/>
+    	<indexitem text="Der Menü &quot;C0H0&quot;"  target="c0h0.3_c0h0menu"/>
+    	<indexitem text="Der C0-Quelltexteditor"  target="c0h0.4_c0edit"/>
+    	<indexitem text="Transformation"  target="c0h0.5_transform"/>
+
+    </indexitem>
+</index>

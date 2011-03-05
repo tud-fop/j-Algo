@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int main()
+{
+  int x1, x2, x3;
+  scanf("%i", &x1);
+  scanf("%i", &x2);
+  
+  while (x1>0) {
+    x1=x1-1;
+    x2=x2+3;
+  }
+
+  printf("%d", x2);
+  return 0;
+}
+
+

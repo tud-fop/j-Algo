@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int main()
+{
+  int x1, x2, x3;
+  scanf("%i", &x1);
+  scanf("%i", &x2);
+
+
+  if (x1 > x2)
+    x3 = x1;
+  else x3 = x2;
+  
+  printf("%d", x3);
+  return 0;
+}
+

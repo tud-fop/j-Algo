@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+	<mapID xml:lang="de"/>
+
+	<!-- C0H0			 -->
+	<mapID target="c0h0" 	    		 		url="../html/data/overview.htm"/>
+
+	<mapID target="c0h0.overview" 	    			url="../html/data/overview.htm"/>
+	<mapID target="c0h0.overview.introduction"  		url="../html/data/overview.htm#introduction"/>
+	<mapID target="c0h0.overview.overview"	 		url="../html/data/overview.htm#overview"/>
+	
+	<mapID target="c0h0.1_start" 	    			url="../html/data/1_start.htm"/>
+	<mapID target="c0h0.1_start.load_example"  		url="../html/data/1_start.htm#load_example"/>
+	<mapID target="c0h0.1_start.load_file"  		url="../html/data/1_start.htm#load_file"/>
+	<mapID target="c0h0.1_start.run_on_flat"  		url="../html/data/1_start.htm#run_on_flat"/>
+
+	<mapID target="c0h0.2_toolbar" 	    			url="../html/data/2_toolbar.htm"/>
+	<mapID target="c0h0.2_toolbar.new" 	    		url="../html/data/2_toolbar.htm#new"/>
+	<mapID target="c0h0.2_toolbar.load" 	    		url="../html/data/2_toolbar.htm#load"/>
+	<mapID target="c0h0.2_toolbar.simulieren" 	 	url="../html/data/2_toolbar.htm#simulieren"/>
+	<mapID target="c0h0.2_toolbar.for-back-ward" 		url="../html/data/2_toolbar.htm#for-back-ward"/>
+	<mapID target="c0h0.2_toolbar.toggle_view"		url="../html/data/2_toolbar.htm#toggle_view"/>
+	<mapID target="c0h0.2_toolbar.toggle_sttrans"		url="../html/data/2_toolbar.htm#toggle_sttrans"/>
+
+	<mapID target="c0h0.3_c0h0menu"     			url="../html/data/3_c0h0menu.htm"/>
+	<mapID target="c0h0.3_c0h0menu.new_c0"   		url="../html/data/3_c0h0menu.htm#new_c0"/>
+	<mapID target="c0h0.3_c0h0menu.ld_c0"    		url="../html/data/3_c0h0menu.htm#ld_c0"/>
+	<mapID target="c0h0.3_c0h0menu.ld_c0ex"  		url="../html/data/3_c0h0menu.htm#ld_c0ex"/>
+	<mapID target="c0h0.3_c0h0menu.st_c0"     		url="../html/data/3_c0h0menu.htm#st_c0"/>
+	<mapID target="c0h0.3_c0h0menu.st_h0"     		url="../html/data/3_c0h0menu.htm#st_h0"/>
+	<mapID target="c0h0.3_c0h0menu.beamermode" 		url="../html/data/3_c0h0menu.htm#beamermode"/>
+
+	<mapID target="c0h0.4_c0edit" 	    			url="../html/data/4_c0edit.htm"/>
+	<mapID target="c0h0.4_c0edit.mki" 	    		url="../html/data/4_c0edit.htm#mki"/>
+	<mapID target="c0h0.4_c0edit.editor_itself" 		url="../html/data/4_c0edit.htm#editor_itself"/>
+	<mapID target="c0h0.4_c0edit.syntax_checker" 		url="../html/data/4_c0edit.htm#syntax_checker"/>
+
+	<mapID target="c0h0.5_transform" 	   		url="../html/data/5_transform.htm"/>
+	<mapID target="c0h0.5_transform.tsa"   			url="../html/data/5_transform.htm#tsa"/>
+	<mapID target="c0h0.5_transform.fc"			url="../html/data/5_transform.htm#fc"/>
+	<mapID target="c0h0.5_transform.h0"			url="../html/data/5_transform.htm#h0"/>
+
+</map>

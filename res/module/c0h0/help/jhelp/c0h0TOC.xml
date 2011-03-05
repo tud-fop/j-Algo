@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de"> 
+  
+  <!-- C0/H0 -->
+  <tocitem text="C0/H0"	target="c0h0"  expand="true">
+    <tocitem text="Einleitung"  target="c0h0.overview.introduction"/>
+	<tocitem text="Funktionsübersicht"  target="c0h0.overview.overview"/>
+    <tocitem text="Der Willkommensbildschirm"  target="c0h0.1_start">
+	  <tocitem text="Beispieldatei laden" target="c0h0.1_start.load_example"/>
+	  <tocitem text="C0-Datei laden" target="c0h0.1_start.load_file"/>
+	  <tocitem text="Neue C0-Datei erstellen" target="c0h0.1_start.run_on_flat"/>
+	</tocitem>
+	<tocitem text="Die Werkzeugleiste"  target="c0h0.1_start">
+	  <tocitem text="Neuen C0-Quelltext erstellen" target="c0h0.2_toolbar.new"/>
+	  <tocitem text="C0-Quelltextdatei laden" target="c0h0.2_toolbar.load"/>
+	  <tocitem text="Simulation" target="c0h0.2_toolbar.simulieren"/>
+	  <tocitem text="Navigation bei der Transformation" target="c0h0.2_toolbar.for-back-ward"/>
+	  <tocitem text="Ansichtswechsel" target="c0h	0.2_toolbar.toggle_view"/>
+	  <tocitem text="Übersetzungsregeln anzeigen" target="c0h0.2_toolbar.toggle_sttrans"/>
+	</tocitem>
+	<tocitem text="Das Menü &quot;C0H0&quot;"  target="c0h0.3_c0h0menu">
+	  <tocitem text="Neuer C0-Quelltext" target="c0h0.3_c0h0menu.new_c0"/>
+	  <tocitem text="Öffnen eines C0-Quelltexts" target="c0h0.3_c0h0menu.ld_c0"/>
+	  <tocitem text="Laden von C0-Beispielen" target="c0h0.3_c0h0menu.ld_c0ex"/>
+	  <tocitem text="Speichern des aktuellen C0-Quelltexts" target="c0h0.3_c0h0menu.st_c0"/>
+	  <tocitem text="Speichern von H0-Quelltexten" target="c0h0.3_c0h0menu.st_h0"/>
+	  <tocitem text="Beamermodus" target="c0h0.3_c0h0menu.beamermode"/>
+	</tocitem>
+	<tocitem text="Der C0-Quelltexteditor"  target="c0h0.4_c0edit">
+	  <tocitem text="m-k-i-Generator" target="c0h0.4_c0edit.mki"/>
+	  <tocitem text="Quelltexteditor" target="c0h0.4_c0edit.editor_itself"/>
+	  <tocitem text="Syntaxfehler" target="c0h0.4_c0edit.syntax_checker"/>
+	</tocitem>
+	<tocitem text="Transformation"  target="c0h0.5_transform">
+	  <tocitem text="Erzeugung der Baumstrukturierten Adressen" target="c0h0.5_transform.tsa"/>
+	  <tocitem text="Darstellung als Flussdiagramm" target="c0h0.5_transform.fc"/>
+	  <tocitem text="Umwandlung in H0-Quelltext" target="c0h0.5_transform.h0"/>
+	</tocitem>
+  </tocitem>
+</toc>

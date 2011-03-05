@@ -31,5 +31,8 @@
 	<classpathentry kind="lib" path="extlibs/commons-lang-2.5.jar"/>
 	<classpathentry kind="lib" path="extlibs/jflex.jar"/>
 	<classpathentry kind="lib" path="res/module/unifikation"/>
+	<classpathentry kind="lib" path="res/module/c0h0"/>
+	<classpathentry kind="lib" path="extlibs/jgraphx.jar"/>
+	<classpathentry kind="lib" path="extlibs/jsyntaxpane-0.9.5-b29.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
