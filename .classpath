@@ -34,5 +34,6 @@
 	<classpathentry kind="lib" path="res/module/c0h0"/>
 	<classpathentry kind="lib" path="extlibs/jgraphx.jar"/>
 	<classpathentry kind="lib" path="extlibs/jsyntaxpane-0.9.5-b29.jar"/>
+	<classpathentry kind="lib" path="res/module/am1simulator"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

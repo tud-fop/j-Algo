@@ -148,6 +148,22 @@
 		</antcall>
 		<!-- ### END BUILD -->
 
+		<!-- ### BEGIN BUILD am1simulator -->
+		<antcall target="module_jar">
+			<param name="modulename" value="am1simulator" />
+			<param name="classpath" value="${module_classpath} ../../extlibs/beaver-rt.jar ../../extlibs/jsyntaxpane-0.9.5-b29.jar" />
+		</antcall>
+		<copy todir="${dist}/am1simulator_${VERSION_ID}/extlibs">
+			<fileset dir="extlibs">
+				<include name="beaver-rt.jar" />
+				<include name="jsyntaxpane-0.9.5-b29.jar" />
+			</fileset>
+		</copy>
+		<antcall target="module_pkg">
+			<param name="modulename" value="am1simulator" />
+		</antcall>
+		<!-- ### END BUILD -->
+
 		<antcall target="module_jar">
 			<param name="modulename" value="kmp" />
 			<param name="classpath" value="${module_classpath}" />

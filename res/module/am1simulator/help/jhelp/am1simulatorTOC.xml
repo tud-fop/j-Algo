@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de">
+
+	<!-- AM1-Simulator -->
+			<tocitem text="AM1-Simulator"								target="am1simulator"  expand="false">
+			   	
+				<tocitem text="Einleitung"						target="am1simulator.overview.einleitung"/>
+				
+				<tocitem text="Funktionsübersicht"					target="am1simulator.overview.funktionen"/>
+								
+				<tocitem text="Editor"						target="am1simulator.editor">
+					<tocitem text="Übersicht" 					target="am1simulator.editor.uebersicht"/>
+					<tocitem text="Datei laden/speichern"				target="am1simulator.editor.laden_speichern"/>
+					<tocitem text="Code validieren" 				target="am1simulator.editor.codevalidierung"/>
+					<tocitem text="Simulation starten"		target="am1simulator.editor.start"/>
+				</tocitem>
+			   	
+				<tocitem text="Simulation"              				target="am1simulator.simulation">
+			   	   	<tocitem text="Übersicht"					target="am1simulator.simulation.uebersicht"/>
+			   	   	<tocitem text="Initiale Konfiguration"				target="am1simulator.simulation.initiale_konfiguration"/>
+			   	   	<tocitem text="Simulationsschritt ausführen"			target="am1simulator.simulation.schritt_ausfuehren"/>
+				</tocitem>
+				
+				<tocitem text="Präsentations-Modus"					target="am1simulator.presentation_mode"/>
+			
+			</tocitem>
+</toc>

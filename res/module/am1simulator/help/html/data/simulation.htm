@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>Simulation</title>
+	</head>
+	<body topmargin="30" leftmargin="30">
+
+	<H1>Simulation</H1>
+	<h2><a name="uebersicht">&Uuml;bersicht</a></h2>
+	<p> Hier hat man die M&ouml;glichkeit, ein zu zuvor geladenes oder eingegebenes Programm auf einer AM1 zu simulieren.
+		Das AM1-Programm ist im linken Teil des Fensters zu sehen. Hier wird der
+		n&auml;chste auszuf&uuml;hrende Befehl markiert. Im unteren linken Teil ist die Befehlssemantik
+		f&uuml;r den markierten Befehl zu sehen. Im rechten Teil des Fensters ist die Tabelle zu
+		sehen, welche die Maschinenkonfiguration nach jedem ausgef&uuml;hrten Schritt dokumentiert.
+		Diese Tabelle ist in Seiten eingeteilt. Auf jeder Seite sind 50 Maschinenkonfigurationen
+		dokumentiert. Um die Seite zu wechseln gibt es &uuml;ber und unter dem vertikalen Scrollbalken
+		der Tabelle entsprechende Buttons. Desweiteren gibt es &uuml;ber der Tabelle einen Tabellenanfang- bzw.
+		einen Tabellenende-Button um auf die erste bzw. letzte Seite zu gelangen. </p>
+	<p> </p>
+	<img src="../../pics/am1simulator.jpg" alt="AM1-Simulator">
+	<h2><a name="initiale_konfiguration">Initiale Konfiguration</a></h2>
+	<p> Bevor eine Simulation gestartet werden kann muss eine Startkonfiguration angegeben
+		werden. Dies geschieht entweder mit einem Klick auf den Button Initiale Konfiguration
+		oder der Dialog wird automatisch eingeblendet, wenn beim Ausf&uuml;hren des ersten
+		Schritts noch keine Anfangskonfiguration existiert. Im Dialogfenster kann dann der
+		Befehlsz&auml;hler, der Datenkeller, der Hauptspeicher, das Eingabeband, das Ausgabeband
+		und die Anzahl auszuf&uuml;hrender Schritte bis zur Nachfrage zur Fortsetzung festgelegt werden. </p>
+	<p> </p>
+	<img src="../../pics/initial_configuration.jpg" alt="initiale Konfiguration">
+	<h2><a name="schritt_ausfuehren">Simulationsschritt ausf&uuml;hren</a></h2>
+	<p> Bevor der erste Schritt ausgef&uuml;hrt werden kann muss eine <a href="#initiale_konfiguration">initiale
+		Konfiguration</a> existieren. Danach kann mit jedem Klick auf den Weiter-Button der n&auml;chste
+		Befehl auf die aktuelle Maschinenkonfiguration angewendet werden. Sollte ein Befehl nicht
+		ausgef&uuml;hrt werden k&ouml;nnen (beispielsweise, wenn vom leeren Eingabeband gelesen werden
+		soll) wird eine entsprechende Fehlermeldung ausgegeben. Andernfalls wird der Schritt
+		ausgef&uuml;hrt und die Tabelle erweitert. Mit einem Klick auf den Button "Alles in einem Schritt" wird
+		das Programm bis zum Ende durchlaufen. Sollten dabei mehr als die eingestellte Anzahl von Schritten
+		durchlaufen werden erscheint eine Abfrage, ob weitere Schritte ausgef&uuml;hrt werden sollen. Die Anzahl
+		von Schritten bis zur Abfrage kann kann bei der initialen Konfiguration eingestellt werden.</p>
+	<p> </p>
+	<img src="../../pics/step_counter.jpg" alt="maximale Schritte">
+	</body>
+</html>
