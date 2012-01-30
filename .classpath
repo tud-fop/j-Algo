@@ -20,6 +20,9 @@
 	<classpathentry kind="lib" path="res/module/testModule"/>
 	<classpathentry kind="lib" path="extlibs/antlr-3.0b6.jar"/>
 	<classpathentry kind="lib" path="extlibs/jep-2.4.1.b.jar"/>
+	<classpathentry kind="lib" path="extlibs/jmatharray.jar"/>
+	<classpathentry kind="lib" path="extlibs/kxml2-2.3.0.jar"/>
+	<classpathentry kind="lib" path="extlibs/xstream-1.4.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="lib" path="extlibs/jgraph.jar"/>
@@ -35,5 +38,7 @@
 	<classpathentry kind="lib" path="extlibs/jgraphx.jar"/>
 	<classpathentry kind="lib" path="extlibs/jsyntaxpane-0.9.5-b29.jar"/>
 	<classpathentry kind="lib" path="res/module/am1simulator"/>
+	<classpathentry kind="lib" path="extlibs/jmathplot.jar"/>
+	<classpathentry kind="lib" path="res/module/em"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

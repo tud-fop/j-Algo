@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE map PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN" "http://java.sun.com/products/javahelp/map_1_0.dtd">
+<map version="1.0">
+	<mapID xml:lang="de"/>
+
+	<!-- EM --> 
+	<mapID target="em" 	    		 	url="../html/data/overview.htm"/>
+
+	<mapID target="em.overview" 	    		url="../html/data/overview.htm"/>
+	<mapID target="em.overview.einleitung"  	url="../html/data/overview.htm#einleitung"/>
+	<mapID target="em.overview.funktionen"	 	url="../html/data/overview.htm#funktionen"/>
+	
+	<mapID target="em.input"			url="../html/data/input.htm"/>
+	<mapID target="em.input.uebersicht"		url="../html/data/input.htm#uebersicht"/>
+	<mapID target="em.input.objektangabe"		url="../html/data/input.htm#objektangabe"/>
+	<mapID target="em.input.beobachtungen"		url="../html/data/input.htm#beobachtungen"/>
+	<mapID target="em.input.haeufigkeiten"		url="../html/data/input.htm#haeufigkeiten"/>
+	<mapID target="em.input.wahrscheinlichkeiten"	url="../html/data/input.htm#wahrscheinlichkeiten"/>
+	
+	<mapID target="em.output"			url="../html/data/output.htm"/>
+	<mapID target="em.output.uebersicht"		url="../html/data/output.htm#uebersicht"/>
+	<mapID target="em.output.diagramm"		url="../html/data/output.htm#diagramm"/>
+	<mapID target="em.output.tabelle"		url="../html/data/output.htm#tabelle"/>
+	<mapID target="em.output.hybrid"		url="../html/data/output.htm#hybrid"/>
+	<mapID target="em.output.navigation"		url="../html/data/output.htm#navigation"/>
+	
+	<mapID target="em.io"				url="../html/data/io.htm"/>
+	<mapID target="em.io.uebersicht"		url="../html/data/io.htm#uebersicht"/>
+	<mapID target="em.io.laden"			url="../html/data/io.htm#laden"/>
+	<mapID target="em.io.speichern"			url="../html/data/io.htm#speichern"/>
+	
+	<mapID target="em.praesentation"		url="../html/data/praesentation.htm"/>
+
+</map>

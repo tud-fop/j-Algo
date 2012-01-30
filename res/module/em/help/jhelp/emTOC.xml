@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN" "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc xml:lang="de">
+
+	<!-- EM -->
+	<tocitem text="EM"							target="em"  expand="false">
+			   	
+		<tocitem text="Einleitung"					target="em.overview.einleitung"/>
+			
+		<tocitem text="Funktionsübersicht"				target="em.overview.funktionen"/>
+								
+		<tocitem text="Experiment starten"				target="em.input">
+			<tocitem text="Übersicht" 				target="em.input.uebersicht"/>
+			<tocitem text="Angabe der Objekte"			target="em.input.objektangabe"/>
+			<tocitem text="Festlegung der Beobachtung"		target="em.input.beobachtungen"/>
+			<tocitem text="Bestimmen der H&auml;ufigkeiten"	 	target="em.input.haeufigkeiten"/>
+			<tocitem text="Startwahrscheinlichkeiten"		target="em.input.wahrscheinlichkeiten"/>
+		</tocitem>
+				
+		<tocitem text="Visualisierung"					target="em.output">
+			<tocitem text="Übersicht"				target="em.output.uebersicht"/>
+			<tocitem text="Diagramm-Ansicht"			target="em.output.diagramm"/>
+			<tocitem text="Tabellen-Ansicht"			target="em.output.tabelle"/>
+			<tocitem text="Hybrid-Ansicht"				target="em.output.hybrid"/>
+			<tocitem text="Navigation"				target="em.output.navigation"/>
+		</tocitem>
+			   	
+		<tocitem text="Laden/Speichern"              			target="em.io">
+	   	   	<tocitem text="Übersicht"				target="em.io.uebersicht"/>
+	   	   	<tocitem text="Laden"					target="em.io.laden"/>
+	   	   	<tocitem text="Speichern"				target="em.io.speichern"/>
+		</tocitem>
+				
+		<tocitem text="Präsentations-Modus"				target="em.praesentation"/>
+			
+	</tocitem>
+</toc>

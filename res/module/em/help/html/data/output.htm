@@ -1,0 +1,113 @@
+<html>
+	<head>
+		<title>Visualisierung</title>
+	</head>
+	<body topmargin="30" leftmargin="30">
+
+	<H1>Visualisierung</H1>
+	<h2><a name="uebersicht">&Uuml;bersicht</a></h2>
+	<p> Nach korrekter Initialisierung oder Laden eines Experiments wird der EM-Algorithmus schrittweise
+		visualisiert. Der Nutzer hat dabei die volle Kontrolle &uuml;ber die Navigation durch Schritte des
+		Algorithmus. Weiterhin stehen verschiedene Modi zur Anzeige der Berechnungen zur Verf&uuml;gung.
+		Standardm&auml;&szlig;ig wird nach Beenden der Eingabe die <a href="#hybrid">Hybridansicht</a> ge&ouml;ffnet.
+		<br> Die Umschaltung zwischen den einzelnen Ansichten erfolgt &uuml;ber das Dropdown-Men&uuml; des Moduls.
+		Zus&auml;tzlich besteht die M&ouml;glichkeit, die Likelihood logarithmisch darzustellen. Dies bietet sich an,
+		da die Likelihood schnell sehr klein wird. Durch die logarithmische Darstellung werden &Auml;nderungen
+		dann deutlicher sichtbar.
+		<br> Die verschiedenen Startwahrscheinlichkeiten sind durch unterschiedliche Farben gekennzeichnet.
+		Die Zuordnung kann der Legende am unteren Rand des Diagramms entnommen werden.
+		<br> Falls w&auml;hrend der Visualisierung wieder in die Eingabe geschaltet werden soll, um beispielsweise
+		&Auml;nderungen am Experiment vorzunehmen, kann dies durch Klick auf das Symbol getan werden.<br>
+		<br><img src="../../pics/hybrid_default.png" alt="Standardansicht nach der Eingabe"><br>
+	</p>
+
+	<h2><a name="diagramm">Diagrammansicht</a></h2>
+	<p> In der <b>Diagrammansicht</b> werden die durch den Algorithmus berechneten Werte grafisch als
+		Liniendiagramme dargestellt. Durch Klicken auf die Tasten am oberen Rand kann zwischen den
+		zu betrachtenden Werten gewechselt werden. Die genaue Bedeutung der einzelnen Werte kann
+		im Skript zur Vorlesung nachgelesen werden. Durch Ziehen eines Rahmens kann in die
+		Liniendiagramme hineingezoomt werden. Durch Klicken der <i>Standardzoom</i>-Taste
+		wird die Ansicht wieder zur&uuml;ckgesetzt.<br>
+		<img src="../../pics/diagramm.png" alt="Liniendiagramm der Likelihood"><br>
+		Besteht das Experiment aus genau zwei M&uuml;nzen steht zus&auml;tzlich eine 3D-Visualisierung der
+		Likelihood zur Verf&uuml;gung. Diese kann durch Klicken und Ziehen der Maus gedreht werden. 
+		Beim Navigieren durch die Schritte bleibt die eingestellte Ansicht erhalten.<br>
+		<br><img src="../../pics/3D.png" alt="3D-Ansicht"><br>
+	</p>
+
+	<h2><a name="tabelle">Tabellenansicht</a></h2>
+	<p> Die <b>Tabellenansicht</b> bietet eine genaue &Uuml;bersicht &uuml;ber berechneten Werte. Durch die
+		absoluten Zahlenwerte kann der Nutzer eigene Berechnungen nachpr&uuml;fen oder exakte Aussagen
+		&uuml;ber die Entwicklung der Werte machen. <br>
+		Die Tabelle scrollt automatisch mit den Schritten des Algorithmus mit, wobei immer drei
+		Berechnungschritte zu einem Zeitpunkt sichtbar sind.<br>
+		Des Weiteren kann die Tabelle <i>eingeklappt</i> werden, um die Darstellung &uuml;bersichtlicher
+		zu machen. Im eingeklappten Zustand sind nur die Zeilen mit den Likelihood-Werten der einzelnen
+		Startwahrscheinlichkeiten zu sehen, wohingegen im ausgeklappten Zustand alle Informationen 
+		angezeigt werden. <br>
+		Um die Tabelle ein- bzw. auszuklappen muss auf eine der Likelihood-Zeilen geklickt werden. Wichtig 
+		ist, dass jeweils auf eine Kopfzeile geklickt wird. Bei erneutem Klick auf die Kopfzeile wird die 
+		Tabelle entsprechend weiter ein- bzw. ausgeklappt.<br>
+		<br><img src="../../pics/tabelle.png" alt="Tabellenansicht"><br>
+	</p>
+
+	<h2><a name="hybrid">Hybridansicht</a></h2>
+	<p> Die <b>Hybridansicht</b> kombiniert die <a href="#diagramm">Diagrammansicht</a> mit der
+		<a href="#tabelle">Tabellenansicht</a> und bietet so einen umfassenen &Uuml;berblick. Die
+		Funktionen der einzelnen Ansichten bleiben dabei uneingeschr&auml;nkt erhalten, so kann
+		beispielsweise weiterhin in die Diagramme hineingezoomt werde. Des Weiteren bietet
+		sich dem Nutzer auf diese Weise die M&ouml;glichkeit, sich die Entwicklung der Werte mit
+		Hilfe des Diagramms zu veranschaulichen und gleichzeitig die absolute Ver&auml;nderung der
+		Werte beobachten zu k&ouml;nnen.<br>
+		&Uuml;ber die Leiste zwischen den Ansichten kann die Gr&ouml;&szlig;e der einzelnen Ansichsteile frei angepasst
+		werden. Insbesondere kann dadurch die Hybridansicht in die <a href="#diagramm">Diagrammansicht</a>
+		oder die <a href="#tabelle">Tabellenansicht</a> &uuml;berf&uuml;hrt werden.<br>
+		<br><img src="../../pics/hybrid.png" alt="Hybridansicht"><br>
+	</p>
+	
+	<h2><a name="navigation">Navigation</a></h2>
+	<p> Zur Navigation durch die Berechnungschritte stehen in der Toolbar des Moduls vier Tasten zur
+		Verf&uuml;gung, die mit <i>gr&uuml;nen Pfeilen</i> gekennzeichnet sind. Die Funktionen der Tasten
+		sind im Detail:
+		<ul>
+			<li><b> <img src="../../pics/last.png"> &ensp; Schritt vor:</b> <br>
+				Es werden drei <i>Einzelschritte</i> auf einmal berechnet. Diese Option bietet 
+				sich an, wenn es haupts&auml;chlich um die Entwicklung der Werte (vor allem der 
+				Likelihood) geht. 
+			</li>
+			<li><b> <img src="../../pics/next.png"> &ensp; Einzelschritt vor:</b> <br>
+				Es wird nur der n&auml;chste Wert berechnet. Diese Option ist hilfreich, um die 
+				Berechnungen des Algorithmus nachzuvollziehen. Die genauen Auswirkungen eines 
+				<i>Einzelschritts</i> sind nur in der <a href="#tabelle">Tabellenansicht</a> 
+				nachvollziehbar.
+			</li>
+			<li><b> <img src="../../pics/clear.png"> &ensp; Schritt zur&uuml;ck:</b><br>
+				&Auml;quivalent zur Option <i>Schritt vor</i> werden die letzten drei berechneten
+				(Einzel-)Werte aus der Darstellung entfernt. Der Startwert der Berechnung
+				kann nicht entfernt werden.
+			</li>
+			<li><b> <img src="../../pics/previous.png"> &ensp; Einzelschritt zur&uuml;ck:</b><br>
+				&Auml;quivalent zur Option <i>Einzeschritt vor</i> wird der letzte berechnete
+				Wert aus der Darstellung entfernt. Auch hier kann der Startwert nicht
+				entfernt werden. Die &Auml;nderungen durch Einzelschritte sind nur in der
+				<a href="#tabelle">Tabellenansicht</a> nachvollziehbar.
+			</li>	
+			<li><b> <img src="../../pics/run.png"> &ensp; Berechnung bis Grenze:</b><br>
+				Diese Option bietet dem Nutzer die M&ouml;glichkeit, die Berechnung des EM-Algorithmus
+				bis zu einer bestimmten Grenze automatisch auszuf&uuml;hren. Der sich &ouml;ffnende Dialog 
+				fordert eine Eingabe in Prozen (%) und bezeichnet die Differenz zwischen zwei
+				aufeinanderfolgenden Likelihoods L<sub>n-1</sub> und L<sub>n</sub>. Die Berechnung wird 
+				gestoppt, sobald die Ver&auml;nderung zwischen allen Likelihoods unterhalb der angegebenen
+				Grenze liegt. Sowohl die Tabelle als auch das Diagramm werden auf die Berechung angepasst
+				und zeigen das Ergebnis der Berechnung an.
+			</li>
+			<li><b> <img src="../../pics/home.png"> &ensp; Zur&uuml;ck zur Eingabe:</b><br>
+				Um von der Visualisierung zur&uuml;ck zur Eingabe zu gelangen gen&uuml;gt ein Klick auf das 
+				<i>Home</i>-Icon. Dies zeigt das Eingabefenster f&uuml;r die 
+				<a href="input.htm#wahrscheinlichkeiten">Startwahrscheinlichkeiten</a> an,
+			       	von dem aus die komplette Eingabe ver&auml;ndert werden kann.
+			</li>
+		<ul>	
+	</p>
+	</body>
+</html>

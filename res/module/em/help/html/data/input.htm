@@ -1,0 +1,113 @@
+<html>
+	<head>
+		<title>Neues Experiment</title>
+	</head>
+	<body topmargin="30" leftmargin="30">
+
+	<H1>Neues Experiment</H1>
+	<h2><a name="uebersicht">&Uuml;bersicht</a></h2>
+	<p> Nach dem Start des Moduls wird zuerst eine Startansicht angezeigt, in der der Benutzer
+		aus zwei Optionen w&auml;hlen kann:
+		<ul>
+			<li> erstellen eines neuen Experiments </li>
+			<li> laden eines gespeicherten Experiments </li>
+		</ul>
+		Dieses Kapitel beschreibt, wie eine neues Experiment erstellt werden kann.	
+	</p>
+	<p> </p>
+	<img src="../../pics/start.png" alt="Startansicht">
+
+	<h2><a name="objektangabe">Angabe der Objekte</a></h2>
+	<p> Nach der Wahl des Men&uuml;punktes <i>neues Experiment</i> aus in der Startansicht &ouml;ffnet 
+		sich ein Fenster zur Angabe der Objekte, aus denen das Experiment bestehen soll. Hier k&ouml;nnen
+		nun beliebige Objekte dem Experiment hinzugef&uuml;gt werden. <br>
+		F&uuml;r die beiden im Alltag gebr&auml;uchlichen Objekte <i>W&uuml;rfel</i> und <i>M&uuml;nze</i>
+		gibt es bereits spezielle Tasten, die direkt das spezifizierte Objekt dem Experiment hinzuf&uuml;gen.
+		Des Weiteren k&ouml;nnen Objekte mit beliebiger, positiver Seitenzahl angegeben werden. Dies erfolgt 
+		&uuml;ber das Eingabefeld und anschlie&szlig;endes best&auml;tigen per Eingabetaste oder durch Klick 
+		auf die entsprechende Taste. Die Tasten zum Hinzuf&uuml;gen von neuen Objekten sind mit einem gr&uuml;
+		Pluszeichen gekennzeichnet.<br>
+		&Uuml;ber die <i>R&uuml;ckg&auml;ngig</i>-Taste kann das zuletzt angegebene Objekt wieder entfernt
+		werden. Die <i>R&uuml;ckg&auml;ngig</i>-Taste ist durch ein rotes Minuszeichen gekennzeichnet.<br>
+		Nach Eingabe der gew&uuml;nschten Objekte (mindestens einem) kann per Klick auf die <i>Weiter</i>-Taste
+		fortgefahren werden. Die <i>Weiter</i>-Taste ist mit einem gr&uuml;nen Pfeil nach rechts gekennzeichnet.
+	</p>
+	<p> </p>
+	<img src="../../pics/objektangabe.png" alt="Angabe der Objekte">
+
+	<h2><a name="beobachtungen">Festlegen der Beobachtungen</a></h2>
+	<p> Bei der Festlegung der Beobachtungen wird die Menge der Ereignisse des Experiments partitioniert. F&uuml;
+		diese Partitionierung stehen verschiedene vorgefertigte Wahlm&ouml;glichkeiten zu Verf&uuml;gung.</p>
+		<p></p>
+		<img src="../../pics/partitionierung.png" alt="Standardeinstellung der Partitionierung"><br>
+
+		<p>In der Listenansicht sind sowohl der Name als auch die Elemente der Klasse in mathematischer
+			Schreibweise dargestellt, sodass f&uuml;r den Benutzer die Einteilung der Beobachtungen
+			stets einsichtig ist. Des Weiteren kann der Benutzer per Doppelklick auf einen
+			Listeneintrag den Namen der Klasse anpassen.
+		</p>
+		<p></p>
+
+		<img src="../../pics/klasse_benennen.png" alt="Umbenennen einer Klasse"><br>
+
+		<ul>
+			<li><b>Gleiche Seite:</b> Die Ereignismenge wird in zwei Klassen geteilt, wobei eine Klasse alle
+				Tupel enth&auml;lt, deren Elemente gleich sind, die andere die restlichen Ereignisse.</li>
+			<li><b>Anzahl Seite:</b> &Uuml;ber das Auswahlfeld kann gew&auml;hlt werden, welche <i>Seite</i> 
+				gez&auml;hlt werden soll (z.B. enth&auml;lt das Tupel (1,4) 0-mal Seite 2, die Tupel (2,1) 
+				und (1,2) jeweils 1-mal Seite 2 und (2,2) 2-mal Seite 2). Bei dieser Einstellung variiert 
+				die Anzahl der verschiedenen Klassen. </li>
+			<li><b>Ein Objekt hat eine Eigenschaft:</b> Diese Einstellungsm&ouml;glichkeit eignet sich f&uuml;r
+				die Einteilung in zwei Klassen, wobei zur Einteilung nur ein bestimmtes Objekt auf
+				eine bestimmte Eigenschaft hin &uuml;berpr&uuml;ft wird (z.B. k&ouml;nnte gefragt sein, wie oft
+				mit der ersten M&uuml;nze Kopf geworfen wurde).</li>
+			<li><b>Summe der Seiten:</b> Diese Option teilt die Ereignisse nach der Summe der Seiten ein,
+				wobei die Summe sich aus den Elementen des Tupel berechnet (z.B. hat (1,3) die Summe
+				4, (2,4) die Summe 6, usw.). F&uuml;r M&uuml;nzen wird Zahl=1 und Kopf=2 gesetzt.</li>
+			<li><b>Eigene Partitionierung:</b> Mit der <i>eigenen Partitionierung</i> kann der Benutzer
+				selbst frei w&auml;hlen, wie die Ereignisse in Klassen eingeteilt werden sollen. &Uuml;ber eine
+				Tabelle kann durch Klicken oder Ziehen von &bdquo;Rahmen&ldquo; die Menge der Ereignisse
+				der Klasse festelegt werden. Dabei ist ausgeschlossen, dass ein Ereignis zwei oder mehr
+				Klassen gleichzeitig zugewiesen wird. Weiterhin kann der Benutzer erst fortfahren, wenn
+				alle Ereignisse partitioniert wurden. Bereits hinzugef&uuml;gte Klassen k&ouml;nnen &uuml;ber die 
+				<i>Entfernen</i>-Taste auch wieder entfernt werden. Zur einfachen Vervollst&auml;ndigung
+				der Beobachtung gibt es eine <i>Auff&uuml;ll</i>-Taste, die aus den noch nicht partitionierten
+				Ereignissen eine neue &bdquo;Restklasse&ldquo; erstellt.<br><br>
+				<img src="../../pics/eigene_partitionierung.png" alt="Anlegen einer eigenen Partitionierung">
+			</li>
+		</ul>
+
+	<h2><a name="haeufigkeiten">Eingeben der Beobachtungsh&auml;ufigkeiten</a></h2>
+	<p> F&uuml;r die Berechnungen des EM-Algorithmus ist die Angabe der H&auml;ufigkeiten der Beobachtungen von N&ouml;ten. 
+		Diese H&auml;ufigkeiten m&uuml;ssen in die rechte Spalte der Tabelle eingetragen werden, wobei es ausreicht, 
+		dass eine Beobachtung h&auml;ufiger als 0-mal auftritt. Jede H&auml;ufigkeit muss eine reelle Zahl &ge;0 sein. 
+		<br>
+		Zur Vermeidung von Fehleingaben werden Fehlermeldungen angezeigt. Des Weiteren ist die Taste zum 
+		Fortfahren nur dann aktiviert, wenn die Eingabe korrekt ist.<br>
+		Akzeptierte Fomate f&uuml;r die Eingabe sind von der Form:
+			<ul>
+				<li><b>1.5</b> &ndash; Eingabe nach amerikanischem Format (Punkt als Trennzeichen).</li>
+				<li><b>1,5</b> &ndash; Eingabe nach europ&auml;ischem Format (Komma als Trennzeichen).</li>
+				<li><b>3/2</b> &ndash; Eingabe als Dezimalbruch</li>
+			</ul>
+		</p>
+		<p></p>
+		<img src="../../pics/haeufigkeiten.png" alt="Eingabe der H&auml;ufigkeiten">
+
+	<h2><a name="wahrscheinlichkeiten">Startwahrscheinlichkeiten</a></h2>
+	<p> Der letzte Schritt zur vollst&auml;ndigen Eingabe der ben&ouml;tigten Parameter ist die Angabe mindestens einer
+		Startwahrscheinlichkeit f&uuml;r die Objekte des Experiments. F&uuml;r eine korrekte Startwahrscheinlichkeit
+		f&uuml;r ein Objekt muss die Summe der Wahrscheinlichkeiten der Seiten 1 sein. Weiterhin darf es keine
+		negativen Wahrscheinlichkeiten geben.<br>
+		Zur vereinfachten Eingabe der Wahrscheinlichkeiten gibt es zwei Tasten zum auff&uuml;llen einer
+		angew&auml;hlten Spalte. Zum Einen kann eine Spalte <i>gleichverteilt</i> aufgef&uuml;llt werden (Schild-Symbol), 
+		zum Anderen kann sie <i>zuf&auml;llig</i> aufgef&uuml;llt werden (Fragezeichen-Symbol). Als dritte 
+		M&ouml;glichkeit steht dem Benutzer die freie Eingabe zur Verf&uuml;gung. F&uuml;r alle drei Varianten findet 
+		sich ein Beispiel in der Abbildung.<br>
+		Bereits eingegebene Startwahrscheinlichkeiten k&ouml;nnen mit der <i>Entfernen</i>-Taste wieder entfernt
+		werden. Die <i>Entfernen</i>-Taste ist mit einem roten Minuszeichen gekennzeichnet. 
+	</p>
+	<p></p>
+	<img src="../../pics/wahrscheinlichkeiten.png" alt="Startwahrscheinlichkeiten">
+	</body>
+</html> 

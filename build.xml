@@ -163,6 +163,24 @@
 			<param name="modulename" value="am1simulator" />
 		</antcall>
 		<!-- ### END BUILD -->
+		
+		<!-- ### BEGIN BUILD em -->
+		        <antcall target="module_jar">
+		            <param name="modulename" value="em" />
+		            <param name="classpath" value="${module_classpath} ../../extlibs/jmathplot.jar ../../extlibs/xstream-1.4.2.jar ../../extlibs/jmatharray.jar ../../extlibs/kxml2-2.3.0.jar" />
+		        </antcall>
+		        <copy todir="${dist}/em_${VERSION_ID}/extlibs">
+		            <fileset dir="extlibs">
+		                <include name="jmathplot.jar" />
+		                <include name="xstream-1.4.2.jar" />
+		            	<include name="jmatharray.jar" />
+		            	<include name="kxml2-2.3.0.jar" />
+		            </fileset>
+		        </copy>
+		        <antcall target="module_pkg">
+		            <param name="modulename" value="em" />
+		        </antcall>
+		<!-- ### END BUILD -->
 
 		<antcall target="module_jar">
 			<param name="modulename" value="kmp" />
