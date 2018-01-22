@@ -99,10 +99,10 @@ public class ActionListeners {
 				//Wenn Selection nach } -> Consume alles
 				if(editWorkspace.getSelectionEnd()==editWorkspace.getDocument().getLength())
 					{e.consume();return;}
-				//Enter fällt aus
+				//Enter faellt aus
 				if(e.getKeyChar()==KeyEvent.VK_ENTER)
 					{e.consume();return;}
-				//Tab fällt aus
+				//Tab faellt aus
 				if(e.getKeyChar()==KeyEvent.VK_TAB)
 					{e.consume();return;}
 				//Del bei Index erwartet

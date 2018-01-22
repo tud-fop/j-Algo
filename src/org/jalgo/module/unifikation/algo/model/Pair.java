@@ -132,7 +132,7 @@ public class Pair {
 						return true;
 					}
 					else {
-						this.lastError="Dekompositionsregel nicht anwendbar, da die Anzahl der Parameter der Konstruktoren unterschiedlich ist."; //eigentlich durch Parser unmöglich
+						this.lastError="Dekompositionsregel nicht anwendbar, da die Anzahl der Parameter der Konstruktoren unterschiedlich ist."; //eigentlich durch Parser unmoeglich
 						return false;
 					}
 				}

@@ -1,316 +1,87 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<project name="j-Algo" default="dist" basedir=".">
-	<tstamp>
-		<format property="VERSION_ID" pattern="yyyyMMdd" />
-	</tstamp>
-
-	<property name="classpath" value=" ../extlibs/jh.jar ../extlibs/swing-layout-1.0.jar ../runtime/modules/avl.jar ../runtime/modules/dijkstra.jar ../runtime/modules/ebnf.jar ../runtime/modules/heapsort.jar ../runtime/modules/hoare.jar ../runtime/modules/kmp.jar  ../runtime/modules/pulsemem.jar ../runtime/modules/app.jar ../runtime/modules/am0c0.jar ../runtime/modules/unifikation.jar ../runtime/modules/lambda.jar ../runtime/modules/bfsdfs.jar ../runtime/modules/c0h0.jar ../runtime/modules/em.jar" />
-	<property name="module_classpath" value="../j-Algo.jar" />
-
-	<property name="dist" location="dist" />
-
-	<property name="bin" location="bin" />
-	<property name="res" location="res" />
-
-	<target name="clean">
-		<delete dir="${dist}" />
-	</target>
-
-	<target name="dist" depends="dist_base,linux,macosx,windows">
-		<delete dir="${dist}/tmp" />
-	</target>
-
-	<target name="init">
-		<mkdir dir="${dist}/tmp" />
-	</target>
-
-	<target name="dist_base" depends="main, parser">
-		<antcall target="module_jar">
-			<param name="modulename" value="avl" />
-			<param name="classpath" value="${module_classpath}" />
-		</antcall>
-		<antcall target="module_pkg">
-			<param name="modulename" value="avl" />
-		</antcall>
-
-		<antcall target="module_jar">
-			<param name="modulename" value="dijkstra" />
-			<param name="classpath" value="${module_classpath}" />
-		</antcall>
-		<antcall target="module_pkg">
-			<param name="modulename" value="dijkstra" />
-		</antcall>
-
-		<antcall target="module_jar">
-			<param name="modulename" value="ebnf" />
-			<param name="classpath" value="${module_classpath}" />
-		</antcall>
-		<antcall target="module_pkg">
-			<param name="modulename" value="ebnf" />
-		</antcall>
-
-		<antcall target="module_jar">
-			<param name="modulename" value="heapsort" />
-			<param name="classpath" value="${module_classpath}" />
-		</antcall>
-		<antcall target="module_pkg">
-			<param name="modulename" value="heapsort" />
-		</antcall>
-
-		<antcall target="module_jar">
-			<param name="modulename" value="hoare" />
-			<param name="classpath" value="${module_classpath} ../../extlibs/antlr-3.0b6.jar ../../extlibs/neu-ext-1.1.1.b.jar ../../extlibs/jep-2.4.1.b.jar ../../extlibs/parser.jar ../../extlibs/jgraph.jar" />
-		</antcall>
-		<copy todir="${dist}/hoare_${VERSION_ID}/extlibs">
-			<fileset dir="extlibs">
-				<include name="antlr-3.0b6.jar" />
-				<include name="neu-ext-1.1.1.b.jar" />
-				<include name="jep-2.4.1.b.jar" />
-				<include name="jgraph.jar" />
-			</fileset>
-			<fileset dir="${dist}/tmp/extlibs/">
-				<include name="parser.jar" />
-			</fileset>
-		</copy>
-		<antcall target="module_pkg">
-			<param name="modulename" value="hoare" />
-		</antcall>
-
-		<antcall target="module_jar">
-			<param name="modulename" value="lambda" />
-			<param name="classpath" value="${module_classpath} ../../extlibs/antlr-runtime-313-custom.jar" />
-		</antcall>
-		<copy todir="${dist}/lambda_${VERSION_ID}/extlibs">
-			<fileset dir="extlibs">
-				<include name="antlr-runtime-313-custom.jar" />
-			</fileset>
-		</copy>
-		<antcall target="module_pkg">
-			<param name="modulename" value="lambda" />
-		</antcall>
-
-		<!-- ### BEGIN BUILD am0c0 -->
-		<antcall target="module_jar">
-			<param name="modulename" value="am0c0" />
-			<param name="classpath" value="${module_classpath} ../../extlibs/beaver-rt.jar ../../extlibs/commons-lang-2.5.jar" />
-		</antcall>
-		<copy todir="${dist}/am0c0_${VERSION_ID}/extlibs">
-			<fileset dir="extlibs">
-				<include name="beaver-rt.jar" />
-				<include name="commons-lang-2.5.jar" />
-			</fileset>
-		</copy>
-		<antcall target="module_pkg">
-			<param name="modulename" value="am0c0" />
-		</antcall>
-		<!-- ### END BUILD -->
-
-		<!-- ### BEGIN BUILD unifikation -->
-		<antcall target="module_jar">
-			<param name="modulename" value="unifikation" />
-			<param name="classpath" value="${module_classpath} ../../extlibs/antlr-runtime-3.2.jar" />
-		</antcall>
-		<copy todir="${dist}/unifikation_${VERSION_ID}/extlibs">
-			<fileset dir="extlibs">
-				<include name="antlr-runtime-3.2.jar" />
-			</fileset>
-		</copy>
-		<antcall target="module_pkg">
-			<param name="modulename" value="unifikation" />
-		</antcall>
-		<!-- ### END BUILD -->
-
-		<!-- ### BEGIN BUILD bfsdfs -->
-		<antcall target="module_jar">
-			<param name="modulename" value="bfsdfs" />
-			<param name="classpath" value="${module_classpath}" />
-		</antcall>
-		<antcall target="module_pkg">
-			<param name="modulename" value="bfsdfs" />
-		</antcall>
-		<!-- ### END BUILD -->
-
-		<!-- ### BEGIN BUILD c0h0 -->
-		<antcall target="module_jar">
-			<param name="modulename" value="c0h0" />
-			<param name="classpath" value="${module_classpath} ../../extlibs/beaver-rt.jar ../../extlibs/jgraphx.jar ../../extlibs/jsyntaxpane-0.9.5-b29.jar" />
-		</antcall>
-		<copy todir="${dist}/c0h0_${VERSION_ID}/extlibs">
-			<fileset dir="extlibs">
-				<include name="beaver-rt.jar" />
-				<include name="jgraphx.jar" />
-				<include name="jsyntaxpane-0.9.5-b29.jar" />
-			</fileset>
-		</copy>
-		<antcall target="module_pkg">
-			<param name="modulename" value="c0h0" />
-		</antcall>
-		<!-- ### END BUILD -->
-
-		<!-- ### BEGIN BUILD am1simulator -->
-		<antcall target="module_jar">
-			<param name="modulename" value="am1simulator" />
-			<param name="classpath" value="${module_classpath} ../../extlibs/beaver-rt.jar ../../extlibs/jsyntaxpane-0.9.5-b29.jar" />
-		</antcall>
-		<copy todir="${dist}/am1simulator_${VERSION_ID}/extlibs">
-			<fileset dir="extlibs">
-				<include name="beaver-rt.jar" />
-				<include name="jsyntaxpane-0.9.5-b29.jar" />
-			</fileset>
-		</copy>
-		<antcall target="module_pkg">
-			<param name="modulename" value="am1simulator" />
-		</antcall>
-		<!-- ### END BUILD -->
-		
-		<!-- ### BEGIN BUILD em -->
-		        <antcall target="module_jar">
-		            <param name="modulename" value="em" />
-		            <param name="classpath" value="${module_classpath} ../../extlibs/jmathplot.jar ../../extlibs/xstream-1.4.2.jar ../../extlibs/jmatharray.jar ../../extlibs/kxml2-2.3.0.jar" />
-		        </antcall>
-		        <copy todir="${dist}/em_${VERSION_ID}/extlibs">
-		            <fileset dir="extlibs">
-		                <include name="jmathplot.jar" />
-		                <include name="xstream-1.4.2.jar" />
-		            	<include name="jmatharray.jar" />
-		            	<include name="kxml2-2.3.0.jar" />
-		            </fileset>
-		        </copy>
-		        <antcall target="module_pkg">
-		            <param name="modulename" value="em" />
-		        </antcall>
-		<!-- ### END BUILD -->
-
-		<antcall target="module_jar">
-			<param name="modulename" value="kmp" />
-			<param name="classpath" value="${module_classpath}" />
-		</antcall>
-		<antcall target="module_pkg">
-			<param name="modulename" value="kmp" />
-		</antcall>
-
-		<antcall target="module_jar">
-			<param name="modulename" value="pulsemem" />
-			<param name="classpath" value="${module_classpath} ../../extlibs/parser.jar ../../extlibs/antlr-3.0b6.jar" />
-		</antcall>
-		<copy todir="${dist}/pulsemem_${VERSION_ID}/extlibs">
-			<fileset dir="extlibs">
-				<include name="antlr-3.0b6.jar" />
-			</fileset>
-			<fileset dir="${dist}/tmp/extlibs/">
-				<include name="parser.jar" />
-			</fileset>
-		</copy>
-		<antcall target="module_pkg">
-			<param name="modulename" value="pulsemem" />
-		</antcall>
-
-		<antcall target="module_jar">
-			<param name="modulename" value="app" />
-			<param name="classpath" value="${module_classpath}" />
-		</antcall>
-		<antcall target="module_pkg">
-			<param name="modulename" value="app" />
-		</antcall>
-
-		<copy todir="${dist}/tmp">
-			<fileset dir="." includes="examples/**" excludes="**/SVN" />
-		</copy>
-
-		<copy todir="${dist}/tmp">
-			<fileset dir="." includes="extlibs/**" excludes="**/SVN" />
-		</copy>
-	</target>
-
-	<target name="linux">
-		<antcall target="platform_base">
-			<param name="platform" value="linux" />
-		</antcall>
-
-		<copy todir="${dist}/linux/j-Algo" file="j-Algo.sh" />
-		<copy todir="${dist}/linux/j-Algo" file="j-Algo.ico" />
-
-		<chmod file="${dist}/linux/j-Algo/j-Algo.sh" perm="+x" />
-
-		<tar tarfile="${dist}/j-Algo-linux-complete-${VERSION_ID}.tar" basedir="${dist}/linux/" />
-		<gzip zipfile="${dist}/j-Algo-linux-complete-${VERSION_ID}.tar.gz" src="${dist}/j-Algo-linux-complete-${VERSION_ID}.tar" />
-		<delete file="${dist}/j-Algo-linux-complete-${VERSION_ID}.tar" />
-	</target>
-
-	<target name="macosx">
-		<antcall target="platform_base">
-			<param name="platform" value="macosx" />
-		</antcall>
-	</target>
-
-	<target name="windows">
-		<antcall target="platform_base">
-			<param name="platform" value="windows" />
-		</antcall>
-
-		<copy todir="${dist}/windows/j-Algo/" file="j-Algo.bat" />
-		<copy todir="${dist}/windows/j-Algo/" file="j-Algo.ico" />
-
-		<zip destfile="${dist}/j-Algo-windows-complete-${VERSION_ID}.zip" basedir="${dist}/windows/" />
-	</target>
-
-	<target name="main" depends="init">
-		<mkdir dir="${dist}/tmp/runtime/" />
-		<jar destfile="${dist}/tmp/runtime/j-Algo.jar">
-			<fileset dir="${bin}" includes="org/jalgo/main/**">
-			</fileset>
-			<fileset dir="${res}/main">
-			</fileset>
-			<manifest>
-				<attribute name="Class-Path" value="${classpath}" />
-				<attribute name="Main-Class" value="org.jalgo.main.JAlgoMain" />
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="module_jar" depends="init">
-		<mkdir dir="${dist}/tmp/runtime/modules" />
-		<jar destfile="${dist}/tmp/runtime/modules/${modulename}.jar">
-			<fileset dir="${bin}" includes="org/jalgo/module/${modulename}/**">
-			</fileset>
-			<fileset dir="${res}/module/${modulename}">
-			</fileset>
-			<manifest>
-				<attribute name="Class-Path" value="${classpath}" />
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="module_pkg">
-		<copy todir="${dist}/${modulename}_${VERSION_ID}">
-			<fileset dir="." excludes="**/SVN">
-				<include name="examples/${modulename}/**" />
-			</fileset>
-			<fileset dir="${dist}/tmp/">
-				<include name="runtime/modules/${modulename}.jar" />
-			</fileset>
-		</copy>
-
-		<tar tarfile="${dist}/${modulename}_${VERSION_ID}.tar" basedir="${dist}/${modulename}_${VERSION_ID}" />
-		<gzip zipfile="${dist}/${modulename}_${VERSION_ID}.tar.gz" src="${dist}/${modulename}_${VERSION_ID}.tar" />
-		<delete file="${dist}/${modulename}_${VERSION_ID}.tar" />
-
-		<delete dir="${dist}/${modulename}_${VERSION_ID}" />
-	</target>
-
-	<target name="parser" depends="init">
-		<mkdir dir="${dist}/tmp/extlibs" />
-		<jar destfile="${dist}/tmp/extlibs/parser.jar">
-			<fileset dir="${bin}" includes="c00/**">
-			</fileset>
-		</jar>
-	</target>
-
-	<target name="platform_base">
-		<copy todir="${dist}/${platform}/j-Algo">
-			<fileset dir="${dist}/tmp" includes="**" />
-		</copy>
-	</target>
-
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="j-Algo">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="../../../../../usr/lib/eclipse/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+        <pathelement location="../../../../../usr/lib/eclipse/plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    </path>
+    <path id="JUnit 3.libraryclasspath">
+        <pathelement location="../../../../../usr/lib/eclipse/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+    </path>
+    <path id="j-Algo.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="extlibs/jh.jar"/>
+        <pathelement location="extlibs/swing-layout-1.0.jar"/>
+        <pathelement location="runtime"/>
+        <pathelement location="res/main"/>
+        <pathelement location="res/module/avl"/>
+        <pathelement location="res/module/dijkstra"/>
+        <pathelement location="res/module/ebnf"/>
+        <pathelement location="res/module/heapsort"/>
+        <pathelement location="res/module/kmp"/>
+        <pathelement location="res/module/am0c0"/>
+        <pathelement location="res/module/app"/>
+        <pathelement location="res/module/lambda"/>
+        <pathelement location="res/module/hoare"/>
+        <pathelement location="res/module/pulsemem"/>
+        <pathelement location="res/module/bfsdfs"/>
+        <pathelement location="res/module/testModule"/>
+        <pathelement location="extlibs/antlr-3.0b6.jar"/>
+        <pathelement location="extlibs/jep-2.4.1.b.jar"/>
+        <pathelement location="extlibs/jmatharray.jar"/>
+        <pathelement location="extlibs/kxml2-2.3.0.jar"/>
+        <pathelement location="extlibs/xstream-1.4.2.jar"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <path refid="JUnit 3.libraryclasspath"/>
+        <pathelement location="extlibs/jgraph.jar"/>
+        <pathelement location="extlibs/neu-ext-1.1.1.b.jar"/>
+        <pathelement location="extlibs/antlr-runtime-313-custom.jar"/>
+        <pathelement location="extlibs/stringtemplate.jar"/>
+        <pathelement location="extlibs/antlr-runtime-3.2.jar"/>
+        <pathelement location="extlibs/beaver-rt.jar"/>
+        <pathelement location="extlibs/commons-lang-2.5.jar"/>
+        <pathelement location="extlibs/jflex.jar"/>
+        <pathelement location="res/module/unifikation"/>
+        <pathelement location="res/module/c0h0"/>
+        <pathelement location="extlibs/jgraphx.jar"/>
+        <pathelement location="extlibs/jsyntaxpane-0.9.5-b29.jar"/>
+        <pathelement location="res/module/am1simulator"/>
+        <pathelement location="extlibs/jmathplot.jar"/>
+        <pathelement location="res/module/em"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="j-Algo.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target name="JAlgoMain">
+        <java classname="org.jalgo.main.JAlgoMain" failonerror="true" fork="yes">
+            <classpath refid="j-Algo.classpath"/>
+        </java>
+    </target>
 </project>

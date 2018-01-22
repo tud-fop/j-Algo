@@ -29,8 +29,8 @@ public class TestSetParser {
 	
 	@Test
 	public void testSetParser(){
-		//Test für Übergabe des Nullpointers
-			assertFalse("Fehler bei Nullpointerübergabe an Parser", parser.parse(null));
+		//Test fuer Uebergabe des Nullpointers
+			assertFalse("Fehler bei Nullpointeruebergabe an Parser", parser.parse(null));
 		
 		//Test korrekter Terme
 			assertTrue("Fehler beim Parsen von M={(x1,x1)}. Expected: 'true' but was 'false'", parser.parse("M={(x1,x1)}"));

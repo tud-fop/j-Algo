@@ -3,8 +3,8 @@ package org.jalgo.module.pulsemem.core.exceptions;
 import org.jalgo.module.pulsemem.Admin;
 
 /**
- * Diese Exception wird geworfen, wenn die Anazahl von Platzhaltern und Argumenten
- * bei einer Printf Anweisung nicht übereinstimmt.
+ * Diese Exception wird geworfen, wenn die Anzahl von Platzhaltern und Argumenten
+ * bei einer Printf Anweisung nicht uebereinstimmt.
  *
  */
 public class EPrintfException extends EExecutionException {

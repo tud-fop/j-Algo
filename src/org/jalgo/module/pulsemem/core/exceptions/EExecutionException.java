@@ -1,7 +1,7 @@
 package org.jalgo.module.pulsemem.core.exceptions;
 
 /**
- * Eine Exception die geworfen wird, wenn ein Laufzeitproblem beim Ausführen des Codes auftritt.
+ * Eine Exception die geworfen wird, wenn ein Laufzeitproblem beim Ausfuehren des Codes auftritt.
  * @author Frank Herrlich
  *
  */

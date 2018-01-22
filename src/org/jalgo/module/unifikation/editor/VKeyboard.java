@@ -211,7 +211,7 @@ public class VKeyboard {
 		btnCR.setLocation(7*(Constants.ButtonSize.width+Constants.ButtonGap)+30, 2*(Constants.ButtonSize.height+Constants.ButtonGap));
 		btnCR.addActionListener(ActionListeners.getButtonLetterListener(TheEdit));
 		
-		//Tasten anfügen
+		//Tasten anfuegen
 		panKeyboard.add(btnAlpha);
 		panKeyboard.add(btnBeta);
 		panKeyboard.add(btnGamma);
