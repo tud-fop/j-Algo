@@ -8,13 +8,6 @@
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-    <path id="JUnit 4.libraryclasspath">
-        <pathelement location="../../../../../usr/lib/eclipse/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
-        <pathelement location="../../../../../usr/lib/eclipse/plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
-    </path>
-    <path id="JUnit 3.libraryclasspath">
-        <pathelement location="../../../../../usr/lib/eclipse/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
-    </path>
     <path id="j-Algo.classpath">
         <pathelement location="bin"/>
         <pathelement location="extlibs/jh.jar"/>
@@ -38,8 +31,7 @@
         <pathelement location="extlibs/jmatharray.jar"/>
         <pathelement location="extlibs/kxml2-2.3.0.jar"/>
         <pathelement location="extlibs/xstream-1.4.2.jar"/>
-        <path refid="JUnit 4.libraryclasspath"/>
-        <path refid="JUnit 3.libraryclasspath"/>
+        <pathelement location="extlibs/junit.jar"/>
         <pathelement location="extlibs/jgraph.jar"/>
         <pathelement location="extlibs/neu-ext-1.1.1.b.jar"/>
         <pathelement location="extlibs/antlr-runtime-313-custom.jar"/>
