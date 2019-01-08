@@ -3,7 +3,8 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="j-Algo">
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="j-Algo">
     <property environment="env"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
@@ -56,9 +57,26 @@
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
+        <touch file="runtime/modules/am0c0.jar" mkdirs="true"/>
+        <touch file="runtime/modules/am1simulator.jar" mkdirs="true"/>
+        <touch file="runtime/modules/app.jar" mkdirs="true"/>
+        <touch file="runtime/modules/avl.jar" mkdirs="true"/>
+        <touch file="runtime/modules/bfsdfs.jar" mkdirs="true"/>
+        <touch file="runtime/modules/c0h0.jar" mkdirs="true"/>
+        <touch file="runtime/modules/dijkstra.jar" mkdirs="true"/>
+        <touch file="runtime/modules/ebnf.jar" mkdirs="true"/>
+        <touch file="runtime/modules/em.jar" mkdirs="true"/>
+        <touch file="runtime/modules/heapsort.jar" mkdirs="true"/>
+        <touch file="runtime/modules/hoare.jar" mkdirs="true"/>
+        <touch file="runtime/modules/kmp.jar" mkdirs="true"/>
+        <touch file="runtime/modules/lambda.jar" mkdirs="true"/>
+        <touch file="runtime/modules/pulsemem.jar" mkdirs="true"/>
+        <touch file="runtime/modules/testModule.jar" mkdirs="true"/>
+        <touch file="runtime/modules/unifikation.jar" mkdirs="true"/>
     </target>
     <target name="clean">
         <delete dir="bin"/>
+        <delete dir="runtime"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
