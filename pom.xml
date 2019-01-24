@@ -110,7 +110,7 @@
 
 <!--     em -->
 
-<!--     this dependency is located locally in repo/jmathplot/jmathplot/1.0/jmathplo-1.0.jar -->
+<!--     this dependency is located locally in repo/jmathplot/jmathplot/1.0/jmathplot-1.0.jar -->
     <dependency>
         <groupId>jmathplot</groupId>
         <artifactId>jmathplot</artifactId>
@@ -118,7 +118,7 @@
     </dependency>
     
     <dependency>
-      <groupId>com.github.yannrichet</groupId>
+      <groupId>jmatharray</groupId>
       <artifactId>jmatharray</artifactId>
       <version>1.0</version>
     </dependency>
