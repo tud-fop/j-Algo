@@ -249,6 +249,8 @@ extends JFrame {
 		JAlgoMain main = JAlgoMain.getInstance();
 		JMenuItem current;
 		for (int i=0; i<main.getKnownModuleInfos().size(); i++) {
+			String s = main.getKnownModuleInfos().get(i).getName();
+			String t = main.getKnownModuleInfos().get(i).getLogoURL().toString();
 			current = new JMenuItem(
 				main.getKnownModuleInfos().get(i).getName(),
 				new ImageIcon(main.getKnownModuleInfos().get(i).getLogoURL()));

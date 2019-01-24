@@ -2,3 +2,6 @@ bin/
 runtime/
 err.log
 out.log
+target/
+**/.DS_Store
+.settings/
