@@ -69,12 +69,22 @@ public class PulseMemTablePanel extends JPanel {
 	 */
 	private String getFormattedVariableName(PulsMemLine line, int j) {
 		String name;
-		boolean isVisibleVar = line.getVisibleStack().indexOf(line.getStack().get(j)) != -1;
+		boolean isVisibleVar = isVisibleVar(line,j);
 		 
-		name = (isVisibleVar ? "<b>" : "");
-		name += line.getStack().get(j).getName();
-		name += (isVisibleVar ? "</b>" : "");
+		name = (isVisibleVar ? "<b>" + line.getStack().get(j).getName() + "</b>" : "");
+		
 		return name;
+	}
+	
+	/**
+	 * checks weather a variable is visible in this scope or not
+	 * @param line The line which is handled at the moment
+	 * @param j Index of the variable.
+	 * @return
+	 */
+	private boolean isVisibleVar(PulsMemLine line, int j) {
+		boolean visible = line.getVisibleStack().indexOf(line.getStack().get(j)) != -1;
+		return visible;
 	}
 	
 	/**
@@ -154,11 +164,14 @@ public class PulseMemTablePanel extends JPanel {
 				columns[i] = Integer.toString(i - 1);
 			}
 			CellObject data[][];
+			String dataValue[][];
 			if (addDummy) {
-				data = new CellObject[numberOfRows + 1][numberOfColumns + 1];
+				data = new CellObject[numberOfRows][numberOfColumns + 1];
+				dataValue = new String[numberOfRows][numberOfColumns + 1];
 				data[numberOfRows][numberOfColumns] = new CellObject(" - ");
 			} else {
-				data = new CellObject[numberOfRows + 1][numberOfColumns];
+				data = new CellObject[numberOfRows][numberOfColumns];
+				dataValue = new String[numberOfRows][numberOfColumns];
 			}
 
 			// get data for each row
@@ -170,9 +183,7 @@ public class PulseMemTablePanel extends JPanel {
 							checkNumberOfGlobalVars(line), numberOfGlobalVars);
 					// find out if line has a label
 					if (line.isLabel()) {
-						data[i][0] = new CellObject(Messages.getString(
-								"pulsemem", "PulseMemTable.Line")
-								+ " " + Integer.toString(line.getCodeLine()),
+						data[i][0] = new CellObject(
 								Messages.getString("pulsemem",
 										"PulseMemTable.Label")
 										+ " "
@@ -183,7 +194,7 @@ public class PulseMemTablePanel extends JPanel {
 								+ " " + Integer.toString(line.getCodeLine()));
 					}
 					// reverse stack string
-					String rm = "] ";
+					String rm = "";
 					int size = line.getRuecksprungMarken().size();
 					for (int j = 0; j < size; j++) {
 						if (j == 0) {
@@ -193,45 +204,60 @@ public class PulseMemTablePanel extends JPanel {
 						} else {
 							rm = Integer.toString(line.getRuecksprungMarken()
 									.get(j))
-									+ "," + rm;
+									+ ":" + rm;
 						}
 					}
-					rm = "[" + rm;
+					if (rm == "")
+						rm = "-";
 					data[i][1] = new CellObject(rm, SwingConstants.RIGHT);
 					// get data for variable of the line
 					for (int j = 0; j < line.getStack().size(); j++) {
 						String name;
-						String value = "?"; //$NON-NLS-1$
+						String value = ""; //$NON-NLS-1$
 
 						if (line.getStack().get(j).getName() == null) {
 							name = "?"; //$NON-NLS-1$
 						} else {
+							name = getFormattedVariableName(line, j);
+							
 							if (line.getStack().get(j) instanceof Zeiger) {
 								Zeiger tmp = (Zeiger) line.getStack().get(j);
 
-								name = "<i>" + tmp.getName() + "</i>";
+								
 								// name = tmp.toString();
-								try {
-									value = "#"
-											+ Integer
-													.toString(line
-															.getStack()
-															.indexOf(
-																	tmp
-																			.getTarget()) + 1);
-								} catch (EMemoryError eme) {
+								String val = Integer.toString(line.getStack().indexOf(tmp.getTarget()) + 1);
+								if (variableChanged(dataValue, i, j, val) || isVisibleVar(line, j)) {
+									try {
+										value = val;
+									} catch (EMemoryError eme) {
 
+									}
+								} else {
+									value = " ";
 								}
+								dataValue[i][j] = val;
 							} else {
 								
-								name = getFormattedVariableName(line, j);
 									
 								try {
-									if (line.getStack().get(j).getValue() != null) {
-										value = line.getStack().get(j).getValue().toString();
+									String val = line.getStack().get(j).getValue().toString();
+									if (variableChanged(dataValue, i, j, val) || isVisibleVar(line, j)) {
+										if (line.getStack().get(j).getValue() != null) {
+										
+											value = val;
+										} else {
+											value = "?";
+										}
 									}
+									else
+										value = " ";
+									
+									dataValue[i][j] = val;
 								} catch (Exception e) {
-
+									if(line.getStack().get(j).isGlobal() || variableChanged(dataValue, i, j, "?")) {
+										value = "?";
+									}
+									dataValue[i][j] = "?";
 								}
 
 							}
@@ -258,13 +284,18 @@ public class PulseMemTablePanel extends JPanel {
 
 				}
 			}
-			for (int i = 0; i < numberOfColumns; i++) {
-				data[numberOfRows][i] = new CellObject("-----");
-			}
+			
 			pmt.setData(columns, data, numberOfGlobalVars);
 		}
 	}
 
+	private boolean variableChanged(String[][] dataValues, int i, int j, String value) {
+		if(i == 0 || dataValues[i-1][j] == null)
+			return true;
+		
+		return !dataValues[i-1][j].equals(value);
+	}
+	
 	/**
 	 * Sets the InlineBreakpoint object for the table.
 	 *

@@ -22,7 +22,7 @@ void g(int x, int y, int *z) {
 }
 
 int main() {
-  scanf("%i", &e); /*label 6*/
+  scanf ("%i", &e); /*label 6*/
   f(e, &a);  /*label 7*/
   printf("%d", a);
   return 0;

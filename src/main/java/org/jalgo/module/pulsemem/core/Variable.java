@@ -92,6 +92,8 @@ public class Variable {
 		this.value = (Integer)value;
 	}
 
+
+	
 	/**
 	 * is the variable global declared?
 	 * @return is the variable global declared?
