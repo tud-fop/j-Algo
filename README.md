@@ -5,6 +5,6 @@ j-Algo can be useful to everyone interested in algorithms, in particular to stud
 
 ## Build and run
 ```bash
-ant build       # build
-ant JAlgoMain   # run
+mvn package       # build
+mvn exec:java     # run
 ```
