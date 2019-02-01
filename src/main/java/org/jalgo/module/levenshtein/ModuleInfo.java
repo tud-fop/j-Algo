@@ -69,7 +69,7 @@ implements IModuleInfo {
 	}
 
 	public URL getLogoURL() {
-		return Messages.getResourceURL("main", "ui.Logo_small");
+		return Messages.getResourceURL("levenshtein", "Ui.Logo");
 	}
 
 	public String getLicense() {
