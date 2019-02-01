@@ -3451,7 +3451,7 @@ public class C00Parser extends DebugParser {
             try { dbg.enterDecision(10);
 
             int LA10_0 = input.LA(1);
-            if ( (LA10_0==Ident||LA10_0==21||LA10_0==23||(LA10_0>=25 && LA10_0<=34)||LA10_0==37) ) {
+            if ( (LA10_0==Ident||LA10_0==21||LA10_0==23||(LA10_0>=25 && LA10_0<=34)||LA10_0==37||LA10_0==54) ) {
                 alt10=1;
             }
             else if ( (LA10_0==EOF||LA10_0==24||LA10_0==40||LA10_0==42) ) {
@@ -3556,6 +3556,7 @@ public class C00Parser extends DebugParser {
         Token s15=null;
         Token i16=null;
         Token n14=null;
+        Token n15=null;
         Token char_literal40=null;
         Token string_literal41=null;
         Token char_literal42=null;
@@ -3605,6 +3606,11 @@ public class C00Parser extends DebugParser {
         Token char_literal86=null;
         Token string_literal87=null;
         Token string_literal88=null;
+        Token string_literal89=null;
+        Token string_literal90=null;
+        Token string_literal91=null;
+        
+        
         assignment_return a1 = null;
 
         boolExpression_return bE3 = null;
@@ -3647,6 +3653,7 @@ public class C00Parser extends DebugParser {
         Object s15_tree=null;
         Object i16_tree=null;
         Object n14_tree=null;
+        Object n15_tree=null;
         Object char_literal40_tree=null;
         Object string_literal41_tree=null;
         Object char_literal42_tree=null;
@@ -3696,6 +3703,9 @@ public class C00Parser extends DebugParser {
         Object char_literal86_tree=null;
         Object string_literal87_tree=null;
         Object string_literal88_tree=null;
+        Object string_literal89_tree=null;
+        Object string_literal90_tree=null;
+        Object string_literal91_tree=null;
 
         try { dbg.enterRule("statement");
         if ( ruleLevel==0 ) {dbg.commence();}
@@ -3814,6 +3824,9 @@ public class C00Parser extends DebugParser {
             case 37:
                 alt11=16;
                 break;
+            case 54:
+            	alt11=17;
+            	break;
             default:
                 if (backtracking>0) {failed=true; return retval;}
                 NoViableAltException nvae =
@@ -4533,40 +4546,111 @@ public class C00Parser extends DebugParser {
                 case 16 :
                     dbg.enterAlt(16);
 
-                    // C00.g:261:7: '/*label' n14= Number '*/'
-                    {
-                    root_0 = (Object)adaptor.nil();
+                    // C00.g:261:7: '/*' 'label' n14= Number '*/'
+				{
+					root_0 = (Object) adaptor.nil();
 
-                    dbg.location(261,7);
-                    string_literal87=(Token)input.LT(1);
-                    match(input,37,FOLLOW_37_in_statement1121); if (failed) return retval;
-                    if ( backtracking==0 ) {
-                    string_literal87_tree = (Object)adaptor.create(string_literal87);
-                    adaptor.addChild(root_0, string_literal87_tree);
-                    }
-                    dbg.location(261,20);
-                    n14=(Token)input.LT(1);
-                    match(input,Number,FOLLOW_Number_in_statement1125); if (failed) return retval;
-                    if ( backtracking==0 ) {
-                    n14_tree = (Object)adaptor.create(n14);
-                    adaptor.addChild(root_0, n14_tree);
-                    }
-                    dbg.location(261,28);
-                    string_literal88=(Token)input.LT(1);
-                    match(input,38,FOLLOW_38_in_statement1127); if (failed) return retval;
-                    if ( backtracking==0 ) {
-                    string_literal88_tree = (Object)adaptor.create(string_literal88);
-                    adaptor.addChild(root_0, string_literal88_tree);
-                    }
-                    dbg.location(262,2);
-                    if ( backtracking==0 ) {
-                      if (n14 == null) {retval.astTree = null;} else
-                      	 {retval.astTree = new AST.LabelStm(Integer.parseInt(n14.getText()));
-                      	 determineIndices(((Token)retval.start), retval.astTree);}
-                    }
+					dbg.location(261, 7);
+					string_literal87 = (Token) input.LT(1);
+					match(input, 37, FOLLOW_37_in_statement1121);
+					if (failed)
+						return retval;
+					if (backtracking == 0) {
+						string_literal87_tree = (Object) adaptor.create(string_literal87);
+						adaptor.addChild(root_0, string_literal87_tree);
+					}
+					
+					dbg.location(261, 7);
+					string_literal88 = (Token) input.LT(1);
+					match(input, 53, FOLLOW_37_in_statement1121);
+					if (failed)
+						return retval;
+					if (backtracking == 0) {
+						string_literal88_tree = (Object) adaptor.create(string_literal88);
+						adaptor.addChild(root_0, string_literal88_tree);
+					}
+					
+					dbg.location(261, 20);
+					n14 = (Token) input.LT(1);
+					match(input, Number, FOLLOW_Number_in_statement1125);
+					if (failed)
+						return retval;
+					if (backtracking == 0) {
+						n14_tree = (Object) adaptor.create(n14);
+						adaptor.addChild(root_0, n14_tree);
+					}
+					
+					dbg.location(261, 28);
+					string_literal89 = (Token) input.LT(1);
+					match(input, 38, FOLLOW_38_in_statement1127);
+					if (failed)
+						return retval;
+					if (backtracking == 0) {
+						string_literal89_tree = (Object) adaptor.create(string_literal89);
+						adaptor.addChild(root_0, string_literal89_tree);
+					}
+					
+					dbg.location(262, 2);
+					if (backtracking == 0) {
+						if (n14 == null) {
+							retval.astTree = null;
+						} else {
+							retval.astTree = new AST.LabelStm(Integer.parseInt(n14.getText()));
+							determineIndices(((Token) retval.start), retval.astTree);
+						}
+					}
 
-                    }
-                    break;
+				}
+					break;
+                case 17 :
+                    dbg.enterAlt(17);
+
+                    // C00.g:261:7: '//' 'label' n14= Number 
+				{
+					root_0 = (Object) adaptor.nil();
+
+					dbg.location(261, 7);
+					string_literal90 = (Token) input.LT(1);
+					match(input, 54, FOLLOW_37_in_statement1121);
+					if (failed)
+						return retval;
+					if (backtracking == 0) {
+						string_literal90_tree = (Object) adaptor.create(string_literal90);
+						adaptor.addChild(root_0, string_literal90_tree);
+					}
+					
+					dbg.location(261, 7);
+					string_literal91 = (Token) input.LT(1);
+					match(input, 53, FOLLOW_37_in_statement1121);
+					if (failed)
+						return retval;
+					if (backtracking == 0) {
+						string_literal91_tree = (Object) adaptor.create(string_literal91);
+						adaptor.addChild(root_0, string_literal91_tree);
+					}
+					
+					dbg.location(261, 20);
+					n15 = (Token) input.LT(1);
+					match(input, Number, FOLLOW_Number_in_statement1125);
+					if (failed)
+						return retval;
+					if (backtracking == 0) {
+						n15_tree = (Object) adaptor.create(n15);
+						adaptor.addChild(root_0, n15_tree);
+					}
+					
+					dbg.location(262, 2);
+					if (backtracking == 0) {
+						if (n15 == null) {
+							retval.astTree = null;
+						} else {
+							retval.astTree = new AST.LabelStm(Integer.parseInt(n15.getText()));
+							determineIndices(((Token) retval.start), retval.astTree);
+						}
+					}
+
+				}
+					break;
 
             }
         }

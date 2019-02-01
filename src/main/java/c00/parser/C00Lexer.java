@@ -19,7 +19,6 @@ public class C00Lexer extends Lexer {
     public static final int Ident=4;
     public static final int T25=25;
     public static final int T18=18;
-    public static final int T37=37;
     public static final int EscapeSequence=8;
     public static final int T26=26;
     public static final int T32=32;
@@ -28,7 +27,6 @@ public class C00Lexer extends Lexer {
     public static final int T46=46;
     public static final int T16=16;
     public static final int DIGIT=10;
-    public static final int T38=38;
     public static final int T41=41;
     public static final int T24=24;
     public static final int T19=19;
@@ -60,6 +58,14 @@ public class C00Lexer extends Lexer {
     public static final int T52=52;
     public static final int Number=5;
     public static final int T30=30;
+    
+    // new label type
+    public static final int T37=37; // /*
+    public static final int T38=38; // */
+    public static final int T53=53; // label
+    public static final int T54=54; // //
+    
+    
     public C00Lexer() {;} 
     public C00Lexer(CharStream input) {
         super(input);
@@ -846,10 +852,10 @@ public class C00Lexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // C00.g:32:7: ( '/*label' )
-            // C00.g:32:7: '/*label'
+            // C00.g:32:7: ( '/*' )
+            // C00.g:32:7: '/*'
             {
-            match("/*label"); 
+            match("/*"); 
 
 
             }
@@ -897,6 +903,62 @@ public class C00Lexer extends Lexer {
     }
     // $ANTLR end T38
 
+    // $ANTLR start T53
+    public void mT53() throws RecognitionException {
+		try {
+			ruleNestingLevel++;
+			int _type = T53;
+			int _start = getCharIndex();
+			int _line = getLine();
+			int _charPosition = getCharPositionInLine();
+			int _channel = Token.DEFAULT_CHANNEL;
+			// C00.g:33:7: ( 'label' )
+			// C00.g:33:7: 'label'
+			{
+				match("label");
+
+			}
+
+			if (token == null && ruleNestingLevel == 1) {
+				emit(_type, _line, _charPosition, _channel, _start, getCharIndex() - 1);
+			}
+
+		} finally {
+			ruleNestingLevel--;
+		}
+    }
+    // $ANTLR end T53
+    
+    // $ANTLR start T54
+    public void mT54() throws RecognitionException {
+        try {
+            ruleNestingLevel++;
+            int _type = T54;
+            int _start = getCharIndex();
+            int _line = getLine();
+            int _charPosition = getCharPositionInLine();
+            int _channel = Token.DEFAULT_CHANNEL;
+            // C00.g:33:7: ( '//' )
+            // C00.g:33:7: '//'
+            {
+            match("//"); 
+
+
+            }
+
+
+
+                    if ( token==null && ruleNestingLevel==1 ) {
+                        emit(_type,_line,_charPosition,_channel,_start,getCharIndex()-1);
+                    }
+
+                        }
+        finally {
+            ruleNestingLevel--;
+        }
+    }
+    // $ANTLR end T54
+    
     // $ANTLR start T39
     public void mT39() throws RecognitionException {
         try {
@@ -2135,6 +2197,8 @@ public class C00Lexer extends Lexer {
             int LA5_24 = input.LA(2);
             if ( (LA5_24=='*') ) {
                 alt5=27;
+            } else if (LA5_24=='/') {
+            	alt5=48;
             }
             else {
                 alt5=35;}
@@ -2192,6 +2256,29 @@ public class C00Lexer extends Lexer {
         case ' ':
             alt5=43;
             break;
+        case 'l':
+        	int LA5_la = input.LA(2);
+        	if (LA5_la=='a') {
+        		int LA5_lab = input.LA(3);
+        		if (LA5_lab=='b') {
+        			int LA5_labe = input.LA(4);
+        			if(LA5_labe=='e') {
+        				int LA5_label = input.LA(5);
+        				if(LA5_label=='l') {
+        					alt5=47;
+        				} else {
+        					alt5=45;
+        				}
+        			} else {
+    					alt5=45;
+    				}
+        		} else {
+					alt5=45;
+				}
+        	} else {
+				alt5=45;
+			}
+        	break;
         case 'A':
         case 'B':
         case 'C':
@@ -2223,7 +2310,6 @@ public class C00Lexer extends Lexer {
         case 'h':
         case 'j':
         case 'k':
-        case 'l':
         case 'n':
         case 'o':
         case 'q':
@@ -2576,6 +2662,12 @@ public class C00Lexer extends Lexer {
 
                 }
                 break;
+            case 47:
+            	mT53();
+            	break;
+            case 48:
+            	mT54();
+            	break;
 
         }
 
