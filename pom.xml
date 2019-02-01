@@ -248,6 +248,9 @@
         <resource>
             <directory>res/module/unifikation</directory>
         </resource>
+        <resource>
+            <directory>res/module/levenshtein</directory>
+        </resource>
     </resources>
   	<plugins>
   	     <plugin>
@@ -277,6 +280,7 @@
                             <touch file="runtime/modules/pulsemem.jar" />
                             <touch file="runtime/modules/testModule.jar" />
                             <touch file="runtime/modules/unifikation.jar" />
+                            <touch file="runtime/modules/levenshtein.jar" />
                         </tasks>
                     </configuration>
                     <goals>
