@@ -39,7 +39,7 @@ import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.gui.components.JToolbarButton;
 import org.jalgo.main.util.Messages;
-import org.jalgo.module.levenshtein.gui.SetUpPanel;
+import org.jalgo.module.levenshtein.gui.components.SetUpPanel;
 
 
 public class ModuleConnector
@@ -49,9 +49,9 @@ extends AbstractModuleConnector {
 	public void init() {
 		JComponent contentPane =
 			JAlgoGUIConnector.getInstance().getModuleComponent(this);
-		SetUpPanel helloJAlgo = new SetUpPanel();
-		helloJAlgo.init();
-		contentPane.add(helloJAlgo, BorderLayout.CENTER);
+		SetUpPanel setUpPanel = new SetUpPanel();
+		setUpPanel.init();
+		contentPane.add(setUpPanel, BorderLayout.CENTER);
 
 		JMenu menu = JAlgoGUIConnector.getInstance().getModuleMenu(this);
 		JMenuItem item = new JMenuItem("a menu item");

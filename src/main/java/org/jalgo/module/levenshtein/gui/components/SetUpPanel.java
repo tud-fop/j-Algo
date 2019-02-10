@@ -1,4 +1,4 @@
-package org.jalgo.module.levenshtein.gui;
+package org.jalgo.module.levenshtein.gui.components;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -79,6 +79,11 @@ public class SetUpPanel extends JPanel {
 		btnAbort = new JButton(getString("button.abort"));
 		btnStart = new JButton(getString("button.start"));
 		
+		// padding object
+		Insets insets = new Insets(0, 0, 0, 0);
+		c.insets = insets;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
 		// create a component for the source word label and input field
 		JPanel sourcePanel = new JPanel(new BorderLayout(hgap,vgap));
 		sourcePanel.add(lblSource, BorderLayout.WEST);
@@ -87,7 +92,6 @@ public class SetUpPanel extends JPanel {
 		// add the component to the GridBagLayout as first component
 		c.gridx = 0;
 		c.gridy = 0;
-		c.fill = GridBagConstraints.HORIZONTAL;
 		contentPanel.add(sourcePanel, c);
 		
 		// create a component for the target word label and input field
@@ -98,110 +102,67 @@ public class SetUpPanel extends JPanel {
 		// add the component to the GridBagLayout as second component
 		c.gridx = 0;
 		c.gridy = 1;
-		c.fill = GridBagConstraints.HORIZONTAL;
 		contentPanel.add(targetPanel, c);
 		
 		// add the cost function label as third component to the GridBagLayout
 		// here some padding to the top is added
-		// TODO: create another panel for the label and move the label to the bottom
-		Insets paddInsets1 = new Insets(20, 0, 0, 0);
-		Insets origInsets1 = c.insets;
-		c.insets = paddInsets1;
+		insets.top = 20;
 		c.gridx = 0;
 		c.gridy = 2;
-		c.fill = GridBagConstraints.HORIZONTAL;
 		contentPanel.add(lblCostFunction, c);
-		c.insets = origInsets1;
+		insets.top = 0;
 		
 		// create a new panel for the cost function input fields
 		JPanel costInputs = new JPanel(new GridBagLayout());
-		GridBagConstraints c1 = new GridBagConstraints();
-		c1.fill = GridBagConstraints.HORIZONTAL;
-		
-		// create a component for the deletion label and input field
-//		JPanel deletionInput = new JPanel(new BorderLayout(hgap,vgap));
-//		deletionInput.add(lblDeletion, BorderLayout.WEST);
-//		deletionInput.add(inputDeletion, BorderLayout.EAST);
-		
+			
 		// add the deletion label
-		c1.gridx = 0;
-		c1.gridy = 0;
-		costInputs.add(lblDeletion, c1);
+		c.gridx = 0;
+		c.gridy = 0;
+		costInputs.add(lblDeletion, c);
 		
-		// create a component for the insertion label and input field
-//		JPanel insertionInput = new JPanel(new BorderLayout(hgap,vgap));
-//		insertionInput.add(lblInsertion, BorderLayout.WEST);
-//		insertionInput.add(inputInsertion, BorderLayout.EAST);
+		// add the deletion input with padding
+		insets.right = 20;
+		c.gridx = 1;
+		c.gridy = 0;
+		costInputs.add(inputDeletion, c);
+		insets.right = 0;
 		
-		// add the component as top right component to the function input fields
-		Insets paddInsets = new Insets(0, 0, 0, 20);
-		Insets origInsets = c1.insets;
-		c1.insets = paddInsets;
-		c1.gridx = 1;
-		c1.gridy = 0;
-		costInputs.add(inputDeletion, c1);
-		c1.insets = origInsets;
+		// add the insertion label
+		c.gridx = 2;
+		c.gridy = 0;
+		costInputs.add(lblInsertion, c);
 		
-		c1.gridx = 2;
-		c1.gridy = 0;
-		costInputs.add(lblInsertion, c1);
+		// add the insertion input
+		c.gridx = 3;
+		c.gridy = 0;
+		costInputs.add(inputInsertion, c);
 		
-		c1.gridx = 3;
-		c1.gridy = 0;
-		costInputs.add(inputInsertion, c1);
+		// add the substitution label
+		c.gridx = 0;
+		c.gridy = 1;
+		costInputs.add(lblSubstitution, c);
 		
+		// add the substitution input with padding
+		insets.right = 20;
+		c.gridx = 1;
+		c.gridy = 1;
+		costInputs.add(inputSubstitution, c);
+		insets.right = 0;
 		
-		c1.gridx = 0;
-		c1.gridy = 1;
-		costInputs.add(lblSubstitution, c1);
+		// add the identity label
+		c.gridx = 2;
+		c.gridy = 1;
+		costInputs.add(lblIdentity, c);
 		
-		c1.insets = paddInsets;
-		c1.gridx = 1;
-		c1.gridy = 1;
-		costInputs.add(inputSubstitution, c1);
-		c1.insets = origInsets;
+		// add the identity input
+		c.gridx = 3;
+		c.gridy = 1;
+		costInputs.add(inputIdentity, c);
 		
-		c1.gridx = 2;
-		c1.gridy = 1;
-		costInputs.add(lblIdentity, c1);
-		
-		c1.gridx = 3;
-		c1.gridy = 1;
-		costInputs.add(inputIdentity, c1);
-		
-		
-		// create a component for the substitution label and input field
-//		JPanel substitutionInput = new JPanel(new BorderLayout(hgap,vgap));
-//		substitutionInput.add(lblSubstitution, BorderLayout.WEST);
-//		substitutionInput.add(inputSubstitution, BorderLayout.EAST);
-//		
-//		// add the component in the bottom left corner
-//		c1.gridx = 0;
-//		c1.gridy = 1;
-//		c1.weightx = 1;
-//		c1.ipadx = 20;
-//		c1.fill = GridBagConstraints.HORIZONTAL;
-//		costInputs.add(substitutionInput, c1);
-//		
-//		// create a component for the identity label and input field
-//		JPanel identityInput = new JPanel(new BorderLayout(hgap,vgap));
-//		identityInput.add(lblIdentity, BorderLayout.WEST);
-//		identityInput.add(inputIdentity, BorderLayout.EAST);
-//		
-//		// add the component in the bottom right corner
-//		c1.gridx = 1;
-//		c1.gridy = 1;
-//		c1.weightx = 1;
-//		c1.ipadx = 20;
-//		c1.fill = GridBagConstraints.HORIZONTAL;
-//		costInputs.add(identityInput, c1);
-//		
 		// add all the cost function input fields as fourth component to the
 		// content GridBagLayout
 		c.gridx = 0;
 		c.gridy = 3;
-		c.ipady = 0;
-		c.fill = GridBagConstraints.HORIZONTAL;
 		contentPanel.add(costInputs, c);
 		
 		// create a component for the buttons
@@ -210,17 +171,13 @@ public class SetUpPanel extends JPanel {
 		buttonPanel.add(btnStart, BorderLayout.EAST);
 		
 		// add the button panel to fifth component
+		insets.top = 20;
 		c.gridx = 0;
 		c.gridy = 4;
-		c.fill = GridBagConstraints.HORIZONTAL;
 		contentPanel.add(buttonPanel, c);
-		
-		
 		
 		// add the GridBagLayout to the contentPane centered.
 		add(contentPanel, BorderLayout.CENTER);
-
-		
 	}
 	
 	private static String getString(String key) {
