@@ -33,13 +33,13 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
+import javax.swing.JPanel;
 
 import org.jalgo.main.AbstractModuleConnector;
 import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.gui.components.JToolbarButton;
 import org.jalgo.main.util.Messages;
-
-
+import org.jalgo.module.levenshtein.gui.SetUpPanel;
 
 
 public class ModuleConnector
@@ -47,23 +47,16 @@ extends AbstractModuleConnector {
 
 	@Override
 	public void init() {
-		// get content pane
 		JComponent contentPane =
 			JAlgoGUIConnector.getInstance().getModuleComponent(this);
-		// create a label that contains "Hello j-Algo!"
-		JLabel helloJAlgo = new JLabel(
-			"Hello j-Algo!",
-			new ImageIcon(Messages.getResourceURL("main", "ui.Logo")),
-			SwingConstants.CENTER);
-		// add label to the contentPane
+		SetUpPanel helloJAlgo = new SetUpPanel();
+		helloJAlgo.init();
 		contentPane.add(helloJAlgo, BorderLayout.CENTER);
 
-		// How to add menu items
 		JMenu menu = JAlgoGUIConnector.getInstance().getModuleMenu(this);
 		JMenuItem item = new JMenuItem("a menu item");
 		menu.add(item);
 
-		// How to add items to the toolbar
 		JToolBar toolbar =
 			JAlgoGUIConnector.getInstance().getModuleToolbar(this);
 		JToolbarButton button = new JToolbarButton(
