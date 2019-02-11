@@ -226,4 +226,23 @@ public class Controller {
 		return result;
 	}
 	
+	public int getDeletion() {
+		return deletion;
+	}
+	
+	public int getInsertion() {
+		return insertion;
+	}
+	
+	public int getSubstitution() {
+		return substitution;
+	}
+	
+	public int getIdentity() {
+		return identity;
+	}
+	
+	public boolean sameCharAt(int j, int i) {
+		return source.charAt(j-1) == target.charAt(i-1);
+	}
 }

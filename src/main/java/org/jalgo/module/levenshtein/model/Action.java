@@ -4,5 +4,6 @@ public enum Action {
 	DELETION,
 	INSERTION,
 	SUBSTITUTION,
-	IDENTITY
+	IDENTITY,
+	NONE
 }

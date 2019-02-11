@@ -22,48 +22,24 @@
  */
 package org.jalgo.module.levenshtein;
 
-import java.awt.BorderLayout;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
-import javax.swing.JPanel;
-
 import org.jalgo.main.AbstractModuleConnector;
-import org.jalgo.main.gui.JAlgoGUIConnector;
-import org.jalgo.main.gui.components.JToolbarButton;
-import org.jalgo.main.util.Messages;
-import org.jalgo.module.levenshtein.gui.components.SetUpPanel;
+import org.jalgo.module.levenshtein.gui.GuiController;
+import org.jalgo.module.levenshtein.model.Controller;
 
 
 public class ModuleConnector
 extends AbstractModuleConnector {
 
+	private Controller controller;
+	private GuiController guiController;
+	
 	@Override
 	public void init() {
-		JComponent contentPane =
-			JAlgoGUIConnector.getInstance().getModuleComponent(this);
-		SetUpPanel setUpPanel = new SetUpPanel();
-		setUpPanel.init();
-		contentPane.add(setUpPanel, BorderLayout.CENTER);
-
-		JMenu menu = JAlgoGUIConnector.getInstance().getModuleMenu(this);
-		JMenuItem item = new JMenuItem("a menu item");
-		menu.add(item);
-
-		JToolBar toolbar =
-			JAlgoGUIConnector.getInstance().getModuleToolbar(this);
-		JToolbarButton button = new JToolbarButton(
-			new ImageIcon(Messages.getResourceURL("main", "ui.Logo_small")),
-			"a tooltip",
-			"");
-		toolbar.add(button);
+		controller = new Controller();
+		guiController = new GuiController(this, controller);
 	}
 
 	@Override

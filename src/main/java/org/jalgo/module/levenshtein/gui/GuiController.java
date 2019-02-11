@@ -12,7 +12,10 @@ import org.jalgo.main.gui.JAlgoGUIConnector;
 import org.jalgo.main.gui.components.JToolbarButton;
 import org.jalgo.main.util.Messages;
 import org.jalgo.module.levenshtein.ModuleConnector;
+import org.jalgo.module.levenshtein.gui.components.CalculationPanel;
+import org.jalgo.module.levenshtein.gui.components.GeneralFormulaPanel;
 import org.jalgo.module.levenshtein.gui.components.SetUpPanel;
+import org.jalgo.module.levenshtein.gui.components.WorkPanel;
 import org.jalgo.module.levenshtein.model.Controller;
 
 public class GuiController {
@@ -24,10 +27,23 @@ public class GuiController {
 		this.controller = controller;
 		contentPane =
 				JAlgoGUIConnector.getInstance().getModuleComponent(connector);
-		SetUpPanel setUpPanel = new SetUpPanel();
-		setUpPanel.init();
-		contentPane.add(setUpPanel, BorderLayout.CENTER);
+//		SetUpPanel setUpPanel = new SetUpPanel();
+//		setUpPanel.init();
+//		contentPane.add(setUpPanel, BorderLayout.CENTER);
 
+//		GeneralFormulaPanel panel = new GeneralFormulaPanel();
+//		panel.init();
+//		contentPane.add(panel, BorderLayout.CENTER);
+		
+//		controller.init("bürste", "schürze", 1, 1, 1, 0);
+//		CalculationPanel panel = new CalculationPanel(controller);
+//		panel.setFormula(2, 4);
+//		contentPane.add(panel, BorderLayout.CENTER);
+		
+		WorkPanel workPanel = new WorkPanel();
+		workPanel.init(controller, "bürste", "schürze");
+		contentPane.add(workPanel, BorderLayout.CENTER);
+		
 		JMenu menu = JAlgoGUIConnector.getInstance().getModuleMenu(connector);
 		JMenuItem item = new JMenuItem("a menu item");
 		menu.add(item);
@@ -45,4 +61,7 @@ public class GuiController {
 		
 	}
 	
+	public static String getString(String key) {
+		return Messages.getString("levenshtein", key);
+	}
 }

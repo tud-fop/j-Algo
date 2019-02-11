@@ -1,24 +1,18 @@
 package org.jalgo.module.levenshtein.gui.components;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
 import org.jalgo.main.gui.JAlgoWindow;
-import org.jalgo.main.util.Messages;
 import org.jalgo.module.levenshtein.Consts;
+import org.jalgo.module.levenshtein.gui.GuiController;
 
 public class SetUpPanel extends JPanel {
 
@@ -57,13 +51,13 @@ public class SetUpPanel extends JPanel {
 		GridBagConstraints c = new GridBagConstraints();
 		
 		// init the Components of the View
-		lblSource = new JLabel(getString("input.source"));
-		lblTarget = new JLabel(getString("input.target"));
-		lblCostFunction = new JLabel(getString("input.costfunction"));
-		lblDeletion = new JLabel(getString("input.deletion"));
-		lblInsertion = new JLabel(getString("input.insertion"));
-		lblSubstitution = new JLabel(getString("input.substitution"));
-		lblIdentity = new JLabel(getString("input.identity"));
+		lblSource = new JLabel(GuiController.getString("input.source"));
+		lblTarget = new JLabel(GuiController.getString("input.target"));
+		lblCostFunction = new JLabel(GuiController.getString("input.costfunction"));
+		lblDeletion = new JLabel(GuiController.getString("input.deletion"));
+		lblInsertion = new JLabel(GuiController.getString("input.insertion"));
+		lblSubstitution = new JLabel(GuiController.getString("input.substitution"));
+		lblIdentity = new JLabel(GuiController.getString("input.identity"));
 		
 		inputSource = new JTextField(columnsWord);
 		inputTarget = new JTextField(columnsWord);
@@ -76,8 +70,8 @@ public class SetUpPanel extends JPanel {
 		inputIdentity = new JTextField(
 				Integer.toString(Consts.identityCosts), columnsCostFunction);
 		
-		btnAbort = new JButton(getString("button.abort"));
-		btnStart = new JButton(getString("button.start"));
+		btnAbort = new JButton(GuiController.getString("button.abort"));
+		btnStart = new JButton(GuiController.getString("button.start"));
 		
 		// padding object
 		Insets insets = new Insets(0, 0, 0, 0);
@@ -180,7 +174,5 @@ public class SetUpPanel extends JPanel {
 		add(contentPanel, BorderLayout.CENTER);
 	}
 	
-	private static String getString(String key) {
-		return Messages.getString("levenshtein", key);
-	}
+	
 }
