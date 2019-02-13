@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import org.jalgo.module.levenshtein.gui.events.ResizeListener;
 import org.jalgo.module.levenshtein.model.Controller;
+import org.jalgo.module.levenshtein.pattern.ToolbarObserver;
 
 public class WorkPanel extends JPanel implements ResizeComponent {
 	private static final long serialVersionUID = -281061652091384919L;
@@ -39,15 +40,15 @@ public class WorkPanel extends JPanel implements ResizeComponent {
 		
 		generalForm = new GeneralFormulaPanel();
 		generalForm.init(controller);
-//		generalForm.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 1, Color.LIGHT_GRAY));
+		generalForm.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 1, Color.LIGHT_GRAY));
 		
 		calcPane = new CalculationPanel(controller);
 		controller.init(source, target, 1, 1, 1, 0);
-//		calcPane.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.LIGHT_GRAY));
+		calcPane.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.LIGHT_GRAY));
 		
 		tablePanel = new TablePanel();
 		tablePanel.init(source, target, controller);
-//		tablePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.LIGHT_GRAY));
+		tablePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.LIGHT_GRAY));
 		
 		label = new JLabel();
 		
@@ -91,5 +92,9 @@ public class WorkPanel extends JPanel implements ResizeComponent {
 				(int) (dim.height * (1-weighty)));
 		calcPane.onResize((int) (dim.width * (1-weightx)), 
 				(int) (dim.height * (1-weighty)));
+	}
+	
+	public ToolbarObserver getToolBarObserver() {
+		return tablePanel;
 	}
 }

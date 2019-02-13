@@ -6,20 +6,26 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.jalgo.module.levenshtein.gui.GuiController;
 import org.jalgo.module.levenshtein.gui.events.ClickOnTableCell;
 import org.jalgo.module.levenshtein.model.Cell;
 import org.jalgo.module.levenshtein.model.Controller;
 import org.jalgo.module.levenshtein.pattern.CellClickedObservable;
 import org.jalgo.module.levenshtein.pattern.CellClickedObserver;
+import org.jalgo.module.levenshtein.pattern.ToolbarObserver;
 
-public class TablePanel extends JPanel implements CellClickedObservable{
+public class TablePanel 
+extends JPanel 
+implements CellClickedObservable, ToolbarObserver {
 	private static final long serialVersionUID = -5407126107244247503L;
 
 	private Controller controller;
@@ -102,6 +108,33 @@ public class TablePanel extends JPanel implements CellClickedObservable{
 		
 		width = getPreferredSize().width;
 		height = getPreferredSize().height;
+		
+		addMouseListener(new MouseListener() {
+			
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public void mouseClicked(MouseEvent e) {
+				cellClicked(-1, -1);
+			}
+		});
 	}
 	
 	public void cellClicked(int j, int i) {
@@ -110,7 +143,7 @@ public class TablePanel extends JPanel implements CellClickedObservable{
 		}
 		coloredCells.clear();
 		
-		if(tablePanels[j][i].isMarked()) {
+		if(j > 0 && i > 0 && tablePanels[j][i].isMarked()) {
 			
 			tablePanels[j][i].unmark();
 			tablePanels[j][i].setVisible(true);
@@ -142,7 +175,7 @@ public class TablePanel extends JPanel implements CellClickedObservable{
 			}	
 		}
 		
-		if(tablePanels[j][i].isFilled()) {
+		if(j > 0 && i > 0 && tablePanels[j][i].isFilled()) {
 			tellObservers((j-1)/2, (i-1)/2);
 			tablePanels[j][i].fat();
 			coloredCells.add(tablePanels[j][i]);
@@ -175,6 +208,16 @@ public class TablePanel extends JPanel implements CellClickedObservable{
 		revalidate();
 	}
 	
+	public void undoCell(int j, int i) {
+		for (TableCellPanel cell : coloredCells) {
+			cell.black();
+		}
+		coloredCells.clear();
+		
+		// TODO: undo Cell
+		throw new NotImplementedException();
+	}
+	
 	public void onResize(int width, int height) {
 		int rows = tablePanels.length;
 		int cols = tablePanels[0].length;
@@ -199,6 +242,50 @@ public class TablePanel extends JPanel implements CellClickedObservable{
 	public void tellObservers(int j, int i) {
 		for (CellClickedObserver obs : onClickObserver) {
 			obs.cellClicked(j, i);
+		}
+	}
+
+	public void performStep() {
+		for (int j = 1; j < tablePanels.length; j+=2) {
+			for (int i = 1; i < tablePanels[0].length; i+=2) {
+				if (tablePanels[j][i].isMarked()) {
+					cellClicked(j, i);
+					return;
+				}
+			}
+		}
+		cellClicked(-1, -1);
+	}
+
+	public void performAllSteps() {
+		for (int j = 1; j < tablePanels.length; j+=2) {
+			for (int i = 1; i < tablePanels[0].length; i+=2) {
+				if (tablePanels[j][i].isMarked()) {
+					cellClicked(j, i);
+				}
+			}
+		}
+		cellClicked(-1, -1);
+	}
+
+	public void undoStep() {
+		for (int j = tablePanels.length-1; j >= 1; j-=2) {
+			for (int i = tablePanels[0].length-1; i >= 1; i-=2) {
+				if (tablePanels[j][i].isFilled()) {
+					undoCell(j,i);
+					return;
+				}
+			}
+		}
+	}
+
+	public void undoAll() {
+		for (int j = tablePanels.length-1; j >= 1; j-=2) {
+			for (int i = tablePanels[0].length-1; i >= 1; i-=2) {
+				if (tablePanels[j][i].isFilled()) {
+					undoCell(j,i);
+				}
+			}
 		}
 	}
 }

@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 import org.jalgo.main.gui.JAlgoWindow;
 import org.jalgo.module.levenshtein.Consts;
 import org.jalgo.module.levenshtein.gui.GuiController;
+import org.jalgo.module.levenshtein.gui.events.Abort;
+import org.jalgo.module.levenshtein.gui.events.StartAction;
 
 public class SetUpPanel extends JPanel {
 
@@ -43,7 +45,7 @@ public class SetUpPanel extends JPanel {
 	private int columnsWord = 20;
 	private int columnsCostFunction = 5;
 	
-	public void init() {
+	public void init(Abort abort, StartAction startAction) {
 		
 		setLayout(new BorderLayout());
 		
@@ -71,7 +73,9 @@ public class SetUpPanel extends JPanel {
 				Integer.toString(Consts.identityCosts), columnsCostFunction);
 		
 		btnAbort = new JButton(GuiController.getString("button.abort"));
+		btnAbort.addActionListener(abort);
 		btnStart = new JButton(GuiController.getString("button.start"));
+		btnStart.addActionListener(startAction);
 		
 		// padding object
 		Insets insets = new Insets(0, 0, 0, 0);
@@ -161,7 +165,7 @@ public class SetUpPanel extends JPanel {
 		
 		// create a component for the buttons
 		JPanel buttonPanel = new JPanel(new BorderLayout());
-		buttonPanel.add(btnAbort, BorderLayout.WEST);
+//		buttonPanel.add(btnAbort, BorderLayout.WEST);
 		buttonPanel.add(btnStart, BorderLayout.EAST);
 		
 		// add the button panel to fifth component
@@ -174,5 +178,28 @@ public class SetUpPanel extends JPanel {
 		add(contentPanel, BorderLayout.CENTER);
 	}
 	
+	public int getDeletion() {
+		return 1;
+	}
+	
+	public int getInsertion() {
+		return 1;
+	}
+	
+	public int getSubstitution() {
+		return 1;
+	}
+	
+	public int getIdentity() {
+		return 0;
+	}
+	
+	public String getSource() {
+		return "bürste";
+	}
+	
+	public String getTarget() {
+		return "schürze";
+	}
 	
 }

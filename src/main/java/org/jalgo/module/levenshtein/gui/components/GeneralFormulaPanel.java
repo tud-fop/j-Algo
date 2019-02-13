@@ -120,7 +120,7 @@ implements CellClickedObserver {
 			LatexRenderer.render(string1, lblDj0, size);
 			String string2 = LatexRenderer.fat(source0Constr);
 			LatexRenderer.render(string2, lbl0jn, size);
-		} else {
+		} else if (i > 0 && j > 0){
 			String string1 = LatexRenderer.fat(fillRest) + openingBracket;
 			string1 += LatexRenderer.green(formDelete )+ ", \\\\ ";
 			string1 += LatexRenderer.blue(formInsert )+ ", \\\\";
