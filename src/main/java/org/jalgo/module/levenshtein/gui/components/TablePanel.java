@@ -1,6 +1,9 @@
 package org.jalgo.module.levenshtein.gui.components;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ import org.jalgo.module.levenshtein.model.Controller;
 import org.jalgo.module.levenshtein.pattern.CellClickedObservable;
 import org.jalgo.module.levenshtein.pattern.CellClickedObserver;
 
-public class TablePanel extends JPanel implements CellClickedObservable {
+public class TablePanel extends JPanel implements CellClickedObservable{
 	private static final long serialVersionUID = -5407126107244247503L;
 
 	private Controller controller;
@@ -27,6 +30,9 @@ public class TablePanel extends JPanel implements CellClickedObservable {
 	private List<CellClickedObserver> onClickObserver;
 	
 	private List<TableCellPanel> coloredCells;
+	
+	private int width;
+	private int height;
 	
 	public void init(String source, String target,
 			Controller controller) {
@@ -93,6 +99,9 @@ public class TablePanel extends JPanel implements CellClickedObservable {
 		}
 		
 		tablePanels[1][1].mark();
+		
+		width = getPreferredSize().width;
+		height = getPreferredSize().height;
 	}
 	
 	public void cellClicked(int j, int i) {
@@ -166,6 +175,22 @@ public class TablePanel extends JPanel implements CellClickedObservable {
 		revalidate();
 	}
 	
+	public void onResize(int width, int height) {
+		int rows = tablePanels.length;
+		int cols = tablePanels[0].length;
+		int maxSizeWidth = (int) (width / (cols * 1.5));
+		int maxSizeHeight = (int) (height / (rows * 1.5));
+		int maxSize = Math.min(maxSizeWidth, maxSizeHeight);
+		
+		for (int j = 0; j < tablePanels.length; j++) {
+			for (int i = 0; i < tablePanels[0].length; i++) {
+				tablePanels[j][i].resize(maxSize);
+			}
+		}
+		
+		repaint();
+		revalidate();
+	}
 
 	public void registerObserver(CellClickedObserver obs) {
 		onClickObserver.add(obs);

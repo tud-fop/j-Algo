@@ -1,6 +1,8 @@
 package org.jalgo.module.levenshtein.gui.components;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -16,9 +18,15 @@ extends JPanel
 implements CellClickedObserver {
 	private static final long serialVersionUID = -2564836710083529767L;
 
-	Controller controller;
+	private Controller controller;
 	
-	JLabel label;
+	private JLabel label;
+	
+	private int height;
+	private int width;
+	
+	String latex;
+	int size;
 	
 	public CalculationPanel(Controller controller) {
 		this.controller = controller;
@@ -33,6 +41,12 @@ implements CellClickedObserver {
 		c.gridx = 0;
 		c.gridy = 0;
 		add(label, c);
+		
+		width = getPreferredSize().width;
+		height = getPreferredSize().height;
+		
+		latex = "";
+		size = 13;
 	}
 	
 	/**
@@ -42,7 +56,7 @@ implements CellClickedObserver {
 	 * @param i, the index in the target word
 	 */
 	public void setFormula(int j, int i) {
-		String latex;
+		
 		// decide in which case we are
 		if (j == 0 && i == 0) {
 			latex = "d(0,0) = 0";
@@ -60,8 +74,8 @@ implements CellClickedObserver {
 					+ controller.getCell(j-1, i-1).getValue() + " + " + subsCosts + "\\end{array}\\right\\}";
 		}
 		
-		// rennder the formula and write it to the label
-		LatexRenderer.render(latex, label);
+		// render the formula and write it to the label
+		LatexRenderer.render(latex, label, size);
 	}
 
 	
@@ -74,7 +88,20 @@ implements CellClickedObserver {
 	}
 	
 	public Dimension getPreferredSize() {
-		return new Dimension(Math.max(200, label.getPreferredSize().width), 
-				label.getPreferredSize().height);
+		return new Dimension(width, height);
+	}
+	
+	public void onResize(int width, int height) {
+		this.width = width;
+		this.height = height;
+		
+		int maxWidthSize = (int) (width / 7.5);
+		int maxHeightSize = height / 9;
+		int maxSize = Math.min(maxWidthSize, maxHeightSize);
+		size = maxSize;
+		label.setText("");
+		
+		repaint();
+		revalidate();
 	}
 }

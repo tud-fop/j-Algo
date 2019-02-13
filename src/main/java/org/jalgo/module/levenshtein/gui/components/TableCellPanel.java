@@ -20,6 +20,7 @@ public class TableCellPanel extends JPanel {
 	private boolean filled;
 	private JLabel label;
 	private String latex;
+	private int size;
 	
 	private boolean marked;
 	
@@ -32,6 +33,7 @@ public class TableCellPanel extends JPanel {
 		marked = false;
 		filled = false;
 		defaultBackground = getBackground();
+		size = 13;
 	}
 	
 	public void setText(String text) {
@@ -56,26 +58,26 @@ public class TableCellPanel extends JPanel {
 	
 	public void fat() {
 		String fat = LatexRenderer.fat(latex);
-		LatexRenderer.render(fat, label);
+		LatexRenderer.render(fat, label, size);
 	}
 	
 	public void black() {
-		LatexRenderer.render(latex, label);
+		LatexRenderer.render(latex, label, size);
 	}
 	
 	public void red() {
 		String red = LatexRenderer.red(latex);
-		LatexRenderer.render(red, label);
+		LatexRenderer.render(red, label, size);
 	}
 	
 	public void green() {
 		String green = LatexRenderer.green(latex);
-		LatexRenderer.render(green, label);
+		LatexRenderer.render(green, label, size);
 	}
 	
 	public void blue() {
 		String blue = LatexRenderer.blue(latex);
-		LatexRenderer.render(blue, label);
+		LatexRenderer.render(blue, label, size);
 	}
 	
 	public void mark() {
@@ -102,10 +104,15 @@ public class TableCellPanel extends JPanel {
 		return filled;
 	}
 	
+	public void resize(int size) {
+		this.size = size;
+		black();
+	}
+	
 	@Override
 	public Dimension getPreferredSize() {
 		Dimension dim = label.getPreferredSize();
-		return new Dimension(Math.max(20, dim.width), 
-				Math.max(20, dim.height));
+		return new Dimension(Math.max((int) (size * 1.5), dim.width), 
+				Math.max((int) (size * 1.5), dim.height));
 	}
 }

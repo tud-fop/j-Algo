@@ -17,10 +17,10 @@ public class LatexRenderer {
 	 * @param latex, the latex formula
 	 * @param jLabel, the label to display the formula in
 	 */
-	public static void render(String latex, JLabel jLabel) {
+	public static void render(String latex, JLabel jLabel, int size) {
 		// following the example from https://github.com/jeffheaton/jlatexmath-example/blob/master/src/com/jeffheaton/latex/LatexExample.java
 		TeXFormula formula = new TeXFormula(latex);
-		TeXIcon icon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, 15);
+		TeXIcon icon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, size);
 		
 		BufferedImage image = 
 				new BufferedImage(icon.getIconWidth(), 
