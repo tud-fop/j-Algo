@@ -42,9 +42,7 @@ implements CellClickedObserver {
 		c.gridy = 0;
 		add(label, c);
 		
-		width = getPreferredSize().width;
-		height = getPreferredSize().height;
-		
+		// standard latex and standard size, if the window did not change its size
 		latex = "";
 		size = 13;
 	}
@@ -78,7 +76,9 @@ implements CellClickedObserver {
 		LatexRenderer.render(latex, label, size);
 	}
 
-	
+	/**
+	 * show the calculations for the cell (j,i)
+	 */
 	public void cellClicked(int j, int i) {
 		if (j < 0 || i < 0) {
 			label.setIcon(null);
@@ -91,10 +91,16 @@ implements CellClickedObserver {
 		return new Dimension(width, height);
 	}
 	
+	/**
+	 * sets a new size for the formula such that it shows up nicely
+	 * @param width, the allowed width of the CalculationPanel
+	 * @param height, the allowed height of the CalculationPanel
+	 */
 	public void onResize(int width, int height) {
 		this.width = width;
 		this.height = height;
 		
+		// calculate the maximal size of the formula
 		int maxWidthSize = (int) (width / 7.5);
 		int maxHeightSize = height / 9;
 		int maxSize = Math.min(maxWidthSize, maxHeightSize);

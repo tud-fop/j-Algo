@@ -14,6 +14,7 @@ import org.jalgo.main.gui.JAlgoWindow;
 import org.jalgo.module.levenshtein.Consts;
 import org.jalgo.module.levenshtein.gui.GuiController;
 import org.jalgo.module.levenshtein.gui.events.Abort;
+import org.jalgo.module.levenshtein.gui.events.InputListener;
 import org.jalgo.module.levenshtein.gui.events.StartAction;
 
 public class SetUpPanel extends JPanel {
@@ -65,12 +66,16 @@ public class SetUpPanel extends JPanel {
 		inputTarget = new JTextField(columnsWord);
 		inputDeletion = new JTextField(
 				Integer.toString(Consts.deletionCosts), columnsCostFunction);
+		inputDeletion.addKeyListener(new InputListener(inputDeletion));
 		inputInsertion = new JTextField(
 				Integer.toString(Consts.insertionCosts), columnsCostFunction);
+		inputInsertion.addKeyListener(new InputListener(inputInsertion));
 		inputSubstitution = new JTextField(
 				Integer.toString(Consts.substitutionCosts), columnsCostFunction);
+		inputSubstitution.addKeyListener(new InputListener(inputSubstitution));
 		inputIdentity = new JTextField(
 				Integer.toString(Consts.identityCosts), columnsCostFunction);
+		inputIdentity.addKeyListener(new InputListener(inputIdentity));
 		
 		btnAbort = new JButton(GuiController.getString("button.abort"));
 		btnAbort.addActionListener(abort);
@@ -178,28 +183,76 @@ public class SetUpPanel extends JPanel {
 		add(contentPanel, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * parse the deletion value from the input field and return it
+	 * @return the deletion penalty to use
+	 */
 	public int getDeletion() {
-		return 1;
+		int d = 1;
+		try {
+			d = Integer.parseInt(inputDeletion.getText());
+		} catch (NumberFormatException e) {
+			
+		}
+		return d;
 	}
 	
+	/**
+	 * parse the insertion value from the input field and return it
+	 * @return the insertion penalty to use
+	 */
 	public int getInsertion() {
-		return 1;
+		int i = 1;
+		try {
+			i = Integer.parseInt(inputInsertion.getText());
+		} catch (NumberFormatException e) {
+			
+		}
+		return i;
 	}
 	
+	/**
+	 * parse the substitution value from the input field and return it
+	 * @return the substitution penalty to use
+	 */
 	public int getSubstitution() {
-		return 1;
+		int s = 1;
+		try {
+			s = Integer.parseInt(inputSubstitution.getText());
+		} catch (NumberFormatException e) {
+			
+		}
+		return s;
 	}
 	
+	/**
+	 * parse the identity value from the input field and return it
+	 * @return the identity penalty to use
+	 */
 	public int getIdentity() {
-		return 0;
+		int i = 0;
+		try {
+			i = Integer.parseInt(inputIdentity.getText());
+		} catch (NumberFormatException e) {
+			
+		}
+		return i;
 	}
 	
+	/**
+	 * 
+	 * @return the source word
+	 */
 	public String getSource() {
-		return "bürste";
+		return inputSource.getText();
 	}
 	
+	/**
+	 * 
+	 * @return the target word
+	 */
 	public String getTarget() {
-		return "schürze";
+		return inputTarget.getText();
 	}
 	
 }

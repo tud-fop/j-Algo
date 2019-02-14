@@ -146,10 +146,16 @@ implements CellClickedObserver {
 		return new Dimension(width, height);
 	}
 	
+	/**
+	 * calculates the new size of the latex formulas as the window size changes
+	 * @param width, the allowed width of the GeneralFormulaPanel
+	 * @param height, the allowed height of the GeneralFormulaPanel
+	 */
 	public void onResize(int width, int height) {
 		this.width = width;
 		this.height = height;
 		
+		// calculate the maximum size
 		int maxWidthSize = width / 25;
 		int maxHeightSize = height / 9;
 		int maxSize = Math.min(maxWidthSize, maxHeightSize);

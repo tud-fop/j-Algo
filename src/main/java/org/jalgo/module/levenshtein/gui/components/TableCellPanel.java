@@ -17,6 +17,12 @@ public class TableCellPanel extends JPanel {
 	public static final int ARROWRIGHTDOWN = 3;
 	public static final int ARROWDOWN = 4;
 	
+	private final int BLACK = 0;
+	private final int RED = 1;
+	private final int GREEN = 2;
+	private final int BLUE = 3;
+	
+	
 	private boolean filled;
 	private JLabel label;
 	private String latex;
@@ -26,6 +32,8 @@ public class TableCellPanel extends JPanel {
 	
 	private Color defaultBackground;
 	
+	private int color;
+	
 	public TableCellPanel() {
 		label = new JLabel();
 		add(label);
@@ -34,13 +42,22 @@ public class TableCellPanel extends JPanel {
 		filled = false;
 		defaultBackground = getBackground();
 		size = 13;
+		color = BLACK;
 	}
 	
+	/**
+	 * sets the text of this cell latex formatted
+	 * @param text, the text that should show up
+	 */
 	public void setText(String text) {
 		latex = text;
 		black();
 	}
 	
+	/**
+	 * sets an arrow latex formatted
+	 * @param arrowType, should be ARROWRIGHT, ARROWRIGHTDOWN or ARROWDOWN
+	 */
 	public void setArrow(int arrowType) {
 		switch (arrowType) {
 		case ARROWRIGHT:
@@ -56,53 +73,104 @@ public class TableCellPanel extends JPanel {
 		black();
 	}
 	
+	/**
+	 * styles the text of the field fat
+	 */
 	public void fat() {
-		String fat = LatexRenderer.fat(latex);
+		String string = latex;
+		switch (color) {
+		case RED:
+			string = LatexRenderer.red(latex);
+			break;
+		case GREEN:
+			string = LatexRenderer.green(latex);
+			break;
+		case BLUE:
+			string = LatexRenderer.blue(latex);
+			break;
+		}
+		String fat = LatexRenderer.fat(string);
 		LatexRenderer.render(fat, label, size);
 	}
 	
+	/**
+	 * returns the text to normal black
+	 */
 	public void black() {
 		LatexRenderer.render(latex, label, size);
+		color = BLACK;
 	}
 	
+	/**
+	 * colors the text red
+	 */
 	public void red() {
 		String red = LatexRenderer.red(latex);
 		LatexRenderer.render(red, label, size);
+		color = RED;
 	}
 	
+	/**
+	 * colors the text green
+	 */
 	public void green() {
 		String green = LatexRenderer.green(latex);
 		LatexRenderer.render(green, label, size);
+		color = GREEN;
 	}
 	
+	/**
+	 * colors the text blue
+	 */
 	public void blue() {
 		String blue = LatexRenderer.blue(latex);
 		LatexRenderer.render(blue, label, size);
+		color = BLUE;
 	}
 	
+	/**
+	 * marks the cell
+	 */
 	public void mark() {
 		setBackground(Color.lightGray);
 		marked = true;
 	}
 	
+	/**
+	 * 
+	 * @return if the cell is marked
+	 */
 	public boolean isMarked() {
 		return marked;
 	}
-	
+	 /**
+	  * unmarks the cell
+	  */
 	public void unmark() {
 		setBackground(defaultBackground);
 		marked = false;
 	}
 	
+	/**
+	 * the panel stays visible but the label so the text gets (in-)visible
+	 */
 	public void setVisible(boolean visible) {
 		label.setVisible(visible);
 		filled = visible;
 	}
 	
+	/**
+	 * 
+	 * @return if the label is visible
+	 */
 	public boolean isFilled() {
 		return filled;
 	}
 	
+	/**
+	 * resizes the text of the cell
+	 * @param size
+	 */
 	public void resize(int size) {
 		this.size = size;
 		black();

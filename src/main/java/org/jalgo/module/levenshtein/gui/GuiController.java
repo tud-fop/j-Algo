@@ -36,31 +36,26 @@ public class GuiController {
 		this.controller = controller;
 		contentPane =
 				JAlgoGUIConnector.getInstance().getModuleComponent(connector);
+		
+		// create the set up panel and show it
 		setUpPanel = new SetUpPanel();
 		setUpPanel.init(new Abort(connector), new StartAction(this));
-		contentPane.add(setUpPanel, BorderLayout.CENTER);
-
-//		GeneralFormulaPanel panel = new GeneralFormulaPanel();
-//		panel.init();
-//		contentPane.add(panel, BorderLayout.CENTER);
+		contentPane.add(setUpPanel, BorderLayout.CENTER);		
 		
-//		controller.init("bürste", "schürze", 1, 1, 1, 0);
-//		CalculationPanel panel = new CalculationPanel(controller);
-//		panel.setFormula(2, 4);
-//		contentPane.add(panel, BorderLayout.CENTER);
-		
-		
-		
-		JMenu menu = JAlgoGUIConnector.getInstance().getModuleMenu(connector);
-		JMenuItem item = new JMenuItem("a menu item");
-		menu.add(item);
+//		JMenu menu = JAlgoGUIConnector.getInstance().getModuleMenu(connector);
+//		JMenuItem item = new JMenuItem("a menu item");
+//		menu.add(item);
 
 		toolbar = JAlgoGUIConnector.getInstance().getModuleToolbar(connector);
 		
-//		startLevenshteinCalculation();
 	}
 	
-	public void createToolbar(ToolbarObserver obs) {
+	/**
+	 * creates the four toolbar buttons to perform steps and undo steps
+	 * @param obs, an observer that wants to listen to actions
+	 */
+	private void createToolbar(ToolbarObserver obs) {
+		// create the undoAll button
 		JToolbarButton undoAll = new JToolbarButton(
 				new ImageIcon(Messages.getResourceURL("main", "Icon.Undo_all")),
 				getString("toolbar.undoall"),
@@ -68,6 +63,7 @@ public class GuiController {
 		undoAll.addActionListener(new UndoAll(obs));
 		toolbar.add(undoAll);
 		
+		// create the undo button
 		JToolbarButton undo = new JToolbarButton(
 				new ImageIcon(Messages.getResourceURL("main", "Icon.Undo_step")),
 				getString("toolbar.undo"),
@@ -75,24 +71,32 @@ public class GuiController {
 		undo.addActionListener(new UndoStep(obs));
 		toolbar.add(undo);
 			
-		JToolbarButton redo = new JToolbarButton(
+		// create the perform a step button
+		JToolbarButton performStep = new JToolbarButton(
 				new ImageIcon(Messages.getResourceURL("main", "Icon.Perform_step")),
 				getString("toolbar.performStep"),
 				"");
-		redo.addActionListener(new PerformStep(obs));
-		toolbar.add(redo);
+		performStep.addActionListener(new PerformStep(obs));
+		toolbar.add(performStep);
 		
-		JToolbarButton redoAll = new JToolbarButton(
+		// create the perform all steps button
+		JToolbarButton performAll = new JToolbarButton(
 				new ImageIcon(Messages.getResourceURL("main", "Icon.Perform_all")),
 				getString("toolbar.performAll"),
 				"");
-		redoAll.addActionListener(new PerformAllSteps(obs));
-		toolbar.add(redoAll);	
+		performAll.addActionListener(new PerformAllSteps(obs));
+		toolbar.add(performAll);	
 	}
 	
+	/**
+	 * starts the levenshtein calculation and changes the view to the WorkPanel,
+	 * also initilizes the controller
+	 */
 	public void startLevenshteinCalculation() {
+		// create the WorkPanel
 		WorkPanel workPanel = new WorkPanel();
 		
+		// initilize the controller
 		controller.init(
 				setUpPanel.getSource(), 
 				setUpPanel.getTarget(), 
@@ -101,17 +105,26 @@ public class GuiController {
 				setUpPanel.getSubstitution(), 
 				setUpPanel.getIdentity());
 		
+		// initilize the WorkPanel
 		workPanel.init(controller, setUpPanel.getSource(), setUpPanel.getTarget());
 		
+		// create the toolbar. the workpanel knows the ToolbarObserver
 		createToolbar(workPanel.getToolBarObserver());
 		
+		// remove other views and add the work panel to the contentPanel
 		contentPane.removeAll();
 		contentPane.add(workPanel, BorderLayout.CENTER);
 
+		// redraw the panel
 		contentPane.revalidate();
 		contentPane.repaint();
 	}
 	
+	/**
+	 * gets a string from the string resources
+	 * @param key, the key of the string
+	 * @return the string
+	 */
 	public static String getString(String key) {
 		return Messages.getString("levenshtein", key);
 	}
