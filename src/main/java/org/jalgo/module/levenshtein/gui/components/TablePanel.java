@@ -214,8 +214,30 @@ implements CellClickedObservable, ToolbarObserver {
 		}
 		coloredCells.clear();
 		
-		// TODO: undo Cell
-		throw new NotImplementedException();
+		cellClicked(-1, -1);
+		
+		tablePanels[j][i].setVisible(false);
+		tablePanels[j][i].mark();
+		
+		if (j > 1) {
+			tablePanels[j-1][i].setVisible(false);
+		}
+		if (i > 1) {
+			tablePanels[j][i-1].setVisible(false);
+		}
+		if (j > 1 && i > 1) {
+			tablePanels[j-1][i-1].setVisible(false);
+		}
+		
+		if (j+2 < tablePanels.length) {
+			tablePanels[j+2][i].unmark();
+		} 
+		if (i+2 < tablePanels[0].length) {
+			tablePanels[j][i+2].unmark();
+		}
+		
+		repaint();
+		revalidate();
 	}
 	
 	public void onResize(int width, int height) {

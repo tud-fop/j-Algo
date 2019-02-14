@@ -94,7 +94,6 @@ public class TableCellPanel extends JPanel {
 		marked = false;
 	}
 	
-	
 	public void setVisible(boolean visible) {
 		label.setVisible(visible);
 		filled = visible;
