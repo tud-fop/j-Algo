@@ -102,8 +102,8 @@ implements CellClickedObserver {
 		c.gridy = 2;
 		add(lbl1ik1jn, c);
 		
-		width = getPreferredSize().width;
-		height = getPreferredSize().height;
+		width = super.getPreferredSize().width;
+		height = super.getPreferredSize().height;
 		
 	}
 
@@ -151,6 +151,22 @@ implements CellClickedObserver {
 		return new Dimension(width, height);
 	}
 	
+	private void fat() {
+		LatexRenderer.render(LatexRenderer.fat(fillTarget0Row), lblD0i, size);
+		LatexRenderer.render(LatexRenderer.fat(target0Constr), lbl0ik, size);
+		
+		LatexRenderer.render(LatexRenderer.fat(fillSource0Col), lblDj0, size);
+		LatexRenderer.render(LatexRenderer.fat(source0Constr), lbl0jn, size);
+		
+		String string = fillRest + openingBracket + formDelete + ", \\\\ " 
+				+ formInsert + ", \\\\" 
+				+ formSubs + openingBracket + costSubstitution + "&" + subsConstr
+							+ costIdentity + "&" + idConstr
+							+ closingBracket + closingBracket;
+		LatexRenderer.render(LatexRenderer.fat(string), lblDji, size);
+		LatexRenderer.render(LatexRenderer.fat(restConstr), lbl1ik1jn, size);
+	}
+	
 	/**
 	 * calculates the new size of the latex formulas as the window size changes
 	 * @param width, the allowed width of the GeneralFormulaPanel
@@ -161,10 +177,21 @@ implements CellClickedObserver {
 		this.height = height;
 		
 		// calculate the maximum size
-		int maxWidthSize = width / 25;
-		int maxHeightSize = height / 9;
-		int maxSize = Math.min(maxWidthSize, maxHeightSize);
-		size = maxSize;
+		Dimension dim = super.getPreferredSize();
+		double ratioWidth = (double) width / (double) dim.width;
+		double ratioHeight = (double) height / (double) dim.height;
+		double maxRatio = Math.min(ratioWidth, ratioHeight);
+		int maxSize = (int) (size * maxRatio);
+		
+		do {
+			size = maxSize;
+			fat();
+			repaint();
+			revalidate();
+			maxSize--;
+			dim = super.getPreferredSize();
+		} while(width < dim.width || height < dim.height);
+		
 		cellClicked(clickedJ, clickedI);
 		
 		repaint();

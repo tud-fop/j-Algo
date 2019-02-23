@@ -35,6 +35,8 @@ public class TableCellPanel extends JPanel {
 	
 	private int color;
 	
+	private Dimension preferredSize;
+	
 	public TableCellPanel() {
 		label = new JLabel();
 		add(label);
@@ -53,6 +55,7 @@ public class TableCellPanel extends JPanel {
 	 */
 	public void setText(String text) {
 		latex = text;
+		preferredSize = LatexRenderer.maxDimension(text, size);
 		black();
 	}
 	
@@ -72,6 +75,7 @@ public class TableCellPanel extends JPanel {
 			latex = "\\downarrow";
 			break;
 		}
+		preferredSize = LatexRenderer.maxDimension(latex, size);
 		black();
 	}
 	
@@ -177,13 +181,12 @@ public class TableCellPanel extends JPanel {
 	 */
 	public void resize(int size) {
 		this.size = size;
+		
 		LatexRenderer.render(latexFormatted, label, size);
 	}
 	
 	@Override
 	public Dimension getPreferredSize() {
-		Dimension dim = label.getPreferredSize();
-		return new Dimension(Math.max((int) (size * 1.5), dim.width), 
-				Math.max((int) (size * 1.5), dim.height));
+		return LatexRenderer.maxDimension(latex, size);
 	}
 }

@@ -8,4 +8,8 @@ public interface AlignmentClickObserver {
 
 	public void alignmentClicked(List<Action> alignment);
 	
+	public void alignmentHoverIn(List<Action> alignment);
+	
+	public void alignmentHoverOut(List<Action> alignment);
+	
 }

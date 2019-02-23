@@ -57,20 +57,20 @@ public class WorkPanel extends JPanel implements ResizeComponent {
 		
 		c.gridx = 0;
 		c.gridy = 0;
-		c.weightx = weightx;
-		c.weighty = weighty;
+//		c.weightx = weightx;
+//		c.weighty = weighty;
 		add(tablePanel, c);
 		
 		c.gridx = 0;
 		c.gridy = 1;
-		c.weightx = weightx;
-		c.weighty = 1- weighty;
+//		c.weightx = weightx;
+//		c.weighty = 1- weighty;
 		add(generalForm, c);
 		
 		c.gridx = 1;
 		c.gridy = 1;
-		c.weightx = 1-weightx;
-		c.weighty = 1-weighty;
+//		c.weightx = 1-weightx;
+//		c.weighty = 1-weighty;
 		add(calcPane, c);
 		
 		tablePanel.registerObserver(calcPane);
@@ -79,8 +79,8 @@ public class WorkPanel extends JPanel implements ResizeComponent {
 		
 		c.gridx = 1;
 		c.gridy = 0;
-		c.weightx = 1-weightx;
-		c.weighty = weighty;
+//		c.weightx = 1-weightx;
+//		c.weighty = weighty;
 		add(alignmentPanel, c);
 		
 		alignmentPanel.registerAlignmentObserver(tablePanel);

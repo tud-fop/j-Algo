@@ -126,4 +126,15 @@ implements AlignmentClickObservable {
 		}
 	}
 	
+	public void mouseEntered() {
+		for (AlignmentClickObserver obs : observers) {
+			obs.alignmentHoverIn(alignment);
+		}
+	}
+	
+	public void mouseExited() {
+		for (AlignmentClickObserver obs : observers) {
+			obs.alignmentHoverOut(alignment);
+		}
+	}
 }

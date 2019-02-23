@@ -1,5 +1,6 @@
 package org.jalgo.module.levenshtein.gui;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -32,6 +33,26 @@ public class LatexRenderer {
 		icon.paintIcon(label, g2, 0, 0);
 		
 		jLabel.setIcon(new ImageIcon(image));
+	}
+	
+	public static Dimension maxDimension(String latex, int size) {
+		// following the example from https://github.com/jeffheaton/jlatexmath-example/blob/master/src/com/jeffheaton/latex/LatexExample.java
+		latex = fat(latex);
+		TeXFormula formula = new TeXFormula(latex);
+		TeXIcon icon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, size);
+		
+		BufferedImage image = 
+				new BufferedImage(icon.getIconWidth(), 
+						icon.getIconHeight(), 
+						BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = image.createGraphics();
+		
+		JLabel label = new JLabel();
+		icon.paintIcon(label, g2, 0, 0);
+		
+		ImageIcon i = new ImageIcon(image);
+		
+		return new Dimension((int) (i.getIconWidth() * 1.5), (int) (i.getIconHeight() * 1.5));
 	}
 	
 	/**

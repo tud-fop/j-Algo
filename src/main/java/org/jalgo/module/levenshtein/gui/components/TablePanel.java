@@ -42,6 +42,13 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 	private int width;
 	private int height;
 	
+	private int clickedJ = -1;
+	private int clickedI = -1;
+	private boolean fixPath = false;
+	private List<Action> fixedPath;
+	
+	private int textSize = 13;
+	
 	/**
 	 * initializes the TablePanel
 	 * @param source, the source word
@@ -98,13 +105,16 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 		
 		// set the words to the correct cells
 		tablePanels[0][0].setText("d(j,i)");
+		tablePanels[0][0].resize(textSize);
 		
 		for (int j = 0; j < source.length(); j++) {
 			tablePanels[2*j + 3][0].setText("\\text{" + source.charAt(j) + "}");
+			tablePanels[2*j + 3][0].resize(textSize);
 		}
 		
 		for (int i = 0; i < target.length(); i++) {
 			tablePanels[0][2*i + 3].setText("\\text{" + target.charAt(i) + "}");
+			tablePanels[0][2*i + 3].resize(textSize);
 		}
 		
 		// fill the invisible cells with their texts
@@ -118,16 +128,20 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 				
 				// set the value to the corresponding cell
 				tablePanels[tJ][tI].setText(cell.getValue()+"");
+				tablePanels[tJ][tI].resize(textSize);
 				
 				// add arrows to the neighbor cells, if we can go that way
 				if (cell.outDeletion()) {
 					tablePanels[tJ+1][tI].setArrow(TableCellPanel.ARROWDOWN);
+					tablePanels[tJ+1][tI].resize(textSize);
 				}
 				if (cell.outInsertion()) {
 					tablePanels[tJ][tI+1].setArrow(TableCellPanel.ARROWRIGHT);
+					tablePanels[tJ][tI+1].resize(textSize);
 				}
 				if (cell.outSubstitution() || cell.outIdentity()) {
 					tablePanels[tJ+1][tI+1].setArrow(TableCellPanel.ARROWRIGHTDOWN);
+					tablePanels[tJ+1][tI+1].resize(textSize);
 				}
 			}
 		}
@@ -162,6 +176,9 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 	 * @param i, the horizontal cell index
 	 */
 	public void cellClicked(int j, int i) {
+		fixPath = false;
+		clickedJ = j;
+		clickedI = i;
 		// uncolor all currently colored cells
 		for (TableCellPanel cell : coloredCells) {
 			cell.black();
@@ -341,24 +358,39 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 	 * @param height, the allowed height of the table panel
 	 */
 	public void onResize(int width, int height) {
-		// calculate the maximum possible size
-		int rows = tablePanels.length;
-		int cols = tablePanels[0].length;
-		int maxSizeWidth = (int) (width / (cols * 1.5));
-		int maxSizeHeight = (int) (height / (rows * 1.5));
-		int maxSize = Math.min(maxSizeWidth, maxSizeHeight);
+		this.width = width;
+		this.height = height;
 		
-		// resize all the table cells
-		for (int j = 0; j < tablePanels.length; j++) {
-			for (int i = 0; i < tablePanels[0].length; i++) {
-				tablePanels[j][i].resize(maxSize);
+		Dimension dim = super.getPreferredSize();
+		
+		// calculate the maximum possible size
+		double ratioWidth = (double) width / (double) dim.width;
+		double ratioHeight = (double) height / (double) dim.height;
+		double maxRatio = Math.min(ratioWidth, ratioHeight);
+		int size = (int)(textSize * maxRatio);
+		
+		do {
+			// resize all the table cells
+			for (int j = 0; j < tablePanels.length; j++) {
+				for (int i = 0; i < tablePanels[0].length; i++) {
+					tablePanels[j][i].resize(size);
+				}
 			}
-		}
+			size--;
+			repaint();
+			revalidate();
+			dim = super.getPreferredSize();
+		} while (dim.width > width || dim.height > height);
+		textSize = size+1;
 		
 		repaint();
 		revalidate();
 	}
 
+	public Dimension getPreferredSize() {
+		return new Dimension(width, height);
+	}
+	
 	/**
 	 * register Observer
 	 */
@@ -434,11 +466,30 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 	}
 
 	public void alignmentClicked(List<Action> alignment) {
+		fixPath = true;
+		fixedPath = alignment;
 		// uncolor all currently colored cells
 		for (TableCellPanel cell : coloredCells) {
 			cell.black();
 		}
 		coloredCells.clear();
 		highlightAlignment(alignment);
+	}
+
+	public void alignmentHoverIn(List<Action> alignment) {
+		// uncolor all currently colored cells
+		for (TableCellPanel cell : coloredCells) {
+			cell.black();
+		}
+		coloredCells.clear();
+		highlightAlignment(alignment);
+	}
+
+	public void alignmentHoverOut(List<Action> alignment) {
+		if (!fixPath) {
+			cellClicked(clickedJ, clickedI);
+		} else {
+			alignmentClicked(fixedPath);
+		}
 	}
 }

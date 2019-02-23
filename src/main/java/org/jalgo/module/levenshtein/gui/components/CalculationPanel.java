@@ -76,7 +76,14 @@ implements CellClickedObserver {
 		}
 		
 		// render the formula and write it to the label
-		LatexRenderer.render(latex, label, size);
+		Dimension dim = super.getPreferredSize();
+		do {
+			LatexRenderer.render(latex, label, size);
+			size--;
+			dim = super.getPreferredSize();
+		} while (width < dim.width || height < dim.height);
+		size++;
+		
 	}
 
 	/**

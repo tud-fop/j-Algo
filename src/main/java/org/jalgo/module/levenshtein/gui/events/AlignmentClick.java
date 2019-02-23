@@ -21,8 +21,12 @@ public class AlignmentClick implements MouseListener {
 
 	public void mouseReleased(MouseEvent e) {}
 
-	public void mouseEntered(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {
+		panel.mouseEntered();
+	}
 
-	public void mouseExited(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {
+		panel.mouseExited();
+	}
 
 }
