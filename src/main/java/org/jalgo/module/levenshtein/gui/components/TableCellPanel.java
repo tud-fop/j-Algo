@@ -26,6 +26,7 @@ public class TableCellPanel extends JPanel {
 	private boolean filled;
 	private JLabel label;
 	private String latex;
+	private String latexFormatted;
 	private int size;
 	
 	private boolean marked;
@@ -38,6 +39,7 @@ public class TableCellPanel extends JPanel {
 		label = new JLabel();
 		add(label);
 		latex = "";
+		latexFormatted = "";
 		marked = false;
 		filled = false;
 		defaultBackground = getBackground();
@@ -75,22 +77,23 @@ public class TableCellPanel extends JPanel {
 	
 	/**
 	 * styles the text of the field fat
+	 * fat() needs to be called after red(), green(), blue() if wished
 	 */
 	public void fat() {
-		String string = latex;
+		latexFormatted = latex;
 		switch (color) {
 		case RED:
-			string = LatexRenderer.red(latex);
+			latexFormatted = LatexRenderer.red(latex);
 			break;
 		case GREEN:
-			string = LatexRenderer.green(latex);
+			latexFormatted = LatexRenderer.green(latex);
 			break;
 		case BLUE:
-			string = LatexRenderer.blue(latex);
+			latexFormatted = LatexRenderer.blue(latex);
 			break;
 		}
-		String fat = LatexRenderer.fat(string);
-		LatexRenderer.render(fat, label, size);
+		latexFormatted = LatexRenderer.fat(latexFormatted);
+		LatexRenderer.render(latexFormatted, label, size);
 	}
 	
 	/**
@@ -98,6 +101,7 @@ public class TableCellPanel extends JPanel {
 	 */
 	public void black() {
 		LatexRenderer.render(latex, label, size);
+		latexFormatted = latex;
 		color = BLACK;
 	}
 	
@@ -105,8 +109,8 @@ public class TableCellPanel extends JPanel {
 	 * colors the text red
 	 */
 	public void red() {
-		String red = LatexRenderer.red(latex);
-		LatexRenderer.render(red, label, size);
+		latexFormatted = LatexRenderer.red(latex);
+		LatexRenderer.render(latexFormatted, label, size);
 		color = RED;
 	}
 	
@@ -114,8 +118,8 @@ public class TableCellPanel extends JPanel {
 	 * colors the text green
 	 */
 	public void green() {
-		String green = LatexRenderer.green(latex);
-		LatexRenderer.render(green, label, size);
+		latexFormatted = LatexRenderer.green(latex);
+		LatexRenderer.render(latexFormatted, label, size);
 		color = GREEN;
 	}
 	
@@ -123,8 +127,8 @@ public class TableCellPanel extends JPanel {
 	 * colors the text blue
 	 */
 	public void blue() {
-		String blue = LatexRenderer.blue(latex);
-		LatexRenderer.render(blue, label, size);
+		latexFormatted = LatexRenderer.blue(latex);
+		LatexRenderer.render(latexFormatted, label, size);
 		color = BLUE;
 	}
 	
@@ -173,7 +177,7 @@ public class TableCellPanel extends JPanel {
 	 */
 	public void resize(int size) {
 		this.size = size;
-		black();
+		LatexRenderer.render(latexFormatted, label, size);
 	}
 	
 	@Override

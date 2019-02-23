@@ -50,12 +50,14 @@ implements CellClickedObserver {
 	
 	private int size = 13;
 	
+	private int clickedJ = -1;
+	private int clickedI = -1;
 	
 	/**
 	 * initializes the GerneralFormulaPanel by writing the formulas of the levenshtein
 	 * distance into the Panel
 	 */
-	public void init(Controller controller ) {
+	public void init(Controller controller) {
 		this.controller = controller;
 		setLayout(new GridBagLayout());
 		
@@ -102,6 +104,7 @@ implements CellClickedObserver {
 		
 		width = getPreferredSize().width;
 		height = getPreferredSize().height;
+		
 	}
 
 	/**
@@ -110,6 +113,8 @@ implements CellClickedObserver {
 	 */
 	public void cellClicked(int j, int i) {
 		init(controller);
+		clickedJ = j;
+		clickedI = i;
 		if (j == 0) {
 			String string1 = LatexRenderer.fat(fillTarget0Row);
 			LatexRenderer.render(string1, lblD0i, size);
@@ -160,11 +165,9 @@ implements CellClickedObserver {
 		int maxHeightSize = height / 9;
 		int maxSize = Math.min(maxWidthSize, maxHeightSize);
 		size = maxSize;
-		init(controller);
+		cellClicked(clickedJ, clickedI);
 		
 		repaint();
 		revalidate();
 	}
-	
-
 }

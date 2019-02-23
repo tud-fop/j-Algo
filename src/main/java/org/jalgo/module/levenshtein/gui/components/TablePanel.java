@@ -20,13 +20,14 @@ import org.jalgo.module.levenshtein.gui.events.ClickOnTableCell;
 import org.jalgo.module.levenshtein.model.Action;
 import org.jalgo.module.levenshtein.model.Cell;
 import org.jalgo.module.levenshtein.model.Controller;
+import org.jalgo.module.levenshtein.pattern.AlignmentClickObserver;
 import org.jalgo.module.levenshtein.pattern.CellClickedObservable;
 import org.jalgo.module.levenshtein.pattern.CellClickedObserver;
 import org.jalgo.module.levenshtein.pattern.ToolbarObserver;
 
 public class TablePanel 
 extends JPanel 
-implements CellClickedObservable, ToolbarObserver {
+implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 	private static final long serialVersionUID = -5407126107244247503L;
 
 	private Controller controller;
@@ -243,42 +244,10 @@ implements CellClickedObservable, ToolbarObserver {
 			// therefore get alignments from the controller
 			List<List<Action>> paths = controller.getAlignments((j-1)/2, (i-1)/2);
 			
-			// highlight the start cell
-			tablePanels[1][1].fat();
-			coloredCells.add(tablePanels[1][1]);
-			
-			// iterate through the alignments and highlight along the actions
-			for (List<Action> path : paths) {
-				int x = 1;
-				int y = 1;
-				for (Action action : path) {
-					switch (action) {
-					case DELETION:
-						tablePanels[x+1][y].fat();
-						coloredCells.add(tablePanels[x+1][y]);
-						tablePanels[x+2][y].fat();
-						coloredCells.add(tablePanels[x+2][y]);
-						x+=2;
-						break;
-					case INSERTION:
-						tablePanels[x][y+1].fat();
-						coloredCells.add(tablePanels[x][y+1]);
-						tablePanels[x][y+2].fat();
-						coloredCells.add(tablePanels[x][y+2]);
-						y+=2;
-						break;
-					case SUBSTITUTION:
-					case IDENTITY:
-						tablePanels[x+1][y+1].fat();
-						coloredCells.add(tablePanels[x+1][y+1]);
-						tablePanels[x+2][y+2].fat();
-						coloredCells.add(tablePanels[x+2][y+2]);
-						x+=2;
-						y+=2;
-						break;
-					}
-				}
+			for (List<Action> alignment : paths) {
+				highlightAlignment(alignment);
 			}
+			
 		} else {
 			// uncolor everything
 			tellObservers(-1, -1);
@@ -286,6 +255,47 @@ implements CellClickedObservable, ToolbarObserver {
 		
 		repaint();
 		revalidate();
+	}
+	
+	private void highlightAlignment(List<Action> alignment) {
+		// highlight the start cell
+		tablePanels[1][1].fat();
+		coloredCells.add(tablePanels[1][1]);
+		
+		// iterate through the alignments and highlight along the actions
+		
+		int x = 1;
+		int y = 1;
+		for (Action action : alignment) {
+			switch (action) {
+			case DELETION:
+				tablePanels[x+1][y].fat();
+				coloredCells.add(tablePanels[x+1][y]);
+				tablePanels[x+2][y].fat();
+				coloredCells.add(tablePanels[x+2][y]);
+				x+=2;
+				break;
+			case INSERTION:
+				tablePanels[x][y+1].fat();
+				coloredCells.add(tablePanels[x][y+1]);
+				tablePanels[x][y+2].fat();
+				coloredCells.add(tablePanels[x][y+2]);
+				y+=2;
+				break;
+			case SUBSTITUTION:
+			case IDENTITY:
+				tablePanels[x+1][y+1].fat();
+				coloredCells.add(tablePanels[x+1][y+1]);
+				tablePanels[x+2][y+2].fat();
+				coloredCells.add(tablePanels[x+2][y+2]);
+				x+=2;
+				y+=2;
+				break;
+			default:
+				break;
+			}
+		}
+		
 	}
 	
 	/**
@@ -421,5 +431,14 @@ implements CellClickedObservable, ToolbarObserver {
 				}
 			}
 		}
+	}
+
+	public void alignmentClicked(List<Action> alignment) {
+		// uncolor all currently colored cells
+		for (TableCellPanel cell : coloredCells) {
+			cell.black();
+		}
+		coloredCells.clear();
+		highlightAlignment(alignment);
 	}
 }

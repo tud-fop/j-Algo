@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import org.jalgo.module.levenshtein.gui.events.ResizeListener;
 import org.jalgo.module.levenshtein.model.Controller;
@@ -24,7 +25,8 @@ public class WorkPanel extends JPanel implements ResizeComponent {
 	private GeneralFormulaPanel generalForm;
 	private CalculationPanel calcPane;
 	private TablePanel tablePanel;
-	private JLabel label;
+	private AlignmentPanel alignmentPanel;
+	private JScrollPane scrollPane;
 	
 	private final double weightx = 0.7;
 	private final double weighty = 0.7;
@@ -50,8 +52,8 @@ public class WorkPanel extends JPanel implements ResizeComponent {
 		tablePanel.init(source, target, controller);
 		tablePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.LIGHT_GRAY));
 		
-		label = new JLabel();
 		
+		alignmentPanel = new AlignmentPanel(source, target, controller);
 		
 		c.gridx = 0;
 		c.gridy = 0;
@@ -73,12 +75,15 @@ public class WorkPanel extends JPanel implements ResizeComponent {
 		
 		tablePanel.registerObserver(calcPane);
 		tablePanel.registerObserver(generalForm);
+		tablePanel.registerObserver(alignmentPanel);
 		
 		c.gridx = 1;
 		c.gridy = 0;
 		c.weightx = 1-weightx;
 		c.weighty = weighty;
-		add(label, c);
+		add(alignmentPanel, c);
+		
+		alignmentPanel.registerAlignmentObserver(tablePanel);
 		
 		addComponentListener(new ResizeListener(this));
 		
@@ -92,6 +97,8 @@ public class WorkPanel extends JPanel implements ResizeComponent {
 				(int) (dim.height * (1-weighty)));
 		calcPane.onResize((int) (dim.width * (1-weightx)), 
 				(int) (dim.height * (1-weighty)));
+		alignmentPanel.onResize((int) (dim.width * (1-weightx)),
+				(int) (dim.height * weighty));
 	}
 	
 	public ToolbarObserver getToolBarObserver() {

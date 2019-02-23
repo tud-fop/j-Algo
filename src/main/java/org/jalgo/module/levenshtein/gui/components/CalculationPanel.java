@@ -28,6 +28,9 @@ implements CellClickedObserver {
 	String latex;
 	int size;
 	
+	private int clickedJ = -1;
+	private int clickedI = -1;
+	
 	public CalculationPanel(Controller controller) {
 		this.controller = controller;
 		
@@ -80,6 +83,9 @@ implements CellClickedObserver {
 	 * show the calculations for the cell (j,i)
 	 */
 	public void cellClicked(int j, int i) {
+		clickedJ = j;
+		clickedI = i;
+		
 		if (j < 0 || i < 0) {
 			label.setIcon(null);
 		} else {
@@ -105,7 +111,7 @@ implements CellClickedObserver {
 		int maxHeightSize = height / 9;
 		int maxSize = Math.min(maxWidthSize, maxHeightSize);
 		size = maxSize;
-		label.setText("");
+		cellClicked(clickedJ, clickedI);
 		
 		repaint();
 		revalidate();
