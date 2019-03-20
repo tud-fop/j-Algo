@@ -53,6 +53,8 @@ implements CellClickedObserver {
 	private int clickedJ = -1;
 	private int clickedI = -1;
 	
+	private boolean wasAlreadyFilled = true;
+	
 	/**
 	 * initializes the GerneralFormulaPanel by writing the formulas of the levenshtein
 	 * distance into the Panel
@@ -111,7 +113,8 @@ implements CellClickedObserver {
 	 * marks the interesting details of the formula with colors such that
 	 * its easier to understand, what's going on
 	 */
-	public void cellClicked(int j, int i) {
+	public void cellClicked(int j, int i, boolean wasAlreadyFilled) {
+		this.wasAlreadyFilled = wasAlreadyFilled;
 		init(controller);
 		clickedJ = j;
 		clickedI = i;
@@ -125,7 +128,18 @@ implements CellClickedObserver {
 			LatexRenderer.render(string1, lblDj0, size);
 			String string2 = LatexRenderer.fat(source0Constr);
 			LatexRenderer.render(string2, lbl0jn, size);
-		} else if (i > 0 && j > 0){
+		} else if (i > 0 && j > 0 && wasAlreadyFilled){
+			String string1 = fillRest + openingBracket + formDelete + ", \\\\ " 
+					+ formInsert + ", \\\\" 
+					+ formSubs + openingBracket + costSubstitution + "&" + subsConstr
+								+ costIdentity + "&" + idConstr
+								+ closingBracket + closingBracket;
+			LatexRenderer.render(LatexRenderer.fat(string1), lblDji, size);
+			
+			String string2 = LatexRenderer.fat(restConstr);
+			LatexRenderer.render(string2, lbl1ik1jn, size);
+			
+		} else if (i > 0 && j > 0 && !wasAlreadyFilled){
 			String string1 = LatexRenderer.fat(fillRest) + openingBracket;
 			string1 += LatexRenderer.green(formDelete )+ ", \\\\ ";
 			string1 += LatexRenderer.blue(formInsert )+ ", \\\\";
@@ -192,7 +206,7 @@ implements CellClickedObserver {
 			dim = super.getPreferredSize();
 		} while(width < dim.width || height < dim.height);
 		
-		cellClicked(clickedJ, clickedI);
+		cellClicked(clickedJ, clickedI, wasAlreadyFilled);
 		
 		repaint();
 		revalidate();

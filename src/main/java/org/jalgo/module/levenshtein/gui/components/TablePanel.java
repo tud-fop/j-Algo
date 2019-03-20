@@ -49,6 +49,8 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 	
 	private int textSize = 13;
 	
+	private List<Pair> history = new ArrayList<TablePanel.Pair>();
+	
 	/**
 	 * initializes the TablePanel
 	 * @param source, the source word
@@ -185,8 +187,14 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 		}
 		coloredCells.clear();
 		
+		boolean wasAlreadyFilled = true;
+		if (j > 0 && i > 0)
+			wasAlreadyFilled = tablePanels[j][i].isFilled();
+		
 		// if the cell is marked it need to get filled and other cells marked
 		if(j > 0 && i > 0 && tablePanels[j][i].isMarked()) {
+			
+			history.add(new Pair(j, i));
 			
 			// unmark and fill the cell
 			tablePanels[j][i].unmark();
@@ -229,14 +237,14 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 		// the cell
 		if(j > 0 && i > 0 && tablePanels[j][i].isFilled()) {
 			// notify observers
-			tellObservers((j-1)/2, (i-1)/2);
+			tellObservers((j-1)/2, (i-1)/2, wasAlreadyFilled);
 			
 			// highlight the current cell
 			tablePanels[j][i].fat();
 			coloredCells.add(tablePanels[j][i]);
 			
 			// color the cells leftwards, upwards and left-upwards
-			if (!(j == 1 || i == 1)) {
+			if (!(j == 1 || i == 1) && !wasAlreadyFilled) {
 				if (j - 2 >= 1) {
 					tablePanels[j-2][i].green();
 					coloredCells.add(tablePanels[j-2][i]);
@@ -267,7 +275,7 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 			
 		} else {
 			// uncolor everything
-			tellObservers(-1, -1);
+			tellObservers(-1, -1, true);
 		}
 		
 		repaint();
@@ -403,9 +411,9 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 	 * @param j, the source word index
 	 * @param i, the target word index
 	 */
-	public void tellObservers(int j, int i) {
+	public void tellObservers(int j, int i, boolean wasAlreadyFilled) {
 		for (CellClickedObserver obs : onClickObserver) {
-			obs.cellClicked(j, i);
+			obs.cellClicked(j, i, wasAlreadyFilled);
 		}
 	}
 
@@ -442,13 +450,10 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 	 * searches for the last filled table and undoes it
 	 */
 	public void undoStep() {
-		for (int j = tablePanels.length-1; j >= 1; j-=2) {
-			for (int i = tablePanels[0].length-1; i >= 1; i-=2) {
-				if (tablePanels[j][i].isFilled()) {
-					undoCell(j,i);
-					return;
-				}
-			}
+		if (history.size() > 0) {
+			Pair p = history.get(history.size()-1);
+			undoCell(p.j, p.i);
+			history.remove(history.size()-1);
 		}
 	}
 
@@ -456,12 +461,10 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 	 * empties the table
 	 */
 	public void undoAll() {
-		for (int j = tablePanels.length-1; j >= 1; j-=2) {
-			for (int i = tablePanels[0].length-1; i >= 1; i-=2) {
-				if (tablePanels[j][i].isFilled()) {
-					undoCell(j,i);
-				}
-			}
+		while (history.size() > 0) {
+			Pair p = history.get(history.size()-1);
+			undoCell(p.j, p.i);
+			history.remove(history.size()-1);
 		}
 	}
 
@@ -490,6 +493,16 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 			cellClicked(clickedJ, clickedI);
 		} else {
 			alignmentClicked(fixedPath);
+		}
+	}
+	
+	private static class Pair {
+		public int i;
+		public int j;
+		
+		public Pair(int j, int i) {
+			this.j = j;
+			this.i = i;
 		}
 	}
 }

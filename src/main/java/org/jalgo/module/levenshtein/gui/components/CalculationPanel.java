@@ -89,7 +89,7 @@ implements CellClickedObserver {
 	/**
 	 * show the calculations for the cell (j,i)
 	 */
-	public void cellClicked(int j, int i) {
+	public void cellClicked(int j, int i, boolean wasAlreadyFilled) {
 		clickedJ = j;
 		clickedI = i;
 		
@@ -118,7 +118,7 @@ implements CellClickedObserver {
 		int maxHeightSize = height / 9;
 		int maxSize = Math.min(maxWidthSize, maxHeightSize);
 		size = maxSize;
-		cellClicked(clickedJ, clickedI);
+		cellClicked(clickedJ, clickedI, true);
 		
 		repaint();
 		revalidate();

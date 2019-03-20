@@ -54,7 +54,7 @@ implements CellClickedObserver, AlignmentClickObservable {
 		observers = new ArrayList<AlignmentClickObserver>();
 	}
 	
-	public void cellClicked(int j, int i) {
+	public void cellClicked(int j, int i, boolean wasAlreadyFilled) {
 		content.removeAll();
 		panels.clear();
 		
