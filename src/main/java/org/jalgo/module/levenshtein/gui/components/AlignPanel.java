@@ -37,6 +37,7 @@ implements AlignmentClickObservable {
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
+		c.ipadx = 5;
 		
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < alignment.size(); j++) {

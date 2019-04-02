@@ -56,7 +56,7 @@ implements CellClickedObserver {
 	 * @param j, the index in the source word
 	 * @param i, the index in the target word
 	 */
-	public void setFormula(int j, int i) {
+	public void setFormula(int j, int i, boolean color) {
 		
 		// decide in which case we are
 		if (j == 0 && i == 0) {
@@ -69,10 +69,18 @@ implements CellClickedObserver {
 			// build the complex formula for the general case
 			int subsCosts = 
 					controller.sameCharAt(j, i) ? controller.getIdentity() : controller.getSubstitution();
+			String del = controller.getCell(j-1, i).getValue() + " + " + controller.getDeletion();
+			String ins = controller.getCell(j, i-1).getValue() + " + " + controller.getInsertion();
+			String subs = controller.getCell(j-1, i-1).getValue() + " + " + subsCosts;
+			if (color) {
+				del = LatexRenderer.green(del);
+				ins = LatexRenderer.blue(ins);
+				subs = LatexRenderer.red(subs);
+			}
 			latex = "d(" + j + "," + i + ") = \\min\\left\\{\\begin{array}{l}" 
-					+ controller.getCell(j-1, i).getValue() + " + " + controller.getDeletion() + ", \\\\"
-					+ controller.getCell(j, i-1).getValue() + " + " + controller.getInsertion() + ", \\\\"
-					+ controller.getCell(j-1, i-1).getValue() + " + " + subsCosts + "\\end{array}\\right\\}";
+					+ del + ", \\\\"
+					+ ins + ", \\\\"
+					+ subs + "\\end{array}\\right\\}";
 		}
 		
 		// render the formula and write it to the label
@@ -96,7 +104,7 @@ implements CellClickedObserver {
 		if (j < 0 || i < 0) {
 			label.setIcon(null);
 		} else {
-			setFormula(j, i);
+			setFormula(j, i, !wasAlreadyFilled);
 		}
 	}
 	
