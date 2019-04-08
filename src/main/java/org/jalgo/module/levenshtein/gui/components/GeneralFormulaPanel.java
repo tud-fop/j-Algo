@@ -20,17 +20,18 @@ implements CellClickedObserver {
 	private static final long serialVersionUID = -3969386447472499860L;
 	
 	
-	private String fillTarget0Row = "d(0,i) = i";
+	private String fillTarget0Row = "d(0,i) = i * $c_{ins}$";
 	private String target0Constr = "\\forall\\ 0 \\le i \\le k";
-	private String fillSource0Col = "d(j,0) = j";
+	private String fillSource0Col = "d(j,0) = j * $c_{del}$";
+//	private String fillSource0Col = "\\textbf{c}_{\\textbf{del}}";
 	private String source0Constr = "\\forall\\ 0 \\le j \\le n";
-	private String formInsert = "d(j,i-1) + c_{ins}";
-	private String formDelete = "d(j-1,i) + c_{del}";
+	private String formInsert = "d(j,i-1) + $c_{ins}$";
+	private String formDelete = "d(j-1,i) + $c_{del}$";
 	private String formSubs = "d(j-1,i-1) + ";
 	private String restConstr = "\\forall\\ 1 \\le j \\le n, \\\\" + "1 \\le i \\le k";
 	private String costSubstitution = "c_{sub}" ;
-	private String subsConstr = "\\text{" + GuiController.getString("gui.if") + "}, w_j \\neq v_i \\\\";
-	private String costIdentity = "c_{id}";
+	private String subsConstr = "\\text{" + GuiController.getString("gui.if") + "}, $w_j$ \\neq $v_i$ \\\\";
+	private String costIdentity = "$c_{id}$";
 	private String idConstr = "\\text{" + GuiController.getString("gui.otherwise") + "}";
 	private String closingBracket = "\\end{array}\\right\\}";
 	private String fillRest = "d(j,i) = \\min";
