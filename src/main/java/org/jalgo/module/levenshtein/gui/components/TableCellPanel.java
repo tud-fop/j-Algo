@@ -22,6 +22,7 @@ public class TableCellPanel extends JPanel {
 	private final int GREEN = 2;
 	private final int BLUE = 3;
 	
+	private int arrowType;
 	
 	private boolean filled;
 	private JLabel label;
@@ -35,9 +36,11 @@ public class TableCellPanel extends JPanel {
 	
 	private int color;
 	
+	private boolean gray;
+	
 	private Dimension preferredSize;
 	
-	public TableCellPanel() {
+	public TableCellPanel(boolean gray) {
 		label = new JLabel();
 		add(label);
 		latex = "";
@@ -47,6 +50,8 @@ public class TableCellPanel extends JPanel {
 		defaultBackground = getBackground();
 		size = 13;
 		color = BLACK;
+		arrowType = TEXT;
+		this.gray = gray;
 	}
 	
 	/**
@@ -54,6 +59,7 @@ public class TableCellPanel extends JPanel {
 	 * @param text, the text that should show up
 	 */
 	public void setText(String text) {
+		arrowType = TEXT;
 		latex = text;
 		preferredSize = LatexRenderer.maxDimension(text, size);
 		black();
@@ -64,6 +70,7 @@ public class TableCellPanel extends JPanel {
 	 * @param arrowType, should be ARROWRIGHT, ARROWRIGHTDOWN or ARROWDOWN
 	 */
 	public void setArrow(int arrowType) {
+		this.arrowType = arrowType;
 		switch (arrowType) {
 		case ARROWRIGHT:
 			latex = "\\rightarrow";
@@ -84,16 +91,32 @@ public class TableCellPanel extends JPanel {
 	 * fat() needs to be called after red(), green(), blue() if wished
 	 */
 	public void fat() {
+//		switch (arrowType) {
+//		case TEXT:
+//			latexFormatted = latex;
+//			break;
+//		case ARROWDOWN:
+//			latexFormatted = "\\Downarrow";
+//			break;
+//		case ARROWRIGHT:
+//			latexFormatted = "\\Rightarrow";
+//			break;
+//		case ARROWRIGHTDOWN:
+//			latexFormatted = "\\Seaarrow";
+//			break;
+//		default:
+//			latexFormatted = latex;
+//		}
 		latexFormatted = latex;
 		switch (color) {
 		case RED:
-			latexFormatted = LatexRenderer.red(latex);
+			latexFormatted = LatexRenderer.red(latexFormatted);
 			break;
 		case GREEN:
-			latexFormatted = LatexRenderer.green(latex);
+			latexFormatted = LatexRenderer.green(latexFormatted);
 			break;
 		case BLUE:
-			latexFormatted = LatexRenderer.blue(latex);
+			latexFormatted = LatexRenderer.blue(latexFormatted);
 			break;
 		}
 		latexFormatted = LatexRenderer.fat(latexFormatted);
@@ -104,8 +127,12 @@ public class TableCellPanel extends JPanel {
 	 * returns the text to normal black
 	 */
 	public void black() {
-		LatexRenderer.render(latex, label, size);
-		latexFormatted = latex;
+		if (gray)
+			latexFormatted = LatexRenderer.gray(latex);
+		else
+			latexFormatted = latex;
+		
+		LatexRenderer.render(latexFormatted, label, size);
 		color = BLACK;
 	}
 	

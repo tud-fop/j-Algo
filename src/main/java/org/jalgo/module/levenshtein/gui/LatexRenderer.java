@@ -55,6 +55,10 @@ public class LatexRenderer {
 		return new Dimension((int) (i.getIconWidth() * 1.5), (int) (i.getIconHeight() * 1.5));
 	}
 	
+	public static String gray(String latex) {
+		return "\\textcolor{gray}{" + latex + "}";
+	}
+	
 	/**
 	 * adds the latex code for making the string red
 	 * @param latex, the latex formula that should be red
@@ -80,6 +84,10 @@ public class LatexRenderer {
 	 */
 	public static String blue(String latex) {
 		return "\\textcolor{blue}{" + latex + "}";
+	}
+	
+	public static String violet(String latex) {
+		return "\\textcolor{violet}{" + latex + "}";
 	}
 	
 	/**

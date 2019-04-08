@@ -77,7 +77,7 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 		// initialize the array of table cells and add the cells to the correct location
 		for (int j = 0; j < 2*(source.length()+1); j++) {
 			for (int i = 0; i < 2*(target.length()+1); i++) {
-				tablePanels[j][i] = new TableCellPanel();
+				tablePanels[j][i] = new TableCellPanel(!(j == 0 || i == 0));
 				
 				// these cells will contain numbers and therefore need to be clicked on
 				if (j % 2 == 1 && i % 2 == 1)
