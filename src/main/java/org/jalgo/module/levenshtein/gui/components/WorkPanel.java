@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.jalgo.module.levenshtein.gui.GuiController;
 import org.jalgo.module.levenshtein.gui.events.ResizeListener;
 import org.jalgo.module.levenshtein.model.Controller;
 import org.jalgo.module.levenshtein.pattern.ToolbarObserver;
@@ -45,7 +46,7 @@ public class WorkPanel extends JPanel implements ResizeComponent {
 		generalForm.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 1, Color.LIGHT_GRAY));
 		
 		calcPane = new CalculationPanel(controller);
-		controller.init(source, target, 1, 1, 1, 0);
+		//controller.init(source, target, 1, 1, 1, 0);
 		calcPane.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.LIGHT_GRAY));
 		
 		tablePanel = new TablePanel();

@@ -15,6 +15,7 @@ import org.jalgo.module.levenshtein.ModuleConnector;
 import org.jalgo.module.levenshtein.gui.components.SetUpPanel;
 import org.jalgo.module.levenshtein.gui.components.WorkPanel;
 import org.jalgo.module.levenshtein.gui.events.Abort;
+import org.jalgo.module.levenshtein.gui.events.AdaptCostFunction;
 import org.jalgo.module.levenshtein.gui.events.PerformAllSteps;
 import org.jalgo.module.levenshtein.gui.events.PerformStep;
 import org.jalgo.module.levenshtein.gui.events.StartAction;
@@ -86,6 +87,13 @@ public class GuiController {
 				"");
 		performAll.addActionListener(new PerformAllSteps(obs));
 		toolbar.add(performAll);	
+		
+		JToolbarButton adaptCostFunction = new JToolbarButton(
+				new ImageIcon(Messages.getResourceURL("main", "ui.Prefs")), 
+				getString("toolbar.adaptCostFunction"), 
+				"");
+		adaptCostFunction.addActionListener(new AdaptCostFunction(this));
+		toolbar.add(adaptCostFunction);
 	}
 	
 	/**
@@ -115,6 +123,19 @@ public class GuiController {
 		contentPane.removeAll();
 		contentPane.add(workPanel, BorderLayout.CENTER);
 
+		// redraw the panel
+		contentPane.revalidate();
+		contentPane.repaint();
+	}
+	
+	public void adaptCostFunction() {
+		toolbar.removeAll();
+		toolbar.revalidate();
+		toolbar.repaint();
+		
+		contentPane.removeAll();
+		contentPane.add(setUpPanel, BorderLayout.CENTER);
+		
 		// redraw the panel
 		contentPane.revalidate();
 		contentPane.repaint();

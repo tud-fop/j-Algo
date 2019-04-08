@@ -55,12 +55,12 @@ public class Controller {
 		levenshteinArray[0][0] = new Cell(0);
 		
 		for (int j = 1; j <= source.length(); j++) {
-			levenshteinArray[j][0] = new Cell(j, Cell.INDELETION);
+			levenshteinArray[j][0] = new Cell(j*deletion, Cell.INDELETION);
 			levenshteinArray[j-1][0].addDirection(Cell.OUTDELETION);
 		}
 		
 		for (int i = 1; i <= target.length(); i++) {
-			levenshteinArray[0][i] = new Cell(i, Cell.ININSERTION);
+			levenshteinArray[0][i] = new Cell(i*insertion, Cell.ININSERTION);
 			levenshteinArray[0][i-1].addDirection(Cell.OUTINSERTION);
 		}
 		
