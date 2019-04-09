@@ -16,7 +16,7 @@ public class PerformAllSteps extends AbstractAction implements ActionListener {
 	
 	public PerformAllSteps(ToolbarObserver obs) {
 		this.obs = obs;
-		putValue(NAME, GuiController.getString("toolbar.performAll"));
+		putValue(NAME, GuiController.getString("toolbar.performAllKey"));
 		putValue(SHORT_DESCRIPTION, GuiController.getString("toolbar.performAll"));
 		putValue(SMALL_ICON, new ImageIcon(Messages.getResourceURL("main", "Icon.Perform_all")));
 	}

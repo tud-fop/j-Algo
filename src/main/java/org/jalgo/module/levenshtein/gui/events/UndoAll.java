@@ -16,7 +16,7 @@ public class UndoAll extends AbstractAction implements ActionListener {
 	
 	public UndoAll(ToolbarObserver obs) {
 		this.obs = obs;
-		putValue(NAME, GuiController.getString("toolbar.undoall"));
+		putValue(NAME, GuiController.getString("toolbar.undoallKey"));
 		putValue(SHORT_DESCRIPTION, GuiController.getString("toolbar.undoall"));
 		putValue(SMALL_ICON, new ImageIcon(Messages.getResourceURL("main", "Icon.Undo_all")));
 

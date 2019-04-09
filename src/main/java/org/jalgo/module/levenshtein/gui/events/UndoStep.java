@@ -16,7 +16,7 @@ public class UndoStep extends AbstractAction implements ActionListener {
 	
 	public UndoStep(ToolbarObserver obs) {
 		this.obs = obs;
-		putValue(NAME, GuiController.getString("toolbar.undo"));
+		putValue(NAME, GuiController.getString("toolbar.undoKey"));
 		putValue(SHORT_DESCRIPTION, GuiController.getString("toolbar.undo"));
 		putValue(SMALL_ICON, new ImageIcon(Messages.getResourceURL("main", "Icon.Undo_step")));
 

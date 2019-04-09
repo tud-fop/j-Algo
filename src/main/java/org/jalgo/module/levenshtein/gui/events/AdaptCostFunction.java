@@ -15,7 +15,7 @@ public class AdaptCostFunction extends AbstractAction implements ActionListener 
 	
 	public AdaptCostFunction(GuiController guiController) {
 		this.guiController = guiController;
-		putValue(NAME, GuiController.getString("toolbar.adaptCostFunction"));
+		putValue(NAME, GuiController.getString("toolbar.adaptCostFunctionKey"));
 		putValue(SHORT_DESCRIPTION, GuiController.getString("toolbar.adaptCostFunction"));
 		putValue(SMALL_ICON, new ImageIcon(Messages.getResourceURL("main", "ui.Prefs")));
 
