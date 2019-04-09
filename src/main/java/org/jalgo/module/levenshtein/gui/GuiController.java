@@ -32,6 +32,7 @@ public class GuiController {
 	private SetUpPanel setUpPanel;
 	
 	private JToolBar toolbar;
+	private JMenu menu;
 	
 	public GuiController(ModuleConnector connector, Controller controller) {
 		this.controller = controller;
@@ -48,7 +49,7 @@ public class GuiController {
 //		menu.add(item);
 
 		toolbar = JAlgoGUIConnector.getInstance().getModuleToolbar(connector);
-		
+		menu = JAlgoGUIConnector.getInstance().getModuleMenu(connector);
 	}
 	
 	/**
@@ -96,6 +97,14 @@ public class GuiController {
 		toolbar.add(adaptCostFunction);
 	}
 	
+	private void installMenu(ToolbarObserver obs) {
+		menu.add(new UndoAll(obs));
+		menu.add(new UndoStep(obs));
+		menu.add(new PerformStep(obs));
+		menu.add(new PerformAllSteps(obs));
+		menu.add(new AdaptCostFunction(this));
+	}
+	
 	/**
 	 * starts the levenshtein calculation and changes the view to the WorkPanel,
 	 * also initilizes the controller
@@ -118,6 +127,7 @@ public class GuiController {
 		
 		// create the toolbar. the workpanel knows the ToolbarObserver
 		createToolbar(workPanel.getToolBarObserver());
+		installMenu(workPanel.getToolBarObserver());
 		
 		// remove other views and add the work panel to the contentPanel
 		contentPane.removeAll();
@@ -132,6 +142,10 @@ public class GuiController {
 		toolbar.removeAll();
 		toolbar.revalidate();
 		toolbar.repaint();
+		
+		menu.removeAll();
+		menu.revalidate();
+		menu.repaint();
 		
 		contentPane.removeAll();
 		contentPane.add(setUpPanel, BorderLayout.CENTER);

@@ -20,9 +20,9 @@ implements CellClickedObserver {
 	private static final long serialVersionUID = -3969386447472499860L;
 	
 	
-	private String fillTarget0Row = "d(0,i) = i * $c_{ins}$";
+	private String fillTarget0Row = "d(0,i) = i \\cdot $c_{ins}$";
 	private String target0Constr = "\\forall\\ 0 \\le i \\le k";
-	private String fillSource0Col = "d(j,0) = j * $c_{del}$";
+	private String fillSource0Col = "d(j,0) = j \\cdot $c_{del}$";
 //	private String fillSource0Col = "\\textbf{c}_{\\textbf{del}}";
 	private String source0Constr = "\\forall\\ 0 \\le j \\le n";
 	private String formInsert = "d(j,i-1) + $c_{ins}$";
