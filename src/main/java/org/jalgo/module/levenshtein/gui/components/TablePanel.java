@@ -110,12 +110,12 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 		tablePanels[0][0].resize(textSize);
 		
 		for (int j = 0; j < source.length(); j++) {
-			tablePanels[2*j + 3][0].setText("\\text{" + source.charAt(j) + "}");
+			tablePanels[2*j + 3][0].setText(source.charAt(j) + "");
 			tablePanels[2*j + 3][0].resize(textSize);
 		}
 		
 		for (int i = 0; i < target.length(); i++) {
-			tablePanels[0][2*i + 3].setText("\\text{" + target.charAt(i) + "}");
+			tablePanels[0][2*i + 3].setText(target.charAt(i) + "");
 			tablePanels[0][2*i + 3].resize(textSize);
 		}
 		
@@ -397,6 +397,7 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 
 	public Dimension getPreferredSize() {
 		return new Dimension(width, height);
+//		return super.getPreferredSize();
 	}
 	
 	/**
