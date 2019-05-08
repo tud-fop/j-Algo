@@ -51,7 +51,7 @@ public class WorkPanel extends JPanel implements ResizeComponent, ChangeGeneralF
 		
 		gfp = new GFP();
 		gfp.setController(controller);
-		gfp.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+		gfp.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.LIGHT_GRAY));
 		
 		
 		calcPane = new CalculationPanel(controller);

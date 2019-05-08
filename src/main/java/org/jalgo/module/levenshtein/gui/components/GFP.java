@@ -64,7 +64,7 @@ public class GFP extends JPanel implements CellClickedObserver, ChangeSizeObserv
 		upButton.setBorderPainted(false);
 
 		leftPanel = new LeftPanel();
-		leftPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+//		leftPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
 		leftPanel.add(downButton);
 		add(leftPanel, leftPanelConstraints);
 
@@ -74,11 +74,13 @@ public class GFP extends JPanel implements CellClickedObserver, ChangeSizeObserv
 		rightPanelConstraints.anchor = GridBagConstraints.CENTER;
 
 		rightBigPanel = new RightBigPanel();
-		rightBigPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+//		rightBigPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
 		add(rightBigPanel, rightPanelConstraints);
 
 		rightSmallPanel = new RightSmallPanel();
-		rightSmallPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+//		rightSmallPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+		
+		setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.LIGHT_GRAY));
 	}
 
 	private ImageIcon resizeImageIcon(ImageIcon imgIcon) {
@@ -209,32 +211,32 @@ public class GFP extends JPanel implements CellClickedObserver, ChangeSizeObserv
 
 			c.gridx = 0;
 			c.gridy = 0;
-			lblD0i.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+//			lblD0i.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
 			add(lblD0i, c);
 
 			c.gridx = 1;
 			c.gridy = 0;
-			lbl0ik.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+//			lbl0ik.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
 			add(lbl0ik, c);
 
 			c.gridx = 0;
 			c.gridy = 1;
-			lblDj0.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+//			lblDj0.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
 			add(lblDj0, c);
 
 			c.gridx = 1;
 			c.gridy = 1;
-			lbl0jn.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+//			lbl0jn.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
 			add(lbl0jn, c);
 
 			c.gridx = 0;
 			c.gridy = 2;
-			lblDji.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+//			lblDji.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
 			add(lblDji, c);
 
 			c.gridx = 1;
 			c.gridy = 2;
-			lbl1ik1jn.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+//			lbl1ik1jn.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
 			add(lbl1ik1jn, c);
 		}
 

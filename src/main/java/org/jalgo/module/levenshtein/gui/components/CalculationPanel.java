@@ -122,8 +122,7 @@ public class CalculationPanel extends JPanel implements CellClickedObserver {
 		int padding = 5;
 		this.width = width - padding;
 		this.height = height - padding;
-		width -= padding;
-		height -= padding;
+		
 
 		if (smallFormula)
 			size = Math.max(1, GFP.RightSmallPanel.size);
