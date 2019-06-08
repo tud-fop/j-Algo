@@ -166,15 +166,15 @@ public class ExpandedGeneralFormula extends GeneralFormula {
 			
 		} else if (i > 0 && j > 0 && !wasAlreadyFilled){
 			String string1 = LatexRenderer.fat(fillRest) + openingBracket;
-			string1 += LatexRenderer.green(formDelete )+ ", \\\\ ";
-			string1 += LatexRenderer.blue(formInsert )+ ", \\\\";
-			string1 += LatexRenderer.red(formSubs) + openingBracket;
+			string1 += LatexRenderer.colorDeletion(formDelete )+ ", \\\\ ";
+			string1 += LatexRenderer.colorInsertion(formInsert )+ ", \\\\";
+			string1 += LatexRenderer.colorSubstitution(formSubs) + openingBracket;
 			if (!controller.sameCharAt(j, i)) {
-				string1 += LatexRenderer.red(costSubstitution) + "&" + subsConstr;
+				string1 += LatexRenderer.colorSubstitution(costSubstitution) + "&" + subsConstr;
 				string1 += costIdentity + "&" + idConstr;
 			} else {
 				string1 += costSubstitution + "&" + subsConstr;
-				string1 += LatexRenderer.red(costIdentity) + "&" + idConstr;
+				string1 += LatexRenderer.colorSubstitution(costIdentity) + "&" + idConstr;
 			}
 			string1 += closingBracket + closingBracket;
 			

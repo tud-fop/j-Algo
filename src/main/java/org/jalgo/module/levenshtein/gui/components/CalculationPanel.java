@@ -77,9 +77,9 @@ public class CalculationPanel extends JPanel implements CellClickedObserver {
 			String ins = controller.getCell(j, i - 1).getValue() + " + " + controller.getInsertion();
 			String subs = controller.getCell(j - 1, i - 1).getValue() + " + " + subsCosts;
 			if (color) {
-				del = LatexRenderer.green(del);
-				ins = LatexRenderer.blue(ins);
-				subs = LatexRenderer.red(subs);
+				del = LatexRenderer.colorDeletion(del);
+				ins = LatexRenderer.colorInsertion(ins);
+				subs = LatexRenderer.colorSubstitution(subs);
 			}
 			if (smallFormula) {
 				latex = "d(" + j + "," + i + ") = \\min\\left\\{" + del + "\\text{,  }" + ins + "\\text{,  }" + subs

@@ -246,21 +246,21 @@ implements CellClickedObservable, ToolbarObserver, AlignmentClickObserver {
 			// color the cells leftwards, upwards and left-upwards
 			if (!(j == 1 || i == 1) && !wasAlreadyFilled) {
 				if (j - 2 >= 1) {
-					tablePanels[j-2][i].green();
+					tablePanels[j-2][i].colorDeletion();
 					coloredCells.add(tablePanels[j-2][i]);
-					tablePanels[j-1][i].green();
+					tablePanels[j-1][i].colorDeletion();
 					coloredCells.add(tablePanels[j-1][i]);
 				}
 				if (i - 2 >= 1) {
-					tablePanels[j][i-2].blue();
+					tablePanels[j][i-2].colorInsertion();
 					coloredCells.add(tablePanels[j][i-2]);
-					tablePanels[j][i-1].blue();
+					tablePanels[j][i-1].colorInsertion();
 					coloredCells.add(tablePanels[j][i-1]);
 				}
 				if (j-2 >= 1 && i-2 >= 1) {
-					tablePanels[j-2][i-2].red();
+					tablePanels[j-2][i-2].colorSubstitution();
 					coloredCells.add(tablePanels[j-2][i-2]);
-					tablePanels[j-1][i-1].red();
+					tablePanels[j-1][i-1].colorSubstitution();
 					coloredCells.add(tablePanels[j-1][i-1]);
 				}
 			}

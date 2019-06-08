@@ -19,9 +19,9 @@ public class TableCellPanel extends JPanel {
 	public static final int NUMBER = 5;
 
 	private final int BLACK = 0;
-	private final int RED = 1;
-	private final int GREEN = 2;
-	private final int BLUE = 3;
+	private final int SUBS = 1;
+	private final int DEL = 2;
+	private final int INS = 3;
 
 	private int content;
 
@@ -112,14 +112,14 @@ public class TableCellPanel extends JPanel {
 //		}
 		latexFormatted = latex;
 		switch (color) {
-		case RED:
-			latexFormatted = LatexRenderer.red(latexFormatted);
+		case SUBS:
+			latexFormatted = LatexRenderer.colorSubstitution(latexFormatted);
 			break;
-		case GREEN:
-			latexFormatted = LatexRenderer.green(latexFormatted);
+		case DEL:
+			latexFormatted = LatexRenderer.colorDeletion(latexFormatted);
 			break;
-		case BLUE:
-			latexFormatted = LatexRenderer.blue(latexFormatted);
+		case INS:
+			latexFormatted = LatexRenderer.colorInsertion(latexFormatted);
 			break;
 		}
 		latexFormatted = LatexRenderer.fat(latexFormatted);
@@ -154,28 +154,28 @@ public class TableCellPanel extends JPanel {
 	/**
 	 * colors the text red
 	 */
-	public void red() {
-		latexFormatted = LatexRenderer.red(latex);
+	public void colorSubstitution() {
+		latexFormatted = LatexRenderer.colorSubstitution(latex);
 		LatexRenderer.render(latexFormatted, label, size);
-		color = RED;
+		color = SUBS;
 	}
 
 	/**
 	 * colors the text green
 	 */
-	public void green() {
-		latexFormatted = LatexRenderer.green(latex);
+	public void colorDeletion() {
+		latexFormatted = LatexRenderer.colorDeletion(latex);
 		LatexRenderer.render(latexFormatted, label, size);
-		color = GREEN;
+		color = DEL;
 	}
 
 	/**
 	 * colors the text blue
 	 */
-	public void blue() {
-		latexFormatted = LatexRenderer.blue(latex);
+	public void colorInsertion() {
+		latexFormatted = LatexRenderer.colorInsertion(latex);
 		LatexRenderer.render(latexFormatted, label, size);
-		color = BLUE;
+		color = INS;
 	}
 
 	/**

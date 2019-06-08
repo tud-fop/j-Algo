@@ -1,5 +1,6 @@
 package org.jalgo.module.levenshtein.gui.components;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -21,22 +22,41 @@ implements AlignmentClickObservable {
 	private String source;
 	private String target;
 	private List<Action> alignment;
+	private int number;
 	
 	private JLabel[][] table;
+	private JLabel numberLabel;
 	
 	private Font standardFont;
 	
 	private List<AlignmentClickObserver> observers;
 	
-	public AlignPanel(String source, String target, List<Action> alignment) {
+	public AlignPanel(int number, String source, String target, List<Action> alignment) {
+		this.number = number;
 		this.source = source;
 		this.target = target;
 		this.alignment = alignment;
 		
-		table = new JLabel[4][alignment.size()];
-		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
+		c.ipadx = 20;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridheight = 4;
+		c.anchor = GridBagConstraints.CENTER;
+		//c.fill = GridBagConstraints.HORIZONTAL;
+		
+		if (alignment.size() > 0)
+			numberLabel = new JLabel(number + ")");
+		else 
+			numberLabel = new JLabel();
+		
+		add(numberLabel,c);
+		
+		table = new JLabel[4][alignment.size()];
+		
+		
+		c = new GridBagConstraints();
 		c.ipadx = 5;
 		
 		for (int i = 0; i < 4; i++) {
@@ -45,16 +65,16 @@ implements AlignmentClickObservable {
 				if (i == 1) {
 					table[i][j].setText("|");
 				}
-				c.gridx = j;
+				c.gridx = j+1;
 				c.gridy = i;
 				add(table[i][j], c);
 			}
 		}
 		
-		if (alignment.size() > 0) {
-			Font font = table[0][0].getFont();
-			standardFont = font.deriveFont((float)font.getSize());
-		}
+		
+		Font font = numberLabel.getFont();
+		standardFont = font.deriveFont((float)font.getSize());
+		
 		
 		init();
 		
@@ -103,10 +123,16 @@ implements AlignmentClickObservable {
 		int prefWidth = getPreferredSize().width;
 		double ratio = (double) width / (double) prefWidth;
 		
+		float maxSize = (float) (numberLabel.getFont().getSize() * ratio);
+		float size = Math.min(maxSize, (float) (height / 6.0));
+		
+		Font newFont = standardFont.deriveFont(
+				Font.PLAIN, 
+				size);
+		numberLabel.setFont(newFont);
+		
 		for (JLabel[] labels : table) {
 			for (JLabel label : labels) {
-				float maxSize = (float) (label.getFont().getSize() * ratio);
-				float size = Math.min(maxSize, height / 4);
 				label.setFont(standardFont.deriveFont(
 						Font.PLAIN, 
 						size));

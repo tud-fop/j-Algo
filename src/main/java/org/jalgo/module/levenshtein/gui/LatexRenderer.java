@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import org.jalgo.module.levenshtein.Consts;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 import org.scilab.forge.jlatexmath.TeXIcon;
@@ -64,8 +65,8 @@ public class LatexRenderer {
 	 * @param latex, the latex formula that should be red
 	 * @return the latex formula in red
 	 */
-	public static String red(String latex) {
-		return "\\textcolor{red}{" + latex + "}";
+	public static String colorSubstitution(String latex) {
+		return "\\textcolor{" + Consts.colorSubstitution + "}{" + latex + "}";
 	}
 	
 	/**
@@ -73,8 +74,8 @@ public class LatexRenderer {
 	 * @param latex, the latex formula that should be green
 	 * @return the latex formula in green
 	 */
-	public static String green(String latex) {
-		return "\\textcolor{olivegreen}{" + latex + "}";
+	public static String colorDeletion(String latex) {
+		return "\\textcolor{" + Consts.colorDeletion + "}{" + latex + "}";
 	}
 	
 	/**
@@ -82,12 +83,8 @@ public class LatexRenderer {
 	 * @param latex, the latex formula that should be blue
 	 * @return the latex formula in blue
 	 */
-	public static String blue(String latex) {
-		return "\\textcolor{blue}{" + latex + "}";
-	}
-	
-	public static String violet(String latex) {
-		return "\\textcolor{violet}{" + latex + "}";
+	public static String colorInsertion(String latex) {
+		return "\\textcolor{" + Consts.colorInsertion + "}{" + latex + "}";
 	}
 	
 	/**

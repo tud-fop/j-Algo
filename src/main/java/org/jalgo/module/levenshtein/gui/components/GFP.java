@@ -359,15 +359,15 @@ public class GFP extends JPanel implements CellClickedObserver, ChangeSizeObserv
 
 			} else if (i > 0 && j > 0 && !wasAlreadyFilled) {
 				String string1 = LatexRenderer.fat(fillRest) + openingBracket;
-				string1 += LatexRenderer.green(formDelete) + ", \\\\ ";
-				string1 += LatexRenderer.blue(formInsert) + ", \\\\";
-				string1 += LatexRenderer.red(formSubs) + openingBracket;
+				string1 += LatexRenderer.colorDeletion(formDelete) + ", \\\\ ";
+				string1 += LatexRenderer.colorInsertion(formInsert) + ", \\\\";
+				string1 += LatexRenderer.colorSubstitution(formSubs) + openingBracket;
 				if (!controller.sameCharAt(j, i)) {
-					string1 += LatexRenderer.red(costSubstitution) + "&" + subsConstr;
+					string1 += LatexRenderer.colorSubstitution(costSubstitution) + "&" + subsConstr;
 					string1 += costIdentity + "&" + idConstr;
 				} else {
 					string1 += costSubstitution + "&" + subsConstr;
-					string1 += LatexRenderer.red(costIdentity) + "&" + idConstr;
+					string1 += LatexRenderer.colorSubstitution(costIdentity) + "&" + idConstr;
 				}
 				string1 += closingBracket + closingBracket;
 
@@ -430,8 +430,8 @@ public class GFP extends JPanel implements CellClickedObserver, ChangeSizeObserv
 					costSubs = costSubstitution;
 				}
 
-				String s = fillRest + openingBracket + LatexRenderer.green(formDelete) + "\\text{,  }"
-						+ LatexRenderer.blue(formInsert) + "\\text{,  }" + LatexRenderer.red(formSubs + costSubs)
+				String s = fillRest + openingBracket + LatexRenderer.colorDeletion(formDelete) + "\\text{,  }"
+						+ LatexRenderer.colorInsertion(formInsert) + "\\text{,  }" + LatexRenderer.colorSubstitution(formSubs + costSubs)
 						+ closingBracket;
 
 				currentString = s;

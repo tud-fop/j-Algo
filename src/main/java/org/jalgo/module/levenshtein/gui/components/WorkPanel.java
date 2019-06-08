@@ -24,6 +24,7 @@ public class WorkPanel extends JPanel implements ResizeComponent, ChangeGeneralF
 	private GeneralFormulaPanel generalForm;
 	private CalculationPanel calcPane;
 	private TablePanel tablePanel;
+	private AlignmentScrollPanel alignmentScrollPanel;
 	private AlignmentPanel alignmentPanel;
 	
 	private GFP gfp;
@@ -62,8 +63,11 @@ public class WorkPanel extends JPanel implements ResizeComponent, ChangeGeneralF
 		tablePanel.init(source, target, controller);
 		tablePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.LIGHT_GRAY));
 		
+		alignmentPanel = new AlignmentPanel();
 		
-		alignmentPanel = new AlignmentPanel(source, target, controller);
+		alignmentScrollPanel = new AlignmentScrollPanel(source, target, controller);
+		
+		alignmentPanel.setScrollPanel(alignmentScrollPanel);
 		
 		c.gridx = 0;
 		c.gridy = 0;
@@ -106,9 +110,9 @@ public class WorkPanel extends JPanel implements ResizeComponent, ChangeGeneralF
 		tablePanel.registerObserver(calcPane);
 //		tablePanel.registerObserver(generalForm);
 		tablePanel.registerObserver(gfp);
-		tablePanel.registerObserver(alignmentPanel);
+		tablePanel.registerObserver(alignmentScrollPanel);
 		
-		alignmentPanel.registerAlignmentObserver(tablePanel);
+		alignmentScrollPanel.registerAlignmentObserver(tablePanel);
 		
 		addComponentListener(new ResizeListener(this));
 		
