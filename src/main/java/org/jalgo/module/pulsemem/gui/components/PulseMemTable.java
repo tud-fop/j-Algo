@@ -254,21 +254,15 @@ public class PulseMemTable extends JScrollPane {
 		for (int i = 0; i < rows; i++) {
 
 			if (beamerMode) {
-				if (i == rows - 1) {
-					tabStatic.setRowHeight(i, 20);
-					tabDynamic.setRowHeight(i, 20);
-				} else {
-					tabStatic.setRowHeight(i, 45);
-					tabDynamic.setRowHeight(i, 45);
-				}
+				
+				tabStatic.setRowHeight(i, 45);
+				tabDynamic.setRowHeight(i, 45);
+				
 			} else {
-				if (i == rows - 1) {
-					tabStatic.setRowHeight(i, 15);
-					tabDynamic.setRowHeight(i, 15);
-				} else {
-					tabStatic.setRowHeight(i, 30);
-					tabDynamic.setRowHeight(i, 30);
-				}
+				
+				tabStatic.setRowHeight(i, 30);
+				tabDynamic.setRowHeight(i, 30);
+				
 			}
 			for (int j = 0; j < cols; j++) {
 				if (data[i][j] != null) {
@@ -280,12 +274,12 @@ public class PulseMemTable extends JScrollPane {
 
 		for (int i = 0; i < statCols; i++) {
 			tabStatic.getColumnModel().getColumn(i).setPreferredWidth(
-					maxColumnWidth[i] + 5);
+					maxColumnWidth[i] + 20);
 		}
 
 		for (int i = 0; i < dynCols; i++) {
 			tabDynamic.getColumnModel().getColumn(i).setPreferredWidth(
-					maxColumnWidth[i + statCols] + 5);
+					maxColumnWidth[i + statCols] + 20);
 		}
 	}
 
