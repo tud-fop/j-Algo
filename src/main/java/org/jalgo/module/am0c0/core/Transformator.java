@@ -28,7 +28,6 @@ package org.jalgo.module.am0c0.core;
 import java.util.List;
 import java.util.Map;
 
-import javax.activity.InvalidActivityException;
 import javax.swing.JOptionPane;
 
 import org.jalgo.main.util.Messages;
@@ -344,11 +343,11 @@ public class Transformator extends Subcontroller {
 	/**
 	 * goes one step back in the transformation
 	 * 
-	 * @throws InvalidActivityException
+	 * @return false if there is no previous history, otherwise true
 	 */
-	public void stepBack() throws InvalidActivityException {
+	public boolean stepBack() {
 		if (!functionsHistory.hasPrevious())
-			throw new InvalidActivityException();
+			return false;
 
 		functions = functionsHistory.previous();
 		getView().updateModel(functions);
@@ -361,6 +360,8 @@ public class Transformator extends Subcontroller {
 		} else {
 			setState(TransformationState.TS_WAITING_FIRST);
 		}
+
+		return true;
 	}
 
 	/**

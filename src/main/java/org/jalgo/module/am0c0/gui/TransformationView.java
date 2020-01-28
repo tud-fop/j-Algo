@@ -33,7 +33,6 @@ import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.activity.InvalidActivityException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -416,9 +415,7 @@ public class TransformationView extends View {
 			}
 
 			if (e.getSource() == stepBackButton) {
-				try {
-					transController.stepBack();
-				} catch (InvalidActivityException error) {
+				if (!transController.stepBack()) {
 					JOptionPane.showMessageDialog(transController.getView(), "There is no previous step!", "Error", //$NON-NLS-1$ //$NON-NLS-2$
 							JOptionPane.ERROR_MESSAGE);
 				}
